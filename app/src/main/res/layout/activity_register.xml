@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_gradient"
+    android:orientation="vertical"
+    android:weightSum="4"
+    tools:context=".ui.Register.RegisterActivity">
+
+
+    <LinearLayout
+        android:id="@+id/rectangle_1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:background="@drawable/app_gradient"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+
+        <ImageView
+            android:id="@+id/vector"
+            android:layout_width="@dimen/_144sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="@dimen/_88sdp"
+            android:background="@drawable/logo"
+            tools:ignore="ObsoleteLayoutParam" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.8">
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/top_corner"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <!-- Log In -->
+                <TextView
+                    android:textSize="@dimen/_14sdp"
+                    android:id="@+id/sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:fontFamily="@font/notosansjp_bold"
+                    android:includeFontPadding="false"
+                    android:text="@string/signup"
+                    android:textAppearance="@style/log_in" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sign_up"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:orientation="horizontal">
+
+                    <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                        android:id="@+id/ccpr"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/edit_text"
+                        android:gravity="center_vertical"
+                        app:ccp_defaultNameCode="IN"
+                        app:ccp_hideNameCode="true"
+                        app:ccp_textColor="@color/Red"
+                        app:ccp_textSize="@dimen/_14sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/edit_text_register"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/log_in"
+                            android:backgroundTint="@color/gradientstartcolor"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:includeFontPadding="false"
+                            android:hint="Phone Number"
+
+                            android:inputType="phone"
+                            android:nextFocusDown="@id/btnLogin"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_15sdp" />
+
+                        <TextView
+                            android:id="@+id/tvPhoneNumberError"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/edt_email"
+                            android:layout_marginTop="-8dp"
+                            android:layout_marginEnd="@dimen/_18sdp"
+                            android:text="Plese"
+                            android:backgroundTint="@color/gradientstartcolor"
+                            android:fontFamily="@font/notosansjp_regular"
+
+                            android:textColor="@color/Red"
+                            android:textSize="@dimen/_9sdp"
+                            android:visibility="gone" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/edt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_user"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:backgroundTint="@color/gradientstartcolor"
+                    android:drawableStart="@drawable/ic_mail"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:hint="Enter your Email"
+                    android:includeFontPadding="false"
+                    android:inputType="textEmailAddress"
+                    android:nextFocusDown="@id/edt_name"
+                    android:paddingTop="@dimen/_8sdp" />
+
+                <TextView
+                    android:id="@+id/tvEmailError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edt_email"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:backgroundTint="@color/gradientstartcolor"
+                    android:fontFamily="@font/notosansjp_regular"
+
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:text="Plese"
+                    android:textColor="@color/Red"
+                    android:textSize="@dimen/_9sdp"
+                    android:visibility="gone" />
+
+
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvEmailError"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:backgroundTint="@color/gradientstartcolor"
+                    android:drawableStart="@drawable/ic_username"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:hint="Enter your name"
+                    android:includeFontPadding="false"
+                    android:inputType="text"
+                    android:nextFocusDown="@id/radioButtonmale"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_12sdp" />
+
+
+                <TextView
+                    android:backgroundTint="@color/gradientstartcolor"
+                    android:fontFamily="@font/notosansjp_regular"
+
+                    android:id="@+id/tvNameError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edt_name"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:text="Plese"
+                    android:textColor="@color/Red"
+                    android:textSize="@dimen/_9sdp"
+                    android:visibility="gone" />
+
+
+                <RadioGroup
+                    android:id="@+id/rd_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvNameError"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonmale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:text="Male" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonfemale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:text="Female" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonOther"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:text="Other" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/txt_continue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rd_gender"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:includeFontPadding="false"
+                    android:text="@string/continuetxt"
+                    android:textColor="@color/Grey"
+                    android:textSize="@dimen/_12sdp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_privacy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_continue"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvPrivacy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:includeFontPadding="false"
+                        android:text="@string/privacypolicy"
+                        android:textColor="@color/gradientstartcolor"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="@dimen/_4sdp"
+                        android:paddingRight="@dimen/_4sdp"
+                        android:text="and"
+                        android:textColor="@color/Grey"
+                        android:textSize="@dimen/_12sdp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tvTerms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:includeFontPadding="false"
+                        android:text="@string/termsofuse"
+                        android:textColor="@color/gradientstartcolor"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_privacy"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:background="@drawable/shape_roundedbtn"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:includeFontPadding="false"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="@string/register"
+                    android:textAllCaps="false"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/_15sdp" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/btnRegister"
+                    android:gravity="center_horizontal|bottom"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <TextView
+
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:id="@+id/tvText"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="@dimen/_4sdp"
+                        android:paddingRight="@dimen/_4sdp"
+                        android:text="Already have an account? "
+                        android:textColor="@color/Grey"
+                        android:textSize="@dimen/_12sdp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:id="@+id/tvLogin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tvText"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:includeFontPadding="false"
+                        android:text="@string/logIn"
+                        android:textColor="@color/gradientstartcolor"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
+

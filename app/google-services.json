@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "936977611572",
+    "firebase_url": "https://fairfaretest.firebaseio.com",
+    "project_id": "fairfaretest",
+    "storage_bucket": "fairfaretest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936977611572:android:8be49e811e44a0b2530361",
+        "android_client_info": {
+          "package_name": "com.example.fairfare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936977611572-5nlr8n96eqig9rnppolb4nbq51hr2q6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZzxGPyZB0FA-FQ48j27PB356EClG2a9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936977611572-5nlr8n96eqig9rnppolb4nbq51hr2q6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

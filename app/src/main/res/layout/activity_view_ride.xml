@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_gradient">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_viewRide"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:background="@drawable/app_gradient"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/_10sdp"
+        android:theme="@style/BaseTheme"
+        app:buttonGravity="center_vertical"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_viewRide"
+        android:layout_marginTop="0dp">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/homeView"
+                android:layout_marginBottom="-30dp"
+                tools:context=".ui.location.MyLocationActivity" />
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_above="@+id/homeView"
+                app:cardBackgroundColor="@color/White"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_8sdp"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_myCurrentLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:drawableStart="@drawable/red_circle"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:text="Pick-up Location"
+                        android:textColor="@color/gradientstartcolor" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_below="@+id/tv_myCurrentLocation"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/secondaryLightGray" />
+
+
+                    <TextView
+                        android:id="@+id/tv_myDropUpLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_below="@+id/view"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:drawableStart="@drawable/triangle"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:text="Drop-off Location " />
+
+
+                    <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:layout_above="@+id/tv_myDropUpLocation"
+                        android:layout_below="@+id/tv_myCurrentLocation"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="-17dp"
+                        android:layout_marginBottom="-17dp"
+                        android:background="@color/secondaryLightGray" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <ScrollView
+                android:id="@+id/homeView"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_300sdp">
+
+                <LinearLayout
+
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_corner"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_3sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/roundedcorner" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <TextView
+                            android:id="@+id/tv_carType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:text="Auto"
+                            android:textAllCaps="true"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+
+                        <Switch
+                            android:clickable="false"
+                            android:layout_marginEnd="@dimen/_50sdp"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/switchdata"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:switchMinWidth="55dp"
+                            android:textStyle="bold"
+                            android:text="Day Time"
+                            android:layout_marginLeft="100dp"
+                            />
+
+
+                    </RelativeLayout>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        app:cardBackgroundColor="@color/White"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_8sdp"
+                        app:cardUseCompatPadding="true">
+
+                        <RelativeLayout
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_90sdp">
+
+                            <LinearLayout
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:id="@+id/llCar"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_width="@dimen/_65sdp"
+                                android:layout_height="match_parent">
+
+
+                                <ImageView
+                                    android:id="@+id/iv_vehical"
+                                    android:layout_width="@dimen/_65sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_centerVertical="true"
+                                    android:scaleType="fitCenter"
+                                    />
+
+                                <TextView
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:id="@+id/tv_carName"
+                                    android:gravity="center_horizontal"
+                                    android:text="Car"
+                                    android:layout_width="@dimen/_65sdp"
+                                    android:layout_height="wrap_content"/>
+
+
+
+                            </LinearLayout>
+
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingBottom="@dimen/_5sdp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Thu, Sept 3, at 23:35" />
+
+
+                                <RelativeLayout
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingBottom="@dimen/_5sdp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_Person"
+                                        android:drawablePadding="@dimen/_3sdp"
+                                        android:text="3"
+                                        android:drawableStart="@drawable/iv_person"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+
+
+
+
+                                    <TextView
+                                        android:layout_toRightOf="@+id/tv_Person"
+                                        android:layout_marginStart="@dimen/_10sdp"
+                                        android:id="@+id/tv_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="8 KM(15 Min)" />
+
+
+
+
+                                </RelativeLayout>
+
+
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <RelativeLayout
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Estimated Fare"/>
+
+                        <TextView
+                            android:id="@+id/tv_estcharge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs 300"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/secondaryLightGray"
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"/>
+
+                    <RelativeLayout
+                        android:paddingTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Additional Charges"/>
+
+                        <TextView
+                            android:id="@+id/tv_additional_charges"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_toLeftOf="@+id/tv_additional"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs 30" />
+
+
+                        <TextView
+                            android:drawableStart="@drawable/ic_downarrow"
+                            android:id="@+id/tv_additional"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:id="@+id/llAdditionalCharges"
+                        android:visibility="gone"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@drawable/rounded_corner_charges"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+
+                        <RelativeLayout
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Wait Time Charges"/>
+
+                            <TextView
+                                android:id="@+id/tv_Wait_time_charge"
+
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rs 300"
+                                android:layout_alignParentEnd="true"/>
+
+                            <TextView
+                                android:layout_marginEnd="@dimen/_60sdp"
+                                android:layout_alignParentEnd="true"
+                                android:background="@color/secondaryLightGray"
+                                android:layout_width="1sp"
+                                android:layout_height="@dimen/_30sdp"/>
+                        </RelativeLayout>
+
+                        <View
+                            android:background="@color/secondaryLightGray"
+                            android:layout_width="match_parent"
+                            android:layout_height="1sp"/>
+
+                        <RelativeLayout
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Toll Charges"/>
+
+                            <TextView
+                                android:id="@+id/tv_tollCharge"
+
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rs 300"
+                                android:layout_alignParentEnd="true"/>
+
+                            <TextView
+                                android:layout_marginEnd="@dimen/_60sdp"
+                                android:layout_alignParentEnd="true"
+                                android:background="@color/secondaryLightGray"
+                                android:layout_width="1sp"
+                                android:layout_height="@dimen/_30sdp"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:background="@color/secondaryLightGray"
+                            android:layout_width="match_parent"
+                            android:layout_height="1sp"/>
+
+                        <RelativeLayout
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Luggage Charges"/>
+
+                            <TextView
+                                android:id="@+id/tv_Luggage_Charges"
+
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rs 300"
+                                android:layout_alignParentEnd="true"/>
+                            <TextView
+                                android:layout_marginEnd="@dimen/_60sdp"
+                                android:layout_alignParentEnd="true"
+                                android:background="@color/secondaryLightGray"
+                                android:layout_width="1sp"
+                                android:layout_height="@dimen/_30sdp"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:background="@color/secondaryLightGray"
+                            android:layout_width="match_parent"
+                            android:layout_height="1sp"/>
+
+                        <RelativeLayout
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="SurCharges"/>
+
+                            <TextView
+                                android:id="@+id/tv_SurCharges"
+
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rs 300"
+                                android:layout_alignParentEnd="true"/>
+                            <TextView
+                                android:layout_marginEnd="@dimen/_60sdp"
+                                android:layout_alignParentEnd="true"
+                                android:background="@color/secondaryLightGray"
+                                android:layout_width="1sp"
+                                android:layout_height="@dimen/_30sdp"/>
+
+                        </RelativeLayout>
+
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/secondaryLightGray"
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"/>
+
+                    <RelativeLayout
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Discounts and Offers"/>
+
+                        <TextView
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_toLeftOf="@+id/tv_discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs 30" />
+
+                        <TextView
+                            android:drawableStart="@drawable/ic_downarrow"
+                            android:id="@+id/tv_discount"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/secondaryLightGray"
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"/>
+
+                    <RelativeLayout
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textColor="@color/Black"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Total Fare"/>
+
+                        <TextView
+                            android:id="@+id/tv_total"
+                            android:textStyle="bold"
+                            android:textColor="@color/gradientstartcolor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs 300"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_note"
+                            android:textColor="@color/Black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Note:"/>
+
+
+                        <TextView
+                            android:textSize="@dimen/_8sdp"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:layout_toEndOf="@+id/tv_note"
+                            android:textColor="@color/Black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing  text ever since the 1500s"/>
+
+                    </RelativeLayout>
+
+
+                    <Button
+                        android:id="@+id/btnLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ll_privacy"
+                        android:layout_marginStart="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_18sdp"
+                        android:background="@drawable/shape_roundedbtn"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:includeFontPadding="false"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:text="Start Ride"
+                        android:textAllCaps="false"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/_15sdp" />
+
+
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+
+
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+

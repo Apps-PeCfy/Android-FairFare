@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_5sdp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_toRightOf="@+id/iv_place"
+        android:textStyle="bold"
+        android:text="Marol Naka,Andheri East,Mumbai"
+        android:id="@+id/list_item"
+        android:textSize="@dimen/_12sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <TextView
+        android:id="@+id/tv_workPlace"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_toRightOf="@+id/iv_place"
+        android:layout_below="@+id/list_item"
+        android:text="Home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_place"
+        android:id="@+id/iv_place"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"/>
+
+    <View
+        android:layout_below="@+id/tv_workPlace"
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#858585" />
+</RelativeLayout>

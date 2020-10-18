@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">pecfy.threeplus.in</domain>
+        <domain includeSubdomains="true">13.233.228.147</domain>
+        <domain includeSubdomains="true">13.232.110.216</domain>
+        <domain includeSubdomains="true">35.154.208.155</domain>
+        <domain includeSubdomains="true">192.168.0.118</domain>
+        <domain includeSubdomains="true">192.168.0.101</domain>
+        <domain includeSubdomains="true">64.225.85.233</domain>
+    </domain-config>
+</network-security-config>

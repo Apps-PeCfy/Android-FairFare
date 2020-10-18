@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_60sdp"
+    app:cardBackgroundColor="@color/White"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_3sdp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:id="@+id/llCar"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_width="@dimen/_65sdp"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/iv_vehical"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                />
+
+            <TextView
+                android:layout_marginTop="@dimen/_2sdp"
+                android:id="@+id/tv_carName"
+                android:gravity="center_horizontal"
+                android:text="Car"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="wrap_content"/>
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/place_item"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/llCar"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <Spinner
+                android:id="@+id/spinner_type"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_marginStart="-8dp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:spinnerMode="dropdown"
+                android:textSize="2dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/secondaryLightGray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <TextView
+                    android:id="@+id/place_area"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:gravity="start"
+                    android:text="6 Km" />
+
+
+                <TextView
+                    android:id="@+id/tv_preson"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_weight="1"
+                    android:drawableEnd="@drawable/iv_person"
+                    android:gravity="end" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="4" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs 250" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15 Mins" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+
+
