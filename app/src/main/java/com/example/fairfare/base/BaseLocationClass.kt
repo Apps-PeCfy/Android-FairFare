@@ -455,6 +455,7 @@ open class BaseLocationClass : AppCompatActivity(),
         }
     }
 
+
     companion object {
         private const val MY_PERMISSIONS_REQUEST_FINE_LOCATION = 11
         private val TAG = BaseLocationClass::class.java.name
