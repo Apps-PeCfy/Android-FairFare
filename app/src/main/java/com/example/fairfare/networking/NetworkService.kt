@@ -10,6 +10,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface NetworkService {
+
     @FormUrlEncoded
     @POST("sendOtp")
     fun login(
