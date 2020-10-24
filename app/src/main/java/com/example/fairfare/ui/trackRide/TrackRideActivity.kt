@@ -24,7 +24,6 @@ class TrackRideActivity : AppCompatActivity() {
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
 
-
         mToolbar!!.title = "Track Ride"
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
