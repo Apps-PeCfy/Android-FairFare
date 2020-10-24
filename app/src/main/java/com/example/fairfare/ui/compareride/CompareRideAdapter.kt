@@ -17,8 +17,7 @@ import java.util.*
 
 class CompareRideAdapter(
     var context: Context,
-    private val compareRideList: ArrayList<CompareRideResponsePOJO.VehiclesItem?>
-    ,
+    private val compareRideList: ArrayList<CompareRideResponsePOJO.VehiclesItem?>,
     var distance: String?,
     var baggs: String?,
     var estTime: String?
@@ -37,37 +36,31 @@ class CompareRideAdapter(
         return MyViewHolder(v)
     }
 
-    override fun onBindViewHolder(
-        holder: MyViewHolder,
-        position: Int
-    ) {
-        holder.tv_time!!.text = estTime
-        holder.distance!!.text = distance
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+       holder.distance!!.text = distance
         holder.tv_carName!!.text = compareRideList[position]!!.vehicleName
+        holder.tv_time!!.text = estTime
+
         spinnr = ArrayList()
         for (i in compareRideList[position]!!.fares!!.indices) {
             (spinnr as ArrayList<String?>).add(compareRideList[position]!!.fares?.get(i)!!.name)
 
         }
-        val NowLater: ArrayAdapter<*> = ArrayAdapter<Any?>(
-            context,
-            android.R.layout.simple_spinner_dropdown_item,
-            spinnr!!
-        )
+        val NowLater: ArrayAdapter<*> = ArrayAdapter<Any?>(context, android.R.layout.simple_spinner_dropdown_item, spinnr!!)
         NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         holder.spinner_type!!.adapter = NowLater
+        holder.total!!.text ="₹ " + compareRideList[position]!!.fares?.get(0)!!.total
+
         holder.spinner_type!!.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                spinnerposition: Int,
-                id: Long
-            ) {
-                holder.total!!.text = compareRideList[position]!!.fares?.get(spinnerposition)!!.total
+            override fun onItemSelected(parent: AdapterView<*>?, view: View, spinnerposition: Int, id: Long) {
+                holder.total!!.text = "₹ " +compareRideList[position]!!.fares?.get(spinnerposition)!!.total
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
+
+
         Glide.with(context)
             .load(compareRideList[position]!!.vehicleImageUrl)
             .apply(
@@ -92,7 +85,7 @@ class CompareRideAdapter(
     }
 
     inner class MyViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        RecyclerView.ViewHolder(itemView), View.OnClickListener,OnItemSelectedListener {
         @JvmField
         @BindView(R.id.tv_total)
         var total: TextView? = null
@@ -129,6 +122,16 @@ class CompareRideAdapter(
         init {
             ButterKnife.bind(this, itemView)
             itemView.setOnClickListener(this)
+            }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+            total!!.text = "₹ " +compareRideList[position]!!.fares?.get(position)!!.total
+
         }
     }
 
