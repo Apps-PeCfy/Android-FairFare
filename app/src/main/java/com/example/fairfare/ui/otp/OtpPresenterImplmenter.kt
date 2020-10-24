@@ -28,14 +28,11 @@ class OtpPresenterImplmenter(var view: IOtpView) : IOtpPresenter {
             countryCode, name, email, gender, otp
         )
         call!!.enqueue(object : Callback<VerifyOTPResponsePojo?> {
-            override fun onResponse(
-                call: Call<VerifyOTPResponsePojo?>,
-                response: Response<VerifyOTPResponsePojo?>
-            ) {
+            override fun onResponse(call: Call<VerifyOTPResponsePojo?>, response: Response<VerifyOTPResponsePojo?>) {
                 view.removeWait()
                 if (response.code() == 200) {
                     view.otpSuccess(response.body())
-                } else if (response.code() == 400) {
+                } else if (response.code() == 400||response.code()==422) {
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
                     try {

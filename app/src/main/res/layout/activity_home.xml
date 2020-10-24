@@ -9,10 +9,11 @@
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/app_gradient">
+        android:background="@color/secondaryLightGray">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_home"
+            android:background="@drawable/app_gradient"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_70sdp"
             app:buttonGravity="center_vertical"
@@ -49,11 +50,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/homeView"
-                    android:layout_marginBottom="-30dp"
                     tools:context=".ui.location.MyLocationActivity" />
 
 
                 <LinearLayout
+
                     android:id="@+id/homeView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -61,13 +62,31 @@
                     android:background="@drawable/top_corner"
                     android:orientation="vertical">
 
-                    <View
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_3sdp"
+                    <RelativeLayout
+                        android:id="@+id/tvhideShow"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:layout_marginBottom="@dimen/_15sdp"
-                        android:background="@drawable/roundedcorner" />
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_30sdp">
+
+                        <TextView
+                            android:layout_centerInParent="true"
+
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_3sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginBottom="@dimen/_15sdp"
+                            android:background="@drawable/roundedcorner" />
+                    </RelativeLayout>
+
+
+
+                    <LinearLayout
+
+                        android:id="@+id/llhideview"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <LinearLayout
 
@@ -100,7 +119,7 @@
                             android:layout_height="@dimen/_30sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_weight="1"
-                            android:background="@drawable/shapespinner"
+                            android:background="@drawable/spinnerbags"
                             android:gravity="bottom"
                             android:paddingStart="@dimen/_30sdp"
                             android:spinnerMode="dropdown"
@@ -170,7 +189,7 @@
                                 android:text="Pick-up Location"
                                 android:id="@+id/tv_myCurrentLocation"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_40sdp"
+                                android:layout_height="@dimen/_45sdp"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:drawableStart="@drawable/red_circle"
@@ -178,14 +197,14 @@
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:includeFontPadding="false"
                                 android:maxLines="2"
-                                android:padding="@dimen/_6sdp" />
+                                />
 
                             <View
                                 android:id="@+id/view"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_1sdp"
                                 android:layout_below="@+id/tv_myCurrentLocation"
-                                android:layout_marginStart="@dimen/_40sdp"
+                                android:layout_marginStart="@dimen/_30sdp"
                                 android:layout_marginEnd="@dimen/_15sdp"
                                 android:background="@color/secondaryLightGray" />
 
@@ -194,7 +213,7 @@
                                 android:gravity="center_vertical"
                                 android:id="@+id/tv_myDropUpLocation"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_40sdp"
+                                android:layout_height="@dimen/_45sdp"
                                 android:layout_below="@+id/view"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
@@ -203,7 +222,6 @@
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:includeFontPadding="false"
                                 android:maxLines="2"
-                                android:padding="@dimen/_6sdp"
                                 android:text="Drop-off Location" />
 
 
@@ -214,7 +232,7 @@
                                 android:layout_marginTop="-17dp"
                                 android:layout_width="@dimen/_1sdp"
                                 android:layout_height="match_parent"
-                                android:layout_marginStart="@dimen/_20sdp"
+                                android:layout_marginStart="@dimen/_14sdp"
                                 android:background="@color/secondaryLightGray" />
                         </RelativeLayout>
 
@@ -259,6 +277,8 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_14sdp"
                         android:visibility="gone" />
+
+                </LinearLayout>
 
 
                 </LinearLayout>

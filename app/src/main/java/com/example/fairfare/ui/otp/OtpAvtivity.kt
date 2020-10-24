@@ -28,6 +28,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     var type: String? = null
     var GoogleToken: String? = null
     var LoginType: String? = null
+    var gender: String? = null
 
     @JvmField
     @BindView(R.id.otp)
@@ -65,6 +66,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
             Username = extras.getString("UserName")
             type = extras.getString("Activity")
             LoginType = extras.getString("LoginType")
+            gender = extras.getString("Gender")
             GoogleToken = extras.getString("GoogleToken")
             otp!!.text = "+$CountryCode $MobileNo"
         }
@@ -92,7 +94,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
             }
             iOtpPresenter!!.verifyOtp(
                 MobileNo, type, "Android",
-                LoginType, CountryCode, Username, UserMail, "Male", edt_otp!!.text.toString()
+                LoginType, CountryCode, Username, UserMail, gender, edt_otp!!.text.toString()
             )
 
             /*   (ApiClient.getClient().verifyOtp(MobileNo, type, "Android",
@@ -188,14 +190,8 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     }
 
     override fun otpSuccess(verifyOTPResponsePojo: VerifyOTPResponsePojo?) {
-        mPreferencesManager!!.setStringValue(
-            Constants.SHARED_PREFERENCE_LOGIN_TOKEN,
-            verifyOTPResponsePojo!!.token
-        )
-        mPreferencesManager!!.setStringValue(
-            Constants.SHARED_PREFERENCE_ISLOGIN,
-            "true"
-        )
+        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, verifyOTPResponsePojo!!.token)
+        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_ISLOGIN, "true")
         edt_otp!!.setText("")
         val intent = Intent(this@OtpAvtivity, HomeActivity::class.java)
         startActivity(intent)

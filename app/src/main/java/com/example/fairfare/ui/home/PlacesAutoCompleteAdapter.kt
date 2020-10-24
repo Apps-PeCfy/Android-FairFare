@@ -19,10 +19,12 @@ import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Tasks
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -50,7 +52,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
     }
 
     interface ClickListener {
-        fun click(place: Place?)
+        fun click(place: Place?,address:String)
         fun favClick(place: Place?)
     }
 
@@ -96,16 +98,21 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
         // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
         // and once again when the user makes a selection (for example when calling fetchPlace()).
         val token = AutocompleteSessionToken.newInstance()
+        val northEast = LatLng(19.076090, 72.877426)
+        val southwest = LatLng(19.2183, 72.9781)
+
 
         //https://gist.github.com/graydon/11198540
         // Use the builder to create a FindAutocompletePredictionsRequest.
         val request =
             FindAutocompletePredictionsRequest.builder() // Call either setLocationBias() OR setLocationRestriction().
                 //.setLocationBias(bounds)
-                //.setCountry("BD")
-                //.setTypeFilter(TypeFilter.ADDRESS)
-                .setSessionToken(token)
+                //.setTypeFilter(TypeFilter.CITIES)
+             //   .setLocationRestriction(RectangularBounds.newInstance(northEast,northEast))
+               // .setLocationBias(RectangularBounds.newInstance(northEast,southwest))
+                    .setSessionToken(token)
                 .setCountry("IN")
+
                 .setQuery(constraint.toString())
                 .build()
         val autocompletePredictions =
@@ -173,8 +180,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
         private val mRoW: RelativeLayout
         private val iv_fav: ImageView
         override fun onClick(v: View) {
-            val item =
-                mResultList!![adapterPosition]
+            val item = mResultList!![adapterPosition]
             if (v.id == R.id.place_item) {
                 val placeId = item.placeId.toString()
                 val placeFields =
@@ -182,7 +188,8 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                         Place.Field.ID,
                         Place.Field.NAME,
                         Place.Field.LAT_LNG,
-                        Place.Field.ADDRESS
+                        Place.Field.ADDRESS,
+                        Place.Field.TYPES
                     )
                 val request =
                     FetchPlaceRequest.builder(placeId, placeFields).build()
@@ -206,12 +213,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                         }
                         val token =
                             preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-                        client.SaveRecentLocation(
-                            "Bearer $token", place.id, returnedAddress!!.subAdminArea,
-                            returnedAddress.adminArea,
-                            returnedAddress.countryName,
-                            place.address
-                        )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
+                        client.SaveRecentLocation("Bearer $token", place.id, returnedAddress!!.subAdminArea, returnedAddress.adminArea, returnedAddress.countryName, place.address)!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
                             override fun onResponse(
                                 call: Call<SaveLocationResponsePojo?>,
                                 response: Response<SaveLocationResponsePojo?>
@@ -226,7 +228,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                                 Log.d("response", t.stackTrace.toString())
                             }
                         })
-                        clickListener!!.click(place)
+                        clickListener!!.click(place,mResultList!![adapterPosition].address.toString())
                     }.addOnFailureListener { exception ->
                         if (exception is ApiException) {
                             Toast.makeText(mContext, exception.message + "", Toast.LENGTH_LONG)
@@ -234,6 +236,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                         }
                     }
             }
+
             if (v.id == R.id.iv_fav) {
                 val placeId = item.placeId.toString()
                 val placeFields =
@@ -263,31 +266,13 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                             }
                         } catch (e: IOException) {
                         }
-                        val token =
-                            preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-                        client.SaveLocation(
-                            "Bearer $token", place.id, returnedAddress!!.subAdminArea,
-                            returnedAddress!!.adminArea,
-                            returnedAddress!!.countryName,
-                            place.address
-                        )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
-                            override fun onResponse(
-                                call: Call<SaveLocationResponsePojo?>,
-                                response: Response<SaveLocationResponsePojo?>
-                            ) {
-                                if (response.code() == 200) {
-                                    iv_fav.setBackgroundResource(R.drawable.ic_fav_checked)
-                                    Toast.makeText(
-                                        mContext,
-                                        "Location saved successfully !!",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                        val token = preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+                        client.SaveLocation("Bearer $token", place.id, returnedAddress!!.subAdminArea, returnedAddress!!.adminArea, returnedAddress!!.countryName, place.address)!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
+                            override fun onResponse(call: Call<SaveLocationResponsePojo?>, response: Response<SaveLocationResponsePojo?>) {
+                                if (response.code() == 200) { iv_fav.setBackgroundResource(R.drawable.ic_fav_checked)
+                                    Toast.makeText(mContext, "Location saved successfully !!", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    Toast.makeText(
-                                        mContext,
-                                        "Internal server error",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    Toast.makeText(mContext, "Internal server error", Toast.LENGTH_LONG).show()
                                 }
                             }
 
@@ -325,6 +310,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
         var placeId: CharSequence,
         var area: CharSequence,
         var address: CharSequence
+
     ) {
         override fun toString(): String {
             return area.toString()

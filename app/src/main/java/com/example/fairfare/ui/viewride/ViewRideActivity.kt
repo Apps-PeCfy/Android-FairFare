@@ -1,14 +1,19 @@
 package com.example.fairfare.ui.viewride
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -18,7 +23,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
+import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
+import com.example.fairfare.ui.ridedetails.RideDetailsActivity
+import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.PreferencesManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -50,7 +59,7 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
 
     @JvmField
     @BindView(R.id.tv_additional)
-    var tv_additional: TextView? = null
+    var tv_additional: RelativeLayout? = null
 
     @JvmField
     @BindView(R.id.tv_carName)
@@ -104,6 +113,24 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
     @BindView(R.id.tv_carType)
     var tv_carType: TextView? = null
 
+   @JvmField
+    @BindView(R.id.tvhideShow)
+    var tvhideShow: RelativeLayout? = null
+
+  @JvmField
+    @BindView(R.id.homeView)
+    var homeView: ScrollView? = null
+
+
+   @JvmField
+    @BindView(R.id.btnLogin)
+    var btnLogin: Button? = null
+
+
+ @JvmField
+    @BindView(R.id.tv_dateandTime)
+    var tv_dateandTime: TextView? = null
+
     @JvmField
     @BindView(R.id.switchdata)
     var switchdata: Switch? = null
@@ -112,10 +139,16 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
     var sourceLat: String? = null
     var sourceLong: String? = null
     var destLat: String? = null
+    var spntext: String? = null
     var destLong: String? = null
     var sAdd: String? = null
+    var currentDate: String? = null
     var dAdd: String? = null
     var mMap: GoogleMap? = null
+    var sharedpreferences: SharedPreferences? = null
+    var preferencesManager: PreferencesManager? = null
+    var hideshow: String? = null
+
     var sourecemarker: Marker? = null
     private var mPolyline: Polyline? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,9 +156,15 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
         setContentView(R.layout.activity_view_ride)
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
+        preferencesManager = PreferencesManager.instance
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
+
+        hideshow = "show"
+        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+
         compareRideList = intent.getSerializableExtra("spinnerdata") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
         spinnerposition = intent.getIntExtra("spinnerposition", 0)
         listPosition = intent.getIntExtra("listPosition", 0)
@@ -136,12 +175,14 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
         destLong = intent.getStringExtra("destLong")
         sAdd = intent.getStringExtra("SourceAddess")
         dAdd = intent.getStringExtra("DestAddress")
+        currentDate = intent.getStringExtra("CurrentDateTime")
+        spntext = intent.getStringExtra("timeSpinnertxt")
 
         tv_myCurrentLocation!!.text = sAdd
         tv_myDropUpLocation!!.text = dAdd
-
-        tv_carType!!.text = compareRideList[listPosition].vehicleName
-        tv_carName!!.text = compareRideList[listPosition].vehicleName
+        tv_dateandTime!!.text = currentDate
+        tv_carType!!.text = compareRideList[listPosition].providerName
+        tv_carName!!.text = compareRideList[listPosition].fares?.get(spinnerposition)!!.name
         Glide.with(this@ViewRideActivity)
             .load(compareRideList[listPosition].vehicleImageUrl)
             .apply(
@@ -151,19 +192,25 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
                     .dontTransform()
             )
             .into(iv_vehical!!)
-        tv_total!!.text = compareRideList[listPosition].fares?.get(spinnerposition)!!.total
+        tv_total!!.text ="₹ "+ compareRideList[listPosition].fares?.get(spinnerposition)!!.total
         tv_time!!.text = distance
-        tv_Wait_time_charge!!.text = "Rs " + 0
+     //   tv_Wait_time_charge!!.text = "₹ " + 0.00
 
-        tv_tollCharge!!.text = "Rs " + compareRideList[listPosition].fares?.get(spinnerposition)!!.tollCharge
+        if(spntext.equals("Now")){
+            btnLogin!!.text ="Start Ride"
+        }else{
+            btnLogin!!.text ="Schedule Ride"
+        }
 
-        tv_Luggage_Charges!!.text = "Rs " + compareRideList[listPosition].fares?.get(spinnerposition)!!.luggageCharge
+        tv_tollCharge!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.tollCharge
 
-        tv_SurCharges!!.text = "Rs " + compareRideList[listPosition].fares?.get(spinnerposition)!!.surCharge
+        tv_Luggage_Charges!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.luggageCharge
 
-        tv_estcharge!!.text = "Rs " + compareRideList[listPosition].fares?.get(spinnerposition)!!.subTotal
+        tv_SurCharges!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.surCharge
 
-        tv_additional_charges!!.text = "Rs " + (compareRideList[listPosition].fares?.get(spinnerposition)!!.luggageCharge!!.toDouble()
+        tv_estcharge!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.subTotal
+
+        tv_additional_charges!!.text = "₹ " + (compareRideList[listPosition].fares?.get(spinnerposition)!!.luggageCharge!!.toDouble()
                 + compareRideList[listPosition].fares?.get(spinnerposition)!!.surCharge!!.toDouble()
                 + compareRideList[listPosition].fares?.get(spinnerposition)!!.tollCharge!!.toDouble())
 
@@ -189,10 +236,63 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
         }
     }
 
+
+    override fun onDestroy() {
+       // sharedpreferences!!.edit().clear().commit()
+      //  preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT,"LOCALITY")
+
+        super.onDestroy()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_home_lang, menu)
         return true
     }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_home -> {
+                preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT,"LOCALITY")
+                sharedpreferences!!.edit().clear().commit()
+                val intent = Intent(this@ViewRideActivity, HomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return true
+    }
+
+
+
+    @OnClick(R.id.btnLogin)
+    fun btnClick(){
+        if(spntext.equals("Now")){
+            val intent = Intent(applicationContext, RideDetailsActivity::class.java)
+            startActivity(intent)
+        }else{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("FairFare")
+            builder.setMessage("Your Ride is Scheduled")
+            builder.setPositiveButton("OK"){dialogInterface, which ->
+            }
+
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
+    }
+
+    @OnClick(R.id.tvhideShow)
+    fun  hideshow(){
+        if(hideshow.equals("show")){
+            hideshow = "hide"
+            homeView?.visibility = View.GONE
+        }else{
+            hideshow = "show"
+            homeView?.visibility = View.VISIBLE
+        }
+    }
+
 
     @OnClick(R.id.tv_additional)
     fun additional() {

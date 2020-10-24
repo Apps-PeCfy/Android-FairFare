@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -25,16 +22,33 @@ import com.rilixtech.widget.countrycodepicker.CountryCodePicker
 import io.michaelrocks.libphonenumber.android.NumberParseException
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import io.michaelrocks.libphonenumber.android.Phonenumber.PhoneNumber
+import java.util.regex.Pattern.compile
 
 class RegisterActivity : AppCompatActivity(),
     CountryCodePicker.OnCountryChangeListener,
     IRegisterVIew {
 
-    var emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\\\.+[a-z]+")
+
+
+    private val emailRegex = compile(
+        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                "\\@" +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                ")+"
+    )
+
+
+
+
+    var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\\\.+[a-z]+"
     var MobileNo: String? = null
     var UserName: String? = null
     var UserEmail: String? = null
     var LoginType: String? = "NOR"
+    var Gender: String? = null
     var GoogleToken: String? = null
     var CountryCode: String? = null
     var countryCodeCCP = "91"
@@ -71,6 +85,19 @@ class RegisterActivity : AppCompatActivity(),
     @JvmField
     @BindView(R.id.sign_up)
     var sign_up: TextView? = null
+
+    @JvmField
+    @BindView(R.id.radioButtonmale)
+    var radioButtonmale: RadioButton? = null
+
+    @JvmField
+    @BindView(R.id.radioButtonfemale)
+    var radioButtonfemale: RadioButton? = null
+
+    @JvmField
+    @BindView(R.id.radioButtonOther)
+    var radioButtonOther: RadioButton? = null
+
 
     @JvmField
     @BindView(R.id.edt_name)
@@ -156,6 +183,22 @@ class RegisterActivity : AppCompatActivity(),
 
     @OnClick(R.id.btnRegister)
     fun btnCLick() {
+
+        if (radioButtonmale!!.isChecked) {
+            Gender = "Male"
+        } else if (radioButtonfemale!!.isChecked) {
+            Gender = "Female"
+        } else {
+            Gender = "Other"
+        }
+
+
+
+
+
+
+
+
         val phoneNumberUtil: PhoneNumberUtil
         var phoneNumber: PhoneNumber? = null
         var numbervalidation = "false"
@@ -178,19 +221,14 @@ class RegisterActivity : AppCompatActivity(),
             "false"
         }
 
-        /* try {
-
-            phoneNumber = phoneNumberUtil.parse(edit_text_register.getText().toString(), countryCodeISO.toUpperCase());
-            boolean isValid = phoneNumberUtil.isValidNumber(phoneNumber);
-
-            numbervalidation = String.valueOf(isValid);
-
-        } catch (NumberParseException e) {
-            e.printStackTrace();
-        }*/if (numbervalidation == "false") {
+      if (numbervalidation == "false") {
             tvPhoneNumberError!!.text = "Please enter a valid phone no."
             tvPhoneNumberError!!.visibility = View.VISIBLE
-        } else if (!edt_email!!.text.toString().trim { it <= ' ' }.matches(emailPattern)) {
+        } else if (!emailRegex.matcher(edt_email!!.text.toString()).matches()) {
+
+
+
+
             // Toast.makeText(this, "wrong", Toast.LENGTH_LONG).show();
             tvEmailError!!.text = "Please enter a valid email."
             tvEmailError!!.visibility = View.VISIBLE
@@ -301,6 +339,8 @@ class RegisterActivity : AppCompatActivity(),
             intent.putExtra("UserMail", edt_email!!.text.toString())
             intent.putExtra("UserName", edt_name!!.text.toString())
             intent.putExtra("LoginType", LoginType)
+            intent.putExtra("Gender", Gender)
+
             intent.putExtra("Activity", "Register")
             intent.putExtra("GoogleToken", GoogleToken)
             startActivity(intent)

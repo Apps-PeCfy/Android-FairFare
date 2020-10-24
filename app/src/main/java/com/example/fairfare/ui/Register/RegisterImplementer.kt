@@ -30,7 +30,7 @@ class RegisterImplementer(var view: IRegisterVIew) : IRegisterPresenter {
                 view.removeWait()
                 if (response.code() == 200) {
                     view.onLoginSUccess(response.body())
-                } else if (response.code() == 400) {
+                } else if (response.code() == 400 || response.code() ==422) {
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
                     try {

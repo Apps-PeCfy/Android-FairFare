@@ -11,32 +11,32 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_60sdp"
         android:background="@drawable/app_gradient"
-        android:theme="@style/BaseTheme"
         android:gravity="center_vertical"
+        android:paddingEnd="@dimen/_10sdp"
 
+        android:theme="@style/BaseTheme"
         app:buttonGravity="center_vertical"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        android:paddingEnd="@dimen/_10sdp"
 
         />
 
-  <!--  <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_home"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        app:buttonGravity="center_vertical"
-        app:navigationIcon="?attr/homeAsUpIndicator">
+    <!--  <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar_home"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/_60sdp"
+          app:buttonGravity="center_vertical"
+          app:navigationIcon="?attr/homeAsUpIndicator">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/notosansjp_bold"
-            android:includeFontPadding="false"
-            android:text="Compare Rides"
-            android:textColor="@color/White"
-            android:textSize="@dimen/_15sdp" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/notosansjp_bold"
+              android:includeFontPadding="false"
+              android:text="Compare Rides"
+              android:textColor="@color/White"
+              android:textSize="@dimen/_15sdp" />
 
-    </androidx.appcompat.widget.Toolbar>-->
+      </androidx.appcompat.widget.Toolbar>-->
 
 
     <RelativeLayout
@@ -63,73 +63,73 @@
                 tools:context=".ui.location.MyLocationActivity" />
 
 
-               <androidx.cardview.widget.CardView
-                   android:layout_width="match_parent"
-                   android:layout_height="@dimen/_120sdp"
-                   android:layout_above="@+id/homeView"
-                   app:cardBackgroundColor="@color/White"
-                   app:cardCornerRadius="@dimen/_10sdp"
-                   app:cardElevation="@dimen/_8sdp"
-                   app:cardUseCompatPadding="true">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_above="@+id/homeView"
+                app:cardBackgroundColor="@color/White"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_8sdp"
+                app:cardUseCompatPadding="true">
 
-                   <RelativeLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"
-                       android:gravity="center_vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
 
-                       <TextView
-                           android:id="@+id/tv_myCurrentLocation"
-                           android:layout_width="match_parent"
-                           android:layout_height="@dimen/_40sdp"
-                           android:layout_marginStart="@dimen/_10sdp"
-                           android:layout_marginEnd="@dimen/_10sdp"
-                           android:drawableStart="@drawable/red_circle"
-                           android:drawablePadding="@dimen/_15sdp"
-                           android:fontFamily="@font/notosansjp_regular"
-                           android:gravity="center_vertical"
-                           android:includeFontPadding="false"
-                           android:maxLines="2"
-                           android:text="Pick-up Location"
-                           android:textColor="@color/gradientstartcolor" />
+                    <TextView
+                        android:id="@+id/tv_myCurrentLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:drawableStart="@drawable/red_circle"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:text="Pick-up Location"
+                        android:textColor="@color/gradientstartcolor" />
 
-                       <View
-                           android:id="@+id/view"
-                           android:layout_width="match_parent"
-                           android:layout_height="@dimen/_1sdp"
-                           android:layout_below="@+id/tv_myCurrentLocation"
-                           android:layout_marginStart="@dimen/_40sdp"
-                           android:layout_marginEnd="@dimen/_15sdp"
-                           android:background="@color/secondaryLightGray" />
-
-
-                       <TextView
-                           android:id="@+id/tv_myDropUpLocation"
-                           android:layout_width="match_parent"
-                           android:layout_height="@dimen/_40sdp"
-                           android:layout_below="@+id/view"
-                           android:layout_marginStart="@dimen/_10sdp"
-                           android:layout_marginEnd="@dimen/_10sdp"
-                           android:drawableStart="@drawable/triangle"
-                           android:drawablePadding="@dimen/_15sdp"
-                           android:fontFamily="@font/notosansjp_regular"
-                           android:gravity="center_vertical"
-                           android:includeFontPadding="false"
-                           android:maxLines="2"
-                           android:text="Drop-off Location " />
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_below="@+id/tv_myCurrentLocation"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/secondaryLightGray" />
 
 
-                       <View
-                           android:layout_width="@dimen/_1sdp"
-                           android:layout_height="match_parent"
-                           android:layout_above="@+id/tv_myDropUpLocation"
-                           android:layout_below="@+id/tv_myCurrentLocation"
-                           android:layout_marginStart="@dimen/_14sdp"
-                           android:layout_marginTop="-17dp"
-                           android:layout_marginBottom="-17dp"
-                           android:background="@color/secondaryLightGray" />
-                   </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_myDropUpLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_below="@+id/view"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:drawableStart="@drawable/triangle"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:text="Drop-off Location " />
 
-               </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:layout_above="@+id/tv_myDropUpLocation"
+                        android:layout_below="@+id/tv_myCurrentLocation"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="-17dp"
+                        android:layout_marginBottom="-17dp"
+                        android:background="@color/secondaryLightGray" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
 
 
             <LinearLayout
@@ -139,102 +139,167 @@
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/top_corner"
                 android:orientation="vertical">
-
-                <View
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_3sdp"
+                <RelativeLayout
+                    android:id="@+id/tvhideShow"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:background="@drawable/roundedcorner" />
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:background="@drawable/roundedcorner"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_10sdp">
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_30sdp">
 
                     <TextView
-                        android:id="@+id/spinner_time"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/shapespinner"
-                        android:gravity="center_vertical"
-                        android:paddingStart="@dimen/_30sdp"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:text="Now"
-                        android:textColor="@color/Black"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/tv_baggs"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/shapespinner"
-                        android:gravity="bottom"
-                        android:paddingStart="@dimen/_30sdp"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:text="2"
-                        android:textColor="@color/Black"
-                        android:textSize="18dp" />
-
-
-                </LinearLayout>
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_3sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/roundedcorner" />
+                </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_marginStart="@dimen/_12sdp"
+                    android:id="@+id/rlhideview"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_220sdp"
-                    android:layout_marginEnd="@dimen/_15sdp">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
 
-                    <TextView
-                        android:paddingStart="@dimen/_5sdp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/notosansjp_bold"
-                        android:includeFontPadding="false"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:text="Available Rides"
-                        android:textSize="@dimen/_12sdp" />
-
-
-                    <TextView
-                        android:id="@+id/tv_sort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:drawableStart="@drawable/ic_sort"
-                        android:drawablePadding="@dimen/_15sdp"
-                        android:fontFamily="@font/notosansjp_bold"
-                        android:includeFontPadding="false"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:text="Sort"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view_compareview"
+                    <RelativeLayout
+                        android:id="@+id/rlBags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_sort" />
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@drawable/roundedcorner"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:paddingTop="@dimen/_5sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Schedule Date &amp; Time" />
+
+
+                            <TextView
+                                android:textStyle="bold"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:id="@+id/spinner_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:gravity="start"
+                                android:text="02 Nov, 08:44 pm"
+                                android:textColor="@color/Black"
+                                android:textSize="15dp" />
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:paddingTop="@dimen/_5sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No. of Bags" />
+
+
+                            <TextView
+                                android:textStyle="bold"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:id="@+id/tv_baggs"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:text="2"
+                                android:textColor="@color/Black"
+                                android:textSize="15dp" />
+
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_150sdp"
+                        android:layout_below="@+id/rlBags"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_15sdp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosansjp_bold"
+                            android:includeFontPadding="false"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:text="Available Rides"
+                            android:textSize="@dimen/_12sdp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_sort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:drawableStart="@drawable/ic_sort"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:fontFamily="@font/notosansjp_bold"
+                            android:includeFontPadding="false"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:text="Sort"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+
+                            android:id="@+id/recycler_view_compareview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_sort" />
+
+
+                    </RelativeLayout>
+
 
 
                 </RelativeLayout>
 
+                <Button
+                    android:id="@+id/addvertise"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/ic_add"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_14sdp"
+                    android:visibility="visible" />
+
+
 
             </LinearLayout>
+
 
 
         </RelativeLayout>

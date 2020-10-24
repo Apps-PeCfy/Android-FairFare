@@ -40,6 +40,15 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FetchPlaceResponse
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.maps.GeoApiContext
+import com.google.maps.GeocodingApi
+import com.google.maps.errors.ApiException
+import com.google.maps.model.GeocodingResult
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -53,13 +62,17 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
-    OnTimeSetListener {
+    OnTimeSetListener,OnItemSelectedListener {
     var currentLatitude = 0.0
     var currentLongitude = 0.0
     private var mPolyline: Polyline? = null
     var sourecemarker: Marker? = null
     var destmarker: Marker? = null
     var spinnerLuggagetxt: String? = null
+    var placesClient: PlacesClient? = null
+
+
+
     var timeSpinner = arrayOf<String?>("Now", "Later")
     var luggageSpinner = arrayOf<String?>(
         "1 Bag", "2 Bags", "3 Bags", "4 Bags", "5 Bags", "6 Bags", "7 Bags", "8 Bags",
@@ -108,6 +121,17 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
     var tv_RideScheduled: TextView? = null
 
 
+ @JvmField
+    @BindView(R.id.llhideview)
+    var llhideview: LinearLayout? = null
+
+
+
+ @JvmField
+    @BindView(R.id.tvhideShow)
+    var tvhideShow: RelativeLayout? = null
+
+
     @JvmField
     @BindView(R.id.tv_myCurrentLocation)
     var myCurrentLocation: TextView? = null
@@ -130,6 +154,7 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
     var SourceLong: String? = null
     var DestinationLat: String? = null
     var DestinationLong: String? = null
+    var spinnertxt: String?=null
     var day = 0
     var month = 0
     var year = 0
@@ -144,6 +169,10 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
     var calendar: Calendar? = null
     var estTime: String? = null
     var estDistance: String? = null
+    var hideshow: String? = null
+    var spnrbag = 0
+    var spnrtime = 0
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,34 +181,39 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
 
+        Places.initialize(this, resources.getString(R.string.google_maps_key))
+        placesClient = Places.createClient(this@HomeActivity)
+
 
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
         val intent = intent
         extras = intent.extras
-        rlRideScheduled?.visibility = View.GONE
+        if (extras != null) {
+            spnrbag = extras!!.getInt("spnbg")
+            spnrtime = extras!!.getInt("spnTime")
+        } else {
+            spnrbag = 0
+            spnrtime = 0
+        }
+
+        if (spnrtime == 0) {
+            rlRideScheduled!!.visibility = View.GONE
+        } else {
+            rlRideScheduled!!.visibility = View.VISIBLE
+        }
+
+
         val gps = GPSTracker(this@HomeActivity)
         if (gps.canGetLocation()) {
             currentLatitude = gps.latitude
             currentLongitude = gps.longitude
-            // \n is for new line
         } else {
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
             gps.showSettingsAlert()
         }
 
 
-        /* locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (locationGPS != null) {
-            currentLatitude = locationGPS.getLatitude();
-            currentLongitude = locationGPS.getLongitude();
-
-
-        } else {
-            Toast.makeText(this, "Unable to find location.", Toast.LENGTH_LONG).show();
-        }*/getcurrentDate()
+        hideshow = "show"
+        getcurrentDate()
         initView()
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
@@ -187,40 +221,19 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
         val NowLater: ArrayAdapter<*> = ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, timeSpinner)
         NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_time?.adapter = NowLater
-        spinner_time?.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                val spinnertxt = spinner_time!!.selectedItem.toString()
-                if (spinnertxt == "Later") {
-                    rlRideScheduled!!.visibility = View.VISIBLE
-                } else {
-                    rlRideScheduled!!.visibility = View.GONE
-                }
-            }
+        spinner_time!!.adapter = NowLater
+        spinner_time!!.setSelection(spnrtime)
+        spinner_time!!.onItemSelectedListener = this
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+
         val spinnerLuggage: ArrayAdapter<*> =
             ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, luggageSpinner)
         spinnerLuggage.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_Luggage?.adapter = spinnerLuggage
-        spinner_Luggage?.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                spinnerLuggagetxt = spinner_Luggage!!.selectedItem.toString()
-            }
+        spinner_Luggage?.setSelection(spnrbag)
+        spinner_Luggage!!.setOnItemSelectedListener(this)
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-    }
+            }
 
     override fun onLocationChanged(location: Location) {
         super.onLocationChanged(location)
@@ -234,6 +247,7 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
     }
 
     private fun initView() {
+
         toolbar?.title = ""
         toolbar?.setTitleTextColor(resources.getColor(android.R.color.white))
         drawerToggle = object : ActionBarDrawerToggle(
@@ -277,6 +291,19 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
         datePickerDialog.show()
     }
 
+
+    @OnClick(R.id.tvhideShow)
+    fun  hideshow(){
+        if(hideshow.equals("show")){
+            hideshow = "hide"
+            llhideview?.visibility = View.GONE
+        }else{
+            hideshow = "show"
+            llhideview?.visibility = View.VISIBLE
+        }
+    }
+
+
     @OnClick(R.id.tv_myCurrentLocation)
     fun myCurrentLocations() {
         val intent = Intent(applicationContext, PickUpDropActivity::class.java)
@@ -284,16 +311,22 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
             intent.putExtra("Toolbar_Title", "Pick-Up")
             intent.putExtra("currentLatitude", currentLatitude)
             intent.putExtra("currentLongitude", currentLongitude)
+            intent.putExtra("spinnerbag", spnrbag)
+            intent.putExtra("spinnerTime", spnrtime)
+
         } else {
             intent.putExtra("Toolbar_Title", "Pick-Up")
             intent.putExtra("currentLatitude", SourceLat!!.toDouble())
             intent.putExtra("currentLongitude", SourceLong!!.toDouble())
+            intent.putExtra("spinnerbag", spnrbag)
+            intent.putExtra("spinnerTime", spnrtime)
+
         }
         startActivity(intent)
     }
 
     override fun onDestroy() {
-        sharedpreferences!!.edit().clear().commit()
+       // sharedpreferences!!.edit().clear().commit()
         super.onDestroy()
     }
 
@@ -304,10 +337,16 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
             intent.putExtra("Toolbar_Title", "Drop-off")
             intent.putExtra("currentLatitude", currentLatitude)
             intent.putExtra("currentLongitude", currentLongitude)
+            intent.putExtra("spinnerbag", spnrbag)
+            intent.putExtra("spinnerTime", spnrtime)
+
         } else {
             intent.putExtra("Toolbar_Title", "Drop-off")
             intent.putExtra("currentLatitude", DestinationLat!!.toDouble())
             intent.putExtra("currentLongitude", DestinationLong!!.toDouble())
+            intent.putExtra("spinnerbag", spnrbag)
+            intent.putExtra("spinnerTime", spnrtime)
+
         }
         startActivity(intent)
     }
@@ -337,16 +376,19 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
             DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
             Log.d("mMarkerPointsSize", "$SourceLat       $SourceLong")
             Log.d("mMarkerPointsSizeDestin", "$DestinationLat    $DestinationLong")
+
+
+
+
+
             googleMap.setOnMapClickListener { latLng ->
                 val markerOptions = MarkerOptions()
                 markerOptions.position(latLng)
                 if (extras != null) {
                     var street: String? = null
                     if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
-                        sharedpreferences!!.edit()
-                            .putString("SourceLat", latLng.latitude.toString()).commit()
-                        sharedpreferences!!.edit()
-                            .putString("SourceLong", latLng.longitude.toString()).commit()
+                        sharedpreferences!!.edit().putString("SourceLat", latLng.latitude.toString()).commit()
+                        sharedpreferences!!.edit().putString("SourceLong", latLng.longitude.toString()).commit()
                         SourceLat = latLng.latitude.toString()
                         SourceLong = latLng.longitude.toString()
                         val geocoder =
@@ -369,6 +411,8 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                             }
                         } catch (e: IOException) {
                         }
+                        sharedpreferences!!.edit().putString("fromLocation",street).commit()
+
                         myCurrentLocation!!.text = street
                         sourecemarker!!.remove()
                         markerOptions.title(street)
@@ -388,11 +432,11 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                                 )
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
                         )
-                    } else {
-                        sharedpreferences!!.edit()
-                            .putString("DestinationLat", latLng.latitude.toString()).commit()
-                        sharedpreferences!!.edit()
-                            .putString("DestinationLong", latLng.longitude.toString()).commit()
+                    }
+                    else
+                    {
+                        sharedpreferences!!.edit().putString("DestinationLat", latLng.latitude.toString()).commit()
+                        sharedpreferences!!.edit().putString("DestinationLong", latLng.longitude.toString()).commit()
                         DestinationLat = latLng.latitude.toString()
                         DestinationLong = latLng.longitude.toString()
                         val geocoder =
@@ -415,6 +459,9 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                             }
                         } catch (e: IOException) {
                         }
+
+                        sharedpreferences!!.edit().putString("destiNationLocation",street).commit()
+
                         myDropUpLocation!!.text = street
                         destmarker!!.remove()
                         markerOptions.title(street)
@@ -435,7 +482,9 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
                         )
                     }
-                } else {
+                }
+
+                else {
                     var streetAddress: String? = null
                     sharedpreferences!!.edit().putString("SourceLat", latLng.latitude.toString()).commit()
                     sharedpreferences!!.edit().putString("SourceLong", latLng.longitude.toString()).commit()
@@ -461,6 +510,7 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                         }
                     } catch (e: IOException) {
                     }
+                    sharedpreferences!!.edit().putString("fromLocation",streetAddress).commit()
                     myCurrentLocation!!.text = streetAddress
                     sourecemarker!!.remove()
                     markerOptions.title(streetAddress)
@@ -475,6 +525,9 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                         ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
                     )
                 }
+
+
+
                 if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
                     drawRoute()
                 }
@@ -483,39 +536,22 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
 
             if (extras != null) {
                 if (!SourceLat!!.isEmpty()) {
+
                     val geocoder =
                         Geocoder(this@HomeActivity, Locale.getDefault())
                     try {
-                        val addresses =
-                            geocoder.getFromLocation(
-                                SourceLat!!.toDouble(),
-                                SourceLong!!.toDouble(),
-                                5
-                            )
+                        val addresses = geocoder.getFromLocation(SourceLat!!.toDouble(), SourceLong!!.toDouble(), 1)
                         streetAddress = if (addresses!!.size > 0 && addresses != null) {
                             addresses[0].getAddressLine(0)
-                        } else {
-                            ""
-                        }
+                        } else { "" }
                     } catch (e: IOException) {
                     }
-                    myCurrentLocation!!.text = streetAddress
+
+                    myCurrentLocation!!.text = sharedpreferences!!.getString("fromLocation", "")
                     mMap!!.animateCamera(
-                        CameraUpdateFactory.newLatLngZoom(
-                            LatLng(
-                                SourceLat!!.toDouble(),
-                                SourceLong!!.toDouble()
-                            ), 13.0f
-                        )
-                    )
+                        CameraUpdateFactory.newLatLngZoom(LatLng(SourceLat!!.toDouble(), SourceLong!!.toDouble()), 13.0f))
                     sourecemarker = mMap!!.addMarker(
-                        MarkerOptions().position(
-                            LatLng(
-                                SourceLat!!.toDouble(),
-                                SourceLong!!.toDouble()
-                            )
-                        ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-                    )
+                        MarkerOptions().position(LatLng(SourceLat!!.toDouble(), SourceLong!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
                 }
                 if (!DestinationLat!!.isEmpty()) {
                     val returnedAddress: Address? = null
@@ -526,7 +562,7 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                             geocoder.getFromLocation(
                                 DestinationLat!!.toDouble(),
                                 DestinationLong!!.toDouble(),
-                                5
+                                1
                             )
                         streetAddress = if (addresses!!.size > 0 && addresses != null) {
                             addresses[0].getAddressLine(0)
@@ -535,7 +571,10 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                         }
                     } catch (e: IOException) {
                     }
-                    myDropUpLocation!!.text = streetAddress
+
+                        myDropUpLocation!!.text = sharedpreferences!!.getString("destiNationLocation", "")
+
+
                     destmarker = mMap!!.addMarker(
                         MarkerOptions().position(
                             LatLng(
@@ -547,8 +586,6 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                 }
                 if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
                     reestimateDateandTime!!.visibility = View.VISIBLE
-                    add!!.visibility = View.GONE
-                    btnCompareRide!!.visibility = View.VISIBLE
                     drawRoute()
                 }
             } else {
@@ -557,7 +594,7 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                     val addresses =
                         geocoder.getFromLocation(
                             currentLatitude,
-                            currentLongitude, 5
+                            currentLongitude, 1
                         )
                     streetAddress = if (addresses!!.size > 0 && addresses != null) {
                         addresses[0].getAddressLine(0)
@@ -572,6 +609,8 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                     sharedpreferences!!.edit().putString("SourceLat", currentLatitude.toString()).commit()
                     sharedpreferences!!.edit().putString("SourceLong", currentLongitude.toString()).commit()
                 }
+
+                sharedpreferences!!.edit().putString("fromLocation",streetAddress).commit()
                 myCurrentLocation?.text = streetAddress
                 mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(currentLatitude, currentLongitude), 13.0f))
                 sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(currentLatitude, currentLongitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
@@ -582,19 +621,27 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
 
     @OnClick(R.id.btnCompareRide)
     fun btnCompare() {
-        val distance = tvEstDistance!!.text.toString()
-        val estTine = tvEstTime!!.text.toString()
-        val intent = Intent(applicationContext, CompareRideActivity::class.java)
-        intent.putExtra("SourceLat", SourceLat)
-        intent.putExtra("SourceLong", SourceLong)
-        intent.putExtra("DestinationLat", DestinationLat)
-        intent.putExtra("DestinationLong", DestinationLong)
-        intent.putExtra("Distance", estDistance)
-        intent.putExtra("EstTime", estTime)
-        intent.putExtra("Liggage", spinnerLuggagetxt)
-        intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
-        intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
-        startActivity(intent)
+        if (estDistance!!.contains("km")) {
+            val distance = tvEstDistance!!.text.toString()
+            val estTine = tvEstTime!!.text.toString()
+            val intent = Intent(applicationContext, CompareRideActivity::class.java)
+            intent.putExtra("SourceLat", SourceLat)
+            intent.putExtra("SourceLong", SourceLong)
+            intent.putExtra("DestinationLat", DestinationLat)
+            intent.putExtra("DestinationLong", DestinationLong)
+            intent.putExtra("Distance", estDistance)
+            intent.putExtra("EstTime", estTime)
+            intent.putExtra("Liggage", spinnerLuggagetxt)
+            intent.putExtra("TimeSpinner", spinnertxt)
+            intent.putExtra("Airport", extras!!.getString("keyAirport"))
+            intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
+            intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
+            intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
+
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Pick-UP and Drop-Off Location should not be same.", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun drawRoute() {
@@ -800,6 +847,10 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
                 }
                 tvEstDistance!!.text = "Est.Distance $estDistance"
                 tvEstTime!!.text = "Est.Time $estTime"
+                if(!estDistance!!.isEmpty()) {
+                    btnCompareRide!!.visibility = View.VISIBLE
+                }
+
                 lineOptions.addAll(points)
                 lineOptions.width(8f)
                 //  lineOptions.color(Color.GREEN);
@@ -817,5 +868,24 @@ class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
             } else Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
                 .show()
         }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        if (parent!!.id == R.id.spinner_Luggage) {
+            spnrbag = position
+            spinnerLuggagetxt = spinner_Luggage!!.selectedItem.toString()
+        } else {
+            spnrtime = position
+            spinnertxt = spinner_time!!.selectedItem.toString()
+            if (spinnertxt == "Later") {
+                rlRideScheduled!!.visibility = View.VISIBLE
+            } else {
+                rlRideScheduled!!.visibility = View.GONE
+            }
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package com.example.fairfare.ui.home
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +14,9 @@ import butterknife.ButterKnife
 import com.example.fairfare.R
 import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO.LocationsItem
 
-class RecyclerViewAdapter(
-    var context: Context,
-    private val LocatoinList: List<LocationsItem>
-) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+class RecyclerViewAdapter(var context: Context, private val LocatoinList: List<LocationsItem>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
     private var iclickListener: IClickListener? = null
+    var fClick ="1"
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
         val v = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.place_recycler_item_layout, viewGroup, false)
@@ -55,10 +54,14 @@ class RecyclerViewAdapter(
         var iv_fav: ImageView? = null
         override fun onClick(v: View) {
             if (v.id == R.id.iv_fav) {
-                iclickListener!!.favClick(LocatoinList[adapterPosition].id)
+                if(fClick=="1") {
+                    iclickListener!!.favClick(LocatoinList[adapterPosition].id)
+                    fClick = "2"
+                }
+
             }
             if (v.id == R.id.place_item) {
-                iclickListener!!.seveRecent(LocatoinList[adapterPosition].placeId)
+                iclickListener!!.seveRecent(LocatoinList[adapterPosition].placeId,LocatoinList[adapterPosition].fullAddress)
             }
         }
 
@@ -74,7 +77,7 @@ class RecyclerViewAdapter(
     }
 
     interface IClickListener {
-        fun seveRecent(placeID: String?)
+        fun seveRecent(placeID: String?,fulladdress:String?)
         fun favClick(id: Int)
     }
 

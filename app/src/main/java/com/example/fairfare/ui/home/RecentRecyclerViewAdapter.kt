@@ -53,7 +53,7 @@ class RecentRecyclerViewAdapter(
         var place_area: TextView? = null
         override fun onClick(v: View) {
             if (v.id == R.id.place_item) {
-                iclickListener!!.seveRecent(LocatoinList[adapterPosition].placeId)
+                iclickListener!!.seveRecent(LocatoinList[adapterPosition].placeId,LocatoinList[adapterPosition].fullAddress)
             }
         }
 

@@ -301,10 +301,8 @@ class LoginActivity : BaseLocationClass(),
 
                                                         }
                                                     });
-                    */iLoginPresenter!!.socialLogin(
-                        "Android", "FBK", fbFirstName,
-                        facebook_uid, token, fbEmail
-                    )
+                    */
+                        iLoginPresenter!!.socialLogin("Android", "FBK", fbFirstName, facebook_uid, token, fbEmail)
                     }
                 val parameters = Bundle()
                 parameters.putString(
@@ -475,16 +473,13 @@ class LoginActivity : BaseLocationClass(),
             val client = OkHttpClient()
             val requestBody = FormEncodingBuilder()
                 .add("grant_type", "authorization_code")
-                .add(
-                    "client_id",
-                    "254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com"
-                )
+                .add("client_id", "254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
                 .add("client_secret", "-ZAJiv8WoSGTb5pHPl_kdtSA")
                 .add("redirect_uri", "")
                 .add("code", acct.serverAuthCode)
                 .build()
             val request = Request.Builder()
-                .url("https://www.oogleapis.com/oauth2/v4/token")
+                .url("https://www.googleapis.com/oauth2/v4/token")
                 .post(requestBody)
                 .build()
             client.newCall(request).enqueue(object : com.squareup.okhttp.Callback {
@@ -568,7 +563,7 @@ class LoginActivity : BaseLocationClass(),
 
                         //  Toast.makeText(LoginActivity.this, loginResponsepojo.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                } else if (response.code() == 400) {
+                } else if (response.code() == 400 || response.code()==422 ) {
                     val gson = GsonBuilder().create()
                     var pojo = ValidationResponse()
                     try {
@@ -647,7 +642,7 @@ class LoginActivity : BaseLocationClass(),
 
                         // Toast.makeText(LoginActivity.this, loginResponsepojo.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                } else if (response.code() == 400) {
+                } else if (response.code() == 400 || response.code()==422) {
                     val gson = GsonBuilder().create()
                     var pojo = ValidationResponse()
                     try {
@@ -732,7 +727,20 @@ class LoginActivity : BaseLocationClass(),
         }
     }
 
-    override fun validationError(validationResponse: ValidationResponse?) {}
+    override fun validationError(pojo: ValidationResponse?) {
+
+
+
+
+                    Toast.makeText(
+                        this@LoginActivity,
+                        pojo!!.errors!![0].message,
+                        Toast.LENGTH_LONG
+                    ).show()
+
+
+
+    }
     override fun socialLoginSuccess(loginResponsepojo: LoginResponsepojo?) {
         if (loginResponsepojo!!.redirectTo.equals("Register", ignoreCase = true)) {
             val intent = Intent(applicationContext, RegisterActivity::class.java)

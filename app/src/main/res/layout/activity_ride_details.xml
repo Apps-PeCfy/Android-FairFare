@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_rideDetails"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:background="@drawable/app_gradient"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/_10sdp"
+        android:theme="@style/BaseTheme"
+        app:buttonGravity="center_vertical"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+
+
+    <ScrollView
+        android:id="@+id/homeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_rideDetails">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@color/White"
+            android:paddingBottom="@dimen/_15sdp">
+
+
+            <TextView
+                android:id="@+id/tv_vehicalDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:drawableEnd="@drawable/iv_scanner"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="Vehical Details"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edt_vehicalNO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_vehicalDetails"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableEnd="@drawable/iv_photo"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:clickable="false"
+                android:hint="Enter Vehical Number"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_15sdp" />
+
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edt_meterReading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_vehicalNO"
+                android:drawableEnd="@drawable/iv_photo"
+                android:hint="Start Meter Reading"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_15sdp" />
+
+            <TextView
+                android:id="@+id/tv_driverDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_meterReading"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Driver Details"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edt_DriverName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_driverDetails"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableEnd="@drawable/iv_photo"
+                android:hint="Enter Driver Name"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_15sdp" />
+
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edt_bagsCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_DriverName"
+                android:hint="Enter Badge"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_15sdp" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_bagsCount"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Photos"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/tv_uploadPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:drawableStart="@drawable/iv_uploadphoto"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:text="UPLOAD PHOTO"
+                    android:textColor="@color/gradientstartcolor"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/llno1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_photo"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:weightSum="2">
+
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/iv1"
+                    android:layout_width="@dimen/_140sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_auto" />
+
+
+                <ImageView
+                    android:layout_alignEnd="@+id/iv1"
+                    android:background="@drawable/ic_closephoto"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp">
+                </ImageView>
+
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_below="@+id/llno1"
+                android:id="@+id/llno2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:weightSum="2">
+
+
+                <ImageView
+                    android:id="@+id/iv2"
+                    android:layout_width="@dimen/_140sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    />
+
+
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/_140sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    />
+
+
+
+            </RelativeLayout>
+
+
+
+            <Button
+                android:id="@+id/btnTrackRide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llno2"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/shape_roundedbtn"
+                android:fontFamily="@font/notosansjp_regular"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="Track Rides"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_14sdp" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
+
+

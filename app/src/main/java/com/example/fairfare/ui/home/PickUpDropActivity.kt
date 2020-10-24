@@ -23,7 +23,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.fairfare.R
 import com.example.fairfare.networking.ApiClient.client
-import com.example.fairfare.ui.home.PickUpDropActivity
 import com.example.fairfare.ui.home.PlacesAutoCompleteAdapter.ClickListener
 import com.example.fairfare.ui.home.RecyclerViewAdapter.IClickListener
 import com.example.fairfare.ui.home.pojo.DeleteSaveDataResponsePOJO
@@ -127,6 +126,8 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     var sharedpreferences: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
     var token: String? = null
+    var locateOnMapAddress: String? = null
+    var keyAirport: String? = null
     var preferencesManager: PreferencesManager? = null
     private var mAutoCompleteAdapter: PlacesAutoCompleteAdapter? = null
     private var savedLocationList: List<LocationsItem> = ArrayList()
@@ -357,10 +358,10 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             ) {
                 if (response.code() == 200) {
                     savedLocationList = response.body()!!.data!!.locations!!
-                    recyclerViewAdapter =
-                        RecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
+                    recyclerViewAdapter = RecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
                     recycler_view_saved!!.adapter = recyclerViewAdapter
                     recyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+
                 } else {
                     Toast.makeText(
                         this@PickUpDropActivity,
@@ -464,7 +465,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     Toast.makeText(
                         this@PickUpDropActivity,
                         "Location saved successfully !!",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 } else {
                     Toast.makeText(
@@ -485,7 +486,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     }
 
     override fun onDestroy() {
-        sharedpreferences!!.edit().clear().commit()
+      //  sharedpreferences!!.edit().clear().commit()
         super.onDestroy()
     }
 
@@ -496,17 +497,13 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             sharedpreferences!!.edit().remove("SourceLong")
             editor!!.putString(SourceLat, currentLatitude.toString())
             editor!!.putString(SourceLong, currentLongitude.toString())
+            editor!!.putString(fromLocation,locateOnMapAddress)
         } else {
             sharedpreferences!!.edit().remove("DestinationLat")
             sharedpreferences!!.edit().remove("DestinationLong")
-            editor!!.putString(
-                DestinationLat,
-                currentLatitude.toString()
-            )
-            editor!!.putString(
-                DestinationLong,
-                currentLongitude.toString()
-            )
+            editor!!.putString(DestinationLat, currentLatitude.toString())
+            editor!!.putString(DestinationLong, currentLongitude.toString())
+            editor!!.putString(destiNationLocation,locateOnMapAddress)
         }
         editor!!.commit()
         editor!!.apply()
@@ -514,6 +511,9 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         intent.putExtra("Toolbar_Title", extras!!.getString("Toolbar_Title"))
         intent.putExtra("currentLatitude", currentLatitude)
         intent.putExtra("currentLongitude", currentLongitude)
+        intent.putExtra("spnbg", extras!!.getInt("spinnerbag"))
+        intent.putExtra("spnTime", extras!!.getInt("spinnerTime"))
+
         startActivity(intent)
     }
 
@@ -591,6 +591,8 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             currentLatitude = latLng.latitude
             currentLongitude = latLng.longitude
             var street: String? = null
+
+
             val geocoder =
                 Geocoder(this@PickUpDropActivity, Locale.getDefault())
             try {
@@ -606,25 +608,29 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 }
             } catch (e: IOException) {
             }
+
+            locateOnMapAddress = street
             tvAddress!!.text = street
             markerOptions.title(street)
             googleMap.clear()
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0f))
-            mMap!!.addMarker(
-                MarkerOptions().position(
-                    LatLng(
-                        latLng.latitude,
-                        latLng.longitude
-                    )
-                ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-            )
+            mMap!!.addMarker(MarkerOptions().position(LatLng(latLng.latitude, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
 
-            //  googleMap.addMarker(markerOptions);
         }
     }
 
-    override fun click(place: Place?) {
+    override fun click(place: Place?,selectedAddress:String) {
+        if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
+            if((place!!.types!!.get(0).name)=="AIRPORT") {
+                preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT, "AIRPORT")
+            }else{
+                preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT, place!!.types!!.get(0).name)
+            }
+
+            keyAirport = place!!.types!!.get(0).name
+        }
+
         currentLatitude = place!!.latLng!!.latitude
         currentLongitude = place!!.latLng!!.longitude
         if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
@@ -632,17 +638,14 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             sharedpreferences!!.edit().remove("SourceLong")
             editor!!.putString(SourceLat, currentLatitude.toString())
             editor!!.putString(SourceLong, currentLongitude.toString())
+            editor!!.putString(fromLocation,selectedAddress)
+
         } else {
             sharedpreferences!!.edit().remove("DestinationLat")
             sharedpreferences!!.edit().remove("DestinationLong")
-            editor!!.putString(
-                DestinationLat,
-                currentLatitude.toString()
-            )
-            editor!!.putString(
-                DestinationLong,
-                currentLongitude.toString()
-            )
+            editor!!.putString(DestinationLat, currentLatitude.toString())
+            editor!!.putString(DestinationLong, currentLongitude.toString())
+            editor!!.putString(destiNationLocation,selectedAddress)
         }
         editor!!.commit()
         editor!!.apply()
@@ -652,6 +655,14 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         intent.putExtra("Toolbar_Title", extras!!.getString("Toolbar_Title"))
         intent.putExtra("currentLatitude", currentLatitude)
         intent.putExtra("currentLongitude", currentLongitude)
+        intent.putExtra("keyAirport", keyAirport)
+        intent.putExtra("spnbg", extras!!.getInt("spinnerbag"))
+        intent.putExtra("spnTime", extras!!.getInt("spinnerTime"))
+        intent.putExtra("splacedi", selectedAddress)
+
+
+
+
         startActivity(intent)
     }
 
@@ -659,7 +670,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         Toast.makeText(this, "Added in fav" + place!!.id, Toast.LENGTH_LONG).show()
     }
 
-    override fun seveRecent(placeID: String?) {
+    override fun seveRecent(placeID: String?,selectedadd:String?) {
         val placeFields =
             Arrays.asList(
                 Place.Field.LAT_LNG,
@@ -673,25 +684,16 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
                     sharedpreferences!!.edit().remove("SourceLat")
                     sharedpreferences!!.edit().remove("SourceLong")
-                    editor!!.putString(
-                        SourceLat,
-                        place.latLng!!.latitude.toString()
-                    )
-                    editor!!.putString(
-                        SourceLong,
-                        place.latLng!!.longitude.toString()
-                    )
+                    editor!!.putString(SourceLat, place.latLng!!.latitude.toString())
+                    editor!!.putString(SourceLong, place.latLng!!.longitude.toString())
+                    editor!!.putString(fromLocation,selectedadd)
+
                 } else {
                     sharedpreferences!!.edit().remove("DestinationLat")
                     sharedpreferences!!.edit().remove("DestinationLong")
-                    editor!!.putString(
-                        DestinationLat,
-                        place.latLng!!.latitude.toString()
-                    )
-                    editor!!.putString(
-                        DestinationLong,
-                        place.latLng!!.longitude.toString()
-                    )
+                    editor!!.putString(DestinationLat, place.latLng!!.latitude.toString())
+                    editor!!.putString(DestinationLong, place.latLng!!.longitude.toString())
+                    editor!!.putString(destiNationLocation,selectedadd)
                 }
                 editor!!.commit()
                 editor!!.apply()
@@ -699,6 +701,9 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 intent.putExtra("Toolbar_Title", extras!!.getString("Toolbar_Title"))
                 intent.putExtra("currentLatitude", place.latLng!!.latitude)
                 intent.putExtra("currentLongitude", place.latLng!!.longitude)
+                intent.putExtra("spnbg", extras!!.getInt("spinnerbag"))
+                intent.putExtra("spnTime", extras!!.getInt("spinnerTime"))
+
                 startActivity(intent)
 
                 // mapCalled(mMap);
@@ -715,34 +720,30 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     }
 
     override fun favClick(fullAddress: Int) {
-        val tokenLogin =
-            preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-        client.deleteRecentLocation(
-            "Bearer $tokenLogin",
-            fullAddress.toString() + ""
-        )!!.enqueue(object : Callback<DeleteSaveDataResponsePOJO?> {
-            override fun onResponse(
-                call: Call<DeleteSaveDataResponsePOJO?>,
-                response: Response<DeleteSaveDataResponsePOJO?>
-            ) {
-                if (response.code() == 200) {
-                    Toast.makeText(
-                        this@PickUpDropActivity,
-                        "Location deleted successfully !!",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    client.getSavedLocation("Bearer $tokenLogin")!!.enqueue(object :
+
+        val tokenLogin = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+        client.deleteRecentLocation("Bearer $tokenLogin", fullAddress.toString() + "")!!.enqueue(object : Callback<DeleteSaveDataResponsePOJO?> {
+            override fun onResponse(call: Call<DeleteSaveDataResponsePOJO?>, response: Response<DeleteSaveDataResponsePOJO?>) {
+                if (response.code() == 200)
+                {
+                    Toast.makeText(this@PickUpDropActivity, "Location deleted successfully !!", Toast.LENGTH_SHORT).show()
+
+                    client.getSavedLocation("Bearer $token")!!.enqueue(object :
                         Callback<GetSaveLocationResponsePOJO?> {
-                        override fun onResponse(
-                            call: Call<GetSaveLocationResponsePOJO?>,
-                            response: Response<GetSaveLocationResponsePOJO?>
-                        ) {
+                        override fun onResponse(call: Call<GetSaveLocationResponsePOJO?>, response: Response<GetSaveLocationResponsePOJO?>) {
                             if (response.code() == 200) {
+
+
                                 savedLocationList = response.body()!!.data!!.locations!!
-                                recyclerViewAdapter =
-                                    RecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
-                                recyclerView!!.adapter = recyclerViewAdapter
+                                recyclerViewAdapter = RecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
+                                recycler_view_saved!!.adapter = recyclerViewAdapter
                                 recyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+
+
+                               /* savedLocationList = response.body()!!.data!!.locations!!
+                                recyclerViewAdapter = RecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
+                                recyclerView!!.adapter = recyclerViewAdapter
+                                recyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)*/
                             } else {
                                 Toast.makeText(
                                     this@PickUpDropActivity,
@@ -775,6 +776,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 Log.d("response", t.stackTrace.toString())
             }
         })
+
     }
 
     companion object {
@@ -783,5 +785,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         const val SourceLong = "SourceLong"
         const val DestinationLat = "DestinationLat"
         const val DestinationLong = "DestinationLong"
+        const val fromLocation = "fromLocation"
+        const val destiNationLocation = "destiNationLocation"
     }
 }

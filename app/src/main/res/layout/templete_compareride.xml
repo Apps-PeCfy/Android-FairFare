@@ -85,6 +85,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tv_preson"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -95,6 +96,7 @@
                     android:gravity="end" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -121,7 +123,7 @@
                 android:id="@+id/tv_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs 250" />
+                android:text="₹ 250" />
 
             <TextView
                 android:id="@+id/tv_time"

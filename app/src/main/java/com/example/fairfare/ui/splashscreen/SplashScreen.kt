@@ -1,7 +1,9 @@
 package com.example.fairfare.ui.splashscreen
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +18,15 @@ import com.example.fairfare.utils.ProjectUtilities
 class SplashScreen : AppCompatActivity() {
     var isLogin: String? = null
     var mPreferencesManager: PreferencesManager? = null
+    var sharedpreferences: SharedPreferences? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         PreferencesManager.initializeInstance(this@SplashScreen)
         mPreferencesManager = PreferencesManager.instance
+        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+        sharedpreferences!!.edit().clear().commit()
+        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT,"LOCALITY")
         isLogin = mPreferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_ISLOGIN)
         val h = Handler()
         h.postDelayed({

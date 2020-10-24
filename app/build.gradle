@@ -20,7 +20,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-       // buildConfigField 'String', 'API_URL', '"http://64.225.85.233/api/"'
+        // buildConfigField 'String', 'API_URL', '"http://64.225.85.233/api/"'
         buildConfigField 'String', 'API_URL', '"https://dev.fairfareindia.com/api/"'
     }
     buildTypes {
