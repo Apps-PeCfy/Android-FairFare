@@ -19,7 +19,7 @@
             app:buttonGravity="center_vertical"
             app:navigationIcon="?attr/homeAsUpIndicator">
 
-            <TextView
+         <!--   <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosansjp_bold"
@@ -27,7 +27,7 @@
                 android:text="Get Fair Fare"
                 android:textColor="@color/White"
                 android:textSize="@dimen/_18sdp" />
-        </androidx.appcompat.widget.Toolbar>
+        --></androidx.appcompat.widget.Toolbar>
 
 
         <RelativeLayout
@@ -38,6 +38,8 @@
 
 
             <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/homeMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/add"
@@ -49,6 +51,7 @@
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
                     android:layout_above="@+id/homeView"
                     tools:context=".ui.location.MyLocationActivity" />
 
@@ -139,7 +142,7 @@
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_5sdp"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
 
                         <TextView
@@ -302,105 +305,96 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_home"
+
+            >
+
+            <FrameLayout
+                android:id="@+id/container_framelayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 
 
     <LinearLayout
+        android:layout_gravity="start"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
         android:background="@android:color/white"
         android:orientation="vertical">
 
 
         <RelativeLayout
+            android:paddingStart="@dimen/_30sdp"
+            android:gravity="center_vertical"
             android:id="@+id/topLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_135sdp"
-            android:background="@color/White">
+            android:layout_height="@dimen/_150sdp"
+            android:background="@drawable/app_gradient">
 
-            <RelativeLayout
+
+
+            <com.example.fairfare.utils.RoundedImageView
                 android:id="@+id/logoLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:padding="@dimen/_5sdp">
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_user"
+                app:riv_corner_radius="@dimen/_60sdp"
+                app:riv_oval="false" />
 
-                <ImageView
-                    android:layout_width="@dimen/_120sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:src="@mipmap/ic_launcher" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_2sdp"
-                android:layout_below="@id/logoLayout"
-                android:background="#e6e6e6" />
-
-
-            <RelativeLayout
-                android:id="@+id/userprofilepicview"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@id/logoLayout"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_horizontal">
-
-
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/logoLayout"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_toEndOf="@+id/userprofilepicview"
-                android:layout_toRightOf="@+id/userprofilepicview">
+                android:layout_marginTop="@dimen/_10sdp">
 
                 <TextView
                     android:id="@+id/tvUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Carolyn Carpente"
-                    android:textColor="@color/Black"
+                    android:text="Prashant"
+                    android:textColor="@color/White"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvAddress"
+                    android:id="@+id/tvEmailAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvUserName"
                     android:gravity="center"
-                    android:text="Pune, India"
-                    android:textColor="@color/Black"
+                    android:text="prashantpp@gmail.com"
+                    android:textColor="@color/White"
                     android:textSize="@dimen/_10sdp" />
 
                 <LinearLayout
                     android:id="@+id/usertypelayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvAddress"
+                    android:layout_below="@+id/tvEmailAddress"
                     android:orientation="horizontal">
 
 
                     <TextView
-                        android:id="@+id/tvMembershipType"
+                        android:id="@+id/tvUserLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/White"
                         android:gravity="center"
-                        android:text="Paid"
+                        android:text="Mumbai"
                         android:textSize="@dimen/_10sdp" />
 
                     <TextView
@@ -410,52 +404,12 @@
                         android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:gravity="center"
-                        android:text="Gold User"
-                        android:textColor="@color/Black"
+                        android:text=""
+                        android:textColor="@color/White"
                         android:textSize="@dimen/_10sdp" />
                 </LinearLayout>
 
 
-                <RelativeLayout
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_below="@+id/usertypelayout"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:padding="@dimen/_5sdp">
-
-
-                    <RelativeLayout
-                        android:id="@+id/passionLayout"
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/app_gradient">
-
-                        <ImageView
-                            android:id="@+id/ivSelectPassion"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_centerInParent="true" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/intrestLayout"
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true">
-
-                        <ImageView
-                            android:id="@+id/ivSelectInterest"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_centerInParent="true" />
-
-                    </RelativeLayout>
-
-
-                </RelativeLayout>
 
 
             </RelativeLayout>
@@ -465,26 +419,35 @@
 
 
         <ListView
+            android:paddingStart="@dimen/_30sdp"
+            android:paddingTop="@dimen/_10sdp"
             android:id="@+id/lvDrawer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:divider="@color/Red"
+            android:divider="@color/White"
             android:dividerHeight="1dp">
 
 
         </ListView>
 
-        <Button
+        <TextView
+            android:paddingStart="@dimen/_30sdp"
+
+            android:padding="@dimen/_5sdp"
+            android:textStyle="bold"
+            android:background="@color/White"
+            android:drawableStart="@drawable/logout"
             android:id="@+id/btnLogout"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/_10sdp"
+            android:gravity="center_vertical"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:text="Logout"
+            android:text="SIGN OUT"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
+            android:textColor="@color/gradientstartcolor"
             android:textSize="@dimen/_14sdp"
             android:visibility="visible" />
     </LinearLayout>

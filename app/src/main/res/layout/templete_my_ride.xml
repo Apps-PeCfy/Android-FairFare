@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/White"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp"
+        app:cardUseCompatPadding="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_10sdp">
+
+            <RelativeLayout
+                android:id="@+id/rlVehicalDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp">
+
+
+                <RelativeLayout
+                    android:id="@+id/vDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+
+
+
+                <ImageView
+                    android:id="@+id/iv_vehical"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitCenter" />
+
+
+                <LinearLayout
+                    android:id="@+id/vehicalDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_toEndOf="@+id/iv_vehical"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_dateandTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="Mon, Sept 3, 23:35 AM" />
+
+                    <TextView
+                        android:id="@+id/tv_vahicalName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_toRightOf="@+id/tv_Person"
+                        android:text="OLA MINI,MH12 3456A"
+                        android:textSize="@dimen/_9sdp" />
+
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_gravity="end"
+                        android:id="@+id/tv_actualFare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:text="Rs 245"
+                        android:textColor="@color/gradientstartcolor" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_toRightOf="@+id/tv_Person"
+                            android:text="Status:"
+                            android:textSize="@dimen/_9sdp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_toRightOf="@+id/tv_Person"
+                            android:text="Upcoming.."
+                            android:textColor="@color/gradientstartcolor"
+                            android:textSize="@dimen/_9sdp" />
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                </RelativeLayout>
+
+
+
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_75sdp"
+                    android:layout_below="@+id/vDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srb_drawBorderEnabled="true"
+                    app:srb_isIndicator="true"
+                    app:srb_borderColor="@color/gradientstartcolor"
+                    app:srb_fillColor="@color/gradientstartcolor"
+                    app:srb_pressedFillColor="@color/gradientstartcolor"
+                    app:srb_starSize="18dp" />
+
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/rlVehicalDetails"
+                android:background="@color/secondaryLightGray" />
+
+
+            <RelativeLayout
+                android:id="@+id/addressDetails"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_below="@+id/view"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/llOrigin"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_myCurrentLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:drawableStart="@drawable/red_circle"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:text="Santacruz -  sfs sfsff sfsfsfsschembur link road, Mumb" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_18sdp"
+                        android:text="10:45 AM"
+                        android:textSize="@dimen/_10sdp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDestination"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_below="@+id/llOrigin"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/destnationAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:paddingStart="@dimen/_19sdp"
+                        android:text="Santacruz dadad dad adada da - chembur link road, Mumb" />/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:drawableStart="@drawable/triangle"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:text="10:45 AM"
+                        android:textSize="@dimen/_10sdp" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/llDestination"
+                    android:layout_below="@+id/llOrigin"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginTop="-35dp"
+                    android:layout_marginBottom="-30dp"
+                    android:background="@color/secondaryLightGray" />
+
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnStartRide"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_below="@+id/addressDetails"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:background="@drawable/shape_roundedbtn"
+                android:text="Start Ride"
+                android:textColor="@color/White" />
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

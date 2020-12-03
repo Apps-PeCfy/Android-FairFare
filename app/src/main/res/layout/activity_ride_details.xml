@@ -18,6 +18,20 @@
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
 
+
+    <fragment
+
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_below="@+id/toolbar_rideDetails"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_above="@+id/llshowData"
+        tools:context=".ui.location.MyLocationActivity" />
+
+
+
     <ScrollView
         android:id="@+id/homeView"
         android:layout_width="match_parent"
@@ -28,9 +42,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
             android:background="@color/White"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingEnd="@dimen/_15sdp"
             android:paddingBottom="@dimen/_15sdp">
 
 
@@ -39,9 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:drawableEnd="@drawable/iv_scanner"
                 android:paddingEnd="@dimen/_10sdp"
-                android:text="Vehical Details"
+                android:text="Vehicle Details"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="bold" />
@@ -53,22 +66,21 @@
                 android:layout_below="@+id/tv_vehicalDetails"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableEnd="@drawable/iv_photo"
-                android:focusable="false"
                 android:focusableInTouchMode="true"
-                android:clickable="false"
-                android:hint="Enter Vehical Number"
+                android:hint="Enter Vehicle Number"
                 android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_15sdp" />
+                android:paddingBottom="@dimen/_15sdp"
+                />
 
 
             <EditText
-                android:focusable="false"
                 android:id="@+id/edt_meterReading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edt_vehicalNO"
                 android:drawableEnd="@drawable/iv_photo"
                 android:hint="Start Meter Reading"
+                android:inputType="phone"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp" />
 
@@ -85,7 +97,6 @@
 
 
             <EditText
-                android:focusable="false"
                 android:id="@+id/edt_DriverName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,17 +104,17 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableEnd="@drawable/iv_photo"
                 android:hint="Enter Driver Name"
+                android:inputType="text"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp" />
 
 
             <EditText
-                android:focusable="false"
                 android:id="@+id/edt_bagsCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edt_DriverName"
-                android:hint="Enter Badge"
+                android:hint="Enter Driver’s Badge Number"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp" />
 
@@ -140,43 +151,60 @@
             </RelativeLayout>
 
 
+            <!--    <RelativeLayout
+                    android:id="@+id/llno1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_photo"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:weightSum="2">
+
+
+                    <ImageView
+                        android:scaleType="fitXY"
+                        android:id="@+id/iv1"
+                        android:layout_width="@dimen/_140sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_auto" />
+
+
+                    <ImageView
+                        android:layout_alignEnd="@+id/iv1"
+                        android:background="@drawable/ic_closephoto"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp">
+                    </ImageView>
+
+
+
+
+                </RelativeLayout>
+    -->
+
             <RelativeLayout
                 android:id="@+id/llno1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl_photo"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:weightSum="2">
+                android:layout_marginTop="@dimen/_5sdp">
 
-
-                <ImageView
-                    android:scaleType="fitXY"
-                    android:id="@+id/iv1"
-                    android:layout_width="@dimen/_140sdp"
-                    android:layout_height="@dimen/_100sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_auto" />
-
-
-                <ImageView
-                    android:layout_alignEnd="@+id/iv1"
-                    android:background="@drawable/ic_closephoto"
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp">
-                </ImageView>
-
-
-
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/selected_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_below="@+id/llno1"
                 android:id="@+id/llno2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/llno1"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="gone"
                 android:weightSum="2">
 
 
@@ -185,22 +213,18 @@
                     android:layout_width="@dimen/_140sdp"
                     android:layout_height="@dimen/_100sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
 
 
                 <ImageView
-                    android:layout_alignParentEnd="true"
                     android:layout_width="@dimen/_140sdp"
                     android:layout_height="@dimen/_100sdp"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    />
-
+                    android:layout_weight="1" />
 
 
             </RelativeLayout>
-
 
 
             <Button

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_15sdp">
+
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:textStyle="bold"
+        android:text="Your Pickup location has changed. Your ride will be calibrated onthe new route as below:"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="@dimen/_15sdp" />
+
+    <TextView
+        android:id="@+id/tvCalculatedDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="New Calculated Distance :"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/tvCalculatedDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="New Calculated Duration :"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/_12sdp"
+
+        />
+
+    <TextView
+        android:id="@+id/tvCalculatedNewFare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="New Calculated Fare :"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/_12sdp" />
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:paddingStart="@dimen/_25sdp"
+        android:paddingEnd="@dimen/_25sdp">
+
+        <Button
+            android:id="@+id/btnProceed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Proceed" />
+
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Cancel" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

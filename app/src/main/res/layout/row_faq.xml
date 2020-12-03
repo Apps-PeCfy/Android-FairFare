@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/_15sdp"
+        android:padding="@dimen/_10sdp"
+        android:id="@+id/llmyaccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/ivExpand"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:text="Lorem Ipsum is simply "
+            android:textColor="@color/Black"
+            android:textStyle="bold"
+            android:textSize="@dimen/_12sdp" />
+
+        <ImageView
+            android:id="@+id/ivExpand"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:padding="@dimen/_2sdp"
+            android:src="@drawable/rightarrow" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tvSubQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:text="Answae "
+        android:textColor="@color/Black"
+        android:textSize="@dimen/_11sdp"
+        android:visibility="gone" />
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+</LinearLayout>

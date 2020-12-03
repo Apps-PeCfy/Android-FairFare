@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_rideDetails"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:background="@drawable/app_gradient"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/_10sdp"
+        android:theme="@style/BaseTheme"
+        app:buttonGravity="center_vertical"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+
+
+    <ScrollView
+        android:id="@+id/homeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_rideDetails">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@color/White"
+            android:paddingBottom="@dimen/_15sdp">
+
+
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/rlvahical"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/rounded_corner_charges"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp">
+
+                <LinearLayout
+
+                    android:id="@+id/llCar"
+                    android:layout_width="@dimen/_55sdp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    >
+
+
+                    <ImageView
+                        android:id="@+id/iv_vehical"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/iv_auto"
+                        android:scaleType="fitCenter" />
+
+                    <TextView
+                        android:id="@+id/tv_carName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:gravity="center_horizontal"
+                        android:text="Car"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/llCar"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_vahicalNO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="MH 12 MS-3422" />
+
+
+                    <TextView
+                        android:id="@+id/tv_driverName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tv_Person"
+                        android:drawableStart="@drawable/iv_end_ride_person"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:text="Vivek Patil" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/tv_bagCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:drawableStart="@drawable/iv_bags"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:gravity="end"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="4 Bags" />
+
+
+                    <TextView
+                        android:id="@+id/tv_Datetime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/tv_Person"
+                        android:drawableStart="@drawable/ic_clock"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:gravity="end"
+                        android:text="Morning Peak" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:layout_below="@+id/rlvahical"
+                android:id="@+id/tv_vehicalDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="@string/register_disputes"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_10sdp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+
+                android:id="@+id/edt_vehicalNO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_vehicalDetails"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:focusableInTouchMode="true"
+                android:paddingEnd="@dimen/_30sdp"
+                />
+
+
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/edtDispute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_vehicalNO"
+                android:hint="Dispute"
+                android:inputType="phone"
+                android:paddingEnd="@dimen/_10sdp"
+                />
+
+
+
+            <EditText
+                android:id="@+id/edt_meterReading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtDispute"
+                android:drawableEnd="@drawable/iv_photo"
+                android:hint="Start Meter Reading"
+                android:inputType="text"
+                android:paddingEnd="@dimen/_10sdp"
+                />
+
+
+            <EditText
+                android:drawableEnd="@drawable/iv_photo"
+                android:id="@+id/edtEndMeterReading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_meterReading"
+                android:hint="End Meter Reading"
+                android:paddingEnd="@dimen/_10sdp"
+                />
+
+
+            <EditText
+                android:drawableEnd="@drawable/iv_photo"
+
+                android:id="@+id/edtTotalFareCharged"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtEndMeterReading"
+                android:hint="Total Fare Charged"
+                android:paddingEnd="@dimen/_10sdp"
+
+                />
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtTotalFareCharged"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Photos"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:padding="@dimen/_5sdp"
+                    android:id="@+id/tv_uploadPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:drawableStart="@drawable/iv_uploadphoto"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:text="UPLOAD PHOTO"
+                    android:textColor="@color/gradientstartcolor"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/llno1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_photo"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/selected_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+
+            </RelativeLayout>
+
+
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <Button
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:id="@+id/btnSaveDisputes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llno2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:background="@drawable/shape_roundedbtn"
+        android:fontFamily="@font/notosansjp_regular"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="Save Dispute"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_14sdp" />
+
+
+</RelativeLayout>
+
+

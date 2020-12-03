@@ -44,9 +44,9 @@
 
 
             <androidx.cardview.widget.CardView
-                android:layout_above="@+id/llshowData"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
+                android:layout_above="@+id/llshowData"
                 app:cardBackgroundColor="@color/White"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_8sdp"
@@ -138,10 +138,10 @@
                 </RelativeLayout>
 
                 <ScrollView
-                    android:visibility="visible"
                     android:id="@+id/homeView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_200sdp">
+                    android:layout_height="@dimen/_200sdp"
+                    android:visibility="visible">
 
 
                     <LinearLayout
@@ -254,13 +254,13 @@
                                         android:paddingBottom="@dimen/_5sdp">
 
                                         <TextView
-                                            android:visibility="gone"
                                             android:id="@+id/tv_Person"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:drawableStart="@drawable/iv_person"
                                             android:drawablePadding="@dimen/_3sdp"
-                                            android:text="4" />
+                                            android:text="4"
+                                            android:visibility="gone" />
 
 
                                         <TextView
@@ -284,13 +284,13 @@
 
 
                         <RelativeLayout
-                            android:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:paddingTop="@dimen/_8sdp"
-                            android:paddingBottom="@dimen/_8sdp">
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:visibility="visible">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -302,6 +302,8 @@
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:gravity="end"
+                                android:paddingEnd="@dimen/_5sdp"
                                 android:text="₹ 300" />
                         </RelativeLayout>
 
@@ -320,9 +322,6 @@
                             android:paddingTop="@dimen/_8sdp">
 
 
-
-
-
                             <RelativeLayout
                                 android:id="@+id/tv_additional"
                                 android:layout_width="wrap_content"
@@ -331,19 +330,18 @@
 
                                 <TextView
                                     android:id="@+id/tv_additionalCharges"
-                                    android:drawablePadding="@dimen/_15sdp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:drawablePadding="@dimen/_15sdp"
                                     android:text="Additional Charges" />
 
                                 <TextView
+                                    android:layout_width="@dimen/_11sdp"
+                                    android:layout_height="@dimen/_7sdp"
                                     android:layout_marginStart="@dimen/_7sdp"
                                     android:layout_marginTop="@dimen/_5sdp"
                                     android:layout_toEndOf="@+id/tv_additionalCharges"
-                                    android:layout_width="@dimen/_11sdp"
-                                    android:background="@drawable/ic_downarrow"
-                                    android:layout_height="@dimen/_7sdp"/>
-
+                                    android:background="@drawable/ic_downarrow" />
 
 
                             </RelativeLayout>
@@ -351,11 +349,13 @@
 
                             <TextView
                                 android:id="@+id/tv_additional_charges"
+
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:gravity="end"
+                                android:paddingEnd="@dimen/_5sdp"
                                 android:text="₹ 30" />
-
 
 
                         </RelativeLayout>
@@ -375,8 +375,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginEnd="@dimen/_10sdp">
+                                android:layout_marginStart="@dimen/_15sdp">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -387,11 +386,13 @@
 
                                 <TextView
                                     android:id="@+id/tv_Wait_time_charge"
+
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
-                                    android:gravity="start"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 0.00" />
 
@@ -411,8 +412,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginEnd="@dimen/_10sdp">
+                                android:layout_marginStart="@dimen/_15sdp">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -425,10 +425,11 @@
                                     android:id="@+id/tv_tollCharge"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_alignParentEnd="true"
-                                    android:gravity="start"
+                                    android:gravity="end"
+
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 300.00" />
 
@@ -449,8 +450,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginEnd="@dimen/_10sdp">
+                                android:layout_marginStart="@dimen/_15sdp">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -463,10 +463,11 @@
                                     android:id="@+id/tv_Luggage_Charges"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_alignParentEnd="true"
-                                    android:gravity="start"
+                                    android:gravity="end"
+
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 300" />
 
@@ -487,8 +488,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginEnd="@dimen/_10sdp">
+                                android:layout_marginStart="@dimen/_15sdp">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -501,10 +501,11 @@
                                     android:id="@+id/tv_SurCharges"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_alignParentEnd="true"
-                                    android:gravity="start"
+                                    android:gravity="end"
+
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 300" />
 
@@ -525,8 +526,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginEnd="@dimen/_10sdp">
+                                android:layout_marginStart="@dimen/_15sdp">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -539,10 +539,11 @@
                                     android:id="@+id/tv_NightCharges"
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_alignParentEnd="true"
-                                    android:gravity="start"
+                                    android:gravity="end"
+
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 0.00" />
 
@@ -554,7 +555,6 @@
                                     android:background="@color/secondaryLightGray" />
 
                             </RelativeLayout>
-
 
 
                         </LinearLayout>
@@ -582,8 +582,11 @@
 
                             <TextView
                                 android:layout_width="@dimen/_60sdp"
+
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:gravity="end"
+                                android:paddingEnd="@dimen/_5sdp"
                                 android:text="₹ 0.00" />
 
                             <TextView
@@ -623,6 +626,8 @@
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:gravity="end"
+                                android:paddingEnd="@dimen/_5sdp"
                                 android:text="₹ 300"
                                 android:textColor="@color/gradientstartcolor"
                                 android:textStyle="bold" />

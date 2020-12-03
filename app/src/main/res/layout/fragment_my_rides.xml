@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/White">
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="visible"
+            android:id="@+id/recycler_view_myRides"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_sort" />
+
+
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rlEmpty"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/ivImg"
+                android:background="@drawable/empty_disput"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"/>
+
+            <TextView
+                android:layout_marginTop="@dimen/_5sdp"
+                android:id="@+id/tvEmptyTxt"
+                android:layout_below="@+id/ivImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+

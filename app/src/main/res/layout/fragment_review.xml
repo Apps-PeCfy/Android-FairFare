@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llshowData"
+            android:layout_marginBottom="-30dp" />
+
+
+        <LinearLayout
+            android:id="@+id/llshowData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/top_corner"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingEnd="@dimen/_15sdp">
+
+            <RelativeLayout
+                android:id="@+id/tvhideShow"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_3sdp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/roundedcorner" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/review"
+                android:textColor="@color/Black" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@color/White"
+                android:layout_gravity="center"
+                android:padding="@dimen/_5sdp">
+
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srb_drawBorderEnabled="true"
+                    app:srb_borderColor="@color/gradientstartcolor"
+                    app:srb_fillColor="@color/gradientstartcolor"
+                    app:srb_pressedFillColor="@color/gradientstartcolor"
+
+                    app:srb_starSize="40dp" />
+
+
+                <TextView
+                    android:id="@+id/tvReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ratingBar"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Your Review"
+                    android:gravity="center"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <EditText
+
+
+                    android:id="@+id/editReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_below="@+id/tvReview"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/roundedcorner"
+                    android:gravity="top"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:hint="Enter your review"
+                    android:textSize="@dimen/_10sdp" />
+
+
+
+            </RelativeLayout>
+
+
+            <Button
+                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/btnCompareRide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/shape_roundedbtn"
+                android:fontFamily="@font/notosansjp_regular"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+
+                android:textSize="@dimen/_14sdp" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+
