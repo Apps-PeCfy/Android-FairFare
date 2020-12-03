@@ -25,6 +25,22 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+    <string name="drawer_covid">Covid-19</string>
+    <string name="drawer_my_account">My Account</string>
+    <string name="drawer_mylocation">My Locations</string>
+    <string name="drawer_myrides">My Rides</string>
+    <string name="drawer_mydisput">My Disputes</string>
+    <string name="drawer_mycomplents">My Complaints</string>
+    <string name="drawer_ratecard">Rate Card</string>
+    <string name="drawer_faq">FAQ\'s</string>
+    <string name="drawer_contactus">Contact Us</string>
+    <string name="drawer_privacypolicy">Privacy Policy</string>
+    <string name="drawer_setting">Settings</string>
+
+
+    <string name="register_disputes">If you are not satisfied with the overall ride experience and/or fare being charged, you can quickly register the dispute here for subsequent detailed complaint filing later.</string>
+    <string name="review">Your feedback is extremely important to us. Please provide your valuable feedback to serve you better. Thank you in advance!</string>
+
 
     <string-array name="tab_A">
         <item>Marol Naka,Andheri East,Mumbai"</item>
@@ -34,5 +50,7 @@
         <item>Marol Naka,Andheri East,Mumbai"</item>
 
     </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 
