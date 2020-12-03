@@ -4,12 +4,32 @@ package com.example.fairfare.networking
 
 import com.example.fairfare.ui.Login.pojo.LoginResponsepojo
 import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
+import com.example.fairfare.ui.disputs.pojo.DisputesReasonResponsePOJO
+import com.example.fairfare.ui.disputs.pojo.SaveDisputResponsePOJO
+import com.example.fairfare.ui.drawer.contactus.pojo.ContactUsResponsePojo
+import com.example.fairfare.ui.drawer.faq.pojo.FAQResponsePOJO
+import com.example.fairfare.ui.drawer.myaccount.pojo.UpdateProfileResponsePOJO
+import com.example.fairfare.ui.drawer.mydisput.disputDetail.pojo.DisputDetailResponsePOJO
+import com.example.fairfare.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
+import com.example.fairfare.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
+import com.example.fairfare.ui.drawer.myrides.pojo.GetRideResponsePOJO
+import com.example.fairfare.ui.drawer.privacypolicy.ContentResponsePOJO
+import com.example.fairfare.ui.drawer.ratecard.pojo.RateCardResponsePOJO
+import com.example.fairfare.ui.endrides.pojo.EndRideResponsePOJO
 import com.example.fairfare.ui.home.pojo.DeleteSaveDataResponsePOJO
 import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.ui.otp.pojo.VerifyOTPResponsePojo
+import com.example.fairfare.ui.trackRide.NearByPlacesPOJO.NearByResponse
+import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
+import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
+import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.util.*
+
 
 interface NetworkService {
 
@@ -49,7 +69,8 @@ interface NetworkService {
         @Field("name") name: String?,
         @Field("email") email: String?,
         @Field("gender") gender: String?,
-        @Field("otp") otp: String?
+        @Field("otp") otp: String?,
+        @Field("device_id") deviceId: String?
     ): Call<VerifyOTPResponsePojo?>?
 
     @FormUrlEncoded
@@ -96,6 +117,225 @@ interface NetworkService {
         @Field("origin_place_id") origin_place_id: String?,
         @Field("destination_place_id") destination_place_id: String?,
         @Field("luggage") luggage: String?,
-        @Field("airport") airport: String?
+        @Field("airport") airport: String?,
+        @Field("schedule_datetime") schedule_datetime: String?
     ): Call<CompareRideResponsePOJO?>?
+
+
+    @FormUrlEncoded
+    @POST("scheduleRide")
+    fun schduleRide(
+        @Header("Authorization") header: String?,
+        @Field("vehicle_rate_card_id") vehicle_rate_card_id: String?,
+        @Field("luggage_quantity") luggage_quantity: String?,
+        @Field("schedule_date") schedule_date: String?,
+        @Field("origin_place_id") origin_place_id: String?,
+        @Field("destination_place_id") destination_place_id: String?,
+        @Field("overview_polyline") overview_polyline: String?,
+        @Field("distance") distance: String?,
+        @Field("duration") duration: String?,
+        @Field("city_id") city_id: String?,
+        @Field("airport_rate_card_id") airport_rate_card_id: String?,
+        @Field("origin_place_lat") origin_place_lat: String?,
+        @Field("origin_place_long") origin_place_long: String?,
+        @Field("destination_place_lat") destination_place_lat: String?,
+        @Field("destination_place_long") destination_place_long: String?
+
+
+    ): Call<ScheduleRideResponsePOJO?>?
+
+
+    @FormUrlEncoded
+    @POST("startRide")
+    fun startRide(
+        @Header("Authorization") header: String?,
+        @Field("ride_id") id: String?,
+        @Field("vehicle_rate_card_id") vehicle_rate_card_id: String?,
+        @Field("luggage_quantity") luggage_quantity: String?,
+        @Field("schedule_date") schedule_date: String?,
+        @Field("origin_place_id") origin_place_id: String?,
+        @Field("destination_place_id") destination_place_id: String?,
+        @Field("overview_polyline") overview_polyline: String?,
+        @Field("distance") distance: String?,
+        @Field("duration") duration: String?,
+        @Field("city_id") city_id: String?,
+        @Field("airport_rate_card_id") airport_rate_card_id: String?,
+        @Field("driver_name") driver_name: String?,
+        @Field("vehicle_no") vehicle_no: String?,
+        @Field("badge_no") badge_no: String?,
+        @Field("start_meter_reading") start_meter_reading: String?,
+        @Field("origin_place_lat") origin_place_lat: String?,
+        @Field("origin_place_long") origin_place_long: String?,
+        @Field("destination_place_lat") destination_place_lat: String?,
+        @Field("destination_place_long") destination_place_long: String?
+    ): Call<ScheduleRideResponsePOJO?>?
+
+
+    @Multipart
+    @POST("startRide")
+    fun storeImage(
+        @Header("Authorization") header: String?,
+        @Part file: MultipartBody.Part?,
+        @PartMap map: HashMap<String?, String?>,
+        @Part("schedule_date") name: RequestBody,
+        @PartMap map1: HashMap<String?, Int?>
+    ): Call<ScheduleRideResponsePOJO?>?
+
+
+    @GET("api/place/nearbysearch/json?sensor=true&key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+    fun getNearbyPlaces(
+        @Query("location") location: String?,
+        @Query("radius") radius: Int
+    ): Call<NearByResponse?>?
+
+
+    @GET("https://roads.googleapis.com/v1/snapToRoads?interpolate=true&key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+    fun getsnaPTOROAD(
+        @Query("path") location: String?
+    ): Call<SnapTORoadResponse?>?
+
+
+
+    @POST("currentFare")
+    fun getCurrentFare(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") ride_id: Int,
+        @Query("distance") distance: String?
+    ): Call<CurrentFareeResponse?>?
+
+  @POST("currentFare")
+    fun getCurrentFareWithoutID(
+        @Header("Authorization") header: String?,
+        @Query("distance") distance: String?,
+        @Query("vehicle_rate_card_id") vehicle_rate_card_id: String?,
+        @Query("airport_rate_card_id") airport_rate_card_id: String?,
+        @Query("luggage_quantity") luggage_quantity: String?
+    ): Call<CurrentFareeResponse?>?
+
+
+    @POST("endRide")
+    fun getEndRide(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") ride_id: String?
+    ): Call<EndRideResponsePOJO?>?
+
+
+    @GET("rides")
+    fun getMyRides(@Header("Authorization") header: String?): Call<GetRideResponsePOJO?>?
+
+    @GET("getDisputeReasons")
+    fun getDisputeReasons(@Header("Authorization") header: String?): Call<DisputesReasonResponsePOJO?>?
+
+
+    @POST("updateProfile")
+    fun updateProfile(
+        @Header("Authorization") header: String?,
+        @Query("name") name: String?,
+        @Query("email") email: String?,
+        @Query("gender") gender: String?,
+        @Query("date_of_birth") date_of_birth: String?,
+        @Query("location") location: String?,
+        @Query("profession") profession: String?
+    ): Call<UpdateProfileResponsePOJO?>?
+
+    @POST("saveDispute")
+    fun saveDispute(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") ride_id: String?,
+        @Query("type") type: String?,
+        @Query("dispute_reason_id") dispute_reason_id: String?,
+        @Query("start_meter_reading") start_meter_reading: String?,
+        @Query("end_meter_reading") end_meter_reading: String?,
+        @Query("actual_meter_charges") actual_meter_charges: String?
+    ): Call<SaveDisputResponsePOJO?>?
+
+
+    @GET("getDispute")
+    fun getMyDispute(@Header("Authorization") header: String?): Call<GetDisputResponsePOJO?>?
+
+    @GET("getDispute")
+    fun getComplaint(
+        @Header("Authorization") header: String?,
+        @Query("type") ride_id: String?
+    ): Call<GetDisputResponsePOJO?>?
+
+
+    @POST("deleteDispute")
+    fun deleteDisput(
+        @Header("Authorization") header: String?,
+        @Query("dispute_id") ride_id: String?
+    ): Call<DeleteDisputResponsePOJO?>?
+
+    @POST("saveComplaint")
+    fun saveComplaint(
+        @Header("Authorization") header: String?,
+        @Query("dispute_id") ride_id: String?
+    ): Call<DeleteDisputResponsePOJO?>?
+
+
+
+    @POST("updateLocation")
+    fun updateLocation(
+        @Header("Authorization") header: String?,
+        @Query("category") category: String?,
+        @Query("location_id") location_id: String?
+    ): Call<UpdateProfileResponsePOJO?>?
+
+
+
+
+    @GET("detailDispute")
+    fun getDisputeDetail(
+        @Header("Authorization") header: String?,
+        @Query("dispute_id") dispute_id: String?
+    ): Call<DisputDetailResponsePOJO?>?
+
+
+
+
+    @POST("saveContactUs")
+    fun saveContactUs(
+        @Header("Authorization") header: String?,
+        @Query("message") message: String?
+    ): Call<ContactUsResponsePojo?>?
+
+    @POST("signOut")
+    fun signOut(
+        @Header("Authorization") header: String?,
+        @Query("device_id") deviceid: String?,
+        @Query("device_type") devicetype: String?
+    ): Call<ContactUsResponsePojo?>?
+
+
+ @POST("rideReview")
+    fun setRideReview(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") rideid: String?,
+        @Query("stars") stars: String?,
+        @Query("reviews") reviews: String?
+    ): Call<ContactUsResponsePojo?>?
+
+
+
+
+
+
+
+    @GET("faqs")
+    fun getFaqs(@Header("Authorization") header: String?): Call<FAQResponsePOJO?>?
+
+
+
+    @GET("pageContents")
+    fun pageContents(
+        @Header("Authorization") header: String?,
+        @Query("page_name") page_name: String?
+    ): Call<ContentResponsePOJO?>?
+
+
+
+    @GET("rateCards")
+    fun rateCards(@Header("Authorization") header: String?): Call<RateCardResponsePOJO?>?
+
+
 }
