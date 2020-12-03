@@ -9,7 +9,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.3"
     defaultConfig {
         multiDexEnabled true
         applicationId "com.example.fairfare"
@@ -20,8 +19,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-        // buildConfigField 'String', 'API_URL', '"http://64.225.85.233/api/"'
-        buildConfigField 'String', 'API_URL', '"https://dev.fairfareindia.com/api/"'
+       // buildConfigField 'String', 'API_URL', '"https://dev.fairfareindia.com/api/"'
+           buildConfigField 'String', 'API_URL', '"https://test.fairfareindia.com/api/"'
     }
     buildTypes {
         release {
@@ -67,11 +66,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
     implementation 'com.squareup.okhttp:okhttp:2.6.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'io.michaelrocks:libphonenumber-android:8.12.6'
 
 
     implementation 'com.google.maps:google-maps-services:0.14.0'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
+
+    implementation 'com.iarcuschin:simpleratingbar:0.1.5'
 
     //noinspection GradleCompatible
     implementation 'com.google.android.material:material:1.0.0'
