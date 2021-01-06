@@ -8,6 +8,9 @@ interface ICompareRidePresenter {
         sPlacesID: String?,
         dPlaceID: String?,
         baggs: String?,
-        airport: String?
+        airport: String?,
+        fdate: String?,
+        currentPlaceID: String
+
     )
 }

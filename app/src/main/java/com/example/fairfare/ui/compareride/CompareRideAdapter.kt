@@ -15,9 +15,7 @@ import com.example.fairfare.R
 import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
 import java.util.*
 
-class CompareRideAdapter(
-    var context: Context,
-    private val compareRideList: ArrayList<CompareRideResponsePOJO.VehiclesItem?>,
+class CompareRideAdapter(var context: Context, private val compareRideList: ArrayList<CompareRideResponsePOJO.VehiclesItem?>,
     var distance: String?,
     var baggs: String?,
     var estTime: String?
@@ -37,39 +35,46 @@ class CompareRideAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-       holder.distance!!.text = distance
-        holder.tv_carName!!.text = compareRideList[position]!!.vehicleName
-        holder.tv_time!!.text = estTime
 
-        spinnr = ArrayList()
-        for (i in compareRideList[position]!!.fares!!.indices) {
-            (spinnr as ArrayList<String?>).add(compareRideList[position]!!.fares?.get(i)!!.name)
+        if(compareRideList.isEmpty()){
 
-        }
-        val NowLater: ArrayAdapter<*> = ArrayAdapter<Any?>(context, android.R.layout.simple_spinner_dropdown_item, spinnr!!)
-        NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        holder.spinner_type!!.adapter = NowLater
-        holder.total!!.text ="₹ " + compareRideList[position]!!.fares?.get(0)!!.total
+        }else{
+            holder.tv_preson!!.text = compareRideList[position]!!.noOfSeater.toString()
+            holder.distance!!.text = distance
+            holder.tv_carName!!.text = compareRideList[position]!!.vehicleName
+            holder.tv_time!!.text = estTime
 
-        holder.spinner_type!!.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View, spinnerposition: Int, id: Long) {
-                holder.total!!.text = "₹ " +compareRideList[position]!!.fares?.get(spinnerposition)!!.total
+            spinnr = ArrayList()
+            for (i in compareRideList[position]!!.fares!!.indices) {
+                (spinnr as ArrayList<String?>).add(compareRideList[position]!!.fares?.get(i)!!.name)
+
+            }
+            val NowLater: ArrayAdapter<*> = ArrayAdapter<Any?>(context, android.R.layout.simple_spinner_dropdown_item, spinnr!!)
+            NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            holder.spinner_type!!.adapter = NowLater
+            holder.total!!.text ="₹ " + compareRideList[position]!!.fares?.get(0)!!.total
+
+            holder.spinner_type!!.onItemSelectedListener = object : OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View, spinnerposition: Int, id: Long) {
+                    holder.total!!.text = "₹ " +compareRideList[position]!!.fares?.get(spinnerposition)!!.total
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+
+            Glide.with(context)
+                .load(compareRideList[position]!!.vehicleImageUrl)
+                .apply(
+                    RequestOptions()
+                        .centerCrop()
+                        .dontAnimate()
+                        .dontTransform()
+                )
+                .into(holder.ivVehical!!)
         }
 
-
-
-        Glide.with(context)
-            .load(compareRideList[position]!!.vehicleImageUrl)
-            .apply(
-                RequestOptions()
-                    .centerCrop()
-                    .dontAnimate()
-                    .dontTransform()
-            )
-            .into(holder.ivVehical!!)
     }
 
     override fun getItemCount(): Int {
@@ -97,6 +102,10 @@ class CompareRideAdapter(
         @JvmField
         @BindView(R.id.tv_time)
         var tv_time: TextView? = null
+
+        @JvmField
+        @BindView(R.id.tv_preson)
+        var tv_preson: TextView? = null
 
         @JvmField
         @BindView(R.id.tv_carName)

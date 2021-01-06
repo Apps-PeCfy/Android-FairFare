@@ -23,6 +23,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.fairfare.R
 import com.example.fairfare.base.BaseLocationClass
+import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
@@ -94,8 +95,9 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var PortAir: String? = null
     var sourecemarker: Marker? = null
     var mMap: GoogleMap? = null
-    var sourceLat: String? = null
     var Airport: String? = null
+    var formatedCurrentDate: String? = null
+    var sourceLat: String? = null
     var sourceLong: String? = null
     var destLat: String? = null
     var destLong: String? = null
@@ -105,6 +107,9 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var replacebags: String? = null
     var currentDate: String? = null
     var estTime: String? = null
+    var CITY_ID: String? = null
+    var CITY_NAME: String? = null
+    var currentPlaceId: String? = null
 
     var hideshow: String? = null
     var sharedpreferences: SharedPreferences? = null
@@ -115,9 +120,9 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var destinationAddress: String? = null
     var compareRideAdapter: CompareRideAdapter? = null
     var preferencesManager: PreferencesManager? = null
+    lateinit var info: CompareRideResponsePOJO
     private var iCompareRidePresenter: ICompareRidePresenter? = null
-    private val compareRideList =
-        ArrayList<CompareRideResponsePOJO.VehiclesItem?>()
+    private val compareRideList = ArrayList<CompareRideResponsePOJO.VehiclesItem?>()
     private var mPolyline: Polyline? = null
     var sourcePlaceID: String? = null
     var DestinationPlaceID: String? = null
@@ -134,9 +139,15 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         preferencesManager = PreferencesManager.instance
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         PortAir = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
+
+        info = intent.getSerializableExtra("MyPOJOClass") as CompareRideResponsePOJO
+
+
         val intent = intent
         extras = intent.extras
         if (extras != null) {
+            CITY_ID = extras!!.getString("CITY_ID")
+            CITY_NAME = extras!!.getString("CITY_NAME")
             sourceLat = extras!!.getString("SourceLat")
             sourceLong = extras!!.getString("SourceLong")
             destLat = extras!!.getString("DestinationLat")
@@ -149,6 +160,8 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
             destinationAddress = extras!!.getString("DestinationAddress")
             currentDate = extras!!.getString("currentDate")
             Airport = extras!!.getString("Airport")
+            currentPlaceId = extras!!.getString("currentPlaceId")
+            formatedCurrentDate = extras!!.getString("currentFormatedDate")
 
         }
 
@@ -191,10 +204,66 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
             e.printStackTrace()
         }
 
+
+
+        if (info!!.vehicles!!.size > 0) {
+            compareRideList.addAll(info.vehicles!!)
+            compareRideAdapter = CompareRideAdapter(this, compareRideList, distance, baggs, estTime)
+            recyclerviewcompareview!!.layoutManager = LinearLayoutManager(this)
+            recyclerviewcompareview!!.adapter = compareRideAdapter
+            compareRideAdapter!!.notifyDataSetChanged()
+
+            compareRideAdapter!!.SetOnItemClickListener(object :
+                CompareRideAdapter.OnItemClickListener {
+                override fun onItemClick(view: View?, position: Int, spnposition: Int) {
+
+
+                    val intent = Intent(applicationContext, ViewRideActivity::class.java)
+                    intent.putExtra("spinnerdata", compareRideList)
+                    intent.putExtra("spinnerposition", spnposition)
+                    intent.putExtra("listPosition", position)
+                    intent.putExtra("SourceLat", sourceLat)
+                    intent.putExtra("SourceLong", sourceLong)
+                    intent.putExtra("CITY_ID", CITY_ID)
+                    intent.putExtra("CITY_NAME", CITY_NAME)
+                    intent.putExtra("destLat", destLat)
+                    intent.putExtra("destLong", destLong)
+                    intent.putExtra("SourceAddess", SourceAddress)
+                    intent.putExtra("DestAddress", destinationAddress)
+                    intent.putExtra("CurrentDateTime", currentDate)
+                    intent.putExtra("timeSpinnertxt", timeSpinnertxt)
+                    intent.putExtra(
+                        "vehicle_rate_card_id",
+                        info!!.vehicles!!.get(position).fares!!.get(spnposition).vehicleRateCardId
+                    )
+                    intent.putExtra(
+                        "airport_rate_card_id",
+                        info!!.vehicles!!.get(position).fares!!.get(spnposition).airportRateCardId
+                    )
+                    intent.putExtra("luggages_quantity", info.luggage)
+                    intent.putExtra("formatedDate", info.scheduleDatetime)
+                    intent.putExtra("ViewRideDistance", info.distance)
+                    intent.putExtra("canStartRide", info.canStartRide)
+                    intent.putExtra("distance", "$distance ($estTime)")
+                    startActivity(intent)
+
+                }
+            })
+        }
+
+
+
         spinner_time!!.text = currentDate
         tv_myCurrentLocation!!.text = SourceAddress
         tv_myDropUpLocation!!.text = destinationAddress
-        tv_baggs!!.text = baggs
+
+        if (baggs.equals("Bags")) {
+            tv_baggs!!.text = "0 " + baggs
+
+        } else {
+            tv_baggs!!.text = baggs
+
+        }
         sourcePlaceID = results[0]!!.placeId
         DestinationPlaceID = results1[0]!!.placeId
         mToolbar!!.title = "Compare Rides"
@@ -214,7 +283,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
         replacedistance = distance!!.replace(" km", "")
 
-        if (baggs == "1 Bag") {
+        if ((baggs == "1 Bag") || (baggs == "Bag")) {
             replacebags = baggs!!.replace(" Bag", "")
 
         } else {
@@ -223,22 +292,25 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         }
 
         iCompareRidePresenter = CompareRideImplementer(this)
-        iCompareRidePresenter!!.getCompareRideData(
+/*        iCompareRidePresenter!!.getCompareRideData(
             token,
             replacedistance,
-            "2707",
+            CITY_ID,
             sourcePlaceID,
             DestinationPlaceID,
             replacebags,
-            airportYesOrNO
-        )
-        //  iCompareRidePresenter.getCompareRideData(token, distance, "2707", sourcePlaceID, DestinationPlaceID, "1","Yes");
+            airportYesOrNO,
+            formatedCurrentDate,
+            currentPlaceId!!
+        )*/
+
+
     }
 
 
     override fun onDestroy() {
-      //  preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT, "LOCALITY")
-       // sharedpreferences!!.edit().clear().commit()
+        //  preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT, "LOCALITY")
+        // sharedpreferences!!.edit().clear().commit()
         super.onDestroy()
     }
 
@@ -298,36 +370,10 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     override fun removeWait() {}
     override fun onFailure(appErrorMessage: String?) {}
     override fun onSuccess(info: CompareRideResponsePOJO?) {
-        if (info!!.vehicles!!.size > 0) {
-            compareRideList.addAll(info.vehicles!!)
-            compareRideAdapter = CompareRideAdapter(this, compareRideList, distance, baggs, estTime)
-            recyclerviewcompareview!!.layoutManager = LinearLayoutManager(this)
-            recyclerviewcompareview!!.adapter = compareRideAdapter
-            compareRideAdapter!!.notifyDataSetChanged()
 
-            compareRideAdapter!!.SetOnItemClickListener(object :
-                CompareRideAdapter.OnItemClickListener {
-                override fun onItemClick(view: View?, position: Int, spnposition: Int) {
+    }
 
-
-                    val intent = Intent(applicationContext, ViewRideActivity::class.java)
-                    intent.putExtra("spinnerdata", compareRideList)
-                    intent.putExtra("spinnerposition", spnposition)
-                    intent.putExtra("listPosition", position)
-                    intent.putExtra("SourceLat", sourceLat)
-                    intent.putExtra("SourceLong", sourceLong)
-                    intent.putExtra("destLat", destLat)
-                    intent.putExtra("destLong", destLong)
-                    intent.putExtra("SourceAddess", SourceAddress)
-                    intent.putExtra("DestAddress", destinationAddress)
-                    intent.putExtra("CurrentDateTime", currentDate)
-                    intent.putExtra("timeSpinnertxt", timeSpinnertxt)
-                    intent.putExtra("distance", "$distance ($estTime)")
-                    startActivity(intent)
-
-                }
-            })
-        }
+    override fun validationError(validationResponse: ValidationResponse?) {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -338,7 +384,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     com.google.android.gms.maps.model.LatLng(
                         sourceLat!!.toDouble(),
                         sourceLong!!.toDouble()
-                    ), 13.0f
+                    ), 15.0f
                 )
             )
             sourecemarker = mMap!!.addMarker(
