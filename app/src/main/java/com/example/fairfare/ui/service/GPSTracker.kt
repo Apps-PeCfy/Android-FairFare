@@ -14,7 +14,6 @@ import android.provider.Settings
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.example.fairfare.ui.service.GPSTracker
 
 class GPSTracker @RequiresApi(api = Build.VERSION_CODES.M) constructor(private val mContext: Context) :
     Service(), LocationListener {
@@ -22,6 +21,7 @@ class GPSTracker @RequiresApi(api = Build.VERSION_CODES.M) constructor(private v
     var isNetworkEnabled = false
     var canGetLocation = false
     var locations: Location? = null
+    var locationsChanged: Location? = null
     var latitude = 0.0
     var longitude = 0.0
     protected var locationManager: LocationManager? = null
@@ -30,24 +30,17 @@ class GPSTracker @RequiresApi(api = Build.VERSION_CODES.M) constructor(private v
     @RequiresApi(api = Build.VERSION_CODES.M)
     fun getLocation(): Location? {
         try {
-            locationManager =
-                mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
             isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
             if (!isGPSEnabled && !isNetworkEnabled) {
             } else {
                 canGetLocation = true
                 if (isNetworkEnabled) {
-                    locationManager!!.requestLocationUpdates(
-                        LocationManager.NETWORK_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES.toFloat(),
-                        this
-                    )
+                    locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES.toFloat(), this)
                     Log.d("Network", "Network")
                     if (locationManager != null) {
-                        locations =
-                            locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                        locations = locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                         if (locations != null) {
                             latitude = locations!!.latitude
                             longitude = locations!!.longitude
@@ -93,7 +86,6 @@ class GPSTracker @RequiresApi(api = Build.VERSION_CODES.M) constructor(private v
         if (locations != null) {
             latitude = locations!!.latitude
         }
-        // return latitude
         return latitude
     }
 
@@ -116,13 +108,25 @@ class GPSTracker @RequiresApi(api = Build.VERSION_CODES.M) constructor(private v
         return canGetLocation
     }
 
+
+    fun getChangeLatitude(): Double? {
+        if (locationsChanged != null) {
+            latitude = locationsChanged!!.latitude
+        }
+
+        Log.d("dsdswdsdsdsget", latitude.toString())
+
+        return latitude
+    }
+
+
+
     /**
      * Function to show settings alert dialog
      * On pressing Settings button will lauch Settings Options
      */
     fun showSettingsAlert() {
-        val alertDialog =
-            AlertDialog.Builder(mContext)
+        val alertDialog = AlertDialog.Builder(mContext)
         // Setting Dialog Title
         alertDialog.setTitle("GPS is settings")
         // Setting Dialog Message
@@ -143,12 +147,12 @@ class GPSTracker @RequiresApi(api = Build.VERSION_CODES.M) constructor(private v
         return null
     }
 
-    override fun onLocationChanged(location: Location) {}
-    override fun onStatusChanged(
-        provider: String,
-        status: Int,
-        extras: Bundle
-    ) {
+    override fun onLocationChanged(clocation: Location) {
+        locationsChanged = clocation
+
+    }
+
+    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
     }
 
     override fun onProviderEnabled(provider: String) {}

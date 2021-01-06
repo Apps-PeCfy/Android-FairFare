@@ -20,13 +20,13 @@ class OtpPresenterImplmenter(var view: IOtpView) : IOtpPresenter {
         name: String?,
         email: String?,
         gender: String?,
-        otp: String?
+        otp: String?,
+        deviceId: String?
     ) {
         view.showWait()
         val call = client.verifyOtp(
             phoneNo, type, deviceType, loginType,
-            countryCode, name, email, gender, otp
-        )
+            countryCode, name, email, gender, otp,deviceId)
         call!!.enqueue(object : Callback<VerifyOTPResponsePojo?> {
             override fun onResponse(call: Call<VerifyOTPResponsePojo?>, response: Response<VerifyOTPResponsePojo?>) {
                 view.removeWait()
@@ -43,6 +43,8 @@ class OtpPresenterImplmenter(var view: IOtpView) : IOtpPresenter {
                         view.validationError(pojo)
                     } catch (exception: IOException) {
                     }
+                }else{
+                    view.onFailure(response.message())
                 }
             }
 
@@ -78,6 +80,17 @@ class OtpPresenterImplmenter(var view: IOtpView) : IOtpPresenter {
             ) {
                 view.removeWait()
                 if (response.code() == 200) {
+                    view.reSendOTPSuccess(response.body())
+
+                }else if (response.code() == 400 || response.code() ==422) {
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(response.errorBody()!!.string(),
+                            ValidationResponse::class.java)
+                        view.validationError(pojo)
+                    } catch (exception: IOException) {
+                    }
                 }
             }
 

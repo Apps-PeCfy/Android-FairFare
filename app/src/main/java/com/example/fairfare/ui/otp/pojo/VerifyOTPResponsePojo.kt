@@ -24,6 +24,10 @@ class VerifyOTPResponsePojo {
         @SerializedName("phone_no")
         var phoneNo: String? = null
 
+        @SerializedName("profession")
+        var profession: String? = null
+
+
         @SerializedName("gender")
         var gender: String? = null
 
@@ -32,6 +36,19 @@ class VerifyOTPResponsePojo {
 
         @SerializedName("name")
         var name: String? = null
+
+        @SerializedName("date_of_birth")
+        var dateOfBirth: String? = null
+
+        @SerializedName("profile_pic")
+        var profilePic: String? = null
+
+
+        @SerializedName("location")
+         val location: String? = null
+
+
+
 
         @SerializedName("id")
         var id = 0
@@ -42,7 +59,10 @@ class VerifyOTPResponsePojo {
         override fun toString(): String {
             return "User{" +
                     "phone_no = '" + phoneNo + '\'' +
+                    ",date_of_birth = '" + dateOfBirth + '\'' +
+                    ",profile_pic = '" + profilePic + '\'' +
                     ",gender = '" + gender + '\'' +
+                    ",profession = '" + profession + '\'' +
                     ",country_phone_code = '" + countryPhoneCode + '\'' +
                     ",name = '" + name + '\'' +
                     ",id = '" + id + '\'' +

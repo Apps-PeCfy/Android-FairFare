@@ -3,6 +3,7 @@ package com.example.fairfare.ui.Login
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,6 +12,10 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -18,16 +23,17 @@ import butterknife.OnTextChanged
 import com.example.fairfare.R
 import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.networking.ApiClient.client
-import com.example.fairfare.ui.Login.LoginActivity
 import com.example.fairfare.ui.Login.pojo.LoginResponsepojo
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
+import com.example.fairfare.ui.Login.privacypolicy.PrivacyPolicy
 import com.example.fairfare.ui.Register.RegisterActivity
+import com.example.fairfare.ui.drawer.privacypolicy.ContentPage
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.otp.OtpAvtivity
+import com.example.fairfare.ui.privacypolicy.PrivacyPolicyActivity
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
-import com.example.fairfare.utils.ProjectUtilities.dismissProgressDialog
-import com.example.fairfare.utils.ProjectUtilities.showProgressDialog
+import com.example.fairfare.utils.ProjectUtilities
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginBehavior
@@ -59,10 +65,14 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 
-class LoginActivity : BaseLocationClass(),
+class LoginActivity : AppCompatActivity(),
     CountryCodePicker.OnCountryChangeListener, ILoginView {
     var facebookLoginClick = 0
     var googleAccessTokem: String? = null
+
+    private var fragmentManager: FragmentManager? = null
+    private var fragmentTransaction: FragmentTransaction? = null
+
 
     @JvmField
     @BindView(R.id.iv_gmail)
@@ -82,6 +92,10 @@ class LoginActivity : BaseLocationClass(),
     @JvmField
     @BindView(R.id.edit_text)
     var edit_text: EditText? = null
+
+    @JvmField
+    @BindView(R.id.tvPrivacy)
+    var tvPrivacy: TextView? = null
 
     @JvmField
     @BindView(R.id.ccpr)
@@ -159,6 +173,24 @@ class LoginActivity : BaseLocationClass(),
         } catch (e: NoSuchAlgorithmException) {
         } catch (e: Exception) {
         }
+    }
+
+    @OnClick(R.id.tvPrivacy)
+    fun tvPrivacy() {
+
+        val intent = Intent(applicationContext, PrivacyPolicyActivity::class.java)
+        startActivity(intent)
+
+
+    }
+
+
+    fun replaceFragment(fragment: Fragment?) {
+
+        fragmentManager = supportFragmentManager
+        fragmentTransaction = fragmentManager!!.beginTransaction()
+        fragmentTransaction!!.replace(R.id.container_framelayout, fragment!!)
+        fragmentTransaction!!.commit()
     }
 
     @OnTextChanged(R.id.edit_text)
@@ -352,91 +384,27 @@ class LoginActivity : BaseLocationClass(),
         } catch (e: NumberParseException) {
             e.printStackTrace()
         }
-        strNumberValidation = if (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile) {
+        /*strNumberValidation = if (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile) {
             "true"
         } else if (PhoneNumberUtil.PhoneNumberType.FIXED_LINE == isMobile) {
             "false"
         } else {
             "false"
         }
+*/
 
-
-        /* try {
-
-            phoneNumber = phoneNumberUtil.parse(edit_text.getText().toString(), countryCodeISO.toUpperCase());
-            boolean isValid = phoneNumberUtil.isValidNumber(phoneNumber);
-
-            strNumberValidation = String.valueOf(isValid);
-
-        } catch (NumberParseException e) {
-            e.printStackTrace();
-        }*/if (strNumberValidation == "false") {
+      if (strNumberValidation == "false") {
             tvPhoneNumberError!!.text = "Please enter a valid phone no."
             tvPhoneNumberError!!.visibility = View.VISIBLE
             //   Toast.makeText(this, "Plese enter valid phone no.", Toast.LENGTH_LONG).show();
         } else {
-            val progressDialog = ProgressDialog(this@LoginActivity)
-            progressDialog.setCancelable(false) // set cancelable to false
-            progressDialog.setMessage("Please Wait") // set message
-            progressDialog.show() // show progress dialog
+
             iLoginPresenter!!.login(
                 edit_text!!.text.toString(), "Login", "Android",
                 "NOR", countryCode, "", "", ""
             )
 
-            /* (ApiClient.getClient().login(edit_text.getText().toString(), "Login", "Android",
-                    "NOR", countryCode, "", "", "")).enqueue(new Callback<LoginResponsepojo>() {
-                @Override
-                public void onResponse(Call<LoginResponsepojo> call, Response<LoginResponsepojo> response) {
-                    loginResponsepojo = response.body();
-
-                    if (response.code() == 200) {
-                        if (loginResponsepojo.getRedirectTo().equals("Register")) {
-                            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra("Mobile_No", edit_text.getText().toString());
-                            intent.putExtra("UserEmail", "");
-                            intent.putExtra("CountryCode", countryCode);
-                            intent.putExtra("UserName", "");
-                            intent.putExtra("LoginType", "NOR");
-                            intent.putExtra("GoogleToken", "");
-                            intent.putExtra("countryCodeISO", countryCodeISO);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Intent intent = new Intent(getApplicationContext(), OtpAvtivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra("Mobile_No", edit_text.getText().toString());
-                            intent.putExtra("CountryCode", countryCode);
-                            intent.putExtra("UserMail", "");
-                            intent.putExtra("UserName", "");
-                            intent.putExtra("Activity", "Login");
-                            intent.putExtra("LoginType", "NOR");
-                            intent.putExtra("GoogleToken", "");
-
-                            startActivity(intent);
-                            finish();
-
-                        }
-
-
-                        progressDialog.dismiss();
-                    }else{
-
-                        progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Internal server error", Toast.LENGTH_LONG).show();
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<LoginResponsepojo> call, Throwable t) {
-                    Log.d("response", t.getStackTrace().toString());
-                    progressDialog.dismiss();
-
-                }
-            });*/
-        }
+           }
     }
 
     private fun signIn() {
@@ -628,10 +596,7 @@ class LoginActivity : BaseLocationClass(),
                         finish()
                     } else if (loginResponsepojo!!.redirectTo.equals("home", ignoreCase = true)) {
                         assert(response.body() != null)
-                        mPreferencesManager!!.setStringValue(
-                            Constants.SHARED_PREFERENCE_LOGIN_TOKEN,
-                            response.body()!!.token
-                        )
+                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, response.body()!!.token)
                         mPreferencesManager!!.setStringValue(
                             Constants.SHARED_PREFERENCE_ISLOGIN,
                             "true"
@@ -688,11 +653,11 @@ class LoginActivity : BaseLocationClass(),
     }
 
     override fun showWait() {
-        showProgressDialog(this@LoginActivity)
+        ProjectUtilities.showProgressDialog(this@LoginActivity)
     }
 
     override fun removeWait() {
-        dismissProgressDialog()
+        ProjectUtilities.dismissProgressDialog()
     }
 
     override fun onFailure(appErrorMessage: String?) {

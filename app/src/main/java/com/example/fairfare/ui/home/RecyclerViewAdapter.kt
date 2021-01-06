@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.fairfare.R
-import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO.LocationsItem
+import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
 
-class RecyclerViewAdapter(var context: Context, private val LocatoinList: List<LocationsItem>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+class RecyclerViewAdapter(var context: Context, private val LocatoinList: List<GetSaveLocationResponsePOJO.DataItem>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
     private var iclickListener: IClickListener? = null
     var fClick ="1"
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,10 +23,8 @@ class RecyclerViewAdapter(var context: Context, private val LocatoinList: List<L
         return MyViewHolder(v)
     }
 
-    override fun onBindViewHolder(
-        holder: MyViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int)
+    {
         holder.place_address!!.text = LocatoinList[position].fullAddress
         holder.iv_fav!!.setBackgroundResource(R.drawable.ic_fav_checked)
     }
@@ -52,6 +50,8 @@ class RecyclerViewAdapter(var context: Context, private val LocatoinList: List<L
         @JvmField
         @BindView(R.id.iv_fav)
         var iv_fav: ImageView? = null
+
+
         override fun onClick(v: View) {
             if (v.id == R.id.iv_fav) {
                 if(fClick=="1") {

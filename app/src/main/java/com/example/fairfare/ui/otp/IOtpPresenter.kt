@@ -10,7 +10,8 @@ interface IOtpPresenter {
         name: String?,
         email: String?,
         gender: String?,
-        otp: String?
+        otp: String?,
+        deviceId: String?
     )
 
     fun resendOtp(

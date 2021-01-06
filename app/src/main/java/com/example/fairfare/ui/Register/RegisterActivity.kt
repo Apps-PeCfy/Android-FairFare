@@ -1,9 +1,12 @@
 package com.example.fairfare.ui.Register
 
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.BindView
@@ -15,6 +18,7 @@ import com.example.fairfare.ui.Login.LoginActivity
 import com.example.fairfare.ui.Login.pojo.LoginResponsepojo
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.otp.OtpAvtivity
+import com.example.fairfare.ui.privacypolicy.PrivacyPolicyActivity
 import com.example.fairfare.utils.ProjectUtilities.dismissProgressDialog
 import com.example.fairfare.utils.ProjectUtilities.showProgressDialog
 import com.rilixtech.widget.countrycodepicker.Country
@@ -98,6 +102,10 @@ class RegisterActivity : AppCompatActivity(),
     @BindView(R.id.radioButtonOther)
     var radioButtonOther: RadioButton? = null
 
+  @JvmField
+    @BindView(R.id.tvPrivacy)
+    var tvPrivacy: TextView? = null
+
 
     @JvmField
     @BindView(R.id.edt_name)
@@ -109,6 +117,9 @@ class RegisterActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         ButterKnife.bind(this)
+
+        setStatusBarGradiant(this)
+
         ccp!!.setOnCountryChangeListener(this)
         iRegisterPresenter = RegisterImplementer(this)
         val intent = intent
@@ -148,6 +159,25 @@ class RegisterActivity : AppCompatActivity(),
             sign_up!!.text = "Please enter Phone number and Gender."
         }
     }
+
+    private fun setStatusBarGradiant(activity: RegisterActivity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = activity.window
+            val background = activity.resources.getDrawable(R.drawable.app_gradient)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = activity.resources.getColor(android.R.color.transparent)
+            window.setBackgroundDrawable(background)
+        }
+    }
+
+    @OnClick(R.id.tvPrivacy)
+    fun tvPrivacy() {
+
+        val intent = Intent(applicationContext, PrivacyPolicyActivity::class.java)
+        startActivity(intent)
+
+    }
+
 
     @OnClick(R.id.tvLogin)
     fun tvLogin() {
@@ -237,13 +267,7 @@ class RegisterActivity : AppCompatActivity(),
             tvNameError!!.visibility = View.VISIBLE
         } else {
 
-/*
 
-            final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
-            progressDialog.setCancelable(false); // set cancelable to false
-            progressDialog.setMessage("Please Wait"); // set message
-            progressDialog.show(); // show progress dialog
-*/
             if (LoginType == "NOR") {
                 GoogleToken = ""
             }
@@ -257,70 +281,6 @@ class RegisterActivity : AppCompatActivity(),
                 edt_email!!.text.toString(),
                 GoogleToken
             )
-            /*  (ApiClient.getClient().login(edit_text_register.getText().toString(), "Register", "Android",
-                    LoginType, countryCode, edt_name.getText().toString(), edt_email.getText().toString(), GoogleToken)).enqueue(new Callback<LoginResponsepojo>() {
-                @Override
-                public void onResponse(Call<LoginResponsepojo> call, Response<LoginResponsepojo> response) {
-                    LoginResponsepojo loginResponsepojo = response.body();
-
-                    if (response.code() == 200) {
-                        if (loginResponsepojo.getRedirectTo().equals("Otp")) {
-                            Intent intent = new Intent(getApplicationContext(), OtpAvtivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra("Mobile_No", edit_text_register.getText().toString());
-                            intent.putExtra("CountryCode", countryCode);
-                            intent.putExtra("UserMail", edt_email.getText().toString());
-                            intent.putExtra("UserName", edt_name.getText().toString());
-                            intent.putExtra("LoginType", LoginType);
-                            intent.putExtra("Activity", "Register");
-                            intent.putExtra("GoogleToken", GoogleToken);
-
-                            startActivity(intent);
-                            finish();
-                        }
-                    } else if(response.code()==400) {
-
-                        Gson gson = new GsonBuilder().create();
-                        ValidationResponse pojo = new ValidationResponse();
-
-                        try {
-                            pojo = gson.fromJson(response.errorBody().string(), ValidationResponse.class);
-                            for (int i = 0; i < pojo.getErrors().size(); i++) {
-
-                                if (pojo.getErrors().get(i).getKey().equals("email")) {
-                                    tvEmailError.setText(pojo.getErrors().get(i).getMessage());
-                                    tvEmailError.setVisibility(View.VISIBLE);
-                                }
-
-                                if (pojo.getErrors().get(i).getKey().equals("phone_no")) {
-                                    tvPhoneNumberError.setText(pojo.getErrors().get(i).getMessage());
-                                    tvPhoneNumberError.setVisibility(View.VISIBLE);
-                                }
-
-
-                            }
-
-
-                        } catch (IOException exception) {
-                        }
-
-
-                    }else {
-                        Toast.makeText(RegisterActivity.this, "Internal server error", Toast.LENGTH_LONG).show();
-                    }
-
-
-                    progressDialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(Call<LoginResponsepojo> call, Throwable t) {
-                    Log.d("response", t.getStackTrace().toString());
-                    progressDialog.dismiss();
-
-                }
-            });
-*/
         }
     }
 

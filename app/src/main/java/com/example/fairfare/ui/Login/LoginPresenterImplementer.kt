@@ -34,6 +34,7 @@ class LoginPresenterImplementer(var view: ILoginView) : ILoginPresenter {
                 if (response.code() == 200) {
                     view.onLoginSUccess(response.body())
                 } else if (response.code() == 400||response.code()==422) {
+                    view.removeWait()
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
                     try {

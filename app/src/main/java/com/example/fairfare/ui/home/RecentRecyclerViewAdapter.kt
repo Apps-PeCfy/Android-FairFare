@@ -11,11 +11,11 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.fairfare.R
 import com.example.fairfare.ui.home.RecyclerViewAdapter.IClickListener
-import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO.LocationsItem
+import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
 
 class RecentRecyclerViewAdapter(
     var context: Context,
-    private val LocatoinList: List<LocationsItem>
+    private val LocatoinList: List<GetSaveLocationResponsePOJO.DataItem>
 ) : RecyclerView.Adapter<RecentRecyclerViewAdapter.MyViewHolder>() {
     private var iclickListener: IClickListener? = null
     override fun onCreateViewHolder(

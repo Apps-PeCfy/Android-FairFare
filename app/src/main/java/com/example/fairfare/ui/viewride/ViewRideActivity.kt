@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +16,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -22,12 +26,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import com.example.fairfare.base.BaseLocationClass
+import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.ridedetails.RideDetailsActivity
+import com.example.fairfare.ui.service.GPSTracker
+import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
+import com.example.fairfare.utils.ProjectUtilities
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -43,11 +51,27 @@ import java.net.URL
 import java.util.*
 
 @Suppress("DEPRECATION")
-class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
+class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,LocationListener{
     var additional = "close"
     var spinnerposition = 0
     var listPosition = 0
+
+    var token: String? = null
+    var vahicalRateCardID: String? = null
+    var luggagesQuantity: String? = null
+    var originPlaceID: String? = null
+    var destinationPlaceID: String? = null
+    var overviewPolyLine: String? = null
     var distance: String? = null
+    var durationRide: String? = null
+    var airportCardID: String? = null
+    var formatedDateTime: String? = null
+    var distance_ViewRide: String? = null
+    var canStartRide: String? = null
+    var getCurrentCity: String? = null
+
+    private var iViewRidePresenter: IViewRidePresenter? = null
+
 
     @JvmField
     @BindView(R.id.toolbar_viewRide)
@@ -64,6 +88,10 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
     @JvmField
     @BindView(R.id.tv_carName)
     var tv_carName: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tv_Person)
+    var tv_Person: TextView? = null
 
     @JvmField
     @BindView(R.id.iv_vehical)
@@ -113,21 +141,25 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
     @BindView(R.id.tv_carType)
     var tv_carType: TextView? = null
 
-   @JvmField
+     @JvmField
+    @BindView(R.id.tv_NightCharges)
+    var tv_NightCharges: TextView? = null
+
+    @JvmField
     @BindView(R.id.tvhideShow)
     var tvhideShow: RelativeLayout? = null
 
-  @JvmField
+    @JvmField
     @BindView(R.id.homeView)
     var homeView: ScrollView? = null
 
 
-   @JvmField
+    @JvmField
     @BindView(R.id.btnLogin)
     var btnLogin: Button? = null
 
 
- @JvmField
+    @JvmField
     @BindView(R.id.tv_dateandTime)
     var tv_dateandTime: TextView? = null
 
@@ -136,8 +168,8 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
     var switchdata: Switch? = null
     private var compareRideList =
         ArrayList<CompareRideResponsePOJO.VehiclesItem>()
-    var sourceLat: String? = null
-    var sourceLong: String? = null
+    var sourceLatitude: String? = null
+    var sourceLongitude: String? = null
     var destLat: String? = null
     var spntext: String? = null
     var destLong: String? = null
@@ -148,40 +180,57 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
     var sharedpreferences: SharedPreferences? = null
     var preferencesManager: PreferencesManager? = null
     var hideshow: String? = null
+    var CITY_ID: String? = null
+    var CITY_NAME: String? = null
 
     var sourecemarker: Marker? = null
     private var mPolyline: Polyline? = null
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_ride)
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
-        preferencesManager = PreferencesManager.instance
 
+        PreferencesManager.initializeInstance(this@ViewRideActivity)
+        preferencesManager = PreferencesManager.instance
+        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+
+        iViewRidePresenter = ViewRideImplementer(this)
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
 
         hideshow = "show"
-        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
-        compareRideList = intent.getSerializableExtra("spinnerdata") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
+        token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+        compareRideList =
+            intent.getSerializableExtra("spinnerdata") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
         spinnerposition = intent.getIntExtra("spinnerposition", 0)
         listPosition = intent.getIntExtra("listPosition", 0)
         distance = intent.getStringExtra("distance")
-        sourceLat = intent.getStringExtra("SourceLat")
-        sourceLong = intent.getStringExtra("SourceLong")
+        CITY_ID = intent.getStringExtra("CITY_ID")
+        CITY_NAME = intent.getStringExtra("CITY_NAME")
+        sourceLatitude = intent.getStringExtra("SourceLat")
+        sourceLongitude = intent.getStringExtra("SourceLong")
         destLat = intent.getStringExtra("destLat")
         destLong = intent.getStringExtra("destLong")
         sAdd = intent.getStringExtra("SourceAddess")
         dAdd = intent.getStringExtra("DestAddress")
         currentDate = intent.getStringExtra("CurrentDateTime")
         spntext = intent.getStringExtra("timeSpinnertxt")
+        airportCardID = intent.getStringExtra("airport_rate_card_id")
+        vahicalRateCardID = intent.getStringExtra("vehicle_rate_card_id")
+        luggagesQuantity = intent.getStringExtra("luggages_quantity")
+        formatedDateTime = intent.getStringExtra("formatedDate")
+        distance_ViewRide = intent.getStringExtra("ViewRideDistance")
+        canStartRide = intent.getStringExtra("canStartRide")
 
         tv_myCurrentLocation!!.text = sAdd
         tv_myDropUpLocation!!.text = dAdd
         tv_dateandTime!!.text = currentDate
         tv_carType!!.text = compareRideList[listPosition].providerName
+        tv_Person!!.text = compareRideList[listPosition].noOfSeater.toString()
         tv_carName!!.text = compareRideList[listPosition].fares?.get(spinnerposition)!!.name
         Glide.with(this@ViewRideActivity)
             .load(compareRideList[listPosition].vehicleImageUrl)
@@ -192,27 +241,70 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
                     .dontTransform()
             )
             .into(iv_vehical!!)
-        tv_total!!.text ="₹ "+ compareRideList[listPosition].fares?.get(spinnerposition)!!.total
+        tv_total!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.total
         tv_time!!.text = distance
-     //   tv_Wait_time_charge!!.text = "₹ " + 0.00
+        //   tv_Wait_time_charge!!.text = "₹ " + 0.00
 
-        if(spntext.equals("Now")){
-            btnLogin!!.text ="Start Ride"
-        }else{
-            btnLogin!!.text ="Schedule Ride"
+        if (spntext.equals("Now")) {
+            btnLogin!!.text = "Start Ride"
+        } else {
+            btnLogin!!.text = "Schedule Ride"
         }
 
-        tv_tollCharge!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.tollCharge
+
+       /* val gps = GPSTracker(this@ViewRideActivity)
+        if (gps.canGetLocation()) {
+
+            val geocoder = Geocoder(this@ViewRideActivity, Locale.getDefault())
+            try {
+                val addresses =
+                    geocoder.getFromLocation(
+                        gps!!.latitude!!.toDouble(),
+                        gps!!.longitude!!.toDouble(),
+                        1
+                    )
+                if (addresses != null) {
+                    val returnedAddress = addresses[0]
+                    val strReturnedAddress =
+                        StringBuilder()
+                    for (j in 0..returnedAddress.maxAddressLineIndex) {
+                        strReturnedAddress.append(returnedAddress.getAddressLine(j))
+                    }
+                    getCurrentCity = returnedAddress.subAdminArea
+                    Log.d("swqazxdfgtr", getCurrentCity)
+
+                }
+            } catch (e: IOException) {
+            }
+
+        } else {
+            gps.showSettingsAlert()
+        }
+*/
+
+        if(btnLogin!!.text.equals("Start Ride")) {
+            if (canStartRide.equals("Yes")) {
+                btnLogin!!.isEnabled = true
+            } else {
+                btnLogin!!.isEnabled = false
+                btnLogin!!.setBackgroundResource(R.drawable.btn_rounded_grey)
+            }
+        }
+
+        tv_tollCharge!!.text =
+            "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.tollCharge
 
         tv_Luggage_Charges!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.luggageCharge
+        tv_NightCharges!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.nightCharge
 
-        tv_SurCharges!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.surCharge
+        tv_SurCharges!!.text =
+            "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.surCharge
 
-        tv_estcharge!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.subTotal
+        tv_estcharge!!.text =
+            "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.subTotal
 
-        tv_additional_charges!!.text = "₹ " + (compareRideList[listPosition].fares?.get(spinnerposition)!!.luggageCharge!!.toDouble()
-                + compareRideList[listPosition].fares?.get(spinnerposition)!!.surCharge!!.toDouble()
-                + compareRideList[listPosition].fares?.get(spinnerposition)!!.tollCharge!!.toDouble())
+        tv_additional_charges!!.text =
+            "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.additionalCharges
 
         if (compareRideList[listPosition].fares?.get(spinnerposition)!!.nightCharge == "0.00") {
             switchdata!!.isChecked = true
@@ -224,6 +316,12 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
+
+
+
+
+
+
     }
 
     private fun setStatusBarGradiant(activity: ViewRideActivity) {
@@ -238,11 +336,12 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
 
 
     override fun onDestroy() {
-       // sharedpreferences!!.edit().clear().commit()
-      //  preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT,"LOCALITY")
+        // sharedpreferences!!.edit().clear().commit()
+        //  preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT,"LOCALITY")
 
         super.onDestroy()
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_home_lang, menu)
@@ -253,7 +352,10 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_home -> {
-                preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT,"LOCALITY")
+                preferencesManager!!.setStringValue(
+                    Constants.SHARED_PREFERENCE_PICKUP_AITPORT,
+                    "LOCALITY"
+                )
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@ViewRideActivity, HomeActivity::class.java)
                 startActivity(intent)
@@ -263,31 +365,55 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
     }
 
 
-
     @OnClick(R.id.btnLogin)
-    fun btnClick(){
-        if(spntext.equals("Now")){
+    fun btnClick() {
+        if (spntext.equals("Now")) {
             val intent = Intent(applicationContext, RideDetailsActivity::class.java)
+            intent.putExtra("vehicle_rate_card_id", vahicalRateCardID)
+            intent.putExtra("luggage_quantity", luggagesQuantity)
+            intent.putExtra("schedule_date", formatedDateTime)
+            intent.putExtra("origin_place_id", originPlaceID)
+            intent.putExtra("destination_place_id", destinationPlaceID)
+            intent.putExtra("overview_polyline", overviewPolyLine)
+            intent.putExtra("distance", distance_ViewRide)
+            intent.putExtra("duration", durationRide)
+            intent.putExtra("airport_rate_card_id", airportCardID)
+            intent.putExtra("originLat", sourceLatitude)
+            intent.putExtra("originLong", sourceLongitude)
+            intent.putExtra("destinationLat", destLat)
+            intent.putExtra("destinationLong", destLong)
+            intent.putExtra("SAddress", sAdd)
+            intent.putExtra("DAddress", dAdd)
+            intent.putExtra("CITY_ID", CITY_ID)
+            intent.putExtra("ImgUrl", compareRideList[listPosition].vehicleImageUrl)
+            intent.putExtra("ImgName", compareRideList[listPosition].fares?.get(spinnerposition)!!.name)
             startActivity(intent)
-        }else{
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("FairFare")
-            builder.setMessage("Your Ride is Scheduled")
-            builder.setPositiveButton("OK"){dialogInterface, which ->
+        } else {
+
+
+            if(vahicalRateCardID==null){
+                vahicalRateCardID = ""
             }
 
-            val alertDialog: AlertDialog = builder.create()
-            alertDialog.setCancelable(false)
-            alertDialog.show()
-        }
+            if(airportCardID==null){
+                airportCardID=""
+            }
+
+
+            iViewRidePresenter!!.schduleRide(token,vahicalRateCardID,luggagesQuantity,formatedDateTime,
+            originPlaceID,destinationPlaceID,overviewPolyLine,distance_ViewRide,durationRide,CITY_ID,
+                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong)
+
+
+         }
     }
 
     @OnClick(R.id.tvhideShow)
-    fun  hideshow(){
-        if(hideshow.equals("show")){
+    fun hideshow() {
+        if (hideshow.equals("show")) {
             hideshow = "hide"
             homeView?.visibility = View.GONE
-        }else{
+        } else {
             hideshow = "show"
             homeView?.visibility = View.VISIBLE
         }
@@ -307,10 +433,9 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        if (!sourceLong!!.isEmpty() && !destLat!!.isEmpty()) {
-            mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(sourceLat!!.toDouble(), sourceLong!!.toDouble()), 13.0f))
-            sourecemarker = mMap!!.addMarker(
-                MarkerOptions().position(LatLng(sourceLat!!.toDouble(), sourceLong!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
+        if (!sourceLatitude!!.isEmpty() && !destLat!!.isEmpty()) {
+            mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(sourceLatitude!!.toDouble(), sourceLongitude!!.toDouble()), 15.0f))
+            sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(sourceLatitude!!.toDouble(), sourceLongitude!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
             sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(destLat!!.toDouble(), destLong!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
             drawRoute()
         }
@@ -318,7 +443,7 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
 
     private fun drawRoute() {
         val mOrigin =
-            LatLng(sourceLat!!.toDouble(), sourceLong!!.toDouble())
+            LatLng(sourceLatitude!!.toDouble(), sourceLongitude!!.toDouble())
         val mDestination =
             LatLng(destLat!!.toDouble(), destLong!!.toDouble())
         val url = getDirectionsUrl(mOrigin, mDestination)
@@ -422,14 +547,16 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
                 val parser =
                     DirectionsJSONParser()
                 val array = jObject.getJSONArray("routes")
+                val geoCodedarray = jObject.getJSONArray("geocoded_waypoints")
                 val routes1 = array.getJSONObject(0)
                 val legs = routes1.getJSONArray("legs")
                 val steps = legs.getJSONObject(0)
                 val distance = steps.getJSONObject("distance")
-                val duration = steps.getJSONObject("duration")
-
-
-                // Starts parsing data
+                durationRide = steps.getJSONObject("duration").getString("text")
+                originPlaceID = geoCodedarray.getJSONObject(0).getString("place_id")
+                destinationPlaceID = geoCodedarray.getJSONObject(1).getString("place_id")
+                overviewPolyLine =
+                    jObject.getJSONArray("routes").getJSONObject(0).getString("overview_polyline")
                 routes = parser.parse(jObject)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -477,5 +604,54 @@ class ViewRideActivity : BaseLocationClass(), OnMapReadyCallback {
             } else Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
                 .show()
         }
+    }
+
+    override fun schduleRideSuccess(scheduleRideResponsePOJO: ScheduleRideResponsePOJO?) {
+    //    Toast.makeText(this@ViewRideActivity, scheduleRideResponsePOJO!!.message, Toast.LENGTH_LONG).show()
+
+        val intent = Intent(this@ViewRideActivity, HomeActivity::class.java)
+        intent.action = "schduleRideSuccess"
+        startActivity(intent)
+
+
+
+    }
+
+    override fun validationError(validationResponse: ValidationResponse?) {
+
+        Toast.makeText(
+            this@ViewRideActivity,
+            validationResponse!!.errors!![0].message,
+            Toast.LENGTH_LONG
+        ).show()
+
+
+
+    }
+
+    override fun showWait() {
+        ProjectUtilities.showProgressDialog(this@ViewRideActivity)
+    }
+
+    override fun removeWait() {
+        ProjectUtilities.dismissProgressDialog()
+    }
+
+    override fun onFailure(appErrorMessage: String?) {
+        Toast.makeText(this@ViewRideActivity, appErrorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onLocationChanged(location: Location?) {
+
+
+    }
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+    }
+
+    override fun onProviderEnabled(provider: String?) {
+    }
+
+    override fun onProviderDisabled(provider: String?) {
     }
 }

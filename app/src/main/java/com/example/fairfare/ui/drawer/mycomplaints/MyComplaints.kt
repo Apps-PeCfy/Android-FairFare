@@ -1,0 +1,190 @@
+package com.example.fairfare.ui.drawer.mycomplaints
+
+import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.util.Log
+import android.view.*
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.example.fairfare.R
+import com.example.fairfare.networking.ApiClient
+import com.example.fairfare.ui.Login.pojo.ValidationResponse
+import com.example.fairfare.ui.drawer.mycomplaints.complaintDetails.ComplaintsDetailsActivity
+import com.example.fairfare.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
+import com.example.fairfare.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
+import com.example.fairfare.ui.drawer.mylocation.MyLocationAdapter
+import com.example.fairfare.ui.home.HomeActivity
+import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
+import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.PreferencesManager
+import com.google.gson.GsonBuilder
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.IOException
+import java.util.ArrayList
+
+class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
+
+
+    var preferencesManager: PreferencesManager? = null
+    var sharedpreferences: SharedPreferences? = null
+    var myComplaintsAdapter: MyComplaintsAdapter? = null
+    var token: String? = null
+    private var getComplaintListList: List<GetDisputResponsePOJO.DataItem> = ArrayList()
+
+
+    @JvmField
+    @BindView(R.id.recycler_view_myRides)
+    var recycler_view_myRides: RecyclerView? = null
+
+    @JvmField
+    @BindView(R.id.ivImg)
+    var ivImg: ImageView? = null
+
+    @JvmField
+    @BindView(R.id.tvEmptyTxt)
+    var tvEmptyTxt: TextView? = null
+
+    @JvmField
+    @BindView(R.id.rlEmpty)
+    var rlEmpty: RelativeLayout? = null
+
+
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_my_rides, container, false)
+        ButterKnife.bind(this, rootView)
+        setHasOptionsMenu(true)
+        initView()
+        PreferencesManager.initializeInstance(activity!!.applicationContext)
+        preferencesManager = PreferencesManager.instance
+        token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+
+
+        val progressDialog = ProgressDialog(activity)
+        progressDialog.setCancelable(false) // set cancelable to false
+        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.show() // show progress dialog
+
+        ApiClient.client.getComplaint("Bearer $token", "Complaint")!!.enqueue(object :
+            Callback<GetDisputResponsePOJO?> {
+            override fun onResponse(
+                call: Call<GetDisputResponsePOJO?>,
+                response: Response<GetDisputResponsePOJO?>
+            ) {
+                progressDialog.dismiss()
+                if (response.code() == 200) {
+                    getComplaintListList = response.body()!!.data!!
+                    if (getComplaintListList.size > 0) {
+                        myComplaintsAdapter = MyComplaintsAdapter(activity, getComplaintListList)
+                        recycler_view_myRides!!.layoutManager = LinearLayoutManager(activity)
+                        recycler_view_myRides!!.adapter = myComplaintsAdapter
+                        myComplaintsAdapter!!.setClickListener(this@MyComplaints)
+
+                        myComplaintsAdapter!!.notifyDataSetChanged()
+                    }else{
+                        rlEmpty!!.visibility=View.VISIBLE
+                        ivImg!!.setBackgroundResource(R.drawable.empty_complaint)
+                        tvEmptyTxt!!.text="You have not filed any Complaints yet!"
+
+                    }
+
+
+                } else if (response.code() == 422) {
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        Toast.makeText(activity, pojo.message, Toast.LENGTH_LONG).show()
+
+
+                    } catch (exception: IOException) {
+                    }
+
+                }else {
+                    Toast.makeText(
+                        activity,
+                        "Internal server error",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+            override fun onFailure(
+                call: Call<GetDisputResponsePOJO?>,
+                t: Throwable
+            ) {
+                progressDialog.dismiss()
+                Log.d("response", t.stackTrace.toString())
+            }
+        })
+
+
+
+
+
+        return rootView
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater!!.inflate(R.menu.menu_home_lang, menu!!)
+        super.onCreateOptionsMenu(menu!!, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_home -> {
+                preferencesManager!!.setStringValue(
+                    Constants.SHARED_PREFERENCE_PICKUP_AITPORT,
+                    "LOCALITY"
+                )
+                sharedpreferences!!.edit().clear().commit()
+                val intent = Intent(activity, HomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return true
+    }
+
+
+    private fun initView() {
+        val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
+        toolbar.title = "My Complaints"
+
+        sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun detailDisputClick(id: Int) {
+        val intent = Intent(activity, ComplaintsDetailsActivity::class.java)
+        intent.putExtra("Id",id.toString())
+        startActivity(intent)
+
+    }
+
+}

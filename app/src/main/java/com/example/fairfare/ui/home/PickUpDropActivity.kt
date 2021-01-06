@@ -27,7 +27,6 @@ import com.example.fairfare.ui.home.PlacesAutoCompleteAdapter.ClickListener
 import com.example.fairfare.ui.home.RecyclerViewAdapter.IClickListener
 import com.example.fairfare.ui.home.pojo.DeleteSaveDataResponsePOJO
 import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
-import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO.LocationsItem
 import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
@@ -127,10 +126,11 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     var editor: SharedPreferences.Editor? = null
     var token: String? = null
     var locateOnMapAddress: String? = null
+    var locateOnMapCurrentAddress: String? = null
     var keyAirport: String? = null
     var preferencesManager: PreferencesManager? = null
     private var mAutoCompleteAdapter: PlacesAutoCompleteAdapter? = null
-    private var savedLocationList: List<LocationsItem> = ArrayList()
+    private var savedLocationList: List<GetSaveLocationResponsePOJO.DataItem> = ArrayList()
     var recyclerViewAdapter: RecyclerViewAdapter? = null
     var recentRecyclerViewAdapter: RecentRecyclerViewAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,14 +155,16 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             ) {
                 if (response.code() == 200) {
                     recyclerView!!.visibility = View.GONE
-                    savedLocationList = response.body()?.data!!.locations!!
-                    recentRecyclerViewAdapter =
-                        RecentRecyclerViewAdapter(this@PickUpDropActivity, savedLocationList!!)
-                    recycler_view_saved!!.adapter = recentRecyclerViewAdapter
-                    recycler_view_saved!!.layoutManager =
-                        LinearLayoutManager(this@PickUpDropActivity)
-                    recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
-                    recentRecyclerViewAdapter!!.notifyDataSetChanged()
+                    savedLocationList = response.body()?.data!!
+                    if(savedLocationList.size>0) {
+                        recentRecyclerViewAdapter =
+                            RecentRecyclerViewAdapter(this@PickUpDropActivity, savedLocationList!!)
+                        recycler_view_saved!!.adapter = recentRecyclerViewAdapter
+                        recycler_view_saved!!.layoutManager =
+                            LinearLayoutManager(this@PickUpDropActivity)
+                        recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+                        recentRecyclerViewAdapter!!.notifyDataSetChanged()
+                    }
                 } else {
                     Toast.makeText(
                         this@PickUpDropActivity,
@@ -185,10 +187,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         mAutoCompleteAdapter!!.setClickListener(this)
         recyclerView!!.adapter = mAutoCompleteAdapter
         mAutoCompleteAdapter!!.notifyDataSetChanged()
-        sharedpreferences = getSharedPreferences(
-            mypreference,
-            Context.MODE_PRIVATE
-        )
+        sharedpreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE)
         editor = sharedpreferences!!.edit()
         homeView!!.visibility = View.VISIBLE
         lladdress!!.visibility = View.GONE
@@ -207,7 +206,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     private val filterTextWatcher: TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable) {
             if (selectedTab == "Saved") {
-                val listClone: MutableList<LocationsItem> =
+                val listClone: MutableList<GetSaveLocationResponsePOJO.DataItem> =
                     ArrayList()
                 for (i in savedLocationList!!.indices) {
                     if (savedLocationList[i].fullAddress!!.toLowerCase()
@@ -221,7 +220,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 recyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
             }
             if (selectedTab == "Recent") {
-                val listCloneRecent: MutableList<LocationsItem> =
+                val listCloneRecent: MutableList<GetSaveLocationResponsePOJO.DataItem> =
                     ArrayList()
                 for (i in savedLocationList!!.indices) {
                     if (savedLocationList[i]!!.fullAddress!!.toLowerCase()
@@ -230,10 +229,12 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                         listCloneRecent.add(savedLocationList[i])
                     }
                 }
-                recentRecyclerViewAdapter =
-                    RecentRecyclerViewAdapter(this@PickUpDropActivity, listCloneRecent)
-                recycler_view_saved!!.adapter = recentRecyclerViewAdapter
-                recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+                if(listCloneRecent.size>0) {
+                    recentRecyclerViewAdapter =
+                        RecentRecyclerViewAdapter(this@PickUpDropActivity, listCloneRecent)
+                    recycler_view_saved!!.adapter = recentRecyclerViewAdapter
+                    recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+                }
             }
             if (selectedTab == "Searches") {
                 if (s.toString() != "") {
@@ -243,7 +244,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 } else {
                     recyclerView!!.visibility = View.GONE
                     recycler_view_saved!!.visibility = View.VISIBLE
-                    val listCloneRecent: MutableList<LocationsItem> =
+                    val listCloneRecent: MutableList<GetSaveLocationResponsePOJO.DataItem> =
                         ArrayList()
                     for (i in savedLocationList.indices) {
                         if (savedLocationList[i].fullAddress!!.toLowerCase()
@@ -252,10 +253,12 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                             listCloneRecent.add(savedLocationList[i])
                         }
                     }
-                    recentRecyclerViewAdapter =
-                        RecentRecyclerViewAdapter(this@PickUpDropActivity, listCloneRecent)
-                    recycler_view_saved!!.adapter = recentRecyclerViewAdapter
-                    recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+                    if(listCloneRecent.size>0) {
+                        recentRecyclerViewAdapter =
+                            RecentRecyclerViewAdapter(this@PickUpDropActivity, listCloneRecent)
+                        recycler_view_saved!!.adapter = recentRecyclerViewAdapter
+                        recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+                    }
                 }
             }
         }
@@ -306,14 +309,15 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     if (response.code() == 200) {
                         recyclerView!!.visibility = View.GONE
                         recycler_view_saved!!.visibility = View.VISIBLE
-                        savedLocationList = response.body()!!.data!!.locations!!
-                        recentRecyclerViewAdapter =
-                            RecentRecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
-                        recycler_view_saved!!.adapter = recentRecyclerViewAdapter
-                        recycler_view_saved!!.layoutManager =
-                            LinearLayoutManager(this@PickUpDropActivity)
-                        recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
-                        recentRecyclerViewAdapter!!.notifyDataSetChanged()
+                        savedLocationList = response.body()!!.data!!
+                        if(savedLocationList.size>0) {
+                            recentRecyclerViewAdapter = RecentRecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
+                            recycler_view_saved!!.adapter = recentRecyclerViewAdapter
+                            recycler_view_saved!!.layoutManager =
+                                LinearLayoutManager(this@PickUpDropActivity)
+                            recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+                            recentRecyclerViewAdapter!!.notifyDataSetChanged()
+                        }
                     } else {
                         Toast.makeText(
                             this@PickUpDropActivity,
@@ -348,8 +352,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         tv_view_recent!!.setBackgroundColor(Color.GRAY)
         tv_view_saved!!.setBackgroundColor(Color.RED)
         tv_view_search!!.setBackgroundColor(Color.GRAY)
-        token =
-            preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+        token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         client.getSavedLocation("Bearer $token")!!.enqueue(object :
             Callback<GetSaveLocationResponsePOJO?> {
             override fun onResponse(
@@ -357,7 +360,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 response: Response<GetSaveLocationResponsePOJO?>
             ) {
                 if (response.code() == 200) {
-                    savedLocationList = response.body()!!.data!!.locations!!
+                    savedLocationList = response.body()!!.data!!
                     recyclerViewAdapter = RecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
                     recycler_view_saved!!.adapter = recyclerViewAdapter
                     recyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
@@ -395,11 +398,12 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 response: Response<GetSaveLocationResponsePOJO?>
             ) {
                 if (response.code() == 200) {
-                    savedLocationList = response.body()!!.data!!.locations!!
-                    recentRecyclerViewAdapter =
-                        RecentRecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
-                    recyclerView!!.adapter = recentRecyclerViewAdapter
-                    recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+                    savedLocationList = response.body()!!.data!!
+                    if(savedLocationList.size>0) {
+                        recentRecyclerViewAdapter = RecentRecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
+                        recyclerView!!.adapter = recentRecyclerViewAdapter
+                        recentRecyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
+                    }
                 } else {
                     Toast.makeText(
                         this@PickUpDropActivity,
@@ -453,8 +457,9 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         client.SaveLocation(
             "Bearer $token", results[0]!!.placeId, returnedAddress!!.subAdminArea,
             returnedAddress.adminArea,
-            returnedAddress.countryName,
-            returnedAddress.getAddressLine(0)
+            returnedAddress.getAddressLine(0),
+            returnedAddress.countryName
+
         )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
             override fun onResponse(
                 call: Call<SaveLocationResponsePojo?>,
@@ -513,6 +518,9 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         intent.putExtra("currentLongitude", currentLongitude)
         intent.putExtra("spnbg", extras!!.getInt("spinnerbag"))
         intent.putExtra("spnTime", extras!!.getInt("spinnerTime"))
+        intent.putExtra("getcity", extras!!.getString("City"))
+        intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
+        intent.putExtra("formaredDateLater", extras!!.getString("formaredDateLater"))
 
         startActivity(intent)
     }
@@ -554,37 +562,24 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             }
         } catch (e: IOException) {
         }
+
+
+        Log.d("sdewddwasPick",currentLatitude.toString())
+
         mMap = googleMap
+        locateOnMapAddress = currentAddress
         tvAddress!!.text = currentAddress
         markerOptionscurrent.title(currentAddress)
-        googleMap!!.animateCamera(
-            CameraUpdateFactory.newLatLng(
-                LatLng(
-                    currentLatitude,
-                    currentLongitude
-                )
-            )
-        )
-        googleMap.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                LatLng(
-                    currentLatitude,
-                    currentLongitude
-                ), 13.0f
-            )
-        )
-        mMap!!.addMarker(
-            MarkerOptions().position(
-                LatLng(
-                    currentLatitude,
-                    currentLongitude
-                )
-            ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-        )
+        googleMap!!.animateCamera(CameraUpdateFactory.newLatLng(LatLng(currentLatitude, currentLongitude)))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(currentLatitude, currentLongitude), 15.0f))
+        mMap!!.addMarker(MarkerOptions().position(LatLng(currentLatitude, currentLongitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
 
 
-        //   googleMap.addMarker(markerOptionscurrent);
+
+
         googleMap.setOnMapClickListener { latLng ->
+
+
             ivFavLocateOnMap!!.setBackgroundResource(R.drawable.ic_fav_unchecked)
             val markerOptions = MarkerOptions()
             markerOptions.position(latLng)
@@ -614,7 +609,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             markerOptions.title(street)
             googleMap.clear()
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0f))
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f))
             mMap!!.addMarker(MarkerOptions().position(LatLng(latLng.latitude, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
 
         }
@@ -658,6 +653,11 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         intent.putExtra("keyAirport", keyAirport)
         intent.putExtra("spnbg", extras!!.getInt("spinnerbag"))
         intent.putExtra("spnTime", extras!!.getInt("spinnerTime"))
+        intent.putExtra("getcity", extras!!.getString("City"))
+        intent.putExtra("formaredDateLater", extras!!.getString("formaredDateLater"))
+
+        intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
+
         intent.putExtra("splacedi", selectedAddress)
 
 
@@ -703,10 +703,14 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 intent.putExtra("currentLongitude", place.latLng!!.longitude)
                 intent.putExtra("spnbg", extras!!.getInt("spinnerbag"))
                 intent.putExtra("spnTime", extras!!.getInt("spinnerTime"))
+                intent.putExtra("getcity", extras!!.getString("City"))
+                intent.putExtra("formaredDateLater", extras!!.getString("formaredDateLater"))
+
+                intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
+
 
                 startActivity(intent)
 
-                // mapCalled(mMap);
                 Log.d(
                     "Placefound: ",
                     place.latLng!!.latitude.toString() + "   " + place.latLng!!.longitude
@@ -734,7 +738,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                             if (response.code() == 200) {
 
 
-                                savedLocationList = response.body()!!.data!!.locations!!
+                                savedLocationList = response.body()!!.data!!
                                 recyclerViewAdapter = RecyclerViewAdapter(this@PickUpDropActivity, savedLocationList)
                                 recycler_view_saved!!.adapter = recyclerViewAdapter
                                 recyclerViewAdapter!!.setClickListener(this@PickUpDropActivity)
@@ -787,5 +791,11 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         const val DestinationLong = "DestinationLong"
         const val fromLocation = "fromLocation"
         const val destiNationLocation = "destiNationLocation"
+
+
+
+        const val SourceAddress = "SourceAddress"
+        const val DestinationAddress = "DestinationAddress"
+
     }
 }

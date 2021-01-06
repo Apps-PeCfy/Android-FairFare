@@ -14,6 +14,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fairfare.R
 import com.example.fairfare.networking.ApiClient.client
+import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.home.PlacesAutoCompleteAdapter.PredictionHolder
 import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.utils.Constants
@@ -28,6 +29,7 @@ import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,8 +53,10 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
         this.clickListener = clickListener
     }
 
+    var favClick: String? = "first"
+
     interface ClickListener {
-        fun click(place: Place?,address:String)
+        fun click(place: Place?, address: String)
         fun favClick(place: Place?)
     }
 
@@ -108,10 +112,10 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
             FindAutocompletePredictionsRequest.builder() // Call either setLocationBias() OR setLocationRestriction().
                 //.setLocationBias(bounds)
                 //.setTypeFilter(TypeFilter.CITIES)
-             //   .setLocationRestriction(RectangularBounds.newInstance(northEast,northEast))
-               // .setLocationBias(RectangularBounds.newInstance(northEast,southwest))
-                    .setSessionToken(token)
-                .setCountry("IN")
+                //   .setLocationRestriction(RectangularBounds.newInstance(northEast,northEast))
+                // .setLocationBias(RectangularBounds.newInstance(northEast,southwest))
+                .setSessionToken(token)
+                //  .setCountry("IN")
 
                 .setQuery(constraint.toString())
                 .build()
@@ -213,7 +217,11 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                         }
                         val token =
                             preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-                        client.SaveRecentLocation("Bearer $token", place.id, returnedAddress!!.subAdminArea, returnedAddress.adminArea, returnedAddress.countryName, place.address)!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
+                        client.SaveRecentLocation(
+                            "Bearer $token", place.id,
+                            returnedAddress!!.subAdminArea, returnedAddress.adminArea,
+                            returnedAddress.countryName, item.address.toString()
+                        )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
                             override fun onResponse(
                                 call: Call<SaveLocationResponsePojo?>,
                                 response: Response<SaveLocationResponsePojo?>
@@ -228,7 +236,10 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                                 Log.d("response", t.stackTrace.toString())
                             }
                         })
-                        clickListener!!.click(place,mResultList!![adapterPosition].address.toString())
+                        clickListener!!.click(
+                            place,
+                            mResultList!![adapterPosition].address.toString()
+                        )
                     }.addOnFailureListener { exception ->
                         if (exception is ApiException) {
                             Toast.makeText(mContext, exception.message + "", Toast.LENGTH_LONG)
@@ -238,57 +249,96 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
             }
 
             if (v.id == R.id.iv_fav) {
-                val placeId = item.placeId.toString()
-                val placeFields =
-                    Arrays.asList(
-                        Place.Field.ID,
-                        Place.Field.NAME,
-                        Place.Field.LAT_LNG,
-                        Place.Field.ADDRESS
-                    )
-                val request =
-                    FetchPlaceRequest.builder(placeId, placeFields).build()
-                placesClient.fetchPlace(request)
-                    .addOnSuccessListener { response ->
-                        var returnedAddress: Address? = null
-                        val place =
-                            response.place
-                        val geocoder =
-                            Geocoder(mContext, Locale.getDefault())
-                        try {
-                            val addresses =
-                                geocoder.getFromLocation(
-                                    place.latLng!!.latitude,
-                                    place.latLng!!.longitude, 1
-                                )
-                            if (addresses != null) {
-                                returnedAddress = addresses[0]
-                            }
-                        } catch (e: IOException) {
-                        }
-                        val token = preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-                        client.SaveLocation("Bearer $token", place.id, returnedAddress!!.subAdminArea, returnedAddress!!.adminArea, returnedAddress!!.countryName, place.address)!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
-                            override fun onResponse(call: Call<SaveLocationResponsePojo?>, response: Response<SaveLocationResponsePojo?>) {
-                                if (response.code() == 200) { iv_fav.setBackgroundResource(R.drawable.ic_fav_checked)
-                                    Toast.makeText(mContext, "Location saved successfully !!", Toast.LENGTH_SHORT).show()
-                                } else {
-                                    Toast.makeText(mContext, "Internal server error", Toast.LENGTH_LONG).show()
-                                }
-                            }
+                if (favClick.equals("first")) {
+                    favClick ="second"
 
-                            override fun onFailure(
-                                call: Call<SaveLocationResponsePojo?>,
-                                t: Throwable
-                            ) {
-                                Log.d("response", t.stackTrace.toString())
+                    val placeId = item.placeId.toString()
+                    val placeFields =
+                        Arrays.asList(
+                            Place.Field.ID,
+                            Place.Field.NAME,
+                            Place.Field.LAT_LNG,
+                            Place.Field.ADDRESS
+                        )
+                    val request = FetchPlaceRequest.builder(placeId, placeFields).build()
+                    placesClient.fetchPlace(request)
+                        .addOnSuccessListener { response ->
+                            var returnedAddress: Address? = null
+                            val place = response.place
+                            val geocoder =
+                                Geocoder(mContext, Locale.getDefault())
+                            try {
+                                val addresses =
+                                    geocoder.getFromLocation(
+                                        place.latLng!!.latitude,
+                                        place.latLng!!.longitude, 1
+                                    )
+                                if (addresses != null) {
+                                    returnedAddress = addresses[0]
+                                }
+                            } catch (e: IOException) {
                             }
-                        })
-                    }.addOnFailureListener { exception ->
-                        if (exception is ApiException) {
-                            Toast.makeText(mContext, exception.message + "", Toast.LENGTH_LONG)
-                                .show()
+                            val token =
+                                preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+                            client.SaveLocation(
+                                "Bearer $token",
+                                place.id,
+                                returnedAddress!!.subAdminArea,
+                                returnedAddress!!.adminArea,
+                                item.address.toString(),
+                                returnedAddress!!.countryName
+                            )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
+                                override fun onResponse(
+                                    call: Call<SaveLocationResponsePojo?>,
+                                    response: Response<SaveLocationResponsePojo?>
+                                ) {
+                                    if (response.code() == 200) {
+                                        favClick = "first"
+                                        iv_fav.setBackgroundResource(R.drawable.ic_fav_checked)
+                                        Toast.makeText(
+                                            mContext,
+                                            "Location saved successfully !!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }else if (response.code() == 422||response.code() ==400 ) {
+                                        val gson = GsonBuilder().create()
+                                        var pojo: ValidationResponse? = ValidationResponse()
+                                        try {
+                                            pojo = gson.fromJson(
+                                                response.errorBody()!!.string(),
+                                                ValidationResponse::class.java
+                                            )
+                                            Toast.makeText(mContext, pojo.message, Toast.LENGTH_LONG).show()
+
+
+                                        } catch (exception: IOException) {
+                                        }
+
+                                    } else {
+                                        Toast.makeText(
+                                            mContext,
+                                            "Internal server error",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+
+                                override fun onFailure(
+                                    call: Call<SaveLocationResponsePojo?>,
+                                    t: Throwable
+                                ) {
+                                    Log.d("response", t.stackTrace.toString())
+                                }
+                            })
+                        }.addOnFailureListener { exception ->
+                            if (exception is ApiException) {
+                                Toast.makeText(mContext, exception.message + "", Toast.LENGTH_LONG)
+                                    .show()
+                            }
                         }
-                    }
+
+
+                }
             }
         }
 
