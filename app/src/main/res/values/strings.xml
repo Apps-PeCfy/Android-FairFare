@@ -32,7 +32,7 @@
     <string name="drawer_mydisput">My Disputes</string>
     <string name="drawer_mycomplents">My Complaints</string>
     <string name="drawer_ratecard">Rate Card</string>
-    <string name="drawer_faq">FAQ\'s</string>
+    <string name="drawer_faq">FAQs</string>
     <string name="drawer_contactus">Contact Us</string>
     <string name="drawer_privacypolicy">Privacy Policy</string>
     <string name="drawer_setting">Settings</string>
@@ -52,5 +52,7 @@
     </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save_dispute">Save Dispute</string>
+    <string name="resendotp">Re-send another code</string>
 </resources>
 

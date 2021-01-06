@@ -4,7 +4,8 @@
 
 
     <item
-        android:id="@+id/action_lang"
+
+        android:id="@+id/action_skip"
         android:title="SKIP"
         app:showAsAction="ifRoom" />
 
