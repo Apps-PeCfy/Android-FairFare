@@ -25,6 +25,7 @@ import com.example.fairfare.ui.otp.pojo.VerifyOTPResponsePojo
 import com.example.fairfare.ui.endrides.pojo.ResponseEnd
 import com.example.fairfare.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
+import com.example.fairfare.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import okhttp3.MultipartBody
@@ -206,6 +207,12 @@ interface NetworkService {
         @Query("location") location: String?,
         @Query("radius") radius: Int
     ): Call<NearByResponse?>?
+
+ @GET("https://maps.googleapis.com/maps/api/distancematrix/json?key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+    fun distanceMatrix(
+        @Query("origins") origins: String?,
+        @Query("destinations") destinations: String
+    ): Call<DistanceMatrixResponse?>?
 
 
     @GET("https://roads.googleapis.com/v1/snapToRoads?interpolate=true&key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
