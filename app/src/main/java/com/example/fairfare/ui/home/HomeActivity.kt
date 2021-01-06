@@ -1,6 +1,7 @@
 package com.example.fairfare.ui.home
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.ProgressDialog
@@ -1316,6 +1317,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         return "https://maps.googleapis.com/maps/api/directions/$output?$parameters"
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
 
 
@@ -1324,6 +1327,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         myMonth = month + 1
         val c = Calendar.getInstance()
         hour = c[Calendar.HOUR]
+        c.add(Calendar.MINUTE,30)
         minute = c[Calendar.MINUTE]
         second = c[Calendar.SECOND]
         AMorPM = c[Calendar.AM_PM]

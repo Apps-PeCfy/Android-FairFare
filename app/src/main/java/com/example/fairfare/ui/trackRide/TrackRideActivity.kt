@@ -35,6 +35,7 @@ import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
+import com.example.fairfare.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.example.fairfare.utils.Constants
@@ -303,12 +304,13 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
                     )
 
                     //distanceBetweenCurrent in meter
-                    if (distanceBetweenCurrent!! >= 10) {
-                        globalmarkerPoints!!.add(OriginM)
+                    if (distanceBetweenCurrent!! >= 1) {
+                        globalmarkerPoints!!.add(0,OriginM)
                         trackBoard = "currentCordinate"
                         drawRoute()
 
                         if (globalmarkerPoints!!.size >= 2) {
+                            calDistance()
                             drawNewRoute()
                             logDistance()
                         }
@@ -415,6 +417,48 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
+    }
+
+    private fun calDistance() {
+
+
+
+        val newOriginLat =  (globalmarkerPoints!!.get(0)!!.latitude)
+        val newOriginLong =  (globalmarkerPoints!!.get(0)!!.longitude)
+
+
+        val newDestLat =  (globalmarkerPoints!!.get(1)!!.latitude)
+        val newDestLong =  (globalmarkerPoints!!.get(1)!!.longitude)
+
+
+        val call = ApiClient.clientPlaces.distanceMatrix(
+
+        "$newOriginLat,$newOriginLong",
+        "$newDestLat,$newDestLong"
+
+        )
+
+        call!!.enqueue(object : Callback<DistanceMatrixResponse?> {
+            override fun onResponse(
+                call: Call<DistanceMatrixResponse?>,
+                response: Response<DistanceMatrixResponse?>
+            ) {
+                if (response.code() == 200) {
+
+                    actulDis = response.body()!!.rows!!.get(0).elements!!.get(0).distance!!.value
+                    Log.d("dewszasdc",actualDistance.toString())
+
+                    actualTravelDistance.add(actulDis.toDouble())
+
+                }
+            }
+
+            override fun onFailure(
+                call: Call<DistanceMatrixResponse?>,
+                t: Throwable
+            ) {
+            }
+        })
     }
 
     private fun logDistance() {
@@ -1361,9 +1405,6 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
                 val duration = zerothLegs.getJSONObject("duration")
 
 
-                 actulDis = distance.getInt("value")
-
-                actualTravelDistance.add(actulDis.toDouble())
                 waitLocation = zerothLegs.getString("end_address")
                 val endLocation = zerothLegs.getJSONObject("end_location")
                 waitLat = endLocation.getString("lat")
