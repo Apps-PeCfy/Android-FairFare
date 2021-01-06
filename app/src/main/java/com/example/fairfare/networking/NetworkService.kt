@@ -13,19 +13,24 @@ import com.example.fairfare.ui.drawer.mydisput.disputDetail.pojo.DisputDetailRes
 import com.example.fairfare.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
 import com.example.fairfare.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
 import com.example.fairfare.ui.drawer.myrides.pojo.GetRideResponsePOJO
+import com.example.fairfare.ui.drawer.myrides.ridedetails.RideDetailsResponsePOJO
 import com.example.fairfare.ui.drawer.privacypolicy.ContentResponsePOJO
 import com.example.fairfare.ui.drawer.ratecard.pojo.RateCardResponsePOJO
-import com.example.fairfare.ui.endrides.pojo.EndRideResponsePOJO
+import com.example.fairfare.ui.drawer.setting.pojo.SettingResponsePojo
 import com.example.fairfare.ui.home.pojo.DeleteSaveDataResponsePOJO
+import com.example.fairfare.ui.home.pojo.GetAllowCityResponse
 import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.ui.otp.pojo.VerifyOTPResponsePojo
+import com.example.fairfare.ui.endrides.pojo.ResponseEnd
 import com.example.fairfare.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 import java.util.*
@@ -80,8 +85,8 @@ interface NetworkService {
         @Field("place_id") place_id: String?,
         @Field("city") city: String?,
         @Field("state") state: String?,
-        @Field("country") country: String?,
-        @Field("full_address") full_address: String?
+        @Field("full_address") full_address: String?,
+        @Field("country") country: String?
     ): Call<SaveLocationResponsePojo?>?
 
     @FormUrlEncoded
@@ -118,7 +123,8 @@ interface NetworkService {
         @Field("destination_place_id") destination_place_id: String?,
         @Field("luggage") luggage: String?,
         @Field("airport") airport: String?,
-        @Field("schedule_datetime") schedule_datetime: String?
+        @Field("schedule_datetime") schedule_datetime: String?,
+        @Field("current_place_id") current_place_id: String?
     ): Call<CompareRideResponsePOJO?>?
 
 
@@ -172,6 +178,7 @@ interface NetworkService {
 
 
     @Multipart
+    @Headers("Content-Type: application/json")
     @POST("startRide")
     fun storeImage(
         @Header("Authorization") header: String?,
@@ -179,6 +186,18 @@ interface NetworkService {
         @PartMap map: HashMap<String?, String?>,
         @Part("schedule_date") name: RequestBody,
         @PartMap map1: HashMap<String?, Int?>
+    ): Call<ScheduleRideResponsePOJO?>?
+
+
+    @Multipart
+    @POST("startRide")
+    fun uploadstartRide(
+        @Header("Authorization") header: String?,
+        @Part file: MultipartBody.Part?,
+        @PartMap map: HashMap<String?, String?>?,
+        @PartMap map1: HashMap<String?, Int?>,
+        @PartMap map2: HashMap<String?, Float?>
+
     ): Call<ScheduleRideResponsePOJO?>?
 
 
@@ -195,15 +214,15 @@ interface NetworkService {
     ): Call<SnapTORoadResponse?>?
 
 
-
     @POST("currentFare")
     fun getCurrentFare(
         @Header("Authorization") header: String?,
         @Query("ride_id") ride_id: Int,
-        @Query("distance") distance: String?
+        @Query("distance") distance: String?,
+        @Query("wating_time") wating_time: String?
     ): Call<CurrentFareeResponse?>?
 
-  @POST("currentFare")
+    @POST("currentFare")
     fun getCurrentFareWithoutID(
         @Header("Authorization") header: String?,
         @Query("distance") distance: String?,
@@ -216,12 +235,33 @@ interface NetworkService {
     @POST("endRide")
     fun getEndRide(
         @Header("Authorization") header: String?,
-        @Query("ride_id") ride_id: String?
-    ): Call<EndRideResponsePOJO?>?
+        @Query("ride_id") ride_id: JSONObject?
+
+
+    ): Call<ResponseEnd>?
+
+
+    @POST("example/api/order")
+    fun postOrder(@Query("data") jsonArray: JSONArray?): Call<JSONArray?>?
+
+    @Headers("Content-Type: application/json")
+    @POST("endRide")
+    fun enndRide(
+        @Header("Authorization") header: String?,
+        @Body body: String?
+    ): Call<ResponseEnd?>?
+
+ @Headers("Content-Type: application/json")
+    @POST("log")
+    fun logRide(
+        @Header("Authorization") header: String?,
+        @Body body: String?
+    ): Call<DeleteDisputResponsePOJO?>?
 
 
     @GET("rides")
-    fun getMyRides(@Header("Authorization") header: String?): Call<GetRideResponsePOJO?>?
+    fun getMyRides(@Header("Authorization") header: String?,
+                   @Query("page") name: String? ): Call<GetRideResponsePOJO?>?
 
     @GET("getDisputeReasons")
     fun getDisputeReasons(@Header("Authorization") header: String?): Call<DisputesReasonResponsePOJO?>?
@@ -231,22 +271,31 @@ interface NetworkService {
     fun updateProfile(
         @Header("Authorization") header: String?,
         @Query("name") name: String?,
-        @Query("email") email: String?,
         @Query("gender") gender: String?,
         @Query("date_of_birth") date_of_birth: String?,
         @Query("location") location: String?,
         @Query("profession") profession: String?
     ): Call<UpdateProfileResponsePOJO?>?
 
+    @Headers("Content-Type: application/json")
     @POST("saveDispute")
     fun saveDispute(
         @Header("Authorization") header: String?,
         @Query("ride_id") ride_id: String?,
         @Query("type") type: String?,
-        @Query("dispute_reason_id") dispute_reason_id: String?,
+        @Query("dispute_reason_id[]") reasionID: ArrayList<Int>?,
         @Query("start_meter_reading") start_meter_reading: String?,
         @Query("end_meter_reading") end_meter_reading: String?,
-        @Query("actual_meter_charges") actual_meter_charges: String?
+        @Query("actual_meter_charges") actual_meter_charges: String?,
+        @Query("comment") comment: String?
+    ): Call<SaveDisputResponsePOJO?>?
+
+
+    @Headers("Content-Type: application/json")
+    @POST("saveDispute")
+    fun addToWishList(
+        @Header("Authorization") header: String?,
+        @Body body: Map<String?, String?>?
     ): Call<SaveDisputResponsePOJO?>?
 
 
@@ -273,7 +322,6 @@ interface NetworkService {
     ): Call<DeleteDisputResponsePOJO?>?
 
 
-
     @POST("updateLocation")
     fun updateLocation(
         @Header("Authorization") header: String?,
@@ -282,15 +330,17 @@ interface NetworkService {
     ): Call<UpdateProfileResponsePOJO?>?
 
 
-
-
     @GET("detailDispute")
     fun getDisputeDetail(
         @Header("Authorization") header: String?,
         @Query("dispute_id") dispute_id: String?
     ): Call<DisputDetailResponsePOJO?>?
 
-
+ @POST("detailRide")
+    fun getDetailRide(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") dispute_id: String?
+    ): Call<RideDetailsResponsePOJO?>?
 
 
     @POST("saveContactUs")
@@ -307,7 +357,7 @@ interface NetworkService {
     ): Call<ContactUsResponsePojo?>?
 
 
- @POST("rideReview")
+    @POST("rideReview")
     fun setRideReview(
         @Header("Authorization") header: String?,
         @Query("ride_id") rideid: String?,
@@ -316,26 +366,44 @@ interface NetworkService {
     ): Call<ContactUsResponsePojo?>?
 
 
-
-
-
-
-
     @GET("faqs")
     fun getFaqs(@Header("Authorization") header: String?): Call<FAQResponsePOJO?>?
 
 
-
     @GET("pageContents")
-    fun pageContents(
-        @Header("Authorization") header: String?,
-        @Query("page_name") page_name: String?
-    ): Call<ContentResponsePOJO?>?
+    fun pageContents(@Query("page_name") page_name: String?): Call<ContentResponsePOJO?>?
 
+
+    /*  @GET("rateCards")
+      fun rateCards(@Header("Authorization") header: String?): Call<RateCardResponsePOJO?>?
+  */
 
 
     @GET("rateCards")
-    fun rateCards(@Header("Authorization") header: String?): Call<RateCardResponsePOJO?>?
+    fun rateCards(
+        @Header("Authorization") header: String?,
+        @Query("city_id") city_id: String?
+    ): Call<RateCardResponsePOJO?>?
+
+
+    @GET("getUserSetting")
+    fun getUserSetting(@Header("Authorization") header: String?): Call<SettingResponsePojo?>?
+
+
+    @POST("updateUserSetting")
+    fun updateUserSetting(
+        @Header("Authorization") header: String?,
+        @Query("user_setting_id") user_setting_id: Int,
+        @Query("language") language: String?,
+        @Query("city") city: String?,
+        @Query("currency") currency: String?,
+        @Query("measurement_unit") measurement_unit: String?,
+        @Query("time_format") time_format: String?
+    ): Call<ContactUsResponsePojo?>?
+
+
+    @GET("getAllowCities")
+    fun getAllowCities(@HeaderMap header: HashMap<String, String>): Call<GetAllowCityResponse?>?
 
 
 }
