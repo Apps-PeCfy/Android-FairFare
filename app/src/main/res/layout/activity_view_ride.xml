@@ -163,7 +163,6 @@
                                 android:layout_height="wrap_content"
                                 android:paddingStart="@dimen/_15sdp"
                                 android:text="Auto"
-                                android:textAllCaps="true"
                                 android:textColor="@color/Black"
                                 android:textSize="@dimen/_12sdp"
                                 android:textStyle="bold" />
@@ -187,6 +186,7 @@
 
 
                         <androidx.cardview.widget.CardView
+
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_90sdp"
                             android:visibility="visible"
@@ -260,10 +260,11 @@
                                             android:drawableStart="@drawable/iv_person"
                                             android:drawablePadding="@dimen/_3sdp"
                                             android:text="4"
-                                            android:visibility="gone" />
+                                            android:visibility="visible" />
 
 
                                         <TextView
+                                            android:layout_marginStart="@dimen/_10sdp"
                                             android:id="@+id/tv_time"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -349,7 +350,6 @@
 
                             <TextView
                                 android:id="@+id/tv_additional_charges"
-
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -373,6 +373,7 @@
 
 
                             <RelativeLayout
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_15sdp">
@@ -404,10 +405,6 @@
                                     android:background="@color/secondaryLightGray" />
                             </RelativeLayout>
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1sp"
-                                android:background="@color/secondaryLightGray" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -495,7 +492,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="SurCharges" />
+                                    android:text="Surcharges" />
 
                                 <TextView
                                     android:id="@+id/tv_SurCharges"
@@ -633,7 +630,16 @@
                                 android:textStyle="bold" />
                         </RelativeLayout>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1sp"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:background="@color/secondaryLightGray" />
+
+
                         <RelativeLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"

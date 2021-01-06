@@ -1,13 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_login"
+        android:background="@drawable/app_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp"
+
+        app:buttonGravity="center_vertical"
+        app:navigationIcon="?attr/homeAsUpIndicator">
+
+
+
+        <Spinner
+            android:visibility="gone"
+            android:gravity="end"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:id="@+id/spinnerLang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/White"
+            android:dropDownWidth="120dp"
+            />
+
+
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_login"
+
+        >
+
+        <FrameLayout
+            android:id="@+id/container_framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_gradient"
     android:orientation="vertical"
     android:weightSum="4"
     tools:context=".ui.Login.LoginActivity">
+
+
+
 
 
 
@@ -187,7 +240,6 @@
                 android:fontFamily="@font/notosansjp_regular"
                 android:includeFontPadding="false"
                 android:text="@string/termsofuse"
-                android:textColor="@color/gradientstartcolor"
                 android:textSize="@dimen/_12sdp" />
 
 
@@ -206,7 +258,7 @@
             android:includeFontPadding="false"
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
-            android:text="Sign In"
+            android:text="@string/register"
             android:textAllCaps="false"
             android:textColor="@color/White"
             android:textSize="@dimen/_15sdp" />
@@ -329,4 +381,9 @@
     </RelativeLayout>
 
 
+
+
 </LinearLayout>
+
+
+</RelativeLayout>

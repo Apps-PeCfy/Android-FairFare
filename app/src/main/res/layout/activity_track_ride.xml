@@ -15,7 +15,6 @@
         android:paddingEnd="@dimen/_10sdp"
         android:theme="@style/BaseTheme"
         app:buttonGravity="center_vertical"
-        app:navigationIcon="?attr/homeAsUpIndicator"
 
         />
 
@@ -52,11 +51,11 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/rounded_corner_track"
+                android:background="@drawable/shape_roundedbtn"
                 android:padding="@dimen/_5sdp"
                 android:text="Track Board"
-                android:textColor="@color/gradientstartcolor"
-                android:textStyle="bold"
+                android:textColor="@color/White"
+                android:fontFamily="@font/notosansjp_bold"
                 />
 
 
@@ -87,6 +86,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/rlhideview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -282,7 +282,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_close"
-                    android:text="Track Board"
+                    android:text="Distance/Time"
                     android:textColor="@color/Black"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -322,15 +322,17 @@
                         android:id="@+id/tv_travelledDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:textSize="@dimen/_8sdp" />
+
 
 
                     <TextView
                         android:id="@+id/tv_estimatedDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:text="3 KM"
+                        android:visibility="gone"
                         android:textSize="@dimen/_8sdp" />
 
 
@@ -358,14 +360,16 @@
                         android:id="@+id/tvTravelTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+
                         android:textSize="@dimen/_8sdp" />
 
 
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/tv_travelTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:textSize="@dimen/_8sdp" />
 
 
@@ -460,61 +464,55 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view2"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Places Nearby"
+                    android:text="Places Nearby within 1 km "
                     android:textColor="@color/Black"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/rl_atm_hotel"
 
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/nearbyPlaces"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical"
                     android:layout_marginEnd="@dimen/_15sdp">
 
                     <TextView
                         android:id="@+id/tv_atm"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:id="@+id/museum"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ATM:2 KM" />
+                        android:textAllCaps="true" />
 
                     <TextView
                         android:id="@+id/tv_hotel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="Hotel:2 KM"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
                         android:textAllCaps="true" />
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rl_atm_hotel"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_15sdp">
-
-                    <TextView
-                        android:id="@+id/museum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ATM:2 KM" />
 
                     <TextView
                         android:id="@+id/hospital"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="Hotel:2 KM"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:textAllCaps="true" />
 
+                </LinearLayout>
 
-                </RelativeLayout>
+
+
 
 
             </RelativeLayout>

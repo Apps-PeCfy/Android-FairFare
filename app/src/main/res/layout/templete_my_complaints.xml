@@ -87,18 +87,42 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <TextView
-                    android:id="@+id/tvDisputNo"
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:fontFamily="@font/notosansjp_regular"
-                    android:includeFontPadding="false"
-                    android:padding="@dimen/_10sdp"
-                    android:text="ID:#MUM7656RT56"
-                    android:textColor="@color/Black"
-                    />
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+
+                    <TextView
+                        android:id="@+id/tvDisputNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:text="ID:#MUM7656RT56"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/tvFilledDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="@dimen/_9sdp"
+                        android:text="Filed Date : 17 Dec, 04:27 pm"
+
+                        android:fontFamily="@font/notosansjp_regular"
+
+
+                        />
+
+
+                </LinearLayout>
+
 
                 <View
                     android:layout_width="@dimen/_2sdp"
@@ -111,7 +135,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/notosansjp_regular"
+                    android:fontFamily="@font/notosansjp_bold"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
@@ -165,7 +189,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:paddingStart="@dimen/_18sdp"
-                        android:text="10:45 AM"
                         android:textSize="@dimen/_10sdp" />
 
 
@@ -179,27 +202,34 @@
                     android:layout_centerVertical="true"
                     android:orientation="vertical">
 
+
+
+
+
+
                     <TextView
                         android:id="@+id/destnationAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
+                        android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
+                        android:drawableStart="@drawable/triangle"
+
                         android:maxLines="2"
-                        android:paddingStart="@dimen/_19sdp"
-                        android:text="Santacruz  sdsds sdsd- chembur link road, Mumb" />/>
+                        android:text="Santacruz - addd dsdsd sdsds chembur link road, Mumb" />
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:drawableStart="@drawable/triangle"
                         android:drawablePadding="@dimen/_10sdp"
-                        android:text="10:45 AM"
                         android:textSize="@dimen/_10sdp" />
 
 
@@ -212,7 +242,7 @@
                     android:layout_below="@+id/llOrigin"
                     android:layout_marginStart="@dimen/_14sdp"
                     android:layout_marginTop="-30dp"
-                    android:layout_marginBottom="-17dp"
+                    android:layout_marginBottom="-10dp"
                     android:background="@color/secondaryLightGray" />
 
 

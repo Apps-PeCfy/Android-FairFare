@@ -16,6 +16,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/rlRideDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/_10sdp">
@@ -36,117 +37,128 @@
                     android:layout_height="wrap_content">
 
 
+                    <ImageView
+                        android:id="@+id/iv_vehical"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitCenter" />
 
-
-
-                <ImageView
-                    android:id="@+id/iv_vehical"
-                    android:layout_width="@dimen/_65sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_centerVertical="true"
-                    android:scaleType="fitCenter" />
-
-
-                <LinearLayout
-                    android:id="@+id/vehicalDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_toEndOf="@+id/iv_vehical"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_dateandTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/notosansjp_bold"
-                        android:includeFontPadding="false"
-                        android:maxLines="1"
-                        android:text="Mon, Sept 3, 23:35 AM" />
-
-                    <TextView
-                        android:id="@+id/tv_vahicalName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:layout_toRightOf="@+id/tv_Person"
-                        android:text="OLA MINI,MH12 3456A"
-                        android:textSize="@dimen/_9sdp" />
-
-
-
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:textSize="@dimen/_12sdp"
-                        android:layout_gravity="end"
-                        android:id="@+id/tv_actualFare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/notosansjp_bold"
-                        android:includeFontPadding="false"
-                        android:text="Rs 245"
-                        android:textColor="@color/gradientstartcolor" />
 
                     <LinearLayout
+                        android:id="@+id/vehicalDetails"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/iv_vehical"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_dateandTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosansjp_bold"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:text="Mon, Sept 3, 23:35 AM" />
+
+                        <TextView
+                            android:id="@+id/tv_vahicalName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:layout_toRightOf="@+id/tv_Person"
-                            android:text="Status:"
-                            android:textSize="@dimen/_9sdp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:layout_toRightOf="@+id/tv_Person"
-                            android:text="Upcoming.."
-                            android:textColor="@color/gradientstartcolor"
+                            android:text="OLA MINI,MH12 3456A"
                             android:textSize="@dimen/_9sdp" />
 
 
                     </LinearLayout>
 
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_actualFare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:fontFamily="@font/notosansjp_bold"
+                            android:includeFontPadding="false"
+                            android:text="Rs 245"
+                            android:textColor="@color/gradientstartcolor"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_toRightOf="@+id/tv_Person"
+                                android:text="Status:"
+                                android:textSize="@dimen/_9sdp" />
+
+
+                            <TextView
+                                android:id="@+id/tv_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_toRightOf="@+id/tv_Person"
+                                android:text="Upcoming.."
+                                android:textColor="@color/gradientstartcolor"
+                                android:textSize="@dimen/_9sdp" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                 </RelativeLayout>
 
 
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/tvRateRide"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:paddingTop="@dimen/_1sdp"
+                    android:textColor="@color/White"
+                    android:background="@drawable/shape_roundedbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vDetails"
+                    android:layout_marginStart="@dimen/_75sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="Rate this Ride" />
+
 
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
                     android:id="@+id/ratingBar"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_75sdp"
-                    android:layout_below="@+id/vDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srb_drawBorderEnabled="true"
-                    app:srb_isIndicator="true"
+                    android:layout_below="@+id/vDetails"
+                    android:layout_marginStart="@dimen/_75sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:visibility="visible"
                     app:srb_borderColor="@color/gradientstartcolor"
+                    app:srb_drawBorderEnabled="true"
                     app:srb_fillColor="@color/gradientstartcolor"
+                    app:srb_isIndicator="true"
                     app:srb_pressedFillColor="@color/gradientstartcolor"
                     app:srb_starSize="18dp" />
-
 
 
             </RelativeLayout>
@@ -195,7 +207,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:paddingStart="@dimen/_18sdp"
-                        android:text="10:45 AM"
                         android:textSize="@dimen/_10sdp" />
 
 
@@ -209,27 +220,28 @@
                     android:layout_centerVertical="true"
                     android:orientation="vertical">
 
+
                     <TextView
                         android:id="@+id/destnationAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
+                        android:drawableStart="@drawable/triangle"
+                        android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
                         android:maxLines="2"
-                        android:paddingStart="@dimen/_19sdp"
-                        android:text="Santacruz dadad dad adada da - chembur link road, Mumb" />/>
+                        android:text="Santacruz -  sfs sfsff sfsfsfsschembur link road, Mumb" />
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:drawableStart="@drawable/triangle"
                         android:drawablePadding="@dimen/_10sdp"
-                        android:text="10:45 AM"
                         android:textSize="@dimen/_10sdp" />
 
 
@@ -242,7 +254,7 @@
                     android:layout_below="@+id/llOrigin"
                     android:layout_marginStart="@dimen/_14sdp"
                     android:layout_marginTop="-35dp"
-                    android:layout_marginBottom="-30dp"
+                    android:layout_marginBottom="-10dp"
                     android:background="@color/secondaryLightGray" />
 
 
@@ -251,7 +263,7 @@
             <Button
                 android:id="@+id/btnStartRide"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_below="@+id/addressDetails"
                 android:layout_marginStart="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_30sdp"

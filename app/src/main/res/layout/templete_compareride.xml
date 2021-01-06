@@ -85,14 +85,15 @@
 
 
                 <TextView
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/tv_preson"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_weight="1"
-                    android:drawableEnd="@drawable/iv_person"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="1.1"
+                    android:text="1"
+                    android:drawableStart="@drawable/iv_person"
                     android:gravity="end" />
 
                 <TextView

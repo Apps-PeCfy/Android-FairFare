@@ -8,5 +8,6 @@
     android:fontFamily="@font/notosansjp_regular"
     android:gravity="center_vertical"
     android:includeFontPadding="false"
+    android:textColor="@color/Black"
     android:maxLines="1"
     android:textSize="@dimen/_10sdp" />

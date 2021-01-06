@@ -51,7 +51,6 @@
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:lineSpacingExtra="2sp"
-        android:text="+91 8898373544"
         android:textColor="@color/Black"
         android:textStyle="bold"
         android:textAppearance="@style/top_line" />
@@ -70,67 +69,34 @@
 
 
 
-
-  <!--  <LinearLayout
-        android:layout_marginTop="@dimen/_70sdp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_54sdp"
+    <LinearLayout
+        android:id="@+id/lltimer"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:fontFamily="@font/notosansjp_bold"
-            android:includeFontPadding="false"
-            android:background="@drawable/otp_background"
-            android:id="@+id/pin_first_edittext"
-            style="@style/pin_edittext_style"
-            android:layout_width="@dimen/_38sdp"
-            android:layout_height="match_parent"
-            android:cursorVisible="false">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You will get OTP by SMS in"
+            android:textColor="@color/Black" />
 
-            <requestFocus />
-        </EditText>
-
-        <EditText
-            android:fontFamily="@font/notosansjp_bold"
-            android:includeFontPadding="false"
-            android:layout_marginStart="@dimen/_17sdp"
-            android:background="@drawable/otp_background"
-            android:id="@+id/pin_second_edittext"
-            style="@style/pin_edittext_style"
-            android:layout_width="@dimen/_38sdp"
-            android:layout_height="match_parent"
-            android:cursorVisible="false" />
-
-        <EditText
-            android:fontFamily="@font/notosansjp_bold"
-            android:includeFontPadding="false"
-            android:layout_marginStart="@dimen/_17sdp"
-            android:background="@drawable/otp_background"
-            android:id="@+id/pin_third_edittext"
-            style="@style/pin_edittext_style"
-            android:layout_width="@dimen/_38sdp"
-            android:layout_height="match_parent"
-            android:cursorVisible="false" />
-
-        <EditText
-            android:fontFamily="@font/notosansjp_bold"
-            android:includeFontPadding="false"
-            android:layout_marginStart="@dimen/_17sdp"
-            android:background="@drawable/otp_background"
-            android:id="@+id/pin_forth_edittext"
-            style="@style/pin_edittext_style"
-            android:layout_width="@dimen/_38sdp"
-            android:layout_height="match_parent"
-            android:cursorVisible="false" />
+        <TextView
+            android:layout_marginStart="@dimen/_5sdp"
+            android:id="@+id/txtResendTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:30"
+            android:textColor="@color/gradientstartcolor" />
 
 
+    </LinearLayout>
 
-    </LinearLayout>-->
+
 
     <TextView
+        android:visibility="gone"
         android:fontFamily="@font/notosansjp_regular"
         android:includeFontPadding="false"
         android:textColor="@color/gradientstartcolor"
@@ -142,7 +108,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_gravity="center_horizontal"
         android:lineSpacingExtra="2sp"
-        android:text="Send another code"
+        android:text="@string/resendotp"
         android:textAppearance="@style/top_line" />
 
 
@@ -155,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_privacy"
         android:layout_marginStart="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_18sdp"
         android:background="@drawable/shape_roundedbtn"
         android:paddingTop="@dimen/_10sdp"

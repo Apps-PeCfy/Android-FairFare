@@ -17,12 +17,11 @@
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
 
-
     <RelativeLayout
-        android:layout_below="@+id/toolbar_rideReview"
         android:id="@+id/rl_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_rideReview">
 
 
         <fragment
@@ -71,22 +70,24 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:background="@color/White"
-                android:layout_gravity="center"
                 android:padding="@dimen/_5sdp">
 
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
                     android:id="@+id/ratingBar"
-                    android:layout_width="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srb_drawBorderEnabled="true"
                     app:srb_borderColor="@color/gradientstartcolor"
+                    app:srb_drawBorderEnabled="true"
                     app:srb_fillColor="@color/gradientstartcolor"
+                    app:srb_numberOfStars="5"
+                    app:srb_stepSize="1"
                     app:srb_pressedFillColor="@color/gradientstartcolor"
-
+                    app:srb_rating="5"
                     app:srb_starSize="40dp" />
-
 
 
                 <EditText
@@ -99,23 +100,22 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:background="@drawable/roundedcorner"
                     android:gravity="top"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingStart="@dimen/_10sdp"
                     android:hint="Enter your review"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
                     android:textSize="@dimen/_10sdp" />
-
 
 
             </RelativeLayout>
 
 
             <Button
-                android:layout_marginTop="@dimen/_10sdp"
                 android:id="@+id/btnSubmitReview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@drawable/shape_roundedbtn"
                 android:fontFamily="@font/notosansjp_regular"

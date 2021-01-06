@@ -21,24 +21,25 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.9"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Language"
+                android:text="Language"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 
 
             <TextView
+                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select default app language" />
+                android:text="Select Default Language for the App" />
 
 
         </LinearLayout>
@@ -49,10 +50,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_5sdp"
-            android:layout_weight="1.1"
+            android:layout_weight="1"
             android:background="@drawable/shapespinnersetting"
-            android:gravity="bottom"
-            android:paddingStart="@dimen/_30sdp"
+            android:gravity="bottom|end"
+            android:paddingEnd="@dimen/_25sdp"
             android:spinnerMode="dropdown"
             android:textSize="10dp" />
 
@@ -79,32 +80,34 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select City"
+                android:text="City"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 
 
             <TextView
+                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select default app city" />
+                android:text="Select Default City" />
 
 
         </LinearLayout>
 
 
         <Spinner
+
             android:layout_width="0dp"
             android:id="@+id/spinner_city"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_weight="1.2"
             android:background="@drawable/shapespinnersetting"
-            android:gravity="bottom"
-            android:paddingStart="@dimen/_30sdp"
+            android:gravity="bottom|end"
+            android:paddingEnd="@dimen/_25sdp"
             android:spinnerMode="dropdown"
             android:textSize="10dp" />
 
@@ -131,18 +134,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Currency"
+                android:text="Currency"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 
 
             <TextView
+                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select default app Currency" />
+                android:text="Select Default Currency" />
 
 
         </LinearLayout>
@@ -156,8 +160,8 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_weight="0.9"
             android:background="@drawable/shapespinnersetting"
-            android:gravity="bottom"
-            android:paddingStart="@dimen/_30sdp"
+            android:gravity="bottom|end"
+            android:paddingEnd="@dimen/_25sdp"
             android:spinnerMode="dropdown"
             android:textSize="10dp" />
 
@@ -177,24 +181,25 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1.7"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Measurement Unit"
+                android:text="Measurement Unit"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 
 
             <TextView
+                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select default Measurement Unit" />
+                android:text="Select Default Measurement Unit" />
 
 
         </LinearLayout>
@@ -203,13 +208,12 @@
         <Spinner
             android:layout_width="0dp"
             android:id="@+id/spinner_unit"
-
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_weight="1"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_weight="1.3"
             android:background="@drawable/shapespinnersetting"
-            android:gravity="bottom"
-            android:paddingStart="@dimen/_30sdp"
+            android:gravity="bottom|end"
+            android:paddingEnd="@dimen/_25sdp"
             android:spinnerMode="dropdown"
             android:textSize="10dp" />
 
@@ -234,18 +238,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Time Format"
+                android:text="Time Format"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 
 
             <TextView
+                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select default Time format" />
+                android:text="Select Default Time Format" />
 
 
         </LinearLayout>
@@ -256,11 +261,11 @@
 
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_5sdp"
             android:layout_weight="1"
             android:background="@drawable/shapespinnersetting"
-            android:gravity="bottom"
-            android:paddingStart="@dimen/_30sdp"
+            android:gravity="bottom|end"
+            android:paddingEnd="@dimen/_25sdp"
+
             android:spinnerMode="dropdown"
             android:textSize="10dp" />
 
@@ -269,7 +274,7 @@
 
 
     <Button
-        android:id="@+id/btnCompareRide"
+        android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

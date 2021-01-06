@@ -292,7 +292,6 @@
                         android:fontFamily="@font/notosansjp_regular"
                         android:includeFontPadding="false"
                         android:text="@string/termsofuse"
-                        android:textColor="@color/gradientstartcolor"
                         android:textSize="@dimen/_12sdp" />
 
 

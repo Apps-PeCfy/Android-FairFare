@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_gradient">
+    tools:context=".ui.drawer.myrides.ridedetails.MyRideDetailsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_endRide"
@@ -15,9 +15,7 @@
         android:paddingEnd="@dimen/_10sdp"
         android:theme="@style/BaseTheme"
         app:buttonGravity="center_vertical"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-
-        />
+        app:navigationIcon="?attr/homeAsUpIndicator" />
 
 
     <RelativeLayout
@@ -32,20 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--
-
-                        <fragment
-                            android:id="@+id/map"
-                            android:name="com.google.android.gms.maps.SupportMapFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_above="@+id/llshowData"
-                            android:layout_marginBottom="-30dp"
-                            tools:context=".ui.location.MyLocationActivity" />
-            -->
 
 
             <LinearLayout
+
                 android:id="@+id/llshowData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -53,22 +41,6 @@
                 android:background="@color/White"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/tvhideShow"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_gravity="center_horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_3sdp"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:layout_marginBottom="@dimen/_15sdp"
-                        android:background="@drawable/roundedcorner"
-                        android:visibility="gone" />
-                </RelativeLayout>
 
 
                 <ScrollView
@@ -81,232 +53,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
                         android:orientation="vertical">
 
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:layout_marginEnd="@dimen/_15sdp">
-
-                            <TextView
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:text="Complaint Details"
-                                android:textColor="@color/Black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvDisputNo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:text="#MUM1223344TR34"
-                                android:textColor="@color/Black"
-                                android:textStyle="bold" />
-
-
-                        </RelativeLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_15sdp"
-                            android:background="@drawable/rounded_corner_disput"
-                            android:orientation="vertical"
-                            android:paddingStart="@dimen/_15sdp"
-                            android:paddingBottom="@dimen/_5sdp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:text="Dispute reasons:"
-                                android:textStyle="bold"
-                                android:textColor="@color/Black" />
-
-                            <TextView
-                                android:id="@+id/tvDisputReason"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_5sdp"
-                                android:text="Driver arrogance"
-                                android:textColor="@color/Black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/Black" />
-
-                            <TextView
-                                android:textStyle="bold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:text="Additional comments:"
-                                android:textColor="@color/Black" />
-
-                            <TextView
-                                android:id="@+id/editReview"
-
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/_15sdp"
-                                android:gravity="top"
-                                android:paddingBottom="@dimen/_5sdp"
-                                android:text="sdskdw wpkddwk'wdkdw sqwssqsqsqs sdsds dsdsd sdsd sdssddsd dsdsdsdsdsdsds "
-                                android:textColor="@color/Black"
-                                android:textSize="@dimen/_10sdp"
-                                android:visibility="visible" />
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_15sdp"
-                            android:paddingStart="@dimen/_15sdp"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_corner_disput"
-                            android:orientation="vertical">
-
-
-                            <TextView
-                                android:id="@+id/tv_startMeterReading"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="str metr reading=10"
-                                android:textColor="@color/Black" />
-
-                            <TextView
-                                android:id="@+id/tv_endMeterReading"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_5sdp"
-
-                                android:text="end metr reading=20"
-                                android:textColor="@color/Black" />
-
-
-                            <TextView
-                                android:id="@+id/tv_actualfare"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_5sdp"
-                                android:text="actual meter fare=150"
-                                android:textColor="@color/Black" />
-
-
-                        </LinearLayout>
-
-
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2sp"
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_15sdp"
-                            android:background="@color/secondaryLightGray" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Ride Details"
-                            android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
-                        <androidx.cardview.widget.CardView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_120sdp"
-                            android:layout_above="@+id/llshowData"
-                            android:visibility="gone"
-                            app:cardBackgroundColor="@color/White"
-                            app:cardCornerRadius="@dimen/_10sdp"
-                            app:cardElevation="@dimen/_8sdp"
-                            app:cardUseCompatPadding="true">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical">
-
-                                <TextView
-                                    android:id="@+id/tv_myCurrentLocation"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_40sdp"
-                                    android:layout_marginStart="@dimen/_10sdp"
-                                    android:layout_marginEnd="@dimen/_10sdp"
-                                    android:drawableStart="@drawable/red_circle"
-                                    android:drawablePadding="@dimen/_15sdp"
-                                    android:fontFamily="@font/notosansjp_regular"
-                                    android:gravity="center_vertical"
-                                    android:includeFontPadding="false"
-                                    android:maxLines="2"
-                                    android:text="Pick-up Location"
-                                    android:textColor="@color/gradientstartcolor" />
-
-                                <View
-                                    android:id="@+id/view"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_1sdp"
-                                    android:layout_below="@+id/tv_myCurrentLocation"
-                                    android:layout_marginStart="@dimen/_40sdp"
-                                    android:layout_marginEnd="@dimen/_15sdp"
-                                    android:background="@color/secondaryLightGray" />
-
-
-                                <TextView
-                                    android:id="@+id/tv_myDropUpLocation"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_40sdp"
-                                    android:layout_below="@+id/view"
-                                    android:layout_marginStart="@dimen/_10sdp"
-                                    android:layout_marginEnd="@dimen/_10sdp"
-                                    android:drawableStart="@drawable/triangle"
-                                    android:drawablePadding="@dimen/_15sdp"
-                                    android:fontFamily="@font/notosansjp_regular"
-                                    android:gravity="center_vertical"
-                                    android:includeFontPadding="false"
-                                    android:maxLines="2"
-                                    android:text="Drop-off Location " />
-
-
-                                <View
-                                    android:layout_width="@dimen/_1sdp"
-                                    android:layout_height="match_parent"
-                                    android:layout_above="@+id/tv_myDropUpLocation"
-                                    android:layout_below="@+id/tv_myCurrentLocation"
-                                    android:layout_marginStart="@dimen/_14sdp"
-                                    android:layout_marginTop="-17dp"
-                                    android:layout_marginBottom="-17dp"
-                                    android:background="@color/secondaryLightGray" />
-                            </RelativeLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_15sdp"
                             android:background="@drawable/rounded_corner_charges"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingBottom="@dimen/_5sdp"
@@ -470,9 +226,7 @@
                             android:id="@+id/llAdditionalCharges"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_15sdp"
                             android:background="@drawable/rounded_corner_charges"
                             android:orientation="vertical"
                             android:visibility="visible">
@@ -571,7 +325,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:text="" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -587,7 +341,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Rs.1000 " />
+                                    android:text="" />
 
 
                             </LinearLayout>
@@ -628,7 +382,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:text="" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -644,7 +398,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Rs.1000 " />
+                                    android:text="" />
 
 
                             </LinearLayout>
@@ -690,6 +444,7 @@
 
                                 </RelativeLayout>
 
+
                                 <TextView
                                     android:layout_width="1sp"
                                     android:layout_height="match_parent"
@@ -704,7 +459,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-" />
+                                    android:text="" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -720,7 +475,8 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="12 Min " />
+                                    android:text="-"
+                                    />
 
 
                             </LinearLayout>
@@ -822,7 +578,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:text="" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -838,7 +594,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 1000 " />
+                                    android:text=" " />
 
 
                             </LinearLayout>
@@ -880,7 +636,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
+                                    android:text="" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -895,7 +651,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
+                                    android:text="" />
 
 
                             </LinearLayout>
@@ -930,13 +686,14 @@
 
 
                                 <TextView
+                                    android:id="@+id/tvEstSurCharge"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
+                                    android:text="" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -945,13 +702,14 @@
 
 
                                 <TextView
+                                    android:id="@+id/tvActualSurCharge"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00 " />
+                                    android:text="" />
 
 
                             </LinearLayout>
@@ -993,7 +751,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:text="" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -1009,7 +767,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 1000 " />
+                                    android:text="" />
 
 
                             </LinearLayout>
@@ -1050,7 +808,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min"
+                                    android:text=""
                                     android:textColor="@color/gradientstartcolor"
                                     android:textStyle="bold" />
 
@@ -1068,7 +826,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 1000 "
+                                    android:text=""
                                     android:textColor="@color/gradientstartcolor"
                                     android:textStyle="bold" />
 
@@ -1077,6 +835,43 @@
 
 
                         </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Ride Ratings"
+                            android:textColor="@color/Black"
+                            android:textStyle="bold" />
+
+                        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                            android:id="@+id/ratingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vDetails"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:visibility="visible"
+                            app:srb_borderColor="@color/gradientstartcolor"
+                            app:srb_drawBorderEnabled="true"
+                            app:srb_fillColor="@color/gradientstartcolor"
+                            app:srb_isIndicator="true"
+                            app:srb_pressedFillColor="@color/gradientstartcolor"
+                            app:srb_starSize="28dp" />
+
+                        <TextView
+
+
+                            android:id="@+id/editReview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ratingBar"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/roundedcorner"
+                            android:gravity="top"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:textSize="@dimen/_10sdp" />
+
 
 
                     </LinearLayout>
@@ -1093,6 +888,8 @@
     </RelativeLayout>
 
 
+
+
+
+
 </RelativeLayout>
-
-

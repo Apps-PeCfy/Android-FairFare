@@ -6,244 +6,268 @@
 
 
     <TextView
-        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/tvCarName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="Auto"
         android:textAlignment="center"
-        android:textSize="@dimen/_12sdp"
         android:textColor="@color/Black"
+        android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <Spinner
+            android:id="@+id/spinner_city"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:background="@drawable/spinner_rate_card"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown" />
+
+
+        <Spinner
+            android:id="@+id/spinner_type_rate_card"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/spinner_rate_card"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown" />
+
+
+    </LinearLayout>
 
 
     <LinearLayout
-        android:layout_marginTop="@dimen/_8sdp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fare"
             android:textAlignment="center"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvFare"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="Rs. 25/- for first fall of  2 Kms (upon downing the meter) and thereafter Rs. 8/- per Km for every additional Km."
             android:textAlignment="textStart"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
 
             />
-
 
 
     </LinearLayout>
 
 
     <View
-        android:layout_marginTop="@dimen/_8sdp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/tv_myCurrentLocation"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/secondaryLightGray" />
 
     <LinearLayout
-        android:layout_marginTop="@dimen/_8sdp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Night Charges"
             android:textAlignment="center"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvNightCharges"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="25% of the fair"
             android:textAlignment="textStart"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
 
             />
 
         <TextView
-            android:layout_marginTop="@dimen/_3sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
             android:text="(11:00 PM to 5:00 AM)"
             android:textAlignment="textStart"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
 
             />
 
     </LinearLayout>
 
     <View
-        android:layout_marginTop="@dimen/_8sdp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/tv_myCurrentLocation"
-        android:background="@color/secondaryLightGray" />
-
-
-    <LinearLayout
         android:layout_marginTop="@dimen/_8sdp"
-        android:orientation="vertical"
+        android:background="@color/secondaryLightGray" />
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Waiting Charges"
             android:textAlignment="center"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvWaitingCharges"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="Rs. 30/- per hour or part thereof (subject to a min of 15 mins stay)"
             android:textAlignment="textStart"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
 
             />
-
 
 
     </LinearLayout>
 
 
     <View
-        android:layout_marginTop="@dimen/_8sdp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/tv_myCurrentLocation"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/secondaryLightGray" />
 
 
-
     <LinearLayout
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:visibility="gone">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TOLL CHARGES"
             android:textAlignment="center"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvTollCharges"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="Rs. 0/- toll charges for single entry"
             android:textAlignment="textStart"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
 
             />
-
 
 
     </LinearLayout>
 
 
-
-
     <LinearLayout
-        android:layout_marginTop="@dimen/_8sdp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Surcharges"
             android:textAlignment="center"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvSurCHarges"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="Rs. 30/- per hour or part thereof (subject to a min of 15 mins stay)"
             android:textAlignment="textStart"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
 
             />
-
 
 
     </LinearLayout>
 
 
     <View
-        android:layout_marginTop="@dimen/_8sdp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/tv_myCurrentLocation"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/secondaryLightGray" />
 
 
     <LinearLayout
-        android:layout_marginTop="@dimen/_8sdp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Luggage"
             android:textAlignment="center"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvLuggage"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="Rs. 7.50/- shall be charged as extra luggage charges whereas the driver/operator shall not charge and money for a shopping bag or a small suitcase"
             android:textAlignment="textStart"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/Black"
+            android:textSize="@dimen/_12sdp"
 
             />
 
 
-
     </LinearLayout>
-
 
 
 </LinearLayout>

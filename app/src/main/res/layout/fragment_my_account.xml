@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/Grey"
+    android:background="@color/White"
 
     >
 
@@ -99,30 +99,6 @@
                         android:text="prashantp@gmail.com" />
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_below="@+id/tv_myCurrentLocation"
-                        android:layout_marginStart="@dimen/_30sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
-                        android:background="@color/secondaryLightGray" />
-
-
-                    <EditText
-                        android:id="@+id/tvUserPosotion"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:background="@android:color/transparent"
-                        android:drawableStart="@drawable/ic_profile_position"
-                        android:drawablePadding="@dimen/_15sdp"
-                        android:fontFamily="@font/notosansjp_regular"
-                        android:gravity="center_vertical"
-                        android:hint="Please Enter Profession"
-                        android:includeFontPadding="false"
-                        android:maxLines="1"
-                        android:textSize="@dimen/_11sdp" />
 
 
                     <View
@@ -145,7 +121,8 @@
                         <ImageView
                             android:id="@+id/ivGender"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/ic_dob"
+
+                            android:background="@drawable/ic_profile_gender"
                             android:layout_width="@dimen/_23sdp"
                             android:layout_height="@dimen/_23sdp"/>
 
@@ -157,6 +134,7 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:drawableStart="@drawable/ic_profile_gender"
                             android:gravity="bottom"
+
                             android:spinnerMode="dialog"
                             android:textSize="@dimen/_5sdp" />
 
@@ -189,15 +167,15 @@
 
                     <TextView
                         android:id="@+id/tvUserDOB"
-
+                        android:drawableStart="@drawable/ic_dob"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:drawableStart="@drawable/ic_profile_gender"
                         android:drawablePadding="@dimen/_15sdp"
                         android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center_vertical"
+                        android:textColor="@color/Black"
                         android:hint="Please Enter DOB"
                         android:includeFontPadding="false"
                         android:textSize="@dimen/_11sdp"
@@ -208,6 +186,35 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/secondaryLightGray" />
+
+
+
+
+
+                    <EditText
+                        android:id="@+id/tvUserPosotion"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_profile_position"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:gravity="center_vertical"
+                        android:hint="Please Enter Profession"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:textSize="@dimen/_11sdp" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_below="@+id/tv_myCurrentLocation"
                         android:layout_marginStart="@dimen/_30sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:background="@color/secondaryLightGray" />
@@ -239,11 +246,27 @@
 
         </LinearLayout>
 
+
+
+        <TextView
+
+            android:id="@+id/tvEmpty"
+            android:layout_below="@+id/userDetails"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp">
+
+
+        </TextView>
+
+
+
         <Button
+
+            android:layout_below="@+id/tvEmpty"
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/userDetails"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/shape_roundedbtn"
