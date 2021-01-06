@@ -21,17 +21,26 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.trackRide.TrackRideActivity"></activity>
+        <activity android:name=".ui.drawer.myrides.ridedetails.MyRideDetailsActivity"></activity>
+        <activity android:name=".ui.privacypolicy.PrivacyPolicyActivity" />
+        <activity android:name=".ui.test.test" />
+        <activity android:name=".ui.ridereview.RideReviewActivity" />
+        <activity android:name=".ui.drawer.mycomplaints.complaintDetails.ComplaintsDetailsActivity" />
+        <activity android:name=".ui.drawer.mydisput.disputDetail.DisputDetailActivity" />
         <activity android:name=".ui.ridedetails.RideDetailsActivity" />
+        <activity android:name=".ui.disputs.RegisterDisputActivity" />
+        <activity android:name=".ui.endrides.EndRidesActivity" />
+        <activity android:name=".ui.trackRide.TrackRideActivity" />
         <activity android:name=".ui.viewride.ViewRideActivity" />
         <activity android:name=".ui.compareride.CompareRideActivity" />
         <activity android:name=".ui.home.HomeActivity" />
