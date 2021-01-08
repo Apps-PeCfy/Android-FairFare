@@ -1,22 +1,26 @@
 package com.example.fairfare.ui.trackRide
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.math.BigDecimal
-import android.location.*
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.provider.Settings
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -31,7 +35,6 @@ import com.example.fairfare.R
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
 import com.example.fairfare.ui.endrides.EndRidesActivity
-import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
@@ -86,6 +89,8 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
     var mPolyline: Polyline? = null
     var updatedPolyline: Polyline? = null
     var mGreyPolyline: Polyline? = null
+
+    private val myMarker: Marker? = null
 
 
     @JvmField
@@ -914,7 +919,7 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
                     (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!.toDouble()
                 )
             ).icon(
-                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)
+                BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
             )
         )
         sourecemarker = mMap!!.addMarker(
@@ -1560,6 +1565,99 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
     }
 
     override fun onProviderDisabled(provider: String?) {
+    }
+
+    /**
+     * iLoma Team :- Mohasin 8 Jan
+     */
+
+    private fun animateMarkerNew(
+        startPosition: LatLng,
+        destination: LatLng,
+        marker: Marker?
+    ) {
+        if (marker != null) {
+            val endPosition =
+                LatLng(
+                    destination.latitude,
+                    destination.longitude
+                )
+            val startRotation = marker.rotation
+            val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
+            val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
+            valueAnimator.duration = 2000 // duration 3 second
+            valueAnimator.interpolator = LinearInterpolator()
+            valueAnimator.addUpdateListener { animation ->
+                try {
+                    val v = animation.animatedFraction
+                    val newPosition: LatLng =
+                        latLngInterpolator.interpolate(v, startPosition, endPosition)!!
+                    myMarker!!.setPosition(newPosition)
+                    mMap!!.moveCamera(
+                        CameraUpdateFactory.newCameraPosition(
+                            CameraPosition.Builder()
+                                .target(newPosition)
+                                .zoom(mMap!!.cameraPosition.zoom)
+                                .build()
+                        )
+                    )
+
+                    // myMarker.setRotation(getBearing(startPosition, new LatLng(destination.latitude, destination.longitude)));
+                } catch (ex: java.lang.Exception) {
+                    //I don't care atm..
+                }
+            }
+            valueAnimator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+
+                    /*  if (myMarker != null) {
+                     myMarker.remove();
+                     }*/
+                }
+            })
+            valueAnimator.start()
+        }
+    }
+
+    private interface LatLngInterpolatorNew {
+        fun interpolate(
+            fraction: Float,
+            a: LatLng?,
+            b: LatLng?
+        ): LatLng?
+
+        class LinearFixed : LatLngInterpolatorNew {
+            override fun interpolate(fraction: Float, a: LatLng?, b: LatLng?): LatLng? {
+                val lat = (b!!.latitude - a!!.latitude) * fraction + a.latitude
+                var lngDelta = b.longitude - a.longitude
+                // Take the shortest path across the 180th meridian.
+                if (Math.abs(lngDelta) > 180) {
+                    lngDelta -= Math.signum(lngDelta) * 360
+                }
+                val lng = lngDelta * fraction + a.longitude
+                return LatLng(lat, lng)
+            }
+        }
+    }
+
+    private fun getBearing(
+        begin: LatLng,
+        end: LatLng
+    ): Float {
+        val lat = Math.abs(begin.latitude - end.latitude)
+        val lng = Math.abs(begin.longitude - end.longitude)
+        if (begin.latitude < end.latitude && begin.longitude < end.longitude) return Math.toDegrees(
+            Math.atan(lng / lat)
+        )
+            .toFloat() else if (begin.latitude >= end.latitude && begin.longitude < end.longitude) return (90 - Math.toDegrees(
+            Math.atan(lng / lat)
+        ) + 90).toFloat() else if (begin.latitude >= end.latitude && begin.longitude >= end.longitude) return (Math.toDegrees(
+            Math.atan(lng / lat)
+        ) + 180).toFloat() else if (begin.latitude < end.latitude && begin.longitude >= end.longitude) return (90 - Math.toDegrees(
+            Math.atan(lng / lat)
+        ) + 270).toFloat()
+        return (-1).toFloat()
     }
 
 }

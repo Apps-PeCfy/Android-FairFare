@@ -41,65 +41,67 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         imageList: ArrayList<ImageModel>?
     )
     {
-        //calmultipartdata(token,id,vehicle_rate_card_id,luggage_quantity,schedule_date,origin_place_id, destination_place_id,overview_polyline,distance,duration,city_id,airport_rate_card_id, driver_name,vehicle_no,badge_no,start_meter_reading,sLat,sLong,dLat,dLong,imageList)
+        if(imageList != null && imageList.size> 0){
+            calmultipartdata(token,id,vehicle_rate_card_id,luggage_quantity,schedule_date,origin_place_id, destination_place_id,overview_polyline,distance,duration,city_id,airport_rate_card_id, driver_name,vehicle_no,badge_no,start_meter_reading,sLat,sLong,dLat,dLong,imageList)
 
-        view.showWait()
-               val call = ApiClient.client.startRide(
-                   "Bearer $token",
-                   id,
-                   vehicle_rate_card_id,
-                   luggage_quantity,
-                   schedule_date,
-                   origin_place_id,
-                   destination_place_id,
-                   overview_polyline,
-                   distance,
-                   duration,
-                   city_id,
-                   airport_rate_card_id,
-                   driver_name, vehicle_no,
-                   badge_no,
-                   start_meter_reading,
-                   sLat,
-                   sLong,
-                   dLat,
-                   dLong
-               )
-               call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
-                   override fun onResponse(
-                       call: Call<ScheduleRideResponsePOJO?>,
-                       response: Response<ScheduleRideResponsePOJO?>
-                   ) {
-                       if (response.code() == 200) {
-                           if (response.body() != null) {
-                               view.removeWait()
-                               view.schduleRideSuccess(response.body())
-                           }
-                       } else if (response.code() == 422) {
-                           view.removeWait()
-                           val gson = GsonBuilder().create()
-                           var pojo: ValidationResponse? = ValidationResponse()
-                           try {
-                               pojo = gson.fromJson(
-                                   response.errorBody()!!.string(),
-                                   ValidationResponse::class.java
-                               )
-                               view.validationError(pojo)
-                           } catch (exception: IOException) {
-                           }
+        }else{
+            view.showWait()
+            val call = ApiClient.client.startRide(
+                "Bearer $token",
+                id,
+                vehicle_rate_card_id,
+                luggage_quantity,
+                schedule_date,
+                origin_place_id,
+                destination_place_id,
+                overview_polyline,
+                distance,
+                duration,
+                city_id,
+                airport_rate_card_id,
+                driver_name, vehicle_no,
+                badge_no,
+                start_meter_reading,
+                sLat,
+                sLong,
+                dLat,
+                dLong
+            )
+            call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
+                override fun onResponse(
+                    call: Call<ScheduleRideResponsePOJO?>,
+                    response: Response<ScheduleRideResponsePOJO?>
+                ) {
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            view.removeWait()
+                            view.schduleRideSuccess(response.body())
+                        }
+                    } else if (response.code() == 422) {
+                        view.removeWait()
+                        val gson = GsonBuilder().create()
+                        var pojo: ValidationResponse? = ValidationResponse()
+                        try {
+                            pojo = gson.fromJson(
+                                response.errorBody()!!.string(),
+                                ValidationResponse::class.java
+                            )
+                            view.validationError(pojo)
+                        } catch (exception: IOException) {
+                        }
 
-                       }
-                   }
+                    }
+                }
 
-                   override fun onFailure(
-                       call: Call<ScheduleRideResponsePOJO?>,
-                       t: Throwable
-                   ) {
-                       view.removeWait()
-                       view.onFailure(t.message)
-                   }
-               })
-
+                override fun onFailure(
+                    call: Call<ScheduleRideResponsePOJO?>,
+                    t: Throwable
+                ) {
+                    view.removeWait()
+                    view.onFailure(t.message)
+                }
+            })
+        }
     }
 
     private fun calmultipartdata(
@@ -126,13 +128,20 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         imageList: ArrayList<ImageModel>?
     ) {
         var body: MultipartBody.Part? = null
+        val imagesMultipart = arrayOfNulls<MultipartBody.Part>(
+                imageList!!.size
+        )
+
         var requestFile: RequestBody
         for (pos in imageList!!.indices) {
-            val file = File(imageList[pos].image!!)
+           /* val file = File(imageList[pos].image!!)
             requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
             body =
-                MultipartBody.Part.createFormData("vehicle_detail_images[]", file.name, requestFile)
+                MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, requestFile)*/
 
+            val file = File(imageList[pos].image!!)
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[pos] = MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, surveyBody)
         }
 
 
@@ -174,7 +183,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         view.showWait()
         val call = ApiClient.client.uploadstartRide(
             "Bearer $token",
-            body,
+            imagesMultipart,
             map, map1, map2
         )
         call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {

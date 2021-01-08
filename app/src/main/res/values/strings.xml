@@ -54,5 +54,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_dispute">Save Dispute</string>
     <string name="resendotp">Re-send another code</string>
+
+    <!--pick image section-->
+    <string name="add_photo">Add Photo!</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="choose_from_gallery">Choose from Gallery</string>
+    <string name="btn_cancel">Cancel</string>
 </resources>
 

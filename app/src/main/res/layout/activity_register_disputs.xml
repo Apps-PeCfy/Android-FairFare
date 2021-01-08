@@ -18,11 +18,12 @@
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/homeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_rideDetails">
+        android:layout_below="@+id/toolbar_rideDetails"
+        android:layout_above="@id/btnSaveDisputes">
 
 
         <RelativeLayout
@@ -342,7 +343,7 @@
 
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
     <Button

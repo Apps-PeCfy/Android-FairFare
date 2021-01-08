@@ -17,6 +17,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -38,17 +39,23 @@ import com.example.fairfare.ui.ridedetails.GridSpacingItemDecoration
 import com.example.fairfare.ui.ridedetails.ImageModel
 import com.example.fairfare.ui.ridedetails.SelectedImageAdapter
 import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.PhotoSelector
 import com.example.fairfare.utils.PreferencesManager
 import com.google.gson.GsonBuilder
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Query
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class RegisterDisputActivity : AppCompatActivity() {
 
@@ -57,6 +64,7 @@ class RegisterDisputActivity : AppCompatActivity() {
     var selectedImageList: ArrayList<String>? = null
     var sharedpreferences: SharedPreferences? = null
     var selectedImageAdapter: SelectedImageAdapter? = null
+
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGES = 2
     var image: File? = null
@@ -64,7 +72,14 @@ class RegisterDisputActivity : AppCompatActivity() {
     var projection =
         arrayOf(MediaStore.MediaColumns.DATA)
 
-    val reasonId = ArrayList<Int>()
+    var reasonId = ArrayList<Int>()
+
+    /**
+     * iLoma Team :- Mohasin 8 Jan
+     */
+    protected var photoSelector: PhotoSelector? = null
+    var context: Context = this
+    var filePath: Uri? = null
 
 
     @JvmField
@@ -138,6 +153,7 @@ class RegisterDisputActivity : AppCompatActivity() {
     var preferencesManager: PreferencesManager? = null
 
 
+
     @JvmField
     @BindView(R.id.tv_carName)
     var tv_carName: TextView? = null
@@ -190,6 +206,8 @@ class RegisterDisputActivity : AppCompatActivity() {
 
 
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+
+        photoSelector = PhotoSelector(this)
 
         mToolbar!!.title = "Register Dispute"
         mToolbar!!.setTitleTextColor(Color.WHITE)
@@ -254,7 +272,16 @@ class RegisterDisputActivity : AppCompatActivity() {
     private fun setSelectedImageList() {
 
 
-        selectedImageAdapter = SelectedImageAdapter(this, selectedImageList!!)
+        selectedImageAdapter = SelectedImageAdapter(this, selectedImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+                showConfirmationDialog(position)
+            }
+
+        } )
         val spanCount = 2
         selectedImageRecyclerView!!.layoutManager = GridLayoutManager(this, spanCount)
         val spacing = 15
@@ -290,6 +317,20 @@ class RegisterDisputActivity : AppCompatActivity() {
         imageList = ArrayList()
     }
 
+    private fun showConfirmationDialog(position: Int) {
+        val alertDialog = AlertDialog.Builder(context)
+        alertDialog.setTitle("FairFare")
+        alertDialog.setMessage("Are you sure you remove this image?")
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("Yes") { dialog, which ->
+            imageList!!.removeAt(position)
+            selectedImageList!!.removeAt(position)
+            selectedImageAdapter!!.notifyDataSetChanged()
+        }
+        alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+        alertDialog.show()
+    }
+
 
     override fun onDestroy() {
         // sharedpreferences!!.edit().clear().commit()
@@ -303,7 +344,7 @@ class RegisterDisputActivity : AppCompatActivity() {
 
     @OnClick(R.id.btnSaveDisputes)
     fun btnSaveDisputes() {
-
+        reasonId = ArrayList<Int>()
         for (i in mSpinner!!.myNumbers()!!.indices) {
             reasonId.add((mSpinner!!.myNumbers())!!.get(i) + 1)
             Log.d("qasdes", ((mSpinner!!.myNumbers())!!.get(i) + 1).toString())
@@ -379,74 +420,175 @@ class RegisterDisputActivity : AppCompatActivity() {
 
 */
 
+        /**
+         * iLoma Team :- Mohasin 8 Jan
+         */
 
+        if(imageList != null && imageList!!.size> 0){
+            saveDisputeMultipart()
+        }else{
+            saveDisputeAPI()
+        }
+
+
+
+
+
+
+    }
+
+    private fun saveDisputeMultipart() {
+        val imagesMultipart = arrayOfNulls<MultipartBody.Part>(
+                imageList!!.size
+        )
+
+        for (pos in imageList!!.indices) {
+            val file = File(imageList!![pos].image!!)
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[pos] = MultipartBody.Part.createFormData("dispute_images[]", imageList!![pos].image!!, surveyBody)
+        }
+
+
+        val map = HashMap<String?, String?>()
+
+        map["ride_id"] = intent.getStringExtra("RIDEID")
+        map["type"] = "Dispute"
+        map["start_meter_reading"] = edt_meterReading!!.text.toString()
+        map["end_meter_reading"] = edtEndMeterReading!!.text.toString()
+        map["actual_meter_charges"] = edtTotalFareCharged!!.text.toString()
+        map["comment"] = editReview!!.text.toString()
+
+
+
+        val map1 = HashMap<String?, ArrayList<Int>?>()
+        map1["dispute_reason_id[]"] = reasonId
+
+
+        val progressDialog = ProgressDialog(this@RegisterDisputActivity)
+        progressDialog.setCancelable(false) // set cancelable to false
+        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.show()
+
+        val call = ApiClient.client.multipartSaveDispute(
+            "Bearer $token",
+            imagesMultipart,
+            map, reasonId
+        )
+        call!!.enqueue(object : Callback<SaveDisputResponsePOJO?> {
+            override fun onResponse(
+                call: Call<SaveDisputResponsePOJO?>,
+                response: Response<SaveDisputResponsePOJO?>
+            ) {
+                progressDialog.dismiss()
+               if (response.code() == 200) {
+                    val intent = Intent(this@RegisterDisputActivity, HomeActivity::class.java)
+                    intent.action = "RegisterDisput"
+                    startActivity(intent)
+
+                }else if (response.code() == 422) {
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        Toast.makeText(
+                            this@RegisterDisputActivity,
+                            pojo.errors!!.get(0).message,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+
+                    } catch (exception: IOException) {
+                    }
+
+                } else {
+                    Toast.makeText(
+                        this@RegisterDisputActivity,
+                        "Internal server error",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+            override fun onFailure(
+                call: Call<SaveDisputResponsePOJO?>,
+                t: Throwable
+            ) {
+                progressDialog.dismiss()
+            }
+        })
+
+
+    }
+
+
+    private fun saveDisputeAPI() {
         var edtcomment = editReview!!.text.toString()
 
 
         val progressDialog = ProgressDialog(this@RegisterDisputActivity)
-            progressDialog.setCancelable(false) // set cancelable to false
-            progressDialog.setMessage("Please Wait") // set message
-            progressDialog.show() // show progress dialog
+        progressDialog.setCancelable(false) // set cancelable to false
+        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.show() // show progress dialog
 
-            ApiClient.client.saveDispute(
-                "Bearer $token",
-                intent.getStringExtra("RIDEID"),
-                "Dispute", reasonId,
-                edt_meterReading!!.text.toString(),
-                edtEndMeterReading!!.text.toString(),
-                edtTotalFareCharged!!.text.toString(), edtcomment
-            )!!.enqueue(object :
-                Callback<SaveDisputResponsePOJO?> {
-                override fun onResponse(
-                    call: Call<SaveDisputResponsePOJO?>,
-                    response: Response<SaveDisputResponsePOJO?>
-                ) {
-                    progressDialog.dismiss()
-                    if (response.code() == 200) {
-                        val intent = Intent(this@RegisterDisputActivity, HomeActivity::class.java)
-                        intent.action = "RegisterDisput"
-                        startActivity(intent)
+        ApiClient.client.saveDispute(
+            "Bearer $token",
+            intent.getStringExtra("RIDEID"),
+            "Dispute", reasonId,
+            edt_meterReading!!.text.toString(),
+            edtEndMeterReading!!.text.toString(),
+            edtTotalFareCharged!!.text.toString(), edtcomment
+        )!!.enqueue(object :
+            Callback<SaveDisputResponsePOJO?> {
+            override fun onResponse(
+                call: Call<SaveDisputResponsePOJO?>,
+                response: Response<SaveDisputResponsePOJO?>
+            ) {
+                progressDialog.dismiss()
+                if (response.code() == 200) {
+                    val intent = Intent(this@RegisterDisputActivity, HomeActivity::class.java)
+                    intent.action = "RegisterDisput"
+                    startActivity(intent)
 
-                    }else if (response.code() == 422) {
-                        val gson = GsonBuilder().create()
-                        var pojo: ValidationResponse? = ValidationResponse()
-                        try {
-                            pojo = gson.fromJson(
-                                response.errorBody()!!.string(),
-                                ValidationResponse::class.java
-                            )
-                            Toast.makeText(
-                                    this@RegisterDisputActivity,
-                                    pojo.errors!!.get(0).message,
-                                    Toast.LENGTH_LONG
-                                )
-                                .show()
-
-
-                        } catch (exception: IOException) {
-                        }
-
-                    } else {
+                }else if (response.code() == 422) {
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
                         Toast.makeText(
                             this@RegisterDisputActivity,
-                            "Internal server error",
+                            pojo.errors!!.get(0).message,
                             Toast.LENGTH_LONG
-                        ).show()
+                        )
+                            .show()
+
+
+                    } catch (exception: IOException) {
                     }
+
+                } else {
+                    Toast.makeText(
+                        this@RegisterDisputActivity,
+                        "Internal server error",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
+            }
 
-                override fun onFailure(
-                    call: Call<SaveDisputResponsePOJO?>,
-                    t: Throwable
-                ) {
-                    progressDialog.dismiss()
-                    Log.d("response", t.stackTrace.toString())
-                }
-            })
-
-
-
-
+            override fun onFailure(
+                call: Call<SaveDisputResponsePOJO?>,
+                t: Throwable
+            ) {
+                progressDialog.dismiss()
+                Log.d("response", t.stackTrace.toString())
+            }
+        })
 
     }
 
@@ -457,7 +599,7 @@ class RegisterDisputActivity : AppCompatActivity() {
 
     private fun setImageList() {
 
-        val options =
+        /*val options =
             arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
         val builder =
             android.app.AlertDialog.Builder(this@RegisterDisputActivity)
@@ -471,7 +613,15 @@ class RegisterDisputActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         }
-        builder.show()
+        builder.show()*/
+
+        /**
+         * iLoma Team :- Mohasin 8 Jan
+         */
+
+        if(photoSelector!!.isPermissionGranted(context)){
+            photoSelector!!.selectImage(null)
+        }
 
 
     }
@@ -514,7 +664,7 @@ class RegisterDisputActivity : AppCompatActivity() {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+   /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
@@ -533,6 +683,40 @@ class RegisterDisputActivity : AppCompatActivity() {
                     val uri = data.data
                     getImageFilePath(uri)
                 }
+            }
+        }
+    }*/
+
+    /**
+     * LIFECYCLE
+     */
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        //Profile Picture
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PhotoSelector.SELECT_FILE) {
+                filePath = photoSelector!!.onSelectFromGalleryResult(data)
+                val imageModel = ImageModel()
+                imageModel.filePath = photoSelector!!.getPath(filePath, context)
+                imageModel.image = photoSelector!!.getPath(filePath, context)
+                imageModel.isSelected
+                imageList!!.add(0, imageModel)
+                selectedImageList!!.add(0, imageModel.image !!)
+                selectedImageAdapter!!.notifyDataSetChanged()
+            } else if (requestCode == PhotoSelector.REQUEST_CAMERA) {
+                filePath = photoSelector!!.onCaptureImageResult()
+                val imageModel = ImageModel()
+                imageModel.filePath = photoSelector!!.getPath(filePath, context)
+                imageModel.image = photoSelector!!.getPath(filePath, context)
+                imageModel.isSelected
+                imageList!!.add(0, imageModel)
+                selectedImageList!!.add(0, imageModel.image !!)
+                selectedImageAdapter!!.notifyDataSetChanged()
             }
         }
     }

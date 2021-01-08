@@ -194,7 +194,7 @@ interface NetworkService {
     @POST("startRide")
     fun uploadstartRide(
         @Header("Authorization") header: String?,
-        @Part file: MultipartBody.Part?,
+        @Part file: Array<MultipartBody.Part?>,
         @PartMap map: HashMap<String?, String?>?,
         @PartMap map1: HashMap<String?, Int?>,
         @PartMap map2: HashMap<String?, Float?>
@@ -295,6 +295,20 @@ interface NetworkService {
         @Query("end_meter_reading") end_meter_reading: String?,
         @Query("actual_meter_charges") actual_meter_charges: String?,
         @Query("comment") comment: String?
+    ): Call<SaveDisputResponsePOJO?>?
+
+    /**
+     * iLoma Team :- Mohasin 8 Jan
+     */
+
+    @Multipart
+    @POST("saveDispute")
+    fun multipartSaveDispute(
+        @Header("Authorization") header: String?,
+        @Part file: Array<MultipartBody.Part?>,
+        @PartMap map: HashMap<String?, String?>?,
+        @Query("dispute_reason_id[]") reasionID: ArrayList<Int>?
+
     ): Call<SaveDisputResponsePOJO?>?
 
 

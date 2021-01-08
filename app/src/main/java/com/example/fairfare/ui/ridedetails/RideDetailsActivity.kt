@@ -9,7 +9,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.location.*
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.*
 import android.os.StrictMode.VmPolicy
@@ -41,6 +44,7 @@ import com.example.fairfare.ui.trackRide.TrackRideActivity
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.PhotoSelector
 import com.example.fairfare.utils.PreferencesManager
 import com.example.fairfare.utils.ProjectUtilities
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -69,10 +73,12 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     var locationChangelatitude = 0.0
     var locationChangelongitude = 0.0
     protected var locationManager: LocationManager? = null
+    protected var photoSelector: PhotoSelector? = null
     var strFirstTime: String? = null
     var mMap: GoogleMap? = null
     private var mPolyline: Polyline? = null
     var sourecemarker: Marker? = null
+    var context: Context = this
 
 
     private var iRidePresenter: IRidePresenter? = null
@@ -83,6 +89,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGES = 2
     var image: File? = null
+    var filePath: Uri? = null
     var mCurrentPhotoPath: String? = null
     var projection =
         arrayOf(MediaStore.MediaColumns.DATA)
@@ -164,6 +171,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         strFirstTime = "firstClick"
         PreferencesManager.initializeInstance(this@RideDetailsActivity)
         preferencesManager = PreferencesManager.instance
+        photoSelector = PhotoSelector(this)
 
 
 
@@ -548,7 +556,16 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     private fun setSelectedImageList() {
 
 
-        selectedImageAdapter = SelectedImageAdapter(this, selectedImageList!!)
+        selectedImageAdapter = SelectedImageAdapter(this, selectedImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+                showConfirmationDialog(position)
+            }
+
+        } )
         val spanCount = 2
         selectedImageRecyclerView!!.layoutManager = GridLayoutManager(this, spanCount)
         val spacing = 15
@@ -584,6 +601,20 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         imageList = ArrayList()
     }
 
+    private fun showConfirmationDialog(position: Int) {
+        val alertDialog = AlertDialog.Builder(context)
+        alertDialog.setTitle("FairFare")
+        alertDialog.setMessage("Are you sure you remove this image?")
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("Yes") { dialog, which ->
+            imageList!!.removeAt(position)
+            selectedImageList!!.removeAt(position)
+            selectedImageAdapter!!.notifyDataSetChanged()
+        }
+        alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+        alertDialog.show()
+    }
+
 
     override fun onDestroy() {
         // sharedpreferences!!.edit().clear().commit()
@@ -602,7 +633,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
 
     private fun setImageList() {
 
-        val options =
+      /*  val options =
             arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
         val builder =
             android.app.AlertDialog.Builder(this@RideDetailsActivity)
@@ -616,7 +647,15 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
                 dialog.dismiss()
             }
         }
-        builder.show()
+        builder.show()*/
+
+        /**
+         * iLoma Team :- Mohasin 8 Jan
+         */
+
+        if(photoSelector!!.isPermissionGranted(context)){
+            photoSelector!!.selectImage(null)
+        }
 
 
     }
@@ -657,7 +696,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
 
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+   /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
@@ -676,6 +715,40 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
                     val uri = data.data
                     getImageFilePath(uri)
                 }
+            }
+        }
+    }*/
+
+    /**
+     * LIFECYCLE
+     */
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        //Profile Picture
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PhotoSelector.SELECT_FILE) {
+                filePath = photoSelector!!.onSelectFromGalleryResult(data)
+                val imageModel = ImageModel()
+                imageModel.filePath = photoSelector!!.getPath(filePath, context)
+                imageModel.image = photoSelector!!.getPath(filePath, context)
+                imageModel.isSelected
+                imageList!!.add(0, imageModel)
+                selectedImageList!!.add(0, imageModel.image !!)
+                selectedImageAdapter!!.notifyDataSetChanged()
+            } else if (requestCode == PhotoSelector.REQUEST_CAMERA) {
+                filePath = photoSelector!!.onCaptureImageResult()
+                val imageModel = ImageModel()
+                imageModel.filePath = photoSelector!!.getPath(filePath, context)
+                imageModel.image = photoSelector!!.getPath(filePath, context)
+                imageModel.isSelected
+                imageList!!.add(0, imageModel)
+                selectedImageList!!.add(0, imageModel.image !!)
+                selectedImageAdapter!!.notifyDataSetChanged()
             }
         }
     }
