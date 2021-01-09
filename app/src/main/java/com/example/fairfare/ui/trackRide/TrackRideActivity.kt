@@ -13,13 +13,11 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.AsyncTask
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
+import android.os.*
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -50,6 +48,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import org.json.JSONException
 import org.json.JSONObject
+import org.slf4j.MDC.clear
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -90,7 +89,8 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
     var updatedPolyline: Polyline? = null
     var mGreyPolyline: Polyline? = null
 
-    private val myMarker: Marker? = null
+    private var myMarker: Marker? = null
+    private var isMapZoomed: Boolean? = false
 
 
     @JvmField
@@ -919,7 +919,7 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
                     (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!.toDouble()
                 )
             ).icon(
-                BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)
             )
         )
         sourecemarker = mMap!!.addMarker(
@@ -1502,8 +1502,16 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
 
         Log.d("onLocationChangedq", location!!.speed.toString())
 
+        /**
+         * iLoma Team :- Mohasin 09 Jan 2021
+         */
+
+        addCurrentLocationMarker(location)
+
         locationChangelatitude = location.latitude
         locationChangelongitude = location.longitude
+
+
 
 
         if (location != null) {
@@ -1570,6 +1578,81 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
     /**
      * iLoma Team :- Mohasin 8 Jan
      */
+
+    private fun addCurrentLocationMarker(location: Location?) {
+
+        val newPosition: LatLng = LatLng(location!!.latitude, location.longitude)
+        if (myMarker != null){
+            myMarker!!.remove()
+        }
+        myMarker = mMap!!.addMarker(
+            MarkerOptions()
+                .position(newPosition)
+                .icon(getMarkerIcon(tv_carType!!.text.toString()))
+                .anchor(0.5f, 0.5f)
+                .draggable(true)
+                .flat(true)
+                .rotation(location.bearing)
+        )
+
+        animateMarker(myMarker!!, location)
+
+        mMap!!.moveCamera(
+            CameraUpdateFactory.newCameraPosition(
+                CameraPosition.Builder()
+                    .target(newPosition)
+                    .zoom(getZoomLevel())
+                    .build()
+            )
+        )
+
+
+    }
+
+    private fun getZoomLevel(): Float {
+        if (!isMapZoomed!!){
+            isMapZoomed = true
+            return 16f
+        }
+        return mMap!!.cameraPosition.zoom
+    }
+
+
+    fun getMarkerIcon(vehicalName: String?): BitmapDescriptor? {
+        when (vehicalName) {
+            "Taxi" -> return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
+            "Auto" -> return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
+        }
+        return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
+    }
+
+    fun animateMarker(marker: Marker, location: Location) {
+        val handler = Handler()
+        val start: Long = SystemClock.uptimeMillis()
+        val startLatLng = marker.position
+        val startRotation = marker.rotation.toDouble()
+        val duration: Long = 500
+        val interpolator: Interpolator = LinearInterpolator()
+        handler.post(object : Runnable {
+            override fun run() {
+                val elapsed: Long = SystemClock.uptimeMillis() - start
+                val t: Float = interpolator.getInterpolation(
+                    elapsed.toFloat()
+                            / duration
+                )
+                val lng = t * location.longitude + (1 - t)* startLatLng.longitude
+                val lat = t * location.latitude + (1 - t)* startLatLng.latitude
+                val rotation = (t * location.bearing + (1 - t)
+                        * startRotation).toFloat()
+                marker.setPosition(LatLng(lat, lng))
+              /*  marker.rotation = rotation
+                if (t < 1.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 10000)
+                }*/
+            }
+        })
+    }
 
     private fun animateMarkerNew(
         startPosition: LatLng,
