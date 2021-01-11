@@ -337,7 +337,7 @@
 
 
     <LinearLayout
-        android:layout_gravity="kiran"
+        android:layout_gravity="start"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
