@@ -903,7 +903,7 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
         //  googleMap!!.clear()
 
         mMap = googleMap
-        mMap!!.isMyLocationEnabled = true
+       // mMap!!.isMyLocationEnabled = true
         mMap!!.animateCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
@@ -1612,7 +1612,7 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
     private fun getZoomLevel(): Float {
         if (!isMapZoomed!!){
             isMapZoomed = true
-            return 16f
+            return 18f
         }
         return mMap!!.cameraPosition.zoom
     }
