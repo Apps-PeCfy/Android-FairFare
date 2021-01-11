@@ -235,12 +235,13 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     fun dob() {
 
         calendar = Calendar.getInstance()
+        calendar!!.add(java.util.Calendar.YEAR,-18)
         myear = calendar!!.get(Calendar.YEAR)
         mmonth = calendar!!.get(Calendar.MONTH)
         mday = calendar!!.get(Calendar.DAY_OF_MONTH)
         val datePickerDialog =
             DatePickerDialog(activity!!, this@MyAccountFragment, myear, mmonth, mday)
-        datePickerDialog.datePicker.maxDate = Date().time
+        datePickerDialog.getDatePicker().setMaxDate(calendar!!.timeInMillis)
         datePickerDialog.show()
 
 

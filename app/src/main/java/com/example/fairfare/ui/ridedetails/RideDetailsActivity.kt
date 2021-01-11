@@ -10,6 +10,11 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.*
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import com.example.fairfare.utils.PhotoSelector
 import android.net.Uri
 import android.os.*
 import android.os.StrictMode.VmPolicy
@@ -33,6 +38,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.fairfare.R
+import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.home.HomeActivity
@@ -64,16 +70,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListener,
+class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListener,
     OnMapReadyCallback {
     var locationChangelatitude = 0.0
     var locationChangelongitude = 0.0
     protected var locationManager: LocationManager? = null
+    protected var photoSelector: PhotoSelector? = null
     var strFirstTime: String? = null
     var mMap: GoogleMap? = null
     private var mPolyline: Polyline? = null
     var sourecemarker: Marker? = null
-
+    var context: Context = this
 
     private var iRidePresenter: IRidePresenter? = null
     var imageList: ArrayList<ImageModel>? = null
@@ -84,6 +91,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     val PICK_IMAGES = 2
     var image: File? = null
     var mCurrentPhotoPath: String? = null
+    var filePath: Uri? = null
     var projection =
         arrayOf(MediaStore.MediaColumns.DATA)
 
@@ -152,9 +160,9 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
-        locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-        locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+     //   locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+     //   locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+     //   locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
      /*   val provider: String = locationManager!!.getBestProvider(Criteria(), true)
         val loc: Location = locationManager!!.getLastKnownLocation(provider)
         locationChangelatitude = loc.latitude
@@ -164,7 +172,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         strFirstTime = "firstClick"
         PreferencesManager.initializeInstance(this@RideDetailsActivity)
         preferencesManager = PreferencesManager.instance
-
+        photoSelector = PhotoSelector(this)
 
 
 
@@ -548,7 +556,17 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     private fun setSelectedImageList() {
 
 
-        selectedImageAdapter = SelectedImageAdapter(this, selectedImageList!!)
+        selectedImageAdapter = SelectedImageAdapter(this, selectedImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+                showConfirmationDialog(position)
+            }
+
+        } )
+
         val spanCount = 2
         selectedImageRecyclerView!!.layoutManager = GridLayoutManager(this, spanCount)
         val spacing = 15
@@ -583,6 +601,19 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         selectedImageList = ArrayList<String>()
         imageList = ArrayList()
     }
+    private fun showConfirmationDialog(position: Int) {
+        val alertDialog = AlertDialog.Builder(context)
+        alertDialog.setTitle("FairFare")
+        alertDialog.setMessage("Are you sure you remove this image?")
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("Yes") { dialog, which ->
+            imageList!!.removeAt(position)
+            selectedImageList!!.removeAt(position)
+            selectedImageAdapter!!.notifyDataSetChanged()
+        }
+        alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+        alertDialog.show()
+    }
 
 
     override fun onDestroy() {
@@ -602,23 +633,30 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
 
     private fun setImageList() {
 
-        val options =
-            arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
-        val builder =
-            android.app.AlertDialog.Builder(this@RideDetailsActivity)
-        builder.setTitle("Add Photo!")
-        builder.setItems(options) { dialog, item ->
-            if (options[item] == "Take Photo") {
-                takePicture()
-            } else if (options[item] == "Choose from Gallery") {
-                getPickImageIntent()
-            } else if (options[item] == "Cancel") {
-                dialog.dismiss()
-            }
+        /*  val options =
+           arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+       val builder =
+           android.app.AlertDialog.Builder(this@RideDetailsActivity)
+       builder.setTitle("Add Photo!")
+       builder.setItems(options) { dialog, item ->
+           if (options[item] == "Take Photo") {
+               takePicture()
+           } else if (options[item] == "Choose from Gallery") {
+               getPickImageIntent()
+           } else if (options[item] == "Cancel") {
+               dialog.dismiss()
+           }
+       }
+       builder.show()
+       builder.show()*/
+
+        /**
+         * iLoma Team :- Mohasin 8 Jan
+         */
+
+        if(photoSelector!!.isPermissionGranted(context)){
+            photoSelector!!.selectImage(null)
         }
-        builder.show()
-
-
     }
 
     fun getPickImageIntent() {
@@ -655,9 +693,41 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         return image
     }
 
+    /**
+     * LIFECYCLE
+     */
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        //Profile Picture
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PhotoSelector.SELECT_FILE) {
+                filePath = photoSelector!!.onSelectFromGalleryResult(data)
+                val imageModel = ImageModel()
+                imageModel.filePath = photoSelector!!.getPath(filePath, context)
+                imageModel.image = photoSelector!!.getPath(filePath, context)
+                imageModel.isSelected
+                imageList!!.add(0, imageModel)
+                selectedImageList!!.add(0, imageModel.image!!)
+                selectedImageAdapter!!.notifyDataSetChanged()
+            } else if (requestCode == PhotoSelector.REQUEST_CAMERA) {
+                filePath = photoSelector!!.onCaptureImageResult()
+                val imageModel = ImageModel()
+                imageModel.filePath = photoSelector!!.getPath(filePath, context)
+                imageModel.image = photoSelector!!.getPath(filePath, context)
+                imageModel.isSelected
+                imageList!!.add(0, imageModel)
+                selectedImageList!!.add(0, imageModel.image!!)
+                selectedImageAdapter!!.notifyDataSetChanged()
+            }
+        }
+    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+   /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
@@ -679,7 +749,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             }
         }
     }
-
+*/
     fun getImageFilePath(uri: Uri?) {
         val cursor =
             contentResolver.query(uri!!, projection, null, null, null)
@@ -775,8 +845,8 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             intentr.putExtra("MyRidesDLat", MyRidesDLat)
             intentr.putExtra("MyRidesDLong", MyRidesDLong)
             intentr.putExtra("MyRidesID", MyRides_RidesID)
-
             startActivity(intentr)
+            finish()
 
         } else {
 
@@ -788,7 +858,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             intentr.putExtra("ImageName", intent.getStringExtra("ImgName"))
             intentr.putExtra("ResponsePOJOScheduleRide", info)
             startActivity(intentr)
-
+            finish()
 
         }
 
@@ -817,7 +887,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         Toast.makeText(this@RideDetailsActivity, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun onLocationChanged(location: Location?) {
+    override fun onLocationChanged(location: Location) {
 
         if (strFirstTime.equals("firstClick")) {
 
@@ -1054,29 +1124,31 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             var lineOptions: PolylineOptions? = null
 
             // Traversing through all the routes
-            for (i in result!!.indices) {
-                points = ArrayList()
-                lineOptions = PolylineOptions()
+            if(result!=null) {
+                for (i in result!!.indices) {
+                    points = ArrayList()
+                    lineOptions = PolylineOptions()
 
-                // Fetching i-th route
-                val path =
-                    result[i]
+                    // Fetching i-th route
+                    val path =
+                        result[i]
 
-                // Fetching all the points in i-th route
-                for (j in path.indices) {
-                    val point = path[j]
-                    val lat = point["lat"]!!.toDouble()
-                    val lng = point["lng"]!!.toDouble()
-                    val position =
-                        LatLng(lat, lng)
-                    points.add(position)
+                    // Fetching all the points in i-th route
+                    for (j in path.indices) {
+                        val point = path[j]
+                        val lat = point["lat"]!!.toDouble()
+                        val lng = point["lng"]!!.toDouble()
+                        val position =
+                            LatLng(lat, lng)
+                        points.add(position)
+                    }
+                    lineOptions.addAll(points)
+                    lineOptions.width(8f)
+                    //  lineOptions.color(Color.GREEN);
+                    lineOptions.color(
+                        this@RideDetailsActivity.resources.getColor(R.color.gradientstartcolor)
+                    )
                 }
-                lineOptions.addAll(points)
-                lineOptions.width(8f)
-                //  lineOptions.color(Color.GREEN);
-                lineOptions.color(
-                    this@RideDetailsActivity.resources.getColor(R.color.gradientstartcolor)
-                )
             }
 
             if (lineOptions != null) {

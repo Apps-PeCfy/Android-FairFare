@@ -211,6 +211,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
     @OnClick(R.id.ivViewInfo)
     fun iiewInfo() {
+        eventInfoDialog = Dialog(this@MyRideDetailsActivity, R.style.dialog_style)
 
         eventInfoDialog!!.setCancelable(true)
         val inflater1 =
@@ -262,10 +263,11 @@ class MyRideDetailsActivity : AppCompatActivity() {
             @SuppressLint("SetTextI18n")
             override fun onResponse(
                 call: Call<RideDetailsResponsePOJO?>,
-                response: Response<RideDetailsResponsePOJO?>
-            ) {
+                response: Response<RideDetailsResponsePOJO?>)
+            {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
+                    waitingList = response.body()!!.data!!.actualTrackRide!!.waitings!!
 
                     if((response.body()!!.data!!.reviews)!!.isNotEmpty()) {
                         editReview!!.text = response.body()!!.data!!.reviews!!.get(0)!!.reviews

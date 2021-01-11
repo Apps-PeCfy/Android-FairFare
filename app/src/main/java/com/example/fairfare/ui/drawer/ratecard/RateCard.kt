@@ -321,29 +321,24 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
                                     .setCustomView(createTabItemView(getRateCardList[j].image!!))
                             )
                             tvCarName!!.text = getRateCardList[0].name
-                            tvFare!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).minBaseFare +
-                                        " for minimum base distance and ₹" + getRateCardList[0].rateCards!!.get(
-                                    0
-                                ).fareAfterMinbdist +
-                                        " after minimum base distance"
-                            tvNightCharges!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).nightCharges + "% of the fair"
 
-                            tvWaitingCharges!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).waitingCharges +
-                                        " per hour or part thereof (subject to a min of 15 mins stay)"
+
+                            tvFare!!.text = "Rs " + getRateCardList[0]!!.rateCards!!.get(0).minBaseFare +
+                                    " for first 1.50 km and thereafter Rs " +
+                                    getRateCardList[0].rateCards!!.get(0).fareAfterMinbdist +
+                                    " for every additional km."
+
+
+
+                            tvNightCharges!!.text = getRateCardList[0]!!.rateCards!!.get(0).nightCharges + "%"+ "Night Charges of the Total Fare"
+
+                            tvWaitingCharges!!.text = "Rs " + getRateCardList[0]!!.rateCards!!.get(0).waitingCharges + " INR per minute "
 
                             if((getRateCardList[0]!!.rateCards!!.get(0).surcharge).equals("0")){
-
-
                                 tvSurCHarges!!.text = "Surcharge Not Applicable"
-
-                            }else{
-
-                                tvSurCHarges!!.text =
-                                    "₹ " + getRateCardList[0]!!.rateCards!!.get(0).surcharge +
-                                            " per hour or part thereof (subject to a min of 15 mins stay)"
+                            }else
+                            {
+                                tvSurCHarges!!.text = "₹ " + getRateCardList[0]!!.rateCards!!.get(0).surcharge + " per hour or part thereof (subject to a min of 15 mins stay)"
 
                             }
 
@@ -508,19 +503,21 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
 
             tvCarName!!.text = getRateCardList[selectedPosition].rateCards!!.get(position).name
 
-            tvFare!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).minBaseFare +
-                        " for minimum base distance and ₹" + getRateCardList[selectedPosition].rateCards!!.get(
-                    position
-                ).fareAfterMinbdist +
-                        " after minimum base distance"
 
-            tvNightCharges!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).nightCharges + "% of the fair"
+            tvFare!!.text = "Rs " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).minBaseFare +
+                    " for first 1.50 km and thereafter Rs " +
+                    getRateCardList[selectedPosition].rateCards!!.get(position).fareAfterMinbdist +
+                    " for every additional km."
 
-            tvWaitingCharges!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).waitingCharges +
-                        " per hour or part thereof (subject to a min of 15 mins stay)"
+
+
+            tvNightCharges!!.text = getRateCardList[selectedPosition]!!.rateCards!!.get(position).nightCharges + "%"+ "Night Charges of the Total Fare"
+
+            tvWaitingCharges!!.text = "Rs " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).waitingCharges + " INR per minute "
+
+
+
+
 
             if((getRateCardList[selectedPosition]!!.rateCards!!.get(position).surcharge).equals("0")){
                 tvSurCHarges!!.text ="Surcharge Not Applicable"

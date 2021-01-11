@@ -34,7 +34,7 @@ class WaitTimePopUpAdapter(
         holder.tvAddress!!.text = arrWaitTime[position].fullAddress
 
         if(arrWaitTime[position].waitingTime>59){
-            holder.tvWaitTime!!.text = ((arrWaitTime[position].waitingTime)/60).toString()+" Min"
+            holder.tvWaitTime!!.text = ((arrWaitTime[position].waitingTimeText))
 
         }else{
 

@@ -60,7 +60,7 @@ class MultipleSelectionSpinner : AppCompatSpinner, OnMultiChoiceClickListener {
 
                 isChecked == false
                 mSelection!![which] = false
-                mSelection!![which] = isChecked
+              //  simple_adapter.notifyDataSetChanged()
 
             }
             /* if (buildSelectedItemString().length > 0) {

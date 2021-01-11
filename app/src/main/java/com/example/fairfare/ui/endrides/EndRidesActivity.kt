@@ -613,29 +613,31 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
             var lineOptions: PolylineOptions? = null
 
             // Traversing through all the routes
-            for (i in result!!.indices) {
-                points = ArrayList()
-                lineOptions = PolylineOptions()
+            if(result!=null) {
+                for (i in result!!.indices) {
+                    points = ArrayList()
+                    lineOptions = PolylineOptions()
 
-                // Fetching i-th route
-                val path =
-                    result[i]
+                    // Fetching i-th route
+                    val path =
+                        result[i]
 
-                // Fetching all the points in i-th route
-                for (j in path.indices) {
-                    val point = path[j]
-                    val lat = point["lat"]!!.toDouble()
-                    val lng = point["lng"]!!.toDouble()
-                    val position =
-                        LatLng(lat, lng)
-                    points.add(position)
+                    // Fetching all the points in i-th route
+                    for (j in path.indices) {
+                        val point = path[j]
+                        val lat = point["lat"]!!.toDouble()
+                        val lng = point["lng"]!!.toDouble()
+                        val position =
+                            LatLng(lat, lng)
+                        points.add(position)
+                    }
+                    lineOptions.addAll(points)
+                    lineOptions.width(8f)
+                    //  lineOptions.color(Color.GREEN);
+                    lineOptions.color(
+                        this@EndRidesActivity.resources.getColor(R.color.gradientstartcolor)
+                    )
                 }
-                lineOptions.addAll(points)
-                lineOptions.width(8f)
-                //  lineOptions.color(Color.GREEN);
-                lineOptions.color(
-                    this@EndRidesActivity.resources.getColor(R.color.gradientstartcolor)
-                )
             }
 
 

@@ -37,6 +37,7 @@ import butterknife.OnClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
+import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.Login.LoginActivity
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
@@ -67,12 +68,13 @@ import com.example.fairfare.utils.ProjectUtilities
 import com.example.fairfare.utils.ProjectUtilities.showProgressDialog
 import com.example.fairfare.utils.RoundedImageView
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.gson.GsonBuilder
@@ -96,7 +98,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("DEPRECATION")
-class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
+class HomeActivity : BaseLocationClass(), OnMapReadyCallback, OnDateSetListener,
     OnTimeSetListener, OnItemSelectedListener, AdapterView.OnItemClickListener, ICompareRideView,
     LocationListener {
     protected var locationManager: LocationManager? = null
@@ -290,6 +292,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var loc: Location? = null
 
     var progressDialogstart: ProgressDialog? = null
+    var fusedLocationProviderClient: FusedLocationProviderClient? = null
 
 
     @SuppressLint("MissingPermission")
@@ -307,12 +310,19 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
         spinnerLang!!.visibility = View.VISIBLE
-        locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-        locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+      //  locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+      //  locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+      //  locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
 
-
-
+       /* fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        val task = fusedLocationProviderClient!!.getLastLocation()
+        task.addOnSuccessListener(object : OnSuccessListener<Location?> {
+            override fun onSuccess(location: Location?) {
+                currentLatitude = location!!.latitude
+                currentLongitude = location!!.longitude
+            }
+        })
+*/
 
 
         callOnLocation = "first"
@@ -435,23 +445,416 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     SpnLang.setDropDownViewResource(R.layout.simple_city_spinner)
                     spinnerLang!!.adapter = SpnLang
                     if (extras == null) {
-                        for (i in cityspinner!!.indices) {
-                            if (city.equals(cityspinner[i])) {
-                                spinnerLang!!.setSelection(i)
+
+                        if (cityspinner.contains(city)) {
+
+                            for (i in cityspinner!!.indices) {
+                                if (city.equals(cityspinner[i])) {
+                                    spinnerLang!!.setSelection(i)
+                                }
+
                             }
+                        } else {
+                            Toast.makeText(
+                                this@HomeActivity,
+                                "Sorry, we dont serve this location yet. Kindly choose Active city from the drop down",
+                                Toast.LENGTH_LONG
+                            ).show()
 
                         }
+
+
                     } else {
-                        for (i in cityspinner!!.indices) {
-                            if (city.equals(cityspinner[i])) {
-                                spinnerLang!!.setSelection(i)
+
+
+                        if (cityspinner.contains(city)) {
+                            for (i in cityspinner!!.indices) {
+                                if (city.equals(cityspinner[i])) {
+                                    spinnerLang!!.setSelection(i)
+                                }
                             }
+                        } else {
+                            Toast.makeText(
+                                this@HomeActivity,
+                                "Sorry, we dont serve this location yet. Kindly choose Active city from the drop down",
+                                Toast.LENGTH_LONG
+                            ).show()
 
                         }
+
+
+
+                }
+                spinnerLang!!.setOnItemSelectedListener(this@HomeActivity)
+
+
+            } else if (response.code() == 422)
+            {
+                val gson = GsonBuilder().create()
+                var pojo: ValidationResponse? = ValidationResponse()
+                try {
+                    pojo = gson.fromJson(
+                        response.errorBody()!!.string(),
+                        ValidationResponse::class.java
+                    )
+                    Toast.makeText(this@HomeActivity, pojo.message, Toast.LENGTH_LONG).show()
+
+
+                } catch (exception: IOException) {
+                }
+
+            } else
+            {
+                Toast.makeText(
+                    this@HomeActivity,
+                    "Internal server error",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+                override fun onFailure(
+            call: Call<GetAllowCityResponse?>,
+            t: Throwable
+        ) {
+            Log.d("response", t.stackTrace.toString())
+        }
+    })
+
+
+}
+
+
+private fun setFragment(myRides: Fragment) {
+
+
+    fragmentManager = supportFragmentManager
+    fragmentTransaction = fragmentManager!!.beginTransaction()
+    fragmentTransaction!!.add(R.id.container_framelayout, myRides)
+    fragmentTransaction!!.commit()
+}
+
+
+private fun setListData() {
+    drawerPojoArrayList = ArrayList<DrawerPojo>()
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            1,
+            getString(R.string.drawer_covid),
+            R.drawable.ic_nav_covid
+        )
+    )
+
+
+
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            2,
+            getString(R.string.drawer_mylocation),
+            R.drawable.ic_nav_mylocation
+        )
+    )
+
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            3,
+            getString(R.string.drawer_myrides),
+            R.drawable.ic_nav_mytrips
+        )
+    )
+
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            4,
+            getString(R.string.drawer_mydisput),
+            R.drawable.ic_nav_mydisput
+        )
+    )
+
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            5,
+            getString(R.string.drawer_mycomplents),
+            R.drawable.ic_nav_mycomplaint
+        )
+    )
+
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            6,
+            getString(R.string.drawer_ratecard),
+            R.drawable.ic_nav_ratecard
+        )
+    )
+
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            7,
+            getString(R.string.drawer_faq),
+            R.drawable.ic_nav_helpandsupport
+        )
+    )
+
+
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            8,
+            getString(R.string.drawer_contactus),
+            R.drawable.ic_nav_helpandsupport
+        )
+    )
+
+
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            9,
+            getString(R.string.drawer_privacypolicy),
+            R.drawable.ic_nav_privacypolicy
+        )
+    )
+    drawerPojoArrayList!!.add(
+        DrawerPojo(
+            10,
+            getString(R.string.drawer_setting),
+            R.drawable.ic_nav_setting
+        )
+    )
+
+
+    drawerAdapter = DrawerAdapter(this, drawerPojoArrayList)
+    lvDrawer!!.adapter = drawerAdapter
+
+}
+
+@SuppressLint("WrongConstant")
+override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    when (position) {
+        0 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(Covid())
+
+        }
+        1 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(MyLocation())
+
+        }
+        2 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(MyRides())
+        }
+        3 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(MyDisput())
+        }
+        4 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(MyComplaints())
+        }
+        5 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(RateCard())
+        }
+        6 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(FAQ())
+        }
+        7 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(ContactUs())
+        }
+        8 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(ContentPage())
+        }
+        9 -> {
+            spinnerLang!!.visibility = View.GONE
+            homeMain!!.visibility = View.GONE
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+            mDrawerLayout!!.closeDrawer(Gravity.START)
+
+            replaceFragment(Setting())
+        }
+
+
+        else -> {
+        }
+    }
+}
+
+
+fun replaceFragment(fragment: Fragment?) {
+
+    fragmentManager = supportFragmentManager
+    fragmentTransaction = fragmentManager!!.beginTransaction()
+    fragmentTransaction!!.replace(R.id.container_framelayout, fragment!!)
+    fragmentTransaction!!.commit()
+}
+
+
+private fun getcurrentDate() {
+    val today = Date()
+    val format = SimpleDateFormat("dd MMM, hh:mm a")
+    val formatviewRide = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+
+
+
+    dateToStr = format.format(today)!!.replace("am", "AM").replace("pm", "PM")
+
+
+    setDate = dateToStr
+
+    formaredDate = formatviewRide.format(today).toString()
+
+
+    if (extras != null) {
+        if (spnrtime == 1) {
+            tv_RideScheduled?.text = tvDateandTime
+        } else {
+            tv_RideScheduled?.text = dateToStr
+
+        }
+
+    } else {
+        tv_RideScheduled?.text = dateToStr
+
+    }
+
+
+}
+
+private fun initView() {
+    toolbar!!.title = "Get Fair Fare"
+    toolbar!!.setTitleTextColor(Color.WHITE)
+    setSupportActionBar(toolbar)
+    lvDrawer!!.onItemClickListener = this
+    drawerToggle = object : ActionBarDrawerToggle(
+        this, mDrawerLayout, toolbar,
+        R.string.drawer_open, R.string.drawer_close
+    ) {
+        override fun onDrawerClosed(drawerView: View) {
+            super.onDrawerClosed(drawerView)
+        }
+
+        override fun onDrawerOpened(drawerView: View) {
+            super.onDrawerOpened(drawerView)
+        }
+    }
+    mDrawerLayout?.addDrawerListener(drawerToggle as ActionBarDrawerToggle)!!
+    drawerToggle?.setDrawerIndicatorEnabled(true)
+    drawerToggle?.setDrawerIndicatorEnabled(false)
+    drawerToggle?.setHomeAsUpIndicator(R.drawable.ic_action_menu)
+    drawerToggle?.syncState()
+    drawerToggle?.setToolbarNavigationClickListener(View.OnClickListener {
+        if (mDrawerLayout!!.isDrawerOpen(Gravity.LEFT)) {
+            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+        } else {
+            tvUserName!!.text =
+                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
+            tvEmailAddress!!.text =
+                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL)
+            tvUserLocation!!.text =
+                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION)
+
+            tvProfession!!.text =
+                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION)
+
+
+
+            Glide.with(this@HomeActivity)
+                .load(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK))
+                .apply(
+                    RequestOptions()
+                        .centerCrop()
+                        .dontAnimate()
+                        .dontTransform()
+                ).into(logoLayout!!)
+
+            mDrawerLayout!!.openDrawer(Gravity.LEFT)
+        }
+    })
+}
+
+@OnClick(R.id.logoLayout)
+fun myAccount() {
+
+    spinnerLang!!.visibility = View.GONE
+    homeMain!!.visibility = View.GONE
+    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+    mDrawerLayout!!.closeDrawer(Gravity.START)
+
+    replaceFragment(MyAccountFragment())
+
+
+}
+
+@OnClick(R.id.btnLogout)
+fun logOut() {
+    deviceID = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID)
+    token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+
+
+    val progressDialog = ProgressDialog(this@HomeActivity)
+    progressDialog.setCancelable(false) // set cancelable to false
+    progressDialog.setMessage("Please Wait") // set message
+    progressDialog.show() // show progress dialog
+
+    ApiClient.client.signOut("Bearer $token", deviceID, "Android")!!
+        .enqueue(object : Callback<ContactUsResponsePojo?> {
+            override fun onResponse(
+                call: Call<ContactUsResponsePojo?>,
+                response: Response<ContactUsResponsePojo?>
+            ) {
+                progressDialog.dismiss()
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        preferencesManager!!.clear()
+                        Toast.makeText(
+                            this@HomeActivity,
+                            response!!.body()!!.message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
                     }
-                    spinnerLang!!.setOnItemSelectedListener(this@HomeActivity)
-
-
                 } else if (response.code() == 422) {
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
@@ -460,7 +863,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                             response.errorBody()!!.string(),
                             ValidationResponse::class.java
                         )
-                        Toast.makeText(this@HomeActivity, pojo.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@HomeActivity, pojo.message, Toast.LENGTH_LONG)
+                            .show()
 
 
                     } catch (exception: IOException) {
@@ -469,698 +873,206 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else {
                     Toast.makeText(
                         this@HomeActivity,
-                        "Internal server error",
+                        "Internal Server Error",
                         Toast.LENGTH_LONG
                     ).show()
+
                 }
             }
 
             override fun onFailure(
-                call: Call<GetAllowCityResponse?>,
-                t: Throwable
+                call: Call<ContactUsResponsePojo?>, t: Throwable
             ) {
+                progressDialog.dismiss()
+                Toast.makeText(this@HomeActivity, t.stackTrace.toString(), Toast.LENGTH_LONG)
+                    .show()
                 Log.d("response", t.stackTrace.toString())
             }
         })
 
+}
 
+
+@OnClick(R.id.tv_RideScheduled)
+fun RideScheduled() {
+
+    calendar = Calendar.getInstance()
+    year = calendar!!.get(Calendar.YEAR)
+    month = calendar!!.get(Calendar.MONTH)
+    day = calendar!!.get(Calendar.DAY_OF_MONTH)
+    val datePickerDialog = DatePickerDialog(
+        this@HomeActivity,
+        this@HomeActivity, year, month, day
+    )
+    datePickerDialog.datePicker.minDate = Date().time
+    datePickerDialog.show()
+}
+
+
+@OnClick(R.id.tvhideShow)
+fun hideshow() {
+    if (hideshow.equals("show")) {
+        hideshow = "hide"
+        llhideview?.visibility = View.GONE
+    } else {
+        hideshow = "show"
+        llhideview?.visibility = View.VISIBLE
+    }
+}
+
+
+@OnClick(R.id.tv_myCurrentLocation)
+fun myCurrentLocations() {
+    val intent = Intent(applicationContext, PickUpDropActivity::class.java)
+    if (SourceLat!!.isEmpty()) {
+        intent.putExtra("Toolbar_Title", "Pick-Up")
+        intent.putExtra("currentLatitude", currentLatitude)
+        intent.putExtra("currentLongitude", currentLongitude)
+        intent.putExtra("spinnerbag", spnrbag)
+        intent.putExtra("spinnerTime", spnrtime)
+        intent.putExtra("City", city_Name)
+        intent.putExtra("formaredDateLater", formaredDateLater)
+        intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
+
+
+    } else {
+        intent.putExtra("Toolbar_Title", "Pick-Up")
+        intent.putExtra("currentLatitude", SourceLat!!.toDouble())
+        intent.putExtra("currentLongitude", SourceLong!!.toDouble())
+        intent.putExtra("spinnerbag", spnrbag)
+        intent.putExtra("spinnerTime", spnrtime)
+        intent.putExtra("City", city_Name)
+        intent.putExtra("formaredDateLater", formaredDateLater)
+        intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
+
+
+    }
+    startActivity(intent)
+}
+
+override fun onDestroy() {
+    // sharedpreferences!!.edit().clear().commit()
+    super.onDestroy()
+}
+
+@OnClick(R.id.tv_myDropUpLocation)
+fun myDropUpLocation() {
+    val intent = Intent(applicationContext, PickUpDropActivity::class.java)
+    if (DestinationLat!!.isEmpty()) {
+        intent.putExtra("Toolbar_Title", "Drop-off")
+        intent.putExtra("currentLatitude", currentLatitude)
+        intent.putExtra("currentLongitude", currentLongitude)
+        intent.putExtra("spinnerbag", spnrbag)
+        intent.putExtra("spinnerTime", spnrtime)
+        intent.putExtra("City", city_Name)
+        intent.putExtra("formaredDateLater", formaredDateLater)
+
+        intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
+
+
+    } else {
+        intent.putExtra("Toolbar_Title", "Drop-off")
+        intent.putExtra("currentLatitude", DestinationLat!!.toDouble())
+        intent.putExtra("currentLongitude", DestinationLong!!.toDouble())
+        intent.putExtra("spinnerbag", spnrbag)
+        intent.putExtra("spinnerTime", spnrtime)
+        intent.putExtra("City", city_Name)
+        intent.putExtra("formaredDateLater", formaredDateLater)
+
+        intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
+
+
+    }
+    startActivity(intent)
+}
+
+private fun setStatusBarGradiant(activity: HomeActivity) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val window = activity.window
+        val background = activity.resources.getDrawable(R.drawable.app_gradient)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = activity.resources.getColor(android.R.color.transparent)
+        window.setBackgroundDrawable(background)
+    }
+}
+
+override fun onBackPressed() {
+    //super.onBackPressed();
+}
+
+
+override fun onMapReady(googleMap: GoogleMap) {
+    //googleMap.clear()
+    mMap = googleMap
+    // mMap!!.getUiSettings().setAllGesturesEnabled(false)
+    //  mMap!!.getUiSettings().setScrollGesturesEnabled(false)
+
+
+}
+
+
+@OnClick(R.id.btnCompareRide)
+fun btnCompare() {
+
+
+    sharedpreferences!!.edit().putString("SourceAddress", myCurrentLocation!!.text.toString())
+        .commit()
+    sharedpreferences!!.edit()
+        .putString("DestinationAddress", myDropUpLocation!!.text.toString()).commit()
+
+
+
+
+
+    if (spnrtime == 1) {
+        formaredDate = formaredDateLater
+    } else {
+        formaredDate = setDate
     }
 
 
-    private fun setFragment(myRides: Fragment) {
+    if (formaredDateLater != null) {
 
-
-        fragmentManager = supportFragmentManager
-        fragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction!!.add(R.id.container_framelayout, myRides)
-        fragmentTransaction!!.commit()
-    }
-
-
-    private fun setListData() {
-        drawerPojoArrayList = ArrayList<DrawerPojo>()
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                1,
-                getString(R.string.drawer_covid),
-                R.drawable.ic_nav_covid
-            )
-        )
-
-
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                2,
-                getString(R.string.drawer_mylocation),
-                R.drawable.ic_nav_mylocation
-            )
-        )
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                3,
-                getString(R.string.drawer_myrides),
-                R.drawable.ic_nav_mytrips
-            )
-        )
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                4,
-                getString(R.string.drawer_mydisput),
-                R.drawable.ic_nav_mydisput
-            )
-        )
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                5,
-                getString(R.string.drawer_mycomplents),
-                R.drawable.ic_nav_mycomplaint
-            )
-        )
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                6,
-                getString(R.string.drawer_ratecard),
-                R.drawable.ic_nav_ratecard
-            )
-        )
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                7,
-                getString(R.string.drawer_faq),
-                R.drawable.ic_nav_helpandsupport
-            )
-        )
-
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                8,
-                getString(R.string.drawer_contactus),
-                R.drawable.ic_nav_helpandsupport
-            )
-        )
-
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                9,
-                getString(R.string.drawer_privacypolicy),
-                R.drawable.ic_nav_privacypolicy
-            )
-        )
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
-                10,
-                getString(R.string.drawer_setting),
-                R.drawable.ic_nav_setting
-            )
-        )
-
-
-        drawerAdapter = DrawerAdapter(this, drawerPojoArrayList)
-        lvDrawer!!.adapter = drawerAdapter
-
-    }
-
-    @SuppressLint("WrongConstant")
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        when (position) {
-            0 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(Covid())
-
-            }
-            1 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(MyLocation())
-
-            }
-            2 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(MyRides())
-            }
-            3 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(MyDisput())
-            }
-            4 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(MyComplaints())
-            }
-            5 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(RateCard())
-            }
-            6 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(FAQ())
-            }
-            7 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(ContactUs())
-            }
-            8 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(ContentPage())
-            }
-            9 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(Setting())
-            }
-
-
-            else -> {
-            }
-        }
-    }
-
-
-    fun replaceFragment(fragment: Fragment?) {
-
-        fragmentManager = supportFragmentManager
-        fragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction!!.replace(R.id.container_framelayout, fragment!!)
-        fragmentTransaction!!.commit()
-    }
-
-
-    private fun getcurrentDate() {
+        val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        var date1: Date? = null
+        var date2: Date? = null
         val today = Date()
-        val format = SimpleDateFormat("dd MMM, hh:mm a")
-        val formatviewRide = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        var formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        var dateq: Date? = null
+        try {
+            dateq = formatter.parse(formaredDateLater)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        formatter = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
 
-
-
-        dateToStr = format.format(today)!!.replace("am", "AM").replace("pm", "PM")
-
-
-        setDate = dateToStr
-
-        formaredDate = formatviewRide.format(today).toString()
-
-
-        if (extras != null) {
-            if (spnrtime == 1) {
-                tv_RideScheduled?.text = tvDateandTime
-            } else {
-                tv_RideScheduled?.text = dateToStr
-
-            }
-
-        } else {
-            tv_RideScheduled?.text = dateToStr
-
+        try {
+            date1 = simpleDateFormat.parse(simpleDateFormat.format(today))
+            date2 = simpleDateFormat.parse(formatter.format(dateq))
+        } catch (e: ParseException) {
+            e.printStackTrace()
         }
 
+        var different: Long? = null
+        different = date2!!.time - date1!!.time
 
-    }
 
-    private fun initView() {
-        toolbar!!.title = "Get Fair Fare"
-        toolbar!!.setTitleTextColor(Color.WHITE)
-        setSupportActionBar(toolbar)
-        lvDrawer!!.onItemClickListener = this
-        drawerToggle = object : ActionBarDrawerToggle(
-            this, mDrawerLayout, toolbar,
-            R.string.drawer_open, R.string.drawer_close
-        ) {
-            override fun onDrawerClosed(drawerView: View) {
-                super.onDrawerClosed(drawerView)
-            }
+        val secondsInMilli: Long = 1000
+        val minutesInMilli = secondsInMilli * 60
+        val hoursInMilli = minutesInMilli * 60
+        val daysInMilli = hoursInMilli * 24
 
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-            }
-        }
-        mDrawerLayout?.addDrawerListener(drawerToggle as ActionBarDrawerToggle)!!
-        drawerToggle?.setDrawerIndicatorEnabled(true)
-        drawerToggle?.setDrawerIndicatorEnabled(false)
-        drawerToggle?.setHomeAsUpIndicator(R.drawable.ic_action_menu)
-        drawerToggle?.syncState()
-        drawerToggle?.setToolbarNavigationClickListener(View.OnClickListener {
-            if (mDrawerLayout!!.isDrawerOpen(Gravity.LEFT)) {
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-            } else {
-                tvUserName!!.text =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
-                tvEmailAddress!!.text =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL)
-                tvUserLocation!!.text =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION)
+        val elapsedDays = different / daysInMilli
+        different = different % daysInMilli
 
-                tvProfession!!.text =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION)
+        val elapsedHours = different / hoursInMilli
+        different = different % hoursInMilli
 
+        val elapsedMinutes = different / minutesInMilli
+        different = different % minutesInMilli
 
 
-                Glide.with(this@HomeActivity)
-                    .load(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK))
-                    .apply(
-                        RequestOptions()
-                            .centerCrop()
-                            .dontAnimate()
-                            .dontTransform()
-                    ).into(logoLayout!!)
-
-                mDrawerLayout!!.openDrawer(Gravity.LEFT)
-            }
-        })
-    }
-
-    @OnClick(R.id.logoLayout)
-    fun myAccount(){
-
-             spinnerLang!!.visibility = View.GONE
-             homeMain!!.visibility = View.GONE
-             mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-             mDrawerLayout!!.closeDrawer(Gravity.START)
-
-             replaceFragment(MyAccountFragment())
-
-
-
-    }
-
-    @OnClick(R.id.btnLogout)
-    fun logOut() {
-        deviceID = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID)
-        token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-
-
-        val progressDialog = ProgressDialog(this@HomeActivity)
-        progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
-        progressDialog.show() // show progress dialog
-
-        ApiClient.client.signOut("Bearer $token", deviceID, "Android")!!
-            .enqueue(object : Callback<ContactUsResponsePojo?> {
-                override fun onResponse(
-                    call: Call<ContactUsResponsePojo?>,
-                    response: Response<ContactUsResponsePojo?>
-                ) {
-                    progressDialog.dismiss()
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            preferencesManager!!.clear()
-                            Toast.makeText(
-                                this@HomeActivity,
-                                response!!.body()!!.message,
-                                Toast.LENGTH_LONG
-                            ).show()
-                            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-                            startActivity(intent)
-                            finish()
-
-                        }
-                    } else if (response.code() == 422) {
-                        val gson = GsonBuilder().create()
-                        var pojo: ValidationResponse? = ValidationResponse()
-                        try {
-                            pojo = gson.fromJson(
-                                response.errorBody()!!.string(),
-                                ValidationResponse::class.java
-                            )
-                            Toast.makeText(this@HomeActivity, pojo.message, Toast.LENGTH_LONG)
-                                .show()
-
-
-                        } catch (exception: IOException) {
-                        }
-
-                    } else {
-                        Toast.makeText(
-                            this@HomeActivity,
-                            "Internal Server Error",
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<ContactUsResponsePojo?>, t: Throwable
-                ) {
-                    progressDialog.dismiss()
-                    Toast.makeText(this@HomeActivity, t.stackTrace.toString(), Toast.LENGTH_LONG)
-                        .show()
-                    Log.d("response", t.stackTrace.toString())
-                }
-            })
-
-    }
-
-
-    @OnClick(R.id.tv_RideScheduled)
-    fun RideScheduled() {
-
-        calendar = Calendar.getInstance()
-        year = calendar!!.get(Calendar.YEAR)
-        month = calendar!!.get(Calendar.MONTH)
-        day = calendar!!.get(Calendar.DAY_OF_MONTH)
-        val datePickerDialog = DatePickerDialog(
-            this@HomeActivity,
-            this@HomeActivity, year, month, day
-        )
-        datePickerDialog.datePicker.minDate = Date().time
-        datePickerDialog.show()
-    }
-
-
-    @OnClick(R.id.tvhideShow)
-    fun hideshow() {
-        if (hideshow.equals("show")) {
-            hideshow = "hide"
-            llhideview?.visibility = View.GONE
-        } else {
-            hideshow = "show"
-            llhideview?.visibility = View.VISIBLE
-        }
-    }
-
-
-    @OnClick(R.id.tv_myCurrentLocation)
-    fun myCurrentLocations() {
-        val intent = Intent(applicationContext, PickUpDropActivity::class.java)
-        if (SourceLat!!.isEmpty()) {
-            intent.putExtra("Toolbar_Title", "Pick-Up")
-            intent.putExtra("currentLatitude", currentLatitude)
-            intent.putExtra("currentLongitude", currentLongitude)
-            intent.putExtra("spinnerbag", spnrbag)
-            intent.putExtra("spinnerTime", spnrtime)
-            intent.putExtra("City", city_Name)
-            intent.putExtra("formaredDateLater", formaredDateLater)
-            intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
-
-
-        } else {
-            intent.putExtra("Toolbar_Title", "Pick-Up")
-            intent.putExtra("currentLatitude", SourceLat!!.toDouble())
-            intent.putExtra("currentLongitude", SourceLong!!.toDouble())
-            intent.putExtra("spinnerbag", spnrbag)
-            intent.putExtra("spinnerTime", spnrtime)
-            intent.putExtra("City", city_Name)
-            intent.putExtra("formaredDateLater", formaredDateLater)
-            intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
-
-
-        }
-        startActivity(intent)
-    }
-
-    override fun onDestroy() {
-        // sharedpreferences!!.edit().clear().commit()
-        super.onDestroy()
-    }
-
-    @OnClick(R.id.tv_myDropUpLocation)
-    fun myDropUpLocation() {
-        val intent = Intent(applicationContext, PickUpDropActivity::class.java)
-        if (DestinationLat!!.isEmpty()) {
-            intent.putExtra("Toolbar_Title", "Drop-off")
-            intent.putExtra("currentLatitude", currentLatitude)
-            intent.putExtra("currentLongitude", currentLongitude)
-            intent.putExtra("spinnerbag", spnrbag)
-            intent.putExtra("spinnerTime", spnrtime)
-            intent.putExtra("City", city_Name)
-            intent.putExtra("formaredDateLater", formaredDateLater)
-
-            intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
-
-
-        } else {
-            intent.putExtra("Toolbar_Title", "Drop-off")
-            intent.putExtra("currentLatitude", DestinationLat!!.toDouble())
-            intent.putExtra("currentLongitude", DestinationLong!!.toDouble())
-            intent.putExtra("spinnerbag", spnrbag)
-            intent.putExtra("spinnerTime", spnrtime)
-            intent.putExtra("City", city_Name)
-            intent.putExtra("formaredDateLater", formaredDateLater)
-
-            intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
-
-
-        }
-        startActivity(intent)
-    }
-
-    private fun setStatusBarGradiant(activity: HomeActivity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = activity.window
-            val background = activity.resources.getDrawable(R.drawable.app_gradient)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = activity.resources.getColor(android.R.color.transparent)
-            window.setBackgroundDrawable(background)
-        }
-    }
-
-    override fun onBackPressed() {
-        //super.onBackPressed();
-    }
-
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        //googleMap.clear()
-        mMap = googleMap
-        // mMap!!.getUiSettings().setAllGesturesEnabled(false)
-        //  mMap!!.getUiSettings().setScrollGesturesEnabled(false)
-
-
-    }
-
-
-    @OnClick(R.id.btnCompareRide)
-    fun btnCompare() {
-
-
-        sharedpreferences!!.edit().putString("SourceAddress", myCurrentLocation!!.text.toString())
-            .commit()
-        sharedpreferences!!.edit()
-            .putString("DestinationAddress", myDropUpLocation!!.text.toString()).commit()
-
-
-
-
-
-        if (spnrtime == 1) {
-            formaredDate = formaredDateLater
-        } else {
-            formaredDate = setDate
-        }
-
-
-        if (formaredDateLater != null) {
-
-            val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-            var date1: Date? = null
-            var date2: Date? = null
-            val today = Date()
-            var formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-            var dateq: Date? = null
-            try {
-                dateq = formatter.parse(formaredDateLater)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            formatter = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-
-            try {
-                date1 = simpleDateFormat.parse(simpleDateFormat.format(today))
-                date2 = simpleDateFormat.parse(formatter.format(dateq))
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-
-            var different: Long? = null
-            different = date2!!.time - date1!!.time
-
-
-            val secondsInMilli: Long = 1000
-            val minutesInMilli = secondsInMilli * 60
-            val hoursInMilli = minutesInMilli * 60
-            val daysInMilli = hoursInMilli * 24
-
-            val elapsedDays = different / daysInMilli
-            different = different % daysInMilli
-
-            val elapsedHours = different / hoursInMilli
-            different = different % hoursInMilli
-
-            val elapsedMinutes = different / minutesInMilli
-            different = different % minutesInMilli
-
-            val elapsedSeconds = different / secondsInMilli
-
-            if (elapsedDays >= 1 || elapsedHours >= 1 || elapsedMinutes >= 30) {
-                if (estDistance!!.contains("km")) {
-
-
-                    if (PortAir.equals("AIRPORT", ignoreCase = true)) {
-                        airportYesOrNO = "Yes"
-                    } else {
-                        airportYesOrNO = "NO"
-                    }
-                    PortAir =
-                        preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
-                    replacedistance = estDistance!!.replace(" km", "")
-
-                    if ((spinnerLuggagetxt == "1 Bag")) {
-                        replacebags = spinnerLuggagetxt!!.replace(" Bag", "")
-
-                    } else if ((spinnerLuggagetxt == "Bags")) {
-                        replacebags = "0"
-
-                    } else {
-                        replacebags = spinnerLuggagetxt!!.replace(" Bags", "")
-
-                    }
-
-
-                    val context = GeoApiContext.Builder()
-                        .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-                        .build()
-                    var results = arrayOfNulls<GeocodingResult>(0)
-                    try {
-                        results = GeocodingApi.newRequest(context)
-                            .latlng(
-                                com.google.maps.model.LatLng(
-                                    SourceLat!!.toDouble(),
-                                    SourceLong!!.toDouble()
-                                )
-                            )
-                            .await()
-                    } catch (e: ApiException) {
-                        e.printStackTrace()
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-
-                    val context1 = GeoApiContext.Builder()
-                        .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-                        .build()
-                    var results1 = arrayOfNulls<GeocodingResult>(0)
-                    try {
-                        results1 = GeocodingApi.newRequest(context1)
-                            .latlng(
-                                com.google.maps.model.LatLng(
-                                    DestinationLat!!.toDouble(),
-                                    DestinationLong!!.toDouble()
-                                )
-                            )
-                            .await()
-                    } catch (e: ApiException) {
-                        e.printStackTrace()
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-
-                    val contextCurrentPlaceID = GeoApiContext.Builder()
-                        .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-                        .build()
-                    var PlaceIDCurrent = arrayOfNulls<GeocodingResult>(0)
-                    try {
-                        PlaceIDCurrent = GeocodingApi.newRequest(contextCurrentPlaceID)
-                            .latlng(
-                                com.google.maps.model.LatLng(
-                                    currentLatitude!!.toDouble(),
-                                    currentLongitude!!.toDouble()
-                                )
-                            )
-                            .await()
-                    } catch (e: ApiException) {
-                        e.printStackTrace()
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-
-                    sourcePlaceID = results[0]!!.placeId
-                    DestinationPlaceID = results1[0]!!.placeId
-                    CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
-
-
-
-                    iCompareRidePresenter!!.getCompareRideData(
-                        token,
-                        replacedistance,
-                        cityID.toString(),
-                        sourcePlaceID,
-                        DestinationPlaceID,
-                        replacebags,
-                        airportYesOrNO,
-                        formaredDate,
-                        CurrentPlaceID!!
-                    )
-
-
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Pick-UP and Drop-Off Location should not be same.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    this,
-                    "Schedule ride after half an hour.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        } else {
+        if (elapsedDays >= 0 || elapsedHours >= 0 || elapsedMinutes >= 31) {
             if (estDistance!!.contains("km")) {
 
 
@@ -1278,584 +1190,663 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 ).show()
             }
         }
+        else {
+            Toast.makeText(
+                this,
+                "Schedule ride after half an hour.",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    } else {
+        if (estDistance!!.contains("km")) {
 
 
-    }
-
-    private fun drawRoute() {
-        val mOrigin =
-            LatLng(SourceLat!!.toDouble(), SourceLong!!.toDouble())
-        val mDestination =
-            LatLng(
-                DestinationLat!!.toDouble(),
-                DestinationLong!!.toDouble()
-            )
-        val url = getDirectionsUrl(mOrigin, mDestination)
-        val downloadTask =
-            DownloadTask()
-        downloadTask.execute(url)
-    }
-
-    private fun getDirectionsUrl(
-        mOrigin: LatLng,
-        mDestination: LatLng
-    ): String {
-        val str_origin = "origin=" + mOrigin.latitude + "," + mOrigin.longitude
-        val str_dest =
-            "destination=" + mDestination.latitude + "," + mDestination.longitude
-
-        // Key
-        val key = "key=" + getString(R.string.google_maps_key)
-
-        // Building the parameters to the web service
-        val parameters = "$str_origin&$str_dest&$key"
-
-        // Output format
-        val output = "json"
-
-        // Building the url to the web service
-        return "https://maps.googleapis.com/maps/api/directions/$output?$parameters"
-    }
-
-    @TargetApi(Build.VERSION_CODES.N)
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
-
-
-        myYear = year
-        myday = dayOfMonth
-        myMonth = month + 1
-        val c = Calendar.getInstance()
-        hour = c[Calendar.HOUR]
-        c.add(Calendar.MINUTE,30)
-        minute = c[Calendar.MINUTE]
-        second = c[Calendar.SECOND]
-        AMorPM = c[Calendar.AM_PM]
-        val timePickerDialog = TimePickerDialog(
-            this@HomeActivity,
-            this@HomeActivity, hour, minute, DateFormat.is24HourFormat(this)
-        )
-        timePickerDialog.show()
-    }
-
-    override fun onTimeSet(view: TimePicker, hourOfDay: Int, Tminute: Int) {
-
-        myHour = hourOfDay
-        myMinute = Tminute
-        val AMorPM: String
-        if (myHour >= 12) {
-            AMorPM = "PM"
-            if (myHour == 12) {
+            if (PortAir.equals("AIRPORT", ignoreCase = true)) {
+                airportYesOrNO = "Yes"
             } else {
-                myHour = myHour - 12
+                airportYesOrNO = "NO"
             }
-        } else {
-            if (myHour == 0) {
-                myHour = myHour + 12
+            PortAir =
+                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
+            replacedistance = estDistance!!.replace(" km", "")
+
+            if ((spinnerLuggagetxt == "1 Bag")) {
+                replacebags = spinnerLuggagetxt!!.replace(" Bag", "")
+
+            } else if ((spinnerLuggagetxt == "Bags")) {
+                replacebags = "0"
+
+            } else {
+                replacebags = spinnerLuggagetxt!!.replace(" Bags", "")
+
             }
-            AMorPM = "AM"
-        }
-        var dmonth: String? = null
-        val monthParse = SimpleDateFormat("MM")
-        val monthDisplay = SimpleDateFormat("MMM")
-        try {
-            dmonth = monthDisplay.format(monthParse.parse(myMonth.toString()))
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
 
 
-        val displaDate = SimpleDateFormat("HH")
-        val olddisplaDate = SimpleDateFormat("hh")
+            val context = GeoApiContext.Builder()
+                .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                .build()
+            var results = arrayOfNulls<GeocodingResult>(0)
+            try {
+                results = GeocodingApi.newRequest(context)
+                    .latlng(
+                        com.google.maps.model.LatLng(
+                            SourceLat!!.toDouble(),
+                            SourceLong!!.toDouble()
+                        )
+                    )
+                    .await()
+            } catch (e: ApiException) {
+                e.printStackTrace()
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
 
 
-        var formatedhr = displaDate.format(olddisplaDate.parse((myHour.toString())))
-        var formatedminute = displaDate.format(olddisplaDate.parse((myMinute.toString())))
+            val context1 = GeoApiContext.Builder()
+                .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                .build()
+            var results1 = arrayOfNulls<GeocodingResult>(0)
+            try {
+                results1 = GeocodingApi.newRequest(context1)
+                    .latlng(
+                        com.google.maps.model.LatLng(
+                            DestinationLat!!.toDouble(),
+                            DestinationLong!!.toDouble()
+                        )
+                    )
+                    .await()
+            } catch (e: ApiException) {
+                e.printStackTrace()
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+
+            val contextCurrentPlaceID = GeoApiContext.Builder()
+                .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                .build()
+            var PlaceIDCurrent = arrayOfNulls<GeocodingResult>(0)
+            try {
+                PlaceIDCurrent = GeocodingApi.newRequest(contextCurrentPlaceID)
+                    .latlng(
+                        com.google.maps.model.LatLng(
+                            currentLatitude!!.toDouble(),
+                            currentLongitude!!.toDouble()
+                        )
+                    )
+                    .await()
+            } catch (e: ApiException) {
+                e.printStackTrace()
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+
+            sourcePlaceID = results[0]!!.placeId
+            DestinationPlaceID = results1[0]!!.placeId
+            CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
 
 
 
+            iCompareRidePresenter!!.getCompareRideData(
+                token,
+                replacedistance,
+                cityID.toString(),
+                sourcePlaceID,
+                DestinationPlaceID,
+                replacebags,
+                airportYesOrNO,
+                formaredDate,
+                CurrentPlaceID!!
+            )
 
-        if ((myMonth.toString().length == 1)) {
-            strMonth = ("0" + myMonth)
+
         } else {
-            strMonth = myMonth.toString()
+            Toast.makeText(
+                this,
+                "Pick-UP and Drop-Off Location should not be same.",
+                Toast.LENGTH_LONG
+            ).show()
         }
+    }
 
-        if ((myday.toString().length == 1)) {
-            stDay = ("0" + myday)
+
+}
+
+private fun drawRoute() {
+    val mOrigin =
+        LatLng(SourceLat!!.toDouble(), SourceLong!!.toDouble())
+    val mDestination =
+        LatLng(
+            DestinationLat!!.toDouble(),
+            DestinationLong!!.toDouble()
+        )
+    val url = getDirectionsUrl(mOrigin, mDestination)
+    val downloadTask =
+        DownloadTask()
+    downloadTask.execute(url)
+}
+
+private fun getDirectionsUrl(
+    mOrigin: LatLng,
+    mDestination: LatLng
+): String {
+    val str_origin = "origin=" + mOrigin.latitude + "," + mOrigin.longitude
+    val str_dest =
+        "destination=" + mDestination.latitude + "," + mDestination.longitude
+
+    // Key
+    val key = "key=" + getString(R.string.google_maps_key)
+
+    // Building the parameters to the web service
+    val parameters = "$str_origin&$str_dest&$key"
+
+    // Output format
+    val output = "json"
+
+    // Building the url to the web service
+    return "https://maps.googleapis.com/maps/api/directions/$output?$parameters"
+}
+
+@TargetApi(Build.VERSION_CODES.N)
+@RequiresApi(Build.VERSION_CODES.N)
+override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
+
+
+    myYear = year
+    myday = dayOfMonth
+    myMonth = month + 1
+    val c = Calendar.getInstance()
+    minute = c[Calendar.MINUTE]
+    if(minute>=28){
+        c.add(Calendar.HOUR,1)
+    }
+    hour = c[Calendar.HOUR]
+
+    c.add(Calendar.MINUTE, 31)
+    minute = c[Calendar.MINUTE]
+
+    second = c[Calendar.SECOND]
+    AMorPM = c[Calendar.AM_PM]
+    val timePickerDialog = TimePickerDialog(
+        this@HomeActivity,
+        this@HomeActivity, hour, minute, DateFormat.is24HourFormat(this)
+    )
+    timePickerDialog.show()
+}
+
+override fun onTimeSet(view: TimePicker, hourOfDay: Int, Tminute: Int) {
+
+    myHour = hourOfDay
+    myMinute = Tminute
+    val AMorPM: String
+    if (myHour >= 12) {
+        AMorPM = "PM"
+        if (myHour == 12) {
         } else {
-            stDay = myday.toString()
+            myHour = myHour - 12
         }
-
-
-        if ((second.toString().length == 1)) {
-            strsecond = ("0" + second)
-        } else {
-            strsecond = second.toString()
+    } else {
+        if (myHour == 0) {
+            myHour = myHour + 12
         }
-
-        if ((myHour.toString().length == 1)) {
-            strhr = ("0" + myHour)
-        } else {
-            strhr = myHour.toString()
-        }
-
-        if ((myMinute.toString().length == 1)) {
-            strMinute = ("0" + myMinute)
-        } else {
-            strMinute = myMinute.toString()
-        }
+        AMorPM = "AM"
+    }
+    var dmonth: String? = null
+    val monthParse = SimpleDateFormat("MM")
+    val monthDisplay = SimpleDateFormat("MMM")
+    try {
+        dmonth = monthDisplay.format(monthParse.parse(myMonth.toString()))
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
 
 
-        var dayhour: String? = null
-
-        if (hourOfDay.toString().length == 1) {
-            dayhour = ("0" + hourOfDay)
-        } else {
-            dayhour = hourOfDay.toString()
-        }
 
 
-        formaredDateLater =
-            (myYear.toString() + "-" + strMonth + "-" + stDay + " " + dayhour + ":" + strMinute + ":" + strsecond)
+    if ((myMonth.toString().length == 1)) {
+        strMonth = ("0" + myMonth)
+    } else {
+        strMonth = myMonth.toString()
+    }
+
+    if ((myday.toString().length == 1)) {
+        stDay = ("0" + myday)
+    } else {
+        stDay = myday.toString()
+    }
+
+
+    if ((second.toString().length == 1)) {
+        strsecond = ("0" + second)
+    } else {
+        strsecond = second.toString()
+    }
+
+    if ((myHour.toString().length == 1)) {
+        strhr = ("0" + myHour)
+    } else {
+        strhr = myHour.toString()
+    }
+
+    if ((myMinute.toString().length == 1)) {
+        strMinute = ("0" + myMinute)
+    } else {
+        strMinute = myMinute.toString()
+    }
+
+
+    var dayhour: String? = null
+
+    if (hourOfDay.toString().length == 1) {
+        dayhour = ("0" + hourOfDay)
+    } else {
+        dayhour = hourOfDay.toString()
+    }
+
+
+    formaredDateLater = (myYear.toString() + "-" + strMonth + "-" + stDay + " " + dayhour + ":" + strMinute + ":" + strsecond)
+
+    tv_RideScheduled!!.text = "$myday $dmonth, $strhr:$strMinute $AMorPM"
+  /*  val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+    var date1: Date? = null
+    var date2: Date? = null
+    val today = Date()
+    var formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+    var dateq: Date? = null
+    try {
+        dateq = formatter.parse(formaredDateLater)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    formatter = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+
+    try {
+        date1 = simpleDateFormat.parse(simpleDateFormat.format(today))
+        date2 = simpleDateFormat.parse(formatter.format(dateq))
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+
+    var different: Long? = null
+    different = date2!!.time - date1!!.time
+
+
+    val secondsInMilli: Long = 1000
+    val minutesInMilli = secondsInMilli * 60
+    val hoursInMilli = minutesInMilli * 60
+    val daysInMilli = hoursInMilli * 24
+
+    val elapsedDays = different / daysInMilli
+    different = different % daysInMilli
+
+    val elapsedHours = different / hoursInMilli
+    different = different % hoursInMilli
+
+    val elapsedMinutes = different / minutesInMilli
+    different = different % minutesInMilli
+
+
+    if (elapsedDays >= 1 || elapsedHours >= 1 || elapsedMinutes >= 31) {
         tv_RideScheduled!!.text = "$myday $dmonth, $strhr:$strMinute $AMorPM"
     }
-
-    private inner class DownloadTask :
-        AsyncTask<String, Void, String>() {
-        // Downloading data in non-ui thread
-        protected override fun doInBackground(vararg url: String): String {
-
-            // For storing data from web service
-            var data = ""
-            try {
-                // Fetching the data from web service
-                data = downloadUrl(url[0])
-                Log.d("DownloadTask", "DownloadTask : $data")
-            } catch (e: Exception) {
-                Log.d("Background Task", e.toString())
-            }
-            return data
-        }
-
-        // Executes in UI thread, after the execution of
-        // doInBackground()
-        override fun onPostExecute(result: String) {
-            super.onPostExecute(result)
-            val parserTask =
-                ParserTask()
-
-            // Invokes the thread for parsing the JSON data
-            parserTask.execute(result)
-        }
+    else {
+        Toast.makeText(
+            this,
+            "Schedule ride after half an hour.",
+            Toast.LENGTH_LONG
+        ).show()
     }
+*/
 
-    @Throws(IOException::class)
-    private fun downloadUrl(strUrl: String): String {
+}
+
+private inner class DownloadTask :
+    AsyncTask<String, Void, String>() {
+    // Downloading data in non-ui thread
+    protected override fun doInBackground(vararg url: String): String {
+
+        // For storing data from web service
         var data = ""
-        var iStream: InputStream? = null
-        var urlConnection: HttpURLConnection? = null
         try {
-            val url = URL(strUrl)
-
-            // Creating an http connection to communicate with url
-            urlConnection = url.openConnection() as HttpURLConnection
-
-            // Connecting to url
-            urlConnection.connect()
-
-            // Reading data from url
-            iStream = urlConnection!!.inputStream
-            val br =
-                BufferedReader(InputStreamReader(iStream))
-            val sb = StringBuffer()
-            var line: String? = ""
-            while (br.readLine().also { line = it } != null) {
-                sb.append(line)
-            }
-            data = sb.toString()
-            br.close()
+            // Fetching the data from web service
+            data = downloadUrl(url[0])
+            Log.d("DownloadTask", "DownloadTask : $data")
         } catch (e: Exception) {
-            Log.d("Exception on download", e.toString())
-        } finally {
-            iStream!!.close()
-            urlConnection!!.disconnect()
+            Log.d("Background Task", e.toString())
         }
         return data
     }
 
-    private inner class ParserTask :
-        AsyncTask<String, Int, List<List<HashMap<String, String>>>?>() {
-        // Parsing the data in non-ui thread
-        protected override fun doInBackground(vararg jsonData: String): List<List<HashMap<String, String>>>? {
-            val jObject: JSONObject
-            var routes: List<List<HashMap<String, String>>>? =
-                null
-            try {
-                jObject = JSONObject(jsonData[0])
-                val parser =
-                    DirectionsJSONParser()
-                val array = jObject.getJSONArray("routes")
-                val routes1 = array.getJSONObject(0)
-                val legs = routes1.getJSONArray("legs")
-                val steps = legs.getJSONObject(0)
-                val distance = steps.getJSONObject("distance")
-                val duration = steps.getJSONObject("duration")
+    // Executes in UI thread, after the execution of
+    // doInBackground()
+    override fun onPostExecute(result: String) {
+        super.onPostExecute(result)
+        val parserTask =
+            ParserTask()
 
-                estTime = duration.getString("text")
-                estDistance = distance.getString("value")
-                estDistance =
-                    DecimalFormat("####.##").format((estDistance!!.toDouble() / 1000)) + " km"
+        // Invokes the thread for parsing the JSON data
+        parserTask.execute(result)
+    }
+}
 
+@Throws(IOException::class)
+private fun downloadUrl(strUrl: String): String {
+    var data = ""
+    var iStream: InputStream? = null
+    var urlConnection: HttpURLConnection? = null
+    try {
+        val url = URL(strUrl)
 
-                /* if((distance.getString("text")).contains("mi")){
-                     estDistance = distance.getString("text")
-                     estDistance = estDistance!!.replace(" mi", "")
-                     var estD =  estDistance!!.toDouble()
+        // Creating an http connection to communicate with url
+        urlConnection = url.openConnection() as HttpURLConnection
 
-                     estD = estD * (1.60934)
+        // Connecting to url
+        urlConnection.connect()
 
-
-
-
-
-                 }else{
-                     estDistance = distance.getString("text")
-
-                 }
-
- */
-                // Starts parsing data
-                routes = parser.parse(jObject)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return routes
+        // Reading data from url
+        iStream = urlConnection!!.inputStream
+        val br =
+            BufferedReader(InputStreamReader(iStream))
+        val sb = StringBuffer()
+        var line: String? = ""
+        while (br.readLine().also { line = it } != null) {
+            sb.append(line)
         }
+        data = sb.toString()
+        br.close()
+    } catch (e: Exception) {
+        Log.d("Exception on download", e.toString())
+    } finally {
+        iStream!!.close()
+        urlConnection!!.disconnect()
+    }
+    return data
+}
 
-        // Executes in UI thread, after the parsing process
-        override fun onPostExecute(result: List<List<HashMap<String, String>>>?) {
-            var points: ArrayList<LatLng?>? = null
-            var lineOptions: PolylineOptions? = null
+private inner class ParserTask :
+    AsyncTask<String, Int, List<List<HashMap<String, String>>>?>() {
+    // Parsing the data in non-ui thread
+    protected override fun doInBackground(vararg jsonData: String): List<List<HashMap<String, String>>>? {
+        val jObject: JSONObject
+        var routes: List<List<HashMap<String, String>>>? =
+            null
+        try {
+            jObject = JSONObject(jsonData[0])
+            val parser =
+                DirectionsJSONParser()
+            val array = jObject.getJSONArray("routes")
+            val routes1 = array.getJSONObject(0)
+            val legs = routes1.getJSONArray("legs")
+            val steps = legs.getJSONObject(0)
+            val distance = steps.getJSONObject("distance")
+            val duration = steps.getJSONObject("duration")
 
-            if (result != null) {
-                for (i in result!!.indices) {
-                    points = ArrayList()
-                    lineOptions = PolylineOptions()
+            estTime = duration.getString("text")
+            estDistance = distance.getString("value")
+            estDistance =
+                DecimalFormat("####.##").format((estDistance!!.toDouble() / 1000)) + " km"
 
-                    // Fetching i-th route
-                    val path =
-                        result[i]
 
-                    // Fetching all the points in i-th route
-                    for (j in path.indices) {
-                        val point = path[j]
-                        val lat = point["lat"]!!.toDouble()
-                        val lng = point["lng"]!!.toDouble()
-                        val position =
-                            LatLng(lat, lng)
-                        points.add(position)
-                    }
-                    tvEstDistance!!.text = "Est.Distance $estDistance"
-                    tvEstTime!!.text = "Est.Time $estTime"
-                    if (!estDistance!!.isEmpty()) {
-                        btnCompareRide!!.visibility = View.VISIBLE
-                    }
+            /* if((distance.getString("text")).contains("mi")){
+                 estDistance = distance.getString("text")
+                 estDistance = estDistance!!.replace(" mi", "")
+                 var estD =  estDistance!!.toDouble()
 
-                    lineOptions.addAll(points)
-                    lineOptions.width(15f)
-                    //  lineOptions.color(Color.GREEN);
-                    lineOptions.color(
-                        this@HomeActivity.resources.getColor(R.color.gradientstartcolor)
-                    )
+                 estD = estD * (1.60934)
+
+
+
+
+
+             }else{
+                 estDistance = distance.getString("text")
+
+             }
+
+*/
+            // Starts parsing data
+            routes = parser.parse(jObject)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return routes
+    }
+
+    // Executes in UI thread, after the parsing process
+    override fun onPostExecute(result: List<List<HashMap<String, String>>>?) {
+        var points: ArrayList<LatLng?>? = null
+        var lineOptions: PolylineOptions? = null
+
+        if (result != null) {
+            for (i in result!!.indices) {
+                points = ArrayList()
+                lineOptions = PolylineOptions()
+
+                // Fetching i-th route
+                val path =
+                    result[i]
+
+                // Fetching all the points in i-th route
+                for (j in path.indices) {
+                    val point = path[j]
+                    val lat = point["lat"]!!.toDouble()
+                    val lng = point["lng"]!!.toDouble()
+                    val position =
+                        LatLng(lat, lng)
+                    points.add(position)
+                }
+                tvEstDistance!!.text = "Est.Distance $estDistance"
+                tvEstTime!!.text = "Est.Time $estTime"
+                if (!estDistance!!.isEmpty()) {
+                    btnCompareRide!!.visibility = View.VISIBLE
                 }
 
-                if (lineOptions != null) {
-                    if (mPolyline != null) {
-                        mPolyline!!.remove()
-                    }
-                    mPolyline = mMap!!.addPolyline(lineOptions)
-                } else {
-                    Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
-                        .show()
+                lineOptions.addAll(points)
+                lineOptions.width(15f)
+                //  lineOptions.color(Color.GREEN);
+                lineOptions.color(
+                    this@HomeActivity.resources.getColor(R.color.gradientstartcolor)
+                )
+            }
+
+            if (lineOptions != null) {
+                if (mPolyline != null) {
+                    mPolyline!!.remove()
                 }
+                mPolyline = mMap!!.addPolyline(lineOptions)
             } else {
                 Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
                     .show()
             }
-
-
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (parent!!.id == R.id.spinner_Luggage) {
-            spnrbag = position
-            spinnerLuggagetxt = spinner_Luggage!!.selectedItem.toString()
-        } else if (parent!!.id == R.id.spinnerLang) {
-            cityID = cityPojoList!!.get(position).id
-            city_Name = cityPojoList!!.get(position).name
-            preferencesManager!!.setStringValue(
-                Constants.SHARED_PREFERENCE_CITY_ID,
-                cityID.toString()
-            )
-
-
         } else {
-            spnrtime = position
-            spinnertxt = spinner_time!!.selectedItem.toString()
-            if (spinnertxt == "Later") {
+            Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+                .show()
+        }
 
 
-                if (extras != null) {
-                    if (spnrtime == 1) {
-                        tv_RideScheduled?.text = tvDateandTime
-                    } else {
-                        tv_RideScheduled?.text = dateToStr
+    }
+}
 
-                    }
+override fun onNothingSelected(parent: AdapterView<*>?) {
+}
 
+override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    if (parent!!.id == R.id.spinner_Luggage) {
+        spnrbag = position
+        spinnerLuggagetxt = spinner_Luggage!!.selectedItem.toString()
+    } else if (parent!!.id == R.id.spinnerLang) {
+        cityID = cityPojoList!!.get(position).id
+        city_Name = cityPojoList!!.get(position).name
+        preferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_CITY_ID,
+            cityID.toString()
+        )
+
+
+    } else {
+        spnrtime = position
+        spinnertxt = spinner_time!!.selectedItem.toString()
+        if (spinnertxt == "Later") {
+
+
+            if (extras != null) {
+                if (spnrtime == 1) {
+                    tv_RideScheduled?.text = tvDateandTime
                 } else {
                     tv_RideScheduled?.text = dateToStr
 
                 }
 
-
-
-                rlRideScheduled!!.visibility = View.VISIBLE
             } else {
-                getcurrentDate()
-                rlRideScheduled!!.visibility = View.GONE
+                tv_RideScheduled?.text = dateToStr
+
             }
+
+
+
+            rlRideScheduled!!.visibility = View.VISIBLE
+        } else {
+            getcurrentDate()
+            rlRideScheduled!!.visibility = View.GONE
         }
-
     }
 
-    override fun onSuccess(info: CompareRideResponsePOJO?) {
-        // Toast.makeText(this, "onSuccess", Toast.LENGTH_LONG).show()
+}
 
-        val distance = tvEstDistance!!.text.toString()
-        val estTine = tvEstTime!!.text.toString()
-        val intent = Intent(applicationContext, CompareRideActivity::class.java)
-        intent.putExtra("SourceLat", SourceLat)
-        intent.putExtra("SourceLong", SourceLong)
-        intent.putExtra("DestinationLat", DestinationLat)
-        intent.putExtra("DestinationLong", DestinationLong)
-        intent.putExtra("Distance", estDistance)
-        intent.putExtra("CITY_ID", cityID.toString())
-        intent.putExtra("CITY_NAME", city_Name)
-        intent.putExtra("EstTime", estTime)
-        intent.putExtra("Liggage", spinnerLuggagetxt)
-        intent.putExtra("TimeSpinner", spinnertxt)
-        intent.putExtra("Airport", extras!!.getString("keyAirport"))
-        intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
-        intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
-        intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
-        intent.putExtra("currentFormatedDate", formaredDate)
-        intent.putExtra("currentPlaceId", CurrentPlaceID)
-        intent.putExtra("MyPOJOClass", info)
+override fun onSuccess(info: CompareRideResponsePOJO?) {
+    // Toast.makeText(this, "onSuccess", Toast.LENGTH_LONG).show()
 
-
-        startActivity(intent)
-    }
-
-    override fun validationError(validationResponse: ValidationResponse?) {
-        Toast.makeText(
-            this@HomeActivity,
-            validationResponse!!.errors!![0].message,
-            Toast.LENGTH_LONG
-        ).show()
+    val distance = tvEstDistance!!.text.toString()
+    val estTine = tvEstTime!!.text.toString()
+    val intent = Intent(applicationContext, CompareRideActivity::class.java)
+    intent.putExtra("SourceLat", SourceLat)
+    intent.putExtra("SourceLong", SourceLong)
+    intent.putExtra("DestinationLat", DestinationLat)
+    intent.putExtra("DestinationLong", DestinationLong)
+    intent.putExtra("Distance", estDistance)
+    intent.putExtra("CITY_ID", cityID.toString())
+    intent.putExtra("CITY_NAME", city_Name)
+    intent.putExtra("EstTime", estTime)
+    intent.putExtra("Liggage", spinnerLuggagetxt)
+    intent.putExtra("TimeSpinner", spinnertxt)
+    intent.putExtra("Airport", extras!!.getString("keyAirport"))
+    intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
+    intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
+    intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
+    intent.putExtra("currentFormatedDate", formaredDate)
+    intent.putExtra("currentPlaceId", CurrentPlaceID)
+    intent.putExtra("MyPOJOClass", info)
 
 
-    }
+    startActivity(intent)
+}
 
-    override fun showWait() {
-        showProgressDialog(this@HomeActivity)
-    }
+override fun validationError(validationResponse: ValidationResponse?) {
+    Toast.makeText(
+        this@HomeActivity,
+        validationResponse!!.errors!![0].message,
+        Toast.LENGTH_LONG
+    ).show()
 
-    override fun removeWait() {
-        ProjectUtilities.dismissProgressDialog()
-    }
 
-    override fun onFailure(appErrorMessage: String?) {
+}
 
-        Toast.makeText(this@HomeActivity, appErrorMessage, Toast.LENGTH_LONG).show()
-    }
+override fun showWait() {
+    showProgressDialog(this@HomeActivity)
+}
 
-    @SuppressLint("MissingPermission")
-    override fun onLocationChanged(location: Location?) {
+override fun removeWait() {
+    ProjectUtilities.dismissProgressDialog()
+}
 
-        Log.d("sdsdsdswnwe", "onLocationChanged")
+override fun onFailure(appErrorMessage: String?) {
 
-        currentLatitude = location!!.latitude
+    Toast.makeText(this@HomeActivity, appErrorMessage, Toast.LENGTH_LONG).show()
+}
+
+@SuppressLint("MissingPermission")
+override fun onLocationChanged(location: Location) {
+
+
+       currentLatitude = location!!.latitude
         currentLongitude = location!!.longitude
 
 
-        if (callOnLocation.equals("first")) {
-            if (currentLatitude != null && currentLatitude != 0.0) {
-
-                getLocationReady()
-                getCity()
-                progressDialogstart!!.dismiss()
-                mainRelativeLayout!!.visibility = View.VISIBLE
 
 
-            } else {
-                Toast.makeText(
-                    this,
-                    "Please wait we are featching your current location",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+    if (callOnLocation.equals("first")) {
 
+        Log.d("sdsdsdswnweHome", currentLatitude.toString()+"    "+currentLongitude)
+
+        if (currentLatitude != null && currentLatitude != 0.0) {
+
+            getLocationReady()
+            getCity()
+            progressDialogstart!!.dismiss()
+            mainRelativeLayout!!.visibility = View.VISIBLE
+
+
+        } else {
+            Toast.makeText(
+                this,
+                "Please wait we are featching your current location",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
-
     }
 
-    private fun updateCameraBearing(mMap: GoogleMap?, bering: Float) {
-        if (mMap == null) return
-        val camPos = CameraPosition
-            .builder(
-                mMap.getCameraPosition() // current Camera
-            )
-            .bearing(bering)
-            .build()
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(camPos))
-    }
 
-    private fun getLocationReady() {
+}
 
-        if (currentLatitude == 0.0) {
-            Toast.makeText(this, "Unable to find CURRENT LOCATION", Toast.LENGTH_LONG).show()
-        } else {
+private fun updateCameraBearing(mMap: GoogleMap?, bering: Float) {
+    if (mMap == null) return
+    val camPos = CameraPosition
+        .builder(
+            mMap.getCameraPosition() // current Camera
+        )
+        .bearing(bering)
+        .build()
+    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(camPos))
+}
 
-            callOnLocation = "second"
+private fun getLocationReady() {
 
-            SourceLat = sharedpreferences!!.getString("SourceLat", "")
-            SourceLong = sharedpreferences!!.getString("SourceLong", "")
-            DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
-            DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
-            Log.d("mMarkerPointsSize", "$SourceLat       $SourceLong")
-            Log.d("mMarkerPointsSizeDestin", "$DestinationLat    $DestinationLong")
+    if (currentLatitude == 0.0) {
+        Toast.makeText(this, "Unable to find CURRENT LOCATION", Toast.LENGTH_LONG).show()
+    } else {
+
+        callOnLocation = "second"
+
+        SourceLat = sharedpreferences!!.getString("SourceLat", "")
+        SourceLong = sharedpreferences!!.getString("SourceLong", "")
+        DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
+        DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
+        Log.d("mMarkerPointsSize", "$SourceLat       $SourceLong")
+        Log.d("mMarkerPointsSizeDestin", "$DestinationLat    $DestinationLong")
 
 
-            /*   mMap!!.setOnMapClickListener { latLng ->
-                   val markerOptions = MarkerOptions()
-                   markerOptions.position(latLng)
-                   if (extras != null) {
-                       var street: String? = null
-                       if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
-                           sharedpreferences!!.edit()
-                               .putString("SourceLat", latLng.latitude.toString()).commit()
-                           sharedpreferences!!.edit()
-                               .putString("SourceLong", latLng.longitude.toString()).commit()
-                           SourceLat = latLng.latitude.toString()
-                           SourceLong = latLng.longitude.toString()
-                           val geocoder =
-                               Geocoder(this@HomeActivity, Locale.getDefault())
-                           try {
-                               val addresses =
-                                   geocoder.getFromLocation(
-                                       SourceLat!!.toDouble(),
-                                       SourceLong!!.toDouble(),
-                                       1
-                                   )
-                               if (addresses != null) {
-                                   val returnedAddress = addresses[0]
-                                   val strReturnedAddress =
-                                       StringBuilder()
-                                   for (j in 0..returnedAddress.maxAddressLineIndex) {
-                                       strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                                   }
-                                   street = strReturnedAddress.toString()
-                                   city = returnedAddress.subAdminArea
-
-                               }
-                           } catch (e: IOException) {
-                           }
-                           sharedpreferences!!.edit().putString("fromLocation", street).commit()
-
-                           myCurrentLocation!!.text = street
-                           sourecemarker!!.remove()
-                           markerOptions.title(street)
-                           mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-                           mMap!!.animateCamera(
-                               CameraUpdateFactory.newLatLngZoom(
-                                   latLng,
-                                   15.0f
-                               )
-                           )
-                           sourecemarker = mMap!!.addMarker(
-                               MarkerOptions()
-                                   .position(LatLng(latLng.latitude, latLng.longitude))
-                                   .draggable(false)
-                                   .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-                           )
-                       } else {
-                           sharedpreferences!!.edit()
-                               .putString("DestinationLat", latLng.latitude.toString()).commit()
-                           sharedpreferences!!.edit()
-                               .putString("DestinationLong", latLng.longitude.toString()).commit()
-                           DestinationLat = latLng.latitude.toString()
-                           DestinationLong = latLng.longitude.toString()
-                           val geocoder =
-                               Geocoder(this@HomeActivity, Locale.getDefault())
-                           try {
-                               val addresses =
-                                   geocoder.getFromLocation(
-                                       DestinationLat!!.toDouble(),
-                                       DestinationLong!!.toDouble(),
-                                       1
-                                   )
-                               if (addresses != null) {
-                                   val returnedAddress = addresses[0]
-                                   val strReturnedAddress =
-                                       StringBuilder()
-                                   for (j in 0..returnedAddress.maxAddressLineIndex) {
-                                       strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                                   }
-                                   street = strReturnedAddress.toString()
-
-                               }
-                           } catch (e: IOException) {
-                           }
-
-                           sharedpreferences!!.edit().putString("destiNationLocation", street).commit()
-
-                           myDropUpLocation!!.text = street
-                           destmarker!!.remove()
-                           markerOptions.title(street)
-                           mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-                           mMap!!.animateCamera(
-                               CameraUpdateFactory.newLatLngZoom(
-                                   latLng,
-                                   15.0f
-                               )
-                           )
-                           destmarker = mMap!!.addMarker(
-                               MarkerOptions().position(
-                                       LatLng(
-                                           latLng.latitude,
-                                           latLng.longitude
-                                       )
-                                   ).draggable(false)
-
-                                   .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-                           )
-                       }
-                   } else {
-                       var streetAddress: String? = null
-                       sharedpreferences!!.edit().putString("SourceLat", latLng.latitude.toString())
-                           .commit()
-                       sharedpreferences!!.edit().putString("SourceLong", latLng.longitude.toString())
-                           .commit()
+        /*   mMap!!.setOnMapClickListener { latLng ->
+               val markerOptions = MarkerOptions()
+               markerOptions.position(latLng)
+               if (extras != null) {
+                   var street: String? = null
+                   if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
+                       sharedpreferences!!.edit()
+                           .putString("SourceLat", latLng.latitude.toString()).commit()
+                       sharedpreferences!!.edit()
+                           .putString("SourceLong", latLng.longitude.toString()).commit()
                        SourceLat = latLng.latitude.toString()
                        SourceLong = latLng.longitude.toString()
-                       val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
+                       val geocoder =
+                           Geocoder(this@HomeActivity, Locale.getDefault())
                        try {
                            val addresses =
                                geocoder.getFromLocation(
@@ -1870,160 +1861,259 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                for (j in 0..returnedAddress.maxAddressLineIndex) {
                                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
                                }
-                               streetAddress = strReturnedAddress.toString()
+                               street = strReturnedAddress.toString()
                                city = returnedAddress.subAdminArea
 
                            }
                        } catch (e: IOException) {
                        }
-                       sharedpreferences!!.edit().putString("fromLocation", streetAddress).commit()
-                       myCurrentLocation!!.text = streetAddress
+                       sharedpreferences!!.edit().putString("fromLocation", street).commit()
+
+                       myCurrentLocation!!.text = street
                        sourecemarker!!.remove()
-                       markerOptions.title(streetAddress)
+                       markerOptions.title(street)
                        mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-                       mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f))
+                       mMap!!.animateCamera(
+                           CameraUpdateFactory.newLatLngZoom(
+                               latLng,
+                               15.0f
+                           )
+                       )
                        sourecemarker = mMap!!.addMarker(
-                           MarkerOptions().position(
-                               LatLng(
-                                   latLng.latitude,
-                                   latLng.longitude
+                           MarkerOptions()
+                               .position(LatLng(latLng.latitude, latLng.longitude))
+                               .draggable(false)
+                               .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+                       )
+                   } else {
+                       sharedpreferences!!.edit()
+                           .putString("DestinationLat", latLng.latitude.toString()).commit()
+                       sharedpreferences!!.edit()
+                           .putString("DestinationLong", latLng.longitude.toString()).commit()
+                       DestinationLat = latLng.latitude.toString()
+                       DestinationLong = latLng.longitude.toString()
+                       val geocoder =
+                           Geocoder(this@HomeActivity, Locale.getDefault())
+                       try {
+                           val addresses =
+                               geocoder.getFromLocation(
+                                   DestinationLat!!.toDouble(),
+                                   DestinationLong!!.toDouble(),
+                                   1
                                )
-                           ).draggable(false)
+                           if (addresses != null) {
+                               val returnedAddress = addresses[0]
+                               val strReturnedAddress =
+                                   StringBuilder()
+                               for (j in 0..returnedAddress.maxAddressLineIndex) {
+                                   strReturnedAddress.append(returnedAddress.getAddressLine(j))
+                               }
+                               street = strReturnedAddress.toString()
+
+                           }
+                       } catch (e: IOException) {
+                       }
+
+                       sharedpreferences!!.edit().putString("destiNationLocation", street).commit()
+
+                       myDropUpLocation!!.text = street
+                       destmarker!!.remove()
+                       markerOptions.title(street)
+                       mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+                       mMap!!.animateCamera(
+                           CameraUpdateFactory.newLatLngZoom(
+                               latLng,
+                               15.0f
+                           )
+                       )
+                       destmarker = mMap!!.addMarker(
+                           MarkerOptions().position(
+                                   LatLng(
+                                       latLng.latitude,
+                                       latLng.longitude
+                                   )
+                               ).draggable(false)
+
                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
                        )
                    }
+               } else {
+                   var streetAddress: String? = null
+                   sharedpreferences!!.edit().putString("SourceLat", latLng.latitude.toString())
+                       .commit()
+                   sharedpreferences!!.edit().putString("SourceLong", latLng.longitude.toString())
+                       .commit()
+                   SourceLat = latLng.latitude.toString()
+                   SourceLong = latLng.longitude.toString()
+                   val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
+                   try {
+                       val addresses =
+                           geocoder.getFromLocation(
+                               SourceLat!!.toDouble(),
+                               SourceLong!!.toDouble(),
+                               1
+                           )
+                       if (addresses != null) {
+                           val returnedAddress = addresses[0]
+                           val strReturnedAddress =
+                               StringBuilder()
+                           for (j in 0..returnedAddress.maxAddressLineIndex) {
+                               strReturnedAddress.append(returnedAddress.getAddressLine(j))
+                           }
+                           streetAddress = strReturnedAddress.toString()
+                           city = returnedAddress.subAdminArea
 
-
-
-                   if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
-                       drawRoute()
+                       }
+                   } catch (e: IOException) {
                    }
+                   sharedpreferences!!.edit().putString("fromLocation", streetAddress).commit()
+                   myCurrentLocation!!.text = streetAddress
+                   sourecemarker!!.remove()
+                   markerOptions.title(streetAddress)
+                   mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+                   mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f))
+                   sourecemarker = mMap!!.addMarker(
+                       MarkerOptions().position(
+                           LatLng(
+                               latLng.latitude,
+                               latLng.longitude
+                           )
+                       ).draggable(false)
+                           .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+                   )
                }
-   */
 
-            if (extras != null) {
-                if (!SourceLat!!.isEmpty()) {
 
-                    val geocoder =
-                        Geocoder(this@HomeActivity, Locale.getDefault())
-                    try {
-                        val addresses = geocoder.getFromLocation(
-                            SourceLat!!.toDouble(),
-                            SourceLong!!.toDouble(),
-                            1
-                        )
-                        streetAddress = if (addresses!!.size > 0 && addresses != null) {
-                            addresses[0].getAddressLine(0)
-                        } else {
-                            ""
-                        }
-                    } catch (e: IOException) {
-                    }
 
-                    myCurrentLocation!!.text = sharedpreferences!!.getString("fromLocation", "")
-                    mMap!!.animateCamera(
-                        CameraUpdateFactory.newLatLngZoom(
-                            LatLng(
-                                SourceLat!!.toDouble(),
-                                SourceLong!!.toDouble()
-                            ), 15.0f
-                        )
-                    )
-                    sourecemarker = mMap!!.addMarker(
-                        MarkerOptions().position(
-                                LatLng(
-                                    SourceLat!!.toDouble(),
-                                    SourceLong!!.toDouble()
-                                )
-                            ).draggable(false)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-                    )
-                }
-                if (!DestinationLat!!.isEmpty()) {
-                    val returnedAddress: Address? = null
-                    val geocoder =
-                        Geocoder(this@HomeActivity, Locale.getDefault())
-                    try {
-                        val addresses =
-                            geocoder.getFromLocation(
-                                DestinationLat!!.toDouble(),
-                                DestinationLong!!.toDouble(),
-                                1
-                            )
-                        streetAddress = if (addresses!!.size > 0 && addresses != null) {
-                            addresses[0].getAddressLine(0)
-                        } else {
-                            ""
-                        }
-                    } catch (e: IOException) {
-                    }
+               if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
+                   drawRoute()
+               }
+           }
+*/
 
-                    myDropUpLocation!!.text =
-                        sharedpreferences!!.getString("destiNationLocation", "")
-                    destmarker = mMap!!.addMarker(
-                        MarkerOptions().position(
-                                LatLng(
-                                    DestinationLat!!.toDouble(),
-                                    DestinationLong!!.toDouble()
-                                )
-                            ).draggable(false)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-                    )
-                }
-                if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
-                    reestimateDateandTime!!.visibility = View.VISIBLE
-                    drawRoute()
-                }
-            } else {
-                val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
+        if (extras != null) {
+            if (!SourceLat!!.isEmpty()) {
+
+                val geocoder =
+                    Geocoder(this@HomeActivity, Locale.getDefault())
                 try {
-                    val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
-                    if (addresses!!.size > 0 && addresses != null) {
-                        streetAddress = addresses[0].getAddressLine(0)
-                        city = addresses[0].subAdminArea
+                    val addresses = geocoder.getFromLocation(
+                        SourceLat!!.toDouble(),
+                        SourceLong!!.toDouble(),
+                        1
+                    )
+                    streetAddress = if (addresses!!.size > 0 && addresses != null) {
+                        addresses[0].getAddressLine(0)
                     } else {
-                        streetAddress = ""
+                        ""
                     }
                 } catch (e: IOException) {
                 }
 
-
-                if (SourceLat!!.isEmpty()) {
-                    sharedpreferences!!.edit().putString("SourceLat", currentLatitude.toString())
-                        .commit()
-                    sharedpreferences!!.edit().putString("SourceLong", currentLongitude.toString())
-                        .commit()
-                }
-
-                sharedpreferences!!.edit().putString("fromLocation", streetAddress).commit()
-                myCurrentLocation!!.text = streetAddress
-
-                Log.d("sdewddwasMar", currentLatitude.toString())
-                mMap?.animateCamera(
+                myCurrentLocation!!.text = sharedpreferences!!.getString("fromLocation", "")
+                mMap!!.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
                         LatLng(
-                            currentLatitude,
-                            currentLongitude
+                            SourceLat!!.toDouble(),
+                            SourceLong!!.toDouble()
                         ), 15.0f
                     )
                 )
                 sourecemarker = mMap!!.addMarker(
-                    MarkerOptions().position(LatLng(currentLatitude, currentLongitude))
-                        .draggable(false)
+                    MarkerOptions().position(
+                            LatLng(
+                                SourceLat!!.toDouble(),
+                                SourceLong!!.toDouble()
+                            )
+                        ).draggable(false)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
                 )
             }
+            if (!DestinationLat!!.isEmpty()) {
+                val returnedAddress: Address? = null
+                val geocoder =
+                    Geocoder(this@HomeActivity, Locale.getDefault())
+                try {
+                    val addresses =
+                        geocoder.getFromLocation(
+                            DestinationLat!!.toDouble(),
+                            DestinationLong!!.toDouble(),
+                            1
+                        )
+                    streetAddress = if (addresses!!.size > 0 && addresses != null) {
+                        addresses[0].getAddressLine(0)
+                    } else {
+                        ""
+                    }
+                } catch (e: IOException) {
+                }
+
+                myDropUpLocation!!.text =
+                    sharedpreferences!!.getString("destiNationLocation", "")
+                destmarker = mMap!!.addMarker(
+                    MarkerOptions().position(
+                            LatLng(
+                                DestinationLat!!.toDouble(),
+                                DestinationLong!!.toDouble()
+                            )
+                        ).draggable(false)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+                )
+            }
+            if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
+                reestimateDateandTime!!.visibility = View.VISIBLE
+                drawRoute()
+            }
+        } else {
+            val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
+            try {
+                val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
+                if (addresses!!.size > 0 && addresses != null) {
+                    streetAddress = addresses[0].getAddressLine(0)
+                    city = addresses[0].subAdminArea
+                } else {
+                    streetAddress = ""
+                }
+            } catch (e: IOException) {
+            }
+
+
+            if (SourceLat!!.isEmpty()) {
+                sharedpreferences!!.edit().putString("SourceLat", currentLatitude.toString())
+                    .commit()
+                sharedpreferences!!.edit().putString("SourceLong", currentLongitude.toString())
+                    .commit()
+            }
+
+            sharedpreferences!!.edit().putString("fromLocation", streetAddress).commit()
+            myCurrentLocation!!.text = streetAddress
+
+            Log.d("sdewddwasMar", currentLatitude.toString())
+            mMap?.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(
+                        currentLatitude,
+                        currentLongitude
+                    ), 15.0f
+                )
+            )
+            sourecemarker = mMap!!.addMarker(
+                MarkerOptions().position(LatLng(currentLatitude, currentLongitude))
+                    .draggable(false)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+            )
         }
     }
+}
 
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-    }
+override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+}
 
-    override fun onProviderEnabled(provider: String?) {
-    }
+override fun onProviderEnabled(provider: String?) {
+}
 
-    override fun onProviderDisabled(provider: String?) {
-    }
+override fun onProviderDisabled(provider: String?) {
+}
 
 
 }

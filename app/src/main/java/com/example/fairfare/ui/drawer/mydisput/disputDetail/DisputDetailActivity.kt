@@ -307,6 +307,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     @OnClick(R.id.ivViewInfo)
     fun iiewInfo() {
+        eventInfoDialog = Dialog(this@DisputDetailActivity, R.style.dialog_style)
 
         eventInfoDialog!!.setCancelable(true)
         val inflater1 =

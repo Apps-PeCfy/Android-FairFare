@@ -5,5 +5,6 @@ class ImageModel {
     var title: String? = null
     var resImg = 0
     var isSelected = false
+    var filePath: String? = null
 
 }
