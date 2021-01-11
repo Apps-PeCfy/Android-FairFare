@@ -19,6 +19,7 @@
 
 
     <ImageView
+        android:id="@+id/img_remove"
         android:layout_alignEnd="@+id/iv1"
         android:background="@drawable/ic_closephoto"
         android:layout_width="@dimen/_15sdp"
