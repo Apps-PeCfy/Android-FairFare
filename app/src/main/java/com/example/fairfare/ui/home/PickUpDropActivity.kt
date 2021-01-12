@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -60,6 +61,8 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     var currentLatitude = 0.0
     var currentLongitude = 0.0
     var extras: Bundle? = null
+
+    private var plotedLocation: Location? = null
 
     @JvmField
     @BindView(R.id.toolbar)
@@ -572,7 +575,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         markerOptionscurrent.title(currentAddress)
         googleMap!!.animateCamera(CameraUpdateFactory.newLatLng(LatLng(currentLatitude, currentLongitude)))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(currentLatitude, currentLongitude), 15.0f))
-        mMap!!.addMarker(MarkerOptions().position(LatLng(currentLatitude, currentLongitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
+      //  mMap!!.addMarker(MarkerOptions().position(LatLng(currentLatitude, currentLongitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
 
 
 
@@ -581,38 +584,53 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
 
             ivFavLocateOnMap!!.setBackgroundResource(R.drawable.ic_fav_unchecked)
-            val markerOptions = MarkerOptions()
-            markerOptions.position(latLng)
-            currentLatitude = latLng.latitude
-            currentLongitude = latLng.longitude
-            var street: String? = null
 
 
-            val geocoder =
-                Geocoder(this@PickUpDropActivity, Locale.getDefault())
-            try {
-                val addresses =
-                    geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
-                if (addresses != null) {
-                    val returnedAddress = addresses[0]
-                    val strReturnedAddress = StringBuilder()
-                    for (j in 0..returnedAddress.maxAddressLineIndex) {
-                        strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                    }
-                    street = strReturnedAddress.toString()
-                }
-            } catch (e: IOException) {
-            }
+            getAddress(latLng)
 
-            locateOnMapAddress = street
-            tvAddress!!.text = street
-            markerOptions.title(street)
-            googleMap.clear()
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f))
-            mMap!!.addMarker(MarkerOptions().position(LatLng(latLng.latitude, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
 
         }
+
+
+        /**
+         * iLoma Team :- Mohsin 12 jan 2021
+         */
+
+        mMap!!.setOnCameraIdleListener {
+            val mapCenter =
+                mMap!!.cameraPosition.target
+            plotedLocation = Location("")
+            plotedLocation!!.setLatitude(mapCenter.latitude)
+            plotedLocation!!.setLongitude(mapCenter.longitude)
+
+            moveToCurrentLocation(mapCenter)
+
+        }
+    }
+
+    private fun getAddress(latLng: LatLng) {
+        currentLatitude = latLng.latitude
+        currentLongitude = latLng.longitude
+        var street: String? = null
+        val geocoder =
+            Geocoder(this@PickUpDropActivity, Locale.getDefault())
+        try {
+            val addresses =
+                geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
+            if (addresses != null) {
+                val returnedAddress = addresses[0]
+                val strReturnedAddress = StringBuilder()
+                for (j in 0..returnedAddress.maxAddressLineIndex) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
+                }
+                street = strReturnedAddress.toString()
+            }
+        } catch (e: IOException) {
+        }
+
+        locateOnMapAddress = street
+        tvAddress!!.text = street
+
     }
 
     override fun click(place: Place?,selectedAddress:String) {
@@ -798,4 +816,61 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         const val DestinationAddress = "DestinationAddress"
 
     }
+
+
+    /*private void setPlaceListener() {
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
+        }
+
+
+        // Initialize the AutocompleteSupportFragment.
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        if (autocompleteFragment != null) {
+            autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG));
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener () {
+                @Override
+                public void onPlaceSelected(@NonNull Place place) {
+                    moveToCurrentLocation(place.getLatLng());
+                }
+
+                @Override
+                public void onError(@NonNull Status status) {
+                    Toast.makeText(context, status.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
+    }*/
+
+    /**
+     * iLoma Team :- Mohasin 12 Jan 2021
+     */
+    private fun moveToCurrentLocation(currentLocation: LatLng?) {
+        if (currentLocation != null) {
+            if (plotedLocation != null) {
+                plotedLocation!!.longitude = currentLocation.longitude
+                plotedLocation!!.latitude = currentLocation.latitude
+            }
+            getAddress(currentLocation)
+            mMap!!.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    currentLocation,
+                    mMap!!.cameraPosition.zoom
+                )
+            )
+
+            mMap!!.animateCamera(
+                CameraUpdateFactory.zoomTo(mMap!!.cameraPosition.zoom),
+                2000,
+                null
+            )
+        }
+    }
+
+
 }
