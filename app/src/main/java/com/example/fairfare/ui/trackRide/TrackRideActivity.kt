@@ -1620,10 +1620,10 @@ class TrackRideActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
 
     fun getMarkerIcon(vehicalName: String?): BitmapDescriptor? {
         when (vehicalName) {
-            "Taxi" -> return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
-            "Auto" -> return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
+            "Taxi" -> return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_taxi)
+            "Auto" -> return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_auto)
         }
-        return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
+        return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_cab)
     }
 
     fun animateMarker(marker: Marker, location: Location) {
