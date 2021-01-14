@@ -37,6 +37,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.spinner_item.view.*
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -189,6 +190,14 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     @BindView(R.id.ivViewInfo)
     var ivViewInfo: ImageView? = null
 
+    @JvmField
+    @BindView(R.id.tvNightChages)
+    var tvNightChages: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvActualNightChages)
+    var tvActualNightChages: TextView? = null
+
 
     @JvmField
     @BindView(R.id.toolbar_endRide)
@@ -269,28 +278,29 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
     @OnClick(R.id.ivViewInfo)
     fun iiewInfo() {
+if(waitingList.size>0) {
+    eventInfoDialog = Dialog(this@EndRidesActivity, R.style.dialog_style)
+    eventInfoDialog!!.setCancelable(true)
+    val inflater1 =
+        this@EndRidesActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    val view12: View = inflater1.inflate(R.layout.event_info, null)
+    eventInfoDialog!!.setContentView(view12)
+    eventDialogBind = EventDialogBind()
+    ButterKnife.bind(eventDialogBind!!, view12)
 
-        eventInfoDialog = Dialog(this@EndRidesActivity, R.style.dialog_style)
-        eventInfoDialog!!.setCancelable(true)
-        val inflater1 =
-            this@EndRidesActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view12: View = inflater1.inflate(R.layout.event_info, null)
-        eventInfoDialog!!.setContentView(view12)
-        eventDialogBind = EventDialogBind()
-        ButterKnife.bind(eventDialogBind!!, view12)
-
-        eventDialogBind!!.rvEventInfo!!.layoutManager =
-            LinearLayoutManager(this@EndRidesActivity, LinearLayoutManager.VERTICAL, false)
-        eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
-            this@EndRidesActivity,
-            LinearLayoutManager.VERTICAL,
-            false
-        ) // set LayoutManager to RecyclerView
-        waittimePopUpAdapter = WaitTimePopUpAdapter(this, waitingList)
-        eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
+    eventDialogBind!!.rvEventInfo!!.layoutManager =
+        LinearLayoutManager(this@EndRidesActivity, LinearLayoutManager.VERTICAL, false)
+    eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
+        this@EndRidesActivity,
+        LinearLayoutManager.VERTICAL,
+        false
+    ) // set LayoutManager to RecyclerView
+    waittimePopUpAdapter = WaitTimePopUpAdapter(this, waitingList)
+    eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
 
 
-        eventInfoDialog!!.show()
+    eventInfoDialog!!.show()
+}
 
 
     }
@@ -391,6 +401,12 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
         tv_estFare!!.text = "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.subTotalCharges
         tv_actualFare!!.text = "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.subTotalCharges
+
+
+
+        tvActualNightChages!!.text = endRideResponsePOJO!!.ride!!.nightCharges
+        tvNightChages!!.text = endRideResponsePOJO!!.ride!!.nightCharges
+
 
         tv_estTotalFare!!.text =
             "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.totalCharges
@@ -613,7 +629,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
             var lineOptions: PolylineOptions? = null
 
             // Traversing through all the routes
-            if(result!=null) {
+            if (result != null) {
                 for (i in result!!.indices) {
                     points = ArrayList()
                     lineOptions = PolylineOptions()

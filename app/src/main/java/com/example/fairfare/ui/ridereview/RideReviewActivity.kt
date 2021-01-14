@@ -84,8 +84,13 @@ class RideReviewActivity : AppCompatActivity() {
         }
 
 
-        mToolbar!!.title = "Fair Fare Review"
+
+
+        mToolbar!!.title = "Ride Review"
         mToolbar!!.setTitleTextColor(Color.WHITE)
+        if(ridefromDrawer.equals("DrawerMyRides")){
+            mToolbar!!.setNavigationIcon(R.drawable.back_arrow)
+        }
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 

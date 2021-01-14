@@ -295,18 +295,20 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
 
     fun getRateCard(cityId: String?) {
 
-        /*  val progressDialog = ProgressDialog(activity)
+/*
+          val progressDialog = ProgressDialog(activity)
           progressDialog.setCancelable(false) // set cancelable to false
           progressDialog.setMessage("Please Wait") // set message
           progressDialog.show() // show progress dialog
-  */
+*/
+
         ApiClient.client.rateCards("Bearer $token", cityId)!!.enqueue(object :
             Callback<RateCardResponsePOJO?> {
             override fun onResponse(
                 call: Call<RateCardResponsePOJO?>,
                 response: Response<RateCardResponsePOJO?>
             ) {
-                //progressDialog.dismiss()
+               // progressDialog.dismiss()
                 if (response.code() == 200) {
 
                     llRateCard!!.visibility=View.VISIBLE
@@ -323,16 +325,16 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
                             tvCarName!!.text = getRateCardList[0].name
 
 
-                            tvFare!!.text = "Rs " + getRateCardList[0]!!.rateCards!!.get(0).minBaseFare +
-                                    " for first 1.50 km and thereafter Rs " +
+                            tvFare!!.text = "₹ " + getRateCardList[0]!!.rateCards!!.get(0).minBaseFare +
+                                    " for first 1.50 km and thereafter ₹ " +
                                     getRateCardList[0].rateCards!!.get(0).fareAfterMinbdist +
                                     " for every additional km."
 
 
 
-                            tvNightCharges!!.text = getRateCardList[0]!!.rateCards!!.get(0).nightCharges + "%"+ "Night Charges of the Total Fare"
+                            tvNightCharges!!.text = getRateCardList[0]!!.rateCards!!.get(0).nightCharges + "%"+ " of the Total Fare"
 
-                            tvWaitingCharges!!.text = "Rs " + getRateCardList[0]!!.rateCards!!.get(0).waitingCharges + " INR per minute "
+                            tvWaitingCharges!!.text = "₹ " + getRateCardList[0]!!.rateCards!!.get(0).waitingCharges + " per minute "
 
                             if((getRateCardList[0]!!.rateCards!!.get(0).surcharge).equals("0")){
                                 tvSurCHarges!!.text = "Surcharge Not Applicable"
@@ -462,7 +464,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
                 call: Call<RateCardResponsePOJO?>,
                 t: Throwable
             ) {
-                // progressDialog.dismiss()
+               //  progressDialog.dismiss()
                 Log.d("response", t.stackTrace.toString())
             }
         })
@@ -504,16 +506,16 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
             tvCarName!!.text = getRateCardList[selectedPosition].rateCards!!.get(position).name
 
 
-            tvFare!!.text = "Rs " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).minBaseFare +
-                    " for first 1.50 km and thereafter Rs " +
+            tvFare!!.text = "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).minBaseFare +
+                    " for first 1.50 km and thereafter ₹ " +
                     getRateCardList[selectedPosition].rateCards!!.get(position).fareAfterMinbdist +
                     " for every additional km."
 
 
 
-            tvNightCharges!!.text = getRateCardList[selectedPosition]!!.rateCards!!.get(position).nightCharges + "%"+ "Night Charges of the Total Fare"
+            tvNightCharges!!.text = getRateCardList[selectedPosition]!!.rateCards!!.get(position).nightCharges + "%"+ " of the Total Fare"
 
-            tvWaitingCharges!!.text = "Rs " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).waitingCharges + " INR per minute "
+            tvWaitingCharges!!.text = "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).waitingCharges + " per minute "
 
 
 

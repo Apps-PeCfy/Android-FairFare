@@ -46,6 +46,8 @@ class MyLocationAdapter(
 
     @SuppressLint("NewApi")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.tv_place_area!!.setVisibility(View.VISIBLE)
+
         my = holder
         holder.place_address!!.text = savedLocationList[position].fullAddress
         holder.tv_place_area!!.text = savedLocationList[position].category
@@ -84,10 +86,10 @@ class MyLocationAdapter(
                 holder.place_area!!.isEnabled=false
                 holder.place_area!!.isCursorVisible=false
 
-                holder.tv_place_area!!.visibility = View.VISIBLE
-                holder.ivEdit!!.setBackgroundResource(R.drawable.slice_edit)
+                holder.tv_place_area!!.visibility = View.GONE
                 iclickListener!!.editClick(savedLocationList[position].id, holder.place_area!!.text.toString())
                 my.tv_place_area!!.text = holder.place_area!!.text.toString()
+                holder.ivEdit!!.setBackgroundResource(R.drawable.slice_edit)
 
 
             }

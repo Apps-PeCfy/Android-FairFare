@@ -74,7 +74,7 @@ class DisputDetailResponsePOJO {
 
 
         @SerializedName("images")
-        var images: List<Any>? = null
+        var images: ArrayList<String?>? = null
 
         @SerializedName("vehicleImageUrl")
         var vehicleImageUrl: String? = null

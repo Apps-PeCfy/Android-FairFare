@@ -342,7 +342,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     //distanceBetweenCurrent in meter
-                    if (distanceBetweenCurrent!! >= 10) {
+                    if (distanceBetweenCurrent!! >= 10&& distanceBetweenCurrent!!<=400) {
                         globalmarkerPoints!!.add(OriginM)
                         trackBoard = "currentCordinate"
                         drawRoute()
@@ -364,6 +364,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                             // calDistance()
                             drawNewRoute()
+
+                            valueForDistanceandWaitTime()
+                            currentFare()
+                            nearByPlaceses()
                         }
 
                     }
@@ -1688,7 +1692,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     private fun getZoomLevel(): Float {
         if (!isMapZoomed!!){
             isMapZoomed = true
-            return 16f
+            return 18f
         }
         return mMap!!.cameraPosition.zoom
     }
@@ -1696,10 +1700,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
     fun getMarkerIcon(vehicalName: String?): BitmapDescriptor? {
         when (vehicalName) {
-            "Taxi" -> return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
-            "Auto" -> return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
+            "Taxi" -> return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_taxi)
+            "Auto" -> return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_auto)
         }
-        return BitmapDescriptorFactory.fromResource(R.drawable.car_marker)
+        return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_cab)
     }
 
     fun animateMarker(marker: Marker, location: Location) {
@@ -1818,6 +1822,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         ) + 270).toFloat()
         return (-1).toFloat()
     }
+
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
     }

@@ -214,7 +214,7 @@ class MyTripsAdapter(
                         "Cancelled"
                     ))
                 ) {
-                    Toast.makeText(context, "Your Ride is Copmleted", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Your Ride is Completed", Toast.LENGTH_LONG).show()
                 } else {
                     iclickListener!!.startRide(
                         MyRideList[adapterPosition].id,
@@ -236,7 +236,7 @@ class MyTripsAdapter(
                 ) {
                     iclickListener!!.rideDetails(MyRideList[adapterPosition].id)
                 } else {
-                    Toast.makeText(context, "Your Ride is Not Copmleted Yet", Toast.LENGTH_LONG)
+                    Toast.makeText(context, "Your ride is not completed yet.", Toast.LENGTH_LONG)
                         .show()
 
                 }
