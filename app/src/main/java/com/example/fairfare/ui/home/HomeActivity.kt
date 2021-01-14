@@ -61,13 +61,8 @@ import com.example.fairfare.ui.drawer.ratecard.RateCard
 import com.example.fairfare.ui.drawer.setting.Setting
 import com.example.fairfare.ui.home.pojo.GetAllowCityResponse
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
-import com.example.fairfare.utils.Constants
-import com.example.fairfare.utils.PreferencesManager
-import com.example.fairfare.utils.ProjectUtilities
+import com.example.fairfare.utils.*
 import com.example.fairfare.utils.ProjectUtilities.showProgressDialog
-import com.example.fairfare.utils.RoundedImageView
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -871,6 +866,137 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         datePickerDialog.show()
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
+
+
+        myYear = year
+        myday = dayOfMonth
+        myMonth = month + 1
+        val c = Calendar.getInstance()
+        hour = c[Calendar.HOUR]
+        c.add(Calendar.MINUTE,30)
+        minute = c[Calendar.MINUTE]
+        second = c[Calendar.SECOND]
+        AMorPM = c[Calendar.AM_PM]
+        val timePickerDialog = TimePickerDialog(
+            this@HomeActivity,
+            this@HomeActivity, hour, minute, DateFormat.is24HourFormat(this)
+        )
+        timePickerDialog.show()
+    }
+
+    override fun onTimeSet(view: TimePicker, hourOfDay: Int, Tminute: Int) {
+
+        myHour = hourOfDay
+        myMinute = Tminute
+
+        var dateTime = myday.toString() + "-" + myMonth + "-" + myYear + " " + myHour + ":" + myMinute
+        val selectedDateTime= SimpleDateFormat("dd-MM-yyyy HH:mm").parse(dateTime)
+        val minValidDateTime = SimpleDateFormat("dd MM yyyy HH:mm:ss").parse(minTimeToShedule())
+
+        if (selectedDateTime.before(minValidDateTime)){
+
+            tv_RideScheduled?.text = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM").replace("pm", "PM")
+
+            Toast.makeText(this, "Scheduled time should be grater than 15 minutes from current time.", Toast.LENGTH_LONG).show()
+
+            return
+
+        }else{
+            val AMorPM: String
+        if (myHour >= 12) {
+            AMorPM = "PM"
+            if (myHour == 12) {
+            } else {
+                myHour = myHour - 12
+            }
+        } else {
+            if (myHour == 0) {
+                myHour = myHour + 12
+            }
+            AMorPM = "AM"
+        }
+        var dmonth: String? = null
+        val monthParse = SimpleDateFormat("MM")
+        val monthDisplay = SimpleDateFormat("MMM")
+        try {
+            dmonth = monthDisplay.format(monthParse.parse(myMonth.toString()))
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+
+        val displaDate = SimpleDateFormat("HH")
+        val olddisplaDate = SimpleDateFormat("hh")
+
+
+        var formatedhr = displaDate.format(olddisplaDate.parse((myHour.toString())))
+        var formatedminute = displaDate.format(olddisplaDate.parse((myMinute.toString())))
+
+
+
+
+        if ((myMonth.toString().length == 1)) {
+            strMonth = ("0" + myMonth)
+        } else {
+            strMonth = myMonth.toString()
+        }
+
+        if ((myday.toString().length == 1)) {
+            stDay = ("0" + myday)
+        } else {
+            stDay = myday.toString()
+        }
+
+
+        if ((second.toString().length == 1)) {
+            strsecond = ("0" + second)
+        } else {
+            strsecond = second.toString()
+        }
+
+        if ((myHour.toString().length == 1)) {
+            strhr = ("0" + myHour)
+        } else {
+            strhr = myHour.toString()
+        }
+
+        if ((myMinute.toString().length == 1)) {
+            strMinute = ("0" + myMinute)
+        } else {
+            strMinute = myMinute.toString()
+        }
+
+
+        var dayhour: String? = null
+
+        if (hourOfDay.toString().length == 1) {
+            dayhour = ("0" + hourOfDay)
+        } else {
+            dayhour = hourOfDay.toString()
+        }
+
+
+        formaredDateLater =
+            (myYear.toString() + "-" + strMonth + "-" + stDay + " " + dayhour + ":" + strMinute + ":" + strsecond)
+        tv_RideScheduled!!.text = "$myday $dmonth, $strhr:$strMinute $AMorPM"
+
+        }
+    }
+
+    private fun minTimeToShedule(): String {
+        val ONE_MINUTE_IN_MILLIS: Long = 60000 //millisecs
+        val date = Calendar.getInstance()
+        val t = date.timeInMillis
+        val afterAddingTenMins = Date(t + 15 * ONE_MINUTE_IN_MILLIS)
+
+        val minDateTime = SimpleDateFormat("dd MM yyyy HH:mm:ss").format(afterAddingTenMins)
+        return minDateTime;
+        
+    }
+
 
     @OnClick(R.id.tvhideShow)
     fun hideshow() {
@@ -975,6 +1101,41 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
     @OnClick(R.id.btnCompareRide)
+    fun btnCompareClick(){
+        if (isValid()){
+            btnCompare()
+        }
+    }
+
+    private fun isValid(): Boolean {
+        if (spinner_time!!.selectedItem.toString().equals("Later", ignoreCase = true)) {
+            var dateTime :String?
+            if (year >0){
+                 dateTime =  year.toString()+ " " + tv_RideScheduled?.text.toString().replace("AM", "am").replace("PM", "pm")
+            }else{
+                 dateTime =  Calendar.getInstance().get(Calendar.YEAR).toString()+ " " + tv_RideScheduled?.text.toString().replace("AM", "am").replace("PM", "pm")
+            }
+
+            val selectedDateTime= SimpleDateFormat("yyyy dd MMM, hh:mm a").parse(dateTime)
+            val minValidDateTime = SimpleDateFormat("dd MM yyyy HH:mm:ss").parse(minTimeToShedule())
+
+            if(tv_RideScheduled?.text.toString().equals(AppUtils.convertDateGMTToLocal(minTimeToShedule()), ignoreCase = true)){
+                return true
+            } else if (selectedDateTime.before(minValidDateTime)){
+
+                tv_RideScheduled?.text = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM").replace("pm", "PM")
+
+                Toast.makeText(this, "Scheduled time should be grater than 15 minutes from current time.", Toast.LENGTH_LONG).show()
+
+                return false
+
+            }else{
+                return true
+            }
+        }
+        return true
+    }
+
     fun btnCompare() {
 
 
@@ -1317,109 +1478,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         return "https://maps.googleapis.com/maps/api/directions/$output?$parameters"
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
 
-
-        myYear = year
-        myday = dayOfMonth
-        myMonth = month + 1
-        val c = Calendar.getInstance()
-        hour = c[Calendar.HOUR]
-        c.add(Calendar.MINUTE,30)
-        minute = c[Calendar.MINUTE]
-        second = c[Calendar.SECOND]
-        AMorPM = c[Calendar.AM_PM]
-        val timePickerDialog = TimePickerDialog(
-            this@HomeActivity,
-            this@HomeActivity, hour, minute, DateFormat.is24HourFormat(this)
-        )
-        timePickerDialog.show()
-    }
-
-    override fun onTimeSet(view: TimePicker, hourOfDay: Int, Tminute: Int) {
-
-        myHour = hourOfDay
-        myMinute = Tminute
-        val AMorPM: String
-        if (myHour >= 12) {
-            AMorPM = "PM"
-            if (myHour == 12) {
-            } else {
-                myHour = myHour - 12
-            }
-        } else {
-            if (myHour == 0) {
-                myHour = myHour + 12
-            }
-            AMorPM = "AM"
-        }
-        var dmonth: String? = null
-        val monthParse = SimpleDateFormat("MM")
-        val monthDisplay = SimpleDateFormat("MMM")
-        try {
-            dmonth = monthDisplay.format(monthParse.parse(myMonth.toString()))
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-
-
-        val displaDate = SimpleDateFormat("HH")
-        val olddisplaDate = SimpleDateFormat("hh")
-
-
-        var formatedhr = displaDate.format(olddisplaDate.parse((myHour.toString())))
-        var formatedminute = displaDate.format(olddisplaDate.parse((myMinute.toString())))
-
-
-
-
-        if ((myMonth.toString().length == 1)) {
-            strMonth = ("0" + myMonth)
-        } else {
-            strMonth = myMonth.toString()
-        }
-
-        if ((myday.toString().length == 1)) {
-            stDay = ("0" + myday)
-        } else {
-            stDay = myday.toString()
-        }
-
-
-        if ((second.toString().length == 1)) {
-            strsecond = ("0" + second)
-        } else {
-            strsecond = second.toString()
-        }
-
-        if ((myHour.toString().length == 1)) {
-            strhr = ("0" + myHour)
-        } else {
-            strhr = myHour.toString()
-        }
-
-        if ((myMinute.toString().length == 1)) {
-            strMinute = ("0" + myMinute)
-        } else {
-            strMinute = myMinute.toString()
-        }
-
-
-        var dayhour: String? = null
-
-        if (hourOfDay.toString().length == 1) {
-            dayhour = ("0" + hourOfDay)
-        } else {
-            dayhour = hourOfDay.toString()
-        }
-
-
-        formaredDateLater =
-            (myYear.toString() + "-" + strMonth + "-" + stDay + " " + dayhour + ":" + strMinute + ":" + strsecond)
-        tv_RideScheduled!!.text = "$myday $dmonth, $strhr:$strMinute $AMorPM"
-    }
 
     private inner class DownloadTask :
         AsyncTask<String, Void, String>() {
@@ -1608,6 +1667,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             spnrtime = position
             spinnertxt = spinner_time!!.selectedItem.toString()
             if (spinnertxt == "Later") {
+
+                /**
+                 * Mohsin to display 15 min Later time.
+                 */
+                dateToStr = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM").replace("pm", "PM")
 
 
                 if (extras != null) {
