@@ -31,7 +31,6 @@
             android:layout_height="match_parent">
 
 
-
             <LinearLayout
 
                 android:id="@+id/llshowData"
@@ -40,7 +39,6 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/White"
                 android:orientation="vertical">
-
 
 
                 <ScrollView
@@ -97,7 +95,6 @@
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:weightSum="2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
@@ -105,23 +102,23 @@
                                     android:layout_marginStart="@dimen/_15sdp"
                                     android:layout_toEndOf="@+id/llCar"
                                     android:gravity="center_vertical"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
 
 
                                     <LinearLayout
-                                        android:layout_weight="1"
                                         android:layout_width="wrap_content"
-                                        android:orientation="vertical"
-                                        android:layout_height="match_parent">
-
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
 
 
                                         <TextView
                                             android:id="@+id/tv_carName"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:gravity="center_horizontal"
                                             android:layout_marginBottom="@dimen/_2sdp"
+                                            android:gravity="center_horizontal"
                                             android:text="Car"
                                             android:textStyle="bold" />
 
@@ -133,17 +130,15 @@
                                             android:text="MH 12 MS-3422" />
 
 
-
                                     </LinearLayout>
 
 
                                     <LinearLayout
-                                        android:paddingStart="@dimen/_15sdp"
-                                        android:layout_weight="1"
                                         android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
                                         android:orientation="vertical"
-                                        android:layout_height="match_parent">
-
+                                        android:paddingStart="@dimen/_15sdp">
 
 
                                         <TextView
@@ -152,23 +147,22 @@
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentEnd="true"
                                             android:layout_gravity="start"
-                                            android:layout_marginBottom="@dimen/_2sdp"
-
                                             android:layout_marginEnd="@dimen/_10sdp"
+
+                                            android:layout_marginBottom="@dimen/_2sdp"
                                             android:drawableStart="@drawable/iv_bags"
                                             android:drawablePadding="@dimen/_6sdp"
                                             android:gravity="end"
                                             android:text="No Bags" />
 
 
-
                                         <TextView
-                                            android:layout_marginTop="@dimen/_2sdp"
-                                            android:layout_below="@+id/tv_bagCount"
                                             android:id="@+id/tv_Datetime"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
+                                            android:layout_below="@+id/tv_bagCount"
                                             android:layout_alignParentEnd="true"
+                                            android:layout_marginTop="@dimen/_2sdp"
                                             android:layout_marginEnd="@dimen/_10sdp"
                                             android:drawableStart="@drawable/ic_clock"
                                             android:drawablePadding="@dimen/_6sdp"
@@ -176,15 +170,10 @@
                                             android:text="Morning Peak" />
 
 
-
                                     </LinearLayout>
 
 
-
                                 </LinearLayout>
-
-
-
 
 
                             </RelativeLayout>
@@ -213,7 +202,6 @@
                                     android:layout_toRightOf="@+id/tv_Person"
                                     android:drawablePadding="@dimen/_5sdp"
                                     android:text="Vivek Patil" />
-
 
 
                             </RelativeLayout>
@@ -415,12 +403,11 @@
                                 android:weightSum="3">
 
                                 <RelativeLayout
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:layout_weight="1"
                                     android:layout_width="0dp"
-                                    android:layout_height="match_parent">
-
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
 
 
                                     <TextView
@@ -434,12 +421,12 @@
 
                                     <ImageView
                                         android:id="@+id/ivViewInfo"
-                                        android:layout_toRightOf="@+id/tvWaitTime"
                                         android:layout_width="@dimen/_16sdp"
-                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_height="@dimen/_16sdp"
                                         android:layout_centerInParent="true"
-                                        android:background="@drawable/view_info"
-                                        android:layout_height="@dimen/_16sdp"/>
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_toRightOf="@+id/tvWaitTime"
+                                        android:background="@drawable/view_info" />
 
 
                                 </RelativeLayout>
@@ -475,8 +462,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-"
-                                    />
+                                    android:text="-" />
 
 
                             </LinearLayout>
@@ -772,6 +758,65 @@
 
                             </LinearLayout>
 
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1sp"
+                                android:background="@color/secondaryLightGray" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="3">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="Night Charges"
+                                    android:textColor="@color/Black"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="1sp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryLightGray" />
+
+
+                                <TextView
+                                    android:id="@+id/tvNightChages"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="" />
+
+                                <TextView
+                                    android:layout_width="1sp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryLightGray" />
+
+
+                                <TextView
+                                    android:id="@+id/tvActualNightChages"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="" />
+
+
+                            </LinearLayout>
+
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1sp"
@@ -836,42 +881,51 @@
 
                         </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/llRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Ride Ratings"
-                            android:textColor="@color/Black"
-                            android:textStyle="bold" />
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
-                        <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                            android:id="@+id/ratingBar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/vDetails"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:visibility="visible"
-                            app:srb_borderColor="@color/gradientstartcolor"
-                            app:srb_drawBorderEnabled="true"
-                            app:srb_fillColor="@color/gradientstartcolor"
-                            app:srb_isIndicator="true"
-                            app:srb_pressedFillColor="@color/gradientstartcolor"
-                            app:srb_starSize="28dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ride Ratings"
+                                android:textColor="@color/Black"
+                                android:textStyle="bold" />
+
+                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                android:id="@+id/ratingBar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/vDetails"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:visibility="visible"
+                                app:srb_borderColor="@color/gradientstartcolor"
+                                app:srb_drawBorderEnabled="true"
+                                app:srb_fillColor="@color/gradientstartcolor"
+                                app:srb_isIndicator="true"
+                                app:srb_pressedFillColor="@color/gradientstartcolor"
+                                app:srb_starSize="28dp" />
+
+                        </LinearLayout>
 
                         <TextView
-
-
                             android:id="@+id/editReview"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_80sdp"
                             android:layout_below="@+id/ratingBar"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@drawable/roundedcorner"
+                            android:background="@drawable/rounded_corner_charges"
                             android:gravity="top"
-                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingStart="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
-                            android:textSize="@dimen/_10sdp" />
-
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="gone" />
 
 
                     </LinearLayout>
@@ -886,10 +940,6 @@
 
 
     </RelativeLayout>
-
-
-
-
 
 
 </RelativeLayout>

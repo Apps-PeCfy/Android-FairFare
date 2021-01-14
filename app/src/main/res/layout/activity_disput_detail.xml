@@ -120,51 +120,66 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:text="Dispute reasons:"
-                                android:textStyle="bold"
-                                android:textColor="@color/Black" />
+                                android:textColor="@color/Black"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:layout_marginTop="@dimen/_5sdp"
+                                android:text="asa asas"
                                 android:id="@+id/tvDisputReasn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/Black" />
 
+                            <LinearLayout
+                                android:layout_marginTop="@dimen/_10sdp"
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_5sdp"
-                                android:text="Additional comments:"
-                                android:textStyle="bold"
-                                android:textColor="@color/Black" />
-
-                            <TextView
-                                android:id="@+id/editReview"
-
+                                android:id="@+id/llComments"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/_15sdp"
-                                android:gravity="top"
-                                android:paddingBottom="@dimen/_5sdp"
-                                android:textColor="@color/Black"
-                                android:textSize="@dimen/_10sdp"
-                                android:visibility="visible" />
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Additional comments:"
+                                    android:textColor="@color/Black"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/editReview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/_15sdp"
+                                    android:gravity="top"
+                                    android:paddingBottom="@dimen/_3sdp"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:visibility="visible" />
+
+                            </LinearLayout>
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/selected_recycler_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp" />
+
 
                         </LinearLayout>
 
 
                         <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
-                            android:paddingStart="@dimen/_15sdp"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:background="@drawable/rounded_corner_disput"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp">
 
 
                             <TextView
@@ -194,22 +209,22 @@
 
 
                         <View
-                            android:layout_marginEnd="@dimen/_15sdp"
-                            android:layout_marginStart="@dimen/_15sdp"
                             android:layout_width="match_parent"
                             android:layout_height="2sp"
+                            android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
                             android:background="@color/secondaryLightGray" />
 
                         <TextView
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:text="Ride Details"
                             android:textColor="@color/Black"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <androidx.cardview.widget.CardView
 
@@ -322,7 +337,6 @@
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:weightSum="2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
@@ -330,23 +344,23 @@
                                     android:layout_marginStart="@dimen/_15sdp"
                                     android:layout_toEndOf="@+id/llCar"
                                     android:gravity="center_vertical"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
 
 
                                     <LinearLayout
-                                        android:layout_weight="1"
                                         android:layout_width="wrap_content"
-                                        android:orientation="vertical"
-                                        android:layout_height="match_parent">
-
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
 
 
                                         <TextView
                                             android:id="@+id/tv_carName"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:gravity="center_horizontal"
                                             android:layout_marginBottom="@dimen/_2sdp"
+                                            android:gravity="center_horizontal"
                                             android:text="Car"
                                             android:textStyle="bold" />
 
@@ -358,17 +372,15 @@
                                             android:text="MH 12 MS-3422" />
 
 
-
                                     </LinearLayout>
 
 
                                     <LinearLayout
-                                        android:paddingStart="@dimen/_15sdp"
-                                        android:layout_weight="1"
                                         android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
                                         android:orientation="vertical"
-                                        android:layout_height="match_parent">
-
+                                        android:paddingStart="@dimen/_15sdp">
 
 
                                         <TextView
@@ -377,23 +389,22 @@
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentEnd="true"
                                             android:layout_gravity="start"
-                                            android:layout_marginBottom="@dimen/_2sdp"
-
                                             android:layout_marginEnd="@dimen/_10sdp"
+
+                                            android:layout_marginBottom="@dimen/_2sdp"
                                             android:drawableStart="@drawable/iv_bags"
                                             android:drawablePadding="@dimen/_6sdp"
                                             android:gravity="end"
                                             android:text="No Bags" />
 
 
-
                                         <TextView
-                                            android:layout_marginTop="@dimen/_2sdp"
-                                            android:layout_below="@+id/tv_bagCount"
                                             android:id="@+id/tv_Datetime"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
+                                            android:layout_below="@+id/tv_bagCount"
                                             android:layout_alignParentEnd="true"
+                                            android:layout_marginTop="@dimen/_2sdp"
                                             android:layout_marginEnd="@dimen/_10sdp"
                                             android:drawableStart="@drawable/ic_clock"
                                             android:drawablePadding="@dimen/_6sdp"
@@ -401,15 +412,10 @@
                                             android:text="Morning Peak" />
 
 
-
                                     </LinearLayout>
 
 
-
                                 </LinearLayout>
-
-
-
 
 
                             </RelativeLayout>
@@ -438,7 +444,6 @@
                                     android:layout_toRightOf="@+id/tv_Person"
                                     android:drawablePadding="@dimen/_5sdp"
                                     android:text="Vivek Patil" />
-
 
 
                             </RelativeLayout>
@@ -642,12 +647,11 @@
                                 android:weightSum="3">
 
                                 <RelativeLayout
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:layout_weight="1"
                                     android:layout_width="0dp"
-                                    android:layout_height="match_parent">
-
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
 
 
                                     <TextView
@@ -661,12 +665,12 @@
 
                                     <ImageView
                                         android:id="@+id/ivViewInfo"
-                                        android:layout_toRightOf="@+id/tvWaitTime"
                                         android:layout_width="@dimen/_16sdp"
-                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_height="@dimen/_16sdp"
                                         android:layout_centerInParent="true"
-                                        android:background="@drawable/view_info"
-                                        android:layout_height="@dimen/_16sdp"/>
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_toRightOf="@+id/tvWaitTime"
+                                        android:background="@drawable/view_info" />
 
 
                                 </RelativeLayout>
@@ -702,8 +706,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-"
-                                    />
+                                    android:text="-" />
 
 
                             </LinearLayout>
@@ -1017,6 +1020,65 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:text="Night Charges"
+                                    android:textColor="@color/Black"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="1sp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryLightGray" />
+
+
+                                <TextView
+                                    android:id="@+id/tvNightChages"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="" />
+
+                                <TextView
+                                    android:layout_width="1sp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryLightGray" />
+
+
+                                <TextView
+                                    android:id="@+id/tvActualNightChages"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="" />
+
+
+                            </LinearLayout>
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1sp"
+                                android:background="@color/secondaryLightGray" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="3">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
                                     android:text="Total Fare"
                                     android:textColor="@color/Black"
                                     android:textStyle="bold" />
@@ -1096,11 +1158,11 @@
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:visibility="gone"
                             android:text="Cancel"
                             android:textAllCaps="false"
                             android:textColor="@color/White"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/_15sdp"
+                            android:visibility="gone" />
 
 
                     </LinearLayout>
