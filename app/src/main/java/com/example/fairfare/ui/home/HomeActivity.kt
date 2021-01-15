@@ -900,7 +900,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             tv_RideScheduled?.text = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM").replace("pm", "PM")
 
-            Toast.makeText(this, "Scheduled time should be grater than 15 minutes from current time.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Scheduled time should be greater than 15 minutes from current time.", Toast.LENGTH_LONG).show()
 
             return
 
@@ -1125,7 +1125,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 tv_RideScheduled?.text = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM").replace("pm", "PM")
 
-                Toast.makeText(this, "Scheduled time should be grater than 15 minutes from current time.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Scheduled time should be greater than 15 minutes from current time.", Toast.LENGTH_LONG).show()
 
                 return false
 
@@ -1181,143 +1181,119 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             different = date2!!.time - date1!!.time
 
 
-            val secondsInMilli: Long = 1000
-            val minutesInMilli = secondsInMilli * 60
-            val hoursInMilli = minutesInMilli * 60
-            val daysInMilli = hoursInMilli * 24
-
-            val elapsedDays = different / daysInMilli
-            different = different % daysInMilli
-
-            val elapsedHours = different / hoursInMilli
-            different = different % hoursInMilli
-
-            val elapsedMinutes = different / minutesInMilli
-            different = different % minutesInMilli
-
-            val elapsedSeconds = different / secondsInMilli
-
-            if (elapsedDays >= 1 || elapsedHours >= 1 || elapsedMinutes >= 30) {
-                if (estDistance!!.contains("km")) {
+            if (estDistance!!.contains("km")) {
 
 
-                    if (PortAir.equals("AIRPORT", ignoreCase = true)) {
-                        airportYesOrNO = "Yes"
-                    } else {
-                        airportYesOrNO = "NO"
-                    }
-                    PortAir =
-                        preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
-                    replacedistance = estDistance!!.replace(" km", "")
+                if (PortAir.equals("AIRPORT", ignoreCase = true)) {
+                    airportYesOrNO = "Yes"
+                } else {
+                    airportYesOrNO = "NO"
+                }
+                PortAir =
+                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
+                replacedistance = estDistance!!.replace(" km", "")
 
-                    if ((spinnerLuggagetxt == "1 Bag")) {
-                        replacebags = spinnerLuggagetxt!!.replace(" Bag", "")
+                if ((spinnerLuggagetxt == "1 Bag")) {
+                    replacebags = spinnerLuggagetxt!!.replace(" Bag", "")
 
-                    } else if ((spinnerLuggagetxt == "Bags")) {
-                        replacebags = "0"
-
-                    } else {
-                        replacebags = spinnerLuggagetxt!!.replace(" Bags", "")
-
-                    }
-
-
-                    val context = GeoApiContext.Builder()
-                        .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-                        .build()
-                    var results = arrayOfNulls<GeocodingResult>(0)
-                    try {
-                        results = GeocodingApi.newRequest(context)
-                            .latlng(
-                                com.google.maps.model.LatLng(
-                                    SourceLat!!.toDouble(),
-                                    SourceLong!!.toDouble()
-                                )
-                            )
-                            .await()
-                    } catch (e: ApiException) {
-                        e.printStackTrace()
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-
-                    val context1 = GeoApiContext.Builder()
-                        .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-                        .build()
-                    var results1 = arrayOfNulls<GeocodingResult>(0)
-                    try {
-                        results1 = GeocodingApi.newRequest(context1)
-                            .latlng(
-                                com.google.maps.model.LatLng(
-                                    DestinationLat!!.toDouble(),
-                                    DestinationLong!!.toDouble()
-                                )
-                            )
-                            .await()
-                    } catch (e: ApiException) {
-                        e.printStackTrace()
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-
-                    val contextCurrentPlaceID = GeoApiContext.Builder()
-                        .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-                        .build()
-                    var PlaceIDCurrent = arrayOfNulls<GeocodingResult>(0)
-                    try {
-                        PlaceIDCurrent = GeocodingApi.newRequest(contextCurrentPlaceID)
-                            .latlng(
-                                com.google.maps.model.LatLng(
-                                    currentLatitude!!.toDouble(),
-                                    currentLongitude!!.toDouble()
-                                )
-                            )
-                            .await()
-                    } catch (e: ApiException) {
-                        e.printStackTrace()
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-
-                    sourcePlaceID = results[0]!!.placeId
-                    DestinationPlaceID = results1[0]!!.placeId
-                    CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
-
-
-
-                    iCompareRidePresenter!!.getCompareRideData(
-                        token,
-                        replacedistance,
-                        cityID.toString(),
-                        sourcePlaceID,
-                        DestinationPlaceID,
-                        replacebags,
-                        airportYesOrNO,
-                        formaredDate,
-                        CurrentPlaceID!!
-                    )
-
+                } else if ((spinnerLuggagetxt == "Bags")) {
+                    replacebags = "0"
 
                 } else {
-                    Toast.makeText(
-                        this,
-                        "Pick-UP and Drop-Off Location should not be same.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    replacebags = spinnerLuggagetxt!!.replace(" Bags", "")
+
                 }
+
+
+                val context = GeoApiContext.Builder()
+                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .build()
+                var results = arrayOfNulls<GeocodingResult>(0)
+                try {
+                    results = GeocodingApi.newRequest(context)
+                        .latlng(
+                            com.google.maps.model.LatLng(
+                                SourceLat!!.toDouble(),
+                                SourceLong!!.toDouble()
+                            )
+                        )
+                        .await()
+                } catch (e: ApiException) {
+                    e.printStackTrace()
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+
+                val context1 = GeoApiContext.Builder()
+                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .build()
+                var results1 = arrayOfNulls<GeocodingResult>(0)
+                try {
+                    results1 = GeocodingApi.newRequest(context1)
+                        .latlng(
+                            com.google.maps.model.LatLng(
+                                DestinationLat!!.toDouble(),
+                                DestinationLong!!.toDouble()
+                            )
+                        )
+                        .await()
+                } catch (e: ApiException) {
+                    e.printStackTrace()
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+
+                val contextCurrentPlaceID = GeoApiContext.Builder()
+                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .build()
+                var PlaceIDCurrent = arrayOfNulls<GeocodingResult>(0)
+                try {
+                    PlaceIDCurrent = GeocodingApi.newRequest(contextCurrentPlaceID)
+                        .latlng(
+                            com.google.maps.model.LatLng(
+                                currentLatitude!!.toDouble(),
+                                currentLongitude!!.toDouble()
+                            )
+                        )
+                        .await()
+                } catch (e: ApiException) {
+                    e.printStackTrace()
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+
+                sourcePlaceID = results[0]!!.placeId
+                DestinationPlaceID = results1[0]!!.placeId
+                CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
+
+
+
+                iCompareRidePresenter!!.getCompareRideData(
+                    token,
+                    replacedistance,
+                    cityID.toString(),
+                    sourcePlaceID,
+                    DestinationPlaceID,
+                    replacebags,
+                    airportYesOrNO,
+                    formaredDate,
+                    CurrentPlaceID!!
+                )
+
+
             } else {
                 Toast.makeText(
                     this,
-                    "Schedule ride after half an hour.",
+                    "Pick-UP and Drop-Off Location should not be same.",
                     Toast.LENGTH_LONG
                 ).show()
             }

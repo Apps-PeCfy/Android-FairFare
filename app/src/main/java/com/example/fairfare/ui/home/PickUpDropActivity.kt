@@ -580,7 +580,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
 
 
-        googleMap.setOnMapClickListener { latLng ->
+       /* googleMap.setOnMapClickListener { latLng ->
 
 
             ivFavLocateOnMap!!.setBackgroundResource(R.drawable.ic_fav_unchecked)
@@ -589,7 +589,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             getAddress(latLng)
 
 
-        }
+        }*/
 
 
         /**
