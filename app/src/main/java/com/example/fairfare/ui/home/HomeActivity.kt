@@ -858,6 +858,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         year = calendar!!.get(Calendar.YEAR)
         month = calendar!!.get(Calendar.MONTH)
         day = calendar!!.get(Calendar.DAY_OF_MONTH)
+
         val datePickerDialog = DatePickerDialog(
             this@HomeActivity,
             this@HomeActivity, year, month, day
@@ -875,15 +876,22 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         myday = dayOfMonth
         myMonth = month + 1
         val c = Calendar.getInstance()
-        hour = c[Calendar.HOUR]
-        c.add(Calendar.MINUTE,30)
-        minute = c[Calendar.MINUTE]
-        second = c[Calendar.SECOND]
-        AMorPM = c[Calendar.AM_PM]
+        hour = c.get(Calendar.HOUR_OF_DAY)
+        if (spinner_time?.selectedItem.toString().equals("Later", ignoreCase = true)) {
+            c.add(Calendar.MINUTE,16)
+        }
+
+        minute = c.get(Calendar.MINUTE)
+        second = c.get(Calendar.SECOND)
+        AMorPM = c.get(Calendar.AM_PM)
+
+
+
         val timePickerDialog = TimePickerDialog(
             this@HomeActivity,
             this@HomeActivity, hour, minute, DateFormat.is24HourFormat(this)
         )
+
         timePickerDialog.show()
     }
 
@@ -1652,7 +1660,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (extras != null) {
                     if (spnrtime == 1) {
-                        tv_RideScheduled?.text = tvDateandTime
+                       // tv_RideScheduled?.text = tvDateandTime
+                        tv_RideScheduled?.text = dateToStr
                     } else {
                         tv_RideScheduled?.text = dateToStr
 
@@ -2057,12 +2066,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+
     }
 
     override fun onProviderEnabled(provider: String?) {
+
     }
 
     override fun onProviderDisabled(provider: String?) {
+
     }
 
 
