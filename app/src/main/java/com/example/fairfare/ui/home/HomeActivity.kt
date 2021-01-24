@@ -1961,7 +1961,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                             SourceLong!!.toDouble(),
                             1
                         )
-                        streetAddress = if (addresses!!.size > 0 && addresses != null) {
+                        //Kiran Code
+                       // streetAddress = if (addresses!!.size > 0 && addresses != null) {
+
+                        //Mohsin Code
+                        streetAddress = if (addresses != null && addresses!!.size > 0) {
                             addresses[0].getAddressLine(0)
                         } else {
                             ""
@@ -1999,7 +2003,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                 DestinationLong!!.toDouble(),
                                 1
                             )
-                        streetAddress = if (addresses!!.size > 0 && addresses != null) {
+                        //Kiran Code
+                        // streetAddress = if (addresses!!.size > 0 && addresses != null) {
+
+                        //Mohsin Code
+                        streetAddress = if (addresses != null && addresses!!.size > 0 ) {
                             addresses[0].getAddressLine(0)
                         } else {
                             ""
@@ -2027,7 +2035,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
                 try {
                     val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
-                    if (addresses!!.size > 0 && addresses != null) {
+                    //Kiran Code
+                    // streetAddress = if (addresses!!.size > 0 && addresses != null) {
+                    //Mohsin Code
+                    if (addresses != null && addresses!!.size > 0) {
                         streetAddress = addresses[0].getAddressLine(0)
                         city = addresses[0].subAdminArea
                     } else {
