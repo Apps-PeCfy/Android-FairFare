@@ -876,11 +876,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         myday = dayOfMonth
         myMonth = month + 1
         val c = Calendar.getInstance()
-        hour = c.get(Calendar.HOUR_OF_DAY)
         if (spinner_time?.selectedItem.toString().equals("Later", ignoreCase = true)) {
             c.add(Calendar.MINUTE,16)
         }
-
+        hour = c.get(Calendar.HOUR_OF_DAY)
         minute = c.get(Calendar.MINUTE)
         second = c.get(Calendar.SECOND)
         AMorPM = c.get(Calendar.AM_PM)
