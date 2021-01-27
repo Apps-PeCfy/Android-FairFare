@@ -69,7 +69,7 @@ class MyComplaintsAdapter(
             complaintList[position].vehicleName + " " + complaintList[position].vehicleNo
 
 
-        val geocoder = Geocoder(context, Locale.getDefault())
+       /* val geocoder = Geocoder(context, Locale.getDefault())
         try {
             val addresses =
                 geocoder.getFromLocation(
@@ -106,11 +106,11 @@ class MyComplaintsAdapter(
                 deststreetAddress = strReturnedAddress.toString()
             }
         } catch (e: IOException) {
-        }
+        }*/
 
 
-        holder.tv_myCurrentLocation!!.text = streetAddress
-        holder.destnationAddress!!.text = deststreetAddress
+        holder.tv_myCurrentLocation!!.text = complaintList[position].originFullAddress
+        holder.destnationAddress!!.text = complaintList[position].destinationFullAddress
         holder.tv_status!!.text = complaintList[position].status
         holder.tvDisputNo!!.text = "ID: "+complaintList[position].disputeNo
 

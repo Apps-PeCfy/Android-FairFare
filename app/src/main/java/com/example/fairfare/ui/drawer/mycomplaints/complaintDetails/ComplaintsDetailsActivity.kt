@@ -234,6 +234,9 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         ID = intent.getStringExtra("Id")
         getDisputDetail()
+
+
+
         mToolbar!!.title = "Complaint Detail"
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
@@ -326,6 +329,10 @@ if(waitingList.size>0) {
 
                     waitingList = response.body()!!.dispute!!.ride!!.actualTrackRide!!.waitings!!
 
+                    if(waitingList.size==0) {
+                        ivViewInfo!!.visibility=View.GONE
+                    }
+
 
                     var dReason: String? = ""
                     for (i in response.body()!!.dispute!!.reasons!!.indices) {
@@ -348,15 +355,15 @@ if(waitingList.size>0) {
 
 
                     if (response.body()!!.dispute!!.ride!!.luggageQuantity.equals("0")) {
-                        tv_bagCount!!.text = "No Bags"
+                        tv_bagCount!!.text = "No Luggage"
                     } else {
 
                         if (response.body()!!.dispute!!.ride!!.luggageQuantity.equals("1")) {
                             tv_bagCount!!.text =
-                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Bag"
+                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Luggage"
                         } else {
                             tv_bagCount!!.text =
-                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Bags"
+                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Luggage"
 
                         }
                     }
@@ -544,7 +551,7 @@ if(waitingList.size>0) {
                     (body!!.dispute!!.destinationPlaceLong)!!.toDouble()
                 )
             ).icon(
-                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
 

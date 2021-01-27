@@ -76,6 +76,14 @@ class GetDisputResponsePOJO {
         var startMeterReading: String? = null
 
 
+        @SerializedName("originFullAddress")
+        var originFullAddress: String? = null
+
+        @SerializedName("destinationFullAddress")
+        var destinationFullAddress: String? = null
+
+
+
         @SerializedName("vehicleImageUrl")
         var vehicleImageUrl: String? = null
 

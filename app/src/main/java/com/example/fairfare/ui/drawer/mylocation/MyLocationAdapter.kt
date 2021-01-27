@@ -1,12 +1,11 @@
 package com.example.fairfare.ui.drawer.mylocation
 
+import android.R.string
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -65,17 +64,14 @@ class MyLocationAdapter(
                     if (q == position) {
 
                         Log.d("Logedit",q.toString())
+                        holder.tv_place_area!!.setVisibility(View.GONE)
+                        holder.ivEdit!!.setBackgroundResource(R.drawable.slice)
 
                         holder.place_area!!.setVisibility(View.VISIBLE)
-                        
-
-
 
                         holder.place_area!!.isEnabled=true
                         holder.place_area!!.isCursorVisible=true
                         holder.place_area!!.isFocusable = true
-                        holder.tv_place_area!!.setVisibility(View.GONE)
-                        holder.ivEdit!!.setBackgroundResource(R.drawable.slice)
 
                     }
                 }

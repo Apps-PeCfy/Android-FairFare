@@ -285,6 +285,12 @@ class MyRideDetailsActivity : AppCompatActivity() {
                 if (response.code() == 200) {
                     waitingList = response.body()!!.data!!.actualTrackRide!!.waitings!!
 
+                    if(waitingList.size==0) {
+                        ivViewInfo!!.visibility=View.GONE
+                    }
+
+
+
                     if ((response.body()!!.data!!.reviews)!!.isNotEmpty()) {
                         val strReview = response.body()!!.data!!.reviews!!.get(0)!!.reviews
                         if (strReview==null) {
@@ -323,15 +329,15 @@ class MyRideDetailsActivity : AppCompatActivity() {
                     tv_Datetime!!.text = strformaredDate
 
                     if (response.body()!!.data!!.luggageQuantity.equals("0")) {
-                        tv_bagCount!!.text = "No Bags"
+                        tv_bagCount!!.text = "No Luggage"
                     } else {
 
                         if (response.body()!!.data!!.luggageQuantity.equals("1")) {
                             tv_bagCount!!.text =
-                                response.body()!!.data!!.luggageQuantity + " Bag"
+                                response.body()!!.data!!.luggageQuantity + " Luggage"
                         } else {
                             tv_bagCount!!.text =
-                                response.body()!!.data!!.luggageQuantity + " Bags"
+                                response.body()!!.data!!.luggageQuantity + " Luggage"
 
                         }
                     }
