@@ -28,7 +28,6 @@ import android.widget.AdapterView.OnItemSelectedListener
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -108,6 +107,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var city: String? = null
     var setDate: String? = null
     var placesClient: PlacesClient? = null
+
+    var appSignatureHelper: AppSignatureHelper? = null
 
 
     var timeSpinner = arrayOf<String?>("Now", "Later")
@@ -309,7 +310,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
 
 
-
+       /* appSignatureHelper = AppSignatureHelper(this)
+        appSignatureHelper!!.getAppSignatures()*/
 
 
         callOnLocation = "first"
