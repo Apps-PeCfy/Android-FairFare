@@ -144,7 +144,7 @@
                     android:drawableStart="@drawable/ic_mail"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/notosansjp_regular"
-                    android:hint="Enter your Email"
+                    android:hint="Email id(Optional)"
                     android:includeFontPadding="false"
                     android:inputType="textEmailAddress"
                     android:nextFocusDown="@id/edt_name"
@@ -180,7 +180,7 @@
                     android:fontFamily="@font/notosansjp_regular"
                     android:hint="Enter your name"
                     android:includeFontPadding="false"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:nextFocusDown="@id/radioButtonmale"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_12sdp" />
@@ -211,7 +211,7 @@
                     android:layout_marginStart="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:weightSum="3.5">
 
                     <RadioButton
                         android:id="@+id/radioButtonmale"
@@ -240,6 +240,26 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
                         android:text="Other" />
+
+
+                    <LinearLayout
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivViewInfo"
+                            android:layout_width="@dimen/_16sdp"
+                            android:layout_height="@dimen/_16sdp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_toRightOf="@+id/tvWaitTime"
+                            android:background="@drawable/view_info" />
+
+                    </LinearLayout>
+
+
                 </RadioGroup>
 
                 <TextView

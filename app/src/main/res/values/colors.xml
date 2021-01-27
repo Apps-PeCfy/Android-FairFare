@@ -7,6 +7,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#F15E38</color>
     <color name="gradientstartcolor">#F15E38</color>
+    <color name="completedcolor">#749E47</color>
     <color name="gradientendcolor">#F78F22</color>
     <color name="White">#FFFFFF</color>
     <color name="Black">#000000</color>

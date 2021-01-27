@@ -45,6 +45,8 @@
                     android:background="@android:color/transparent"
                     android:id="@+id/place_area"
                     android:cursorVisible="true"
+                    android:focusable="true"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

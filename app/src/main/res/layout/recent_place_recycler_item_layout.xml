@@ -16,6 +16,7 @@
         android:paddingBottom="@dimen/_5sdp">
 
         <TextView
+            android:layout_centerVertical="true"
             android:id="@+id/place_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,14 +27,6 @@
             android:textStyle="bold" />
 
 
-        <TextView
-            android:id="@+id/place_area"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/place_address"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_toRightOf="@+id/iv_place"
-            android:text="Home" />
 
         <ImageView
             android:id="@+id/iv_place"
