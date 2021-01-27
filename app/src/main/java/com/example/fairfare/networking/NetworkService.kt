@@ -146,7 +146,9 @@ interface NetworkService {
         @Field("origin_place_lat") origin_place_lat: String?,
         @Field("origin_place_long") origin_place_long: String?,
         @Field("destination_place_lat") destination_place_lat: String?,
-        @Field("destination_place_long") destination_place_long: String?
+        @Field("destination_place_long") destination_place_long: String?,
+        @Field("origin_full_address") origin_full_address: String?,
+        @Field("destination_full_address") destination_full_address: String?
 
 
     ): Call<ScheduleRideResponsePOJO?>?
@@ -174,7 +176,9 @@ interface NetworkService {
         @Field("origin_place_lat") origin_place_lat: String?,
         @Field("origin_place_long") origin_place_long: String?,
         @Field("destination_place_lat") destination_place_lat: String?,
-        @Field("destination_place_long") destination_place_long: String?
+        @Field("destination_place_long") destination_place_long: String?,
+        @Field("origin_full_address") origin_full_address: String?,
+        @Field("destination_full_address") destination_full_address: String?
     ): Call<ScheduleRideResponsePOJO?>?
 
 
