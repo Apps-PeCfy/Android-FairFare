@@ -669,6 +669,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
             }
         } catch (e: IOException) {
+
         }
 
         locateOnMapAddress = street
