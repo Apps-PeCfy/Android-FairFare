@@ -10,8 +10,6 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
@@ -31,15 +29,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.set
 
-class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
+class RateCard : Fragment(), AdapterView.OnItemSelectedListener,View.OnClickListener {
 
     var activityIsRunning = false
     var selectedPosition = 0
+    var itemSelectedPosition = 0
+
 
     var check = 0
 
@@ -54,7 +53,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
     @BindView(R.id.viewPager)
     var viewPager: ViewPager? = null
 
- @JvmField
+    @JvmField
     @BindView(R.id.llRateCard)
     var llRateCard: LinearLayout? = null
 
@@ -118,9 +117,11 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
     @BindView(R.id.sFare)
     var sFare: TextView? = null
 
-  @JvmField
+    @JvmField
     @BindView(R.id.cLuggage)
     var cLuggage: TextView? = null
+
+    var mRgAllButtons: RadioGroup? = null
 
 
     @JvmField
@@ -295,21 +296,23 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
 
     fun getRateCard(cityId: String?) {
 
-        /*  val progressDialog = ProgressDialog(activity)
+/*
+          val progressDialog = ProgressDialog(activity)
           progressDialog.setCancelable(false) // set cancelable to false
           progressDialog.setMessage("Please Wait") // set message
           progressDialog.show() // show progress dialog
-  */
+*/
+
         ApiClient.client.rateCards("Bearer $token", cityId)!!.enqueue(object :
             Callback<RateCardResponsePOJO?> {
             override fun onResponse(
                 call: Call<RateCardResponsePOJO?>,
                 response: Response<RateCardResponsePOJO?>
             ) {
-                //progressDialog.dismiss()
+                // progressDialog.dismiss()
                 if (response.code() == 200) {
 
-                    llRateCard!!.visibility=View.VISIBLE
+                    llRateCard!!.visibility = View.VISIBLE
                     getRateCardList = response.body()!!.rateCards!!
                     if (getRateCardList.size > 0) {
 
@@ -321,29 +324,30 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
                                     .setCustomView(createTabItemView(getRateCardList[j].image!!))
                             )
                             tvCarName!!.text = getRateCardList[0].name
+
+
                             tvFare!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).minBaseFare +
-                                        " for minimum base distance and ₹" + getRateCardList[0].rateCards!!.get(
-                                    0
-                                ).fareAfterMinbdist +
-                                        " after minimum base distance"
+                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).minBaseFare +
+                                        " for first 1.50 km and thereafter ₹ " +
+                                        getRateCardList[0].rateCards!!.get(0).rateCards!!.get(0).fareAfterMinbdist +
+                                        " for every additional km."
+
+
+
                             tvNightCharges!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).nightCharges + "% of the fair"
+                                getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).nightCharges + "%" + " of the Total Fare"
 
                             tvWaitingCharges!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).waitingCharges +
-                                        " per hour or part thereof (subject to a min of 15 mins stay)"
+                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).waitingCharges + " per minute "
 
-                            if((getRateCardList[0]!!.rateCards!!.get(0).surcharge).equals("0")){
-
-
+                            if ((getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge).equals(
+                                    "0"
+                                )
+                            ) {
                                 tvSurCHarges!!.text = "Surcharge Not Applicable"
-
-                            }else{
-
+                            } else {
                                 tvSurCHarges!!.text =
-                                    "₹ " + getRateCardList[0]!!.rateCards!!.get(0).surcharge +
-                                            " per hour or part thereof (subject to a min of 15 mins stay)"
+                                    "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge + " per booking"
 
                             }
 
@@ -352,10 +356,10 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
 
 
                             tvLuggage!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).chargesPerLuggage +
-                                        " shall be charged as extra luggage charges whereas the driver/operator shall not charge and money for a shopping bag or a small suitcase"
+                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).chargesPerLuggage +
+                                        " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
 
-                            tvNightChargeTime!!.text = "(11:00 PM to 5:00 AM)"
+                            tvNightChargeTime!!.text = "(00:00 AM to 5:00 AM)"
                             nCharge!!.text = "Night Charges"
                             wCharge!!.text = "Waiting Charges"
                             sCharge!!.text = "Surcharges"
@@ -366,14 +370,38 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
                         }
 
 
+
+
+
+
+
+
                         spinnr = java.util.ArrayList()
                         for (i in (getRateCardList.get(0).rateCards)!!.indices) {
                             (spinnr as ArrayList<String?>).add(
-                                getRateCardList[0]!!.rateCards!!.get(
-                                    i
-                                ).name
+                                getRateCardList[0]!!.rateCards!!.get(i).name
                             )
 
+                        }
+
+
+
+                        mRgAllButtons = activity!!.findViewById(R.id.radiogroup)
+
+                        mRgAllButtons!!.removeAllViews()
+
+                        mRgAllButtons!!.setOrientation(LinearLayout.VERTICAL)
+                        for (i in (getRateCardList.get(0).rateCards)!!.get(0).rateCards!!.indices) {
+                            val rdbtn = RadioButton(activity)
+                            rdbtn.id = View.generateViewId()
+                            rdbtn.setOnClickListener(this@RateCard)
+
+                            rdbtn.text = (getRateCardList.get(0).rateCards!!.get(0).rateCards!!.get(i).rateCardType)+""
+                            mRgAllButtons!!.addView(rdbtn)
+
+                            if (i == 0) {
+                                mRgAllButtons!!.check(rdbtn.id)
+                            }
                         }
 
 
@@ -402,6 +430,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
                                 selectedPosition = tab.position
 
                                 tvCarName!!.text = getRateCardList[tab.position].name
+
 
                                 spinnr = java.util.ArrayList()
                                 for (i in (getRateCardList.get(tab.position).rateCards)!!.indices) {
@@ -467,7 +496,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
                 call: Call<RateCardResponsePOJO?>,
                 t: Throwable
             ) {
-                // progressDialog.dismiss()
+                //  progressDialog.dismiss()
                 Log.d("response", t.stackTrace.toString())
             }
         })
@@ -505,41 +534,190 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener {
 
         } else {
 
+            itemSelectedPosition = position
+            mRgAllButtons = activity!!.findViewById(R.id.radiogroup)
+
+            mRgAllButtons!!.removeAllViews()
+            mRgAllButtons!!.setOrientation(LinearLayout.VERTICAL)
+            for (i in (getRateCardList.get(selectedPosition).rateCards)!!.get(position).rateCards!!.indices) {
+                val rdbtn = RadioButton(activity)
+                rdbtn.id = View.generateViewId()
+
+                rdbtn.setOnClickListener(this)
+                rdbtn.text = (getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)+""
+                mRgAllButtons!!.addView(rdbtn)
+
+                if (i == 0) {
+                    mRgAllButtons!!.check(rdbtn.id)
+                }
+            }
+
 
             tvCarName!!.text = getRateCardList[selectedPosition].rateCards!!.get(position).name
 
+
             tvFare!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).minBaseFare +
-                        " for minimum base distance and ₹" + getRateCardList[selectedPosition].rateCards!!.get(
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                     position
-                ).fareAfterMinbdist +
-                        " after minimum base distance"
+                ).minBaseFare +
+                        " for first 1.50 km and thereafter ₹ " +
+                        getRateCardList[selectedPosition].rateCards!!.get(position).rateCards!!.get(
+                            position
+                        ).fareAfterMinbdist +
+                        " for every additional km."
+
+
 
             tvNightCharges!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).nightCharges + "% of the fair"
+                getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
+                    position
+                ).nightCharges + "%" + " of the Total Fare"
 
             tvWaitingCharges!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).waitingCharges +
-                        " per hour or part thereof (subject to a min of 15 mins stay)"
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
+                    position
+                ).waitingCharges + " per minute "
 
-            if((getRateCardList[selectedPosition]!!.rateCards!!.get(position).surcharge).equals("0")){
-                tvSurCHarges!!.text ="Surcharge Not Applicable"
 
-            }else{
+
+
+
+
+
+            if ((getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
+                    position
+                ).surcharge).equals("0")
+            ) {
+                tvSurCHarges!!.text = "Surcharge Not Applicable"
+
+            } else {
                 tvSurCHarges!!.text =
-                    "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).surcharge +
-                            " per hour or part thereof (subject to a min of 15 mins stay)"
+                    "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
+                        position
+                    ).surcharge +
+                            " per booking"
 
             }
 
 
 
             tvLuggage!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).chargesPerLuggage +
-                        " shall be charged as extra luggage charges whereas the driver/operator shall not charge and money for a shopping bag or a small suitcase"
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
+                    position
+                ).chargesPerLuggage +
+                        " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
 
 
         }
+
+    }
+
+    override fun onClick(v: View?) {
+
+        val position: Int = mRgAllButtons!!.indexOfChild(v)
+
+
+
+        if (position == 0) {
+
+
+
+        tvFare!!.text =
+            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                position
+            ).minBaseFare +
+                    " for first 1.50 km and thereafter ₹ " +
+                    getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                        position
+                    ).fareAfterMinbdist +
+                    " for every additional km."
+
+
+        tvNightCharges!!.text =
+            getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                position
+            ).nightCharges + "%" + " of the Total Fare"
+
+        tvWaitingCharges!!.text =
+            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                position
+            ).waitingCharges + " per minute "
+
+
+        if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                position
+            ).surcharge).equals("0")
+        ) {
+            tvSurCHarges!!.text = "Surcharge Not Applicable"
+
+        } else {
+            tvSurCHarges!!.text =
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).surcharge +
+                        " per booking"
+
+        }
+
+        tvLuggage!!.text =
+            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                position
+            ).chargesPerLuggage +
+                    " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
+
+
+    }
+        else{
+            tvFare!!.text =
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).minBaseFare +
+                        " for minimum base distance of " + getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).minBaseDistance+" km and thereafter ₹ "+
+                        getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                            position
+                        ).fareAfterMinbdist +
+                        " for every distance slab of "+ getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).minBaseDistance+" km"
+
+
+            tvNightCharges!!.text =
+                getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).nightCharges + "%" + " of the Total Fare"
+
+            tvWaitingCharges!!.text =
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).waitingCharges + " per minute "
+
+
+            if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).surcharge).equals("0")
+            ) {
+                tvSurCHarges!!.text = "Surcharge Not Applicable"
+
+            } else {
+                tvSurCHarges!!.text =
+                    "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                        position
+                    ).surcharge +
+                            " per booking"
+
+            }
+
+            tvLuggage!!.text =
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).chargesPerLuggage +
+                        " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
+
+        }
+
+
 
     }
 

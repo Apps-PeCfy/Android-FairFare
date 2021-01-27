@@ -84,8 +84,13 @@ class RideReviewActivity : AppCompatActivity() {
         }
 
 
-        mToolbar!!.title = "Fair Fare Review"
+
+
+        mToolbar!!.title = "Ride Review"
         mToolbar!!.setTitleTextColor(Color.WHITE)
+        if(ridefromDrawer.equals("DrawerMyRides")){
+            mToolbar!!.setNavigationIcon(R.drawable.back_arrow)
+        }
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
@@ -107,13 +112,15 @@ class RideReviewActivity : AppCompatActivity() {
 
         if(ridefromDrawer.equals("DrawerMyRides")){
 
+
+
         }else{
             menuInflater.inflate(R.menu.menu_skip, menu)
 
             val positionOfMenuItem = 0 // or whatever...
 
             val item = menu.getItem(positionOfMenuItem)
-            val s = SpannableString("SKIP")
+            val s = SpannableString("Skip")
             s.setSpan(ForegroundColorSpan(Color.WHITE), 0, s.length, 0)
             item.setTitle(s)
 
@@ -131,6 +138,8 @@ class RideReviewActivity : AppCompatActivity() {
                 )
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@RideReviewActivity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }

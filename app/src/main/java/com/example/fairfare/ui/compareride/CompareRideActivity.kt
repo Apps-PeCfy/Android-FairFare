@@ -257,7 +257,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         tv_myCurrentLocation!!.text = SourceAddress
         tv_myDropUpLocation!!.text = destinationAddress
 
-        if (baggs.equals("Bags")) {
+        if (baggs.equals("Luggage")) {
             tv_baggs!!.text = "0 " + baggs
 
         } else {
@@ -283,11 +283,11 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
         replacedistance = distance!!.replace(" km", "")
 
-        if ((baggs == "1 Bag") || (baggs == "Bag")) {
-            replacebags = baggs!!.replace(" Bag", "")
+        if ((baggs == "1 Luggage") || (baggs == "Luggage")) {
+            replacebags = baggs!!.replace(" Luggage", "")
 
         } else {
-            replacebags = baggs!!.replace(" Bags", "")
+            replacebags = baggs!!.replace(" Luggage", "")
 
         }
 
@@ -330,6 +330,8 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 )
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@CompareRideActivity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }
@@ -401,7 +403,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         destLat!!.toDouble(),
                         destLong!!.toDouble()
                     )
-                ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+                ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
             )
             drawRoute()
         }

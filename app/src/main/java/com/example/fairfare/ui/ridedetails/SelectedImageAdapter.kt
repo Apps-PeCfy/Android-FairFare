@@ -28,11 +28,13 @@ class SelectedImageAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       /* Glide.with(context)
-            .load(stringArrayList[position])
-            .placeholder(R.color.Red)
-            .centerCrop()
-            .into(holder.image)*/
+
+        /* Glide.with(context)
+             .load(stringArrayList[position])
+             .placeholder(R.color.Red)
+             .centerCrop()
+             .into(holder.image)*/
+
 
         /**
          * iLoma Team :- Mohasin 8 Jan

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -19,7 +20,6 @@ import com.example.fairfare.R
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.drawer.contactus.pojo.ContactUsResponsePojo
-import com.example.fairfare.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
@@ -28,6 +28,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+
 
 class ContactUs : Fragment() {
 
@@ -74,6 +75,8 @@ class ContactUs : Fragment() {
                 )
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(activity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }
@@ -115,7 +118,28 @@ class ContactUs : Fragment() {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
                     if (response.body() != null) {
-                        Toast.makeText(activity, response!!.body()!!.message, Toast.LENGTH_LONG).show()
+                        //Toast.makeText(activity, response!!.body()!!.message, Toast.LENGTH_LONG).show()
+
+
+                        val toastDurationInMilliSeconds = 20000
+                       val mToastToShow = Toast.makeText(activity, response!!.body()!!.message, Toast.LENGTH_LONG)
+                        val toastCountDown: CountDownTimer
+                        toastCountDown = object :
+                            CountDownTimer(
+                                toastDurationInMilliSeconds.toLong(),
+                                1 /*Tick duration*/
+                            ) {
+                            override fun onTick(millisUntilFinished: Long) {
+                                mToastToShow.show()
+                            }
+
+                            override fun onFinish() {
+                                mToastToShow.cancel()
+                            }
+                        }
+
+                        mToastToShow.show()
+                        toastCountDown.start()
 
                     }
                 } else if (response.code() == 422) {
@@ -126,7 +150,7 @@ class ContactUs : Fragment() {
                             response.errorBody()!!.string(),
                             ValidationResponse::class.java
                         )
-                        Toast.makeText(activity, pojo.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, pojo.errors!!.get(0).message, Toast.LENGTH_LONG).show()
 
 
                     } catch (exception: IOException) {

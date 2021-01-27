@@ -166,6 +166,9 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
 
     override fun onBindViewHolder(mPredictionHolder: PredictionHolder, i: Int) {
         mPredictionHolder.address.text = mResultList!![i].address
+
+        mPredictionHolder.area.visibility = View.GONE
+        mPredictionHolder.ivEdit.visibility = View.GONE
         mPredictionHolder.area.text = mResultList!![i].area
     }
 
@@ -180,6 +183,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
     inner class PredictionHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val address: TextView
+        val ivEdit: RelativeLayout
         val area: TextView
         private val mRoW: RelativeLayout
         private val iv_fav: ImageView
@@ -202,25 +206,24 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                         val place =
                             response.place
                         var returnedAddress: Address? = null
+                        var addressesRecent: List<Address?>? = null
+
                         val geocoder =
                             Geocoder(mContext, Locale.getDefault())
                         try {
-                            val addresses =
+                            addressesRecent =
                                 geocoder.getFromLocation(
                                     place.latLng!!.latitude,
-                                    place.latLng!!.longitude, 1
+                                    place.latLng!!.longitude, 5
                                 )
-                            if (addresses != null) {
-                                returnedAddress = addresses[0]
-                            }
+
                         } catch (e: IOException) {
                         }
-                        val token =
-                            preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+                        val token = preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
                         client.SaveRecentLocation(
                             "Bearer $token", place.id,
-                            returnedAddress!!.subAdminArea, returnedAddress.adminArea,
-                            returnedAddress.countryName, item.address.toString()
+                            addressesRecent!!.get(0)!!.subAdminArea, addressesRecent!!.get(0)!!.adminArea,
+                            addressesRecent!!.get(0)!!.countryName, item.address.toString()
                         )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
                             override fun onResponse(
                                 call: Call<SaveLocationResponsePojo?>,
@@ -236,10 +239,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                                 Log.d("response", t.stackTrace.toString())
                             }
                         })
-                        clickListener!!.click(
-                            place,
-                            mResultList!![adapterPosition].address.toString()
-                        )
+                        clickListener!!.click(place, mResultList!![adapterPosition].address.toString())
                     }.addOnFailureListener { exception ->
                         if (exception is ApiException) {
                             Toast.makeText(mContext, exception.message + "", Toast.LENGTH_LONG)
@@ -264,18 +264,18 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                     placesClient.fetchPlace(request)
                         .addOnSuccessListener { response ->
                             var returnedAddress: Address? = null
+                            var addresses: List<Address?>? = null
+
                             val place = response.place
                             val geocoder =
                                 Geocoder(mContext, Locale.getDefault())
                             try {
-                                val addresses =
+                                 addresses =
                                     geocoder.getFromLocation(
                                         place.latLng!!.latitude,
                                         place.latLng!!.longitude, 1
                                     )
-                                if (addresses != null) {
-                                    returnedAddress = addresses[0]
-                                }
+
                             } catch (e: IOException) {
                             }
                             val token =
@@ -283,10 +283,15 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                             client.SaveLocation(
                                 "Bearer $token",
                                 place.id,
-                                returnedAddress!!.subAdminArea,
-                                returnedAddress!!.adminArea,
+                                addresses!!.get(0)!!.subAdminArea,
+                                addresses!!.get(0)!!.adminArea,
                                 item.address.toString(),
-                                returnedAddress!!.countryName
+                                addresses!!.get(0)!!.countryName
+
+
+
+
+
                             )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
                                 override fun onResponse(
                                     call: Call<SaveLocationResponsePojo?>,
@@ -345,6 +350,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
         init {
             area = itemView.findViewById(R.id.place_area)
             address = itemView.findViewById(R.id.place_address)
+            ivEdit = itemView.findViewById(R.id.ivEdit)
             mRoW = itemView.findViewById(R.id.place_item)
             iv_fav = itemView.findViewById(R.id.iv_fav)
             itemView.setOnClickListener(this)

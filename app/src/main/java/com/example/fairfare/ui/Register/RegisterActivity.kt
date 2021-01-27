@@ -1,14 +1,19 @@
 package com.example.fairfare.ui.Register
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -17,6 +22,8 @@ import com.example.fairfare.R
 import com.example.fairfare.ui.Login.LoginActivity
 import com.example.fairfare.ui.Login.pojo.LoginResponsepojo
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
+import com.example.fairfare.ui.drawer.myrides.ridedetails.MyRideDetailsActivity
+import com.example.fairfare.ui.drawer.myrides.ridedetails.RidePopUpAdapter
 import com.example.fairfare.ui.otp.OtpAvtivity
 import com.example.fairfare.ui.privacypolicy.PrivacyPolicyActivity
 import com.example.fairfare.utils.ProjectUtilities.dismissProgressDialog
@@ -33,7 +40,6 @@ class RegisterActivity : AppCompatActivity(),
     IRegisterVIew {
 
 
-
     private val emailRegex = compile(
         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                 "\\@" +
@@ -43,8 +49,6 @@ class RegisterActivity : AppCompatActivity(),
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                 ")+"
     )
-
-
 
 
     var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\\\.+[a-z]+"
@@ -102,7 +106,15 @@ class RegisterActivity : AppCompatActivity(),
     @BindView(R.id.radioButtonOther)
     var radioButtonOther: RadioButton? = null
 
-  @JvmField
+    @JvmField
+    @BindView(R.id.ivViewInfo)
+    var ivViewInfo: ImageView? = null
+
+    var eventInfoDialog: Dialog? = null
+    var eventDialogBind: EventDialogBind1? = null
+
+
+    @JvmField
     @BindView(R.id.tvPrivacy)
     var tvPrivacy: TextView? = null
 
@@ -170,6 +182,34 @@ class RegisterActivity : AppCompatActivity(),
         }
     }
 
+
+    @OnClick(R.id.ivViewInfo)
+    fun iiewInfo() {
+
+        eventInfoDialog = Dialog(this@RegisterActivity, R.style.dialog_style)
+
+        eventInfoDialog!!.setCancelable(true)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view12: View = inflater1.inflate(R.layout.gender_info, null)
+        eventInfoDialog!!.setContentView(view12)
+        eventDialogBind = EventDialogBind1()
+        ButterKnife.bind(eventDialogBind!!, view12)
+        eventInfoDialog!!.show()
+
+
+    }
+    inner class EventDialogBind1 {
+        @JvmField
+        @BindView(R.id.ivPopUpClose)
+        var ivPopUpClose: ImageView? = null
+
+        @OnClick(R.id.ivPopUpClose)
+        fun ivPopUpClose() {
+            eventInfoDialog!!.dismiss()
+        }
+    }
+
+
     @OnClick(R.id.tvPrivacy)
     fun tvPrivacy() {
 
@@ -223,12 +263,6 @@ class RegisterActivity : AppCompatActivity(),
         }
 
 
-
-
-
-
-
-
         val phoneNumberUtil: PhoneNumberUtil
         var phoneNumber: PhoneNumber? = null
         var numbervalidation = "false"
@@ -251,17 +285,17 @@ class RegisterActivity : AppCompatActivity(),
             "false"
         }
 
-      if (numbervalidation == "false") {
+        if (numbervalidation == "false") {
             tvPhoneNumberError!!.text = "Please enter a valid phone no."
             tvPhoneNumberError!!.visibility = View.VISIBLE
-        } else if (!emailRegex.matcher(edt_email!!.text.toString()).matches()) {
+        } else if (edt_email!!.text.toString().isNotEmpty()) {
+
+            if (!emailRegex.matcher(edt_email!!.text.toString()).matches()) {
+                tvEmailError!!.text = "Please enter a valid email."
+                tvEmailError!!.visibility = View.VISIBLE
+            }
 
 
-
-
-            // Toast.makeText(this, "wrong", Toast.LENGTH_LONG).show();
-            tvEmailError!!.text = "Please enter a valid email."
-            tvEmailError!!.visibility = View.VISIBLE
         } else if (TextUtils.isEmpty(edt_name!!.text.toString())) {
             tvNameError!!.text = "Please enter Full Name"
             tvNameError!!.visibility = View.VISIBLE

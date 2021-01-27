@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
@@ -34,6 +35,8 @@ import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
 import com.google.gson.GsonBuilder
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
+import kotlinx.android.synthetic.main.my_dialog.view.*
+import kotlinx.android.synthetic.main.spinner_item.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,6 +56,10 @@ class MyRideDetailsActivity : AppCompatActivity() {
     @JvmField
     @BindView(R.id.tvEstSurCharge)
     var tvEstSurCharge: TextView? = null
+
+    @JvmField
+    @BindView(R.id.llRating)
+    var llRating: LinearLayout? = null
 
     @JvmField
     @BindView(R.id.tvActualSurCharge)
@@ -93,6 +100,14 @@ class MyRideDetailsActivity : AppCompatActivity() {
     @JvmField
     @BindView(R.id.tv_actualDistance)
     var tv_actualDistance: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvNightChages)
+    var tvNightChages: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvActualNightChages)
+    var tvActualNightChages: TextView? = null
 
     @JvmField
     @BindView(R.id.tv_actualTime)
@@ -186,13 +201,11 @@ class MyRideDetailsActivity : AppCompatActivity() {
     private var waitingList: List<RideDetailsResponsePOJO.WaitingsItem1> = ArrayList()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_ride_details)
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
-        eventInfoDialog = Dialog(this, R.style.alertDialog)
 
         PreferencesManager.initializeInstance(this@MyRideDetailsActivity)
         preferencesManager = PreferencesManager.instance
@@ -212,23 +225,27 @@ class MyRideDetailsActivity : AppCompatActivity() {
     @OnClick(R.id.ivViewInfo)
     fun iiewInfo() {
 
-        eventInfoDialog!!.setCancelable(true)
-        val inflater1 =
-            this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view12: View = inflater1.inflate(R.layout.event_info, null)
-        eventInfoDialog!!.setContentView(view12)
-        eventDialogBind = EventDialogBind1()
-        ButterKnife.bind(eventDialogBind!!, view12)
+        if(waitingList.size>0) {
+            eventInfoDialog = Dialog(this@MyRideDetailsActivity, R.style.dialog_style)
 
-        eventDialogBind!!.rvEventInfo!!.layoutManager =
-            LinearLayoutManager(
-                this,
-                LinearLayoutManager.VERTICAL, false
-            )
-        waittimePopUpAdapter = RidePopUpAdapter(this, waitingList)
-        eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
+            eventInfoDialog!!.setCancelable(true)
+            val inflater1 =
+                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view12: View = inflater1.inflate(R.layout.event_info, null)
+            eventInfoDialog!!.setContentView(view12)
+            eventDialogBind = EventDialogBind1()
+            ButterKnife.bind(eventDialogBind!!, view12)
 
-        eventInfoDialog!!.show()
+            eventDialogBind!!.rvEventInfo!!.layoutManager =
+                LinearLayoutManager(
+                    this,
+                    LinearLayoutManager.VERTICAL, false
+                )
+            waittimePopUpAdapter = RidePopUpAdapter(this, waitingList)
+            eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
+
+            eventInfoDialog!!.show()
+        }
 
 
     }
@@ -266,10 +283,33 @@ class MyRideDetailsActivity : AppCompatActivity() {
             ) {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
+                    waitingList = response.body()!!.data!!.actualTrackRide!!.waitings!!
 
-                    if((response.body()!!.data!!.reviews)!!.isNotEmpty()) {
-                        editReview!!.text = response.body()!!.data!!.reviews!!.get(0)!!.reviews
-                        ratingBar!!.setRating((response.body()!!.data!!.reviews!!.get(0)!!.stars).toFloat())
+                    if(waitingList.size==0) {
+                        ivViewInfo!!.visibility=View.GONE
+                    }
+
+
+
+                    if ((response.body()!!.data!!.reviews)!!.isNotEmpty()) {
+                        val strReview = response.body()!!.data!!.reviews!!.get(0)!!.reviews
+                        if (strReview==null) {
+                            editReview!!.visibility = View.GONE
+                        } else {
+                            editReview!!.visibility = View.VISIBLE
+                            editReview!!.text = response.body()!!.data!!.reviews!!.get(0)!!.reviews
+
+                        }
+
+                        if ((response.body()!!.data!!.reviews!!.get(0)!!.stars) > 0) {
+                            llRating!!.visibility = View.VISIBLE
+                            ratingBar!!.setRating((response.body()!!.data!!.reviews!!.get(0)!!.stars).toFloat())
+
+                        } else {
+                            llRating!!.visibility = View.GONE
+
+                        }
+
                     }
 
                     tv_vahicalNO!!.text = response.body()!!.data!!.vehicleNo
@@ -289,15 +329,15 @@ class MyRideDetailsActivity : AppCompatActivity() {
                     tv_Datetime!!.text = strformaredDate
 
                     if (response.body()!!.data!!.luggageQuantity.equals("0")) {
-                        tv_bagCount!!.text = "No Bags"
+                        tv_bagCount!!.text = "No Luggage"
                     } else {
 
                         if (response.body()!!.data!!.luggageQuantity.equals("1")) {
                             tv_bagCount!!.text =
-                                response.body()!!.data!!.luggageQuantity + " Bag"
+                                response.body()!!.data!!.luggageQuantity + " Luggage"
                         } else {
                             tv_bagCount!!.text =
-                                response.body()!!.data!!.luggageQuantity + " Bags"
+                                response.body()!!.data!!.luggageQuantity + " Luggage"
 
                         }
                     }
@@ -319,7 +359,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
                         tv_actualDistance!!.text =
                             response!!.body()!!.data!!.actualTrackRide!!.distance + " KM"
                         tv_actualTime!!.text =
-                            response!!.body()!!.data!!.actualTrackRide!!.duration
+                            response!!.body()!!.data!!.actualTrackRide!!.duration+" mins"
                         tv_actualFare!!.text =
                             "₹ " + response!!.body()!!.data!!.actualTrackRide!!.subTotalCharges
                         tv_actualTotalFare!!.text =
@@ -336,6 +376,9 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
                         tvActualSurCharge!!.text =
                             response!!.body()!!.data!!.actualTrackRide!!.surCharge
+
+
+                        tvActualNightChages!!.text = "₹ "+response.body()!!.data!!.nightCharges
 
                     }
 
@@ -362,6 +405,9 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
                         tvEstSurCharge!!.text =
                             response!!.body()!!.data!!.estimatedTrackRide!!.surCharge
+
+
+                        tvNightChages!!.text = "₹ "+response.body()!!.data!!.nightCharges
 
                     }
 

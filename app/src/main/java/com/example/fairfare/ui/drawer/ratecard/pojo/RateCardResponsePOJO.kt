@@ -27,6 +27,9 @@ class RateCardResponsePOJO : Serializable {
         @SerializedName("name")
         var name: String? = null
 
+        @SerializedName("rateCardType")
+        var rateCardType: String? = null
+
         @SerializedName("noOfSeater")
         var noOfSeater = 0
 

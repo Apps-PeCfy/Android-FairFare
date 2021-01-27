@@ -6,7 +6,8 @@
     <item
 
         android:id="@+id/action_skip"
-        android:title="SKIP"
+        android:title="Skip"
+
         app:showAsAction="ifRoom" />
 
 

@@ -112,7 +112,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
                     txtResendTimer!!.setText("(00:" + millisUntilFinished / 1000+")")
 
                 }
-               }
+            }
 
             override fun onFinish() {
                 lltimer!!.visibility = View.GONE
@@ -192,7 +192,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     @OnClick(R.id.txt_resend_otp)
     fun resendOTP() {
         edt_otp!!.setText("")
-       if (LoginType == "NOR") {
+        if (LoginType == "NOR") {
             GoogleToken = ""
         }
         iOtpPresenter!!.resendOtp(
@@ -200,7 +200,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
             LoginType, CountryCode, "", "", GoogleToken
         )
 
-      }
+    }
 
     override fun otpSuccess(verifyOTPResponsePojo: VerifyOTPResponsePojo?) {
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, verifyOTPResponsePojo!!.token)

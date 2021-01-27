@@ -36,7 +36,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center_horizontal"
-            android:text="Prashant Jadhav" />
+            />
 
         <LinearLayout
             android:id="@+id/userDetails"
@@ -96,7 +96,7 @@
                         android:includeFontPadding="false"
                         android:textSize="@dimen/_11sdp"
                         android:maxLines="1"
-                        android:text="prashantp@gmail.com" />
+                        />
 
 
 
@@ -233,7 +233,7 @@
                         android:drawablePadding="@dimen/_15sdp"
                         android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center_vertical"
-                        android:hint="Please Enter Location"
+                        android:hint="Please Enter Home City"
                         android:includeFontPadding="false"
                         android:maxLines="1"
                         android:textSize="@dimen/_11sdp" />

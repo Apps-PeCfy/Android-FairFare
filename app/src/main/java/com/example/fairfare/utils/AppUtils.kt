@@ -4,7 +4,10 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-public class AppUtils{
+
+class AppUtils {
+
+
     companion object {
         fun convertDateGMTToLocal(sourceDate: String?): String? {
 

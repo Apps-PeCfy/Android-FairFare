@@ -14,9 +14,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
@@ -29,7 +31,9 @@ import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.drawer.mydisput.DisputWaitTimePopUpAdapter
 import com.example.fairfare.ui.drawer.mydisput.disputDetail.DisputDetailActivity
 import com.example.fairfare.ui.drawer.mydisput.disputDetail.pojo.DisputDetailResponsePOJO
+import com.example.fairfare.ui.drawer.mydisput.disputDetail.setImgAdapter
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
+import com.example.fairfare.ui.ridedetails.GridSpacingItemDecoration
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -182,13 +186,33 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     var tv_Datetime: TextView? = null
 
     @JvmField
+    @BindView(R.id.tvNightChages)
+    var tvNightChages: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvActualNightChages)
+    var tvActualNightChages: TextView? = null
+
+    @JvmField
     @BindView(R.id.tvActualWaitTime)
     var tvActualWaitTime: TextView? = null
 
 
     @JvmField
+    @BindView(R.id.selected_recycler_view)
+    var selectedImageRecyclerView: RecyclerView? = null
+
+    var selectedImageList: ArrayList<String?>? = null
+    var selectedImageAdapter: setImgAdapter? = null
+
+
+    @JvmField
     @BindView(R.id.ivViewInfo)
     var ivViewInfo: ImageView? = null
+
+    @JvmField
+    @BindView(R.id.llComments)
+    var llComments: LinearLayout? = null
 
     var eventInfoDialog: Dialog? = null
     var eventDialogBind: EventDialogBind? = null
@@ -210,6 +234,9 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         ID = intent.getStringExtra("Id")
         getDisputDetail()
+
+
+
         mToolbar!!.title = "Complaint Detail"
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
@@ -220,30 +247,30 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     @OnClick(R.id.ivViewInfo)
     fun iiewInfo() {
+if(waitingList.size>0) {
+    eventInfoDialog = Dialog(this@ComplaintsDetailsActivity, R.style.dialog_style)
+    eventInfoDialog!!.setCancelable(true)
+    val inflater1 =
+        this@ComplaintsDetailsActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    val view12: View = inflater1.inflate(R.layout.event_info, null)
+    eventInfoDialog!!.setContentView(view12)
+    eventDialogBind = EventDialogBind()
+    ButterKnife.bind(eventDialogBind!!, view12)
 
-        eventInfoDialog = Dialog(this@ComplaintsDetailsActivity, R.style.dialog_style)
-        eventInfoDialog!!.setCancelable(true)
-        val inflater1 =
-            this@ComplaintsDetailsActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view12: View = inflater1.inflate(R.layout.event_info, null)
-        eventInfoDialog!!.setContentView(view12)
-        eventDialogBind = EventDialogBind()
-        ButterKnife.bind(eventDialogBind!!, view12)
+    eventDialogBind!!.rvEventInfo!!.layoutManager =
+        LinearLayoutManager(this@ComplaintsDetailsActivity, LinearLayoutManager.VERTICAL, false)
+    eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
+        this@ComplaintsDetailsActivity,
+        LinearLayoutManager.VERTICAL,
+        false
+    ) // set LayoutManager to RecyclerView
+    waittimePopUpAdapter = DisputWaitTimePopUpAdapter(this, waitingList)
+    eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
 
-        eventDialogBind!!.rvEventInfo!!.layoutManager =
-            LinearLayoutManager(this@ComplaintsDetailsActivity, LinearLayoutManager.VERTICAL, false)
-        eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
-            this@ComplaintsDetailsActivity,
-            LinearLayoutManager.VERTICAL,
-            false
-        ) // set LayoutManager to RecyclerView
-        waittimePopUpAdapter = DisputWaitTimePopUpAdapter(this, waitingList)
-        eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
+    eventDialogBind!!.ivPopUpClose
 
-        eventDialogBind!!.ivPopUpClose
-
-        eventInfoDialog!!.show()
-
+    eventInfoDialog!!.show()
+}
 
     }
 
@@ -281,8 +308,30 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             ) {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
-                    //  drawMap(response.body())
+
+
+
+                    selectedImageList = response.body()!!.dispute!!.images
+                    selectedImageAdapter = setImgAdapter(this@ComplaintsDetailsActivity, selectedImageList!!)
+                    val spanCount = 3
+                    selectedImageRecyclerView!!.layoutManager = GridLayoutManager(this@ComplaintsDetailsActivity, spanCount)
+                    val spacing = 15
+                    val includeEdge = true
+                    selectedImageRecyclerView!!.addItemDecoration(
+                        GridSpacingItemDecoration(
+                            spanCount,
+                            spacing,
+                            includeEdge
+                        )
+                    )
+                    selectedImageRecyclerView!!.adapter = selectedImageAdapter
+
+
                     waitingList = response.body()!!.dispute!!.ride!!.actualTrackRide!!.waitings!!
+
+                    if(waitingList.size==0) {
+                        ivViewInfo!!.visibility=View.GONE
+                    }
 
 
                     var dReason: String? = ""
@@ -306,15 +355,15 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                     if (response.body()!!.dispute!!.ride!!.luggageQuantity.equals("0")) {
-                        tv_bagCount!!.text = "No Bags"
+                        tv_bagCount!!.text = "No Luggage"
                     } else {
 
                         if (response.body()!!.dispute!!.ride!!.luggageQuantity.equals("1")) {
                             tv_bagCount!!.text =
-                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Bag"
+                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Luggage"
                         } else {
                             tv_bagCount!!.text =
-                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Bags"
+                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Luggage"
 
                         }
                     }
@@ -329,11 +378,15 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                         "End Trip Meter: " + response.body()!!.dispute!!.endMeterReading
 
 
-                    if (response.body()!!.dispute!!.comment!!.isNotEmpty()) {
+                    val comment = response.body()!!.dispute!!.comment!!
+
+                    if (comment.isNotEmpty()) {
+                        llComments!!.visibility = View.VISIBLE
                         editReview!!.visibility = View.VISIBLE
                         editReview!!.text = response.body()!!.dispute!!.comment
                     } else {
                         editReview!!.visibility = View.GONE
+                        llComments!!.visibility = View.GONE
 
                     }
 
@@ -413,6 +466,10 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                             "₹ " + response!!.body()!!.dispute!!.ride!!.luggageCharges
                         tv_actualTotalFare!!.text =
                             "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.totalCharges
+
+                        tvActualNightChages!!.text =  "₹ " +response.body()!!.dispute!!.ride!!.nightCharges
+
+
                         tvActualWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingTime
                         tvActualWaitCharge!!.text =
@@ -432,6 +489,9 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                             "₹ " + response!!.body()!!.dispute!!.ride!!.luggageCharges
                         tv_estTotalFare!!.text =
                             "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.totalCharges
+
+                        tvNightChages!!.text =  "₹ " +response.body()!!.dispute!!.ride!!.nightCharges
+
 
                         tvEstWaitCharge!!.text =
                             response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges
@@ -491,7 +551,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                     (body!!.dispute!!.destinationPlaceLong)!!.toDouble()
                 )
             ).icon(
-                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
 

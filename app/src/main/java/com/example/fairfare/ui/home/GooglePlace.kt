@@ -66,7 +66,6 @@ class GooglePlace : AppCompatActivity() {
                 // TODO: Handle the error.
                 val status =
                     Autocomplete.getStatusFromIntent(data!!)
-                Log.i("PlaceData", status.statusMessage)
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
             }

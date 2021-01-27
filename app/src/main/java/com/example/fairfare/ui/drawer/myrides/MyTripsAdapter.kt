@@ -1,5 +1,6 @@
 package com.example.fairfare.ui.drawer.myrides
 
+import android.graphics.Color
 import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +50,14 @@ class MyTripsAdapter(
         holder.ratingBar!!.visibility = View.GONE
         holder.btnStartRide!!.visibility = View.GONE
 
-        holder.tv_status!!.text = MyRideList.get(position).status
+        if(MyRideList.get(position).status.equals("Completed")){
+            holder.tv_status!!.text = MyRideList.get(position).status
+            holder.tv_status!!.setTextColor(Color.parseColor("#749E47"))
+        }else{
+            holder.tv_status!!.text = MyRideList.get(position).status
+            holder.tv_status!!.setTextColor(Color.parseColor("#F15E38"))
+
+        }
         holder.tv_actualFare!!.text = "₹ " + MyRideList[position].fare.toString()
         holder.tv_vahicalName!!.text =
             MyRideList[position].vehicleName + " " + MyRideList[position].vehicleNo
@@ -76,7 +84,7 @@ class MyTripsAdapter(
             ).into(holder.iv_vehical!!)
 
 
-        val geocoder = Geocoder(context, Locale.getDefault())
+/*        val geocoder = Geocoder(context, Locale.getDefault())
         try {
             val addresses =
                 geocoder.getFromLocation(
@@ -113,11 +121,11 @@ class MyTripsAdapter(
                 deststreetAddress = strReturnedAddress.toString()
             }
         } catch (e: IOException) {
-        }
+        }*/
 
 
-        holder.tv_myCurrentLocation!!.text = streetAddress
-        holder.destnationAddress!!.text = deststreetAddress
+        holder.tv_myCurrentLocation!!.text = MyRideList[position].originFullAddress
+        holder.destnationAddress!!.text = MyRideList[position].destinationFullAddress
 
 
         if (currentCity!!.equals(MyRideList[position].cityName)) {
@@ -214,7 +222,7 @@ class MyTripsAdapter(
                         "Cancelled"
                     ))
                 ) {
-                    Toast.makeText(context, "Your Ride is Copmleted", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Your Ride is Completed", Toast.LENGTH_LONG).show()
                 } else {
                     iclickListener!!.startRide(
                         MyRideList[adapterPosition].id,
@@ -236,7 +244,7 @@ class MyTripsAdapter(
                 ) {
                     iclickListener!!.rideDetails(MyRideList[adapterPosition].id)
                 } else {
-                    Toast.makeText(context, "Your Ride is Not Copmleted Yet", Toast.LENGTH_LONG)
+                    Toast.makeText(context, "Your ride is not completed yet.", Toast.LENGTH_LONG)
                         .show()
 
                 }

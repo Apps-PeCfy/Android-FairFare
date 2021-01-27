@@ -10,16 +10,25 @@
 
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_180sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@android:color/transparent">
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/llman"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_300sdp"
+        android:layout_height="@dimen/_180sdp"
         >
 
 
         <LinearLayout
 
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_300sdp"
+            android:layout_height="@dimen/_180sdp"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/pop_up_background"
@@ -36,17 +45,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.8"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_25sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_4sdp"
                     android:text="Location"
                     android:textColor="@color/Black"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="@dimen/_2sdp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gradientstartcolor" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -62,6 +67,8 @@
 
 
             <TextView
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_2sdp"
                 android:background="@color/gradientstartcolor" />
@@ -81,14 +88,35 @@
     </RelativeLayout>
 
     <ImageView
+        android:layout_marginTop="@dimen/_5sdp"
         android:id="@+id/ivPopUpClose"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/_10sdp"
+        android:src="@drawable/iv_popup_close"
 
-        android:background="@drawable/ic_subscriber_cross" />
 
+        />
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:gravity="center"
+            android:src="@drawable/iv_info"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -9,6 +9,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
+
+import android.location.*
+
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
@@ -36,6 +39,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.fairfare.R
+import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.home.HomeActivity
@@ -68,7 +72,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListener,
+class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListener,
     OnMapReadyCallback {
     var locationChangelatitude = 0.0
     var locationChangelongitude = 0.0
@@ -91,6 +95,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     var image: File? = null
     var filePath: Uri? = null
     var mCurrentPhotoPath: String? = null
+    var filePath: Uri? = null
     var projection =
         arrayOf(MediaStore.MediaColumns.DATA)
 
@@ -145,6 +150,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     private var pDialog: ProgressDialog? = null
     var strDescimal: String? = null
     var estCurrentDuration: String? = null
+    var estCurrentDurationValue: String? = null
     var estCurrentDistance: String? = null
     var estCurrentFare: String? = null
     var actualDistanceInMeter: Int = 0
@@ -159,9 +165,9 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
-        locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-        locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+     //   locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+     //   locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+     //   locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
      /*   val provider: String = locationManager!!.getBestProvider(Criteria(), true)
         val loc: Location = locationManager!!.getLastKnownLocation(provider)
         locationChangelatitude = loc.latitude
@@ -377,7 +383,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             val currentTravelledTime = estCurrentDuration!!.replace(" mins", "")
 
              distance_ViewRide = (estCurrentDistance!!.toFloat() ).toString()
-             durationRide=(currentTravelledTime.toFloat()).toString()
+             durationRide=(estCurrentDurationValue!!.toInt()/60).toFloat().toString()
             originLat = locationChangelatitude.toString()
             originLong = locationChangelongitude.toString()
 
@@ -463,7 +469,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     @OnClick(R.id.btnTrackRide)
     fun btnTrack() {
 
-        if(((edt_vehicalNO!!.text).toString()).isEmpty()){
+  /*      if(((edt_vehicalNO!!.text).toString()).isEmpty()){
             Toast.makeText(
                 this@RideDetailsActivity,
                 "Enter Vehicle Number", Toast.LENGTH_LONG).show()
@@ -473,7 +479,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
                 this@RideDetailsActivity,
                 "Enter Driver Name", Toast.LENGTH_LONG).show()
 
-        }else {
+        }else {*/
 
 
             if ((MyRides_RidesID != null)) {
@@ -498,10 +504,11 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
                         edt_vehicalNO!!.text.toString(),
                         edt_bagsCount!!.text.toString(),
                         edt_meterReading!!.text.toString(),
-                        originLat, originLong, "", "", imageList
+                        originLat, originLong, "", "", imageList,"",""
                     )
 
-                } else {
+                } else
+                {
                     iRidePresenter!!.startRide(
                         token,
                         MyRides_RidesID,
@@ -519,13 +526,14 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
                         edt_vehicalNO!!.text.toString(),
                         edt_bagsCount!!.text.toString(),
                         edt_meterReading!!.text.toString(),
-                        "", "", "", "", imageList
+                        "", "", "", "", imageList,"",""
                     )
 
                 }
 
 
-            } else {
+            } else
+            {
 
 
                 iRidePresenter!!.startRide(
@@ -545,11 +553,11 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, destiLat, destiLong,imageList
+                    originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress
                 )
 
             }
-        }
+
 
     }
 
@@ -566,6 +574,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             }
 
         } )
+
         val spanCount = 2
         selectedImageRecyclerView!!.layoutManager = GridLayoutManager(this, spanCount)
         val spacing = 15
@@ -599,6 +608,19 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     private fun init() {
         selectedImageList = ArrayList<String>()
         imageList = ArrayList()
+    }
+    private fun showConfirmationDialog(position: Int) {
+        val alertDialog = AlertDialog.Builder(context)
+        alertDialog.setTitle("FairFare")
+        alertDialog.setMessage("Are you sure you remove this image?")
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("Yes") { dialog, which ->
+            imageList!!.removeAt(position)
+            selectedImageList!!.removeAt(position)
+            selectedImageAdapter!!.notifyDataSetChanged()
+        }
+        alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+        alertDialog.show()
     }
 
     private fun showConfirmationDialog(position: Int) {
@@ -658,6 +680,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         }
 
 
+
     }
 
     fun getPickImageIntent() {
@@ -694,7 +717,39 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         return image
     }
 
+    /**
+     * LIFECYCLE
+     */
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        //Profile Picture
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PhotoSelector.SELECT_FILE) {
+                filePath = photoSelector!!.onSelectFromGalleryResult(data)
+                val imageModel = ImageModel()
+                imageModel.filePath = photoSelector!!.getPath(filePath, context)
+                imageModel.image = photoSelector!!.getPath(filePath, context)
+                imageModel.isSelected
+                imageList!!.add(0, imageModel)
+                selectedImageList!!.add(0, imageModel.image!!)
+                selectedImageAdapter!!.notifyDataSetChanged()
+            } else if (requestCode == PhotoSelector.REQUEST_CAMERA) {
+                filePath = photoSelector!!.onCaptureImageResult()
+                val imageModel = ImageModel()
+                imageModel.filePath = photoSelector!!.getPath(filePath, context)
+                imageModel.image = photoSelector!!.getPath(filePath, context)
+                imageModel.isSelected
+                imageList!!.add(0, imageModel)
+                selectedImageList!!.add(0, imageModel.image!!)
+                selectedImageAdapter!!.notifyDataSetChanged()
+            }
+        }
+    }
 
    /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -719,39 +774,6 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         }
     }*/
 
-    /**
-     * LIFECYCLE
-     */
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        //Profile Picture
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PhotoSelector.SELECT_FILE) {
-                filePath = photoSelector!!.onSelectFromGalleryResult(data)
-                val imageModel = ImageModel()
-                imageModel.filePath = photoSelector!!.getPath(filePath, context)
-                imageModel.image = photoSelector!!.getPath(filePath, context)
-                imageModel.isSelected
-                imageList!!.add(0, imageModel)
-                selectedImageList!!.add(0, imageModel.image !!)
-                selectedImageAdapter!!.notifyDataSetChanged()
-            } else if (requestCode == PhotoSelector.REQUEST_CAMERA) {
-                filePath = photoSelector!!.onCaptureImageResult()
-                val imageModel = ImageModel()
-                imageModel.filePath = photoSelector!!.getPath(filePath, context)
-                imageModel.image = photoSelector!!.getPath(filePath, context)
-                imageModel.isSelected
-                imageList!!.add(0, imageModel)
-                selectedImageList!!.add(0, imageModel.image !!)
-                selectedImageAdapter!!.notifyDataSetChanged()
-            }
-        }
-    }
 
     fun getImageFilePath(uri: Uri?) {
         val cursor =
@@ -794,6 +816,8 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             R.id.action_home -> {
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@RideDetailsActivity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }
@@ -848,8 +872,8 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             intentr.putExtra("MyRidesDLat", MyRidesDLat)
             intentr.putExtra("MyRidesDLong", MyRidesDLong)
             intentr.putExtra("MyRidesID", MyRides_RidesID)
-
             startActivity(intentr)
+            finish()
 
         } else {
 
@@ -861,7 +885,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             intentr.putExtra("ImageName", intent.getStringExtra("ImgName"))
             intentr.putExtra("ResponsePOJOScheduleRide", info)
             startActivity(intentr)
-
+            finish()
 
         }
 
@@ -890,7 +914,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
         Toast.makeText(this@RideDetailsActivity, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun onLocationChanged(location: Location?) {
+    override fun onLocationChanged(location: Location) {
 
         if (strFirstTime.equals("firstClick")) {
 
@@ -927,10 +951,10 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
     }
 
-    override fun onProviderEnabled(provider: String?) {
+    override fun onProviderEnabled(provider: String) {
     }
 
-    override fun onProviderDisabled(provider: String?) {
+    override fun onProviderDisabled(provider: String) {
     }
 
     override fun onMapReady(p0: GoogleMap?) {
@@ -1101,6 +1125,7 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
                 val duration = steps.getJSONObject("duration")
 
                 estCurrentDuration = duration.getString("text")
+                estCurrentDurationValue = duration.getString("value")
                 estCurrentDistance = distance.getString("text")
 
 
@@ -1127,29 +1152,31 @@ class RideDetailsActivity : AppCompatActivity(), IRideDetaisView, LocationListen
             var lineOptions: PolylineOptions? = null
 
             // Traversing through all the routes
-            for (i in result!!.indices) {
-                points = ArrayList()
-                lineOptions = PolylineOptions()
+            if(result!=null) {
+                for (i in result!!.indices) {
+                    points = ArrayList()
+                    lineOptions = PolylineOptions()
 
-                // Fetching i-th route
-                val path =
-                    result[i]
+                    // Fetching i-th route
+                    val path =
+                        result[i]
 
-                // Fetching all the points in i-th route
-                for (j in path.indices) {
-                    val point = path[j]
-                    val lat = point["lat"]!!.toDouble()
-                    val lng = point["lng"]!!.toDouble()
-                    val position =
-                        LatLng(lat, lng)
-                    points.add(position)
+                    // Fetching all the points in i-th route
+                    for (j in path.indices) {
+                        val point = path[j]
+                        val lat = point["lat"]!!.toDouble()
+                        val lng = point["lng"]!!.toDouble()
+                        val position =
+                            LatLng(lat, lng)
+                        points.add(position)
+                    }
+                    lineOptions.addAll(points)
+                    lineOptions.width(8f)
+                    //  lineOptions.color(Color.GREEN);
+                    lineOptions.color(
+                        this@RideDetailsActivity.resources.getColor(R.color.gradientstartcolor)
+                    )
                 }
-                lineOptions.addAll(points)
-                lineOptions.width(8f)
-                //  lineOptions.color(Color.GREEN);
-                lineOptions.color(
-                    this@RideDetailsActivity.resources.getColor(R.color.gradientstartcolor)
-                )
             }
 
             if (lineOptions != null) {

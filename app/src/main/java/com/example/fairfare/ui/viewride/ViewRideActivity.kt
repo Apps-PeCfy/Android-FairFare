@@ -31,7 +31,6 @@ import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.ridedetails.RideDetailsActivity
-import com.example.fairfare.ui.service.GPSTracker
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
@@ -252,35 +251,6 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         }
 
 
-       /* val gps = GPSTracker(this@ViewRideActivity)
-        if (gps.canGetLocation()) {
-
-            val geocoder = Geocoder(this@ViewRideActivity, Locale.getDefault())
-            try {
-                val addresses =
-                    geocoder.getFromLocation(
-                        gps!!.latitude!!.toDouble(),
-                        gps!!.longitude!!.toDouble(),
-                        1
-                    )
-                if (addresses != null) {
-                    val returnedAddress = addresses[0]
-                    val strReturnedAddress =
-                        StringBuilder()
-                    for (j in 0..returnedAddress.maxAddressLineIndex) {
-                        strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                    }
-                    getCurrentCity = returnedAddress.subAdminArea
-                    Log.d("swqazxdfgtr", getCurrentCity)
-
-                }
-            } catch (e: IOException) {
-            }
-
-        } else {
-            gps.showSettingsAlert()
-        }
-*/
 
         if(btnLogin!!.text.equals("Start Ride")) {
             if (canStartRide.equals("Yes")) {
@@ -358,6 +328,8 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
                 )
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@ViewRideActivity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }
@@ -402,7 +374,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
             iViewRidePresenter!!.schduleRide(token,vahicalRateCardID,luggagesQuantity,formatedDateTime,
             originPlaceID,destinationPlaceID,overviewPolyLine,distance_ViewRide,durationRide,CITY_ID,
-                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong)
+                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong,sAdd,dAdd)
 
 
          }
@@ -436,7 +408,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         if (!sourceLatitude!!.isEmpty() && !destLat!!.isEmpty()) {
             mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(sourceLatitude!!.toDouble(), sourceLongitude!!.toDouble()), 15.0f))
             sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(sourceLatitude!!.toDouble(), sourceLongitude!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
-            sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(destLat!!.toDouble(), destLong!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
+            sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(destLat!!.toDouble(), destLong!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)))
             drawRoute()
         }
     }
@@ -570,29 +542,32 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
             var lineOptions: PolylineOptions? = null
 
             // Traversing through all the routes
-            for (i in result!!.indices) {
-                points = ArrayList()
-                lineOptions = PolylineOptions()
 
-                // Fetching i-th route
-                val path =
-                    result[i]
+            if(result!=null) {
+                for (i in result!!.indices) {
+                    points = ArrayList()
+                    lineOptions = PolylineOptions()
 
-                // Fetching all the points in i-th route
-                for (j in path.indices) {
-                    val point = path[j]
-                    val lat = point["lat"]!!.toDouble()
-                    val lng = point["lng"]!!.toDouble()
-                    val position =
-                        LatLng(lat, lng)
-                    points.add(position)
+                    // Fetching i-th route
+                    val path =
+                        result[i]
+
+                    // Fetching all the points in i-th route
+                    for (j in path.indices) {
+                        val point = path[j]
+                        val lat = point["lat"]!!.toDouble()
+                        val lng = point["lng"]!!.toDouble()
+                        val position =
+                            LatLng(lat, lng)
+                        points.add(position)
+                    }
+                    lineOptions.addAll(points)
+                    lineOptions.width(8f)
+                    //  lineOptions.color(Color.GREEN);
+                    lineOptions.color(
+                        this@ViewRideActivity.resources.getColor(R.color.gradientstartcolor)
+                    )
                 }
-                lineOptions.addAll(points)
-                lineOptions.width(8f)
-                //  lineOptions.color(Color.GREEN);
-                lineOptions.color(
-                    this@ViewRideActivity.resources.getColor(R.color.gradientstartcolor)
-                )
             }
 
             // Drawing polyline in the Google Map for the i-th route
@@ -641,7 +616,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         Toast.makeText(this@ViewRideActivity, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun onLocationChanged(location: Location?) {
+    override fun onLocationChanged(location: Location) {
 
 
     }
@@ -649,9 +624,9 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
     }
 
-    override fun onProviderEnabled(provider: String?) {
+    override fun onProviderEnabled(provider: String) {
     }
 
-    override fun onProviderDisabled(provider: String?) {
+    override fun onProviderDisabled(provider: String) {
     }
 }

@@ -115,7 +115,8 @@
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:layout_toRightOf="@+id/tv_Person"
                                 android:text="Upcoming.."
-                                android:textColor="@color/gradientstartcolor"
+
+                                android:textColor="@color/completedcolor"
                                 android:textSize="@dimen/_9sdp" />
 
 

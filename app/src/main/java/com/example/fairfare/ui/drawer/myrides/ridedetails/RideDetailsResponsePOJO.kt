@@ -22,7 +22,7 @@ class RideDetailsResponsePOJO {
         var dateTime: String? = null
 
         @SerializedName("fare")
-        var fare = 0
+        var fare = 0.0
 
         @SerializedName("vehicleName")
         var vehicleName: String? = null

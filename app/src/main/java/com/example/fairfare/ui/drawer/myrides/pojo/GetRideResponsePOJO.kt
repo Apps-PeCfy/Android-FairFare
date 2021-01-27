@@ -90,14 +90,16 @@ class GetRideResponsePOJO {
 		@SerializedName("destinationPlaceId")
 		var destinationPlaceId: String? = null
 
-		@SerializedName("originFullAddress")
-		var originFullAddress: String? = null
+
 
 		@SerializedName("vehicleNo")
 		var vehicleNo: String? = null
 
 		@SerializedName("reviewStar")
 		var reviewStar = 0.00
+
+		@SerializedName("originFullAddress")
+		var originFullAddress: String? = null
 
 		@SerializedName("destinationFullAddress")
 		var destinationFullAddress: String? = null

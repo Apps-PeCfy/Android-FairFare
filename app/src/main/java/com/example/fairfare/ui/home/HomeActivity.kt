@@ -1,3 +1,5 @@
+
+
 package com.example.fairfare.ui.home
 
 import android.annotation.SuppressLint
@@ -26,6 +28,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -112,8 +115,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     // var cityspinner = Array<String?>
     var cityspinner = ArrayList<String>()
     var luggageSpinner = arrayOf<String?>(
-        "Bags", "1 Bag", "2 Bags", "3 Bags", "4 Bags", "5 Bags", "6 Bags", "7 Bags", "8 Bags",
-        "9 Bags", "10 Bags"
+        "Luggage", "1 Luggage", "2 Luggage", "3 Luggage", "4 Luggage", "5 Luggage"
     )
 
     @JvmField
@@ -247,9 +249,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var calendar: Calendar? = null
     var estTime: String? = null
     var estDistance: String? = null
+    var estDistanceInMeter = 0
     var hideshow: String? = null
     var spnrbag = 0
-    var cityID = 0
+    var cityID = ""
     var spnrtime = 0
 
     private var drawerPojoArrayList: ArrayList<DrawerPojo>? = null
@@ -294,7 +297,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
-
         progressDialogstart = ProgressDialog(this@HomeActivity)
         progressDialogstart!!.setCancelable(false) // set cancelable to false
         progressDialogstart!!.setMessage("Please Wait") // set message
@@ -395,6 +397,19 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             setFragment(MyComplaints())
         }
 
+
+
+        SourceLat = sharedpreferences!!.getString("SourceLat", "")
+        SourceLong = sharedpreferences!!.getString("SourceLong", "")
+        DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
+        DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
+
+
+        if(SourceLat!!.isNotEmpty()&&DestinationLat!!.isNotEmpty()){
+            progressDialogstart!!.dismiss()
+        }
+
+
     }
 
 
@@ -429,18 +444,45 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     )
                     SpnLang.setDropDownViewResource(R.layout.simple_city_spinner)
                     spinnerLang!!.adapter = SpnLang
+
                     if (extras == null) {
+
+                        if (cityspinner.contains(city)) {
+
+                            for (i in cityspinner!!.indices) {
+                            if (city.equals(cityspinner[i])) {
+                                spinnerLang!!.setSelection(i)
+                            }
+
+                        }
+                        }else{
+                            cityspinner.add(0, "Choose City")
+                            Toast.makeText(
+                                this@HomeActivity,
+                                "Sorry, we dont serve location in " + city + " city yet.We will notify you as soon as we launch. Kindly choose Active city from the drop down",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                        }
+
+                    } else {
+
+                        if (cityspinner.contains(city)) {
                         for (i in cityspinner!!.indices) {
                             if (city.equals(cityspinner[i])) {
                                 spinnerLang!!.setSelection(i)
                             }
 
                         }
-                    } else {
-                        for (i in cityspinner!!.indices) {
-                            if (city.equals(cityspinner[i])) {
-                                spinnerLang!!.setSelection(i)
-                            }
+                    }else {
+
+                            cityspinner.add(0, "Choose City")
+
+                            Toast.makeText(
+                                this@HomeActivity,
+                                "Sorry, we dont serve location in " + city + " city yet.We will notify you as soon as we launch. Kindly choose Active city from the drop down",
+                                Toast.LENGTH_LONG
+                            ).show()
 
                         }
                     }
@@ -771,12 +813,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     @OnClick(R.id.logoLayout)
     fun myAccount(){
 
-             spinnerLang!!.visibility = View.GONE
-             homeMain!!.visibility = View.GONE
-             mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-             mDrawerLayout!!.closeDrawer(Gravity.START)
+        spinnerLang!!.visibility = View.GONE
+        homeMain!!.visibility = View.GONE
+        mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+        mDrawerLayout!!.closeDrawer(Gravity.START)
 
-             replaceFragment(MyAccountFragment())
+        replaceFragment(MyAccountFragment())
 
 
 
@@ -788,10 +830,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
 
-        val progressDialog = ProgressDialog(this@HomeActivity)
-        progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
-        progressDialog.show() // show progress dialog
+        val progressDialogLogout = ProgressDialog(this@HomeActivity)
+        progressDialogLogout.setCancelable(false) // set cancelable to false
+        progressDialogLogout.setMessage("Please Wait") // set message
+        progressDialogLogout.show() // show progress dialog
 
         ApiClient.client.signOut("Bearer $token", deviceID, "Android")!!
             .enqueue(object : Callback<ContactUsResponsePojo?> {
@@ -799,7 +841,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     call: Call<ContactUsResponsePojo?>,
                     response: Response<ContactUsResponsePojo?>
                 ) {
-                    progressDialog.dismiss()
+                    progressDialogLogout.dismiss()
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             preferencesManager!!.clear()
@@ -841,7 +883,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 override fun onFailure(
                     call: Call<ContactUsResponsePojo?>, t: Throwable
                 ) {
-                    progressDialog.dismiss()
+                    progressDialogLogout.dismiss()
                     Toast.makeText(this@HomeActivity, t.stackTrace.toString(), Toast.LENGTH_LONG)
                         .show()
                     Log.d("response", t.stackTrace.toString())
@@ -884,8 +926,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         second = c.get(Calendar.SECOND)
         AMorPM = c.get(Calendar.AM_PM)
 
-
-
         val timePickerDialog = TimePickerDialog(
             this@HomeActivity,
             this@HomeActivity, hour, minute, DateFormat.is24HourFormat(this)
@@ -913,6 +953,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         }else{
             val AMorPM: String
+
         if (myHour >= 12) {
             AMorPM = "PM"
             if (myHour == 12) {
@@ -945,50 +986,53 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
 
-        if ((myMonth.toString().length == 1)) {
-            strMonth = ("0" + myMonth)
-        } else {
-            strMonth = myMonth.toString()
-        }
-
-        if ((myday.toString().length == 1)) {
-            stDay = ("0" + myday)
-        } else {
-            stDay = myday.toString()
-        }
 
 
-        if ((second.toString().length == 1)) {
-            strsecond = ("0" + second)
-        } else {
-            strsecond = second.toString()
-        }
+            if ((myMonth.toString().length == 1)) {
+                strMonth = ("0" + myMonth)
+            } else {
+                strMonth = myMonth.toString()
+            }
 
-        if ((myHour.toString().length == 1)) {
-            strhr = ("0" + myHour)
-        } else {
-            strhr = myHour.toString()
-        }
-
-        if ((myMinute.toString().length == 1)) {
-            strMinute = ("0" + myMinute)
-        } else {
-            strMinute = myMinute.toString()
-        }
+            if ((myday.toString().length == 1)) {
+                stDay = ("0" + myday)
+            } else {
+                stDay = myday.toString()
+            }
 
 
-        var dayhour: String? = null
+            if ((second.toString().length == 1)) {
+                strsecond = ("0" + second)
+            } else {
+                strsecond = second.toString()
+            }
 
-        if (hourOfDay.toString().length == 1) {
-            dayhour = ("0" + hourOfDay)
-        } else {
-            dayhour = hourOfDay.toString()
-        }
+            if ((myHour.toString().length == 1)) {
+                strhr = ("0" + myHour)
+            } else {
+                strhr = myHour.toString()
+            }
+
+            if ((myMinute.toString().length == 1)) {
+                strMinute = ("0" + myMinute)
+            } else {
+                strMinute = myMinute.toString()
+            }
 
 
-        formaredDateLater =
-            (myYear.toString() + "-" + strMonth + "-" + stDay + " " + dayhour + ":" + strMinute + ":" + strsecond)
-        tv_RideScheduled!!.text = "$myday $dmonth, $strhr:$strMinute $AMorPM"
+            var dayhour: String? = null
+
+            if (hourOfDay.toString().length == 1) {
+                dayhour = ("0" + hourOfDay)
+            } else {
+                dayhour = hourOfDay.toString()
+            }
+
+
+            formaredDateLater =
+                (myYear.toString() + "-" + strMonth + "-" + stDay + " " + dayhour + ":" + strMinute + ":" + strsecond)
+            tv_RideScheduled!!.text = "$myday $dmonth, $strhr:$strMinute $AMorPM"
+
 
         }
     }
@@ -1001,7 +1045,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         val minDateTime = SimpleDateFormat("dd MM yyyy HH:mm:ss").format(afterAddingTenMins)
         return minDateTime;
-        
+
     }
 
 
@@ -1093,6 +1137,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     override fun onBackPressed() {
+        finish()
         //super.onBackPressed();
     }
 
@@ -1118,9 +1163,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (spinner_time!!.selectedItem.toString().equals("Later", ignoreCase = true)) {
             var dateTime :String?
             if (year >0){
-                 dateTime =  year.toString()+ " " + tv_RideScheduled?.text.toString().replace("AM", "am").replace("PM", "pm")
+
+                dateTime =  year.toString()+ " " + tv_RideScheduled?.text.toString().replace("AM", "am").replace("PM", "pm")
             }else{
-                 dateTime =  Calendar.getInstance().get(Calendar.YEAR).toString()+ " " + tv_RideScheduled?.text.toString().replace("AM", "am").replace("PM", "pm")
+                dateTime =  Calendar.getInstance().get(Calendar.YEAR).toString()+ " " + tv_RideScheduled?.text.toString().replace("AM", "am").replace("PM", "pm")
             }
 
             val selectedDateTime= SimpleDateFormat("yyyy dd MMM, hh:mm a").parse(dateTime)
@@ -1188,7 +1234,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             different = date2!!.time - date1!!.time
 
 
-            if (estDistance!!.contains("km")) {
+
+            if (estDistanceInMeter>499) {
+
 
 
                 if (PortAir.equals("AIRPORT", ignoreCase = true)) {
@@ -1200,14 +1248,16 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
                 replacedistance = estDistance!!.replace(" km", "")
 
-                if ((spinnerLuggagetxt == "1 Bag")) {
-                    replacebags = spinnerLuggagetxt!!.replace(" Bag", "")
 
-                } else if ((spinnerLuggagetxt == "Bags")) {
+                if ((spinnerLuggagetxt == "1 Luggage")) {
+                    replacebags = spinnerLuggagetxt!!.replace(" Luggage", "")
+
+                } else if ((spinnerLuggagetxt == "Luggage")) {
                     replacebags = "0"
 
                 } else {
-                    replacebags = spinnerLuggagetxt!!.replace(" Bags", "")
+                    replacebags = spinnerLuggagetxt!!.replace(" Luggage", "")
+
 
                 }
 
@@ -1287,7 +1337,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 iCompareRidePresenter!!.getCompareRideData(
                     token,
                     replacedistance,
-                    cityID.toString(),
+                    cityID,
                     sourcePlaceID,
                     DestinationPlaceID,
                     replacebags,
@@ -1305,7 +1355,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 ).show()
             }
         } else {
-            if (estDistance!!.contains("km")) {
+            if (estDistanceInMeter>499) {
 
 
                 if (PortAir.equals("AIRPORT", ignoreCase = true)) {
@@ -1317,14 +1367,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
                 replacedistance = estDistance!!.replace(" km", "")
 
-                if ((spinnerLuggagetxt == "1 Bag")) {
-                    replacebags = spinnerLuggagetxt!!.replace(" Bag", "")
+                if ((spinnerLuggagetxt == "1 Luggage")) {
+                    replacebags = spinnerLuggagetxt!!.replace(" Luggage", "")
 
-                } else if ((spinnerLuggagetxt == "Bags")) {
+                } else if ((spinnerLuggagetxt == "Luggage")) {
                     replacebags = "0"
 
                 } else {
-                    replacebags = spinnerLuggagetxt!!.replace(" Bags", "")
+                    replacebags = spinnerLuggagetxt!!.replace(" Luggage", "")
 
                 }
 
@@ -1404,7 +1454,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 iCompareRidePresenter!!.getCompareRideData(
                     token,
                     replacedistance,
-                    cityID.toString(),
+                    cityID,
                     sourcePlaceID,
                     DestinationPlaceID,
                     replacebags,
@@ -1546,26 +1596,18 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 estTime = duration.getString("text")
                 estDistance = distance.getString("value")
-                estDistance =
-                    DecimalFormat("####.##").format((estDistance!!.toDouble() / 1000)) + " km"
+                estDistanceInMeter = distance.getString("value").toInt()
+                estDistance = DecimalFormat("####.##").format((estDistance!!.toDouble() / 1000)) + " km"
 
 
                 /* if((distance.getString("text")).contains("mi")){
                      estDistance = distance.getString("text")
                      estDistance = estDistance!!.replace(" mi", "")
                      var estD =  estDistance!!.toDouble()
-
                      estD = estD * (1.60934)
-
-
-
-
-
                  }else{
                      estDistance = distance.getString("text")
-
                  }
-
  */
                 // Starts parsing data
                 routes = parser.parse(jObject)
@@ -1638,12 +1680,40 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             spnrbag = position
             spinnerLuggagetxt = spinner_Luggage!!.selectedItem.toString()
         } else if (parent!!.id == R.id.spinnerLang) {
-            cityID = cityPojoList!!.get(position).id
-            city_Name = cityPojoList!!.get(position).name
-            preferencesManager!!.setStringValue(
-                Constants.SHARED_PREFERENCE_CITY_ID,
-                cityID.toString()
-            )
+            if (city_Name.equals("Choose City")) {
+
+            }else{
+
+                if (cityspinner.contains("Choose City")) {
+                    if(position>0){
+                        cityID = cityPojoList!!.get(position-1).id.toString()
+                        city_Name = cityPojoList!!.get(position-1).name
+                        preferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_CITY_ID,
+                            cityID
+                        )
+                    }else{
+                        preferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_CITY_ID,
+                            cityPojoList!!.get(position).id.toString()
+                        )
+                    }
+
+
+
+                }else{
+                    cityID = cityPojoList!!.get(position).id.toString()
+                    city_Name = cityPojoList!!.get(position).name
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_CITY_ID,
+                        cityID
+                    )
+
+                }
+            }
+
+
+
 
 
         } else {
@@ -1659,8 +1729,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (extras != null) {
                     if (spnrtime == 1) {
-                       // tv_RideScheduled?.text = tvDateandTime
+
+                      //  tv_RideScheduled?.text = tvDateandTime
                         tv_RideScheduled?.text = dateToStr
+
                     } else {
                         tv_RideScheduled?.text = dateToStr
 
@@ -1693,7 +1765,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         intent.putExtra("DestinationLat", DestinationLat)
         intent.putExtra("DestinationLong", DestinationLong)
         intent.putExtra("Distance", estDistance)
-        intent.putExtra("CITY_ID", cityID.toString())
+        intent.putExtra("CITY_ID", cityID)
         intent.putExtra("CITY_NAME", city_Name)
         intent.putExtra("EstTime", estTime)
         intent.putExtra("Liggage", spinnerLuggagetxt)
@@ -1734,7 +1806,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     @SuppressLint("MissingPermission")
-    override fun onLocationChanged(location: Location?) {
+    override fun onLocationChanged(location: Location) {
 
         Log.d("sdsdsdswnwe", "onLocationChanged")
 
@@ -1743,7 +1815,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
         if (callOnLocation.equals("first")) {
-            if (currentLatitude != null && currentLatitude != 0.0) {
+            if ( currentLatitude != 0.0 && currentLatitude != null) {
 
                 getLocationReady()
                 getCity()
@@ -1783,10 +1855,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             callOnLocation = "second"
 
-            SourceLat = sharedpreferences!!.getString("SourceLat", "")
-            SourceLong = sharedpreferences!!.getString("SourceLong", "")
-            DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
-            DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
             Log.d("mMarkerPointsSize", "$SourceLat       $SourceLong")
             Log.d("mMarkerPointsSizeDestin", "$DestinationLat    $DestinationLong")
 
@@ -1821,12 +1889,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                    }
                                    street = strReturnedAddress.toString()
                                    city = returnedAddress.subAdminArea
-
                                }
                            } catch (e: IOException) {
                            }
                            sharedpreferences!!.edit().putString("fromLocation", street).commit()
-
                            myCurrentLocation!!.text = street
                            sourecemarker!!.remove()
                            markerOptions.title(street)
@@ -1867,13 +1933,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                        strReturnedAddress.append(returnedAddress.getAddressLine(j))
                                    }
                                    street = strReturnedAddress.toString()
-
                                }
                            } catch (e: IOException) {
                            }
-
                            sharedpreferences!!.edit().putString("destiNationLocation", street).commit()
-
                            myDropUpLocation!!.text = street
                            destmarker!!.remove()
                            markerOptions.title(street)
@@ -1891,7 +1954,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                            latLng.longitude
                                        )
                                    ).draggable(false)
-
                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
                            )
                        }
@@ -1920,7 +1982,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                }
                                streetAddress = strReturnedAddress.toString()
                                city = returnedAddress.subAdminArea
-
                            }
                        } catch (e: IOException) {
                        }
@@ -1940,9 +2001,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
                        )
                    }
-
-
-
                    if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
                        drawRoute()
                    }
@@ -1960,10 +2018,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                             SourceLong!!.toDouble(),
                             1
                         )
+
                         //Kiran Code
                        // streetAddress = if (addresses!!.size > 0 && addresses != null) {
 
                         //Mohsin Code
+
                         streetAddress = if (addresses != null && addresses!!.size > 0) {
                             addresses[0].getAddressLine(0)
                         } else {
@@ -2002,10 +2062,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                 DestinationLong!!.toDouble(),
                                 1
                             )
-                        //Kiran Code
-                        // streetAddress = if (addresses!!.size > 0 && addresses != null) {
 
-                        //Mohsin Code
                         streetAddress = if (addresses != null && addresses!!.size > 0 ) {
                             addresses[0].getAddressLine(0)
                         } else {
@@ -2023,7 +2080,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                     DestinationLong!!.toDouble()
                                 )
                             ).draggable(false)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
                     )
                 }
                 if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
@@ -2034,9 +2091,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
                 try {
                     val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
-                    //Kiran Code
-                    // streetAddress = if (addresses!!.size > 0 && addresses != null) {
-                    //Mohsin Code
+
                     if (addresses != null && addresses!!.size > 0) {
                         streetAddress = addresses[0].getAddressLine(0)
                         city = addresses[0].subAdminArea
@@ -2079,11 +2134,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     }
 
-    override fun onProviderEnabled(provider: String?) {
 
+    override fun onProviderEnabled(provider: String) {
     }
 
-    override fun onProviderDisabled(provider: String?) {
+    override fun onProviderDisabled(provider: String) {
 
     }
 

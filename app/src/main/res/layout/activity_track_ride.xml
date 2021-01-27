@@ -52,11 +52,10 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/shape_roundedbtn"
+                android:fontFamily="@font/notosansjp_bold"
                 android:padding="@dimen/_5sdp"
                 android:text="Track Board"
-                android:textColor="@color/White"
-                android:fontFamily="@font/notosansjp_bold"
-                />
+                android:textColor="@color/White" />
 
 
             <LinearLayout
@@ -140,7 +139,6 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
-
 
 
                             </RelativeLayout>
@@ -258,9 +256,8 @@
 
                 <TextView
                     android:id="@+id/tv_refresh"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:layout_toStartOf="@+id/tv_close"
                     android:background="@drawable/refresh_black_small" />
@@ -268,11 +265,11 @@
                 <TextView
 
                     android:id="@+id/tv_close"
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@drawable/ic_track_board_close" />
 
@@ -299,57 +296,67 @@
                     android:textStyle="bold" />
 
 
-                <ProgressBar
-                    android:id="@+id/progressBarDistance"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_distance"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    />
-
 
                 <RelativeLayout
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:id="@+id/rlDistance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/progressBarDistance"
+                    android:layout_below="@+id/tv_distance"
                     android:layout_marginEnd="@dimen/_15sdp">
 
                     <TextView
-                        android:inputType="numberDecimal"
                         android:id="@+id/tv_travelledDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:inputType="numberDecimal"
                         android:textSize="@dimen/_8sdp" />
-
 
 
                     <TextView
                         android:id="@+id/tv_estimatedDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3 KM"
-                        android:visibility="gone"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_8sdp"
+                        android:visibility="gone" />
+
+                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                         android:text="Actual travelled distance"
+                        android:textSize="@dimen/_9sdp"
+                        android:visibility="visible" />
 
 
                 </RelativeLayout>
 
 
+
                 <ProgressBar
-                    android:id="@+id/progressBarTime"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:id="@+id/progressBarDistance"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlDistance"
+                    android:layout_marginEnd="@dimen/_15sdp" />
+
+
+
+
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/progressBarTime"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/progressBarDistance"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    />
+                    android:layout_marginEnd="@dimen/_15sdp" />
 
                 <RelativeLayout
+                    android:layout_marginTop="@dimen/_3sdp"
                     android:id="@+id/rlTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -366,24 +373,30 @@
 
 
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/tv_travelTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_8sdp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Actual travelled time"
+                        android:textSize="@dimen/_9sdp"
+                        android:visibility="visible" />
 
 
                 </RelativeLayout>
 
 
-
                 <RelativeLayout
-                    android:layout_marginEnd="@dimen/_15sdp"
                     android:id="@+id/tv_waitTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlTime"
-                    android:layout_marginTop="@dimen/_10sdp">
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp">
 
 
                     <TextView
@@ -397,10 +410,10 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_alignParentEnd="true"
                         android:id="@+id/tv_currentwaitTime"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true" />
 
 
                 </RelativeLayout>
@@ -476,43 +489,102 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/nearbyPlaces"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="@dimen/_15sdp">
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_atm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
-                        android:id="@+id/museum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAllCaps="true" />
-
-                    <TextView
-                        android:id="@+id/tv_hotel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
-                        android:textAllCaps="true" />
-
-                    <TextView
-                        android:id="@+id/hospital"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
+                    <LinearLayout
                         android:layout_marginBottom="@dimen/_10sdp"
-                        android:textAllCaps="true" />
+
+                        android:visibility="gone"
+                        android:id="@+id/llAtm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivAtm"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"/>
+
+                        <TextView
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:id="@+id/tv_atm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/llMuseum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivMuseum"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"/>
+                        <TextView
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:id="@+id/museum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:textAllCaps="false" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/llHotel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/ivHotel"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"/>
+
+                        <TextView
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:id="@+id/tv_hotel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:textAllCaps="false" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/llHospital"
+                        android:layout_marginBottom="@dimen/_10sdp"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/ivHospital"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"/>
+
+                        <TextView
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:id="@+id/hospital"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:textAllCaps="false" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-
-
 
 
             </RelativeLayout>

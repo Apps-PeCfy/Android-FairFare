@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
-            android:text="(11:00 PM to 5:00 AM)"
+            android:text="(00:00 AM to 5:00 AM)"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
             android:textSize="@dimen/_12sdp"

@@ -68,48 +68,9 @@ class MyDisPutesAdapter(var context: FragmentActivity?, private val MyDisputsLis
             MyDisputsListList[position].vehicleName + " " + MyDisputsListList[position].vehicleNo
 
 
-        val geocoder = Geocoder(context, Locale.getDefault())
-        try {
-            val addresses =
-                geocoder.getFromLocation(
-                    (MyDisputsListList[position].originPlaceLat)!!.toDouble(),
-                    (MyDisputsListList[position].originPlaceLong)!!.toDouble(), 1
-                )
-            if (addresses != null) {
-                val returnedAddress = addresses[0]
-                val strReturnedAddress =
-                    StringBuilder()
-                for (j in 0..returnedAddress.maxAddressLineIndex) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                }
-                streetAddress = strReturnedAddress.toString()
-            }
-        } catch (e: IOException) {
-        }
 
-
-        val geocoderDestination = Geocoder(context, Locale.getDefault())
-        try {
-            val addresses =
-                geocoderDestination.getFromLocation(
-                    (MyDisputsListList[position].destinationPlaceLat)!!.toDouble(),
-                    (MyDisputsListList[position].destinationPlaceLong)!!.toDouble(), 1
-                )
-            if (addresses != null) {
-                val returnedAddress = addresses[0]
-                val strReturnedAddress =
-                    StringBuilder()
-                for (j in 0..returnedAddress.maxAddressLineIndex) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                }
-                deststreetAddress = strReturnedAddress.toString()
-            }
-        } catch (e: IOException) {
-        }
-
-
-        holder.tv_myCurrentLocation!!.text = streetAddress
-        holder.destnationAddress!!.text = deststreetAddress
+        holder.tv_myCurrentLocation!!.text = MyDisputsListList[position].originFullAddress
+        holder.destnationAddress!!.text = MyDisputsListList[position].destinationFullAddress
 
 
     }

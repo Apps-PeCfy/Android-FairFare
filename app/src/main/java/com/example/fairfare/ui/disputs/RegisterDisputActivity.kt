@@ -158,7 +158,7 @@ class RegisterDisputActivity : AppCompatActivity() {
     @BindView(R.id.tv_carName)
     var tv_carName: TextView? = null
 
- @JvmField
+    @JvmField
     @BindView(R.id.iv_vehical)
     var iv_vehical: ImageView? = null
 
@@ -352,73 +352,62 @@ class RegisterDisputActivity : AppCompatActivity() {
         }
 
 
-      /*  var requestBody = HashMap<String?, String?>()
-        requestBody.put("ride_id", "1")
-        requestBody.put("type", "Dispute")
-        val citiesArray = intArrayOf(4, 2)
-        requestBody.put("dispute_reason_id", citiesArray.toString())
-        requestBody.put("start_meter_reading", "1")
-        requestBody.put("end_meter_reading", "13")
-        requestBody.put("actual_meter_charges", "123")
-        requestBody.put("comment", "re")
-
-
-
-        val progressDialog = ProgressDialog(this@RegisterDisputActivity)
-        progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
-        progressDialog.show() // show progress dialog
-
-        ApiClient.client.addToWishList(
-            "Bearer $token",requestBody
-        )!!.enqueue(object :
-            Callback<SaveDisputResponsePOJO?> {
-            override fun onResponse(
-                call: Call<SaveDisputResponsePOJO?>,
-                response: Response<SaveDisputResponsePOJO?>
-            ) {
-                progressDialog.dismiss()
-                if (response.code() == 200) {
-
-
-                }else if (response.code() == 422) {
-                    val gson = GsonBuilder().create()
-                    var pojo: ValidationResponse? = ValidationResponse()
-                    try {
-                        pojo = gson.fromJson(
-                            response.errorBody()!!.string(),
-                            ValidationResponse::class.java
-                        )
-                        Toast.makeText(
-                                this@RegisterDisputActivity,
-                                pojo.errors!!.get(0).message,
-                                Toast.LENGTH_LONG
-                            )
-                            .show()
-
-
-                    } catch (exception: IOException) {
-                    }
-
-                } else {
-                    Toast.makeText(
-                        this@RegisterDisputActivity,
-                        "Internal server error",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-
-            override fun onFailure(
-                call: Call<SaveDisputResponsePOJO?>,
-                t: Throwable
-            ) {
-                progressDialog.dismiss()
-                Log.d("response", t.stackTrace.toString())
-            }
-        })
-
-*/
+        /*  var requestBody = HashMap<String?, String?>()
+          requestBody.put("ride_id", "1")
+          requestBody.put("type", "Dispute")
+          val citiesArray = intArrayOf(4, 2)
+          requestBody.put("dispute_reason_id", citiesArray.toString())
+          requestBody.put("start_meter_reading", "1")
+          requestBody.put("end_meter_reading", "13")
+          requestBody.put("actual_meter_charges", "123")
+          requestBody.put("comment", "re")
+          val progressDialog = ProgressDialog(this@RegisterDisputActivity)
+          progressDialog.setCancelable(false) // set cancelable to false
+          progressDialog.setMessage("Please Wait") // set message
+          progressDialog.show() // show progress dialog
+          ApiClient.client.addToWishList(
+              "Bearer $token",requestBody
+          )!!.enqueue(object :
+              Callback<SaveDisputResponsePOJO?> {
+              override fun onResponse(
+                  call: Call<SaveDisputResponsePOJO?>,
+                  response: Response<SaveDisputResponsePOJO?>
+              ) {
+                  progressDialog.dismiss()
+                  if (response.code() == 200) {
+                  }else if (response.code() == 422) {
+                      val gson = GsonBuilder().create()
+                      var pojo: ValidationResponse? = ValidationResponse()
+                      try {
+                          pojo = gson.fromJson(
+                              response.errorBody()!!.string(),
+                              ValidationResponse::class.java
+                          )
+                          Toast.makeText(
+                                  this@RegisterDisputActivity,
+                                  pojo.errors!!.get(0).message,
+                                  Toast.LENGTH_LONG
+                              )
+                              .show()
+                      } catch (exception: IOException) {
+                      }
+                  } else {
+                      Toast.makeText(
+                          this@RegisterDisputActivity,
+                          "Internal server error",
+                          Toast.LENGTH_LONG
+                      ).show()
+                  }
+              }
+              override fun onFailure(
+                  call: Call<SaveDisputResponsePOJO?>,
+                  t: Throwable
+              ) {
+                  progressDialog.dismiss()
+                  Log.d("response", t.stackTrace.toString())
+              }
+          })
+  */
 
         /**
          * iLoma Team :- Mohasin 8 Jan
@@ -439,7 +428,7 @@ class RegisterDisputActivity : AppCompatActivity() {
 
     private fun saveDisputeMultipart() {
         val imagesMultipart = arrayOfNulls<MultipartBody.Part>(
-                imageList!!.size
+            imageList!!.size
         )
 
         for (pos in imageList!!.indices) {
@@ -480,7 +469,7 @@ class RegisterDisputActivity : AppCompatActivity() {
                 response: Response<SaveDisputResponsePOJO?>
             ) {
                 progressDialog.dismiss()
-               if (response.code() == 200) {
+                if (response.code() == 200) {
                     val intent = Intent(this@RegisterDisputActivity, HomeActivity::class.java)
                     intent.action = "RegisterDisput"
                     startActivity(intent)
@@ -494,10 +483,10 @@ class RegisterDisputActivity : AppCompatActivity() {
                             ValidationResponse::class.java
                         )
                         Toast.makeText(
-                            this@RegisterDisputActivity,
-                            pojo.errors!!.get(0).message,
-                            Toast.LENGTH_LONG
-                        )
+                                this@RegisterDisputActivity,
+                                pojo.errors!!.get(0).message,
+                                Toast.LENGTH_LONG
+                            )
                             .show()
 
 
@@ -562,10 +551,10 @@ class RegisterDisputActivity : AppCompatActivity() {
                             ValidationResponse::class.java
                         )
                         Toast.makeText(
-                            this@RegisterDisputActivity,
-                            pojo.errors!!.get(0).message,
-                            Toast.LENGTH_LONG
-                        )
+                                this@RegisterDisputActivity,
+                                pojo.errors!!.get(0).message,
+                                Toast.LENGTH_LONG
+                            )
                             .show()
 
 
@@ -664,28 +653,28 @@ class RegisterDisputActivity : AppCompatActivity() {
     }
 
 
-   /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                if (mCurrentPhotoPath != null) {
-                    addImage(mCurrentPhotoPath)
-                }
-            } else if (requestCode == PICK_IMAGES) {
-                if (data!!.clipData != null) {
-                    val mClipData = data.clipData
-                    for (i in 0 until mClipData!!.itemCount) {
-                        val item = mClipData.getItemAt(i)
-                        val uri = item.uri
-                        getImageFilePath(uri)
-                    }
-                } else if (data.data != null) {
-                    val uri = data.data
-                    getImageFilePath(uri)
-                }
-            }
-        }
-    }*/
+    /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+         super.onActivityResult(requestCode, resultCode, data)
+         if (resultCode == Activity.RESULT_OK) {
+             if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                 if (mCurrentPhotoPath != null) {
+                     addImage(mCurrentPhotoPath)
+                 }
+             } else if (requestCode == PICK_IMAGES) {
+                 if (data!!.clipData != null) {
+                     val mClipData = data.clipData
+                     for (i in 0 until mClipData!!.itemCount) {
+                         val item = mClipData.getItemAt(i)
+                         val uri = item.uri
+                         getImageFilePath(uri)
+                     }
+                 } else if (data.data != null) {
+                     val uri = data.data
+                     getImageFilePath(uri)
+                 }
+             }
+         }
+     }*/
 
     /**
      * LIFECYCLE
@@ -762,6 +751,8 @@ class RegisterDisputActivity : AppCompatActivity() {
             R.id.action_home -> {
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@RegisterDisputActivity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }
