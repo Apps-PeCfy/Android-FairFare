@@ -462,7 +462,7 @@ class LoginActivity : AppCompatActivity(),
                     try {
                         val jsonObject = JSONObject(response.body().string())
                         gToken = jsonObject.getString("access_token")
-                        Log.d("access_token", gToken)
+                        Log.d("access_token", gToken!!)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -476,7 +476,6 @@ class LoginActivity : AppCompatActivity(),
             providerid = acct.id //proderid
             val auth = acct.serverAuthCode
             val personPhoto = acct.photoUrl
-            Log.d("GmailData", auth)
             mGoogleSignInClient!!.signOut().addOnCompleteListener(
                 this
             ) { }
