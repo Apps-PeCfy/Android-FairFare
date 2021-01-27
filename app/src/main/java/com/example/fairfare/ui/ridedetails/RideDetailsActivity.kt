@@ -95,7 +95,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var image: File? = null
     var filePath: Uri? = null
     var mCurrentPhotoPath: String? = null
-    var filePath: Uri? = null
     var projection =
         arrayOf(MediaStore.MediaColumns.DATA)
 
@@ -609,20 +608,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         selectedImageList = ArrayList<String>()
         imageList = ArrayList()
     }
-    private fun showConfirmationDialog(position: Int) {
-        val alertDialog = AlertDialog.Builder(context)
-        alertDialog.setTitle("FairFare")
-        alertDialog.setMessage("Are you sure you remove this image?")
-        alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Yes") { dialog, which ->
-            imageList!!.removeAt(position)
-            selectedImageList!!.removeAt(position)
-            selectedImageAdapter!!.notifyDataSetChanged()
-        }
-        alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
-        alertDialog.show()
-    }
-
+    
     private fun showConfirmationDialog(position: Int) {
         val alertDialog = AlertDialog.Builder(context)
         alertDialog.setTitle("FairFare")
