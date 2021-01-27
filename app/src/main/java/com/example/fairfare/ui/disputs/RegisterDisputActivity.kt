@@ -751,6 +751,8 @@ class RegisterDisputActivity : AppCompatActivity() {
             R.id.action_home -> {
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@RegisterDisputActivity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }

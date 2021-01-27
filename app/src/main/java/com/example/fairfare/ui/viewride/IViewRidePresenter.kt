@@ -17,7 +17,9 @@ interface IViewRidePresenter {
         sLat: String?,
         sLong: String?,
         dLat: String?,
-        dLong: String?
+        dLong: String?,
+        sorceAddress:String?,
+        destinationAddress:String?
 
     )
 }

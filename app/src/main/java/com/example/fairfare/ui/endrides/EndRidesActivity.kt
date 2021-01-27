@@ -352,7 +352,9 @@ if(waitingList.size>0) {
         waitingList = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitings!!
 
 
-
+        if(waitingList.size>0) {
+            ivViewInfo!!.visibility=View.GONE
+        }
 
 
 
@@ -386,10 +388,10 @@ if(waitingList.size>0) {
             ).into(iv_vehical!!)
 
         if (endRideResponsePOJO!!.ride!!.luggageQuantity.equals("0")) {
-            tv_bagCount!!.text = "No Bags"
+            tv_bagCount!!.text = "No Luggage"
 
         } else {
-            tv_bagCount!!.text = endRideResponsePOJO!!.ride!!.luggageQuantity.toString() + " Bags"
+            tv_bagCount!!.text = endRideResponsePOJO!!.ride!!.luggageQuantity.toString() + " Luggage"
 
         }
 
@@ -485,7 +487,7 @@ if(waitingList.size>0) {
                     (destLong)!!.toDouble()
                 )
             ).icon(
-                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
 

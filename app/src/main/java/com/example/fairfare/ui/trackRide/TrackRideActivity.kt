@@ -342,7 +342,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     //distanceBetweenCurrent in meter
-                    if (distanceBetweenCurrent!! >= 10&& distanceBetweenCurrent!!<=400) {
+                    if (distanceBetweenCurrent!! >= 10) {
                         globalmarkerPoints!!.add(OriginM)
                         trackBoard = "currentCordinate"
                         drawRoute()
@@ -413,8 +413,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             try {
                 val addresses =
                     geocoder.getFromLocation(
-                        ((intent.getStringExtra("MyRidesLat")).toDouble()),
-                        ((intent.getStringExtra("MyRidesLong")).toDouble()), 1
+                        ((intent.getStringExtra("MyRidesLat"))!!.toDouble()),
+                        ((intent.getStringExtra("MyRidesLong"))!!.toDouble()), 1
                     )
                 if (addresses != null) {
                     val returnedAddress = addresses[0]
@@ -433,8 +433,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             try {
                 val addresses =
                     geocoderDestination.getFromLocation(
-                        ((intent.getStringExtra("MyRidesDLat")).toDouble()),
-                        ((intent.getStringExtra("MyRidesDLong")).toDouble()), 1
+                        ((intent.getStringExtra("MyRidesDLat"))!!.toDouble()),
+                        ((intent.getStringExtra("MyRidesDLong"))!!.toDouble()), 1
                     )
                 if (addresses != null) {
                     val returnedAddress = addresses[0]
@@ -1029,7 +1029,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!.toDouble()
                 )
             ).icon(
-                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)
+                BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
 
@@ -1827,10 +1827,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
     }
 
-    override fun onProviderEnabled(provider: String?) {
+    override fun onProviderEnabled(provider: String) {
     }
 
-    override fun onProviderDisabled(provider: String?) {
+    override fun onProviderDisabled(provider: String) {
     }
 
 }

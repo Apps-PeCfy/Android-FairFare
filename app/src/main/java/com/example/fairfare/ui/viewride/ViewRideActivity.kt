@@ -328,6 +328,8 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
                 )
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@ViewRideActivity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }
@@ -372,7 +374,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
             iViewRidePresenter!!.schduleRide(token,vahicalRateCardID,luggagesQuantity,formatedDateTime,
             originPlaceID,destinationPlaceID,overviewPolyLine,distance_ViewRide,durationRide,CITY_ID,
-                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong)
+                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong,sAdd,dAdd)
 
 
          }
@@ -406,7 +408,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         if (!sourceLatitude!!.isEmpty() && !destLat!!.isEmpty()) {
             mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(sourceLatitude!!.toDouble(), sourceLongitude!!.toDouble()), 15.0f))
             sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(sourceLatitude!!.toDouble(), sourceLongitude!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
-            sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(destLat!!.toDouble(), destLong!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
+            sourecemarker = mMap!!.addMarker(MarkerOptions().position(LatLng(destLat!!.toDouble(), destLong!!.toDouble())).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)))
             drawRoute()
         }
     }
@@ -614,7 +616,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         Toast.makeText(this@ViewRideActivity, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun onLocationChanged(location: Location?) {
+    override fun onLocationChanged(location: Location) {
 
 
     }
@@ -622,9 +624,9 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
     }
 
-    override fun onProviderEnabled(provider: String?) {
+    override fun onProviderEnabled(provider: String) {
     }
 
-    override fun onProviderDisabled(provider: String?) {
+    override fun onProviderDisabled(provider: String) {
     }
 }

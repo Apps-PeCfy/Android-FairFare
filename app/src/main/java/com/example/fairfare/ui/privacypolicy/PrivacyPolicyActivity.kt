@@ -70,7 +70,7 @@ class PrivacyPolicyActivity : AppCompatActivity() {
                         webView!!.settings.javaScriptEnabled = true
                         webView!!.loadDataWithBaseURL(
                             null,
-                            response.body()!!.pageContent!!.content,
+                            response.body()!!.pageContent!!.content!!,
                             "text/html",
                             "utf-8",
                             null

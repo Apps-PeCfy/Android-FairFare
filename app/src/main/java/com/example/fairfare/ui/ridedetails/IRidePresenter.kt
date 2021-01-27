@@ -26,7 +26,9 @@ interface IRidePresenter {
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?
+        imageList: ArrayList<ImageModel>?,
+        sourceAddress: String?,
+        destinationAddress: String?
 
     )
 }

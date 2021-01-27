@@ -25,7 +25,9 @@ class ViewRideImplementer(private val view: IViesRideView) : IViewRidePresenter 
         sLat: String?,
         sLong: String?,
         dLat: String?,
-        dLong: String?
+        dLong: String?,
+        sourceAdddress:String?,
+        destinationAddress:String?
     )
     {
         view.showWait()
@@ -40,7 +42,7 @@ class ViewRideImplementer(private val view: IViesRideView) : IViewRidePresenter 
             distance,
             duration,
             city_id,
-            airport_rate_card_id,sLat,sLong,dLat,dLong
+            airport_rate_card_id,sLat,sLong,dLat,dLong,sourceAdddress,destinationAddress
         )
         call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
             override fun onResponse(

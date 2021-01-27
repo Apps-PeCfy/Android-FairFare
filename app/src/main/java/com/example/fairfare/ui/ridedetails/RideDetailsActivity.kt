@@ -146,6 +146,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     private var pDialog: ProgressDialog? = null
     var strDescimal: String? = null
     var estCurrentDuration: String? = null
+    var estCurrentDurationValue: String? = null
     var estCurrentDistance: String? = null
     var estCurrentFare: String? = null
     var actualDistanceInMeter: Int = 0
@@ -377,7 +378,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             val currentTravelledTime = estCurrentDuration!!.replace(" mins", "")
 
              distance_ViewRide = (estCurrentDistance!!.toFloat() ).toString()
-             durationRide=(currentTravelledTime.toFloat()).toString()
+             durationRide=(estCurrentDurationValue!!.toInt()/60).toFloat().toString()
             originLat = locationChangelatitude.toString()
             originLong = locationChangelongitude.toString()
 
@@ -463,7 +464,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     @OnClick(R.id.btnTrackRide)
     fun btnTrack() {
 
-        if(((edt_vehicalNO!!.text).toString()).isEmpty()){
+  /*      if(((edt_vehicalNO!!.text).toString()).isEmpty()){
             Toast.makeText(
                 this@RideDetailsActivity,
                 "Enter Vehicle Number", Toast.LENGTH_LONG).show()
@@ -473,7 +474,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 this@RideDetailsActivity,
                 "Enter Driver Name", Toast.LENGTH_LONG).show()
 
-        }else {
+        }else {*/
 
 
             if ((MyRides_RidesID != null)) {
@@ -498,10 +499,11 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                         edt_vehicalNO!!.text.toString(),
                         edt_bagsCount!!.text.toString(),
                         edt_meterReading!!.text.toString(),
-                        originLat, originLong, "", "", imageList
+                        originLat, originLong, "", "", imageList,"",""
                     )
 
-                } else {
+                } else
+                {
                     iRidePresenter!!.startRide(
                         token,
                         MyRides_RidesID,
@@ -519,13 +521,14 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                         edt_vehicalNO!!.text.toString(),
                         edt_bagsCount!!.text.toString(),
                         edt_meterReading!!.text.toString(),
-                        "", "", "", "", imageList
+                        "", "", "", "", imageList,"",""
                     )
 
                 }
 
 
-            } else {
+            } else
+            {
 
 
                 iRidePresenter!!.startRide(
@@ -545,11 +548,11 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, destiLat, destiLong,imageList
+                    originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress
                 )
 
             }
-        }
+
 
     }
 
@@ -791,6 +794,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             R.id.action_home -> {
                 sharedpreferences!!.edit().clear().commit()
                 val intent = Intent(this@RideDetailsActivity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                 startActivity(intent)
             }
         }
@@ -924,10 +929,10 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
     }
 
-    override fun onProviderEnabled(provider: String?) {
+    override fun onProviderEnabled(provider: String) {
     }
 
-    override fun onProviderDisabled(provider: String?) {
+    override fun onProviderDisabled(provider: String) {
     }
 
     override fun onMapReady(p0: GoogleMap?) {
@@ -1098,6 +1103,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 val duration = steps.getJSONObject("duration")
 
                 estCurrentDuration = duration.getString("text")
+                estCurrentDurationValue = duration.getString("value")
                 estCurrentDistance = distance.getString("text")
 
 
