@@ -1,6 +1,7 @@
 package com.example.fairfare.ui.otp
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
@@ -15,6 +16,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.fairfare.R
+import com.example.fairfare.receiver.SmsReceiver
 import com.example.fairfare.ui.Login.pojo.LoginResponsepojo
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.home.HomeActivity
@@ -23,6 +25,7 @@ import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
 import com.example.fairfare.utils.ProjectUtilities.dismissProgressDialog
 import com.example.fairfare.utils.ProjectUtilities.showProgressDialog
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import kotlin.random.Random
 
 
@@ -36,6 +39,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     var LoginType: String? = null
     var gender: String? = null
     var deviceID: String? = null
+    var smsReceiver: SmsReceiver? = null
 
     @JvmField
     @BindView(R.id.otp)
@@ -108,7 +112,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
                     txtResendTimer!!.setText("(00:" + millisUntilFinished / 1000+")")
 
                 }
-               }
+            }
 
             override fun onFinish() {
                 lltimer!!.visibility = View.GONE
@@ -121,8 +125,46 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
 
 
 
+        registerReceiver()
+    }
 
+    //    private void readOTPAutomatically(){
+    //        smsVerifyCatcher = new SmsVerifyCatcher((Activity) context, new OnSmsCatchListener<String>() {
+    //            @Override
+    //            public void onSmsCatch(String message) {
+    //                String code = message;
+    //              String otp = code.substring(code.length() - 4);
+    //
+    //              otpView.setText (otp);
+    //
+    //                if (isValid()){
+    //                    verifyOTPAPI();
+    //                }
+    //
+    //            }
+    //        });
+    //    }
+    private fun registerReceiver() {
+        val client = SmsRetriever.getClient(this)
+        val task = client.startSmsRetriever()
+        task.addOnSuccessListener {
+            smsReceiver = SmsReceiver()
+            registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+            val otpListener: SmsReceiver.OTPListener = object : SmsReceiver.OTPListener {
+                override fun onOTPReceived(otpData: String?) {
+                    edt_otp?.setText(otpData)
+                }
 
+                override fun onOTPTimeOut() {
+                    edt_otp?.setText("")
+                    Toast.makeText(this@OtpAvtivity, "TimeOut", Toast.LENGTH_SHORT).show()
+                }
+            }
+            smsReceiver!!.injectOTPListener(otpListener)
+        }
+        task.addOnFailureListener { // Failed to start retriever, inspect Exception for more details
+            Toast.makeText(this, "Problem to start listener", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setToolbar() {
@@ -150,7 +192,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     @OnClick(R.id.txt_resend_otp)
     fun resendOTP() {
         edt_otp!!.setText("")
-       if (LoginType == "NOR") {
+        if (LoginType == "NOR") {
             GoogleToken = ""
         }
         iOtpPresenter!!.resendOtp(
@@ -158,7 +200,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
             LoginType, CountryCode, "", "", GoogleToken
         )
 
-      }
+    }
 
     override fun otpSuccess(verifyOTPResponsePojo: VerifyOTPResponsePojo?) {
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, verifyOTPResponsePojo!!.token)
@@ -226,5 +268,10 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
 
     override fun onFailure(appErrorMessage: String?) {
         Toast.makeText(this@OtpAvtivity, appErrorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(smsReceiver)
     }
 }
