@@ -24,7 +24,7 @@ class SmsReceiver : BroadcastReceiver() {
                     // Get SMS message contents
                     val message =
                         extras[SmsRetriever.EXTRA_SMS_MESSAGE] as String?
-                    val pattern = Pattern.compile("\\d{4}")
+                    val pattern = Pattern.compile("\\d{6}")
                     val matcher = pattern.matcher(message)
                     println("SMS verification code::SMSBroadcastReceiver:1:  $message")
                     if (matcher.find()) {
