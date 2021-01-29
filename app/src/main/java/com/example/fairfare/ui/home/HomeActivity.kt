@@ -77,6 +77,7 @@ import com.google.maps.GeoApiContext
 import com.google.maps.GeocodingApi
 import com.google.maps.errors.ApiException
 import com.google.maps.model.GeocodingResult
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -310,6 +311,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
 
 
+        EventBus.getDefault().register(this)
+
        /* appSignatureHelper = AppSignatureHelper(this)
         appSignatureHelper!!.getAppSignatures()*/
 
@@ -433,62 +436,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 if (response.code() == 200) {
                     cityPojoList = response!!.body()!!.cities
 
-                    for (i in response.body()!!.cities.indices) {
-                        cityspinner.add(response!!.body()!!.cities.get(i).name)
+                    preferencesManager?.setCityList(cityPojoList)
 
-                    }
+                    setCitySpinner()
 
 
-                    val SpnLang: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                        this@HomeActivity,
-                        R.layout.simple_city_txt_spinner,
-                        cityspinner as List<Any?>
-                    )
-                    SpnLang.setDropDownViewResource(R.layout.simple_city_spinner)
-                    spinnerLang!!.adapter = SpnLang
-
-                    if (extras == null) {
-
-                        if (cityspinner.contains(city)) {
-
-                            for (i in cityspinner!!.indices) {
-                            if (city.equals(cityspinner[i])) {
-                                spinnerLang!!.setSelection(i)
-                            }
-
-                        }
-                        }else{
-                            cityspinner.add(0, "Choose City")
-                            Toast.makeText(
-                                this@HomeActivity,
-                                "Sorry, we dont serve location in " + city + " city yet.We will notify you as soon as we launch. Kindly choose Active city from the drop down",
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                        }
-
-                    } else {
-
-                        if (cityspinner.contains(city)) {
-                        for (i in cityspinner!!.indices) {
-                            if (city.equals(cityspinner[i])) {
-                                spinnerLang!!.setSelection(i)
-                            }
-
-                        }
-                    }else {
-
-                            cityspinner.add(0, "Choose City")
-
-                            Toast.makeText(
-                                this@HomeActivity,
-                                "Sorry, we dont serve location in " + city + " city yet.We will notify you as soon as we launch. Kindly choose Active city from the drop down",
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                        }
-                    }
-                    spinnerLang!!.setOnItemSelectedListener(this@HomeActivity)
 
 
                 } else if (response.code() == 422) {
@@ -523,6 +475,65 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         })
 
 
+    }
+
+    private fun setCitySpinner() {
+        for (cityModel : GetAllowCityResponse.CitiesItem in cityPojoList) {
+            cityspinner.add(cityModel.name)
+
+        }
+
+
+        val SpnLang: ArrayAdapter<*> = ArrayAdapter<Any?>(
+            this@HomeActivity,
+            R.layout.simple_city_txt_spinner,
+            cityspinner as List<Any?>
+        )
+        SpnLang.setDropDownViewResource(R.layout.simple_city_spinner)
+        spinnerLang!!.adapter = SpnLang
+
+        if (extras == null) {
+
+            if (cityspinner.contains(city)) {
+
+                for (i in cityspinner!!.indices) {
+                    if (city.equals(cityspinner[i])) {
+                        spinnerLang!!.setSelection(i)
+                    }
+
+                }
+            }else{
+                cityspinner.add(0, "Choose City")
+                Toast.makeText(
+                    this@HomeActivity,
+                    "Sorry, we dont serve location in " + city + " city yet.We will notify you as soon as we launch. Kindly choose Active city from the drop down",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            }
+
+        } else {
+
+            if (cityspinner.contains(city)) {
+                for (i in cityspinner!!.indices) {
+                    if (city.equals(cityspinner[i])) {
+                        spinnerLang!!.setSelection(i)
+                    }
+
+                }
+            }else {
+
+                cityspinner.add(0, "Choose City")
+
+                Toast.makeText(
+                    this@HomeActivity,
+                    "Sorry, we dont serve location in " + city + " city yet.We will notify you as soon as we launch. Kindly choose Active city from the drop down",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            }
+        }
+        spinnerLang!!.setOnItemSelectedListener(this@HomeActivity)
     }
 
 
@@ -1094,6 +1105,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onDestroy() {
         // sharedpreferences!!.edit().clear().commit()
+
+        //ILOMADEV
+        try {
+            EventBus.getDefault().unregister(this)
+        }catch (ex : Exception){
+
+        }
+
         super.onDestroy()
     }
 
@@ -1820,7 +1839,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             if ( currentLatitude != 0.0 && currentLatitude != null) {
 
                 getLocationReady()
-                getCity()
+                cityPojoList = preferencesManager!!.getCityList()
+                if (cityPojoList != null && cityPojoList.size>0){
+                    setCitySpinner()
+                }else{
+                    getCity()
+                }
+
                 progressDialogstart!!.dismiss()
                 mainRelativeLayout!!.visibility = View.VISIBLE
 
@@ -2035,23 +2060,26 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
 
                     myCurrentLocation!!.text = sharedpreferences!!.getString("fromLocation", "")
-                    mMap!!.animateCamera(
-                        CameraUpdateFactory.newLatLngZoom(
-                            LatLng(
-                                SourceLat!!.toDouble(),
-                                SourceLong!!.toDouble()
-                            ), 15.0f
+                    if (mMap != null){
+                        mMap!!.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                LatLng(
+                                    SourceLat!!.toDouble(),
+                                    SourceLong!!.toDouble()
+                                ), 15.0f
+                            )
                         )
-                    )
-                    sourecemarker = mMap!!.addMarker(
-                        MarkerOptions().position(
+                        sourecemarker = mMap!!.addMarker(
+                            MarkerOptions().position(
                                 LatLng(
                                     SourceLat!!.toDouble(),
                                     SourceLong!!.toDouble()
                                 )
                             ).draggable(false)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-                    )
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+                        )
+                    }
+
                 }
                 if (!DestinationLat!!.isEmpty()) {
                     val returnedAddress: Address? = null
@@ -2123,7 +2151,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         ), 15.0f
                     )
                 )
-                sourecemarker = mMap!!.addMarker(
+                sourecemarker = mMap?.addMarker(
                     MarkerOptions().position(LatLng(currentLatitude, currentLongitude))
                         .draggable(false)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))

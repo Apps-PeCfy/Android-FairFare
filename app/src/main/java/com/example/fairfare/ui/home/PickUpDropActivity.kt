@@ -31,6 +31,7 @@ import com.example.fairfare.ui.home.PlacesAutoCompleteAdapter.ClickListener
 import com.example.fairfare.ui.home.RecyclerViewAdapter.IClickListener
 import com.example.fairfare.ui.home.pojo.DeleteSaveDataResponsePOJO
 import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
+import com.example.fairfare.ui.home.pojo.PickUpLocationModel
 import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
@@ -51,6 +52,7 @@ import com.google.maps.GeoApiContext
 import com.google.maps.GeocodingApi
 import com.google.maps.errors.ApiException
 import com.google.maps.model.GeocodingResult
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -724,6 +726,9 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
 
         startActivity(intent)
+
+        EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude))
+
     }
 
     override fun favClick(place: Place?) {
