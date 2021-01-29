@@ -153,6 +153,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
             val otpListener: SmsReceiver.OTPListener = object : SmsReceiver.OTPListener {
                 override fun onOTPReceived(otpData: String?) {
                     edt_otp?.setText(otpData)
+                    successOtpFlow()
                 }
 
                 override fun onOTPTimeOut() {
@@ -165,6 +166,15 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         task.addOnFailureListener { // Failed to start retriever, inspect Exception for more details
             Toast.makeText(this, "Problem to start listener", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun successOtpFlow() {
+        if (LoginType == "NOR") {
+            GoogleToken = ""
+        }
+        iOtpPresenter!!.verifyOtp(
+            MobileNo, type, "Android",
+            LoginType, CountryCode, Username, UserMail, gender, edt_otp!!.text.toString(),deviceID)
     }
 
     private fun setToolbar() {
@@ -180,12 +190,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
             Toast.makeText(this, "Please enter OTP", Toast.LENGTH_LONG).show()
         } else {
 
-            if (LoginType == "NOR") {
-                GoogleToken = ""
-            }
-            iOtpPresenter!!.verifyOtp(
-                MobileNo, type, "Android",
-                LoginType, CountryCode, Username, UserMail, gender, edt_otp!!.text.toString(),deviceID)
+            successOtpFlow()
         }
     }
 

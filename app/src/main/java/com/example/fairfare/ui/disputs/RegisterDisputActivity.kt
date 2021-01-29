@@ -15,6 +15,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -159,6 +160,10 @@ class RegisterDisputActivity : AppCompatActivity() {
     var tv_carName: TextView? = null
 
     @JvmField
+    @BindView(R.id.ivUserIcon)
+    var ivUserIcon: ImageView? = null
+
+    @JvmField
     @BindView(R.id.iv_vehical)
     var iv_vehical: ImageView? = null
 
@@ -176,6 +181,11 @@ class RegisterDisputActivity : AppCompatActivity() {
         tv_Datetime!!.text = intent.getStringExtra("Datetime")
         tv_bagCount!!.text = intent.getStringExtra("bagCount")
         tv_driverName!!.text = intent.getStringExtra("driverName")
+
+        if(intent.getStringExtra("driverName")!!.isEmpty()){
+            ivUserIcon?.visibility= View.GONE
+
+        }
         tv_vahicalNO!!.text = intent.getStringExtra("vahicalNo")
         tv_carName!!.text = intent.getStringExtra("vahicalName")
         if(intent.getStringExtra("MeterReading").equals("0")){

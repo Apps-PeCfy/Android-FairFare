@@ -56,25 +56,6 @@ class CompareRideResponsePOJO : Serializable {
         @SerializedName("noOfSeater")
         var noOfSeater = 0
 
-        @SerializedName("fares")
-        var fares: List<FaresItem>? =
-            null
-
-        override fun toString(): String {
-            return "VehiclesItem{" +
-                    "vehicleName = '" + vehicleName + '\'' +
-                    ",vehicleImageUrl = '" + vehicleImageUrl + '\'' +
-                    ",providerImageUrl = '" + providerImageUrl + '\'' +
-                    ",providerName = '" + providerName + '\'' +
-                    ",fares = '" + fares + '\'' +
-                    "}"
-        }
-    }
-
-    inner class FaresItem : Serializable {
-        @SerializedName("tollCharge")
-        var tollCharge: String? = null
-
         @SerializedName("vehicleRateCardId")
         var vehicleRateCardId: String? = null
 
@@ -83,6 +64,12 @@ class CompareRideResponsePOJO : Serializable {
 
         @SerializedName("total")
         var total: String? = null
+
+
+        @SerializedName("tollCharge")
+        var tollCharge: String? = null
+
+
 
         @SerializedName("additionalCharges")
         var additionalCharges: String? = null
@@ -102,20 +89,17 @@ class CompareRideResponsePOJO : Serializable {
         @SerializedName("surCharge")
         var surCharge: String? = null
 
+
         override fun toString(): String {
-            return "FaresItem{" +
-                    "tollCharge = '" + tollCharge + '\'' +
-                    ",total = '" + total + '\'' +
-                    ",name = '" + name + '\'' +
-                    ",luggageCharge = '" + luggageCharge + '\'' +
-                    ",vehicleRateCardId = '" + luggageCharge + '\'' +
-                    ",airportRateCardId = '" + luggageCharge + '\'' +
-                    ",nightCharge = '" + nightCharge + '\'' +
-                    ",subTotal = '" + subTotal + '\'' +
-                    ",surCharge = '" + surCharge + '\'' +
+            return "VehiclesItem{" +
+                    "vehicleName = '" + vehicleName + '\'' +
+                    ",vehicleImageUrl = '" + vehicleImageUrl + '\'' +
+                    ",providerImageUrl = '" + providerImageUrl + '\'' +
+                    ",providerName = '" + providerName + '\'' +
                     "}"
         }
     }
+
 
 
 }

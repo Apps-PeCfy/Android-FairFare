@@ -198,6 +198,10 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     @BindView(R.id.tvActualNightChages)
     var tvActualNightChages: TextView? = null
 
+  @JvmField
+    @BindView(R.id.ivUserIcon)
+    var ivUserIcon: ImageView? = null
+
 
     @JvmField
     @BindView(R.id.toolbar_endRide)
@@ -352,7 +356,7 @@ if(waitingList.size>0) {
         waitingList = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitings!!
 
 
-        if(waitingList.size>0) {
+        if(waitingList.size==0) {
             ivViewInfo!!.visibility=View.GONE
         }
 
@@ -366,6 +370,10 @@ if(waitingList.size>0) {
         tv_vahicalNO!!.text = endRideResponsePOJO!!.ride!!.vehicleDetail!!.vehicleNo
         tv_carName!!.text = endRideResponsePOJO!!.ride!!.vehicleName
         tv_driverName!!.text = endRideResponsePOJO!!.ride!!.vehicleDetail!!.driverName
+
+        if(endRideResponsePOJO!!.ride!!.vehicleDetail!!.driverName!!.isEmpty()){
+            ivUserIcon!!.visibility = View.GONE
+        }
         tvEstWaitTime!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingTime
         tvActualWaitTime!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingTime
 

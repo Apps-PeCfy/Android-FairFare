@@ -304,25 +304,16 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         if (tvUserDOB!!.text.isNotEmpty()) {
 
 
-            if (userName!!.text.toString()
-                    .equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME))
-                && tvUserPosotion!!.text.toString()
-                    .equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION))
-                && tvUserLocation!!.text.toString()
-                    .equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION))
-                && tvUserDOB!!.text.equals(
-                    formatRide.format(
-                        formatviewRide.parse(
-                            preferencesManager!!.getStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_DOB
-                            )
-                        )
-                    )
-                )
-                && gender!!.equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER))
-            ) {
+       /*     if (userName!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME))
+                && tvUserPosotion!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION))
+                && tvUserLocation!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION))
+                && tvUserDOB!!.text.equals(formatRide.format(formatviewRide.parse(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB))))
+                && gender!!.equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER)))
 
-            } else {
+            {
+                Toast.makeText(activity, "", Toast.LENGTH_SHORT).show()
+
+            } else {*/
                 val formatviewRide = SimpleDateFormat("dd-mm-yyyy")
 
                 val formatRide = SimpleDateFormat("yyyy-mm-dd")
@@ -352,7 +343,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                         if (response.code() == 200) {
 
 
-                            // Toast.makeText(activity, response.body()!!.message, Toast.LENGTH_SHORT).show()
+                             Toast.makeText(activity, response.body()!!.message, Toast.LENGTH_SHORT).show()
 
 
                             preferencesManager!!.setStringValue(
@@ -465,7 +456,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
 
             }
-        }
+
 
     }
 

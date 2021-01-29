@@ -195,6 +195,10 @@ class MyRideDetailsActivity : AppCompatActivity() {
     @BindView(R.id.ivViewInfo)
     var ivViewInfo: ImageView? = null
 
+    @JvmField
+    @BindView(R.id.ivUserIcon)
+    var ivUserIcon: ImageView? = null
+
     var eventInfoDialog: Dialog? = null
     var eventDialogBind: EventDialogBind1? = null
     var waittimePopUpAdapter: RidePopUpAdapter? = null
@@ -314,6 +318,13 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
                     tv_vahicalNO!!.text = response.body()!!.data!!.vehicleNo
                     tv_driverName!!.text = response.body()!!.data!!.driverName
+
+                    if(response.body()!!.data!!.driverName!!.isEmpty()){
+                        ivUserIcon?.visibility = View.GONE
+                    }
+
+
+
 
 
                     val formatviewRide = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")

@@ -8,14 +8,13 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
+import android.view.*
+import android.view.animation.TranslateAnimation
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
@@ -75,6 +74,10 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var tvhideShow: RelativeLayout? = null
 
     @JvmField
+    @BindView(R.id.locationCardView)
+    var locationCardView: CardView? = null
+
+    @JvmField
     @BindView(R.id.spinner_time)
     var spinner_time: TextView? = null
 
@@ -122,7 +125,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var preferencesManager: PreferencesManager? = null
     lateinit var info: CompareRideResponsePOJO
     private var iCompareRidePresenter: ICompareRidePresenter? = null
-    private val compareRideList = ArrayList<CompareRideResponsePOJO.VehiclesItem?>()
+    private var compareRideList = ArrayList<CompareRideResponsePOJO.VehiclesItem?>()
     private var mPolyline: Polyline? = null
     var sourcePlaceID: String? = null
     var DestinationPlaceID: String? = null
@@ -207,7 +210,10 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
 
         if (info!!.vehicles!!.size > 0) {
-            compareRideList.addAll(info.vehicles!!)
+            compareRideList.addAll(info.vehicles!!.sortedWith(compareBy({it!!.total})))
+
+
+
             compareRideAdapter = CompareRideAdapter(this, compareRideList, distance, baggs, estTime)
             recyclerviewcompareview!!.layoutManager = LinearLayoutManager(this)
             recyclerviewcompareview!!.adapter = compareRideAdapter
@@ -215,12 +221,11 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
             compareRideAdapter!!.SetOnItemClickListener(object :
                 CompareRideAdapter.OnItemClickListener {
-                override fun onItemClick(view: View?, position: Int, spnposition: Int) {
+                override fun onItemClick(view: View?, position: Int) {
 
 
                     val intent = Intent(applicationContext, ViewRideActivity::class.java)
                     intent.putExtra("spinnerdata", compareRideList)
-                    intent.putExtra("spinnerposition", spnposition)
                     intent.putExtra("listPosition", position)
                     intent.putExtra("SourceLat", sourceLat)
                     intent.putExtra("SourceLong", sourceLong)
@@ -234,11 +239,11 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     intent.putExtra("timeSpinnertxt", timeSpinnertxt)
                     intent.putExtra(
                         "vehicle_rate_card_id",
-                        info!!.vehicles!!.get(position).fares!!.get(spnposition).vehicleRateCardId
+                        info!!.vehicles!!.get(position).vehicleRateCardId
                     )
                     intent.putExtra(
                         "airport_rate_card_id",
-                        info!!.vehicles!!.get(position).fares!!.get(spnposition).airportRateCardId
+                        info!!.vehicles!!.get(position).airportRateCardId
                     )
                     intent.putExtra("luggages_quantity", info.luggage)
                     intent.putExtra("formatedDate", info.scheduleDatetime)
@@ -258,7 +263,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         tv_myDropUpLocation!!.text = destinationAddress
 
         if (baggs.equals("Luggage")) {
-            tv_baggs!!.text = "0 " + baggs
+            tv_baggs!!.text = "No " + baggs
 
         } else {
             tv_baggs!!.text = baggs
@@ -351,10 +356,13 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
     @OnClick(R.id.tv_sort)
     fun tvSort() {
+
+
         Collections.reverse(compareRideList)
         compareRideAdapter!!.notifyDataSetChanged()
     }
 
+/*
 
     @OnClick(R.id.tvhideShow)
     fun hideshow() {
@@ -365,6 +373,59 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
             hideshow = "show"
             rlhideview?.visibility = View.VISIBLE
         }
+    }
+*/
+
+    @OnClick(R.id.tvhideShow)
+    fun hideshow() {
+        if (hideshow.equals("show")) {
+            hideshow = "hide"
+            locationCardView!!.visibility = View.GONE
+            recyclerviewcompareview!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            recyclerviewcompareview!!.requestLayout()
+            rlhideview!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            rlhideview!!.requestLayout()
+            slideUp(rlhideview)
+
+        } else {
+            hideshow = "show"
+            //  rlhideview?.visibility = View.VISIBLE
+            slideDown(rlhideview)
+
+            locationCardView!!.visibility = View.VISIBLE
+            rlhideview!!.layoutParams.height = 750
+            rlhideview!!.requestLayout()
+
+
+        }
+    }
+
+    private fun slideUp(view: RelativeLayout?) {
+        val animate = TranslateAnimation(
+            0.0F,  // fromXDelta
+            0.0F,  // toXDelta
+            view!!.height.toFloat(),  // fromYDelta
+            0.0F
+        ) // toYDelta
+
+        animate.duration = 500
+        animate.fillAfter = true
+        view!!.startAnimation(animate)
+    }
+
+    private fun slideDown(view: RelativeLayout?) {
+        val animate = TranslateAnimation(
+            0.0F,  // fromXDelta
+            0.0F,  // toXDelta
+            0.0F,  // fromYDelta
+            0.0F
+        ) // toYDelta
+
+        animate.duration = 500
+        animate.fillAfter = true
+        view!!.startAnimation(animate)
+
+
     }
 
 
