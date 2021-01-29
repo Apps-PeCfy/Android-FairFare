@@ -68,7 +68,7 @@
                 android:layout_below="@+id/tv_vehicalDetails"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:focusableInTouchMode="true"
-                android:hint="Enter Vehicle Number"
+                android:hint="Enter Vehicle Number (optional)"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp"
                 />
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_driverDetails"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:hint="Enter Driver Name"
+                android:hint="Enter Driver Name (optional)"
                 android:inputType="text"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp" />

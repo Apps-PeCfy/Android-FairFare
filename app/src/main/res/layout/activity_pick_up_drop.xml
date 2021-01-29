@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="vertical"
-                    android:layout_marginBottom="68dp"
+                    android:layout_marginBottom="63dp"
                     android:layout_above="@id/homeView">
 
                     <ImageView

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_gradient">
+    android:background="@color/White">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_home"
@@ -64,6 +64,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/locationCardView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
                 android:layout_above="@+id/homeView"
@@ -159,7 +160,7 @@
                     android:id="@+id/rlhideview"
                     android:visibility="visible"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_225sdp"
                     android:orientation="vertical">
 
 
@@ -240,7 +241,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_150sdp"
+                        android:layout_height="match_parent"
                         android:layout_below="@+id/rlBags"
                         android:layout_marginStart="@dimen/_12sdp"
                         android:layout_marginEnd="@dimen/_15sdp">
@@ -276,7 +277,7 @@
 
                             android:id="@+id/recycler_view_compareview"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_below="@+id/tv_sort" />
 
 
@@ -286,21 +287,19 @@
 
                 </RelativeLayout>
 
-                <Button
-                    android:id="@+id/addvertise"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/ic_add"
-                    android:gravity="center"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/_14sdp"
-                    android:visibility="visible" />
-
-
 
             </LinearLayout>
+            <Button
+                android:id="@+id/addvertise"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/ic_add"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="visible" />
 
 
 
