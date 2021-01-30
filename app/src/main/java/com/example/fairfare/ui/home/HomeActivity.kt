@@ -12,10 +12,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.util.Calendar
-import android.location.*
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.Gravity
@@ -53,7 +57,6 @@ import com.example.fairfare.ui.drawer.faq.FAQ
 import com.example.fairfare.ui.drawer.myaccount.MyAccountFragment
 import com.example.fairfare.ui.drawer.mycomplaints.MyComplaints
 import com.example.fairfare.ui.drawer.mydisput.MyDisput
-import com.example.fairfare.ui.drawer.mylocation.MyLocation
 import com.example.fairfare.ui.drawer.myrides.MyRides
 import com.example.fairfare.ui.drawer.pojo.DrawerPojo
 import com.example.fairfare.ui.drawer.privacypolicy.ContentPage
@@ -112,6 +115,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var setDate: String? = null
     var keyAirport: String? = null
     var placesClient: PlacesClient? = null
+
+    var doubleBackPressed: Boolean? = false
 
     var appSignatureHelper: AppSignatureHelper? = null
 
@@ -1275,10 +1280,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         }
     }
 
-    override fun onBackPressed() {
-        finish()
-        //super.onBackPressed();
-    }
+
 
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -2319,6 +2321,20 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onProviderDisabled(provider: String) {
 
+    }
+
+    override fun onBackPressed() {
+        if (doubleBackPressed!!) {
+            finish()
+        } else {
+            doubleBackPressed = true
+            Toast.makeText(
+                this,
+                resources.getString(R.string.str_alert_exit_app),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        Handler().postDelayed({ doubleBackPressed = false }, 3000)
     }
 
 

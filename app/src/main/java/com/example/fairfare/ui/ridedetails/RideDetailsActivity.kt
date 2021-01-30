@@ -23,6 +23,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
@@ -47,10 +48,7 @@ import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.trackRide.TrackRideActivity
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
-import com.example.fairfare.utils.Constants
-import com.example.fairfare.utils.PhotoSelector
-import com.example.fairfare.utils.PreferencesManager
-import com.example.fairfare.utils.ProjectUtilities
+import com.example.fairfare.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -77,6 +75,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var locationChangelatitude = 0.0
     var locationChangelongitude = 0.0
     protected var locationManager: LocationManager? = null
+    protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
+
     protected var photoSelector: PhotoSelector? = null
     var strFirstTime: String? = null
     var mMap: GoogleMap? = null
@@ -236,6 +236,52 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
 
+        if(Constants.IS_OLD_PICK_UP_CODE){
+
+        }else{
+            //ILOMADEV
+            initLocationUpdates()
+        }
+
+    }
+
+    private fun initLocationUpdates() {
+        myLocationManager?.getCurrentLocation(object : MyLocationManager.LocationManagerInterface {
+            override fun onSuccess(location: Location?) {
+                if (location != null) {
+                    if (strFirstTime.equals("firstClick")) {
+
+                        strFirstTime = "secondClick"
+
+                        if (location != null) {
+                            locationChangelatitude = location.latitude
+                            locationChangelongitude = location.longitude
+                        }
+                        drawRoute()
+                        if ((MyRides_RidesID != null)) {
+
+                            GetDistanceFromLatLonInKm(
+                                MyRidesLat!!.toDouble(),
+                                MyRidesLong!!.toDouble(),
+                                locationChangelatitude,
+                                locationChangelongitude
+                            )
+
+                        } else{
+                            GetDistanceFromLatLonInKm(
+                                originLat!!.toDouble(),
+                                originLong!!.toDouble(),
+                                locationChangelatitude,
+                                locationChangelongitude
+                            )
+                        }
+
+
+                    }
+                }
+            }
+
+        })
     }
 
 
@@ -902,7 +948,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     override fun onLocationChanged(location: Location) {
 
-        if (strFirstTime.equals("firstClick")) {
+        /*if (strFirstTime.equals("firstClick")) {
 
             strFirstTime = "secondClick"
 
@@ -930,7 +976,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             }
 
 
-        }
+        }*/
 
     }
 
