@@ -84,45 +84,6 @@ class MyTripsAdapter(
             ).into(holder.iv_vehical!!)
 
 
-/*        val geocoder = Geocoder(context, Locale.getDefault())
-        try {
-            val addresses =
-                geocoder.getFromLocation(
-                    (MyRideList[position].originPlaceLat)!!.toDouble(),
-                    (MyRideList[position].originPlaceLong)!!.toDouble(), 1
-                )
-            if (addresses != null) {
-                val returnedAddress = addresses[0]
-                val strReturnedAddress =
-                    StringBuilder()
-                for (j in 0..returnedAddress.maxAddressLineIndex) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                }
-                streetAddress = strReturnedAddress.toString()
-            }
-        } catch (e: IOException) {
-        }
-
-
-        val geocoderDestination = Geocoder(context, Locale.getDefault())
-        try {
-            val addresses =
-                geocoderDestination.getFromLocation(
-                    (MyRideList[position].destinationPlaceLat)!!.toDouble(),
-                    (MyRideList[position].destinationPlaceLong)!!.toDouble(), 1
-                )
-            if (addresses != null) {
-                val returnedAddress = addresses[0]
-                val strReturnedAddress =
-                    StringBuilder()
-                for (j in 0..returnedAddress.maxAddressLineIndex) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                }
-                deststreetAddress = strReturnedAddress.toString()
-            }
-        } catch (e: IOException) {
-        }*/
-
 
         holder.tv_myCurrentLocation!!.text = MyRideList[position].originFullAddress
         holder.destnationAddress!!.text = MyRideList[position].destinationFullAddress

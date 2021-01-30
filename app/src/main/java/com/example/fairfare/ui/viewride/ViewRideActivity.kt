@@ -230,7 +230,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         tv_dateandTime!!.text = currentDate
         tv_carType!!.text = compareRideList[listPosition].providerName
         tv_Person!!.text = compareRideList[listPosition].noOfSeater.toString()
-        tv_carName!!.text = compareRideList[listPosition].fares?.get(spinnerposition)!!.name
+        tv_carName!!.text = compareRideList[listPosition].vehicleName
         Glide.with(this@ViewRideActivity)
             .load(compareRideList[listPosition].vehicleImageUrl)
             .apply(
@@ -240,7 +240,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
                     .dontTransform()
             )
             .into(iv_vehical!!)
-        tv_total!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.total
+        tv_total!!.text = "₹ " + compareRideList[listPosition].total
         tv_time!!.text = distance
         //   tv_Wait_time_charge!!.text = "₹ " + 0.00
 
@@ -262,21 +262,21 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         }
 
         tv_tollCharge!!.text =
-            "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.tollCharge
+            "₹ " + compareRideList[listPosition].tollCharge
 
-        tv_Luggage_Charges!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.luggageCharge
-        tv_NightCharges!!.text = "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.nightCharge
+        tv_Luggage_Charges!!.text = "₹ " + compareRideList[listPosition].luggageCharge
+        tv_NightCharges!!.text = "₹ " + compareRideList[listPosition].nightCharge
 
         tv_SurCharges!!.text =
-            "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.surCharge
+            "₹ " + compareRideList[listPosition].surCharge
 
         tv_estcharge!!.text =
-            "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.subTotal
+            "₹ " + compareRideList[listPosition].subTotal
 
         tv_additional_charges!!.text =
-            "₹ " + compareRideList[listPosition].fares?.get(spinnerposition)!!.additionalCharges
+            "₹ " + compareRideList[listPosition].additionalCharges
 
-        if (compareRideList[listPosition].fares?.get(spinnerposition)!!.nightCharge == "0.00") {
+        if (compareRideList[listPosition].nightCharge == "0.00") {
             switchdata!!.isChecked = true
         } else {
             switchdata!!.isChecked = false
@@ -358,7 +358,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
             intent.putExtra("DAddress", dAdd)
             intent.putExtra("CITY_ID", CITY_ID)
             intent.putExtra("ImgUrl", compareRideList[listPosition].vehicleImageUrl)
-            intent.putExtra("ImgName", compareRideList[listPosition].fares?.get(spinnerposition)!!.name)
+            intent.putExtra("ImgName", compareRideList[listPosition].name)
             startActivity(intent)
         } else {
 

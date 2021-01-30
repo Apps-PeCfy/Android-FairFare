@@ -154,7 +154,6 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
                 override fun onOTPReceived(otpData: String?) {
                     edt_otp?.setText(otpData)
                     successOtpFlow()
-
                 }
 
                 override fun onOTPTimeOut() {
@@ -167,6 +166,15 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         task.addOnFailureListener { // Failed to start retriever, inspect Exception for more details
             Toast.makeText(this, "Problem to start listener", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun successOtpFlow() {
+        if (LoginType == "NOR") {
+            GoogleToken = ""
+        }
+        iOtpPresenter!!.verifyOtp(
+            MobileNo, type, "Android",
+            LoginType, CountryCode, Username, UserMail, gender, edt_otp!!.text.toString(),deviceID)
     }
 
     private fun setToolbar() {
@@ -185,14 +193,6 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         }
     }
 
-    private fun successOtpFlow() {
-        if (LoginType == "NOR") {
-            GoogleToken = ""
-        }
-        iOtpPresenter!!.verifyOtp(
-            MobileNo, type, "Android",
-            LoginType, CountryCode, Username, UserMail, gender, edt_otp!!.text.toString(),deviceID)
-    }
 
     @OnClick(R.id.txt_resend_otp)
     fun resendOTP() {

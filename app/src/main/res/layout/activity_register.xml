@@ -144,7 +144,7 @@
                     android:drawableStart="@drawable/ic_mail"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/notosansjp_regular"
-                    android:hint="Email id(Optional)"
+                    android:hint="Email id(optional)"
                     android:includeFontPadding="false"
                     android:inputType="textEmailAddress"
                     android:nextFocusDown="@id/edt_name"

@@ -221,6 +221,10 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     @BindView(R.id.ivViewInfo)
     var ivViewInfo: ImageView? = null
 
+    @JvmField
+    @BindView(R.id.ivUserIcon)
+    var ivUserIcon: ImageView? = null
+
     var mMap: GoogleMap? = null
     var sourecemarker: Marker? = null
     var mPolyline: Polyline? = null
@@ -431,6 +435,10 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                     tvDisputNo!!.text = "Dispute ID:" + response.body()!!.dispute!!.disputeNo
                     tv_vahicalNO!!.text = response.body()!!.dispute!!.vehicleNo
                     tv_driverName!!.text = response.body()!!.dispute!!.driverName
+
+                    if(response.body()!!.dispute!!.driverName!!.isEmpty()){
+                       ivUserIcon!!.visibility=View.GONE
+                    }
                     if (response.body()!!.dispute!!.ride!!.luggageQuantity.equals("0")) {
                         tv_bagCount!!.text = "No Luggage"
                     } else {

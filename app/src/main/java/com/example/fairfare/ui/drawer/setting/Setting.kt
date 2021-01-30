@@ -263,7 +263,7 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
         progressDialog.setMessage("Please Wait") // set message
         progressDialog.show() // show progress dialog
 
-        ApiClient.client.updateUserSetting("Bearer $token",settingpojo!!.userSetting!!.userId,
+        ApiClient.client.updateUserSetting("Bearer $token",settingpojo!!.userSetting!!.id,
             settingpojo!!.userSetting!!.language,
             city,
             settingpojo!!.userSetting!!.currency,

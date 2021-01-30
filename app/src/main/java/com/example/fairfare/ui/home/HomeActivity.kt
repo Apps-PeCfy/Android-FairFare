@@ -111,7 +111,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     var appSignatureHelper: AppSignatureHelper? = null
 
-
     var timeSpinner = arrayOf<String?>("Now", "Later")
 
     // var cityspinner = Array<String?>
@@ -311,10 +310,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
 
 
-        EventBus.getDefault().register(this)
-
        /* appSignatureHelper = AppSignatureHelper(this)
         appSignatureHelper!!.getAppSignatures()*/
+
 
 
         callOnLocation = "first"
@@ -559,17 +557,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
 
-        drawerPojoArrayList!!.add(
+       /* drawerPojoArrayList!!.add(
             DrawerPojo(
                 2,
                 getString(R.string.drawer_mylocation),
                 R.drawable.ic_nav_mylocation
             )
         )
-
+*/
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                3,
+                2,
                 getString(R.string.drawer_myrides),
                 R.drawable.ic_nav_mytrips
             )
@@ -577,7 +575,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                4,
+                3,
                 getString(R.string.drawer_mydisput),
                 R.drawable.ic_nav_mydisput
             )
@@ -585,7 +583,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                5,
+                4,
                 getString(R.string.drawer_mycomplents),
                 R.drawable.ic_nav_mycomplaint
             )
@@ -593,7 +591,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                6,
+                5,
                 getString(R.string.drawer_ratecard),
                 R.drawable.ic_nav_ratecard
             )
@@ -601,7 +599,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                7,
+                6,
                 getString(R.string.drawer_faq),
                 R.drawable.ic_nav_helpandsupport
             )
@@ -610,7 +608,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                8,
+                7,
                 getString(R.string.drawer_contactus),
                 R.drawable.ic_nav_helpandsupport
             )
@@ -619,14 +617,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                9,
+                8,
                 getString(R.string.drawer_privacypolicy),
                 R.drawable.ic_nav_privacypolicy
             )
         )
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                10,
+                9,
                 getString(R.string.drawer_setting),
                 R.drawable.ic_nav_setting
             )
@@ -650,16 +648,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 replaceFragment(Covid())
 
             }
+
             1 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
-
-                replaceFragment(MyLocation())
-
-            }
-            2 -> {
                 spinnerLang!!.visibility = View.GONE
                 homeMain!!.visibility = View.GONE
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)
@@ -667,7 +657,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 replaceFragment(MyRides())
             }
-            3 -> {
+
+
+            2 -> {
                 spinnerLang!!.visibility = View.GONE
                 homeMain!!.visibility = View.GONE
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)
@@ -675,7 +667,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 replaceFragment(MyDisput())
             }
-            4 -> {
+
+
+            3 -> {
                 spinnerLang!!.visibility = View.GONE
                 homeMain!!.visibility = View.GONE
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)
@@ -683,7 +677,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 replaceFragment(MyComplaints())
             }
-            5 -> {
+
+
+            4 -> {
                 spinnerLang!!.visibility = View.GONE
                 homeMain!!.visibility = View.GONE
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)
@@ -691,7 +687,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 replaceFragment(RateCard())
             }
-            6 -> {
+
+
+            5 -> {
                 spinnerLang!!.visibility = View.GONE
                 homeMain!!.visibility = View.GONE
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)
@@ -699,7 +697,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 replaceFragment(FAQ())
             }
-            7 -> {
+
+
+            6 -> {
                 spinnerLang!!.visibility = View.GONE
                 homeMain!!.visibility = View.GONE
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)
@@ -707,7 +707,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 replaceFragment(ContactUs())
             }
-            8 -> {
+
+
+            7 -> {
                 spinnerLang!!.visibility = View.GONE
                 homeMain!!.visibility = View.GONE
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)
@@ -715,7 +717,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 replaceFragment(ContentPage())
             }
-            9 -> {
+
+
+            8 -> {
                 spinnerLang!!.visibility = View.GONE
                 homeMain!!.visibility = View.GONE
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)

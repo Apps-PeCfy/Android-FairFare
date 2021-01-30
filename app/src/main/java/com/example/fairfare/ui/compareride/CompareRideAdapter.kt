@@ -42,9 +42,11 @@ class CompareRideAdapter(var context: Context, private val compareRideList: Arra
             holder.tv_preson!!.text = compareRideList[position]!!.noOfSeater.toString()
             holder.distance!!.text = distance
             holder.tv_carName!!.text = compareRideList[position]!!.vehicleName
+            holder.tv_vehialType!!.text = compareRideList[position]!!.vehicleName
             holder.tv_time!!.text = estTime
+            holder.total!!.text = "₹ " +compareRideList[position]!!.total
 
-            spinnr = ArrayList()
+           /* spinnr = ArrayList()
             for (i in compareRideList[position]!!.fares!!.indices) {
                 (spinnr as ArrayList<String?>).add(compareRideList[position]!!.fares?.get(i)!!.name)
 
@@ -61,7 +63,7 @@ class CompareRideAdapter(var context: Context, private val compareRideList: Arra
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-
+*/
 
 
             Glide.with(context)
@@ -86,11 +88,11 @@ class CompareRideAdapter(var context: Context, private val compareRideList: Arra
     }
 
     interface OnItemClickListener {
-        fun onItemClick(view: View?, position: Int, spnposition: Int)
+        fun onItemClick(view: View?, position: Int)
     }
 
     inner class MyViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener,OnItemSelectedListener {
+        RecyclerView.ViewHolder(itemView), View.OnClickListener {
         @JvmField
         @BindView(R.id.tv_total)
         var total: TextView? = null
@@ -112,8 +114,8 @@ class CompareRideAdapter(var context: Context, private val compareRideList: Arra
         var tv_carName: TextView? = null
 
         @JvmField
-        @BindView(R.id.spinner_type)
-        var spinner_type: Spinner? = null
+        @BindView(R.id.tv_vehialType)
+        var tv_vehialType: TextView? = null
 
         @JvmField
         @BindView(R.id.iv_vehical)
@@ -122,8 +124,7 @@ class CompareRideAdapter(var context: Context, private val compareRideList: Arra
             if (mItemClickListener != null) {
                 mItemClickListener!!.onItemClick(
                     v,
-                    position,
-                    spinner_type!!.selectedItemPosition
+                    position
                 )
             }
         }
@@ -133,15 +134,7 @@ class CompareRideAdapter(var context: Context, private val compareRideList: Arra
             itemView.setOnClickListener(this)
             }
 
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-            TODO("Not yet implemented")
-        }
 
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-            total!!.text = "₹ " +compareRideList[position]!!.fares?.get(position)!!.total
-
-        }
     }
 
 }

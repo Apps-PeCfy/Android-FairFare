@@ -211,6 +211,10 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     var ivViewInfo: ImageView? = null
 
     @JvmField
+    @BindView(R.id.ivUserIcon)
+    var ivUserIcon: ImageView? = null
+
+    @JvmField
     @BindView(R.id.llComments)
     var llComments: LinearLayout? = null
 
@@ -247,30 +251,34 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     @OnClick(R.id.ivViewInfo)
     fun iiewInfo() {
-if(waitingList.size>0) {
-    eventInfoDialog = Dialog(this@ComplaintsDetailsActivity, R.style.dialog_style)
-    eventInfoDialog!!.setCancelable(true)
-    val inflater1 =
-        this@ComplaintsDetailsActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    val view12: View = inflater1.inflate(R.layout.event_info, null)
-    eventInfoDialog!!.setContentView(view12)
-    eventDialogBind = EventDialogBind()
-    ButterKnife.bind(eventDialogBind!!, view12)
+        if (waitingList.size > 0) {
+            eventInfoDialog = Dialog(this@ComplaintsDetailsActivity, R.style.dialog_style)
+            eventInfoDialog!!.setCancelable(true)
+            val inflater1 =
+                this@ComplaintsDetailsActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view12: View = inflater1.inflate(R.layout.event_info, null)
+            eventInfoDialog!!.setContentView(view12)
+            eventDialogBind = EventDialogBind()
+            ButterKnife.bind(eventDialogBind!!, view12)
 
-    eventDialogBind!!.rvEventInfo!!.layoutManager =
-        LinearLayoutManager(this@ComplaintsDetailsActivity, LinearLayoutManager.VERTICAL, false)
-    eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
-        this@ComplaintsDetailsActivity,
-        LinearLayoutManager.VERTICAL,
-        false
-    ) // set LayoutManager to RecyclerView
-    waittimePopUpAdapter = DisputWaitTimePopUpAdapter(this, waitingList)
-    eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
+            eventDialogBind!!.rvEventInfo!!.layoutManager =
+                LinearLayoutManager(
+                    this@ComplaintsDetailsActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
+                this@ComplaintsDetailsActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            ) // set LayoutManager to RecyclerView
+            waittimePopUpAdapter = DisputWaitTimePopUpAdapter(this, waitingList)
+            eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
 
-    eventDialogBind!!.ivPopUpClose
+            eventDialogBind!!.ivPopUpClose
 
-    eventInfoDialog!!.show()
-}
+            eventInfoDialog!!.show()
+        }
 
     }
 
@@ -310,11 +318,12 @@ if(waitingList.size>0) {
                 if (response.code() == 200) {
 
 
-
                     selectedImageList = response.body()!!.dispute!!.images
-                    selectedImageAdapter = setImgAdapter(this@ComplaintsDetailsActivity, selectedImageList!!)
+                    selectedImageAdapter =
+                        setImgAdapter(this@ComplaintsDetailsActivity, selectedImageList!!)
                     val spanCount = 3
-                    selectedImageRecyclerView!!.layoutManager = GridLayoutManager(this@ComplaintsDetailsActivity, spanCount)
+                    selectedImageRecyclerView!!.layoutManager =
+                        GridLayoutManager(this@ComplaintsDetailsActivity, spanCount)
                     val spacing = 15
                     val includeEdge = true
                     selectedImageRecyclerView!!.addItemDecoration(
@@ -329,8 +338,8 @@ if(waitingList.size>0) {
 
                     waitingList = response.body()!!.dispute!!.ride!!.actualTrackRide!!.waitings!!
 
-                    if(waitingList.size==0) {
-                        ivViewInfo!!.visibility=View.GONE
+                    if (waitingList.size == 0) {
+                        ivViewInfo!!.visibility = View.GONE
                     }
 
 
@@ -351,7 +360,9 @@ if(waitingList.size>0) {
                     tvDisputNo!!.text = "Complaint ID:" + response.body()!!.dispute!!.disputeNo
                     tv_vahicalNO!!.text = response.body()!!.dispute!!.vehicleNo
                     tv_driverName!!.text = response.body()!!.dispute!!.driverName
-
+                    if (response.body()!!.dispute!!.driverName!!.isEmpty()) {
+                        ivUserIcon?.visibility = View.GONE
+                    }
 
 
                     if (response.body()!!.dispute!!.ride!!.luggageQuantity.equals("0")) {
@@ -467,7 +478,8 @@ if(waitingList.size>0) {
                         tv_actualTotalFare!!.text =
                             "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.totalCharges
 
-                        tvActualNightChages!!.text =  "₹ " +response.body()!!.dispute!!.ride!!.nightCharges
+                        tvActualNightChages!!.text =
+                            "₹ " + response.body()!!.dispute!!.ride!!.nightCharges
 
 
                         tvActualWaitTime!!.text =
@@ -490,7 +502,8 @@ if(waitingList.size>0) {
                         tv_estTotalFare!!.text =
                             "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.totalCharges
 
-                        tvNightChages!!.text =  "₹ " +response.body()!!.dispute!!.ride!!.nightCharges
+                        tvNightChages!!.text =
+                            "₹ " + response.body()!!.dispute!!.ride!!.nightCharges
 
 
                         tvEstWaitCharge!!.text =

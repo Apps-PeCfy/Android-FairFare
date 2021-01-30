@@ -452,6 +452,7 @@
 
 
                                 <ImageView
+                                    android:id="@+id/ivUserIcon"
                                     android:layout_width="@dimen/_15sdp"
                                     android:layout_height="@dimen/_15sdp"
                                     android:layout_centerVertical="true"
