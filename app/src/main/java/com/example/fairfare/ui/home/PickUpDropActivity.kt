@@ -66,6 +66,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     var currentLatitude = 0.0
     var currentLongitude = 0.0
     var extras: Bundle? = null
+    var isSource : Boolean ? = false
 
     private var plotedLocation: Location? = null
 
@@ -525,12 +526,14 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     @OnClick(R.id.btnContinue)
     fun btnContinue() {
         if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
+            isSource = true
             sharedpreferences!!.edit().remove("SourceLat")
             sharedpreferences!!.edit().remove("SourceLong")
             editor!!.putString(SourceLat, currentLatitude.toString())
             editor!!.putString(SourceLong, currentLongitude.toString())
             editor!!.putString(fromLocation, locateOnMapAddress)
         } else {
+            isSource = false
             sharedpreferences!!.edit().remove("DestinationLat")
             sharedpreferences!!.edit().remove("DestinationLong")
             editor!!.putString(DestinationLat, currentLatitude.toString())
@@ -549,7 +552,18 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
         intent.putExtra("formaredDateLater", extras!!.getString("formaredDateLater"))
 
-        startActivity(intent)
+        //Old Code
+        if (Constants.IS_OLD_PICK_UP_CODE){
+            startActivity(intent)
+        }else{
+            // ILOMADEV
+            finish()
+
+            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, locateOnMapAddress, keyAirport))
+        }
+
+
+
     }
 
     private fun setStatusBarGradiant(activity: PickUpDropActivity) {
@@ -691,6 +705,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         currentLatitude = place!!.latLng!!.latitude
         currentLongitude = place!!.latLng!!.longitude
         if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
+            isSource = true
             sharedpreferences!!.edit().remove("SourceLat")
             sharedpreferences!!.edit().remove("SourceLong")
             editor!!.putString(SourceLat, currentLatitude.toString())
@@ -698,6 +713,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             editor!!.putString(fromLocation, selectedAddress)
 
         } else {
+            isSource = false
             sharedpreferences!!.edit().remove("DestinationLat")
             sharedpreferences!!.edit().remove("DestinationLong")
             editor!!.putString(DestinationLat, currentLatitude.toString())
@@ -722,12 +738,15 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
         intent.putExtra("splacedi", selectedAddress)
 
+        //Old Code
+        if (Constants.IS_OLD_PICK_UP_CODE){
+            startActivity(intent)
+        }else{
+            // ILOMADEV
+            finish()
 
-
-
-        startActivity(intent)
-
-        EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude))
+            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, locateOnMapAddress, keyAirport))
+        }
 
     }
 
@@ -747,6 +766,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 val place = response.place
                 mMap!!.clear()
                 if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
+                    isSource = true
                     sharedpreferences!!.edit().remove("SourceLat")
                     sharedpreferences!!.edit().remove("SourceLong")
                     editor!!.putString(SourceLat, place.latLng!!.latitude.toString())
@@ -754,6 +774,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     editor!!.putString(fromLocation, selectedadd)
 
                 } else {
+                    isSource = false
                     sharedpreferences!!.edit().remove("DestinationLat")
                     sharedpreferences!!.edit().remove("DestinationLong")
                     editor!!.putString(DestinationLat, place.latLng!!.latitude.toString())
@@ -774,7 +795,18 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
 
 
-                startActivity(intent)
+                //Old Code
+                if (Constants.IS_OLD_PICK_UP_CODE){
+                    startActivity(intent)
+                }else{
+                    // ILOMADEV
+                    finish()
+
+                    EventBus.getDefault().post(PickUpLocationModel(place.latLng!!.latitude, place.latLng!!.longitude, isSource, selectedadd, keyAirport))
+                }
+
+
+
 
                 Log.d(
                     "Placefound: ",

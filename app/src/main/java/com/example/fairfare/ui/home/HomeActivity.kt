@@ -62,6 +62,7 @@ import com.example.fairfare.ui.drawer.privacypolicy.ContentPage
 import com.example.fairfare.ui.drawer.ratecard.RateCard
 import com.example.fairfare.ui.drawer.setting.Setting
 import com.example.fairfare.ui.home.pojo.GetAllowCityResponse
+import com.example.fairfare.ui.home.pojo.PickUpLocationModel
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.utils.*
 import com.example.fairfare.utils.ProjectUtilities.showProgressDialog
@@ -78,6 +79,8 @@ import com.google.maps.GeocodingApi
 import com.google.maps.errors.ApiException
 import com.google.maps.model.GeocodingResult
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -107,6 +110,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var spinnerLuggagetxt: String? = null
     var city: String? = null
     var setDate: String? = null
+    var keyAirport: String? = null
     var placesClient: PlacesClient? = null
 
     var appSignatureHelper: AppSignatureHelper? = null
@@ -412,7 +416,72 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             progressDialogstart!!.dismiss()
         }
 
+        EventBus.getDefault().register(this)
 
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPickUpLocationModel(model: PickUpLocationModel) {
+        if (model != null){
+                keyAirport = model.keyAirport
+        if (model.isSource!!){
+//            SourceLat = sharedpreferences!!.getString("SourceLat", "")
+//            SourceLong = sharedpreferences!!.getString("SourceLong", "")
+            SourceLat = model.latitude.toString()
+            SourceLong = model.longitude.toString()
+            myCurrentLocation!!.text = model.address
+        }else{
+          //  DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
+          //  DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
+            DestinationLat = model.latitude.toString()
+            DestinationLong = model.longitude.toString()
+            myDropUpLocation!!.text = model.address
+        }
+            drawRouteOnAddressSelection()
+        }
+
+    }
+
+    private fun drawRouteOnAddressSelection() {
+        if (!SourceLat!!.isEmpty()) {
+
+            if (mMap != null){
+                mMap!!.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            SourceLat!!.toDouble(),
+                            SourceLong!!.toDouble()
+                        ), 15.0f
+                    )
+                )
+                sourecemarker = mMap!!.addMarker(
+                    MarkerOptions().position(
+                        LatLng(
+                            SourceLat!!.toDouble(),
+                            SourceLong!!.toDouble()
+                        )
+                    ).draggable(false)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+                )
+            }
+
+        }
+        if (!DestinationLat!!.isEmpty()) {
+            destmarker = mMap!!.addMarker(
+                MarkerOptions().position(
+                    LatLng(
+                        DestinationLat!!.toDouble(),
+                        DestinationLong!!.toDouble()
+                    )
+                ).draggable(false)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
+            )
+        }
+        if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
+            reestimateDateandTime!!.visibility = View.VISIBLE
+            drawRoute()
+        }
     }
 
 
@@ -1232,6 +1301,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             formaredDate = setDate
         }
 
+        //ILOMADEV :- Take value before comparing
+
+        PortAir =
+            preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
 
         if (formaredDateLater != null) {
 
@@ -1269,8 +1342,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else {
                     airportYesOrNO = "NO"
                 }
-                PortAir =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
+//                PortAir =
+//                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
                 replacedistance = estDistance!!.replace(" km", "")
 
 
@@ -1388,8 +1461,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else {
                     airportYesOrNO = "NO"
                 }
-                PortAir =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
+//                PortAir =
+//                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
                 replacedistance = estDistance!!.replace(" km", "")
 
                 if ((spinnerLuggagetxt == "1 Luggage")) {
@@ -1795,7 +1868,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         intent.putExtra("EstTime", estTime)
         intent.putExtra("Liggage", spinnerLuggagetxt)
         intent.putExtra("TimeSpinner", spinnertxt)
-        intent.putExtra("Airport", extras!!.getString("keyAirport"))
+       // intent.putExtra("Airport", extras!!.getString("keyAirport"))
+
+        // ILOMADEV
+
+        intent.putExtra("Airport", keyAirport)
         intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
         intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
         intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
@@ -1883,6 +1960,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (currentLatitude == 0.0) {
             Toast.makeText(this, "Unable to find CURRENT LOCATION", Toast.LENGTH_LONG).show()
         } else {
+            Toast.makeText(this, "On Start Location Ready", Toast.LENGTH_LONG).show()
+
 
             callOnLocation = "second"
 
@@ -2039,7 +2118,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
    */
 
             if (extras != null) {
-                if (!SourceLat!!.isEmpty()) {
+              /*  if (!SourceLat!!.isEmpty()) {
 
                     val geocoder =
                         Geocoder(this@HomeActivity, Locale.getDefault())
@@ -2120,8 +2199,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
                     reestimateDateandTime!!.visibility = View.VISIBLE
                     drawRoute()
-                }
+                }*/
+
+                //ILOMADEV :- 30 Jan 2021 :- Created Method for this code
+
+                drawRouteOnAddressSelection()
+
+
             } else {
+                Toast.makeText(this, "On Start before GeoCoder", Toast.LENGTH_LONG).show()
                 val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
                 try {
                     val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
@@ -2132,11 +2218,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     } else {
                         streetAddress = ""
                     }
+                    Toast.makeText(this, "On Start after GeoCoder", Toast.LENGTH_LONG).show()
+
                 } catch (e: IOException) {
                 }
 
 
                 if (SourceLat!!.isEmpty()) {
+                    //ILOMADEV
+                    SourceLat = currentLatitude.toString();
+                    SourceLong = currentLongitude.toString();
+
                     sharedpreferences!!.edit().putString("SourceLat", currentLatitude.toString())
                         .commit()
                     sharedpreferences!!.edit().putString("SourceLong", currentLongitude.toString())
@@ -2175,6 +2267,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     override fun onProviderDisabled(provider: String) {
 
     }
+
 
 
 }
