@@ -1,5 +1,3 @@
-
-
 package com.example.fairfare.ui.home
 
 import android.annotation.SuppressLint
@@ -101,6 +99,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     OnTimeSetListener, OnItemSelectedListener, AdapterView.OnItemClickListener, ICompareRideView,
     LocationListener {
     protected var locationManager: LocationManager? = null
+
+    protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
 
     var currentLatitude = 0.0
     var currentLongitude = 0.0
@@ -309,13 +309,19 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
         spinnerLang!!.visibility = View.VISIBLE
-        locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-        locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+
+        if (Constants.IS_OLD_PICK_UP_CODE) {
+            locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+            locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+        } else {
+            // ILOMADEV :- New method for location update
+            initLocationUpdates()
+        }
 
 
-       /* appSignatureHelper = AppSignatureHelper(this)
-        appSignatureHelper!!.getAppSignatures()*/
+        /* appSignatureHelper = AppSignatureHelper(this)
+         appSignatureHelper!!.getAppSignatures()*/
 
 
 
@@ -412,32 +418,68 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
 
 
-        if(SourceLat!!.isNotEmpty()&&DestinationLat!!.isNotEmpty()){
+        if (SourceLat!!.isNotEmpty() && DestinationLat!!.isNotEmpty()) {
             progressDialogstart!!.dismiss()
         }
 
         EventBus.getDefault().register(this)
 
+
+    }
+
+    private fun initLocationUpdates() {
+        myLocationManager?.getCurrentLocation(object : MyLocationManager.LocationManagerInterface {
+            override fun onSuccess(location: Location?) {
+                if (location != null) {
+
+                    Log.d("sdsdsdswnwe", "onLocationChanged")
+
+                    currentLatitude = location!!.latitude
+                    currentLongitude = location!!.longitude
+
+
+                    if (callOnLocation.equals("first")) {
+                        if (currentLatitude != 0.0 && currentLatitude != null) {
+
+                            getLocationReady()
+                            cityPojoList = preferencesManager!!.getCityList()
+                            if (cityPojoList != null && cityPojoList.size > 0) {
+                                setCitySpinner()
+                            } else {
+                                getCity()
+                            }
+
+                            progressDialogstart!!.dismiss()
+                            mainRelativeLayout!!.visibility = View.VISIBLE
+
+
+                        }
+
+                    }
+                }
+            }
+
+        })
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onPickUpLocationModel(model: PickUpLocationModel) {
-        if (model != null){
-                keyAirport = model.keyAirport
-        if (model.isSource!!){
+        if (model != null) {
+            keyAirport = model.keyAirport
+            if (model.isSource!!) {
 //            SourceLat = sharedpreferences!!.getString("SourceLat", "")
 //            SourceLong = sharedpreferences!!.getString("SourceLong", "")
-            SourceLat = model.latitude.toString()
-            SourceLong = model.longitude.toString()
-            myCurrentLocation!!.text = model.address
-        }else{
-          //  DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
-          //  DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
-            DestinationLat = model.latitude.toString()
-            DestinationLong = model.longitude.toString()
-            myDropUpLocation!!.text = model.address
-        }
+                SourceLat = model.latitude.toString()
+                SourceLong = model.longitude.toString()
+                myCurrentLocation!!.text = model.address
+            } else {
+                //  DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
+                //  DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
+                DestinationLat = model.latitude.toString()
+                DestinationLong = model.longitude.toString()
+                myDropUpLocation!!.text = model.address
+            }
             drawRouteOnAddressSelection()
         }
 
@@ -446,7 +488,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     private fun drawRouteOnAddressSelection() {
         if (!SourceLat!!.isEmpty()) {
 
-            if (mMap != null){
+            if (mMap != null) {
                 mMap!!.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
                         LatLng(
@@ -508,8 +550,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     setCitySpinner()
 
 
-
-
                 } else if (response.code() == 422) {
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
@@ -545,7 +585,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     private fun setCitySpinner() {
-        for (cityModel : GetAllowCityResponse.CitiesItem in cityPojoList) {
+        for (cityModel: GetAllowCityResponse.CitiesItem in cityPojoList) {
             cityspinner.add(cityModel.name)
 
         }
@@ -569,7 +609,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
 
                 }
-            }else{
+            } else {
                 cityspinner.add(0, "Choose City")
                 Toast.makeText(
                     this@HomeActivity,
@@ -588,7 +628,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
 
                 }
-            }else {
+            } else {
 
                 cityspinner.add(0, "Choose City")
 
@@ -625,15 +665,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         )
 
 
-
-       /* drawerPojoArrayList!!.add(
-            DrawerPojo(
-                2,
-                getString(R.string.drawer_mylocation),
-                R.drawable.ic_nav_mylocation
-            )
-        )
-*/
+        /* drawerPojoArrayList!!.add(
+             DrawerPojo(
+                 2,
+                 getString(R.string.drawer_mylocation),
+                 R.drawable.ic_nav_mylocation
+             )
+         )
+ */
         drawerPojoArrayList!!.add(
             DrawerPojo(
                 2,
@@ -897,7 +936,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     @OnClick(R.id.logoLayout)
-    fun myAccount(){
+    fun myAccount() {
 
         spinnerLang!!.visibility = View.GONE
         homeMain!!.visibility = View.GONE
@@ -905,7 +944,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         mDrawerLayout!!.closeDrawer(Gravity.START)
 
         replaceFragment(MyAccountFragment())
-
 
 
     }
@@ -1005,7 +1043,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         myMonth = month + 1
         val c = Calendar.getInstance()
         if (spinner_time?.selectedItem.toString().equals("Later", ignoreCase = true)) {
-            c.add(Calendar.MINUTE,16)
+            c.add(Calendar.MINUTE, 16)
         }
         hour = c.get(Calendar.HOUR_OF_DAY)
         minute = c.get(Calendar.MINUTE)
@@ -1025,49 +1063,56 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         myHour = hourOfDay
         myMinute = Tminute
 
-        var dateTime = myday.toString() + "-" + myMonth + "-" + myYear + " " + myHour + ":" + myMinute
-        val selectedDateTime= SimpleDateFormat("dd-MM-yyyy HH:mm").parse(dateTime)
+        var dateTime =
+            myday.toString() + "-" + myMonth + "-" + myYear + " " + myHour + ":" + myMinute
+        val selectedDateTime = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(dateTime)
         val minValidDateTime = SimpleDateFormat("dd MM yyyy HH:mm:ss").parse(minTimeToShedule())
 
-        if (selectedDateTime.before(minValidDateTime)){
+        if (selectedDateTime.before(minValidDateTime)) {
 
-            tv_RideScheduled?.text = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM").replace("pm", "PM")
+            tv_RideScheduled?.text =
+                AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM")
+                    .replace("pm", "PM")
 
-            Toast.makeText(this, "Scheduled time should be greater than 15 minutes from current time.", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Scheduled time should be greater than 15 minutes from current time.",
+                Toast.LENGTH_LONG
+            ).show()
 
             return
 
-        }else{
+        } else {
             val AMorPM: String
 
-        if (myHour >= 12) {
-            AMorPM = "PM"
-            if (myHour == 12) {
+            if (myHour >= 12) {
+                AMorPM = "PM"
+                if (myHour == 12) {
+                } else {
+                    myHour = myHour - 12
+                }
             } else {
-                myHour = myHour - 12
+                if (myHour == 0) {
+                    myHour = myHour + 12
+                }
+                AMorPM = "AM"
             }
-        } else {
-            if (myHour == 0) {
-                myHour = myHour + 12
+            var dmonth: String? = null
+            val monthParse = SimpleDateFormat("MM")
+            val monthDisplay = SimpleDateFormat("MMM")
+            try {
+                dmonth = monthDisplay.format(monthParse.parse(myMonth.toString()))
+            } catch (e: ParseException) {
+                e.printStackTrace()
             }
-            AMorPM = "AM"
-        }
-        var dmonth: String? = null
-        val monthParse = SimpleDateFormat("MM")
-        val monthDisplay = SimpleDateFormat("MMM")
-        try {
-            dmonth = monthDisplay.format(monthParse.parse(myMonth.toString()))
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
 
 
-        val displaDate = SimpleDateFormat("HH")
-        val olddisplaDate = SimpleDateFormat("hh")
+            val displaDate = SimpleDateFormat("HH")
+            val olddisplaDate = SimpleDateFormat("hh")
 
 
-        var formatedhr = displaDate.format(olddisplaDate.parse((myHour.toString())))
-        var formatedminute = displaDate.format(olddisplaDate.parse((myMinute.toString())))
+            var formatedhr = displaDate.format(olddisplaDate.parse((myHour.toString())))
+            var formatedminute = displaDate.format(olddisplaDate.parse((myMinute.toString())))
 
 
 
@@ -1182,7 +1227,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         //ILOMADEV
         try {
             EventBus.getDefault().unregister(this)
-        }catch (ex : Exception){
+        } catch (ex: Exception) {
 
         }
 
@@ -1247,36 +1292,48 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
     @OnClick(R.id.btnCompareRide)
-    fun btnCompareClick(){
-        if (isValid()){
+    fun btnCompareClick() {
+        if (isValid()) {
             btnCompare()
         }
     }
 
     private fun isValid(): Boolean {
         if (spinner_time!!.selectedItem.toString().equals("Later", ignoreCase = true)) {
-            var dateTime :String?
-            if (year >0){
+            var dateTime: String?
+            if (year > 0) {
 
-                dateTime =  year.toString()+ " " + tv_RideScheduled?.text.toString().replace("AM", "am").replace("PM", "pm")
-            }else{
-                dateTime =  Calendar.getInstance().get(Calendar.YEAR).toString()+ " " + tv_RideScheduled?.text.toString().replace("AM", "am").replace("PM", "pm")
+                dateTime =
+                    year.toString() + " " + tv_RideScheduled?.text.toString().replace("AM", "am")
+                        .replace("PM", "pm")
+            } else {
+                dateTime = Calendar.getInstance().get(Calendar.YEAR)
+                    .toString() + " " + tv_RideScheduled?.text.toString().replace("AM", "am")
+                    .replace("PM", "pm")
             }
 
-            val selectedDateTime= SimpleDateFormat("yyyy dd MMM, hh:mm a").parse(dateTime)
+            val selectedDateTime = SimpleDateFormat("yyyy dd MMM, hh:mm a").parse(dateTime)
             val minValidDateTime = SimpleDateFormat("dd MM yyyy HH:mm:ss").parse(minTimeToShedule())
 
-            if(tv_RideScheduled?.text.toString().equals(AppUtils.convertDateGMTToLocal(minTimeToShedule()), ignoreCase = true)){
+            if (tv_RideScheduled?.text.toString()
+                    .equals(AppUtils.convertDateGMTToLocal(minTimeToShedule()), ignoreCase = true)
+            ) {
                 return true
-            } else if (selectedDateTime.before(minValidDateTime)){
+            } else if (selectedDateTime.before(minValidDateTime)) {
 
-                tv_RideScheduled?.text = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM").replace("pm", "PM")
+                tv_RideScheduled?.text =
+                    AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM")
+                        .replace("pm", "PM")
 
-                Toast.makeText(this, "Scheduled time should be greater than 15 minutes from current time.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Scheduled time should be greater than 15 minutes from current time.",
+                    Toast.LENGTH_LONG
+                ).show()
 
                 return false
 
-            }else{
+            } else {
                 return true
             }
         }
@@ -1333,8 +1390,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
 
-            if (estDistanceInMeter>499) {
-
+            if (estDistanceInMeter > 499) {
 
 
                 if (PortAir.equals("AIRPORT", ignoreCase = true)) {
@@ -1453,7 +1509,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 ).show()
             }
         } else {
-            if (estDistanceInMeter>499) {
+            if (estDistanceInMeter > 499) {
 
 
                 if (PortAir.equals("AIRPORT", ignoreCase = true)) {
@@ -1610,7 +1666,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
 
-
     private inner class DownloadTask :
         AsyncTask<String, Void, String>() {
         // Downloading data in non-ui thread
@@ -1695,7 +1750,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 estTime = duration.getString("text")
                 estDistance = distance.getString("value")
                 estDistanceInMeter = distance.getString("value").toInt()
-                estDistance = DecimalFormat("####.##").format((estDistance!!.toDouble() / 1000)) + " km"
+                estDistance =
+                    DecimalFormat("####.##").format((estDistance!!.toDouble() / 1000)) + " km"
 
 
                 /* if((distance.getString("text")).contains("mi")){
@@ -1780,17 +1836,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         } else if (parent!!.id == R.id.spinnerLang) {
             if (city_Name.equals("Choose City")) {
 
-            }else{
+            } else {
 
                 if (cityspinner.contains("Choose City")) {
-                    if(position>0){
-                        cityID = cityPojoList!!.get(position-1).id.toString()
-                        city_Name = cityPojoList!!.get(position-1).name
+                    if (position > 0) {
+                        cityID = cityPojoList!!.get(position - 1).id.toString()
+                        city_Name = cityPojoList!!.get(position - 1).name
                         preferencesManager!!.setStringValue(
                             Constants.SHARED_PREFERENCE_CITY_ID,
                             cityID
                         )
-                    }else{
+                    } else {
                         preferencesManager!!.setStringValue(
                             Constants.SHARED_PREFERENCE_CITY_ID,
                             cityPojoList!!.get(position).id.toString()
@@ -1798,8 +1854,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
 
 
-
-                }else{
+                } else {
                     cityID = cityPojoList!!.get(position).id.toString()
                     city_Name = cityPojoList!!.get(position).name
                     preferencesManager!!.setStringValue(
@@ -1811,9 +1866,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-
-
-
         } else {
             spnrtime = position
             spinnertxt = spinner_time!!.selectedItem.toString()
@@ -1822,13 +1874,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 /**
                  * Mohsin to display 15 min Later time.
                  */
-                dateToStr = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM").replace("pm", "PM")
+                dateToStr = AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM")
+                    .replace("pm", "PM")
 
 
                 if (extras != null) {
                     if (spnrtime == 1) {
 
-                      //  tv_RideScheduled?.text = tvDateandTime
+                        //  tv_RideScheduled?.text = tvDateandTime
                         tv_RideScheduled?.text = dateToStr
 
                     } else {
@@ -1868,7 +1921,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         intent.putExtra("EstTime", estTime)
         intent.putExtra("Liggage", spinnerLuggagetxt)
         intent.putExtra("TimeSpinner", spinnertxt)
-       // intent.putExtra("Airport", extras!!.getString("keyAirport"))
+        // intent.putExtra("Airport", extras!!.getString("keyAirport"))
 
         // ILOMADEV
 
@@ -1917,13 +1970,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
         if (callOnLocation.equals("first")) {
-            if ( currentLatitude != 0.0 && currentLatitude != null) {
+            if (currentLatitude != 0.0 && currentLatitude != null) {
 
                 getLocationReady()
                 cityPojoList = preferencesManager!!.getCityList()
-                if (cityPojoList != null && cityPojoList.size>0){
+                if (cityPojoList != null && cityPojoList.size > 0) {
                     setCitySpinner()
-                }else{
+                } else {
                     getCity()
                 }
 
@@ -1960,7 +2013,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (currentLatitude == 0.0) {
             Toast.makeText(this, "Unable to find CURRENT LOCATION", Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(this, "On Start Location Ready", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "On Start Location Ready", Toast.LENGTH_LONG).show()
 
 
             callOnLocation = "second"
@@ -2118,88 +2171,88 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
    */
 
             if (extras != null) {
-              /*  if (!SourceLat!!.isEmpty()) {
+                /*  if (!SourceLat!!.isEmpty()) {
 
-                    val geocoder =
-                        Geocoder(this@HomeActivity, Locale.getDefault())
-                    try {
-                        val addresses = geocoder.getFromLocation(
-                            SourceLat!!.toDouble(),
-                            SourceLong!!.toDouble(),
-                            1
-                        )
+                      val geocoder =
+                          Geocoder(this@HomeActivity, Locale.getDefault())
+                      try {
+                          val addresses = geocoder.getFromLocation(
+                              SourceLat!!.toDouble(),
+                              SourceLong!!.toDouble(),
+                              1
+                          )
 
-                        //Kiran Code
-                       // streetAddress = if (addresses!!.size > 0 && addresses != null) {
+                          //Kiran Code
+                         // streetAddress = if (addresses!!.size > 0 && addresses != null) {
 
-                        //Mohsin Code
+                          //Mohsin Code
 
-                        streetAddress = if (addresses != null && addresses!!.size > 0) {
-                            addresses[0].getAddressLine(0)
-                        } else {
-                            ""
-                        }
-                    } catch (e: IOException) {
-                    }
+                          streetAddress = if (addresses != null && addresses!!.size > 0) {
+                              addresses[0].getAddressLine(0)
+                          } else {
+                              ""
+                          }
+                      } catch (e: IOException) {
+                      }
 
-                    myCurrentLocation!!.text = sharedpreferences!!.getString("fromLocation", "")
-                    if (mMap != null){
-                        mMap!!.animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(
-                                LatLng(
-                                    SourceLat!!.toDouble(),
-                                    SourceLong!!.toDouble()
-                                ), 15.0f
-                            )
-                        )
-                        sourecemarker = mMap!!.addMarker(
-                            MarkerOptions().position(
-                                LatLng(
-                                    SourceLat!!.toDouble(),
-                                    SourceLong!!.toDouble()
-                                )
-                            ).draggable(false)
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-                        )
-                    }
+                      myCurrentLocation!!.text = sharedpreferences!!.getString("fromLocation", "")
+                      if (mMap != null){
+                          mMap!!.animateCamera(
+                              CameraUpdateFactory.newLatLngZoom(
+                                  LatLng(
+                                      SourceLat!!.toDouble(),
+                                      SourceLong!!.toDouble()
+                                  ), 15.0f
+                              )
+                          )
+                          sourecemarker = mMap!!.addMarker(
+                              MarkerOptions().position(
+                                  LatLng(
+                                      SourceLat!!.toDouble(),
+                                      SourceLong!!.toDouble()
+                                  )
+                              ).draggable(false)
+                                  .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+                          )
+                      }
 
-                }
-                if (!DestinationLat!!.isEmpty()) {
-                    val returnedAddress: Address? = null
-                    val geocoder =
-                        Geocoder(this@HomeActivity, Locale.getDefault())
-                    try {
-                        val addresses =
-                            geocoder.getFromLocation(
-                                DestinationLat!!.toDouble(),
-                                DestinationLong!!.toDouble(),
-                                1
-                            )
+                  }
+                  if (!DestinationLat!!.isEmpty()) {
+                      val returnedAddress: Address? = null
+                      val geocoder =
+                          Geocoder(this@HomeActivity, Locale.getDefault())
+                      try {
+                          val addresses =
+                              geocoder.getFromLocation(
+                                  DestinationLat!!.toDouble(),
+                                  DestinationLong!!.toDouble(),
+                                  1
+                              )
 
-                        streetAddress = if (addresses != null && addresses!!.size > 0 ) {
-                            addresses[0].getAddressLine(0)
-                        } else {
-                            ""
-                        }
-                    } catch (e: IOException) {
-                    }
+                          streetAddress = if (addresses != null && addresses!!.size > 0 ) {
+                              addresses[0].getAddressLine(0)
+                          } else {
+                              ""
+                          }
+                      } catch (e: IOException) {
+                      }
 
-                    myDropUpLocation!!.text =
-                        sharedpreferences!!.getString("destiNationLocation", "")
-                    destmarker = mMap!!.addMarker(
-                        MarkerOptions().position(
-                                LatLng(
-                                    DestinationLat!!.toDouble(),
-                                    DestinationLong!!.toDouble()
-                                )
-                            ).draggable(false)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
-                    )
-                }
-                if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
-                    reestimateDateandTime!!.visibility = View.VISIBLE
-                    drawRoute()
-                }*/
+                      myDropUpLocation!!.text =
+                          sharedpreferences!!.getString("destiNationLocation", "")
+                      destmarker = mMap!!.addMarker(
+                          MarkerOptions().position(
+                                  LatLng(
+                                      DestinationLat!!.toDouble(),
+                                      DestinationLong!!.toDouble()
+                                  )
+                              ).draggable(false)
+                              .icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
+                      )
+                  }
+                  if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
+                      reestimateDateandTime!!.visibility = View.VISIBLE
+                      drawRoute()
+                  }*/
 
                 //ILOMADEV :- 30 Jan 2021 :- Created Method for this code
 
@@ -2207,7 +2260,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
             } else {
-                Toast.makeText(this, "On Start before GeoCoder", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, "On Start before GeoCoder", Toast.LENGTH_LONG).show()
                 val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
                 try {
                     val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
@@ -2218,7 +2271,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     } else {
                         streetAddress = ""
                     }
-                    Toast.makeText(this, "On Start after GeoCoder", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(this, "On Start after GeoCoder", Toast.LENGTH_LONG).show()
 
                 } catch (e: IOException) {
                 }
@@ -2267,7 +2320,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     override fun onProviderDisabled(provider: String) {
 
     }
-
 
 
 }
