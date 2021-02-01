@@ -446,7 +446,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     if (callOnLocation.equals("first")) {
                         if (currentLatitude != 0.0 && currentLatitude != null) {
 
-                            getLocationReady()
+                            mapAndLocationReady()
                             cityPojoList = preferencesManager!!.getCityList()
                             if (cityPojoList != null && cityPojoList.size > 0) {
                                 setCitySpinner()
@@ -461,10 +461,37 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         }
 
                     }
+                } else {
+                    initLocationUpdates()
                 }
             }
 
         })
+    }
+
+    private fun mapAndLocationReady() {
+        if (callOnLocation.equals("first") && mMap != null && currentLatitude != null && currentLatitude != 0.0) {
+            getLocationReady()
+        }
+    }
+
+    private fun getCurrentCityName() {
+        if (currentLatitude != 0.0 && currentLongitude != 0.0) {
+            val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
+            try {
+                val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
+
+                if (addresses != null && addresses!!.size > 0) {
+                    streetAddress = addresses[0].getAddressLine(0)
+                    city = addresses[0].subAdminArea
+                } else {
+                    streetAddress = ""
+                }
+
+            } catch (e: IOException) {
+            }
+        }
+
     }
 
 
@@ -590,6 +617,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     private fun setCitySpinner() {
+        if (city == null){
+            getCurrentCityName()
+        }
+
         for (cityModel: GetAllowCityResponse.CitiesItem in cityPojoList) {
             cityspinner.add(cityModel.name)
 
@@ -1281,11 +1312,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
 
-
-
     override fun onMapReady(googleMap: GoogleMap) {
         //googleMap.clear()
         mMap = googleMap
+        mapAndLocationReady()
         // mMap!!.getUiSettings().setAllGesturesEnabled(false)
         //  mMap!!.getUiSettings().setScrollGesturesEnabled(false)
 
@@ -1974,7 +2004,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (callOnLocation.equals("first")) {
             if (currentLatitude != 0.0 && currentLatitude != null) {
 
-                getLocationReady()
+                mapAndLocationReady()
                 cityPojoList = preferencesManager!!.getCityList()
                 if (cityPojoList != null && cityPojoList.size > 0) {
                     setCitySpinner()
