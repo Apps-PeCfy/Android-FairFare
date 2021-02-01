@@ -13,16 +13,15 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 
+import org.slf4j.MDC.clear
 import android.os.*
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import android.os.Handler
-
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -95,10 +94,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var mPolyline: Polyline? = null
     var updatedPolyline: Polyline? = null
     var mGreyPolyline: Polyline? = null
-
     private var myMarker: Marker? = null
     private var isMapZoomed: Boolean? = false
-
 
     @JvmField
     @BindView(R.id.tvhideShow)
@@ -1006,7 +1003,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         //  googleMap!!.clear()
 
         mMap = googleMap
-       // mMap!!.isMyLocationEnabled = true
+        mMap!!.isMyLocationEnabled = true
         mMap!!.animateCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
@@ -1605,18 +1602,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
         Log.d("onLocationChangedq", location!!.speed.toString())
-
-        /**
-         * iLoma Team :- Mohasin 09 Jan 2021
-         */
-
         addCurrentLocationMarker(location)
-
-
         locationChangelatitude = location.latitude
         locationChangelongitude = location.longitude
-
-
 
 
         if (location != null) {
@@ -1670,19 +1658,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         }
 
     }
-
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-    }
-
-    override fun onProviderEnabled(provider: String) {
-    }
-
-    override fun onProviderDisabled(provider: String) {
-    }
-
-    /**
-     * iLoma Team :- Mohasin 8 Jan
-     */
 
     private fun addCurrentLocationMarker(location: Location?) {
 
@@ -1750,11 +1725,11 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 val rotation = (t * location.bearing + (1 - t)
                         * startRotation).toFloat()
                 marker.setPosition(LatLng(lat, lng))
-              /*  marker.rotation = rotation
-                if (t < 1.0) {
-                    // Post again 16ms later.
-                    handler.postDelayed(this, 10000)
-                }*/
+                /*  marker.rotation = rotation
+                  if (t < 1.0) {
+                      // Post again 16ms later.
+                      handler.postDelayed(this, 10000)
+                  }*/
             }
         })
     }
@@ -1836,8 +1811,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val lat = Math.abs(begin.latitude - end.latitude)
         val lng = Math.abs(begin.longitude - end.longitude)
         if (begin.latitude < end.latitude && begin.longitude < end.longitude) return Math.toDegrees(
-            Math.atan(lng / lat)
-        )
+                Math.atan(lng / lat)
+            )
             .toFloat() else if (begin.latitude >= end.latitude && begin.longitude < end.longitude) return (90 - Math.toDegrees(
             Math.atan(lng / lat)
         ) + 90).toFloat() else if (begin.latitude >= end.latitude && begin.longitude >= end.longitude) return (Math.toDegrees(
@@ -1846,6 +1821,16 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             Math.atan(lng / lat)
         ) + 270).toFloat()
         return (-1).toFloat()
+    }
+
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+    }
+
+    override fun onProviderEnabled(provider: String) {
+    }
+
+    override fun onProviderDisabled(provider: String) {
     }
 
 }

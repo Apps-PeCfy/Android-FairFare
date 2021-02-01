@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
@@ -70,7 +69,6 @@ class LoginActivity : AppCompatActivity(),
     CountryCodePicker.OnCountryChangeListener, ILoginView {
     var facebookLoginClick = 0
     var googleAccessTokem: String? = null
-    var doubleBackPressed: Boolean? = false
 
     private var fragmentManager: FragmentManager? = null
     private var fragmentTransaction: FragmentTransaction? = null
@@ -735,19 +733,5 @@ class LoginActivity : AppCompatActivity(),
 
             //  Toast.makeText(LoginActivity.this, loginResponsepojo.getMessage(), Toast.LENGTH_LONG).show();
         }
-    }
-
-    override fun onBackPressed() {
-        if (doubleBackPressed!!) {
-            finish()
-        } else {
-            doubleBackPressed = true
-            Toast.makeText(
-                this,
-                resources.getString(R.string.str_alert_exit_app),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        Handler().postDelayed({ doubleBackPressed = false }, 3000)
     }
 }

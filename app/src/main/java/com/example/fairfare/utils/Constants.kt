@@ -24,7 +24,4 @@ object Constants {
     var SHARED_PREFERENCE_CLat = "lat"
     var SHARED_PREFERENCE_CLong = "lang"
 
-    // ILOMADEV:- This flag must be false to run iloma optimise code
-    var IS_OLD_PICK_UP_CODE = false
-
 }

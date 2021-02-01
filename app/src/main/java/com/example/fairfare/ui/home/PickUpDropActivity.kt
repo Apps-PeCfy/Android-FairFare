@@ -31,7 +31,6 @@ import com.example.fairfare.ui.home.PlacesAutoCompleteAdapter.ClickListener
 import com.example.fairfare.ui.home.RecyclerViewAdapter.IClickListener
 import com.example.fairfare.ui.home.pojo.DeleteSaveDataResponsePOJO
 import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
-import com.example.fairfare.ui.home.pojo.PickUpLocationModel
 import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
@@ -52,7 +51,6 @@ import com.google.maps.GeoApiContext
 import com.google.maps.GeocodingApi
 import com.google.maps.errors.ApiException
 import com.google.maps.model.GeocodingResult
-import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -66,7 +64,6 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     var currentLatitude = 0.0
     var currentLongitude = 0.0
     var extras: Bundle? = null
-    var isSource : Boolean ? = false
 
     private var plotedLocation: Location? = null
 
@@ -526,14 +523,12 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     @OnClick(R.id.btnContinue)
     fun btnContinue() {
         if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
-            isSource = true
             sharedpreferences!!.edit().remove("SourceLat")
             sharedpreferences!!.edit().remove("SourceLong")
             editor!!.putString(SourceLat, currentLatitude.toString())
             editor!!.putString(SourceLong, currentLongitude.toString())
             editor!!.putString(fromLocation, locateOnMapAddress)
         } else {
-            isSource = false
             sharedpreferences!!.edit().remove("DestinationLat")
             sharedpreferences!!.edit().remove("DestinationLong")
             editor!!.putString(DestinationLat, currentLatitude.toString())
@@ -552,18 +547,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
         intent.putExtra("formaredDateLater", extras!!.getString("formaredDateLater"))
 
-        //Old Code
-        if (Constants.IS_OLD_PICK_UP_CODE){
-            startActivity(intent)
-        }else{
-            // ILOMADEV
-            finish()
-
-            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, locateOnMapAddress, keyAirport))
-        }
-
-
-
+        startActivity(intent)
     }
 
     private fun setStatusBarGradiant(activity: PickUpDropActivity) {
@@ -607,7 +591,6 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         locateOnMapAddress = currentAddress
         tvAddress!!.text = currentAddress
         markerOptionscurrent.title(currentAddress)
-
         googleMap!!.animateCamera(
             CameraUpdateFactory.newLatLng(
                 LatLng(
@@ -627,12 +610,10 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         //  mMap!!.addMarker(MarkerOptions().position(LatLng(currentLatitude, currentLongitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
 
 
-
         /* googleMap.setOnMapClickListener { latLng ->
              ivFavLocateOnMap!!.setBackgroundResource(R.drawable.ic_fav_unchecked)
              getAddress(latLng)
          }*/
-
 
 
         /**
@@ -640,13 +621,16 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
          */
 
         mMap!!.setOnCameraIdleListener {
-            val mapCenter =
-                mMap!!.cameraPosition.target
+            val mapCenter = mMap!!.cameraPosition.target
             plotedLocation = Location("")
             plotedLocation!!.setLatitude(mapCenter.latitude)
             plotedLocation!!.setLongitude(mapCenter.longitude)
 
-            moveToCurrentLocation(mapCenter)
+            if(mapCenter!=null){
+                moveToCurrentLocation(mapCenter)
+            }
+
+
 
         }
     }
@@ -660,28 +644,36 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         try {
             val addresses =
                 geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
-            if (addresses != null && addresses.size > 0) {
+            if (addresses != null) {
 
-                val returnedAddress = addresses[0]
-                val strReturnedAddress = StringBuilder()
-                for (j in 0..returnedAddress.maxAddressLineIndex) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
+                if (addresses.size > 0) {
+                    val returnedAddress = addresses[0].getAddressLine(0)
+
+                    street = returnedAddress
+
+                } else {
+
+                    Toast.makeText(
+                        this,
+                        "Address is not found, Please try after some time",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-                street = strReturnedAddress.toString()
-            }else {
 
+            } else {
                 Toast.makeText(
                     this,
                     "Address is not found, Please try after some time",
                     Toast.LENGTH_LONG
                 ).show()
+
             }
         } catch (e: IOException) {
+
         }
 
         locateOnMapAddress = street
         tvAddress!!.text = street
-
 
     }
 
@@ -705,7 +697,6 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         currentLatitude = place!!.latLng!!.latitude
         currentLongitude = place!!.latLng!!.longitude
         if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
-            isSource = true
             sharedpreferences!!.edit().remove("SourceLat")
             sharedpreferences!!.edit().remove("SourceLong")
             editor!!.putString(SourceLat, currentLatitude.toString())
@@ -713,7 +704,6 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             editor!!.putString(fromLocation, selectedAddress)
 
         } else {
-            isSource = false
             sharedpreferences!!.edit().remove("DestinationLat")
             sharedpreferences!!.edit().remove("DestinationLong")
             editor!!.putString(DestinationLat, currentLatitude.toString())
@@ -738,16 +728,10 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
         intent.putExtra("splacedi", selectedAddress)
 
-        //Old Code
-        if (Constants.IS_OLD_PICK_UP_CODE){
-            startActivity(intent)
-        }else{
-            // ILOMADEV
-            finish()
 
-            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, locateOnMapAddress, keyAirport))
-        }
 
+
+        startActivity(intent)
     }
 
     override fun favClick(place: Place?) {
@@ -766,7 +750,6 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 val place = response.place
                 mMap!!.clear()
                 if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
-                    isSource = true
                     sharedpreferences!!.edit().remove("SourceLat")
                     sharedpreferences!!.edit().remove("SourceLong")
                     editor!!.putString(SourceLat, place.latLng!!.latitude.toString())
@@ -774,7 +757,6 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     editor!!.putString(fromLocation, selectedadd)
 
                 } else {
-                    isSource = false
                     sharedpreferences!!.edit().remove("DestinationLat")
                     sharedpreferences!!.edit().remove("DestinationLong")
                     editor!!.putString(DestinationLat, place.latLng!!.latitude.toString())
@@ -795,18 +777,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
 
 
-                //Old Code
-                if (Constants.IS_OLD_PICK_UP_CODE){
-                    startActivity(intent)
-                }else{
-                    // ILOMADEV
-                    finish()
-
-                    EventBus.getDefault().post(PickUpLocationModel(place.latLng!!.latitude, place.latLng!!.longitude, isSource, selectedadd, keyAirport))
-                }
-
-
-
+                startActivity(intent)
 
                 Log.d(
                     "Placefound: ",
@@ -957,18 +928,12 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
 
     /*private void setPlaceListener() {
-
-
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
         }
-
-
         // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-
-
         if (autocompleteFragment != null) {
             autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG));
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener () {
@@ -976,14 +941,12 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 public void onPlaceSelected(@NonNull Place place) {
                     moveToCurrentLocation(place.getLatLng());
                 }
-
                 @Override
                 public void onError(@NonNull Status status) {
                     Toast.makeText(context, status.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
-
     }*/
 
     /**
@@ -996,19 +959,20 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 plotedLocation!!.latitude = currentLocation.latitude
             }
 
-            getAddress(currentLocation)
-            mMap!!.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    currentLocation,
-                    mMap!!.cameraPosition.zoom
+                getAddress(currentLocation)
+                mMap!!.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        currentLocation,
+                        mMap!!.cameraPosition.zoom
+                    )
                 )
-            )
 
-            mMap!!.animateCamera(
-                CameraUpdateFactory.zoomTo(mMap!!.cameraPosition.zoom),
-                2000,
-                null
-            )
+                mMap!!.animateCamera(
+                    CameraUpdateFactory.zoomTo(mMap!!.cameraPosition.zoom),
+                    2000,
+                    null
+                )
+
 
         }
     }
