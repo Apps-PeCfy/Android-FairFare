@@ -9,13 +9,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
-
 import android.location.*
-
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import com.example.fairfare.utils.PhotoSelector
 import android.net.Uri
 import android.os.*
 import android.os.StrictMode.VmPolicy
@@ -23,7 +22,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
@@ -48,7 +46,9 @@ import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.trackRide.TrackRideActivity
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
-import com.example.fairfare.utils.*
+import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.PreferencesManager
+import com.example.fairfare.utils.ProjectUtilities
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -75,15 +75,12 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var locationChangelatitude = 0.0
     var locationChangelongitude = 0.0
     protected var locationManager: LocationManager? = null
-    protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
-
     protected var photoSelector: PhotoSelector? = null
     var strFirstTime: String? = null
     var mMap: GoogleMap? = null
     private var mPolyline: Polyline? = null
     var sourecemarker: Marker? = null
     var context: Context = this
-
 
     private var iRidePresenter: IRidePresenter? = null
     var imageList: ArrayList<ImageModel>? = null
@@ -93,8 +90,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGES = 2
     var image: File? = null
-    var filePath: Uri? = null
     var mCurrentPhotoPath: String? = null
+    var filePath: Uri? = null
     var projection =
         arrayOf(MediaStore.MediaColumns.DATA)
 
@@ -183,7 +180,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
 
-
         pDialog = ProgressDialog(this@RideDetailsActivity)
         pDialog!!.setMessage("Please wait...")
         pDialog!!.setCancelable(false)
@@ -236,52 +232,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
 
-        if(Constants.IS_OLD_PICK_UP_CODE){
-
-        }else{
-            //ILOMADEV
-            initLocationUpdates()
-        }
-
-    }
-
-    private fun initLocationUpdates() {
-        myLocationManager?.getCurrentLocation(object : MyLocationManager.LocationManagerInterface {
-            override fun onSuccess(location: Location?) {
-                if (location != null) {
-                    if (strFirstTime.equals("firstClick")) {
-
-                        strFirstTime = "secondClick"
-
-                        if (location != null) {
-                            locationChangelatitude = location.latitude
-                            locationChangelongitude = location.longitude
-                        }
-                        drawRoute()
-                        if ((MyRides_RidesID != null)) {
-
-                            GetDistanceFromLatLonInKm(
-                                MyRidesLat!!.toDouble(),
-                                MyRidesLong!!.toDouble(),
-                                locationChangelatitude,
-                                locationChangelongitude
-                            )
-
-                        } else{
-                            GetDistanceFromLatLonInKm(
-                                originLat!!.toDouble(),
-                                originLong!!.toDouble(),
-                                locationChangelatitude,
-                                locationChangelongitude
-                            )
-                        }
-
-
-                    }
-                }
-            }
-
-        })
     }
 
 
@@ -654,7 +604,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         selectedImageList = ArrayList<String>()
         imageList = ArrayList()
     }
-    
     private fun showConfirmationDialog(position: Int) {
         val alertDialog = AlertDialog.Builder(context)
         alertDialog.setTitle("FairFare")
@@ -687,21 +636,22 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     private fun setImageList() {
 
-      /*  val options =
-            arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
-        val builder =
-            android.app.AlertDialog.Builder(this@RideDetailsActivity)
-        builder.setTitle("Add Photo!")
-        builder.setItems(options) { dialog, item ->
-            if (options[item] == "Take Photo") {
-                takePicture()
-            } else if (options[item] == "Choose from Gallery") {
-                getPickImageIntent()
-            } else if (options[item] == "Cancel") {
-                dialog.dismiss()
-            }
-        }
-        builder.show()*/
+        /*  val options =
+           arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+       val builder =
+           android.app.AlertDialog.Builder(this@RideDetailsActivity)
+       builder.setTitle("Add Photo!")
+       builder.setItems(options) { dialog, item ->
+           if (options[item] == "Take Photo") {
+               takePicture()
+           } else if (options[item] == "Choose from Gallery") {
+               getPickImageIntent()
+           } else if (options[item] == "Cancel") {
+               dialog.dismiss()
+           }
+       }
+       builder.show()
+       builder.show()*/
 
         /**
          * iLoma Team :- Mohasin 8 Jan
@@ -710,9 +660,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         if(photoSelector!!.isPermissionGranted(context)){
             photoSelector!!.selectImage(null)
         }
-
-
-
     }
 
     fun getPickImageIntent() {
@@ -804,9 +751,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 }
             }
         }
-    }*/
-
-
+    }
+*/
     fun getImageFilePath(uri: Uri?) {
         val cursor =
             contentResolver.query(uri!!, projection, null, null, null)
@@ -948,7 +894,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     override fun onLocationChanged(location: Location) {
 
-        /*if (strFirstTime.equals("firstClick")) {
+        if (strFirstTime.equals("firstClick")) {
 
             strFirstTime = "secondClick"
 
@@ -976,7 +922,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             }
 
 
-        }*/
+        }
 
     }
 

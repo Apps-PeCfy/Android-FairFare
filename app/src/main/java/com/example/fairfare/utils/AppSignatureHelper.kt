@@ -10,9 +10,7 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 
-
-public class AppSignatureHelper(context: Context?) :
-
+ class AppSignatureHelper(context: Context?) :
     ContextWrapper(context) {// Get all package signatures for the current package
 
     // For each signature create a compatible hash
