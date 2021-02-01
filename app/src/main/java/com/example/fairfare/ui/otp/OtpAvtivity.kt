@@ -189,10 +189,10 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         if (TextUtils.isEmpty(edt_otp!!.text.toString()) || edt_otp!!.textSize < 6) {
             Toast.makeText(this, "Please enter OTP", Toast.LENGTH_LONG).show()
         } else {
-
             successOtpFlow()
         }
     }
+
 
     @OnClick(R.id.txt_resend_otp)
     fun resendOTP() {
