@@ -521,6 +521,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (!SourceLat!!.isEmpty()) {
 
             if (mMap != null) {
+                if(sourecemarker != null){
+                    sourecemarker?.remove()
+                }
                 mMap!!.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
                         LatLng(
@@ -542,6 +545,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         }
         if (!DestinationLat!!.isEmpty()) {
+            if(destmarker != null){
+                destmarker?.remove()
+            }
             destmarker = mMap!!.addMarker(
                 MarkerOptions().position(
                     LatLng(
