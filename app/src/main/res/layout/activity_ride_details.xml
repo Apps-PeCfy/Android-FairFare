@@ -68,7 +68,7 @@
                 android:layout_below="@+id/tv_vehicalDetails"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:focusableInTouchMode="true"
-                android:hint="Enter Vehicle Number (optional)"
+                android:hint="Enter Vehicle Number (Optional)"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp"
                 />
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edt_vehicalNO"
-                android:hint="Start Trip Meter (optional)"
+                android:hint="Start Trip Meter (Optional)"
                 android:inputType="number"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp" />
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_driverDetails"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:hint="Enter Driver Name (optional)"
+                android:hint="Enter Driver Name (Optional)"
                 android:inputType="text"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp" />
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edt_DriverName"
-                android:hint="Enter Driver’s Badge Number (optional)"
+                android:hint="Enter Driver’s Badge Number (Optional)"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp" />
 

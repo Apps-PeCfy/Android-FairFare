@@ -57,13 +57,12 @@
 
 
     <EditText
-        android:maxLength="6"
         android:id="@+id/edt_otp"
         android:layout_marginTop="@dimen/_60sdp"
         android:layout_width="@dimen/_200sdp"
         android:gravity="center_horizontal|center_vertical"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:letterSpacing="1"
+        android:hint="@string/enter_otp"
         android:inputType="number"
         android:layout_height="@dimen/_54sdp"/>
 

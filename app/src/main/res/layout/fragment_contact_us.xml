@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="@string/review"
+                android:text="If you have any questions or need clarifications or have suggestions, please do write to us. We will get back to you at the earliest possible."
                 android:textColor="@color/Black" />
 
 
