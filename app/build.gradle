@@ -8,12 +8,12 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         multiDexEnabled true
         applicationId "com.example.fairfare"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -77,6 +77,11 @@ dependencies {
 
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+
+    //Event Bus
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
 
     //noinspection GradleCompatible
     implementation 'com.google.android.material:material:1.0.0'
