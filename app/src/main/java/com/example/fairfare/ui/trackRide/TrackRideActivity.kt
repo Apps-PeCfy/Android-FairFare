@@ -342,7 +342,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     //distanceBetweenCurrent in meter
-                    if (distanceBetweenCurrent!! >= 10&& distanceBetweenCurrent!!<=400) {
+                    if (distanceBetweenCurrent!! >= 10) {
                         globalmarkerPoints!!.add(OriginM)
                         trackBoard = "currentCordinate"
                         drawRoute()
