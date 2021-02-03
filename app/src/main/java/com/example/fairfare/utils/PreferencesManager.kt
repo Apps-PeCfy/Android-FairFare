@@ -2,9 +2,13 @@ package com.example.fairfare.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.fairfare.ui.home.pojo.GetAllowCityResponse
+import com.google.gson.Gson
 
 class PreferencesManager private constructor(context: Context) {
     private val mPref: SharedPreferences
+    private val cityList_key : String = "ALLOWED_CITY_LIST"
+
     fun setStringValue(KEY_VALUE: String?, value: String?) {
         mPref.edit()
             .putString(KEY_VALUE, value)
@@ -44,6 +48,23 @@ class PreferencesManager private constructor(context: Context) {
             .clear()
             .commit()
     }
+
+    fun setCityList(cityList: List<GetAllowCityResponse.CitiesItem>) {
+        val gson = Gson()
+        val jsonString = gson.toJson(cityList)
+        mPref.edit().putString(cityList_key, jsonString).apply()
+    }
+
+    fun getCityList(): List<GetAllowCityResponse.CitiesItem> {
+        var cityList: List<GetAllowCityResponse.CitiesItem> = ArrayList()
+        val gson = Gson()
+        val jsonString = mPref.getString(cityList_key, "")
+        if(jsonString != null && jsonString.isNotEmpty()){
+            cityList = gson.fromJson(jsonString, Array<GetAllowCityResponse.CitiesItem>::class.java).asList()
+        }
+        return cityList
+    }
+
 
     companion object {
         private const val PREF_NAME = "FairFare"
