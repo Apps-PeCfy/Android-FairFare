@@ -9,9 +9,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
-
 import android.location.*
-
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
@@ -23,7 +21,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
@@ -76,13 +73,13 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var locationChangelongitude = 0.0
     protected var locationManager: LocationManager? = null
     protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
-
     protected var photoSelector: PhotoSelector? = null
     var strFirstTime: String? = null
     var mMap: GoogleMap? = null
     private var mPolyline: Polyline? = null
     var sourecemarker: Marker? = null
     var context: Context = this
+    lateinit var popupschduleResponse: ScheduleRideResponsePOJO
 
 
     private var iRidePresenter: IRidePresenter? = null
@@ -93,8 +90,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGES = 2
     var image: File? = null
-    var filePath: Uri? = null
     var mCurrentPhotoPath: String? = null
+    var filePath: Uri? = null
     var projection =
         arrayOf(MediaStore.MediaColumns.DATA)
 
@@ -143,6 +140,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var MyRidesLong: String? = null
     var MyRidesDLat: String? = null
     var MyRidesDLong: String? = null
+    var MyRidesoriginalAddress: String? = null
+    var MyRidesdestinationAddress: String? = null
 
     var travelledDistance: Double? = null
 
@@ -183,7 +182,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
 
-
         pDialog = ProgressDialog(this@RideDetailsActivity)
         pDialog!!.setMessage("Please wait...")
         pDialog!!.setCancelable(false)
@@ -215,6 +213,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         MyRidesLong = intent.getStringExtra("MyRidessLong")
         MyRidesDLat = intent.getStringExtra("MyRidesdLat")
         MyRidesDLong = intent.getStringExtra("MyRidesdLong")
+        MyRidesoriginalAddress = intent.getStringExtra("MyRidesoriginalAddress")
+        MyRidesdestinationAddress = intent.getStringExtra("MyRidesdestinationAddress")
 
 
         getcurrentDate()
@@ -242,6 +242,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             //ILOMADEV
             initLocationUpdates()
         }
+
 
     }
 
@@ -415,9 +416,37 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         val tvCalculatedDistance: TextView = customLayout!!.findViewById(R.id.tvCalculatedDistance)
         val tvCalculatedDuration: TextView = customLayout!!.findViewById(R.id.tvCalculatedDuration)
         val tvCalculatedNewFare: TextView = customLayout!!.findViewById(R.id.tvCalculatedNewFare)
+        val tvDropUpLocation: TextView = customLayout!!.findViewById(R.id.tvDropUpLocation)
+        val tvPickUpLocation: TextView = customLayout!!.findViewById(R.id.tvPickUpLocation)
         tvCalculatedDistance.text = "New Calculated Distance : " + estCurrentDistance.toString()
         tvCalculatedDuration.text = "New Calculated Duration : " + estCurrentDuration
         tvCalculatedNewFare.text = "New Calculated Fare : " + "Rs " + estCurrentFare
+        tvDropUpLocation.text = "Drop Up Location : " + dAddress
+
+        val geocoder = Geocoder(this@RideDetailsActivity, Locale.getDefault())
+        var currentAddress: String? = null
+
+        try {
+            val addresses =
+                geocoder.getFromLocation(
+                    (locationChangelatitude),
+                    (locationChangelongitude), 1
+                )
+            if (addresses != null) {
+                val returnedAddress = addresses[0]
+                val strReturnedAddress =
+                    StringBuilder()
+                for (j in 0..returnedAddress.maxAddressLineIndex) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
+                }
+                currentAddress = strReturnedAddress.toString()
+            }
+        } catch (e: IOException) {
+        }
+
+
+
+        tvPickUpLocation.text = "Pick Up Location : " + currentAddress
 
         alertDialog.setPositiveButton("Proceed") { dialog, which ->
             val editText: TextView = customLayout!!.findViewById(R.id.test)
@@ -530,6 +559,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             if ((MyRides_RidesID != null)) {
 
 
+
+
                 if (actualDistanceInMeter >= 500) {
 
                     iRidePresenter!!.startRide(
@@ -549,7 +580,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                         edt_vehicalNO!!.text.toString(),
                         edt_bagsCount!!.text.toString(),
                         edt_meterReading!!.text.toString(),
-                        originLat, originLong, "", "", imageList,"",""
+                        originLat, originLong, "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
                     )
 
                 } else
@@ -571,7 +602,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                         edt_vehicalNO!!.text.toString(),
                         edt_bagsCount!!.text.toString(),
                         edt_meterReading!!.text.toString(),
-                        "", "", "", "", imageList,"",""
+                        "", "", "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
                     )
 
                 }
@@ -598,7 +629,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress
+                    originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress,"No"
                 )
 
             }
@@ -654,7 +685,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         selectedImageList = ArrayList<String>()
         imageList = ArrayList()
     }
-    
     private fun showConfirmationDialog(position: Int) {
         val alertDialog = AlertDialog.Builder(context)
         alertDialog.setTitle("FairFare")
@@ -687,21 +717,22 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     private fun setImageList() {
 
-      /*  val options =
-            arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
-        val builder =
-            android.app.AlertDialog.Builder(this@RideDetailsActivity)
-        builder.setTitle("Add Photo!")
-        builder.setItems(options) { dialog, item ->
-            if (options[item] == "Take Photo") {
-                takePicture()
-            } else if (options[item] == "Choose from Gallery") {
-                getPickImageIntent()
-            } else if (options[item] == "Cancel") {
-                dialog.dismiss()
-            }
-        }
-        builder.show()*/
+        /*  val options =
+           arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+       val builder =
+           android.app.AlertDialog.Builder(this@RideDetailsActivity)
+       builder.setTitle("Add Photo!")
+       builder.setItems(options) { dialog, item ->
+           if (options[item] == "Take Photo") {
+               takePicture()
+           } else if (options[item] == "Choose from Gallery") {
+               getPickImageIntent()
+           } else if (options[item] == "Cancel") {
+               dialog.dismiss()
+           }
+       }
+       builder.show()
+       builder.show()*/
 
         /**
          * iLoma Team :- Mohasin 8 Jan
@@ -710,9 +741,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         if(photoSelector!!.isPermissionGranted(context)){
             photoSelector!!.selectImage(null)
         }
-
-
-
     }
 
     fun getPickImageIntent() {
@@ -804,9 +832,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 }
             }
         }
-    }*/
-
-
+    }
+*/
     fun getImageFilePath(uri: Uri?) {
         val cursor =
             contentResolver.query(uri!!, projection, null, null, null)
@@ -903,6 +930,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             intentr.putExtra("MyRidesLong", MyRidesLong)
             intentr.putExtra("MyRidesDLat", MyRidesDLat)
             intentr.putExtra("MyRidesDLong", MyRidesDLong)
+            intentr.putExtra("MyRidesoriginalAddress", MyRidesoriginalAddress)
+            intentr.putExtra("MyRidesdestinationAddress", MyRidesdestinationAddress)
             intentr.putExtra("MyRidesID", MyRides_RidesID)
             startActivity(intentr)
             finish()
@@ -920,6 +949,67 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             finish()
 
         }
+
+
+    }
+
+    override fun procedPopUp(scheduleRideResponsePOJO: ValidationResponse?) {
+
+        val alertDialog = AlertDialog.Builder(context)
+        alertDialog.setMessage(scheduleRideResponsePOJO!!.message)
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("OK") { dialog, which ->
+
+            if (actualDistanceInMeter >= 500) {
+
+                iRidePresenter!!.startRide(
+                    token,
+                    MyRides_RidesID,
+                    MyRides_vehicle_rate_card_id,
+                    "",
+                    "",
+                    originPlaceID,
+                    "",
+                    "",
+                    distance_ViewRide,
+                    durationRide,
+                    "",
+                    MyRides_airport_ratr_card_id,
+                    edt_DriverName!!.text.toString(),
+                    edt_vehicalNO!!.text.toString(),
+                    edt_bagsCount!!.text.toString(),
+                    edt_meterReading!!.text.toString(),
+                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"Yes"
+                )
+
+            } else
+            {
+                iRidePresenter!!.startRide(
+                    token,
+                    MyRides_RidesID,
+                    MyRides_vehicle_rate_card_id,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    MyRides_airport_ratr_card_id,
+                    edt_DriverName!!.text.toString(),
+                    edt_vehicalNO!!.text.toString(),
+                    edt_bagsCount!!.text.toString(),
+                    edt_meterReading!!.text.toString(),
+                    "", "", "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"Yes"
+                )
+
+            }
+
+
+        }
+        alertDialog.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        alertDialog.show()
 
 
     }
@@ -948,7 +1038,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     override fun onLocationChanged(location: Location) {
 
-        /*if (strFirstTime.equals("firstClick")) {
+      /*  if (strFirstTime.equals("firstClick")) {
 
             strFirstTime = "secondClick"
 
@@ -976,8 +1066,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             }
 
 
-        }*/
-
+        }
+*/
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {

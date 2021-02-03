@@ -18,11 +18,40 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textSize="@dimen/_15sdp" />
 
+
+    <TextView
+        android:id="@+id/tvPickUpLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/_12sdp"
+
+        />
+
+
+
+    <TextView
+        android:id="@+id/tvDropUpLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/_12sdp"
+
+        />
+
+
+
     <TextView
         android:id="@+id/tvCalculatedDistance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:text="New Calculated Distance :"

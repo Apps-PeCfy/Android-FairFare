@@ -441,6 +441,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                     currentLatitude = location!!.latitude
                     currentLongitude = location!!.longitude
+                    preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_CLat, currentLatitude.toString())
+                    preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_CLong, currentLongitude.toString())
 
 
                     if (callOnLocation.equals("first")) {
@@ -1029,7 +1031,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                 response.errorBody()!!.string(),
                                 ValidationResponse::class.java
                             )
-                            Toast.makeText(this@HomeActivity, pojo.message, Toast.LENGTH_LONG)
+                            Toast.makeText(this@HomeActivity, pojo.errors!!.get(0).message, Toast.LENGTH_LONG)
                                 .show()
 
 
@@ -2366,7 +2368,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             doubleBackPressed = true
             Toast.makeText(
                 this,
-                resources.getString(R.string.str_alert_exit_app),
+                "Press once again to exit",
                 Toast.LENGTH_SHORT
             ).show()
         }

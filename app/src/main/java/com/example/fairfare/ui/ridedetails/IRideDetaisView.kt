@@ -8,6 +8,10 @@ interface IRideDetaisView  : IBaseView {
 
     fun schduleRideSuccess(scheduleRideResponsePOJO: ScheduleRideResponsePOJO?)
 
+    fun procedPopUp(msg: ValidationResponse?)
+
     fun validationError(validationResponse: ValidationResponse?)
+
+
 
 }

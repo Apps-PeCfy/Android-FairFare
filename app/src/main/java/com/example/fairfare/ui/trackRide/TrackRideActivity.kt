@@ -345,7 +345,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     //distanceBetweenCurrent in meter
-                    if (distanceBetweenCurrent!! >= 10&& distanceBetweenCurrent!!<=400) {
+                    if (distanceBetweenCurrent!! >= 10) {
                         globalmarkerPoints!!.add(OriginM)
                         trackBoard = "currentCordinate"
                         drawRoute()
@@ -451,8 +451,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             } catch (e: IOException) {
             }
 
-            tv_myCurrentLocation!!.text = streetAddress
-            tv_myDropUpLocation!!.text = deststreetAddress
+            tv_myCurrentLocation!!.text = intent.getStringExtra("MyRidesoriginalAddress")
+            tv_myDropUpLocation!!.text = intent.getStringExtra("MyRidesdestinationAddress")
 
 
         } else {

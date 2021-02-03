@@ -88,7 +88,7 @@
                 <RelativeLayout
                     android:id="@+id/addressDetails"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_135sdp"
+                    android:layout_height="@dimen/_140sdp"
                     android:layout_below="@+id/view"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -161,7 +161,7 @@
                     <LinearLayout
                         android:id="@+id/llOrigin"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_height="@dimen/_48sdp"
                         android:layout_centerVertical="true"
                         android:orientation="vertical">
 
@@ -176,8 +176,8 @@
                             android:fontFamily="@font/notosansjp_bold"
                             android:gravity="center_vertical"
                             android:includeFontPadding="false"
-                            android:maxLines="2"
-                            android:text="Santacruz - addd dsdsd sdsds chembur link road, Mumb" />
+                            android:maxLines="3"
+                            android:text="Santacruz - cxxc qwewewe wewewe  wewexc dsdsdsdaddd dsdsd sdsds chembur link road, Mumb" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -192,7 +192,7 @@
                     <LinearLayout
                         android:id="@+id/llDestination"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_height="@dimen/_55sdp"
                         android:layout_below="@+id/llOrigin"
                         android:layout_centerVertical="true"
                         android:orientation="vertical">
@@ -210,8 +210,8 @@
                             android:fontFamily="@font/notosansjp_bold"
                             android:gravity="center_vertical"
                             android:includeFontPadding="false"
-                            android:maxLines="2"
-                            android:text="Santacruz - addd dsdsd sdsds chembur link road, Mumb" />
+                            android:maxLines="3"
+                            android:text="Santacruz - add sdsdsd sdssds sdssd sddsdds sdsdsdsdsd  sdsdsd dsdsd sdsds chembur link road, Mumb" />
 
 
                         <TextView
@@ -231,8 +231,8 @@
                         android:layout_above="@+id/llDestination"
                         android:layout_below="@+id/llOrigin"
                         android:layout_marginStart="@dimen/_14sdp"
-                        android:layout_marginTop="-30dp"
-                        android:layout_marginBottom="-10dp"
+                        android:layout_marginTop="-20dp"
+                        android:layout_marginBottom="-15dp"
                         android:background="@color/secondaryLightGray" />
 
 

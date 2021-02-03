@@ -8,6 +8,7 @@ import com.google.gson.Gson
 class PreferencesManager private constructor(context: Context) {
     private val mPref: SharedPreferences
     private val cityList_key : String = "ALLOWED_CITY_LIST"
+
     fun setStringValue(KEY_VALUE: String?, value: String?) {
         mPref.edit()
             .putString(KEY_VALUE, value)
@@ -63,6 +64,7 @@ class PreferencesManager private constructor(context: Context) {
         }
         return cityList
     }
+
 
     companion object {
         private const val PREF_NAME = "FairFare"

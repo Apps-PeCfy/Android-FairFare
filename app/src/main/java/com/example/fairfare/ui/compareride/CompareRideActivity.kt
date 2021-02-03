@@ -134,6 +134,10 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         setContentView(R.layout.activity_compare_ride)
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
+
+
+
+
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
         Places.initialize(this, resources.getString(R.string.google_maps_key))
@@ -375,6 +379,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         }
     }
 */
+    
 
     @OnClick(R.id.tvhideShow)
     fun hideshow() {

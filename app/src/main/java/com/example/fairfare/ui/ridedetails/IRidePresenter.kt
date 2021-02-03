@@ -28,7 +28,8 @@ interface IRidePresenter {
         dLong: String?,
         imageList: ArrayList<ImageModel>?,
         sourceAddress: String?,
-        destinationAddress: String?
+        destinationAddress: String?,
+        night_allow: String?
 
     )
 }

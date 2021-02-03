@@ -13,7 +13,12 @@ interface ILoginPresenter {
     )
 
     fun socialLogin(
-        deviceType: String?, loginType: String?, name: String?,
-        providerId: String?, token: String?, email: String?
+        deviceType: String?,
+        loginType: String?,
+        name: String?,
+        providerId: String?,
+        token: String?,
+        email: String?,
+        deviceID: String?
     )
 }

@@ -61,7 +61,8 @@ interface NetworkService {
         @Field("name") name: String?,
         @Field("provider_id") provider_id: String?,
         @Field("token") token: String?,
-        @Field("email") email: String?
+        @Field("email") email: String?,
+        @Field("device_id") deviceId: String?
     ): Call<LoginResponsepojo?>?
 
     @FormUrlEncoded
@@ -178,7 +179,8 @@ interface NetworkService {
         @Field("destination_place_lat") destination_place_lat: String?,
         @Field("destination_place_long") destination_place_long: String?,
         @Field("origin_full_address") origin_full_address: String?,
-        @Field("destination_full_address") destination_full_address: String?
+        @Field("destination_full_address") destination_full_address: String?,
+        @Field("night_allow") night_allow: String?
     ): Call<ScheduleRideResponsePOJO?>?
 
 
@@ -272,7 +274,9 @@ interface NetworkService {
 
     @GET("rides")
     fun getMyRides(@Header("Authorization") header: String?,
-                   @Query("page") name: String? ): Call<GetRideResponsePOJO?>?
+                   @Query("page") name: String?,
+                   @Query("latitude") latitude: String?,
+                   @Query("longitude") longitude: String?): Call<GetRideResponsePOJO?>?
 
     @GET("getDisputeReasons")
     fun getDisputeReasons(@Header("Authorization") header: String?): Call<DisputesReasonResponsePOJO?>?

@@ -198,6 +198,7 @@ class RegisterActivity : AppCompatActivity(),
 
 
     }
+
     inner class EventDialogBind1 {
         @JvmField
         @BindView(R.id.ivPopUpClose)
@@ -288,12 +289,11 @@ class RegisterActivity : AppCompatActivity(),
         if (numbervalidation == "false") {
             tvPhoneNumberError!!.text = "Please enter a valid phone no."
             tvPhoneNumberError!!.visibility = View.VISIBLE
-        } else if (edt_email!!.text.toString().isNotEmpty()) {
+        } else if (edt_email!!.text.toString().isNotEmpty() && (!emailRegex.matcher(edt_email!!.text.toString()).matches())) {
 
-            if (!emailRegex.matcher(edt_email!!.text.toString()).matches()) {
-                tvEmailError!!.text = "Please enter a valid email."
-                tvEmailError!!.visibility = View.VISIBLE
-            }
+
+            tvEmailError!!.text = "Please enter a valid email."
+            tvEmailError!!.visibility = View.VISIBLE
 
 
         } else if (TextUtils.isEmpty(edt_name!!.text.toString())) {

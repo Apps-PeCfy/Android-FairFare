@@ -41,16 +41,15 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         dLong: String?,
         imageList: ArrayList<ImageModel>?,
         sourceAddress:String?,
-        destinationAddress: String?
+        destinationAddress: String?,
+        nightallow: String?
     )
     {
         if(imageList != null && imageList.size> 0){
-
             calmultipartdata(token,id,vehicle_rate_card_id,luggage_quantity,schedule_date,
                 origin_place_id, destination_place_id,overview_polyline,distance,
                 duration,city_id,airport_rate_card_id, driver_name,vehicle_no,badge_no,
-                start_meter_reading,sLat,sLong,dLat,dLong,imageList,sourceAddress,destinationAddress)
-
+                start_meter_reading,sLat,sLong,dLat,dLong,imageList,sourceAddress,destinationAddress,nightallow)
 
         }else{
             view.showWait()
@@ -73,16 +72,13 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
                 sLat,
                 sLong,
                 dLat,
-
-                dLong,sourceAddress,destinationAddress
-
+                dLong,sourceAddress,destinationAddress,nightallow
             )
             call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
                 override fun onResponse(
                     call: Call<ScheduleRideResponsePOJO?>,
                     response: Response<ScheduleRideResponsePOJO?>
                 ) {
-
                     view.removeWait()
 
                     if (response.code() == 200) {
@@ -102,10 +98,23 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
                         } catch (exception: IOException) {
                         }
 
+                    }else if(response.code() == 406){
+
+                        val gson = GsonBuilder().create()
+                        var pojo: ValidationResponse? = ValidationResponse()
+                        try {
+                            pojo = gson.fromJson(
+                                response.errorBody()!!.string(),
+                                ValidationResponse::class.java
+                            )
+                            view.procedPopUp(pojo)
+                        } catch (exception: IOException) {
+                        }
+
+
                     }else{
 
                         view.onFailure(response.message())
-
 
                     }
                 }
@@ -144,23 +153,20 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         dLong: String?,
         imageList: ArrayList<ImageModel>?,
         sourceAddress: String?,
-        destAddress: String?
+        destAddress: String?,
+        nightallow: String?
     ) {
         var body: MultipartBody.Part? = null
         val imagesMultipart = arrayOfNulls<MultipartBody.Part>(
-
             imageList!!.size
-
         )
 
         var requestFile: RequestBody
         for (pos in imageList!!.indices) {
-
             /* val file = File(imageList[pos].image!!)
              requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
              body =
                  MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, requestFile)*/
-
 
             val file = File(imageList[pos].image!!)
             val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
@@ -170,6 +176,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
         val map = HashMap<String?, String?>()
 
+        map["night_allow"] = nightallow!!
         map["luggage_quantity"] = luggageQuantity!!
         map["origin_place_id"] = originPlaceId!!
         map["destination_place_id"] = destinationPlaceId!!
@@ -233,7 +240,22 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
                     } catch (exception: IOException) {
                     }
 
-                }else{
+                }else if(response.code() == 406){
+
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        view.procedPopUp(pojo)
+                    } catch (exception: IOException) {
+                    }
+
+                }
+
+                else{
                     view.onFailure(response.message())
 
                 }

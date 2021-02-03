@@ -61,7 +61,7 @@ class GetRideResponsePOJO {
 		var destinationPlaceLat: String? = null
 
 		@SerializedName("fare")
-		var fare = 0.00
+		var fare:String? = null
 
 		@SerializedName("vehicleName")
 		var vehicleName: String? = null
@@ -127,6 +127,9 @@ class GetRideResponsePOJO {
 
 		@SerializedName("status")
 		var status: String? = null
+
+		@SerializedName("rideStatus")
+		var rideStatus: String? = null
 
 		override fun toString(): String {
 			return "DataItem{" +

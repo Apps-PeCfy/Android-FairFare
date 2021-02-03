@@ -176,7 +176,7 @@
             <RelativeLayout
                 android:id="@+id/addressDetails"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_130sdp"
+                android:layout_height="@dimen/_135sdp"
                 android:layout_below="@+id/view"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -200,8 +200,8 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:maxLines="2"
-                        android:text="Santacruz -  sfs sfsff sfsfsfsschembur link road, Mumb" />
+                        android:maxLines="3"
+                        android:text="Santacruz -  sfs s sfs sdsdsd ffsf fffdfdf dsdsdddsdsds fff  sffsff sfsfsfsschembur link road, Mumb" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -233,8 +233,8 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:maxLines="2"
-                        android:text="Santacruz -  sfs sfsff sfsfsfsschembur link road, Mumb" />
+                        android:maxLines="3"
+                        android:text="Santacruz -  sfs s fdfdfdf fddfdfdfd fdfdfdf dfdfdfdffdd fdffsff sfsfsfsschembur link road, Mumb" />
 
 
                     <TextView
@@ -254,7 +254,7 @@
                     android:layout_above="@+id/llDestination"
                     android:layout_below="@+id/llOrigin"
                     android:layout_marginStart="@dimen/_14sdp"
-                    android:layout_marginTop="-35dp"
+                    android:layout_marginTop="-25dp"
                     android:layout_marginBottom="-10dp"
                     android:background="@color/secondaryLightGray" />
 
