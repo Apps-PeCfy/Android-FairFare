@@ -251,7 +251,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         getDisputDetail()
 
 
-        mToolbar!!.title = "Dispute Detail"
+        mToolbar!!.title = "Dispute Details"
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }

@@ -448,8 +448,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             } catch (e: IOException) {
             }
 
-            tv_myCurrentLocation!!.text = streetAddress
-            tv_myDropUpLocation!!.text = deststreetAddress
+            tv_myCurrentLocation!!.text = intent.getStringExtra("MyRidesoriginalAddress")
+            tv_myDropUpLocation!!.text = intent.getStringExtra("MyRidesdestinationAddress")
 
 
         } else {

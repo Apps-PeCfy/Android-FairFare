@@ -42,6 +42,8 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
     var preferencesManager: PreferencesManager? = null
     var sharedpreferences: SharedPreferences? = null
     var token: String? = null
+    var currentLat: String? = null
+    var currentLong: String? = null
     var CurrentpageCount: Int = 1
     var totalPageCount: Int = 1
 
@@ -87,11 +89,13 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
         PreferencesManager.initializeInstance(activity!!.applicationContext)
         preferencesManager = PreferencesManager.instance
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+        currentLat = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_CLat)
+        currentLong = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_CLong)
         initView()
 
 
         iMyRidesPresenter = MyRidesImplementer(this)
-        iMyRidesPresenter!!.getRide(token, CurrentpageCount)
+        iMyRidesPresenter!!.getRide(token, CurrentpageCount,currentLat,currentLong)
 
 
 
@@ -237,7 +241,9 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
         sLat: String?,
         sLong: String?,
         dLat: String?,
-        dLong: String?
+        dLong: String?,
+        originalAddress: String?,
+        destinationAddress: String?
     ) {
 
         val intent = Intent(activity, RideDetailsActivity::class.java)
@@ -248,6 +254,8 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
         intent.putExtra("MyRidessLong", sLong)
         intent.putExtra("MyRidesdLat", dLat)
         intent.putExtra("MyRidesdLong", dLong)
+        intent.putExtra("MyRidesoriginalAddress", originalAddress)
+        intent.putExtra("MyRidesdestinationAddress", destinationAddress)
         startActivity(intent)
 
 

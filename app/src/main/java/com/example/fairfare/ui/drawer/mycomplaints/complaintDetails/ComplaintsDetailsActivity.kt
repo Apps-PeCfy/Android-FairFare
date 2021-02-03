@@ -241,7 +241,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
 
-        mToolbar!!.title = "Complaint Detail"
+        mToolbar!!.title = "Complaint Details"
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }

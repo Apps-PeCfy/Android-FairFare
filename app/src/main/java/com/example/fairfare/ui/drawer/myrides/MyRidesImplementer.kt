@@ -11,12 +11,12 @@ import java.io.IOException
 
 class MyRidesImplementer(private val view: IMyRidesView) : IMyRidesPresenter {
 
-    override fun getRide(token: String?,cnt:Int?) {
+    override fun getRide(token: String?,cnt:Int?,currentLat: String?,currentLong: String?) {
 
 
         view.showWait()
         val call = ApiClient.client.getMyRides(
-            "Bearer $token",cnt.toString())
+            "Bearer $token",cnt.toString(),currentLat,currentLong)
         call!!.enqueue(object : Callback<GetRideResponsePOJO?> {
             override fun onResponse(
                 call: Call<GetRideResponsePOJO?>,

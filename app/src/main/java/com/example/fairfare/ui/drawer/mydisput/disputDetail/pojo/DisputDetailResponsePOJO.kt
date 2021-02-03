@@ -259,7 +259,7 @@ class DisputDetailResponsePOJO {
         var overviewPolyline: String? = null
 
         @SerializedName("totalCharges")
-        var totalCharges:Float?=null
+        var totalCharges:String?=null
 
         @SerializedName("id")
         var id = 0
@@ -340,7 +340,7 @@ class DisputDetailResponsePOJO {
         var overviewPolyline: String? = null
 
         @SerializedName("totalCharges")
-        var totalCharges: Float? = null
+        var totalCharges: String? = null
 
         @SerializedName("id")
         var id = 0

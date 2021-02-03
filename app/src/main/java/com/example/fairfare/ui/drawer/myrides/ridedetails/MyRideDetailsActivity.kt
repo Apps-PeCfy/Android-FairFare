@@ -216,7 +216,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         ID = intent.getStringExtra("Id")
 
-        mToolbar!!.title = "Ride Detail"
+        mToolbar!!.title = "Ride Details"
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }

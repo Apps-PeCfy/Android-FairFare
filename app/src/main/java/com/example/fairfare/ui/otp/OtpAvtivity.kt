@@ -2,14 +2,19 @@ package com.example.fairfare.ui.otp
 
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.text.Editable
+import android.text.InputFilter
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
@@ -76,6 +81,8 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp_avtivity)
         ButterKnife.bind(this)
+        edt_otp!!.filters = arrayOf(InputFilter.LengthFilter(6))
+
         iOtpPresenter = OtpPresenterImplmenter(this)
         PreferencesManager.initializeInstance(this@OtpAvtivity)
         mPreferencesManager = PreferencesManager.instance
@@ -98,7 +105,29 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         }
 
 
+        edt_otp?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+            }
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
 
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if(s.length>0){
+                    edt_otp?.letterSpacing=1.0f
+
+                }else{
+                    edt_otp?.letterSpacing=0.0f
+
+                }
+
+            }
+        })
 
 
 
@@ -106,10 +135,10 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         object : CountDownTimer(31000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 if((millisUntilFinished / 1000).toString().length==1){
-                    txtResendTimer!!.setText("(00:0" + millisUntilFinished / 1000+")")
+                    txtResendTimer!!.setText("00:0" + millisUntilFinished / 1000+"")
 
                 }else{
-                    txtResendTimer!!.setText("(00:" + millisUntilFinished / 1000+")")
+                    txtResendTimer!!.setText("00:" + millisUntilFinished / 1000+"")
 
                 }
             }
@@ -151,7 +180,9 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
             smsReceiver = SmsReceiver()
             registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
             val otpListener: SmsReceiver.OTPListener = object : SmsReceiver.OTPListener {
+                @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                 override fun onOTPReceived(otpData: String?) {
+                    edt_otp?.letterSpacing=1.0f
                     edt_otp?.setText(otpData)
                     successOtpFlow()
                 }
@@ -220,8 +251,9 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION, verifyOTPResponsePojo!!.user!!.location)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID, deviceID)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_ISLOGIN, "true")
-        edt_otp!!.setText("")
         val intent = Intent(this@OtpAvtivity, HomeActivity::class.java)
+      //  edt_otp!!.setText("")
+
         startActivity(intent)
         finish()
     }
@@ -236,10 +268,10 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         object : CountDownTimer(31000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 if((millisUntilFinished / 1000).toString().length==1){
-                    txtResendTimer!!.setText("(00:0" + millisUntilFinished / 1000+")")
+                    txtResendTimer!!.setText("00:0" + millisUntilFinished / 1000+"")
 
                 }else{
-                    txtResendTimer!!.setText("(00:" + millisUntilFinished / 1000+")")
+                    txtResendTimer!!.setText("00:" + millisUntilFinished / 1000+"")
 
                 }
             }

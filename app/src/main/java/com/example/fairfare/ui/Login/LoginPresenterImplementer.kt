@@ -64,12 +64,13 @@ class LoginPresenterImplementer(var view: ILoginView) : ILoginPresenter {
         name: String?,
         providerId: String?,
         token: String?,
-        email: String?
+        email: String?,
+        deviceID: String?
     ) {
         view.showWait()
         val call = client.sociallogin(
             deviceType, loginType,
-            name, providerId, token, email
+            name, providerId, token, email,deviceID
         )
         call!!.enqueue(object : Callback<LoginResponsepojo?> {
             override fun onResponse(

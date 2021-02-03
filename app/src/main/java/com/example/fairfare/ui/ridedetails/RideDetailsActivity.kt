@@ -14,7 +14,6 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import com.example.fairfare.utils.PhotoSelector
 import android.net.Uri
 import android.os.*
 import android.os.StrictMode.VmPolicy
@@ -46,9 +45,7 @@ import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.trackRide.TrackRideActivity
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
-import com.example.fairfare.utils.Constants
-import com.example.fairfare.utils.PreferencesManager
-import com.example.fairfare.utils.ProjectUtilities
+import com.example.fairfare.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -75,12 +72,15 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var locationChangelatitude = 0.0
     var locationChangelongitude = 0.0
     protected var locationManager: LocationManager? = null
+    protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
     protected var photoSelector: PhotoSelector? = null
     var strFirstTime: String? = null
     var mMap: GoogleMap? = null
     private var mPolyline: Polyline? = null
     var sourecemarker: Marker? = null
     var context: Context = this
+    lateinit var popupschduleResponse: ScheduleRideResponsePOJO
+
 
     private var iRidePresenter: IRidePresenter? = null
     var imageList: ArrayList<ImageModel>? = null
@@ -140,6 +140,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var MyRidesLong: String? = null
     var MyRidesDLat: String? = null
     var MyRidesDLong: String? = null
+    var MyRidesoriginalAddress: String? = null
+    var MyRidesdestinationAddress: String? = null
 
     var travelledDistance: Double? = null
 
@@ -211,6 +213,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         MyRidesLong = intent.getStringExtra("MyRidessLong")
         MyRidesDLat = intent.getStringExtra("MyRidesdLat")
         MyRidesDLong = intent.getStringExtra("MyRidesdLong")
+        MyRidesoriginalAddress = intent.getStringExtra("MyRidesoriginalAddress")
+        MyRidesdestinationAddress = intent.getStringExtra("MyRidesdestinationAddress")
 
 
         getcurrentDate()
@@ -232,6 +236,53 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
 
+        if(Constants.IS_OLD_PICK_UP_CODE){
+
+        }else{
+            //ILOMADEV
+            initLocationUpdates()
+        }
+
+
+    }
+
+    private fun initLocationUpdates() {
+        myLocationManager?.getCurrentLocation(object : MyLocationManager.LocationManagerInterface {
+            override fun onSuccess(location: Location?) {
+                if (location != null) {
+                    if (strFirstTime.equals("firstClick")) {
+
+                        strFirstTime = "secondClick"
+
+                        if (location != null) {
+                            locationChangelatitude = location.latitude
+                            locationChangelongitude = location.longitude
+                        }
+                        drawRoute()
+                        if ((MyRides_RidesID != null)) {
+
+                            GetDistanceFromLatLonInKm(
+                                MyRidesLat!!.toDouble(),
+                                MyRidesLong!!.toDouble(),
+                                locationChangelatitude,
+                                locationChangelongitude
+                            )
+
+                        } else{
+                            GetDistanceFromLatLonInKm(
+                                originLat!!.toDouble(),
+                                originLong!!.toDouble(),
+                                locationChangelatitude,
+                                locationChangelongitude
+                            )
+                        }
+
+
+                    }
+                }
+            }
+
+        })
     }
 
 
@@ -365,9 +416,37 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         val tvCalculatedDistance: TextView = customLayout!!.findViewById(R.id.tvCalculatedDistance)
         val tvCalculatedDuration: TextView = customLayout!!.findViewById(R.id.tvCalculatedDuration)
         val tvCalculatedNewFare: TextView = customLayout!!.findViewById(R.id.tvCalculatedNewFare)
+        val tvDropUpLocation: TextView = customLayout!!.findViewById(R.id.tvDropUpLocation)
+        val tvPickUpLocation: TextView = customLayout!!.findViewById(R.id.tvPickUpLocation)
         tvCalculatedDistance.text = "New Calculated Distance : " + estCurrentDistance.toString()
         tvCalculatedDuration.text = "New Calculated Duration : " + estCurrentDuration
         tvCalculatedNewFare.text = "New Calculated Fare : " + "Rs " + estCurrentFare
+        tvDropUpLocation.text = "Drop Up Location : " + dAddress
+
+        val geocoder = Geocoder(this@RideDetailsActivity, Locale.getDefault())
+        var currentAddress: String? = null
+
+        try {
+            val addresses =
+                geocoder.getFromLocation(
+                    (locationChangelatitude),
+                    (locationChangelongitude), 1
+                )
+            if (addresses != null) {
+                val returnedAddress = addresses[0]
+                val strReturnedAddress =
+                    StringBuilder()
+                for (j in 0..returnedAddress.maxAddressLineIndex) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
+                }
+                currentAddress = strReturnedAddress.toString()
+            }
+        } catch (e: IOException) {
+        }
+
+
+
+        tvPickUpLocation.text = "Pick Up Location : " + currentAddress
 
         alertDialog.setPositiveButton("Proceed") { dialog, which ->
             val editText: TextView = customLayout!!.findViewById(R.id.test)
@@ -480,6 +559,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             if ((MyRides_RidesID != null)) {
 
 
+
+
                 if (actualDistanceInMeter >= 500) {
 
                     iRidePresenter!!.startRide(
@@ -499,7 +580,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                         edt_vehicalNO!!.text.toString(),
                         edt_bagsCount!!.text.toString(),
                         edt_meterReading!!.text.toString(),
-                        originLat, originLong, "", "", imageList,"",""
+                        originLat, originLong, "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
                     )
 
                 } else
@@ -521,7 +602,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                         edt_vehicalNO!!.text.toString(),
                         edt_bagsCount!!.text.toString(),
                         edt_meterReading!!.text.toString(),
-                        "", "", "", "", imageList,"",""
+                        "", "", "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
                     )
 
                 }
@@ -548,7 +629,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress
+                    originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress,"No"
                 )
 
             }
@@ -849,6 +930,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             intentr.putExtra("MyRidesLong", MyRidesLong)
             intentr.putExtra("MyRidesDLat", MyRidesDLat)
             intentr.putExtra("MyRidesDLong", MyRidesDLong)
+            intentr.putExtra("MyRidesoriginalAddress", MyRidesoriginalAddress)
+            intentr.putExtra("MyRidesdestinationAddress", MyRidesdestinationAddress)
             intentr.putExtra("MyRidesID", MyRides_RidesID)
             startActivity(intentr)
             finish()
@@ -866,6 +949,67 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             finish()
 
         }
+
+
+    }
+
+    override fun procedPopUp(scheduleRideResponsePOJO: ValidationResponse?) {
+
+        val alertDialog = AlertDialog.Builder(context)
+        alertDialog.setMessage(scheduleRideResponsePOJO!!.message)
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("OK") { dialog, which ->
+
+            if (actualDistanceInMeter >= 500) {
+
+                iRidePresenter!!.startRide(
+                    token,
+                    MyRides_RidesID,
+                    MyRides_vehicle_rate_card_id,
+                    "",
+                    "",
+                    originPlaceID,
+                    "",
+                    "",
+                    distance_ViewRide,
+                    durationRide,
+                    "",
+                    MyRides_airport_ratr_card_id,
+                    edt_DriverName!!.text.toString(),
+                    edt_vehicalNO!!.text.toString(),
+                    edt_bagsCount!!.text.toString(),
+                    edt_meterReading!!.text.toString(),
+                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"Yes"
+                )
+
+            } else
+            {
+                iRidePresenter!!.startRide(
+                    token,
+                    MyRides_RidesID,
+                    MyRides_vehicle_rate_card_id,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    MyRides_airport_ratr_card_id,
+                    edt_DriverName!!.text.toString(),
+                    edt_vehicalNO!!.text.toString(),
+                    edt_bagsCount!!.text.toString(),
+                    edt_meterReading!!.text.toString(),
+                    "", "", "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"Yes"
+                )
+
+            }
+
+
+        }
+        alertDialog.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        alertDialog.show()
 
 
     }
@@ -894,7 +1038,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     override fun onLocationChanged(location: Location) {
 
-        if (strFirstTime.equals("firstClick")) {
+      /*  if (strFirstTime.equals("firstClick")) {
 
             strFirstTime = "secondClick"
 
@@ -923,7 +1067,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
         }
-
+*/
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {

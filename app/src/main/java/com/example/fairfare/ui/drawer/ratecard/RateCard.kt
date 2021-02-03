@@ -33,7 +33,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.set
 
-class RateCard : Fragment(), AdapterView.OnItemSelectedListener,View.OnClickListener {
+class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     var activityIsRunning = false
     var selectedPosition = 0
@@ -395,8 +395,20 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener,View.OnClickList
                             val rdbtn = RadioButton(activity)
                             rdbtn.id = View.generateViewId()
                             rdbtn.setOnClickListener(this@RateCard)
+                            if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                                val imgResource: Int = R.drawable.domestic_icon
+                                rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                rdbtn.setCompoundDrawablePadding(100)
+                            }
 
-                            rdbtn.text = (getRateCardList.get(0).rateCards!!.get(0).rateCards!!.get(i).rateCardType)+""
+
+                            if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                                val imgResource: Int = R.drawable.international_icon
+                                rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                rdbtn.setCompoundDrawablePadding(130)
+                            }
+                            rdbtn.text =
+                                (getRateCardList.get(0).rateCards!!.get(0).rateCards!!.get(i).rateCardType) + ""
                             mRgAllButtons!!.addView(rdbtn)
 
                             if (i == 0) {
@@ -544,7 +556,20 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener,View.OnClickList
                 rdbtn.id = View.generateViewId()
 
                 rdbtn.setOnClickListener(this)
-                rdbtn.text = (getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)+""
+                if ((getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                    val imgResource: Int = R.drawable.domestic_icon
+                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                    rdbtn.setCompoundDrawablePadding(100)
+                }
+
+
+                if ((getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                    val imgResource: Int = R.drawable.international_icon
+                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                    rdbtn.setCompoundDrawablePadding(130)
+                }
+                rdbtn.text =
+                    (getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)
                 mRgAllButtons!!.addView(rdbtn)
 
                 if (i == 0) {
@@ -584,18 +609,17 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener,View.OnClickList
 
 
 
-            if ((getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
-                    position
-                ).surcharge).equals("0")
+            if ((getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(0).surcharge).equals(
+                    "0"
+                )
             ) {
                 tvSurCHarges!!.text = "Surcharge Not Applicable"
 
             } else {
                 tvSurCHarges!!.text =
                     "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
-                        position
-                    ).surcharge +
-                            " per booking"
+                        0
+                    ).surcharge + " per booking"
 
             }
 
@@ -621,66 +645,68 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener,View.OnClickList
         if (position == 0) {
 
 
-
-        tvFare!!.text =
-            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                position
-            ).minBaseFare +
-                    " for first 1.50 km and thereafter ₹ " +
-                    getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                        position
-                    ).fareAfterMinbdist +
-                    " for every additional km."
-
-
-        tvNightCharges!!.text =
-            getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                position
-            ).nightCharges + "%" + " of the Total Fare"
-
-        tvWaitingCharges!!.text =
-            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                position
-            ).waitingCharges + " per minute "
-
-
-        if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                position
-            ).surcharge).equals("0")
-        ) {
-            tvSurCHarges!!.text = "Surcharge Not Applicable"
-
-        } else {
-            tvSurCHarges!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                    position
-                ).surcharge +
-                        " per booking"
-
-        }
-
-        tvLuggage!!.text =
-            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                position
-            ).chargesPerLuggage +
-                    " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
-
-
-    }
-        else{
             tvFare!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).minBaseFare +
-                        " for minimum base distance of " + getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                    position
-                ).minBaseDistance+" km and thereafter ₹ "+
+                        " for first 1.50 km and thereafter ₹ " +
                         getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                             position
                         ).fareAfterMinbdist +
-                        " for every distance slab of "+ getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                        " for every additional km."
+
+
+            tvNightCharges!!.text =
+                getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).minBaseDistance+" km"
+                ).nightCharges + "%" + " of the Total Fare"
+
+            tvWaitingCharges!!.text =
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).waitingCharges + " per minute "
+
+
+            if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).surcharge).equals("0")
+            ) {
+                tvSurCHarges!!.text = "Surcharge Not Applicable"
+
+            } else {
+                tvSurCHarges!!.text =
+                    "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                        position
+                    ).surcharge +
+                            " per booking"
+
+            }
+
+            tvLuggage!!.text =
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).chargesPerLuggage +
+                        " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
+
+
+        } else {
+            tvFare!!.text =
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                    position
+                ).minBaseFare +
+                        " for minimum base distance of " + getRateCardList[selectedPosition].rateCards!!.get(
+                    itemSelectedPosition
+                ).rateCards!!.get(
+                    position
+                ).minBaseDistance + " km and thereafter ₹ " +
+                        getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                            position
+                        ).fareAfterMinbdist +
+                        " for every distance slab of " + getRateCardList[selectedPosition].rateCards!!.get(
+                    itemSelectedPosition
+                ).rateCards!!.get(
+                    position
+                ).minBaseDistance + " km"
 
 
             tvNightCharges!!.text =
@@ -716,7 +742,6 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener,View.OnClickList
                         " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
 
         }
-
 
 
     }
