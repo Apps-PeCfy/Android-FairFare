@@ -320,9 +320,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                 OriginM = LatLng(locationChangelatitude, locationChangelongitude)
 
+                drawRouteWithoutCallingDistanceAPI()
+
                 if (globalmarkerPoints!!.size > 0) {
-
-
 
 
                     //10 meter
@@ -366,7 +366,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             )
 
                             // calDistance()
-                            drawNewRoute()
+                          //  drawNewRoute()
 
                             valueForDistanceandWaitTime()
                             currentFare()
@@ -1006,7 +1006,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         //  googleMap!!.clear()
 
         mMap = googleMap
-       // mMap!!.isMyLocationEnabled = true
+        // mMap!!.isMyLocationEnabled = true
         mMap!!.animateCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
@@ -1079,6 +1079,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     }
 
     private fun getDirectionsUrl(mOrigin: LatLng, mDestination: LatLng): String {
+
+        Toast.makeText(applicationContext, "Direction API calling", Toast.LENGTH_LONG)
+            .show()
+
         val str_origin = "origin=" + mOrigin.latitude + "," + mOrigin.longitude
         val str_dest = "destination=" + mDestination.latitude + "," + mDestination.longitude
 
@@ -1204,6 +1208,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             if (result != null) {
                 for (i in result!!.indices) {
                     points = ArrayList()
+                    markerPoints = ArrayList()
                     lineOptions = PolylineOptions()
 
 
@@ -1618,7 +1623,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 
-
         if (location != null) {
 
 
@@ -1687,7 +1691,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     private fun addCurrentLocationMarker(location: Location?) {
 
         val newPosition: LatLng = LatLng(location!!.latitude, location.longitude)
-        if (myMarker != null){
+        if (myMarker != null) {
             myMarker!!.remove()
         }
         myMarker = mMap!!.addMarker(
@@ -1715,7 +1719,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     }
 
     private fun getZoomLevel(): Float {
-        if (!isMapZoomed!!){
+        if (!isMapZoomed!!) {
             isMapZoomed = true
             return 18f
         }
@@ -1745,16 +1749,16 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     elapsed.toFloat()
                             / duration
                 )
-                val lng = t * location.longitude + (1 - t)* startLatLng.longitude
-                val lat = t * location.latitude + (1 - t)* startLatLng.latitude
+                val lng = t * location.longitude + (1 - t) * startLatLng.longitude
+                val lat = t * location.latitude + (1 - t) * startLatLng.latitude
                 val rotation = (t * location.bearing + (1 - t)
                         * startRotation).toFloat()
                 marker.setPosition(LatLng(lat, lng))
-              /*  marker.rotation = rotation
-                if (t < 1.0) {
-                    // Post again 16ms later.
-                    handler.postDelayed(this, 10000)
-                }*/
+                /*  marker.rotation = rotation
+                  if (t < 1.0) {
+                      // Post again 16ms later.
+                      handler.postDelayed(this, 10000)
+                  }*/
             }
         })
     }
@@ -1846,6 +1850,44 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             Math.atan(lng / lat)
         ) + 270).toFloat()
         return (-1).toFloat()
+
     }
+
+    private fun drawRouteWithoutCallingDistanceAPI() {
+        var latestPoints: ArrayList<LatLng?>? = ArrayList()
+        locationChangelatitude
+        locationChangelongitude
+
+
+        if (markerPoints != null){
+
+            if (markerPoints?.get(0)?.latitude!! > markerPoints?.get(markerPoints!!.size-1)?.latitude!!){
+                for (latLng : LatLng? in markerPoints!!){
+                    if (locationChangelatitude >= latLng?.latitude!! || locationChangelongitude >= latLng.longitude){
+                        latestPoints?.add(latLng)
+                    }
+                }
+            }else{
+                for (latLng : LatLng? in markerPoints!!){
+                    if (locationChangelatitude <= latLng?.latitude!! || locationChangelongitude <= latLng.longitude){
+                        latestPoints?.add(latLng)
+                    }
+                }
+            }
+
+            Toast.makeText(this, markerPoints?.size.toString()+" Max to less " + latestPoints?.size, Toast.LENGTH_SHORT).show()
+
+            if (mGreyPolyline != null){
+                //Remove the same line from map
+                mGreyPolyline?.remove();
+            }
+            //Add line to map
+            mGreyPolyline = mMap?.addPolyline (PolylineOptions ()
+                .addAll(latestPoints)
+                .width(18f).color(Color.DKGRAY))
+        }
+
+    }
+
 
 }
