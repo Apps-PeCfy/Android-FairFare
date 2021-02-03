@@ -4,7 +4,9 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class AppUtils {
+
 
     companion object {
         fun convertDateGMTToLocal(sourceDate: String?): String? {
@@ -22,4 +24,5 @@ class AppUtils {
             return outputText
         }
     }
+
 }
