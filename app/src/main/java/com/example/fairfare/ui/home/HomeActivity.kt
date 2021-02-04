@@ -441,8 +441,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                     currentLatitude = location!!.latitude
                     currentLongitude = location!!.longitude
-                    preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_CLat, currentLatitude.toString())
-                    preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_CLong, currentLongitude.toString())
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_CLat,
+                        currentLatitude.toString()
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_CLong,
+                        currentLongitude.toString()
+                    )
 
 
                     if (callOnLocation.equals("first")) {
@@ -479,19 +485,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     private fun getCurrentCityName() {
         if (currentLatitude != 0.0 && currentLongitude != 0.0) {
-            val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
-            try {
-                val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
-
-                if (addresses != null && addresses!!.size > 0) {
-                    streetAddress = addresses[0].getAddressLine(0)
-                    city = addresses[0].subAdminArea
-                } else {
-                    streetAddress = ""
-                }
-
-            } catch (e: IOException) {
-            }
+            streetAddress = getAddressFromLocation()
         }
 
     }
@@ -523,7 +517,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (!SourceLat!!.isEmpty()) {
 
             if (mMap != null) {
-                if(sourecemarker != null){
+                if (sourecemarker != null) {
                     sourecemarker?.remove()
                 }
                 mMap!!.animateCamera(
@@ -547,7 +541,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         }
         if (!DestinationLat!!.isEmpty()) {
-            if(destmarker != null){
+            if (destmarker != null) {
                 destmarker?.remove()
             }
             destmarker = mMap!!.addMarker(
@@ -625,7 +619,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     private fun setCitySpinner() {
-        if (city == null){
+        if (city == null) {
             getCurrentCityName()
         }
 
@@ -1031,7 +1025,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                 response.errorBody()!!.string(),
                                 ValidationResponse::class.java
                             )
-                            Toast.makeText(this@HomeActivity, pojo.errors!!.get(0).message, Toast.LENGTH_LONG)
+                            Toast.makeText(
+                                this@HomeActivity,
+                                pojo.errors!!.get(0).message,
+                                Toast.LENGTH_LONG
+                            )
                                 .show()
 
 
@@ -2300,21 +2298,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
             } else {
-//                Toast.makeText(this, "On Start before GeoCoder", Toast.LENGTH_LONG).show()
-                val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
-                try {
-                    val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
+                streetAddress = getAddressFromLocation()
 
-                    if (addresses != null && addresses!!.size > 0) {
-                        streetAddress = addresses[0].getAddressLine(0)
-                        city = addresses[0].subAdminArea
-                    } else {
-                        streetAddress = ""
-                    }
-//                    Toast.makeText(this, "On Start after GeoCoder", Toast.LENGTH_LONG).show()
-
-                } catch (e: IOException) {
-                }
 
 
                 if (SourceLat!!.isEmpty()) {
@@ -2359,6 +2344,29 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onProviderDisabled(provider: String) {
 
+    }
+
+    private fun getAddressFromLocation(): String? {
+        var address: String = ""
+        val geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
+
+            if (addresses != null && addresses!!.size > 0) {
+                val obj = addresses[0]
+                //  address = addresses[0].getAddressLine(0)
+
+                address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea + " " + obj.postalCode
+                address = address.replace("null, ", "")
+
+                city = obj.subAdminArea
+            } else {
+                address = ""
+            }
+        } catch (e: IOException) {
+        }
+
+        return address
     }
 
     override fun onBackPressed() {

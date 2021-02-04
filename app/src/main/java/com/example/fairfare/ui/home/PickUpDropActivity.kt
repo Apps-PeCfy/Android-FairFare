@@ -467,7 +467,6 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             e.printStackTrace()
         }
         Log.d("sdsdesdsds", results[0]!!.placeId)
-        var returnedAddress: Address? = null
         var addresses: List<Address?>? = null
         val geocoder = Geocoder(this@PickUpDropActivity, Locale.getDefault())
         try {
@@ -476,9 +475,6 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     currentLatitude,
                     currentLongitude, 1
                 )
-            if (addresses != null) {
-                returnedAddress = addresses[0]
-            }
         } catch (e: IOException) {
         }
         val token =
@@ -588,18 +584,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 currentLongitude
             )
         )
-        var currentAddress: String? = null
-        val geocoder = Geocoder(this@PickUpDropActivity, Locale.getDefault())
-        try {
-            val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
-            if (addresses != null) {
-                val returnedAddress = addresses[0].getAddressLine(0)
-
-                currentAddress = returnedAddress.toString()
-            }
-        } catch (e: IOException) {
-        }
-
+        val currentAddress: String? = getAddressFromLocation()
 
         Log.d("sdewddwasPick", currentLatitude.toString())
 
@@ -654,30 +639,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     private fun getAddress(latLng: LatLng) {
         currentLatitude = latLng.latitude
         currentLongitude = latLng.longitude
-        var street: String? = null
-        val geocoder =
-            Geocoder(this@PickUpDropActivity, Locale.getDefault())
-        try {
-            val addresses =
-                geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
-            if (addresses != null && addresses.size > 0) {
-
-                val returnedAddress = addresses[0]
-                val strReturnedAddress = StringBuilder()
-                for (j in 0..returnedAddress.maxAddressLineIndex) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                }
-                street = strReturnedAddress.toString()
-            }else {
-
-                Toast.makeText(
-                    this,
-                    "Address is not found, Please try after some time",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        } catch (e: IOException) {
-        }
+        val street: String? = getAddressFromLocation()
 
         locateOnMapAddress = street
         tvAddress!!.text = street
@@ -745,7 +707,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             // ILOMADEV
             finish()
 
-            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, locateOnMapAddress, keyAirport))
+            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, selectedAddress, keyAirport))
         }
 
     }
@@ -1011,6 +973,27 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             )
 
         }
+    }
+
+    private fun getAddressFromLocation(): String? {
+        var address: String = ""
+        val geocoder = Geocoder(this@PickUpDropActivity, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
+
+            if (addresses != null && addresses!!.size > 0) {
+                val obj = addresses[0]
+                //  address = addresses[0].getAddressLine(0)
+
+                address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea + " " + obj.postalCode
+                address = address.replace("null, ", "")
+            } else {
+                address = ""
+            }
+        } catch (e: IOException) {
+        }
+
+        return address
     }
 
 
