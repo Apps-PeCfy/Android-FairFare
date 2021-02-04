@@ -745,7 +745,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             // ILOMADEV
             finish()
 
-            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, locateOnMapAddress, keyAirport))
+            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, selectedAddress, keyAirport))
         }
 
     }
