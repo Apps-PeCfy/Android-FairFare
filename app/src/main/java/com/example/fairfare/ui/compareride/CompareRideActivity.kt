@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.animation.TranslateAnimation
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -28,6 +29,7 @@ import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.viewride.ViewRideActivity
 import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.OnSwipeTouchListener
 import com.example.fairfare.utils.PreferencesManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -72,6 +74,10 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     @JvmField
     @BindView(R.id.tvhideShow)
     var tvhideShow: RelativeLayout? = null
+
+    @JvmField
+    @BindView(R.id.homeView)
+    var homeView: LinearLayout? = null
 
     @JvmField
     @BindView(R.id.locationCardView)
@@ -313,7 +319,38 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
             currentPlaceId!!
         )*/
 
+        setListeners()
+    }
 
+    private fun setListeners() {
+        homeView?.setOnTouchListener(object : OnSwipeTouchListener(this) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+            }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+            }
+            override fun onSwipeUp() {
+                super.onSwipeUp()
+                hideshow = "hide"
+                locationCardView!!.visibility = View.GONE
+                recyclerviewcompareview!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                recyclerviewcompareview!!.requestLayout()
+                rlhideview!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                rlhideview!!.requestLayout()
+                slideUp(rlhideview)
+            }
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+                hideshow = "show"
+                //  rlhideview?.visibility = View.VISIBLE
+                slideDown(rlhideview)
+
+                locationCardView!!.visibility = View.VISIBLE
+                rlhideview!!.layoutParams.height = 750
+                rlhideview!!.requestLayout()
+            }
+        })
     }
 
 

@@ -14,12 +14,17 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 
+
 class MyLocationManager {
     private var context: Context? = null
 
     //location
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var locationManager: LocationManager? = null
+
+    //For My CurrentLocation Changed
+    private var locationRequest: LocationRequest? = null
+    private var locationCallback: LocationCallback? = null
 
     constructor(context: Context?) {
         this.context = context
@@ -30,6 +35,56 @@ class MyLocationManager {
         fun onSuccess(location: Location?)
     }
 
+    interface LocationManagerTrackInterface {
+        fun onMyLocationChange(currentLocation: MutableList<Location>?, lastLocation: Location?)
+    }
+
+    fun getMyCurrentLocationChange(listener: LocationManagerTrackInterface?) {
+        if (ActivityCompat.checkSelfPermission(
+                context!!,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermission()
+            return
+        }
+        if (isLocationEnabled()) {
+            try {
+                if (fusedLocationProviderClient == null){
+                    fusedLocationProviderClient =
+                        LocationServices.getFusedLocationProviderClient(context!!)
+                }
+
+                locationRequest = LocationRequest.create();
+                locationRequest?.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                locationRequest?.setInterval(10 * 1000);
+
+                locationCallback = object : LocationCallback() {
+                    override fun onLocationResult(locationResult: LocationResult?) {
+                        locationResult ?: return
+
+                        if (listener != null && locationResult.locations.isNotEmpty()) {
+
+                            listener.onMyLocationChange(locationResult.locations, locationResult.lastLocation)
+                            // get latest location
+                            val location = locationResult.lastLocation
+                            // use your location object
+                            // get latitude , longitude and other info from this
+                        }
+
+
+                    }
+                }
+
+                LocationServices.getFusedLocationProviderClient(context!!)
+                    .requestLocationUpdates(locationRequest, locationCallback, null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } else {
+            enableGPSAutomatically()
+        }
+    }
 
     fun getCurrentLocation(listener: LocationManagerInterface?) {
         if (ActivityCompat.checkSelfPermission(
@@ -179,4 +234,10 @@ class MyLocationManager {
         }
         return true
     }
+
+    fun stopLocationUpdates() {
+        fusedLocationProviderClient?.removeLocationUpdates(locationCallback)
+    }
+
 }
+

@@ -666,13 +666,17 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
         currentLatitude = place!!.latLng!!.latitude
         currentLongitude = place!!.latLng!!.longitude
+
+        //ILOMADEV To Remove CountryName From Selected AutoPlaceAddress
+        var newSelectedAddress : String = removeCountryFromAddress(selectedAddress, place?.latLng)
+
         if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
             isSource = true
             sharedpreferences!!.edit().remove("SourceLat")
             sharedpreferences!!.edit().remove("SourceLong")
             editor!!.putString(SourceLat, currentLatitude.toString())
             editor!!.putString(SourceLong, currentLongitude.toString())
-            editor!!.putString(fromLocation, selectedAddress)
+            editor!!.putString(fromLocation, newSelectedAddress)
 
         } else {
             isSource = false
@@ -680,7 +684,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             sharedpreferences!!.edit().remove("DestinationLong")
             editor!!.putString(DestinationLat, currentLatitude.toString())
             editor!!.putString(DestinationLong, currentLongitude.toString())
-            editor!!.putString(destiNationLocation, selectedAddress)
+            editor!!.putString(destiNationLocation, newSelectedAddress)
         }
         editor!!.commit()
         editor!!.apply()
@@ -698,7 +702,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
         intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
 
-        intent.putExtra("splacedi", selectedAddress)
+        intent.putExtra("splacedi", newSelectedAddress)
 
         //Old Code
         if (Constants.IS_OLD_PICK_UP_CODE){
@@ -707,10 +711,12 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             // ILOMADEV
             finish()
 
-            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, selectedAddress, keyAirport))
+            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, newSelectedAddress, keyAirport))
         }
 
     }
+
+
 
     override fun favClick(place: Place?) {
         Toast.makeText(this, "Added in fav" + place!!.id, Toast.LENGTH_LONG).show()
@@ -726,6 +732,10 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         placesClient!!.fetchPlace(request)
             .addOnSuccessListener { response: FetchPlaceResponse ->
                 val place = response.place
+
+                // ILOMADEV
+                var newSelectedAddress: String = removeCountryFromAddress(selectedadd!!, place?.latLng)
+
                 mMap!!.clear()
                 if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
                     isSource = true
@@ -733,7 +743,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     sharedpreferences!!.edit().remove("SourceLong")
                     editor!!.putString(SourceLat, place.latLng!!.latitude.toString())
                     editor!!.putString(SourceLong, place.latLng!!.longitude.toString())
-                    editor!!.putString(fromLocation, selectedadd)
+                    editor!!.putString(fromLocation, newSelectedAddress)
 
                 } else {
                     isSource = false
@@ -741,7 +751,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     sharedpreferences!!.edit().remove("DestinationLong")
                     editor!!.putString(DestinationLat, place.latLng!!.latitude.toString())
                     editor!!.putString(DestinationLong, place.latLng!!.longitude.toString())
-                    editor!!.putString(destiNationLocation, selectedadd)
+                    editor!!.putString(destiNationLocation, newSelectedAddress)
                 }
                 editor!!.commit()
                 editor!!.apply()
@@ -764,7 +774,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     // ILOMADEV
                     finish()
 
-                    EventBus.getDefault().post(PickUpLocationModel(place.latLng!!.latitude, place.latLng!!.longitude, isSource, selectedadd, keyAirport))
+                    EventBus.getDefault().post(PickUpLocationModel(place.latLng!!.latitude, place.latLng!!.longitude, isSource, newSelectedAddress, keyAirport))
                 }
 
 
@@ -994,6 +1004,30 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         }
 
         return address
+    }
+
+    private fun removeCountryFromAddress(
+        selectedAddress: String,
+        latLng: LatLng?
+    ): String {
+
+        var countryName: String = ""
+        val geocoder = Geocoder(this@PickUpDropActivity, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(latLng?.latitude!!, latLng.longitude, 1)
+
+            if (addresses != null && addresses!!.size > 0) {
+                val obj = addresses[0]
+                countryName = obj.countryName
+                if (countryName!= null && countryName.equals("United States", ignoreCase = true)){
+                    countryName = "USA"
+                }
+
+            }
+        } catch (e: IOException) {
+        }
+        return selectedAddress.replace(", $countryName", "").replace("- $countryName", "")
+
     }
 
 
