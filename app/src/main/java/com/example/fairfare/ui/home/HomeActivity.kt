@@ -115,6 +115,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var setDate: String? = null
     var keyAirport: String? = null
     var placesClient: PlacesClient? = null
+    var isFirstTimeLocationShowed: Boolean? = false
 
     var doubleBackPressed: Boolean? = false
 
@@ -432,7 +433,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     }
 
-    private fun initLocationUpdates() {
+    /*private fun initLocationUpdates() {
         myLocationManager?.getCurrentLocation(object : MyLocationManager.LocationManagerInterface {
             override fun onSuccess(location: Location?) {
                 if (location != null) {
@@ -471,6 +472,61 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
                 } else {
                     initLocationUpdates()
+                }
+            }
+
+        })
+    }*/
+
+    private fun initLocationUpdates() {
+        myLocationManager?.getMyCurrentLocationChange(object :
+            MyLocationManager.LocationManagerTrackInterface {
+            override fun onMyLocationChange(
+                currentLocation: MutableList<Location>?,
+                lastLocation: Location?
+            ) {
+                if (lastLocation != null) {
+
+                    Log.d("sdsdsdswnwe", "onLocationChanged")
+
+                    currentLatitude = lastLocation!!.latitude
+                    currentLongitude = lastLocation!!.longitude
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_CLat,
+                        currentLatitude.toString()
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_CLong,
+                        currentLongitude.toString()
+                    )
+
+                    //Stop Location Updates
+                    if (isFirstTimeLocationShowed!! && currentLatitude != null && currentLatitude != 0.0 ){
+                        myLocationManager?.stopLocationUpdates()
+                    }
+
+                    if (callOnLocation.equals("first")) {
+                        if (currentLatitude != null && currentLatitude != 0.0) {
+
+                            isFirstTimeLocationShowed = true
+
+
+                            mapAndLocationReady()
+                            cityPojoList = preferencesManager!!.getCityList()
+                            if (cityPojoList != null && cityPojoList.size > 0) {
+                                setCitySpinner()
+                            } else {
+                                getCity()
+                            }
+
+                            progressDialogstart!!.dismiss()
+                            mainRelativeLayout!!.visibility = View.VISIBLE
+
+
+                        }
+
+                    }
+
                 }
             }
 
@@ -2356,7 +2412,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 val obj = addresses[0]
                 //  address = addresses[0].getAddressLine(0)
 
-                address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea + " " + obj.postalCode
+                if (obj != null && obj.locality != null && obj.adminArea  != null && obj.locality.equals(obj.adminArea, ignoreCase = true)){
+                    address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea + " " + obj.postalCode
+                }else{
+                    address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea + " " + obj.postalCode
+                }
+
                 address = address.replace("null, ", "")
 
                 city = obj.subAdminArea
@@ -2364,6 +2425,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 address = ""
             }
         } catch (e: IOException) {
+            Toast.makeText(
+                this,
+                e.toString(),
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         return address

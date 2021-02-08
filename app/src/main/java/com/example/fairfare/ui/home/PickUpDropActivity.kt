@@ -995,7 +995,11 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 val obj = addresses[0]
                 //  address = addresses[0].getAddressLine(0)
 
-                address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea + " " + obj.postalCode
+                if (obj != null && obj.locality != null && obj.adminArea  != null && obj.locality.equals(obj.adminArea, ignoreCase = true)){
+                    address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea + " " + obj.postalCode
+                }else{
+                    address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea + " " + obj.postalCode
+                }
                 address = address.replace("null, ", "")
             } else {
                 address = ""
