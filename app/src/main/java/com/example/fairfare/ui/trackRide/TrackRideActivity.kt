@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.hardware.GeomagneticField
 import android.icu.math.BigDecimal
 import android.location.Geocoder
 import android.location.Location
@@ -281,12 +282,15 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var destinationAddress: String? = null
     var streetAddress: String? = null
     var deststreetAddress: String? = null
-    var isFirstTimeSetUpDone : Boolean = false
+    var isFirstTimeSetUpDone: Boolean = false
 
     var markerPoints: ArrayList<LatLng?>? = null
     var globalmarkerPoints: ArrayList<LatLng?>? = null
     var OriginM: LatLng? = null
     val handler = Handler()
+    lateinit var destLocation: Location
+    lateinit var startLocation: Location
+    var geoField: GeomagneticField? = null
 
 
     @SuppressLint("MissingPermission")
@@ -341,6 +345,16 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         info = intent.getSerializableExtra("ResponsePOJOScheduleRide") as ScheduleRideResponsePOJO
 
+        destLocation = Location("")
+        destLocation.latitude = (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!.toDouble()
+        destLocation.longitude =
+            (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!.toDouble()
+
+        startLocation = Location("")
+        startLocation.latitude = (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!.toDouble()
+        startLocation.longitude = (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!.toDouble()
+
+
         if ((intent.getStringExtra("MyRidesLat")) != null) {
 
             streetAddress = getAddressFromLatLng(
@@ -383,6 +397,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             initLocationUpdates()
         }
 
+
     }
 
 
@@ -405,6 +420,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     locationChangelatitude = lastLocation!!.latitude
                     locationChangelongitude = lastLocation!!.longitude
 
+
                     logicToShowActualDistanceTravelled()
 
 
@@ -415,7 +431,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             prevLatLng!!
                         )!! >= 0
                     ) {
-                        if (isFirstTimeSetUpDone){
+                        if (isFirstTimeSetUpDone) {
                             trackBoard = "currentCordinate"
                             valueForDistanceandWaitTime()
                             currentFare()
@@ -474,7 +490,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         if (globalmarkerPoints!!.size > 0) {
 
-            distanceBetweenCurrent = getDistanceBetweenTwoLatLng(OriginM!!, globalmarkerPoints?.get(globalmarkerPoints!!.size - 1)!!)
+            distanceBetweenCurrent = getDistanceBetweenTwoLatLng(
+                OriginM!!,
+                globalmarkerPoints?.get(globalmarkerPoints!!.size - 1)!!
+            )
 
             //distanceBetweenCurrent in meter
             if (distanceBetweenCurrent!! >= 10) {
@@ -808,9 +827,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         actualTime = strescimal
 
         //ILOMADEV
-        if(Constants.IS_OLD_PICK_UP_CODE){
+        if (Constants.IS_OLD_PICK_UP_CODE) {
             tvTravelTime!!.text = strescimal + " Min"
-        }else{
+        } else {
             tvTravelTime!!.text = formatTime(todayRefresh.getTime() - today!!.getTime())
         }
 
@@ -1144,8 +1163,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
-
-
+        updateCamera(getCompassBearing(startLocation, destLocation))
         drawRoute()
     }
 
@@ -1450,10 +1468,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             timeInMin = totalWaitTime / 60
             val strTimeCal = String.format("%.02f", timeInMin)
             //ILOMADEV
-            if (Constants.IS_OLD_PICK_UP_CODE){
+            if (Constants.IS_OLD_PICK_UP_CODE) {
                 tv_currentwaitTime!!.text = strTimeCal + " Min"
-            }else{
-                tv_currentwaitTime!!.text = formatTime((timeInMin*60*1000).toLong())
+            } else {
+                tv_currentwaitTime!!.text = formatTime((timeInMin * 60 * 1000).toLong())
             }
 
 
@@ -1464,10 +1482,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         } else {
             timeInMin = totalWaitTime
             //ILOMADEV
-            if (Constants.IS_OLD_PICK_UP_CODE){
+            if (Constants.IS_OLD_PICK_UP_CODE) {
                 tv_currentwaitTime!!.text = timeInMin.toString() + " Sec"
-            }else{
-                tv_currentwaitTime!!.text = formatTime((timeInMin*1000).toLong())
+            } else {
+                tv_currentwaitTime!!.text = formatTime((timeInMin * 1000).toLong())
             }
 
 
@@ -1833,16 +1851,30 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         prevLatLng = newPosition
 
-        mMap!!.moveCamera(
-            CameraUpdateFactory.newCameraPosition(
-                CameraPosition.Builder()
-                    .target(newPosition)
-                    .zoom(getZoomLevel())
-                    .build()
-            )
+          mMap!!.moveCamera(
+              CameraUpdateFactory.newCameraPosition(
+                  CameraPosition.Builder()
+                      .target(newPosition)
+                      .bearing(getCompassBearing(startLocation, destLocation))
+                      .zoom(getZoomLevel())
+                      .build()
+              )
+          )
+
+    }
+
+    private fun getCompassBearing(location: Location): Float {
+        location.bearingTo(destLocation);
+
+        geoField = GeomagneticField(
+            java.lang.Double.valueOf(location.latitude).toFloat(),
+            java.lang.Double.valueOf(location.longitude).toFloat(),
+            java.lang.Double.valueOf(location.altitude).toFloat(),
+            System.currentTimeMillis()
         )
 
-
+        return Math.round(-(location.bearing - (location.bearing - geoField?.declination!!) / 360 + 180))
+            .toFloat()
     }
 
     private fun getZoomLevel(): Float {
@@ -1921,14 +1953,15 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     val newPosition: LatLng =
                         latLngInterpolator.interpolate(v, startPosition, endPosition)!!
                     myMarker!!.setPosition(newPosition)
-                    mMap!!.moveCamera(
-                        CameraUpdateFactory.newCameraPosition(
-                            CameraPosition.Builder()
-                                .target(newPosition)
-                                .zoom(mMap!!.cameraPosition.zoom)
-                                .build()
-                        )
-                    )
+                     mMap!!.moveCamera(
+                         CameraUpdateFactory.newCameraPosition(
+                             CameraPosition.Builder()
+                                 .target(newPosition)
+                                 .bearing(getCompassBearing(startLocation, destLocation))
+                                 .zoom(mMap!!.cameraPosition.zoom)
+                                 .build()
+                         )
+                     )
 
                     myMarker!!.setRotation(
                         getBearing(
@@ -2092,9 +2125,43 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 resources.getString(R.string.time_minutes_seconds_formatter), minutes, seconds
             ) + " Min"
 
-            else -> resources.getString(R.string.time_hours_minutes_seconds_formatter, hours, minutes, seconds) + " Hrs"
+            else -> resources.getString(
+                R.string.time_hours_minutes_seconds_formatter,
+                hours,
+                minutes,
+                seconds
+            ) + " Hrs"
         }
+    }
+
+    fun updateCamera(bearing: Float) {
+        val currentPlace: CameraPosition = CameraPosition.Builder()
+            .target(LatLng(locationChangelatitude, locationChangelongitude))
+            .bearing(bearing).zoom(getZoomLevel()).build()
+        mMap?.animateCamera(CameraUpdateFactory.newCameraPosition(currentPlace))
+    }
+
+    private fun getCompassBearing(
+        startlocation: Location,
+        destLocation: Location
+    ): Float {
+        var bearTo: Float = startlocation.bearingTo(destLocation)
+
+        if (bearTo < 0) {
+            bearTo += 360;
+
+        }
+
+        geoField = GeomagneticField(
+            java.lang.Double.valueOf(startlocation.latitude).toFloat(),
+            java.lang.Double.valueOf(startlocation.longitude).toFloat(),
+            java.lang.Double.valueOf(startlocation.altitude).toFloat(),
+            System.currentTimeMillis()
+        )
+
+        return bearTo
     }
 
 
 }
+

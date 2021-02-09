@@ -2410,15 +2410,20 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
-                //  address = addresses[0].getAddressLine(0)
+                address = obj.getAddressLine(0)
 
-                if (obj != null && obj.locality != null && obj.subAdminArea  != null && obj.locality.equals(obj.subAdminArea, ignoreCase = true)){
+              /*  if (obj != null && obj.locality != null && obj.subAdminArea  != null && obj.locality.equals(obj.subAdminArea, ignoreCase = true)){
                     address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea + " " + obj.postalCode
                 }else{
                     address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea + " " + obj.postalCode
                 }
 
-                address = address.replace("null, ", "")
+                address = address.replace("null, ", "")*/
+                var countryName = obj.countryName
+                if (obj.countryName!= null && obj.countryName.equals("United States", ignoreCase = true)){
+                    obj.countryName = "USA"
+                }
+                address = address.replace(", $countryName", "").replace("- $countryName", "")
 
                 city = obj.subAdminArea
             } else {
