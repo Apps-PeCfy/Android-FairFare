@@ -1140,7 +1140,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 LatLng(
                     (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!.toDouble(),
                     (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!.toDouble()
-                ), 17.0f
+                ), 18.0f
             )
         )
         sourecemarker = mMap!!.addMarker(
@@ -1880,7 +1880,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     private fun getZoomLevel(): Float {
         if (!isMapZoomed!!) {
             isMapZoomed = true
-            return 18f
+            return 18.0f
+        }else if(mMap!!.cameraPosition.zoom<5){
+            return 18.0f
         }
         return mMap!!.cameraPosition.zoom
     }
@@ -1958,7 +1960,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             CameraPosition.Builder()
                                 .target(newPosition)
                                 .bearing(getCompassBearing(startLocation, destLocation))
-                                .zoom(mMap!!.cameraPosition.zoom)
+                                .zoom(getZoomLevel())
                                 .build()
                         )
                     )

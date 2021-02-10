@@ -480,60 +480,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
      }*/
 
 
-    private fun initLocationUpdates() {
-        myLocationManager?.getMyCurrentLocationChange(object :
-            MyLocationManager.LocationManagerTrackInterface {
-            override fun onMyLocationChange(
-                currentLocation: MutableList<Location>?,
-                lastLocation: Location?
-            ) {
-                if (lastLocation != null) {
-
-                    Log.d("sdsdsdswnwe", "onLocationChanged")
-
-                    currentLatitude = lastLocation!!.latitude
-                    currentLongitude = lastLocation!!.longitude
-                    preferencesManager!!.setStringValue(
-                        Constants.SHARED_PREFERENCE_CLat,
-                        currentLatitude.toString()
-                    )
-                    preferencesManager!!.setStringValue(
-                        Constants.SHARED_PREFERENCE_CLong,
-                        currentLongitude.toString()
-                    )
-
-                    //Stop Location Updates
-                    if (isFirstTimeLocationShowed!! && currentLatitude != null && currentLatitude != 0.0) {
-                        myLocationManager?.stopLocationUpdates()
-                    }
-
-                    if (callOnLocation.equals("first")) {
-                        if (currentLatitude != null && currentLatitude != 0.0) {
-
-                            isFirstTimeLocationShowed = true
-
-
-                            mapAndLocationReady()
-                            cityPojoList = preferencesManager!!.getCityList()
-                            if (cityPojoList != null && cityPojoList.size > 0) {
-                                setCitySpinner()
-                            } else {
-                                getCity()
-                            }
-
-                            progressDialogstart!!.dismiss()
-                            mainRelativeLayout!!.visibility = View.VISIBLE
-
-
-                        }
-
-                    }
-
-                }
-            }
-
-        })
-    }*/
 
     private fun initLocationUpdates() {
         myLocationManager?.getMyCurrentLocationChange(object :

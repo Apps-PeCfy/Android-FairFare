@@ -80,10 +80,6 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var tvhideShow: RelativeLayout? = null
 
     @JvmField
-    @BindView(R.id.homeView)
-    var homeView: LinearLayout? = null
-
-    @JvmField
     @BindView(R.id.locationCardView)
     var locationCardView: CardView? = null
 
