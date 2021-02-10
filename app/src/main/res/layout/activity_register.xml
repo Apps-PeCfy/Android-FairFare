@@ -52,18 +52,16 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
-                <!-- Log In -->
                 <TextView
-                    android:textSize="@dimen/_14sdp"
                     android:id="@+id/sign_up"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_25sdp"
                     android:fontFamily="@font/notosansjp_bold"
+                    android:gravity="center_horizontal|top"
                     android:includeFontPadding="false"
                     android:text="@string/signup"
                     android:textAppearance="@style/log_in" />
@@ -243,6 +241,7 @@
 
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="0.3"
                         android:layout_width="0dp"
@@ -371,6 +370,9 @@
                         android:text="@string/logIn"
                         android:textColor="@color/gradientstartcolor"
                         android:textSize="@dimen/_12sdp" />
+
+
+
 
 
                 </RelativeLayout>

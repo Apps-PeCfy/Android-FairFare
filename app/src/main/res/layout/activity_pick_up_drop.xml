@@ -278,7 +278,6 @@
 
                             <TextView
                                 android:drawablePadding="@dimen/_10sdp"
-                                android:maxLines="2"
                                 android:layout_marginEnd="@dimen/_15sdp"
                                 android:id="@+id/tvAddress"
                                 android:layout_width="match_parent"

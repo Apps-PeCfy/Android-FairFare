@@ -120,6 +120,8 @@
             android:orientation="vertical">
 
             <TextView
+                android:textColor="@color/gradientstartcolor"
+                android:textStyle="bold"
                 android:id="@+id/tv_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

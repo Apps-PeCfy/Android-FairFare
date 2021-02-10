@@ -108,7 +108,6 @@
             android:fontFamily="@font/notosansjp_bold"
             android:gravity="center_horizontal|top"
             android:includeFontPadding="false"
-            android:lineSpacingExtra=".25dp"
             android:text="@string/logIn"
             android:textAppearance="@style/log_in" />
 
@@ -365,6 +364,7 @@
                 android:visibility="visible" />
 
 
+
             <TextView
                 android:id="@+id/tvSignUp"
                 android:layout_width="wrap_content"
@@ -374,6 +374,18 @@
                 android:text="@string/signup"
                 android:textColor="@color/gradientstartcolor"
                 android:textSize="@dimen/_12sdp" />
+
+
+
+          <!--  <TextView
+                android:id="@+id/tvSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosansjp_regular"
+                android:includeFontPadding="false"
+                android:text="@string/signup"
+                android:textColor="@color/gradientstartcolor"
+                android:textSize="@dimen/_12sdp" />-->
 
 
         </LinearLayout>

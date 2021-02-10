@@ -103,7 +103,7 @@
                 android:layout_below="@+id/tv_driverDetails"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:hint="Enter Driver Name (Optional)"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_15sdp" />
 

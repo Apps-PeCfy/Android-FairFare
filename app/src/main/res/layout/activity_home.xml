@@ -187,7 +187,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_120sdp"
+                        android:layout_height="wrap_content"
                         app:cardBackgroundColor="@color/White"
                         app:cardCornerRadius="@dimen/_10sdp"
                         app:cardElevation="@dimen/_10sdp"
@@ -199,19 +199,20 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
                                 android:textColor="@color/gradientstartcolor"
                                 android:gravity="center_vertical"
                                 android:text="Pick-up Location"
                                 android:id="@+id/tv_myCurrentLocation"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_45sdp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:drawableStart="@drawable/red_circle"
                                 android:drawablePadding="@dimen/_15sdp"
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:includeFontPadding="false"
-                                android:maxLines="2"
                                 />
 
                             <View
@@ -225,10 +226,12 @@
 
 
                             <TextView
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
                                 android:gravity="center_vertical"
                                 android:id="@+id/tv_myDropUpLocation"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_45sdp"
+                                android:layout_height="wrap_content"
                                 android:layout_below="@+id/view"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
@@ -236,7 +239,6 @@
                                 android:drawablePadding="@dimen/_15sdp"
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:includeFontPadding="false"
-                                android:maxLines="2"
                                 android:text="Drop-off Location" />
 
 
