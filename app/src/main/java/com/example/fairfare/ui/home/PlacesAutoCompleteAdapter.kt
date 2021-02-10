@@ -221,26 +221,29 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                         } catch (e: IOException) {
                         }
                         val token = preferencesManager.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-                        client.SaveRecentLocation(
-                            "Bearer $token", place.id,
-                            addressesRecent!!.get(0)!!.subAdminArea, addressesRecent!!.get(0)!!.adminArea,
-                            addressesRecent!!.get(0)!!.countryName, item.address.toString()
-                        )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
-                            override fun onResponse(
-                                call: Call<SaveLocationResponsePojo?>,
-                                response: Response<SaveLocationResponsePojo?>
-                            ) {
-                                // Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                            }
+                        if (addressesRecent != null && addressesRecent.size >0){
+                            client.SaveRecentLocation(
+                                "Bearer $token", place.id,
+                                addressesRecent?.get(0)!!.subAdminArea, addressesRecent?.get(0)!!.adminArea,
+                                addressesRecent?.get(0)!!.countryName, item.address.toString()
+                            )!!.enqueue(object : Callback<SaveLocationResponsePojo?> {
+                                override fun onResponse(
+                                    call: Call<SaveLocationResponsePojo?>,
+                                    response: Response<SaveLocationResponsePojo?>
+                                ) {
+                                    // Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                }
 
-                            override fun onFailure(
-                                call: Call<SaveLocationResponsePojo?>,
-                                t: Throwable
-                            ) {
-                                Log.d("response", t.stackTrace.toString())
-                            }
-                        })
+                                override fun onFailure(
+                                    call: Call<SaveLocationResponsePojo?>,
+                                    t: Throwable
+                                ) {
+                                    Log.d("response", t.stackTrace.toString())
+                                }
+                            })
+                        }
                         clickListener!!.click(place, mResultList!![adapterPosition].address.toString())
+
                     }.addOnFailureListener { exception ->
                         if (exception is ApiException) {
                             Toast.makeText(mContext, exception.message + "", Toast.LENGTH_LONG)
@@ -271,7 +274,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                             val geocoder =
                                 Geocoder(mContext, Locale.getDefault())
                             try {
-                                 addresses =
+                                addresses =
                                     geocoder.getFromLocation(
                                         place.latLng!!.latitude,
                                         place.latLng!!.longitude, 1
@@ -284,10 +287,10 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                             client.SaveLocation(
                                 "Bearer $token",
                                 place.id,
-                                addresses!!.get(0)!!.subAdminArea,
-                                addresses!!.get(0)!!.adminArea,
+                                addresses?.get(0)?.subAdminArea,
+                                addresses?.get(0)?.adminArea,
                                 item.address.toString(),
-                                addresses!!.get(0)!!.countryName
+                                addresses?.get(0)?.countryName
 
 
 

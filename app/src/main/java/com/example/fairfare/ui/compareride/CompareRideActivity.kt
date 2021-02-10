@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.animation.TranslateAnimation
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -28,6 +29,7 @@ import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.viewride.ViewRideActivity
 import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.OnSwipeTouchListener
 import com.example.fairfare.utils.PreferencesManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -66,6 +68,10 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var tv_baggs: TextView? = null
 
     @JvmField
+    @BindView(R.id.homeView)
+    var homeView: LinearLayout? = null
+
+    @JvmField
     @BindView(R.id.rlhideview)
     var rlhideview: RelativeLayout? = null
 
@@ -96,6 +102,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var extras: Bundle? = null
     var token: String? = null
     var PortAir: String? = null
+    var isSorted: Boolean = false
     var sourecemarker: Marker? = null
     var mMap: GoogleMap? = null
     var Airport: String? = null
@@ -214,9 +221,9 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
 
         if (info!!.vehicles!!.size > 0) {
-            compareRideList.addAll(info.vehicles!!.sortedWith(compareBy({it!!.total})))
 
 
+            compareRideList.addAll(info.vehicles!!)
 
             compareRideAdapter = CompareRideAdapter(this, compareRideList, distance, baggs, estTime)
             recyclerviewcompareview!!.layoutManager = LinearLayoutManager(this)
@@ -301,6 +308,8 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         }
 
         iCompareRidePresenter = CompareRideImplementer(this)
+
+
 /*        iCompareRidePresenter!!.getCompareRideData(
             token,
             replacedistance,
@@ -313,7 +322,39 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
             currentPlaceId!!
         )*/
 
+        setListeners()
 
+    }
+
+    private fun setListeners() {
+        homeView?.setOnTouchListener(object : OnSwipeTouchListener(this) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+            }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+            }
+            override fun onSwipeUp() {
+                super.onSwipeUp()
+                hideshow = "hide"
+                locationCardView!!.visibility = View.GONE
+                recyclerviewcompareview!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                recyclerviewcompareview!!.requestLayout()
+                rlhideview!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                rlhideview!!.requestLayout()
+                slideUp(rlhideview)
+            }
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+                hideshow = "show"
+                //  rlhideview?.visibility = View.VISIBLE
+                slideDown(rlhideview)
+
+                locationCardView!!.visibility = View.VISIBLE
+                rlhideview!!.layoutParams.height = 750
+                rlhideview!!.requestLayout()
+            }
+        })
     }
 
 
@@ -361,9 +402,62 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     @OnClick(R.id.tv_sort)
     fun tvSort() {
 
+        if(isSorted){
 
-        Collections.reverse(compareRideList)
-        compareRideAdapter!!.notifyDataSetChanged()
+            Collections.reverse(compareRideList)
+            compareRideAdapter!!.notifyDataSetChanged()
+        }else{
+            isSorted =true
+            compareRideList.clear()
+
+            compareRideList.addAll(info.vehicles!!.sortedBy { it.total!!.toDouble() })
+
+
+            compareRideAdapter = CompareRideAdapter(this, compareRideList, distance, baggs, estTime)
+            recyclerviewcompareview!!.layoutManager = LinearLayoutManager(this)
+            recyclerviewcompareview!!.adapter = compareRideAdapter
+            compareRideAdapter!!.notifyDataSetChanged()
+
+            compareRideAdapter!!.SetOnItemClickListener(object :
+                CompareRideAdapter.OnItemClickListener {
+                override fun onItemClick(view: View?, position: Int) {
+
+
+                    val intent = Intent(applicationContext, ViewRideActivity::class.java)
+                    intent.putExtra("spinnerdata", compareRideList)
+                    intent.putExtra("listPosition", position)
+                    intent.putExtra("SourceLat", sourceLat)
+                    intent.putExtra("SourceLong", sourceLong)
+                    intent.putExtra("CITY_ID", CITY_ID)
+                    intent.putExtra("CITY_NAME", CITY_NAME)
+                    intent.putExtra("destLat", destLat)
+                    intent.putExtra("destLong", destLong)
+                    intent.putExtra("SourceAddess", SourceAddress)
+                    intent.putExtra("DestAddress", destinationAddress)
+                    intent.putExtra("CurrentDateTime", currentDate)
+                    intent.putExtra("timeSpinnertxt", timeSpinnertxt)
+                    intent.putExtra(
+                        "vehicle_rate_card_id",
+                        info!!.vehicles!!.get(position).vehicleRateCardId
+                    )
+                    intent.putExtra(
+                        "airport_rate_card_id",
+                        info!!.vehicles!!.get(position).airportRateCardId
+                    )
+                    intent.putExtra("luggages_quantity", info.luggage)
+                    intent.putExtra("formatedDate", info.scheduleDatetime)
+                    intent.putExtra("ViewRideDistance", info.distance)
+                    intent.putExtra("canStartRide", info.canStartRide)
+                    intent.putExtra("distance", "$distance ($estTime)")
+                    startActivity(intent)
+
+                }
+            })
+        }
+
+
+     //   compareRideList.sortedWith(compareBy({it!!.total}))
+    //    compareRideAdapter!!.notifyDataSetChanged()
     }
 
 /*

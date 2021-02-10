@@ -16,12 +16,15 @@ class MyRidesImplementer(private val view: IMyRidesView) : IMyRidesPresenter {
 
         view.showWait()
         val call = ApiClient.client.getMyRides(
-            "Bearer $token",cnt.toString(),currentLat,currentLong)
+             token,cnt,currentLat,currentLong)
         call!!.enqueue(object : Callback<GetRideResponsePOJO?> {
             override fun onResponse(
                 call: Call<GetRideResponsePOJO?>,
                 response: Response<GetRideResponsePOJO?>
             ) {
+
+                view.removeWait()
+
                 if (response.code() == 200) {
                     if (response.body() != null) {
                         view.removeWait()
@@ -40,6 +43,8 @@ class MyRidesImplementer(private val view: IMyRidesView) : IMyRidesPresenter {
                     } catch (exception: IOException) {
                     }
 
+                }else{
+                    view.onFailure(response.message())
                 }
             }
 

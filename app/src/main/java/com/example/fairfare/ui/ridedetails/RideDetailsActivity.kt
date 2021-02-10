@@ -515,7 +515,12 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         alertDialog.setNegativeButton("Cancel") { dialog, which ->
             val editText: TextView = customLayout!!.findViewById(R.id.test)
 
-            Toast.makeText(this@RideDetailsActivity, "Cancel", Toast.LENGTH_LONG).show()
+            sharedpreferences!!.edit().clear().commit()
+            val intent = Intent(this@RideDetailsActivity, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+
+           // Toast.makeText(this@RideDetailsActivity, "Cancel", Toast.LENGTH_LONG).show()
         }
 
 

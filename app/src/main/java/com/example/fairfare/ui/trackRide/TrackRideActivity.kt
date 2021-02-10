@@ -8,28 +8,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.hardware.GeomagneticField
 import android.icu.math.BigDecimal
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-
-import android.os.AsyncTask
-import android.os.Build
-import android.os.Bundle
-
 import android.os.*
-import android.view.animation.Interpolator
-import android.view.animation.LinearInterpolator
-import android.os.Handler
-
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.Interpolator
+import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -48,6 +41,7 @@ import com.example.fairfare.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.MyLocationManager
 import com.example.fairfare.utils.PreferencesManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -68,11 +62,13 @@ import java.net.URL
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListener {
     lateinit var info: ScheduleRideResponsePOJO
     protected var locationManager: LocationManager? = null
+    protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
     var waypoints = ""
 
     var hideshow: String? = "show"
@@ -95,6 +91,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var mPolyline: Polyline? = null
     var updatedPolyline: Polyline? = null
     var mGreyPolyline: Polyline? = null
+    var prevLatLng: LatLng? = null
 
     private var myMarker: Marker? = null
     private var isMapZoomed: Boolean? = false
@@ -269,7 +266,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var waitLong: String? = ""
     var waitAt: String? = ""
     var waitTimeForCurrentFare: String? = "0"
-    var strDistCal: String? = ""
+    var strDistCal: String? = "0"
     var actualTime: String? = "0"
     var actualDistance: String? = "0"
 
@@ -285,17 +282,27 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var destinationAddress: String? = null
     var streetAddress: String? = null
     var deststreetAddress: String? = null
+    var isFirstTimeSetUpDone: Boolean = false
 
     var markerPoints: ArrayList<LatLng?>? = null
     var globalmarkerPoints: ArrayList<LatLng?>? = null
     var OriginM: LatLng? = null
-    val ha = Handler()
+    val handler = Handler()
+    lateinit var destLocation: Location
+    lateinit var startLocation: Location
+    var geoField: GeomagneticField? = null
+
 
     @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_track_ride)
+        init()
+    }
+
+    private fun init() {
+
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
         val mapFragment = supportFragmentManager
@@ -312,7 +319,211 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         getcurrentDate()
 
 
-        ha.postDelayed(object : Runnable {
+
+
+        preferencesManager = PreferencesManager.instance
+        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+
+        sorceAddress = sharedpreferences!!.getString("SourceAddress", "")
+        destinationAddress = sharedpreferences!!.getString("DestinationAddress", "")
+
+
+        sAddress = intent.getStringExtra("SAddress")
+        dAddress = intent.getStringExtra("DAddress")
+        tv_carType!!.text = intent.getStringExtra("ImageName")
+        token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+
+        Glide.with(this@TrackRideActivity)
+            .load(intent.getStringExtra("ImageUrl"))
+            .apply(
+                RequestOptions()
+                    .centerCrop()
+                    .dontAnimate()
+                    .dontTransform()
+            ).into(iv_vehical!!)
+
+
+        info = intent.getSerializableExtra("ResponsePOJOScheduleRide") as ScheduleRideResponsePOJO
+
+        destLocation = Location("")
+        destLocation.latitude = (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!.toDouble()
+        destLocation.longitude =
+            (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!.toDouble()
+
+        startLocation = Location("")
+        startLocation.latitude = (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!.toDouble()
+        startLocation.longitude = (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!.toDouble()
+
+
+        if ((intent.getStringExtra("MyRidesLat")) != null) {
+
+            streetAddress = getAddressFromLatLng(
+                (intent.getStringExtra("MyRidesLat"))!!.toDouble(),
+                (intent.getStringExtra("MyRidesLong"))!!.toDouble()
+            )
+            deststreetAddress = getAddressFromLatLng(
+                (intent.getStringExtra("MyRidesDLat"))!!.toDouble(),
+                (intent.getStringExtra("MyRidesDLong"))!!.toDouble()
+            )
+
+
+            tv_myCurrentLocation!!.text = intent.getStringExtra("MyRidesoriginalAddress")
+            tv_myDropUpLocation!!.text = intent.getStringExtra("MyRidesdestinationAddress")
+
+
+        } else {
+            tv_myDropUpLocation!!.text = dAddress
+            tv_myCurrentLocation!!.text = sAddress
+
+        }
+
+
+        //   tv_estimatedDistance!!.text = info.ride!!.estimatedTrackRide!!.distance + " km"
+        tv_travelTime!!.text = info.ride!!.estimatedTrackRide!!.duration
+
+
+        /* tv_distance!!.text =
+             "(Est.Distance:" + info.ride!!.estimatedTrackRide!!.distance + " km) / " +
+                     "(Est.Time:" + info.ride!!.estimatedTrackRide!!.duration + ")"*/
+
+        mToolbar!!.title = "Track Ride"
+        mToolbar!!.setTitleTextColor(Color.WHITE)
+        setSupportActionBar(mToolbar)
+        mToolbar!!.setNavigationOnClickListener { onBackPressed() }
+
+        if (Constants.IS_OLD_PICK_UP_CODE) {
+            setHandler()
+        } else {
+            initLocationUpdates()
+        }
+
+
+    }
+
+
+    private fun initLocationUpdates() {
+        myLocationManager?.getMyCurrentLocationChange(object :
+            MyLocationManager.LocationManagerTrackInterface {
+            override fun onMyLocationChange(
+                currentLocation: MutableList<Location>?,
+                lastLocation: Location?
+            ) {
+                if (lastLocation != null) {
+
+                    /**
+                     * iLoma Team :- Mohasin 09 Jan 2021
+                     */
+
+                    addCurrentLocationMarker(lastLocation)
+
+
+                    locationChangelatitude = lastLocation!!.latitude
+                    locationChangelongitude = lastLocation!!.longitude
+
+
+                    logicToShowActualDistanceTravelled()
+
+
+                    var currentspeed = (((lastLocation.speed) * 3600) / 1000).toInt()
+
+                    if (prevLatLng != null && getDistanceBetweenTwoLatLng(
+                            LatLng(locationChangelatitude, locationChangelongitude),
+                            prevLatLng!!
+                        )!! >= 0
+                    ) {
+                        if (isFirstTimeSetUpDone) {
+                            trackBoard = "currentCordinate"
+                            valueForDistanceandWaitTime()
+                            currentFare()
+                        }
+
+                        drawRoute()
+                    }
+
+
+                    if (currentspeed!! < 10) {   //speed less than 10 km per hr
+                        if (waitTime == null) {
+                            waitTime = Date()
+                            val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                            waitAt = formatter.format(waitTime)
+
+                        }
+
+                    } else {
+
+                        if (waitTime != null) {
+                            val time = Date()
+
+                            val calculateDate =
+                                ((time!!.getTime() - waitTime!!.getTime()) / 1000) //time in second
+
+                            if (calculateDate > 60) {
+                                val timeDiffrence = (calculateDate - 60).toDouble()//time in min
+
+
+                                var options = HashMap<String, String>()
+                                options.put("waiting_time", timeDiffrence.toString())
+                                options.put("full_address", waitLocation!!)
+                                options.put("wait_at", waitAt!!)
+                                options.put("lat", waitLat!!)
+                                options.put("long", waitLong!!)
+                                arrWaitTime.add(options!!)
+
+
+                            }
+                            waitTime = null
+                            calculateWaitTime()
+
+                        }
+
+
+                    }
+
+                }
+            }
+
+        })
+    }
+
+    private fun logicToShowActualDistanceTravelled() {
+        OriginM = LatLng(locationChangelatitude, locationChangelongitude)
+
+        if (globalmarkerPoints!!.size > 0) {
+
+            distanceBetweenCurrent = getDistanceBetweenTwoLatLng(
+                OriginM!!,
+                globalmarkerPoints?.get(globalmarkerPoints!!.size - 1)!!
+            )
+
+            //distanceBetweenCurrent in meter
+            if (distanceBetweenCurrent!! >= 10) {
+                globalmarkerPoints!!.add(OriginM)
+                if (globalmarkerPoints!!.size >= 2) {
+
+                    actulDis = distanceBetweenCurrent!!
+                    actualTravelDistance.add(actulDis)
+
+
+                    logDistance(
+                        actulDis,
+                        (globalmarkerPoints!!.get(globalmarkerPoints!!.size - 2)!!.latitude),
+                        (globalmarkerPoints!!.get(globalmarkerPoints!!.size - 2)!!.longitude),
+
+                        (globalmarkerPoints!!.get(globalmarkerPoints!!.size - 1)!!.latitude),
+                        (globalmarkerPoints!!.get(globalmarkerPoints!!.size - 1)!!.longitude)
+                    )
+                }
+
+            }
+
+        } else {
+            globalmarkerPoints!!.add(OriginM)
+        }
+    }
+
+    private fun setHandler() {
+
+        handler.postDelayed(object : Runnable {
             override fun run() {
 
                 Log.d("onLocationChangedq", "every10sec")
@@ -321,8 +532,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 OriginM = LatLng(locationChangelatitude, locationChangelongitude)
 
                 if (globalmarkerPoints!!.size > 0) {
-
-
 
 
                     //10 meter
@@ -366,7 +575,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             )
 
                             // calDistance()
-                            drawNewRoute()
+                            //  drawNewRoute()
 
                             valueForDistanceandWaitTime()
                             currentFare()
@@ -379,101 +588,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     globalmarkerPoints!!.add(OriginM)
                 }
 
-                ha.postDelayed(this, 10000)
+                handler.postDelayed(this, 10000)
             }
         }, 10000)
-
-
-
-
-        preferencesManager = PreferencesManager.instance
-        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
-
-        sorceAddress = sharedpreferences!!.getString("SourceAddress", "")
-        destinationAddress = sharedpreferences!!.getString("DestinationAddress", "")
-
-
-        sAddress = intent.getStringExtra("SAddress")
-        dAddress = intent.getStringExtra("DAddress")
-        tv_carType!!.text = intent.getStringExtra("ImageName")
-        token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-
-        Glide.with(this@TrackRideActivity)
-            .load(intent.getStringExtra("ImageUrl"))
-            .apply(
-                RequestOptions()
-                    .centerCrop()
-                    .dontAnimate()
-                    .dontTransform()
-            ).into(iv_vehical!!)
-
-
-        info = intent.getSerializableExtra("ResponsePOJOScheduleRide") as ScheduleRideResponsePOJO
-
-        if ((intent.getStringExtra("MyRidesLat")) != null) {
-
-            val geocoder = Geocoder(this@TrackRideActivity, Locale.getDefault())
-            try {
-                val addresses =
-                    geocoder.getFromLocation(
-                        ((intent.getStringExtra("MyRidesLat"))!!.toDouble()),
-                        ((intent.getStringExtra("MyRidesLong"))!!.toDouble()), 1
-                    )
-                if (addresses != null) {
-                    val returnedAddress = addresses[0]
-                    val strReturnedAddress =
-                        StringBuilder()
-                    for (j in 0..returnedAddress.maxAddressLineIndex) {
-                        strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                    }
-                    streetAddress = strReturnedAddress.toString()
-                }
-            } catch (e: IOException) {
-            }
-
-
-            val geocoderDestination = Geocoder(this@TrackRideActivity, Locale.getDefault())
-            try {
-                val addresses =
-                    geocoderDestination.getFromLocation(
-                        ((intent.getStringExtra("MyRidesDLat"))!!.toDouble()),
-                        ((intent.getStringExtra("MyRidesDLong"))!!.toDouble()), 1
-                    )
-                if (addresses != null) {
-                    val returnedAddress = addresses[0]
-                    val strReturnedAddress =
-                        StringBuilder()
-                    for (j in 0..returnedAddress.maxAddressLineIndex) {
-                        strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                    }
-                    deststreetAddress = strReturnedAddress.toString()
-                }
-            } catch (e: IOException) {
-            }
-
-            tv_myCurrentLocation!!.text = intent.getStringExtra("MyRidesoriginalAddress")
-            tv_myDropUpLocation!!.text = intent.getStringExtra("MyRidesdestinationAddress")
-
-
-        } else {
-            tv_myDropUpLocation!!.text = dAddress
-            tv_myCurrentLocation!!.text = sAddress
-
-        }
-
-
-        //   tv_estimatedDistance!!.text = info.ride!!.estimatedTrackRide!!.distance + " km"
-        tv_travelTime!!.text = info.ride!!.estimatedTrackRide!!.duration
-
-
-        /* tv_distance!!.text =
-             "(Est.Distance:" + info.ride!!.estimatedTrackRide!!.distance + " km) / " +
-                     "(Est.Time:" + info.ride!!.estimatedTrackRide!!.duration + ")"*/
-
-        mToolbar!!.title = "Track Ride"
-        mToolbar!!.setTitleTextColor(Color.WHITE)
-        setSupportActionBar(mToolbar)
-        mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
     }
 
@@ -708,7 +825,14 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val strescimal = String.format("%.02f", different)
 
         actualTime = strescimal
-        tvTravelTime!!.text = strescimal + " Min"
+
+        //ILOMADEV
+        if (Constants.IS_OLD_PICK_UP_CODE) {
+            tvTravelTime!!.text = strescimal + " Min"
+        } else {
+            tvTravelTime!!.text = formatTime(todayRefresh.getTime() - today!!.getTime())
+        }
+
 
         var totalActualDistance = 0.0
 
@@ -785,16 +909,18 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
     @OnClick(R.id.btnEndRide)
     fun endRide() {
-        ha.removeCallbacksAndMessages(null)
 
         val alertDialog = AlertDialog.Builder(this)
-        // Setting Dialog Title
-        //  alertDialog.setTitle("GPS is settings")
-        // Setting Dialog Message
         alertDialog.setTitle("FairFare")
         alertDialog.setMessage("Are you sure you want to end this Ride?")
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Yes") { dialog, which ->
+
+            if (Constants.IS_OLD_PICK_UP_CODE) {
+                handler.removeCallbacksAndMessages(null)
+            } else {
+                myLocationManager?.stopLocationUpdates()
+            }
 
             val intentr = Intent(applicationContext, EndRidesActivity::class.java)
             if ((intent.getStringExtra("MyRidesLat")) != null) {
@@ -809,6 +935,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
                 intentr.putExtra("actualDistanceTravelled", actualDistance)
                 intentr.putExtra("actualTimeTravelled", actualTime)
+
+
 
                 startActivity(intentr)
                 finish()
@@ -1006,13 +1134,13 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         //  googleMap!!.clear()
 
         mMap = googleMap
-       // mMap!!.isMyLocationEnabled = true
+        // mMap!!.isMyLocationEnabled = true
         mMap!!.animateCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
                     (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!.toDouble(),
                     (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!.toDouble()
-                ), 15.0f
+                ), 17.0f
             )
         )
         sourecemarker = mMap!!.addMarker(
@@ -1035,8 +1163,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
-
-
+        updateCamera(getCompassBearing(startLocation, destLocation))
         drawRoute()
     }
 
@@ -1079,6 +1206,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     }
 
     private fun getDirectionsUrl(mOrigin: LatLng, mDestination: LatLng): String {
+
+        // Toast.makeText(applicationContext, "Direction API calling", Toast.LENGTH_LONG).show()
+
         val str_origin = "origin=" + mOrigin.latitude + "," + mOrigin.longitude
         val str_dest = "destination=" + mDestination.latitude + "," + mDestination.longitude
 
@@ -1204,6 +1334,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             if (result != null) {
                 for (i in result!!.indices) {
                     points = ArrayList()
+                    markerPoints = ArrayList()
                     lineOptions = PolylineOptions()
 
 
@@ -1239,7 +1370,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 if (trackBoard.equals("currentCordinate")) {
 
                     lineOptions!!.addAll(points)
-                    lineOptions!!.width(13f)
+                    lineOptions!!.width(15f)
                     //  lineOptions.color(Color.GREEN);
                     lineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.gradientendcolor))
 
@@ -1259,7 +1390,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     }
 
                 } else {
-
+                    //ILOMADEV
+                    isFirstTimeSetUpDone = true
 
                     val estCurrDIst = (estCurrentDistance!!.toDouble() / 1000)
 
@@ -1285,7 +1417,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     lineOptions!!.addAll(points)
-                    lineOptions!!.width(8f)
+                    lineOptions!!.width(15f)
                     //  lineOptions.color(Color.GREEN);
                     lineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.gradientstartcolor))
 
@@ -1331,10 +1463,17 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         var timeInMin = 0.0
 
+
         if (totalWaitTime > 59) {
             timeInMin = totalWaitTime / 60
             val strTimeCal = String.format("%.02f", timeInMin)
-            tv_currentwaitTime!!.text = strTimeCal + " Min"
+            //ILOMADEV
+            if (Constants.IS_OLD_PICK_UP_CODE) {
+                tv_currentwaitTime!!.text = strTimeCal + " Min"
+            } else {
+                tv_currentwaitTime!!.text = formatTime((timeInMin * 60 * 1000).toLong())
+            }
+
 
             val strTime = String.format("%.02f", timeInMin)
             waitTimeForCurrentFare = strTime
@@ -1342,7 +1481,13 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         } else {
             timeInMin = totalWaitTime
-            tv_currentwaitTime!!.text = timeInMin.toString() + " Sec"
+            //ILOMADEV
+            if (Constants.IS_OLD_PICK_UP_CODE) {
+                tv_currentwaitTime!!.text = timeInMin.toString() + " Sec"
+            } else {
+                tv_currentwaitTime!!.text = formatTime((timeInMin * 1000).toLong())
+            }
+
 
         }
 
@@ -1581,10 +1726,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                   greylineOptions!!.addAll(greypoints)
                   greylineOptions!!.width(15f)
                   greylineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.Grey))
-
-
                   if (greylineOptions != null) {
-
                       if (mGreyPolyline != null) {
                       }
                       mGreyPolyline = mMap!!.addPolyline(greylineOptions)
@@ -1603,71 +1745,72 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onLocationChanged(location: Location) {
 
+        if (Constants.IS_OLD_PICK_UP_CODE) {
+            Log.d("onLocationChangedq", location!!.speed.toString())
 
-        Log.d("onLocationChangedq", location!!.speed.toString())
+            /**
+             * iLoma Team :- Mohasin 09 Jan 2021
+             */
 
-        /**
-         * iLoma Team :- Mohasin 09 Jan 2021
-         */
-
-        addCurrentLocationMarker(location)
-
-
-        locationChangelatitude = location.latitude
-        locationChangelongitude = location.longitude
+            addCurrentLocationMarker(location)
 
 
+            locationChangelatitude = location.latitude
+            locationChangelongitude = location.longitude
 
 
-        if (location != null) {
+
+            if (location != null) {
 
 
-            var currentspeed = (((location.speed) * 3600) / 1000).toInt()
-
+                var currentspeed = (((location.speed) * 3600) / 1000).toInt()
 
 
 
 
-            if (currentspeed!! < 10) {   //speed less than 10 km per hr
-                if (waitTime == null) {
-                    waitTime = Date()
-                    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    waitAt = formatter.format(waitTime)
 
-                }
-
-            } else {
-
-                if (waitTime != null) {
-                    val time = Date()
-
-                    val calculateDate =
-                        ((time!!.getTime() - waitTime!!.getTime()) / 1000) //time in second
-
-                    if (calculateDate > 60) {
-                        val timeDiffrence = (calculateDate - 60).toDouble()//time in min
-
-
-                        var options = HashMap<String, String>()
-                        options.put("waiting_time", timeDiffrence.toString())
-                        options.put("full_address", waitLocation!!)
-                        options.put("wait_at", waitAt!!)
-                        options.put("lat", waitLat!!)
-                        options.put("long", waitLong!!)
-                        arrWaitTime.add(options!!)
-
+                if (currentspeed!! < 10) {   //speed less than 10 km per hr
+                    if (waitTime == null) {
+                        waitTime = Date()
+                        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                        waitAt = formatter.format(waitTime)
 
                     }
-                    waitTime = null
-                    calculateWaitTime()
+
+                } else {
+
+                    if (waitTime != null) {
+                        val time = Date()
+
+                        val calculateDate =
+                            ((time!!.getTime() - waitTime!!.getTime()) / 1000) //time in second
+
+                        if (calculateDate > 60) {
+                            val timeDiffrence = (calculateDate - 60).toDouble()//time in min
+
+
+                            var options = HashMap<String, String>()
+                            options.put("waiting_time", timeDiffrence.toString())
+                            options.put("full_address", waitLocation!!)
+                            options.put("wait_at", waitAt!!)
+                            options.put("lat", waitLat!!)
+                            options.put("long", waitLong!!)
+                            arrWaitTime.add(options!!)
+
+
+                        }
+                        waitTime = null
+                        calculateWaitTime()
+
+                    }
+
 
                 }
 
 
             }
-
-
         }
+
 
     }
 
@@ -1687,7 +1830,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     private fun addCurrentLocationMarker(location: Location?) {
 
         val newPosition: LatLng = LatLng(location!!.latitude, location.longitude)
-        if (myMarker != null){
+        if (myMarker != null) {
+            if (prevLatLng != null) {
+                animateMarkerNew(prevLatLng!!, newPosition, myMarker)
+            }
             myMarker!!.remove()
         }
         myMarker = mMap!!.addMarker(
@@ -1700,22 +1846,36 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 .rotation(location.bearing)
         )
 
-        animateMarker(myMarker!!, location)
+        prevLatLng = newPosition
 
         mMap!!.moveCamera(
             CameraUpdateFactory.newCameraPosition(
                 CameraPosition.Builder()
                     .target(newPosition)
+                    .bearing(getCompassBearing(startLocation, destLocation))
                     .zoom(getZoomLevel())
                     .build()
             )
         )
 
+    }
 
+    private fun getCompassBearing(location: Location): Float {
+        location.bearingTo(destLocation);
+
+        geoField = GeomagneticField(
+            java.lang.Double.valueOf(location.latitude).toFloat(),
+            java.lang.Double.valueOf(location.longitude).toFloat(),
+            java.lang.Double.valueOf(location.altitude).toFloat(),
+            System.currentTimeMillis()
+        )
+
+        return Math.round(-(location.bearing - (location.bearing - geoField?.declination!!) / 360 + 180))
+            .toFloat()
     }
 
     private fun getZoomLevel(): Float {
-        if (!isMapZoomed!!){
+        if (!isMapZoomed!!) {
             isMapZoomed = true
             return 18f
         }
@@ -1724,9 +1884,18 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
     fun getMarkerIcon(vehicalName: String?): BitmapDescriptor? {
-        when (vehicalName) {
-            "Taxi" -> return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_taxi)
-            "Auto" -> return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_auto)
+        if (vehicalName.equals("Taxi", ignoreCase = true) || vehicalName.equals(
+                "Local Taxi",
+                ignoreCase = true
+            )
+        ) {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_taxi)
+        } else if (vehicalName.equals("Auto", ignoreCase = true) || vehicalName.equals(
+                "Local Auto",
+                ignoreCase = true
+            )
+        ) {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_auto)
         }
         return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_cab)
     }
@@ -1745,16 +1914,16 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     elapsed.toFloat()
                             / duration
                 )
-                val lng = t * location.longitude + (1 - t)* startLatLng.longitude
-                val lat = t * location.latitude + (1 - t)* startLatLng.latitude
+                val lng = t * location.longitude + (1 - t) * startLatLng.longitude
+                val lat = t * location.latitude + (1 - t) * startLatLng.latitude
                 val rotation = (t * location.bearing + (1 - t)
                         * startRotation).toFloat()
                 marker.setPosition(LatLng(lat, lng))
-              /*  marker.rotation = rotation
-                if (t < 1.0) {
-                    // Post again 16ms later.
-                    handler.postDelayed(this, 10000)
-                }*/
+                /*  marker.rotation = rotation
+                  if (t < 1.0) {
+                      // Post again 16ms later.
+                      handler.postDelayed(this, 10000)
+                  }*/
             }
         })
     }
@@ -1773,7 +1942,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            valueAnimator.duration = 2000 // duration 3 second
+            valueAnimator.duration = 2000 // duration 2 second
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener { animation ->
                 try {
@@ -1785,12 +1954,18 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         CameraUpdateFactory.newCameraPosition(
                             CameraPosition.Builder()
                                 .target(newPosition)
+                                .bearing(getCompassBearing(startLocation, destLocation))
                                 .zoom(mMap!!.cameraPosition.zoom)
                                 .build()
                         )
                     )
 
-                    // myMarker.setRotation(getBearing(startPosition, new LatLng(destination.latitude, destination.longitude)));
+                    myMarker!!.setRotation(
+                        getBearing(
+                            startPosition,
+                            LatLng(destination.latitude, destination.longitude)
+                        )
+                    )
                 } catch (ex: java.lang.Exception) {
                     //I don't care atm..
                 }
@@ -1836,8 +2011,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val lat = Math.abs(begin.latitude - end.latitude)
         val lng = Math.abs(begin.longitude - end.longitude)
         if (begin.latitude < end.latitude && begin.longitude < end.longitude) return Math.toDegrees(
-            Math.atan(lng / lat)
-        )
+                Math.atan(lng / lat)
+            )
             .toFloat() else if (begin.latitude >= end.latitude && begin.longitude < end.longitude) return (90 - Math.toDegrees(
             Math.atan(lng / lat)
         ) + 90).toFloat() else if (begin.latitude >= end.latitude && begin.longitude >= end.longitude) return (Math.toDegrees(
@@ -1846,6 +2021,143 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             Math.atan(lng / lat)
         ) + 270).toFloat()
         return (-1).toFloat()
+
     }
+
+    private fun getDistanceBetweenTwoLatLng(current: LatLng, previous: LatLng): Double? {
+        var distance: Double = 0.0
+
+        val R = 6371
+        val dLat = deg2rad(current.latitude - previous.latitude)
+        val dLon = deg2rad(current.longitude - previous.longitude)
+        val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(
+            deg2rad(current.latitude)
+        ) * Math.cos(
+            deg2rad(previous.latitude)
+        ) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+        distance = (R * c) * 1000
+
+        //Toast.makeText(applicationContext, "Distance difference = " + distance.toString(), Toast.LENGTH_LONG).show()
+        return distance
+
+    }
+
+    private fun drawRouteWithoutCallingDistanceAPI() {
+        var latestPoints: ArrayList<LatLng?>? = ArrayList()
+        locationChangelatitude
+        locationChangelongitude
+
+
+        if (markerPoints != null) {
+
+            if (markerPoints?.get(0)?.latitude!! > markerPoints?.get(markerPoints!!.size - 1)?.latitude!!) {
+                for (latLng: LatLng? in markerPoints!!) {
+                    if (locationChangelatitude >= latLng?.latitude!! || locationChangelongitude >= latLng.longitude) {
+                        latestPoints?.add(latLng)
+                    }
+                }
+            } else {
+                for (latLng: LatLng? in markerPoints!!) {
+                    if (locationChangelatitude <= latLng?.latitude!! || locationChangelongitude <= latLng.longitude) {
+                        latestPoints?.add(latLng)
+                    }
+                }
+            }
+
+            Toast.makeText(
+                this,
+                markerPoints?.size.toString() + " Max to less " + latestPoints?.size,
+                Toast.LENGTH_SHORT
+            ).show()
+
+            if (mGreyPolyline != null) {
+                //Remove the same line from map
+                mGreyPolyline?.remove();
+            }
+            //Add line to map
+            mGreyPolyline = mMap?.addPolyline(
+                PolylineOptions()
+                    .addAll(latestPoints)
+                    .width(18f).color(Color.DKGRAY)
+            )
+        }
+
+    }
+
+    private fun getAddressFromLatLng(latitude: Double, longitude: Double): String? {
+        var address: String = ""
+
+        val geocoder = Geocoder(this@TrackRideActivity, Locale.getDefault())
+        try {
+            val addresses =
+                geocoder.getFromLocation(latitude, longitude, 1)
+            if (addresses != null) {
+                val returnedAddress = addresses[0]
+                val strReturnedAddress =
+                    StringBuilder()
+                for (j in 0..returnedAddress.maxAddressLineIndex) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
+                }
+                address = strReturnedAddress.toString()
+            }
+        } catch (e: IOException) {
+        }
+
+        return address
+    }
+
+    private fun formatTime(millis: Long): String {
+        val hours = TimeUnit.MILLISECONDS.toHours(millis) % 24
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(millis) % 60
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % 60
+
+        return when {
+            hours == 0L && minutes == 0L -> String.format(
+                resources.getString(R.string.time_seconds_formatter), seconds
+            ) + " Sec"
+
+            hours == 0L && minutes > 0L -> String.format(
+                resources.getString(R.string.time_minutes_seconds_formatter), minutes, seconds
+            ) + " Min"
+
+            else -> resources.getString(
+                R.string.time_hours_minutes_seconds_formatter,
+                hours,
+                minutes,
+                seconds
+            ) + " Hrs"
+        }
+    }
+
+    fun updateCamera(bearing: Float) {
+        val currentPlace: CameraPosition = CameraPosition.Builder()
+            .target(LatLng(locationChangelatitude, locationChangelongitude))
+            .bearing(bearing).zoom(getZoomLevel()).build()
+        mMap?.animateCamera(CameraUpdateFactory.newCameraPosition(currentPlace))
+    }
+
+    private fun getCompassBearing(
+        startlocation: Location,
+        destLocation: Location
+    ): Float {
+        var bearTo: Float = startlocation.bearingTo(destLocation)
+
+        if (bearTo < 0) {
+            bearTo += 360
+
+        }
+
+        geoField = GeomagneticField(
+            java.lang.Double.valueOf(startlocation.latitude).toFloat(),
+            java.lang.Double.valueOf(startlocation.longitude).toFloat(),
+            java.lang.Double.valueOf(startlocation.altitude).toFloat(),
+            System.currentTimeMillis()
+        )
+
+        return bearTo
+    }
+
 
 }

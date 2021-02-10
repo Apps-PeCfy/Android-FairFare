@@ -141,6 +141,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
     var citycalles: String? = "first"
     var cityID: String? = null
+    var cityID1: String? = null
     var preferencesManager: PreferencesManager? = null
     var sharedpreferences: SharedPreferences? = null
 
@@ -193,6 +194,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
         preferencesManager = PreferencesManager.instance
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         cityID = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_CITY_ID)
+        cityID1 = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_CITY_ID)
 
         getCity()
 
@@ -208,13 +210,12 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
         progressDialog.show() // show progress dialog
 
 
-        val headers = HashMap<String, String>()
-        headers["Content-Type"] = "application/json"
-        headers["Accept"] = "application/json"
-        headers["Authorization"] = "Bearer $token"
+
+        val cLat = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_CLat)
+        val cLong = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_CLong)
 
 
-        ApiClient.client.getAllowCities(headers)!!.enqueue(object :
+        ApiClient.client.getAllowCities("Bearer $token",cLat,cLong)!!.enqueue(object :
             Callback<GetAllowCityResponse?> {
             override fun onResponse(
                 call: Call<GetAllowCityResponse?>,
@@ -395,20 +396,41 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                             val rdbtn = RadioButton(activity)
                             rdbtn.id = View.generateViewId()
                             rdbtn.setOnClickListener(this@RateCard)
-                            if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
-                                val imgResource: Int = R.drawable.domestic_icon
-                                rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
-                                rdbtn.setCompoundDrawablePadding(100)
+
+                            if(cityId.equals("2707")){
+                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                                    val imgResource: Int = R.drawable.domestic_icon
+                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                    rdbtn.setCompoundDrawablePadding(100)
+                                }
+
+
+                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                                    val imgResource: Int = R.drawable.international_icon
+                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                    rdbtn.setCompoundDrawablePadding(130)
+                                }
+
+                            }else
+                            {
+                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                                    val imgResource: Int = R.drawable.pune_dom
+                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                    rdbtn.setCompoundDrawablePadding(100)
+                                }
+
+
+                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                                    val imgResource: Int = R.drawable.pune_intl
+                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                    rdbtn.setCompoundDrawablePadding(130)
+                                }
+
                             }
 
 
-                            if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
-                                val imgResource: Int = R.drawable.international_icon
-                                rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
-                                rdbtn.setCompoundDrawablePadding(130)
-                            }
-                            rdbtn.text =
-                                (getRateCardList.get(0).rateCards!!.get(0).rateCards!!.get(i).rateCardType) + ""
+
+                            rdbtn.text = (getRateCardList.get(0).rateCards!!.get(0).rateCards!!.get(i).rateCardType) + ""
                             mRgAllButtons!!.addView(rdbtn)
 
                             if (i == 0) {
@@ -531,6 +553,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
         if (parent!!.id == R.id.spinner_city) {
 
 
@@ -538,6 +561,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
                 citycalles = "second"
                 cityID = (cityPojoList.get(position).id).toString()
+                cityID1 = (cityPojoList.get(position).id).toString()
+
 
                 getCity()
             } else {
@@ -545,6 +570,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             }
 
         } else {
+
+
 
             itemSelectedPosition = position
             mRgAllButtons = activity!!.findViewById(R.id.radiogroup)
@@ -556,18 +583,37 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 rdbtn.id = View.generateViewId()
 
                 rdbtn.setOnClickListener(this)
-                if ((getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
-                    val imgResource: Int = R.drawable.domestic_icon
-                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
-                    rdbtn.setCompoundDrawablePadding(100)
-                }
+                if(cityID1.equals("2707")){
+                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                        val imgResource: Int = R.drawable.domestic_icon
+                        rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                        rdbtn.setCompoundDrawablePadding(100)
+                    }
 
 
-                if ((getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
-                    val imgResource: Int = R.drawable.international_icon
-                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
-                    rdbtn.setCompoundDrawablePadding(130)
+                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                        val imgResource: Int = R.drawable.international_icon
+                        rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                        rdbtn.setCompoundDrawablePadding(130)
+                    }
+
+                }else
+                {
+                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                        val imgResource: Int = R.drawable.pune_dom
+                        rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                        rdbtn.setCompoundDrawablePadding(100)
+                    }
+
+
+                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                        val imgResource: Int = R.drawable.pune_intl
+                        rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                        rdbtn.setCompoundDrawablePadding(130)
+                    }
+
                 }
+
                 rdbtn.text =
                     (getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)
                 mRgAllButtons!!.addView(rdbtn)

@@ -43,7 +43,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
 
 class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     AdapterView.OnItemSelectedListener {
@@ -60,7 +59,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     @JvmField
     @BindView(R.id.tvUserEmailID)
-    var tvUserEmailID: TextView? = null
+    var tvUserEmailID: EditText? = null
 
     @JvmField
     @BindView(R.id.tvUserGender)
@@ -112,7 +111,6 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     var formatRide = SimpleDateFormat("dd-mm-yyyy")
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -130,8 +128,21 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
         tvUserNumber!!.text =
             "+91 " + preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO)
-        tvUserEmailID!!.text =
-            preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL)
+
+        if (preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL)!!
+                .isNotEmpty()
+        ) {
+            tvUserEmailID!!.isClickable = false
+            tvUserEmailID!!.isEnabled = false
+            tvUserEmailID!!.setText(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL))
+
+        } else {
+            tvUserEmailID!!.isClickable = true
+            tvUserEmailID!!.isEnabled = true
+
+            tvUserEmailID!!.setText(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL))
+
+        }
 
         if ((preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER)).equals("Male")) {
             spngen = 0
@@ -182,7 +193,8 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         if (!(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB))!!.isEmpty()) {
 
-            val formaredDate = formatRide.format(formatviewRide.parse(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB)))
+            val formaredDate =
+                formatRide.format(formatviewRide.parse(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB)))
 
 
             tvUserDOB!!.text = formaredDate
@@ -304,159 +316,308 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         if (tvUserDOB!!.text.isNotEmpty()) {
 
 
-       /*     if (userName!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME))
-                && tvUserPosotion!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION))
-                && tvUserLocation!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION))
-                && tvUserDOB!!.text.equals(formatRide.format(formatviewRide.parse(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB))))
-                && gender!!.equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER)))
+            /*     if (userName!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME))
+                     && tvUserPosotion!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION))
+                     && tvUserLocation!!.text.toString().equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION))
+                     && tvUserDOB!!.text.equals(formatRide.format(formatviewRide.parse(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB))))
+                     && gender!!.equals(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER)))
 
-            {
-                Toast.makeText(activity, "", Toast.LENGTH_SHORT).show()
+                 {
+                     Toast.makeText(activity, "", Toast.LENGTH_SHORT).show()
 
-            } else {*/
-                val formatviewRide = SimpleDateFormat("dd-mm-yyyy")
+                 } else {*/
+            val formatviewRide = SimpleDateFormat("dd-mm-yyyy")
 
-                val formatRide = SimpleDateFormat("yyyy-mm-dd")
+            val formatRide = SimpleDateFormat("yyyy-mm-dd")
 
-                val formaredDate =
-                    formatRide.format(formatviewRide.parse(tvUserDOB!!.text.toString()))
-
-
-                val progressDialog = ProgressDialog(activity)
-                progressDialog.setCancelable(false) // set cancelable to false
-                progressDialog.setMessage("Please Wait") // set message
-                progressDialog.show() // show progress dialog
-
-                ApiClient.client.updateProfile(
-                    "Bearer $token",
-                    userName!!.text.toString(),
-                    gender, formaredDate,
-                    tvUserLocation!!.text.toString(),
-                    tvUserPosotion!!.text.toString()
-                )!!.enqueue(object :
-                    Callback<UpdateProfileResponsePOJO?> {
-                    override fun onResponse(
-                        call: Call<UpdateProfileResponsePOJO?>,
-                        response: Response<UpdateProfileResponsePOJO?>
-                    ) {
-                        progressDialog.dismiss()
-                        if (response.code() == 200) {
+            val formaredDate =
+                formatRide.format(formatviewRide.parse(tvUserDOB!!.text.toString()))
 
 
-                             Toast.makeText(activity, response.body()!!.message, Toast.LENGTH_SHORT).show()
+            if(tvUserEmailID!!.isEnabled){
+                callAPIWithEmail(formaredDate)
 
-
-                            preferencesManager!!.setStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_NAME,
-                                response.body()!!.user!!.name
-                            )
-                            preferencesManager!!.setStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_EMAIL,
-                                response.body()!!.user!!.email
-                            )
-                            preferencesManager!!.setStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_PHONENO,
-                                response.body()!!.user!!.phoneNo
-                            )
-                            preferencesManager!!.setStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_GENDER,
-                                response.body()!!.user!!.gender
-                            )
-                            preferencesManager!!.setStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_PROFESTION,
-                                response.body()!!.user!!.profession
-                            )
-                            preferencesManager!!.setStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_DOB,
-                                response.body()!!.user!!.dateOfBirth
-                            )
-                            preferencesManager!!.setStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK,
-                                response.body()!!.user!!.profilePic
-                            )
-                            preferencesManager!!.setStringValue(
-                                Constants.SHARED_PREFERENCE_LOGIN_LOCATION,
-                                response.body()!!.user!!.location
-                            )
-
-
-                            if ((response!!.body()!!.user!!.gender).equals("Male")) {
-                                spngen = 0
-                            } else if ((response!!.body()!!.user!!.gender).equals("Female")) {
-                                spngen = 1
-                            } else {
-                                spngen = 2
-                            }
-
-                            Glide.with(this@MyAccountFragment)
-                                .load(response.body()!!.user!!.profilePic)
-                                .apply(
-                                    RequestOptions()
-                                        .centerCrop()
-                                        .dontAnimate()
-                                        .dontTransform()
-                                ).into(iv_user!!)
-
-
-                            userName!!.text = response.body()!!.user!!.name
-                            tvUserNumber!!.text = "+91 " + response.body()!!.user!!.phoneNo
-                            tvUserEmailID!!.text = response.body()!!.user!!.email
-
-                            val formatviewRide = SimpleDateFormat("yyyy-mm-dd")
-
-                            val formatRide = SimpleDateFormat("dd-mm-yyyy")
-                            val formaredDate = formatRide.format(
-                                formatviewRide.parse(
-                                    response.body()!!.user!!.dateOfBirth
-                                )
-                            )
-
-
-                            tvUserDOB!!.text = formaredDate
-                            tvUserPosotion!!.setText(response.body()!!.user!!.profession.toString())
-                            tvUserLocation!!.setText(response.body()!!.user!!.location.toString())
-
-
-                        } else if (response.code() == 422) {
-                            val gson = GsonBuilder().create()
-                            var pojo: ValidationResponse? = ValidationResponse()
-                            try {
-                                pojo = gson.fromJson(
-                                    response.errorBody()!!.string(),
-                                    ValidationResponse::class.java
-                                )
-                                Toast.makeText(
-                                        activity,
-                                        pojo.errors!!.get(0).message,
-                                        Toast.LENGTH_LONG
-                                    )
-                                    .show()
-
-
-                            } catch (exception: IOException) {
-                            }
-
-                        } else {
-                            Toast.makeText(
-                                activity,
-                                "Internal server error",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-
-                    override fun onFailure(
-                        call: Call<UpdateProfileResponsePOJO?>,
-                        t: Throwable
-                    ) {
-                        progressDialog.dismiss()
-                        Log.d("response", t.stackTrace.toString())
-                    }
-                })
-
-
+            }else{
+                callAPIWithOutEmail(formaredDate)
             }
 
+
+
+
+        }
+
+
+    }
+
+    private fun callAPIWithOutEmail(formaredDate: String) {
+        val progressDialog = ProgressDialog(activity)
+        progressDialog.setCancelable(false) // set cancelable to false
+        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.show() // show progress dialog
+
+        ApiClient.client.updateProfileWithOutEmail(
+            "Bearer $token",
+            userName!!.text.toString(),
+            gender, formaredDate,
+            tvUserLocation!!.text.toString(),
+            tvUserPosotion!!.text.toString()
+        )!!.enqueue(object :
+            Callback<UpdateProfileResponsePOJO?> {
+            override fun onResponse(
+                call: Call<UpdateProfileResponsePOJO?>,
+                response: Response<UpdateProfileResponsePOJO?>
+            ) {
+                progressDialog.dismiss()
+                if (response.code() == 200) {
+
+
+                    Toast.makeText(activity, response.body()!!.message, Toast.LENGTH_SHORT)
+                        .show()
+
+
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_NAME,
+                        response.body()!!.user!!.name
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_EMAIL,
+                        response.body()!!.user!!.email
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_PHONENO,
+                        response.body()!!.user!!.phoneNo
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_GENDER,
+                        response.body()!!.user!!.gender
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_PROFESTION,
+                        response.body()!!.user!!.profession
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_DOB,
+                        response.body()!!.user!!.dateOfBirth
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK,
+                        response.body()!!.user!!.profilePic
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_LOCATION,
+                        response.body()!!.user!!.location
+                    )
+
+
+                    if ((response!!.body()!!.user!!.gender).equals("Male")) {
+                        spngen = 0
+                    } else if ((response!!.body()!!.user!!.gender).equals("Female")) {
+                        spngen = 1
+                    } else {
+                        spngen = 2
+                    }
+
+                    Glide.with(this@MyAccountFragment)
+                        .load(response.body()!!.user!!.profilePic)
+                        .apply(
+                            RequestOptions()
+                                .centerCrop()
+                                .dontAnimate()
+                                .dontTransform()
+                        ).into(iv_user!!)
+
+
+                    userName!!.text = response.body()!!.user!!.name
+                    tvUserNumber!!.text = "+91 " + response.body()!!.user!!.phoneNo
+                    tvUserEmailID!!.setText(response.body()!!.user!!.email)
+                    val formatviewRide = SimpleDateFormat("yyyy-mm-dd")
+
+                    val formatRide = SimpleDateFormat("dd-mm-yyyy")
+                    val formaredDate = formatRide.format(
+                        formatviewRide.parse(
+                            response.body()!!.user!!.dateOfBirth
+                        )
+                    )
+
+
+                    tvUserDOB!!.text = formaredDate
+                    tvUserPosotion!!.setText(response.body()!!.user!!.profession.toString())
+                    tvUserLocation!!.setText(response.body()!!.user!!.location.toString())
+
+
+                } else if (response.code() == 422) {
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        Toast.makeText(
+                                activity,
+                                pojo.errors!!.get(0).message,
+                                Toast.LENGTH_LONG
+                            )
+                            .show()
+
+
+                    } catch (exception: IOException) {
+                    }
+
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Internal server error",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+            override fun onFailure(
+                call: Call<UpdateProfileResponsePOJO?>,
+                t: Throwable
+            ) {
+                progressDialog.dismiss()
+                Log.d("response", t.stackTrace.toString())
+            }
+        })
+
+
+    }
+
+    private fun callAPIWithEmail(formaredDate: String) {
+        val progressDialog = ProgressDialog(activity)
+        progressDialog.setCancelable(false) // set cancelable to false
+        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.show() // show progress dialog
+
+        ApiClient.client.updateProfile(
+            "Bearer $token",
+            userName!!.text.toString(),
+            gender, formaredDate,
+            tvUserLocation!!.text.toString(),
+            tvUserPosotion!!.text.toString(),
+            tvUserEmailID!!.text.toString()
+        )!!.enqueue(object :
+            Callback<UpdateProfileResponsePOJO?> {
+            override fun onResponse(
+                call: Call<UpdateProfileResponsePOJO?>,
+                response: Response<UpdateProfileResponsePOJO?>
+            ) {
+                progressDialog.dismiss()
+                if (response.code() == 200) {
+
+
+                    Toast.makeText(activity, response.body()!!.message, Toast.LENGTH_SHORT)
+                        .show()
+
+
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_NAME,
+                        response.body()!!.user!!.name
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_EMAIL,
+                        response.body()!!.user!!.email
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_PHONENO,
+                        response.body()!!.user!!.phoneNo
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_GENDER,
+                        response.body()!!.user!!.gender
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_PROFESTION,
+                        response.body()!!.user!!.profession
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_DOB,
+                        response.body()!!.user!!.dateOfBirth
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK,
+                        response.body()!!.user!!.profilePic
+                    )
+                    preferencesManager!!.setStringValue(
+                        Constants.SHARED_PREFERENCE_LOGIN_LOCATION,
+                        response.body()!!.user!!.location
+                    )
+
+
+                    if ((response!!.body()!!.user!!.gender).equals("Male")) {
+                        spngen = 0
+                    } else if ((response!!.body()!!.user!!.gender).equals("Female")) {
+                        spngen = 1
+                    } else {
+                        spngen = 2
+                    }
+
+                    Glide.with(this@MyAccountFragment)
+                        .load(response.body()!!.user!!.profilePic)
+                        .apply(
+                            RequestOptions()
+                                .centerCrop()
+                                .dontAnimate()
+                                .dontTransform()
+                        ).into(iv_user!!)
+
+
+                    userName!!.text = response.body()!!.user!!.name
+                    tvUserNumber!!.text = "+91 " + response.body()!!.user!!.phoneNo
+                    tvUserEmailID!!.setText(response.body()!!.user!!.email)
+                    val formatviewRide = SimpleDateFormat("yyyy-mm-dd")
+
+                    val formatRide = SimpleDateFormat("dd-mm-yyyy")
+                    val formaredDate = formatRide.format(
+                        formatviewRide.parse(
+                            response.body()!!.user!!.dateOfBirth
+                        )
+                    )
+
+
+                    tvUserDOB!!.text = formaredDate
+                    tvUserPosotion!!.setText(response.body()!!.user!!.profession.toString())
+                    tvUserLocation!!.setText(response.body()!!.user!!.location.toString())
+
+
+                } else if (response.code() == 422) {
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        Toast.makeText(
+                                activity,
+                                pojo.errors!!.get(0).message,
+                                Toast.LENGTH_LONG
+                            )
+                            .show()
+
+
+                    } catch (exception: IOException) {
+                    }
+
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Internal server error",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+            override fun onFailure(
+                call: Call<UpdateProfileResponsePOJO?>,
+                t: Throwable
+            ) {
+                progressDialog.dismiss()
+                Log.d("response", t.stackTrace.toString())
+            }
+        })
 
     }
 
