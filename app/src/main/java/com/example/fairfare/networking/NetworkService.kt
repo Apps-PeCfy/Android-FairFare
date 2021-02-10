@@ -214,7 +214,7 @@ interface NetworkService {
         @Query("radius") radius: Int
     ): Call<NearByResponse?>?
 
- @GET("https://maps.googleapis.com/maps/api/distancematrix/json?key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+    @GET("https://maps.googleapis.com/maps/api/distancematrix/json?key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
     fun distanceMatrix(
         @Query("origins") origins: String?,
         @Query("destinations") destinations: String
@@ -264,7 +264,7 @@ interface NetworkService {
         @Body body: String?
     ): Call<ResponseEnd?>?
 
- @Headers("Content-Type: application/json")
+    @Headers("Content-Type: application/json")
     @POST("log")
     fun logRide(
         @Header("Authorization") header: String?,
@@ -273,10 +273,12 @@ interface NetworkService {
 
 
     @GET("rides")
-    fun getMyRides(@Header("Authorization") header: String?,
-                   @Query("page") name: String?,
-                   @Query("latitude") latitude: String?,
-                   @Query("longitude") longitude: String?): Call<GetRideResponsePOJO?>?
+    fun getMyRides(
+        @Header("Authorization") header: String?,
+        @Query("page") pageCount: Int?,
+        @Query("latitude") latitude: String?,
+        @Query("longitude") longitude: String?
+    ): Call<GetRideResponsePOJO?>?
 
     @GET("getDisputeReasons")
     fun getDisputeReasons(@Header("Authorization") header: String?): Call<DisputesReasonResponsePOJO?>?
@@ -284,6 +286,17 @@ interface NetworkService {
 
     @POST("updateProfile")
     fun updateProfile(
+        @Header("Authorization") header: String?,
+        @Query("name") name: String?,
+        @Query("gender") gender: String?,
+        @Query("date_of_birth") date_of_birth: String?,
+        @Query("location") location: String?,
+        @Query("profession") profession: String?,
+        @Query("email") email: String?
+    ): Call<UpdateProfileResponsePOJO?>?
+
+    @POST("updateProfile")
+    fun updateProfileWithOutEmail(
         @Header("Authorization") header: String?,
         @Query("name") name: String?,
         @Query("gender") gender: String?,
@@ -365,7 +378,7 @@ interface NetworkService {
         @Query("dispute_id") dispute_id: String?
     ): Call<DisputDetailResponsePOJO?>?
 
- @POST("detailRide")
+    @POST("detailRide")
     fun getDetailRide(
         @Header("Authorization") header: String?,
         @Query("ride_id") dispute_id: String?
@@ -431,8 +444,15 @@ interface NetworkService {
     ): Call<ContactUsResponsePojo?>?
 
 
-    @GET("getAllowCities")
+  /*  @GET("getAllowCities")
     fun getAllowCities(@HeaderMap header: HashMap<String, String>): Call<GetAllowCityResponse?>?
+*/
 
+    @GET("getAllowCities")
+    fun getAllowCities(
+        @Header("Authorization") header: String?,
+        @Query("latitude") latitude: String?,
+        @Query("longitude") longitude: String?
+    ): Call<GetAllowCityResponse?>?
 
 }
