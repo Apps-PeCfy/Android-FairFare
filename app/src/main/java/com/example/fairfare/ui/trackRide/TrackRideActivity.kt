@@ -1310,6 +1310,18 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 estCurrentDuration = duration.getString("text")
                 estCurrentDurationInMin = duration.getString("value")
 
+                waitLocation = zerothLegs.getString("end_address")
+                val endLocation = zerothLegs.getJSONObject("end_location")
+                waitLat = endLocation.getString("lat")
+                waitLong = endLocation.getString("lng")
+
+
+
+                waitStartLocation = zerothLegs.getString("start_address")
+                val startLocation = zerothLegs.getJSONObject("start_location")
+                waitStartLat = startLocation.getString("lat")
+                waitStartLong = startLocation.getString("lng")
+
 
 
                 routes = parser.parse(jObject)
@@ -2180,6 +2192,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         )
 
         return bearTo
+    }
+
+    override fun onBackPressed() {
+
     }
 
 

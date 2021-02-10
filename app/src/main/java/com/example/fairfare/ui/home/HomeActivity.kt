@@ -2421,6 +2421,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     obj.countryName = "USA"
                 }
                 address = address.replace(", $countryName", "").replace("- $countryName", "")
+                address = address.replace(" " + obj.postalCode, "")
 
                 city = obj.subAdminArea
             } else {

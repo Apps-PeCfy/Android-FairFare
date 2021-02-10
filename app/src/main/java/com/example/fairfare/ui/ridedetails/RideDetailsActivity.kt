@@ -377,7 +377,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     private fun calculateCurrentFare() {
 
-        travelledDistance = (estCurrentDistance!!.replace(" km","")).toDouble()
+        travelledDistance = (estCurrentDistance?.replace(" km",""))?.toDouble()
 
         val call = ApiClient.client.getCurrentFareWithoutID(
             "Bearer $token",
