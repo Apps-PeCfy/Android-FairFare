@@ -95,7 +95,7 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
 
 
         iMyRidesPresenter = MyRidesImplementer(this)
-        iMyRidesPresenter!!.getRide(token, CurrentpageCount,currentLat,currentLong)
+        iMyRidesPresenter!!.getRide("Bearer " +token, CurrentpageCount,currentLat,currentLong)
 
 
 

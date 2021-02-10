@@ -157,93 +157,75 @@
             <RelativeLayout
                 android:id="@+id/addressDetails"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/view"
                 android:gravity="center"
                 android:orientation="vertical">
 
-
-                <LinearLayout
-                    android:id="@+id/llOrigin"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
 
                     <TextView
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+
                         android:id="@+id/tv_myCurrentLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:drawableStart="@drawable/red_circle"
-                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawablePadding="@dimen/_15sdp"
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:maxLines="3"
-                        android:text="Santacruz - addd dsds  sdsds sdsds sd ds dsd ss dds sd sdsd ds sdsdsd dsdsd sdsds chembur link road, Mumb" />
+                        android:text="Pick-up Location"
+                        android:textColor="@color/gradientstartcolor" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:paddingStart="@dimen/_18sdp"
-                        android:textSize="@dimen/_10sdp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llDestination"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_below="@+id/llOrigin"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical">
-
-
-
-
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_below="@+id/tv_myCurrentLocation"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/secondaryLightGray" />
 
 
                     <TextView
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+
                         android:id="@+id/destnationAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/view1"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableStart="@drawable/triangle"
+                        android:drawablePadding="@dimen/_15sdp"
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:drawableStart="@drawable/triangle"
-
-                        android:maxLines="3"
-                        android:text="Santacruz - ad sdsds sdsd sdsdsdsd sdsd sdsd dsdsdsd sdsdsd  sdsdsdd dsdsd sdsds chembur link road, Mumb" />
+                        android:text="Drop-off Location " />
 
 
+                    <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:layout_above="@+id/destnationAddress"
+                        android:layout_below="@+id/tv_myCurrentLocation"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="-17dp"
+                        android:layout_marginBottom="-17dp"
+                        android:background="@color/secondaryLightGray" />
+                </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:textSize="@dimen/_10sdp" />
 
 
-                </LinearLayout>
 
-                <View
-                    android:layout_width="@dimen/_1sdp"
-                    android:layout_height="match_parent"
-                    android:layout_above="@+id/llDestination"
-                    android:layout_below="@+id/llOrigin"
-                    android:layout_marginStart="@dimen/_14sdp"
-                    android:layout_marginTop="-25dp"
-                    android:layout_marginBottom="-20dp"
-                    android:background="@color/secondaryLightGray" />
 
 
             </RelativeLayout>

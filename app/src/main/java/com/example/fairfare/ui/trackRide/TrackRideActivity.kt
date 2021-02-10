@@ -1851,15 +1851,15 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         prevLatLng = newPosition
 
-          mMap!!.moveCamera(
-              CameraUpdateFactory.newCameraPosition(
-                  CameraPosition.Builder()
-                      .target(newPosition)
-                      .bearing(getCompassBearing(startLocation, destLocation))
-                      .zoom(getZoomLevel())
-                      .build()
-              )
-          )
+        mMap!!.moveCamera(
+            CameraUpdateFactory.newCameraPosition(
+                CameraPosition.Builder()
+                    .target(newPosition)
+                    .bearing(getCompassBearing(startLocation, destLocation))
+                    .zoom(getZoomLevel())
+                    .build()
+            )
+        )
 
     }
 
@@ -1953,15 +1953,15 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     val newPosition: LatLng =
                         latLngInterpolator.interpolate(v, startPosition, endPosition)!!
                     myMarker!!.setPosition(newPosition)
-                     mMap!!.moveCamera(
-                         CameraUpdateFactory.newCameraPosition(
-                             CameraPosition.Builder()
-                                 .target(newPosition)
-                                 .bearing(getCompassBearing(startLocation, destLocation))
-                                 .zoom(mMap!!.cameraPosition.zoom)
-                                 .build()
-                         )
-                     )
+                    mMap!!.moveCamera(
+                        CameraUpdateFactory.newCameraPosition(
+                            CameraPosition.Builder()
+                                .target(newPosition)
+                                .bearing(getCompassBearing(startLocation, destLocation))
+                                .zoom(mMap!!.cameraPosition.zoom)
+                                .build()
+                        )
+                    )
 
                     myMarker!!.setRotation(
                         getBearing(

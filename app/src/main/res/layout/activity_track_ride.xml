@@ -124,7 +124,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_120sdp"
+                        android:layout_height="wrap_content"
                         android:layout_above="@+id/llshowData"
                         app:cardBackgroundColor="@color/White"
                         app:cardCornerRadius="@dimen/_10sdp"
@@ -136,17 +136,14 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical">
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-
-                            </RelativeLayout>
-
                             <TextView
+
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+
                                 android:id="@+id/tv_myCurrentLocation"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_40sdp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:drawableStart="@drawable/red_circle"
@@ -154,7 +151,6 @@
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
-                                android:maxLines="2"
                                 android:text="Pick-up Location"
                                 android:textColor="@color/gradientstartcolor" />
 
@@ -169,9 +165,12 @@
 
 
                             <TextView
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+
                                 android:id="@+id/tv_myDropUpLocation"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_40sdp"
+                                android:layout_height="wrap_content"
                                 android:layout_below="@+id/view"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
@@ -180,7 +179,6 @@
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
-                                android:maxLines="2"
                                 android:text="Drop-off Location " />
 
 
@@ -296,13 +294,12 @@
                     android:textStyle="bold" />
 
 
-
                 <RelativeLayout
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:id="@+id/rlDistance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_distance"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp">
 
                     <TextView
@@ -321,10 +318,10 @@
                         android:textSize="@dimen/_8sdp"
                         android:visibility="gone" />
 
-                     <TextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                         android:text="Actual travelled distance"
+                        android:text="Actual travelled distance"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
 
@@ -332,35 +329,32 @@
                 </RelativeLayout>
 
 
-
                 <ProgressBar
-                    android:layout_marginTop="@dimen/_3sdp"
                     android:id="@+id/progressBarDistance"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlDistance"
+                    android:layout_marginTop="@dimen/_3sdp"
                     android:layout_marginEnd="@dimen/_15sdp" />
 
 
-
-
                 <ProgressBar
-                    android:visibility="gone"
                     android:id="@+id/progressBarTime"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/progressBarDistance"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_15sdp" />
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:visibility="gone" />
 
                 <RelativeLayout
-                    android:layout_marginTop="@dimen/_3sdp"
                     android:id="@+id/rlTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/progressBarTime"
+                    android:layout_marginTop="@dimen/_3sdp"
                     android:layout_marginEnd="@dimen/_15sdp">
 
                     <TextView
@@ -494,91 +488,94 @@
 
 
                     <LinearLayout
-                        android:layout_marginBottom="@dimen/_10sdp"
-
-                        android:visibility="gone"
                         android:id="@+id/llAtm"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/ivAtm"
                             android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"/>
+                            android:layout_height="@dimen/_15sdp" />
 
                         <TextView
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:id="@+id/tv_atm"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:textAllCaps="false" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/llMuseum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_10sdp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/ivMuseum"
                             android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"/>
+                            android:layout_height="@dimen/_15sdp" />
+
                         <TextView
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:id="@+id/museum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:textAllCaps="false" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/llHotel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_10sdp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
                         <ImageView
                             android:id="@+id/ivHotel"
                             android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"/>
+                            android:layout_height="@dimen/_15sdp" />
 
                         <TextView
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:id="@+id/tv_hotel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:textAllCaps="false" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/llHospital"
-                        android:layout_marginBottom="@dimen/_10sdp"
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
                         <ImageView
                             android:id="@+id/ivHospital"
                             android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"/>
+                            android:layout_height="@dimen/_15sdp" />
 
                         <TextView
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:id="@+id/hospital"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:textAllCaps="false" />
 

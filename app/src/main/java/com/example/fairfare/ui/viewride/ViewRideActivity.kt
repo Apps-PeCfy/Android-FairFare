@@ -230,7 +230,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         tv_dateandTime!!.text = currentDate
         tv_carType!!.text = compareRideList[listPosition].providerName
         tv_Person!!.text = compareRideList[listPosition].noOfSeater.toString()
-        tv_carName!!.text = compareRideList[listPosition].vehicleName
+        tv_carName!!.text = compareRideList[listPosition].name
         Glide.with(this@ViewRideActivity)
             .load(compareRideList[listPosition].vehicleImageUrl)
             .apply(

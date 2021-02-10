@@ -470,7 +470,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         var addresses: List<Address?>? = null
         val geocoder = Geocoder(this@PickUpDropActivity, Locale.getDefault())
         try {
-             addresses =
+            addresses =
                 geocoder.getFromLocation(
                     currentLatitude,
                     currentLongitude, 1

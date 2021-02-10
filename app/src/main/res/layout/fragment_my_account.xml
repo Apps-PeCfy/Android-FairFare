@@ -91,9 +91,10 @@
                             android:background="@color/secondaryLightGray" />
 
 
-                        <TextView
+                        <EditText
 
                             android:hint="Enter Email Id"
+                            android:background="@android:color/transparent"
 
                             android:id="@+id/tvUserEmailID"
                             android:layout_width="match_parent"
@@ -206,6 +207,8 @@
 
 
                         <EditText
+                            android:inputType="textCapWords"
+
                             android:id="@+id/tvUserPosotion"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
@@ -234,6 +237,8 @@
 
 
                         <EditText
+                            android:inputType="textCapWords"
+
                             android:id="@+id/tvUserLocation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"

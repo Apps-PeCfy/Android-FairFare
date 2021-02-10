@@ -71,5 +71,10 @@
     <string name="time_seconds_formatter" translatable="false">%02d</string>
 
 
+    <string name="time_hours_minutes_seconds_formatter" translatable="false">%02d:%02d:%02d</string>
+    <string name="time_minutes_seconds_formatter" translatable="false">%02d:%02d</string>
+    <string name="time_seconds_formatter" translatable="false">%02d</string>
+
+
 </resources>
 

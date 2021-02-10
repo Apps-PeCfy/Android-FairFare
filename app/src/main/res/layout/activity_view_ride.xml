@@ -45,7 +45,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_120sdp"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/llshowData"
                 app:cardBackgroundColor="@color/White"
                 app:cardCornerRadius="@dimen/_10sdp"
@@ -58,9 +58,12 @@
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+
                         android:id="@+id/tv_myCurrentLocation"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:drawableStart="@drawable/red_circle"
@@ -68,7 +71,6 @@
                         android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:maxLines="2"
                         android:text="Pick-up Location"
                         android:textColor="@color/gradientstartcolor" />
 
@@ -83,9 +85,12 @@
 
 
                     <TextView
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+
                         android:id="@+id/tv_myDropUpLocation"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/view"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -94,7 +99,6 @@
                         android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:maxLines="2"
                         android:text="Drop-off Location " />
 
 
@@ -158,6 +162,7 @@
 
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/tv_carType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -202,8 +207,10 @@
                                 android:layout_gravity="center_vertical">
 
                                 <LinearLayout
+                                    android:layout_marginEnd="@dimen/_5sdp"
+                                    android:layout_toStartOf="@+id/dateandTime"
                                     android:id="@+id/llCar"
-                                    android:layout_width="@dimen/_65sdp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="@dimen/_10sdp"
                                     android:gravity="center_vertical"
@@ -218,11 +225,11 @@
                                         android:scaleType="fitCenter" />
 
                                     <TextView
+                                       android:paddingStart="@dimen/_5sdp"
                                         android:id="@+id/tv_carName"
-                                        android:layout_width="@dimen/_65sdp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_2sdp"
-                                        android:gravity="center_horizontal"
                                         android:text="Car" />
 
 
@@ -230,6 +237,7 @@
 
 
                                 <LinearLayout
+                                    android:id="@+id/dateandTime"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"

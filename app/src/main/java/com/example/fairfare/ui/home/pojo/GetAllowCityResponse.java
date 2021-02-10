@@ -11,6 +11,12 @@ public class GetAllowCityResponse{
 	@SerializedName("message")
 	private String message;
 
+	@SerializedName("allowCity")
+	private String allowCity;
+
+	@SerializedName("allowCityName")
+	private String allowCityName;
+
 	public void setCities(List<CitiesItem> cities){
 		this.cities = cities;
 	}
@@ -25,6 +31,22 @@ public class GetAllowCityResponse{
 
 	public String getMessage(){
 		return message;
+	}
+
+	public void setallowCity(String allowCity){
+		this.allowCity = allowCity;
+	}
+
+	public String getallowCity(){
+		return allowCity;
+	}
+
+	public void setallowCityName(String allowCityName){
+		this.allowCityName = allowCityName;
+	}
+
+	public String getallowCityName(){
+		return allowCityName;
 	}
 
 	@Override

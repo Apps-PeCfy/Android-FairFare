@@ -274,7 +274,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                             val geocoder =
                                 Geocoder(mContext, Locale.getDefault())
                             try {
-                                 addresses =
+                                addresses =
                                     geocoder.getFromLocation(
                                         place.latLng!!.latitude,
                                         place.latLng!!.longitude, 1

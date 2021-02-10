@@ -115,7 +115,7 @@
                         <androidx.cardview.widget.CardView
 
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_120sdp"
+                            android:layout_height="wrap_content"
                             android:layout_above="@+id/llshowData"
                             android:visibility="visible"
                             app:cardBackgroundColor="@color/White"
@@ -129,9 +129,12 @@
                                 android:gravity="center_vertical">
 
                                 <TextView
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:paddingBottom="@dimen/_10sdp"
+
                                     android:id="@+id/tv_myCurrentLocation"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_40sdp"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_10sdp"
                                     android:layout_marginEnd="@dimen/_10sdp"
                                     android:drawableStart="@drawable/red_circle"
@@ -139,7 +142,6 @@
                                     android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
-                                    android:maxLines="2"
                                     android:text="Pick-up Location"
                                     android:textColor="@color/gradientstartcolor" />
 
@@ -154,9 +156,12 @@
 
 
                                 <TextView
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:paddingBottom="@dimen/_10sdp"
+
                                     android:id="@+id/tv_myDropUpLocation"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_40sdp"
+                                    android:layout_height="wrap_content"
                                     android:layout_below="@+id/view"
                                     android:layout_marginStart="@dimen/_10sdp"
                                     android:layout_marginEnd="@dimen/_10sdp"
@@ -165,7 +170,6 @@
                                     android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
-                                    android:maxLines="2"
                                     android:text="Drop-off Location " />
 
 
