@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_trackRide"
+        android:layout_above="@id/add"
         android:layout_marginTop="0dp">
 
 
@@ -592,7 +593,17 @@
 
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_add"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="visible" />
+
 
 </RelativeLayout>
-
-
