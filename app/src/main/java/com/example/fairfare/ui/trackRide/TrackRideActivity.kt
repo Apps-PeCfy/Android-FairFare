@@ -401,6 +401,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     }
 
 
+    override fun onBackPressed() {
+    }
+
     private fun initLocationUpdates() {
         myLocationManager?.getMyCurrentLocationChange(object :
             MyLocationManager.LocationManagerTrackInterface {
@@ -1140,7 +1143,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 LatLng(
                     (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!.toDouble(),
                     (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!.toDouble()
-                ), 17.0f
+                ), 18.0f
             )
         )
         sourecemarker = mMap!!.addMarker(
@@ -1163,7 +1166,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
-        updateCamera(getCompassBearing(startLocation, destLocation))
+        //  updateCamera(getCompassBearing(startLocation, destLocation))
         drawRoute()
     }
 
@@ -1312,6 +1315,22 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 
+                waitLocation = zerothLegs.getString("end_address")
+                val endLocation = zerothLegs.getJSONObject("end_location")
+                waitLat = endLocation.getString("lat")
+                waitLong = endLocation.getString("lng")
+
+
+
+                waitStartLocation = zerothLegs.getString("start_address")
+                val startLocation = zerothLegs.getJSONObject("start_location")
+                waitStartLat = startLocation.getString("lat")
+                waitStartLong = startLocation.getString("lng")
+
+
+
+
+
                 routes = parser.parse(jObject)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -1353,6 +1372,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         points!!.add(position)
                         markerPoints!!.add(position)
                     }
+
+                    updateCamera(getCompassBearing(points[0]!!, points[1]!!))
 
 
                     // Fetching all the points in i-th route
@@ -1426,7 +1447,13 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         if (mPolyline != null) {
                             // mPolyline!!.remove()
                         }
-                        mPolyline = mMap!!.addPolyline(lineOptions)
+                        //  mPolyline = mMap!!.addPolyline(lineOptions)
+
+                        // ILOMADEV :- 10 Feb 2021
+                        if (updatedPolyline != null) {
+                            updatedPolyline!!.remove()
+                        }
+                        updatedPolyline = mMap!!.addPolyline(lineOptions)
                     } else {
                         Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
                             .show()
@@ -1659,19 +1686,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 val duration = zerothLegs.getJSONObject("duration")
 
 
-                waitLocation = zerothLegs.getString("end_address")
-                val endLocation = zerothLegs.getJSONObject("end_location")
-                waitLat = endLocation.getString("lat")
-                waitLong = endLocation.getString("lng")
-
-
-
-                waitStartLocation = zerothLegs.getString("start_address")
-                val startLocation = zerothLegs.getJSONObject("start_location")
-                waitStartLat = startLocation.getString("lat")
-                waitStartLong = startLocation.getString("lng")
-
-
                 Log.d(
                     "cvfdde",
                     actualTravelDistance.size.toString() + "       " + (actulDis!!.toDouble())
@@ -1726,7 +1740,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                   greylineOptions!!.addAll(greypoints)
                   greylineOptions!!.width(15f)
                   greylineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.Grey))
+
+
                   if (greylineOptions != null) {
+
                       if (mGreyPolyline != null) {
                       }
                       mGreyPolyline = mMap!!.addPolyline(greylineOptions)
@@ -1848,11 +1865,11 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         prevLatLng = newPosition
 
-        mMap!!.moveCamera(
+        mMap!!.animateCamera(
             CameraUpdateFactory.newCameraPosition(
                 CameraPosition.Builder()
                     .target(newPosition)
-                    .bearing(getCompassBearing(startLocation, destLocation))
+                    //  .bearing(getCompassBearing(startLocation, destLocation))
                     .zoom(getZoomLevel())
                     .build()
             )
@@ -1877,7 +1894,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     private fun getZoomLevel(): Float {
         if (!isMapZoomed!!) {
             isMapZoomed = true
-            return 18f
+            return 18.0f
+        }else if(mMap!!.cameraPosition.zoom<5){
+            return 18.0f
         }
         return mMap!!.cameraPosition.zoom
     }
@@ -1950,12 +1969,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     val newPosition: LatLng =
                         latLngInterpolator.interpolate(v, startPosition, endPosition)!!
                     myMarker!!.setPosition(newPosition)
-                    mMap!!.moveCamera(
+                    mMap!!.animateCamera(
                         CameraUpdateFactory.newCameraPosition(
                             CameraPosition.Builder()
                                 .target(newPosition)
-                                .bearing(getCompassBearing(startLocation, destLocation))
-                                .zoom(mMap!!.cameraPosition.zoom)
+                                .bearing(getCompassBearing(startPosition, endPosition))
+                                .zoom(getZoomLevel())
                                 .build()
                         )
                     )
@@ -2139,20 +2158,30 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     }
 
     private fun getCompassBearing(
-        startlocation: Location,
-        destLocation: Location
+        startlocation: LatLng,
+        destlocation: LatLng
     ): Float {
-        var bearTo: Float = startlocation.bearingTo(destLocation)
+
+
+        destLocation = Location("")
+        destLocation.latitude = destlocation.latitude
+        destLocation.longitude = destlocation.longitude
+
+        startLocation = Location("")
+        startLocation.latitude = startlocation.latitude
+        startLocation.longitude = startlocation.longitude
+
+        var bearTo: Float = startLocation.bearingTo(destLocation)
 
         if (bearTo < 0) {
-            bearTo += 360
+            bearTo += 360;
 
         }
 
         geoField = GeomagneticField(
-            java.lang.Double.valueOf(startlocation.latitude).toFloat(),
-            java.lang.Double.valueOf(startlocation.longitude).toFloat(),
-            java.lang.Double.valueOf(startlocation.altitude).toFloat(),
+            java.lang.Double.valueOf(startLocation.latitude).toFloat(),
+            java.lang.Double.valueOf(startLocation.longitude).toFloat(),
+            java.lang.Double.valueOf(startLocation.altitude).toFloat(),
             System.currentTimeMillis()
         )
 

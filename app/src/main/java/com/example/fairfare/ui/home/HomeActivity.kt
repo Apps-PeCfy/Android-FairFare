@@ -16,10 +16,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.AsyncTask
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
+import android.os.*
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.Gravity
@@ -119,6 +116,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var getAllowCityResponse: GetAllowCityResponse? = null
 
     var doubleBackPressed: Boolean? = false
+    private var mToastToShow: Toast? = null
+
 
     var appSignatureHelper: AppSignatureHelper? = null
 
@@ -708,11 +707,28 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 }
             } else {
                 cityspinner.add(0, "Choose City")
-                Toast.makeText(
+
+
+                    val toastDurationInMilliSeconds = 10000
+                    mToastToShow = Toast.makeText(this@HomeActivity, "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.", Toast.LENGTH_LONG)
+                    val toastCountDown: CountDownTimer
+                    toastCountDown = object : CountDownTimer(toastDurationInMilliSeconds.toLong(), 1000 /*Tick duration*/) {
+                        override  fun onTick(millisUntilFinished: Long) {
+                            mToastToShow!!.show()
+                        }
+
+                        override  fun onFinish() {
+                            mToastToShow!!.cancel()
+                        }
+                    }
+                    mToastToShow!!.show()
+                    toastCountDown.start()
+
+               /* Toast.makeText(
                     this@HomeActivity,
                     "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
                     Toast.LENGTH_LONG
-                ).show()
+                ).show()*/
 
             }
 
@@ -729,11 +745,28 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 cityspinner.add(0, "Choose City")
 
-                Toast.makeText(
+
+                val toastDurationInMilliSeconds = 10000
+                mToastToShow = Toast.makeText(this@HomeActivity, "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.", Toast.LENGTH_LONG)
+                val toastCountDown: CountDownTimer
+                toastCountDown = object : CountDownTimer(toastDurationInMilliSeconds.toLong(), 1000 /*Tick duration*/) {
+                    override  fun onTick(millisUntilFinished: Long) {
+                        mToastToShow!!.show()
+                    }
+
+                    override  fun onFinish() {
+                        mToastToShow!!.cancel()
+                    }
+                }
+                mToastToShow!!.show()
+                toastCountDown.start()
+
+
+              /*  Toast.makeText(
                     this@HomeActivity,
                     "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
                     Toast.LENGTH_LONG
-                ).show()
+                ).show()*/
 
             }
         }
@@ -2413,6 +2446,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     obj.countryName = "USA"
                 }
                 address = address.replace(", $countryName", "").replace("- $countryName", "")
+                address = address.replace(" " + obj.postalCode, "")
 
                 city = obj.subAdminArea
             } else {

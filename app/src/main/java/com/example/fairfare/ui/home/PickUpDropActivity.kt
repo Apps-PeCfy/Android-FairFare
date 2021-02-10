@@ -1010,6 +1010,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     obj.countryName = "USA"
                 }
                 address = address.replace(", $countryName", "").replace("- $countryName", "")
+                address = address.replace(" " + obj.postalCode, "")
             } else {
                 address = ""
             }
