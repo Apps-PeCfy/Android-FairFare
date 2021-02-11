@@ -605,7 +605,6 @@
         android:textSize="@dimen/_14sdp"
         android:visibility="visible" />
 
-
 </RelativeLayout>
 
 

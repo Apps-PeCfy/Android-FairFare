@@ -401,6 +401,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     }
 
 
+    override fun onBackPressed() {
+    }
+
     private fun initLocationUpdates() {
         myLocationManager?.getMyCurrentLocationChange(object :
             MyLocationManager.LocationManagerTrackInterface {
@@ -1163,7 +1166,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
+
       //  updateCamera(getCompassBearing(startLocation, destLocation))
+
         drawRoute()
     }
 
@@ -1324,6 +1329,22 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 
+                waitLocation = zerothLegs.getString("end_address")
+                val endLocation = zerothLegs.getJSONObject("end_location")
+                waitLat = endLocation.getString("lat")
+                waitLong = endLocation.getString("lng")
+
+
+
+                waitStartLocation = zerothLegs.getString("start_address")
+                val startLocation = zerothLegs.getJSONObject("start_location")
+                waitStartLat = startLocation.getString("lat")
+                waitStartLong = startLocation.getString("lng")
+
+
+
+
+
                 routes = parser.parse(jObject)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -1440,7 +1461,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         if (mPolyline != null) {
                             // mPolyline!!.remove()
                         }
+
                       //  mPolyline = mMap!!.addPolyline(lineOptions)
+
 
                         // ILOMADEV :- 10 Feb 2021
                         if (updatedPolyline != null) {
@@ -1677,19 +1700,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 val zerothLegs = legs.getJSONObject(0)
                 val distance = zerothLegs.getJSONObject("distance")
                 val duration = zerothLegs.getJSONObject("duration")
-
-
-                waitLocation = zerothLegs.getString("end_address")
-                val endLocation = zerothLegs.getJSONObject("end_location")
-                waitLat = endLocation.getString("lat")
-                waitLong = endLocation.getString("lng")
-
-
-
-                waitStartLocation = zerothLegs.getString("start_address")
-                val startLocation = zerothLegs.getJSONObject("start_location")
-                waitStartLat = startLocation.getString("lat")
-                waitStartLong = startLocation.getString("lng")
 
 
                 Log.d(
@@ -2200,4 +2210,5 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 }
+
 

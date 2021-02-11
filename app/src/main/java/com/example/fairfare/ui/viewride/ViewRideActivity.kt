@@ -11,14 +11,12 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -33,6 +31,7 @@ import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.ridedetails.RideDetailsActivity
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.example.fairfare.utils.Constants
+import com.example.fairfare.utils.OnSwipeTouchListener
 import com.example.fairfare.utils.PreferencesManager
 import com.example.fairfare.utils.ProjectUtilities
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -75,6 +74,12 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
     @JvmField
     @BindView(R.id.toolbar_viewRide)
     var mToolbar: Toolbar? = null
+
+    @JvmField
+    @BindView(R.id.locationCardView)
+    var locationCardView: CardView? = null
+
+
 
     @JvmField
     @BindView(R.id.llAdditionalCharges)
@@ -151,6 +156,10 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
     @JvmField
     @BindView(R.id.homeView)
     var homeView: ScrollView? = null
+
+@JvmField
+    @BindView(R.id.llshowData)
+    var llshowData: LinearLayout? = null
 
 
     @JvmField
@@ -290,9 +299,40 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
 
 
-
+        setListeners()
 
     }
+
+    private fun setListeners() {
+        homeView?.setOnTouchListener(object : OnSwipeTouchListener(this) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+            }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+            }
+            override fun onSwipeUp() {
+                super.onSwipeUp()
+
+                hideshow = "hide"
+                locationCardView!!.visibility = View.GONE
+                llshowData!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                llshowData!!.requestLayout()
+                homeView!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                homeView!!.requestLayout()
+              }
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+
+                hideshow = "show"
+                locationCardView!!.visibility = View.VISIBLE
+                llshowData!!.layoutParams.height = 750
+                llshowData!!.requestLayout()
+
+            }
+        })
+    }
+
 
     private fun setStatusBarGradiant(activity: ViewRideActivity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -380,7 +420,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
          }
     }
 
-    @OnClick(R.id.tvhideShow)
+/*    @OnClick(R.id.tvhideShow)
     fun hideshow() {
         if (hideshow.equals("show")) {
             hideshow = "hide"
@@ -388,6 +428,32 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         } else {
             hideshow = "show"
             homeView?.visibility = View.VISIBLE
+        }
+    }*/
+
+
+    @OnClick(R.id.tvhideShow)
+    fun hideshow() {
+        if (hideshow.equals("show")) {
+            hideshow = "hide"
+            locationCardView!!.visibility = View.GONE
+            llshowData!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            llshowData!!.requestLayout()
+
+            homeView!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            homeView!!.requestLayout()
+
+            //  slideUp(rlhideview)
+
+        } else {
+            hideshow = "show"
+          //  slideDown(rlhideview)
+
+            locationCardView!!.visibility = View.VISIBLE
+            llshowData!!.layoutParams.height = 750
+            llshowData!!.requestLayout()
+
+
         }
     }
 

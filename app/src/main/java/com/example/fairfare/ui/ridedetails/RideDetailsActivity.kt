@@ -548,97 +548,109 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     @OnClick(R.id.btnTrackRide)
     fun btnTrack() {
 
-  /*      if(((edt_vehicalNO!!.text).toString()).isEmpty()){
-            Toast.makeText(
-                this@RideDetailsActivity,
-                "Enter Vehicle Number", Toast.LENGTH_LONG).show()
 
-        }else   if(((edt_DriverName!!.text).toString()).isEmpty()){
-            Toast.makeText(
-                this@RideDetailsActivity,
-                "Enter Driver Name", Toast.LENGTH_LONG).show()
+        if(  edt_meterReading!!.text.toString().isEmpty() ||   edt_meterReading!!.text.toString().equals("0")){
 
-        }else {*/
+            val alertDialog = AlertDialog.Builder(this)
+            alertDialog.setTitle("FairFare")
+            alertDialog.setMessage("Make sure that your Start Trip Meter is set to zero.")
+            alertDialog.setCancelable(false)
+            alertDialog.setPositiveButton("Yes") { dialog, which ->
 
+                callTrackButton()
 
-            if ((MyRides_RidesID != null)) {
+            }
+            alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+            alertDialog.show()
+        }else{
+            callTrackButton()
 
-
-
-
-                if (actualDistanceInMeter >= 500) {
-
-                    iRidePresenter!!.startRide(
-                        token,
-                        MyRides_RidesID,
-                        MyRides_vehicle_rate_card_id,
-                        "",
-                        "",
-                        originPlaceID,
-                        "",
-                        "",
-                        distance_ViewRide,
-                        durationRide,
-                        "",
-                        MyRides_airport_ratr_card_id,
-                        edt_DriverName!!.text.toString(),
-                        edt_vehicalNO!!.text.toString(),
-                        edt_bagsCount!!.text.toString(),
-                        edt_meterReading!!.text.toString(),
-                        originLat, originLong, "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
-                    )
-
-                } else
-                {
-                    iRidePresenter!!.startRide(
-                        token,
-                        MyRides_RidesID,
-                        MyRides_vehicle_rate_card_id,
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        MyRides_airport_ratr_card_id,
-                        edt_DriverName!!.text.toString(),
-                        edt_vehicalNO!!.text.toString(),
-                        edt_bagsCount!!.text.toString(),
-                        edt_meterReading!!.text.toString(),
-                        "", "", "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
-                    )
-
-                }
+        }
 
 
-            } else
-            {
 
+
+
+    }
+
+    private fun callTrackButton() {
+        if ((MyRides_RidesID != null)) {
+
+
+
+
+            if (actualDistanceInMeter >= 500) {
 
                 iRidePresenter!!.startRide(
                     token,
+                    MyRides_RidesID,
+                    MyRides_vehicle_rate_card_id,
                     "",
-                    vahicalRateCardID,
-                    luggagesQuantity,
-                    formaredDateqw,
+                    "",
                     originPlaceID,
-                    destinationPlaceID,
-                    overviewPolyLine,
+                    "",
+                    "",
                     distance_ViewRide,
                     durationRide,
-                    CITY_ID,
-                    airportCardID,
+                    "",
+                    MyRides_airport_ratr_card_id,
                     edt_DriverName!!.text.toString(),
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress,"No"
+                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
+                )
+
+            } else
+            {
+                iRidePresenter!!.startRide(
+                    token,
+                    MyRides_RidesID,
+                    MyRides_vehicle_rate_card_id,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    MyRides_airport_ratr_card_id,
+                    edt_DriverName!!.text.toString(),
+                    edt_vehicalNO!!.text.toString(),
+                    edt_bagsCount!!.text.toString(),
+                    edt_meterReading!!.text.toString(),
+                    "", "", "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
                 )
 
             }
 
+
+        }
+        else {
+
+
+            iRidePresenter!!.startRide(
+                token,
+                "",
+                vahicalRateCardID,
+                luggagesQuantity,
+                formaredDateqw,
+                originPlaceID,
+                destinationPlaceID,
+                overviewPolyLine,
+                distance_ViewRide,
+                durationRide,
+                CITY_ID,
+                airportCardID,
+                edt_DriverName!!.text.toString(),
+                edt_vehicalNO!!.text.toString(),
+                edt_bagsCount!!.text.toString(),
+                edt_meterReading!!.text.toString(),
+                originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress,"No"
+            )
+
+        }
 
     }
 
