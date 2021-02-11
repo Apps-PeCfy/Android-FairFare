@@ -66,7 +66,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     var currentLatitude = 0.0
     var currentLongitude = 0.0
     var extras: Bundle? = null
-    var isSource : Boolean ? = false
+    var isSource: Boolean? = false
 
     private var plotedLocation: Location? = null
 
@@ -480,7 +480,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         val token =
             preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         client.SaveLocation(
-            "Bearer $token", results[0]!!.placeId, addresses!!.get(0)!!.subAdminArea ,
+            "Bearer $token", results[0]!!.placeId, addresses!!.get(0)!!.subAdminArea,
             addresses!!.get(0)!!.adminArea,
             addresses.get(0)!!.getAddressLine(0),
             addresses!!.get(0)!!.countryName
@@ -549,15 +549,22 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         intent.putExtra("formaredDateLater", extras!!.getString("formaredDateLater"))
 
         //Old Code
-        if (Constants.IS_OLD_PICK_UP_CODE){
+        if (Constants.IS_OLD_PICK_UP_CODE) {
             startActivity(intent)
-        }else{
+        } else {
             // ILOMADEV
             finish()
 
-            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, locateOnMapAddress, keyAirport))
+            EventBus.getDefault().post(
+                PickUpLocationModel(
+                    currentLatitude,
+                    currentLongitude,
+                    isSource,
+                    locateOnMapAddress,
+                    keyAirport
+                )
+            )
         }
-
 
 
     }
@@ -612,12 +619,10 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         //  mMap!!.addMarker(MarkerOptions().position(LatLng(currentLatitude, currentLongitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)))
 
 
-
         /* googleMap.setOnMapClickListener { latLng ->
              ivFavLocateOnMap!!.setBackgroundResource(R.drawable.ic_fav_unchecked)
              getAddress(latLng)
          }*/
-
 
 
         /**
@@ -668,7 +673,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         currentLongitude = place!!.latLng!!.longitude
 
         //ILOMADEV To Remove CountryName From Selected AutoPlaceAddress
-        var newSelectedAddress : String = removeCountryFromAddress(selectedAddress, place?.latLng)
+        var newSelectedAddress: String = removeCountryFromAddress(selectedAddress, place?.latLng)
 
         if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
             isSource = true
@@ -705,17 +710,24 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         intent.putExtra("splacedi", newSelectedAddress)
 
         //Old Code
-        if (Constants.IS_OLD_PICK_UP_CODE){
+        if (Constants.IS_OLD_PICK_UP_CODE) {
             startActivity(intent)
-        }else{
+        } else {
             // ILOMADEV
             finish()
 
-            EventBus.getDefault().post(PickUpLocationModel(currentLatitude, currentLongitude, isSource, newSelectedAddress, keyAirport))
+            EventBus.getDefault().post(
+                PickUpLocationModel(
+                    currentLatitude,
+                    currentLongitude,
+                    isSource,
+                    newSelectedAddress,
+                    keyAirport
+                )
+            )
         }
 
     }
-
 
 
     override fun favClick(place: Place?) {
@@ -734,7 +746,8 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 val place = response.place
 
                 // ILOMADEV
-                var newSelectedAddress: String = removeCountryFromAddress(selectedadd!!, place?.latLng)
+                var newSelectedAddress: String =
+                    removeCountryFromAddress(selectedadd!!, place?.latLng)
 
                 mMap!!.clear()
                 if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
@@ -768,13 +781,21 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
 
                 //Old Code
-                if (Constants.IS_OLD_PICK_UP_CODE){
+                if (Constants.IS_OLD_PICK_UP_CODE) {
                     startActivity(intent)
-                }else{
+                } else {
                     // ILOMADEV
                     finish()
 
-                    EventBus.getDefault().post(PickUpLocationModel(place.latLng!!.latitude, place.latLng!!.longitude, isSource, newSelectedAddress, keyAirport))
+                    EventBus.getDefault().post(
+                        PickUpLocationModel(
+                            place.latLng!!.latitude,
+                            place.latLng!!.longitude,
+                            isSource,
+                            newSelectedAddress,
+                            keyAirport
+                        )
+                    )
                 }
 
 
@@ -993,21 +1014,35 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
-                address = obj.getAddressLine(0)
 
-                /*if (obj != null && obj.locality != null && obj.subAdminArea  != null && obj.locality.equals(obj.subAdminArea, ignoreCase = true)){
-                    address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea + " " + obj.postalCode
-                }else{
-                    address = obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea + " " + obj.postalCode
-                }
-                address = address.replace("null, ", "")*/
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                    if (obj != null && obj.locality != null && obj.subAdminArea != null && obj.locality.equals(
+                            obj.subAdminArea,
+                            ignoreCase = true
+                        )
+                    ) {
+                        address =
+                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea
+                    } else {
+                        address =
+                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea
+                    }
+                    address = address.replace("null, ", "")
 
-                var countryName = obj.countryName
-                if (obj.countryName!= null && obj.countryName.equals("United States", ignoreCase = true)){
-                    obj.countryName = "USA"
+                } else {
+                    address = obj.getAddressLine(0)
+                    var countryName = obj.countryName
+                    if (obj.countryName != null && obj.countryName.equals(
+                            "United States",
+                            ignoreCase = true
+                        )
+                    ) {
+                        obj.countryName = "USA"
+                    }
+                    address = address.replace(", $countryName", "").replace("- $countryName", "")
+                    address = address.replace(" " + obj.postalCode, "")
                 }
-                address = address.replace(", $countryName", "").replace("- $countryName", "")
-                address = address.replace(" " + obj.postalCode, "")
+
             } else {
                 address = ""
             }
@@ -1030,7 +1065,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
                 countryName = obj.countryName
-                if (countryName!= null && countryName.equals("United States", ignoreCase = true)){
+                if (countryName != null && countryName.equals("United States", ignoreCase = true)) {
                     countryName = "USA"
                 }
 
