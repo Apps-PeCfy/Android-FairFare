@@ -401,8 +401,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     }
 
 
-    override fun onBackPressed() {
-    }
+
 
     private fun initLocationUpdates() {
         myLocationManager?.getMyCurrentLocationChange(object :
@@ -1326,21 +1325,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 val startLocation = zerothLegs.getJSONObject("start_location")
                 waitStartLat = startLocation.getString("lat")
                 waitStartLong = startLocation.getString("lng")
-
-
-
-                waitLocation = zerothLegs.getString("end_address")
-                val endLocation = zerothLegs.getJSONObject("end_location")
-                waitLat = endLocation.getString("lat")
-                waitLong = endLocation.getString("lng")
-
-
-
-                waitStartLocation = zerothLegs.getString("start_address")
-                val startLocation = zerothLegs.getJSONObject("start_location")
-                waitStartLat = startLocation.getString("lat")
-                waitStartLong = startLocation.getString("lng")
-
 
 
 
