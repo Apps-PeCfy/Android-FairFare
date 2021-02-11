@@ -399,6 +399,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
             intent.putExtra("CITY_ID", CITY_ID)
             intent.putExtra("ImgUrl", compareRideList[listPosition].vehicleImageUrl)
             intent.putExtra("ImgName", compareRideList[listPosition].name)
+            intent.putExtra("VehicleName", compareRideList[listPosition].vehicleName)
             startActivity(intent)
         } else {
 

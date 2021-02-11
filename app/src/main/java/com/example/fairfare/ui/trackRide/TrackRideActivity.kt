@@ -274,6 +274,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var waitStartLocation: String? = ""
     var waitStartLat: String? = ""
     var waitStartLong: String? = ""
+    var vehicleName: String? = ""
 
     var passjObject: JSONObject? = null
 
@@ -331,6 +332,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         sAddress = intent.getStringExtra("SAddress")
         dAddress = intent.getStringExtra("DAddress")
         tv_carType!!.text = intent.getStringExtra("ImageName")
+        vehicleName = intent.getStringExtra("VehicleName")
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
         Glide.with(this@TrackRideActivity)
@@ -1856,7 +1858,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         myMarker = mMap!!.addMarker(
             MarkerOptions()
                 .position(newPosition)
-                .icon(getMarkerIcon(tv_carType!!.text.toString()))
+                .icon(getMarkerIcon(vehicleName))
                 .anchor(0.5f, 0.5f)
                 .draggable(true)
                 .flat(true)

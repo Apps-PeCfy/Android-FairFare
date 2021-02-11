@@ -941,6 +941,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             intentr.putExtra("DAddress", dAddress)
             intentr.putExtra("ImageUrl", intent.getStringExtra("ImgUrl"))
             intentr.putExtra("ImageName", intent.getStringExtra("ImgName"))
+            intentr.putExtra("VehicleName", intent.getStringExtra("VehicleName"))
             intentr.putExtra("ResponsePOJOScheduleRide", info)
 
             intentr.putExtra("MyRidesLat", MyRidesLat)
@@ -961,6 +962,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             intentr.putExtra("DAddress", dAddress)
             intentr.putExtra("ImageUrl", intent.getStringExtra("ImgUrl"))
             intentr.putExtra("ImageName", intent.getStringExtra("ImgName"))
+            intentr.putExtra("VehicleName", intent.getStringExtra("VehicleName"))
             intentr.putExtra("ResponsePOJOScheduleRide", info)
             startActivity(intentr)
             finish()
