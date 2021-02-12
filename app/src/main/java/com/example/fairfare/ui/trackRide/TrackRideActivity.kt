@@ -473,7 +473,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                                 options.put("long", waitLong!!)
                                 arrWaitTime.add(options!!)
 
-
                             }
                             waitTime = null
                             calculateWaitTime()
@@ -1130,7 +1129,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         rlData!!.visibility = View.GONE
         llshowData!!.visibility = View.VISIBLE
         tv_ShowTrackBoard!!.visibility = View.VISIBLE
-
+        hideshow = "show"
+        rlhideview?.visibility = View.VISIBLE
     }
 
 
