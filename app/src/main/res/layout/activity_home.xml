@@ -212,7 +212,6 @@
                                 android:drawableStart="@drawable/red_circle"
                                 android:drawablePadding="@dimen/_15sdp"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:includeFontPadding="false"
                                 />
 
                             <View
@@ -238,7 +237,6 @@
                                 android:drawableStart="@drawable/triangle"
                                 android:drawablePadding="@dimen/_15sdp"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:includeFontPadding="false"
                                 android:text="Drop-off Location" />
 
 
