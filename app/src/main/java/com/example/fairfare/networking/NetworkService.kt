@@ -29,7 +29,6 @@ import com.example.fairfare.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -180,20 +179,17 @@ interface NetworkService {
         @Field("destination_place_long") destination_place_long: String?,
         @Field("origin_full_address") origin_full_address: String?,
         @Field("destination_full_address") destination_full_address: String?,
-        @Field("night_allow") night_allow: String?
+        @Field("night_allow") night_allow: String?,
+        @Body body: String?
     ): Call<ScheduleRideResponsePOJO?>?
 
-
-    @Multipart
-    @Headers("Content-Type: application/json")
+  @FormUrlEncoded
     @POST("startRide")
-    fun storeImage(
+    fun startRidear(
         @Header("Authorization") header: String?,
-        @Part file: MultipartBody.Part?,
-        @PartMap map: HashMap<String?, String?>,
-        @Part("schedule_date") name: RequestBody,
-        @PartMap map1: HashMap<String?, Int?>
+        @Body body: String?
     ): Call<ScheduleRideResponsePOJO?>?
+
 
 
     @Multipart
