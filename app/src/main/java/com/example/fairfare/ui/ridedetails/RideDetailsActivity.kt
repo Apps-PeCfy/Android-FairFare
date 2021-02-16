@@ -9,7 +9,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.location.*
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
@@ -27,7 +26,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -40,6 +38,7 @@ import com.example.fairfare.R
 import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
+import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.trackRide.TrackRideActivity
@@ -56,6 +55,8 @@ import com.google.maps.GeocodingApi
 import com.google.maps.errors.ApiException
 import com.google.maps.model.GeocodingResult
 import kotlinx.android.synthetic.main.activity_ride_details.*
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -80,6 +81,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var sourecemarker: Marker? = null
     var context: Context = this
     lateinit var popupschduleResponse: ScheduleRideResponsePOJO
+    private var compareRideList = ArrayList<CompareRideResponsePOJO.VehiclesItem>()
 
 
     private var iRidePresenter: IRidePresenter? = null
@@ -187,6 +189,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         pDialog!!.setCancelable(false)
         pDialog!!.show()
 
+        compareRideList = intent.getSerializableExtra("compareRideList") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
 
         CITY_ID = intent.getStringExtra("CITY_ID")
         vahicalRateCardID = intent.getStringExtra("vehicle_rate_card_id")
@@ -418,9 +421,9 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         val tvCalculatedNewFare: TextView = customLayout!!.findViewById(R.id.tvCalculatedNewFare)
         val tvDropUpLocation: TextView = customLayout!!.findViewById(R.id.tvDropUpLocation)
         val tvPickUpLocation: TextView = customLayout!!.findViewById(R.id.tvPickUpLocation)
-        tvCalculatedDistance.text = "New Calculated Distance : " + estCurrentDistance.toString()
+        tvCalculatedDistance.text = "Estimated Distance : " + estCurrentDistance.toString()
         tvCalculatedDuration.text = "New Calculated Duration : " + estCurrentDuration
-        tvCalculatedNewFare.text = "New Calculated Fare : " + "Rs " + estCurrentFare
+        tvCalculatedNewFare.text = "Estimated Fare : " + "Rs " + estCurrentFare
         tvDropUpLocation.text = "Drop Up Location : " + dAddress
 
         val geocoder = Geocoder(this@RideDetailsActivity, Locale.getDefault())
@@ -553,7 +556,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
             val alertDialog = AlertDialog.Builder(this)
             alertDialog.setTitle("FairFare")
-            alertDialog.setMessage("Make sure that your Start Trip Meter is set to zero.")
+            alertDialog.setMessage("Make sure you record the Start Meter reading before starting the ride.")
             alertDialog.setCancelable(false)
             alertDialog.setPositiveButton("Yes") { dialog, which ->
 
@@ -598,7 +601,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
+                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,
+                    MyRidesdestinationAddress,"No",compareRideList
                 )
 
             } else
@@ -620,7 +624,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    "", "", "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"No"
+                    "", "", "", "", imageList,MyRidesoriginalAddress,
+                    MyRidesdestinationAddress,"No",compareRideList
                 )
 
             }
@@ -628,6 +633,10 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
         }
         else {
+
+
+
+
 
 
             iRidePresenter!!.startRide(
@@ -647,7 +656,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 edt_vehicalNO!!.text.toString(),
                 edt_bagsCount!!.text.toString(),
                 edt_meterReading!!.text.toString(),
-                originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress,"No"
+                originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress,"No",compareRideList
             )
 
         }
@@ -998,7 +1007,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"Yes"
+                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,
+                    MyRidesdestinationAddress,"Yes",compareRideList
                 )
 
             } else
@@ -1020,7 +1030,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    "", "", "", "", imageList,MyRidesoriginalAddress,MyRidesdestinationAddress,"Yes"
+                    "", "", "", "", imageList,MyRidesoriginalAddress,
+                    MyRidesdestinationAddress,"Yes",compareRideList
                 )
 
             }

@@ -29,7 +29,6 @@
                 />
 
             <TextView
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:id="@+id/tv_carName"
                 android:gravity="center_horizontal"

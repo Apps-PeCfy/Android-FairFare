@@ -1,11 +1,13 @@
 package com.example.fairfare.ui.drawer.myrides
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -13,12 +15,14 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.example.fairfare.R
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.drawer.myrides.pojo.GetRideResponsePOJO
@@ -33,6 +37,7 @@ import com.example.fairfare.utils.PreferencesManager
 import com.example.fairfare.utils.ProjectUtilities
 import java.io.IOException
 import java.util.*
+import java.util.stream.Collectors
 
 class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
 
@@ -47,12 +52,18 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
     var CurrentpageCount: Int = 1
     var totalPageCount: Int = 1
 
+    var statusFilter = arrayOf<String?>()
+
+    var mylist = ArrayList<String?>()
+
+
     var loading = true
 
     var mLayoutManager: LinearLayoutManager? = null
 
     var getCurrentCity: String? = null
     private var myRideList: List<GetRideResponsePOJO.DataItem> = ArrayList()
+    private var myRideListFilter: List<GetRideResponsePOJO.DataItem> = ArrayList()
 
 
     @JvmField
@@ -67,6 +78,10 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
     @JvmField
     @BindView(R.id.tvEmptyTxt)
     var tvEmptyTxt: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tv_filter)
+    var tv_filter: TextView? = null
 
     @JvmField
     @BindView(R.id.rlEmpty)
@@ -95,7 +110,7 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
 
 
         iMyRidesPresenter = MyRidesImplementer(this)
-        iMyRidesPresenter!!.getRide("Bearer " +token, CurrentpageCount,currentLat,currentLong)
+        iMyRidesPresenter!!.getRide("Bearer " + token, CurrentpageCount, currentLat, currentLong)
 
 
 
@@ -114,7 +129,7 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
                         CurrentpageCount = CurrentpageCount + 1
                         loading = false
 
-                        Log.d("onScrolled",dx.toString())
+                        Log.d("onScrolled", dx.toString())
 
                     }
 
@@ -169,6 +184,78 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
         super.onCreateOptionsMenu(menu!!, inflater)
     }
 
+    @OnClick(R.id.tv_filter)
+    fun filter() {
+        showAlertDialog()
+    }
+
+
+    private fun showAlertDialog() {
+        val alertDialog = AlertDialog.Builder(activity!!)
+        alertDialog.setItems(statusFilter, object : DialogInterface.OnClickListener {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                when (which) {
+                    which ->
+                        adapterchang(statusFilter[which])
+
+                }
+            }
+        })
+
+        val alert = alertDialog.create()
+        alert.setCanceledOnTouchOutside(true)
+        alert.show()
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun adapterchang(sdata: String?) {
+
+
+        if(sdata.equals("Clear Filter")){
+
+            val first = "Filter By Status: "
+            tv_filter!!.setText(first)
+
+
+
+
+            myTripsAdapter = MyTripsAdapter(activity, myRideList, getCurrentCity)
+            recycler_view_myRides!!.layoutManager = LinearLayoutManager(activity)
+            recycler_view_myRides!!.adapter = myTripsAdapter
+            myTripsAdapter!!.setClickListener(this@MyRides)
+            myTripsAdapter!!.notifyDataSetChanged()
+        }else{
+
+            val first = "Filter By Status: "
+            val next = "<font color='#F15E38'>"+sdata+"</font> "
+            tv_filter!!.setText(Html.fromHtml(first + next.toUpperCase()))
+
+
+
+            for (a in myRideList) {
+                if (a.status.equals(sdata)) {
+                    Log.d("wcxvzqss",a.dateTime!!)
+                    myRideListFilter = myRideList.stream().filter({ article -> article.status!!.contains(sdata!!) }).collect(Collectors.toList())
+                }
+            }
+
+
+            myTripsAdapter = MyTripsAdapter(activity, myRideListFilter, getCurrentCity)
+            recycler_view_myRides!!.layoutManager = LinearLayoutManager(activity)
+            recycler_view_myRides!!.adapter = myTripsAdapter
+            myTripsAdapter!!.setClickListener(this@MyRides)
+            myTripsAdapter!!.notifyDataSetChanged()
+        }
+
+
+
+
+
+
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_home -> {
@@ -206,7 +293,21 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
         CurrentpageCount = getRideResponsePOJO.currentPage
         totalPageCount = getRideResponsePOJO.lastPage
 
+
+
         if (myRideList.size > 0) {
+
+            for (i in myRideList!!.indices) {
+                if (mylist.contains(myRideList.get(i).status)) {
+
+                } else {
+                    mylist.add(myRideList.get(i).status)
+                }
+            }
+            mylist.add("Clear Filter")
+
+            statusFilter = mylist.toTypedArray()
+
             myTripsAdapter = MyTripsAdapter(activity, myRideList, getCurrentCity)
             recycler_view_myRides!!.layoutManager = LinearLayoutManager(activity)
             recycler_view_myRides!!.adapter = myTripsAdapter
@@ -272,7 +373,7 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
 
     override fun rideDetails(id: Int) {
         val intent = Intent(activity, MyRideDetailsActivity::class.java)
-        intent.putExtra("Id",id.toString())
+        intent.putExtra("Id", id.toString())
         startActivity(intent)
     }
 

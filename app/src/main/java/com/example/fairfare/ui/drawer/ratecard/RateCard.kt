@@ -336,7 +336,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
                             tvNightCharges!!.text =
-                                getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).nightCharges + "%" + " of the Total Fare"
+                                getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).nightChargesInPercentage + " of the Fare"
 
                             tvWaitingCharges!!.text =
                                 "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).waitingCharges + " per minute "
@@ -642,7 +642,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             tvNightCharges!!.text =
                 getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                     position
-                ).nightCharges + "%" + " of the Total Fare"
+                ).nightChargesInPercentage + " of the Fare"
 
             tvWaitingCharges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
@@ -705,7 +705,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             tvNightCharges!!.text =
                 getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).nightCharges + "%" + " of the Total Fare"
+                ).nightChargesInPercentage + " of the Fare"
 
             tvWaitingCharges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
@@ -758,7 +758,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             tvNightCharges!!.text =
                 getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).nightCharges + "%" + " of the Total Fare"
+                ).nightChargesInPercentage + " of the Fare"
 
             tvWaitingCharges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(

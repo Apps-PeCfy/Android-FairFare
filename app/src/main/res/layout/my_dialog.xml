@@ -13,7 +13,7 @@
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:textStyle="bold"
-        android:text="Your Pickup location has changed. Your ride will be calibrated onthe new route as below:"
+        android:text="Your Pickup location has changed. Your ride will be calibrated on the new route"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textSize="@dimen/_15sdp" />
@@ -34,6 +34,7 @@
 
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tvDropUpLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,6 +60,7 @@
         android:textSize="@dimen/_12sdp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tvCalculatedDuration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

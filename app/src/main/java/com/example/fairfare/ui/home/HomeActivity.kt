@@ -698,6 +698,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         if (extras == null) {
 
+            if (city.equals("thane", ignoreCase = true)) {
+                city = "Mumbai"
+            }
+
             if (cityspinner.contains(city)) {
 
                 for (i in cityspinner!!.indices) {
@@ -706,7 +710,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
 
                 }
-            } else {
+            } else
+            {
                 cityspinner.add(0, "Choose City")
 
 
@@ -734,6 +739,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
         } else {
+            if (city.equals("thane", ignoreCase = true)) {
+                city = "Mumbai"
+            }
 
             if (cityspinner.contains(city)) {
                 for (i in cityspinner!!.indices) {
@@ -742,7 +750,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
 
                 }
-            } else {
+            } else
+            {
 
                 cityspinner.add(0, "Choose City")
 
@@ -1881,7 +1890,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 estDistance = distance.getString("value")
                 estDistanceInMeter = distance.getString("value").toInt()
                 estDistance =
-                    DecimalFormat("####.##").format((estDistance!!.toDouble() / 1000)) + " km"
+                    DecimalFormat("####.#").format((estDistance!!.toDouble() / 1000)) + " km"
 
 
                 /* if((distance.getString("text")).contains("mi")){

@@ -559,10 +559,10 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                         tvActualWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingTime
                         tvActualWaitCharge!!.text =
-                            response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingCharges
+                            "₹ "+ response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingCharges
 
                         tvActualSurCharge!!.text =
-                            response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.surCharge
+                            "₹ "+response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.surCharge
 
                     }
 
@@ -584,13 +584,13 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                             "₹ " + response.body()!!.dispute!!.ride!!.nightCharges
 
                         tvEstWaitCharge!!.text =
-                            response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges
+                            "₹ "+ response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges
                         tvEstWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingTime
 
 
                         tvEstSurCharge!!.text =
-                            response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.surCharge
+                            "₹ "+response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.surCharge
 
                     }
 

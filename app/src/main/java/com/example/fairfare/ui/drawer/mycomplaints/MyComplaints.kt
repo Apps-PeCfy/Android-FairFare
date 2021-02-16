@@ -61,6 +61,9 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
     @BindView(R.id.rlEmpty)
     var rlEmpty: RelativeLayout? = null
 
+    @JvmField
+    @BindView(R.id.rl_sort)
+    var rl_sort: RelativeLayout? = null
 
 
 
@@ -72,6 +75,8 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
         val rootView = inflater.inflate(R.layout.fragment_my_rides, container, false)
         ButterKnife.bind(this, rootView)
         setHasOptionsMenu(true)
+        rl_sort!!.visibility = View.GONE
+
         initView()
         PreferencesManager.initializeInstance(activity!!.applicationContext)
         preferencesManager = PreferencesManager.instance

@@ -174,8 +174,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
     @JvmField
     @BindView(R.id.switchdata)
     var switchdata: Switch? = null
-    private var compareRideList =
-        ArrayList<CompareRideResponsePOJO.VehiclesItem>()
+    private var compareRideList = ArrayList<CompareRideResponsePOJO.VehiclesItem>()
     var sourceLatitude: String? = null
     var sourceLongitude: String? = null
     var destLat: String? = null
@@ -212,8 +211,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         hideshow = "show"
 
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-        compareRideList =
-            intent.getSerializableExtra("spinnerdata") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
+        compareRideList = intent.getSerializableExtra("spinnerdata") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
         spinnerposition = intent.getIntExtra("spinnerposition", 0)
         listPosition = intent.getIntExtra("listPosition", 0)
         distance = intent.getStringExtra("distance")
@@ -237,9 +235,9 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         tv_myCurrentLocation!!.text = sAdd
         tv_myDropUpLocation!!.text = dAdd
         tv_dateandTime!!.text = currentDate
-        tv_carType!!.text = compareRideList[listPosition].providerName
+        tv_carType!!.text = compareRideList[listPosition].label
         tv_Person!!.text = compareRideList[listPosition].noOfSeater.toString()
-        tv_carName!!.text = compareRideList[listPosition].name
+        tv_carName!!.text = compareRideList[listPosition].vehicleName
         Glide.with(this@ViewRideActivity)
             .load(compareRideList[listPosition].vehicleImageUrl)
             .apply(
@@ -271,7 +269,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         }
 
         tv_tollCharge!!.text =
-            "₹ " + compareRideList[listPosition].tollCharge
+            "₹ " + compareRideList[listPosition].tollCharges
 
         tv_Luggage_Charges!!.text = "₹ " + compareRideList[listPosition].luggageCharge
         tv_NightCharges!!.text = "₹ " + compareRideList[listPosition].nightCharge
@@ -400,6 +398,11 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
             intent.putExtra("ImgUrl", compareRideList[listPosition].vehicleImageUrl)
             intent.putExtra("ImgName", compareRideList[listPosition].name)
             intent.putExtra("VehicleName", compareRideList[listPosition].vehicleName)
+
+
+            intent.putExtra("compareRideList", compareRideList)
+
+
             startActivity(intent)
         } else {
 

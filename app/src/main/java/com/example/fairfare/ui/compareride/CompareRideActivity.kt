@@ -256,11 +256,16 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         "airport_rate_card_id",
                         info!!.vehicles!!.get(position).airportRateCardId
                     )
+
+
                     intent.putExtra("luggages_quantity", info.luggage)
                     intent.putExtra("formatedDate", info.scheduleDatetime)
                     intent.putExtra("ViewRideDistance", info.distance)
                     intent.putExtra("canStartRide", info.canStartRide)
                     intent.putExtra("distance", "$distance ($estTime)")
+
+
+
                     startActivity(intent)
 
                 }
@@ -451,6 +456,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     intent.putExtra("ViewRideDistance", info.distance)
                     intent.putExtra("canStartRide", info.canStartRide)
                     intent.putExtra("distance", "$distance ($estTime)")
+
                     startActivity(intent)
 
                 }

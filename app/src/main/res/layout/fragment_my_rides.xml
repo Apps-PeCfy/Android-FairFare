@@ -6,8 +6,29 @@
     android:background="@color/White">
 
 
+
     <RelativeLayout
-        android:layout_marginTop="@dimen/_15sdp"
+
+        android:padding="@dimen/_10sdp"
+        android:id="@+id/rl_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:fontFamily="@font/notosansjp_bold"
+            android:id="@+id/tv_filter"
+            android:layout_alignParentEnd="true"
+            android:drawableEnd="@drawable/ic_sort_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter By Status: "/>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_below="@+id/rl_sort"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true">
@@ -17,7 +38,7 @@
             android:id="@+id/recycler_view_myRides"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tv_sort" />
+            />
 
 
 

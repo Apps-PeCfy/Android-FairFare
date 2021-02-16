@@ -1170,6 +1170,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
       //  updateCamera(getCompassBearing(startLocation, destLocation))
 
+
         drawRoute()
     }
 
@@ -1418,7 +1419,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     val estCurrentDist =
-                        DecimalFormat("####.##").format((estCurrentDistance!!.toDouble() / 1000)) + " km"
+                        DecimalFormat("####.#").format((estCurrentDistance!!.toDouble() / 1000)) + " km"
                     tvEstDistance!!.text = "Est.Distance " + estCurrentDist
                     tvEstTime!!.text = "Est.Time " + estCurrentDuration
                     progressBarDistance!!.max = (estCurrDIst)!!.toFloat().toInt()
@@ -1449,6 +1450,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         }
 
                       //  mPolyline = mMap!!.addPolyline(lineOptions)
+
+
 
 
                         // ILOMADEV :- 10 Feb 2021

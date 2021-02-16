@@ -33,6 +33,8 @@ class CompareRideImplementer(private val view: ICompareRideView) : ICompareRideP
         call!!.enqueue(object : Callback<CompareRideResponsePOJO?> {
             override fun onResponse(call: Call<CompareRideResponsePOJO?>, response: Response<CompareRideResponsePOJO?>)
             {
+                view.removeWait()
+
                 if (response.code() == 200) {
                     view.removeWait()
 
@@ -51,6 +53,8 @@ class CompareRideImplementer(private val view: ICompareRideView) : ICompareRideP
                         view.validationError(pojo)
                     } catch (exception: IOException) {
                     }
+                }else{
+                    view.onFailure(response.message())
                 }
             }
 

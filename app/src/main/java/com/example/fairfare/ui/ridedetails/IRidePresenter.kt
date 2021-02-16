@@ -1,5 +1,6 @@
 package com.example.fairfare.ui.ridedetails
 
+import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
 import java.util.ArrayList
 
 interface IRidePresenter {
@@ -29,7 +30,8 @@ interface IRidePresenter {
         imageList: ArrayList<ImageModel>?,
         sourceAddress: String?,
         destinationAddress: String?,
-        night_allow: String?
+        night_allow: String?,
+        tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>
 
     )
 }

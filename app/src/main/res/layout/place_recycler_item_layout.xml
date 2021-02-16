@@ -37,6 +37,7 @@
 
 
             <EditText
+                android:textColor="@color/gradientstartcolor"
                 android:id="@+id/place_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,8 +95,8 @@
 
     <ImageView
         android:id="@+id/iv_fav"
-        android:layout_width="@dimen/_22sdp"
-        android:layout_height="@dimen/_22sdp"
+        android:layout_width="@dimen/_17sdp"
+        android:layout_height="@dimen/_17sdp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/_5sdp"

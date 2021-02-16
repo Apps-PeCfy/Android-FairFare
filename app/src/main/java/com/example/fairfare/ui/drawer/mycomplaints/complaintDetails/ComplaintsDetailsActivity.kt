@@ -485,7 +485,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                         tvActualWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingTime
                         tvActualWaitCharge!!.text =
-                            response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingCharges
+                            "₹ "+ response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingCharges
                     }
 
 
@@ -507,7 +507,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                         tvEstWaitCharge!!.text =
-                            response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges
+                            "₹ "+response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges
                         tvEstWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingTime
 
