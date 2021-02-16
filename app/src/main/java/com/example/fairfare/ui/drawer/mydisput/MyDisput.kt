@@ -52,11 +52,13 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
     @BindView(R.id.tvEmptyTxt)
     var tvEmptyTxt: TextView? = null
 
-  @JvmField
+    @JvmField
     @BindView(R.id.rlEmpty)
     var rlEmpty: RelativeLayout? = null
 
-
+    @JvmField
+    @BindView(R.id.rl_sort)
+    var rl_sort: RelativeLayout? = null
 
 
     override fun onCreateView(
@@ -67,6 +69,7 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
         val rootView = inflater.inflate(R.layout.fragment_my_rides, container, false)
         ButterKnife.bind(this, rootView)
         setHasOptionsMenu(true)
+        rl_sort!!.visibility = View.GONE
         initView()
 
         PreferencesManager.initializeInstance(activity!!.applicationContext)
@@ -134,7 +137,7 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
             myDisPutesAdapter!!.setClickListener(this@MyDisput)
 
             myDisPutesAdapter!!.notifyDataSetChanged()
-        }else{
+        } else {
 
             myDisPutesAdapter = MyDisPutesAdapter(activity, myDisputsList)
             recycler_view_myRides!!.layoutManager = LinearLayoutManager(activity)
@@ -143,9 +146,9 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
 
             myDisPutesAdapter!!.notifyDataSetChanged()
 
-            rlEmpty!!.visibility=View.VISIBLE
+            rlEmpty!!.visibility = View.VISIBLE
             ivImg!!.setBackgroundResource(R.drawable.empty_disput)
-            tvEmptyTxt!!.text="You have not registered any Disputes yet!"
+            tvEmptyTxt!!.text = "You have not registered any Disputes yet!"
         }
 
 
@@ -181,7 +184,7 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
 
     override fun fileComplaintClick(id: Int) {
 
-        val alertDialog = AlertDialog.Builder(activity!!,R.style.alertDialog)
+        val alertDialog = AlertDialog.Builder(activity!!, R.style.alertDialog)
         alertDialog.setTitle("FairFare")
         alertDialog.setMessage("Are you sure you want to file Complaint?")
         alertDialog.setCancelable(false)
@@ -194,13 +197,12 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
         alertDialog.show()
 
 
-
     }
 
     override fun deleteDisputClick(id: Int) {
 
 
-        val alertDialog = AlertDialog.Builder(activity!!,R.style.alertDialog)
+        val alertDialog = AlertDialog.Builder(activity!!, R.style.alertDialog)
         // Setting Dialog Title
         //  alertDialog.setTitle("GPS is settings")
         // Setting Dialog Message
@@ -220,7 +222,7 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
 
     override fun detailDisputClick(id: Int) {
         val intent = Intent(activity, DisputDetailActivity::class.java)
-        intent.putExtra("Id",id.toString())
+        intent.putExtra("Id", id.toString())
         startActivity(intent)
     }
 

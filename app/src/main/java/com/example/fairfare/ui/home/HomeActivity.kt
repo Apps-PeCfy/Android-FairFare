@@ -697,6 +697,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         if (extras == null) {
 
+            if (city.equals("thane", ignoreCase = true)) {
+                city = "Mumbai"
+            }
+
             if (cityspinner.contains(city)) {
 
                 for (i in cityspinner!!.indices) {
@@ -705,7 +709,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
 
                 }
-            } else {
+            } else
+            {
                 cityspinner.add(0, "Choose City")
 
 
@@ -733,6 +738,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
         } else {
+            if (city.equals("thane", ignoreCase = true)) {
+                city = "Mumbai"
+            }
 
             if (cityspinner.contains(city)) {
                 for (i in cityspinner!!.indices) {
@@ -741,7 +749,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
 
                 }
-            } else {
+            } else
+            {
 
                 cityspinner.add(0, "Choose City")
 
@@ -1881,7 +1890,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 estDistance = distance.getString("value")
                 estDistanceInMeter = distance.getString("value").toInt()
                 estDistance =
-                    DecimalFormat("####.##").format((estDistance!!.toDouble() / 1000)) + " km"
+                    DecimalFormat("####.#").format((estDistance!!.toDouble() / 1000)) + " km"
 
 
                 /* if((distance.getString("text")).contains("mi")){
@@ -2438,15 +2447,33 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
-                //  address = addresses[0].getAddressLine(0)
-                address = obj.getAddressLine(0)
-
-                var countryName = obj.countryName
-                if (obj.countryName!= null && obj.countryName.equals("United States", ignoreCase = true)){
-                    obj.countryName = "USA"
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                    if (obj != null && obj.locality != null && obj.subAdminArea != null && obj.locality.equals(
+                            obj.subAdminArea,
+                            ignoreCase = true
+                        )
+                    ) {
+                        address =
+                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea
+                    } else {
+                        address =
+                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea
+                    }
+                    address = address.replace("null, ", "")
+                } else
+                {
+                    address = obj.getAddressLine(0)
+                    var countryName = obj.countryName
+                    if (obj.countryName != null && obj.countryName.equals(
+                            "United States",
+                            ignoreCase = true
+                        )
+                    ) {
+                        obj.countryName = "USA"
+                    }
+                    address = address.replace(", $countryName", "").replace("- $countryName", "")
+                    address = address.replace(" " + obj.postalCode, "")
                 }
-                address = address.replace(", $countryName", "").replace("- $countryName", "")
-                address = address.replace(" " + obj.postalCode, "")
 
                 city = obj.subAdminArea
             } else {

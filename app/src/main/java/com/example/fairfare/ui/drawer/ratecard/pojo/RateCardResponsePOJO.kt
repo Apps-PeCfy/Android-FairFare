@@ -63,6 +63,9 @@ class RateCardResponsePOJO : Serializable {
         @SerializedName("nightCharges")
         var nightCharges: String? = null
 
+        @SerializedName("nightChargesInPercentage")
+        var nightChargesInPercentage: String? = null
+
         @SerializedName("minBaseFare")
         var minBaseFare: String? = null
 

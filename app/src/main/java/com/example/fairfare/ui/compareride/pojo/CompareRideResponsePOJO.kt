@@ -7,6 +7,7 @@ class CompareRideResponsePOJO : Serializable {
     @SerializedName("vehicles")
     var vehicles: List<VehiclesItem>? = null
 
+
     @SerializedName("scheduleMinutes")
     var scheduleMinutes: String? = null
 
@@ -47,11 +48,22 @@ class CompareRideResponsePOJO : Serializable {
         @SerializedName("vehicleImageUrl")
         var vehicleImageUrl: String? = null
 
+        @SerializedName("tollCharges")
+        var tollCharges: String? = null
+
+
+        @SerializedName("tolls")
+        var tolls: List<TollsItem>? = null
+
+
         @SerializedName("providerImageUrl")
         var providerImageUrl: String? = null
 
         @SerializedName("providerName")
         var providerName: String? = null
+
+        @SerializedName("label")
+        var label: String? = null
 
         @SerializedName("noOfSeater")
         var noOfSeater = 0
@@ -68,7 +80,6 @@ class CompareRideResponsePOJO : Serializable {
 
         @SerializedName("tollCharge")
         var tollCharge: String? = null
-
 
 
         @SerializedName("additionalCharges")
@@ -100,6 +111,38 @@ class CompareRideResponsePOJO : Serializable {
         }
     }
 
+    inner class TollsItem : Serializable {
+        @SerializedName("name")
+        var name: String? = null
+
+        @SerializedName("road")
+        var road: String? = null
+
+        @SerializedName("state")
+        var state: String? = null
+
+        @SerializedName("country")
+        var country: String? = null
+
+        @SerializedName("type")
+        var type: String? = null
+
+        @SerializedName("currency")
+        var currency: String? = null
+
+        @SerializedName("latitude")
+        var latitude: String? = null
+
+        @SerializedName("longitude")
+        var longitude: String? = null
+
+
+        @SerializedName("charges")
+        var charges = 0
+
+
+
+    }
 
 
 }

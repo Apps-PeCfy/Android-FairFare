@@ -383,10 +383,10 @@ class MyRideDetailsActivity : AppCompatActivity() {
                         tvActualWaitTime!!.text =
                             response!!.body()!!.data!!.actualTrackRide!!.waitingTime
                         tvActualWaitCharge!!.text =
-                            response!!.body()!!.data!!.actualTrackRide!!.waitingCharges
+                            "₹ "+ response!!.body()!!.data!!.actualTrackRide!!.waitingCharges
 
                         tvActualSurCharge!!.text =
-                            response!!.body()!!.data!!.actualTrackRide!!.surCharge
+                            "₹ "+response!!.body()!!.data!!.actualTrackRide!!.surCharge
 
 
                         tvActualNightChages!!.text = "₹ "+response.body()!!.data!!.nightCharges
@@ -409,13 +409,13 @@ class MyRideDetailsActivity : AppCompatActivity() {
                             "₹ " + response!!.body()!!.data!!.luggageCharges
 
                         tvEstWaitCharge!!.text =
-                            response!!.body()!!.data!!.estimatedTrackRide!!.waitingCharges
+                            "₹ "+ response!!.body()!!.data!!.estimatedTrackRide!!.waitingCharges
                         tvEstWaitTime!!.text =
                             response!!.body()!!.data!!.estimatedTrackRide!!.waitingTime
 
 
                         tvEstSurCharge!!.text =
-                            response!!.body()!!.data!!.estimatedTrackRide!!.surCharge
+                            "₹ "+ response!!.body()!!.data!!.estimatedTrackRide!!.surCharge
 
 
                         tvNightChages!!.text = "₹ "+response.body()!!.data!!.nightCharges

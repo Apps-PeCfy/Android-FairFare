@@ -377,11 +377,11 @@ if(waitingList.size>0) {
         tvEstWaitTime!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingTime
         tvActualWaitTime!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingTime
 
-        tvActualWaitCharge!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingCharges
-        tvEstWaitCharge!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingCharges
+        tvActualWaitCharge!!.text = "₹ "+endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingCharges
+        tvEstWaitCharge!!.text = "₹ "+endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingCharges
 
-        tvActualSurCharge!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.surCharge
-        tvEstSurCharge!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.surCharge
+        tvActualSurCharge!!.text = "₹ "+endRideResponsePOJO!!.ride!!.actualTrackRide!!.surCharge
+        tvEstSurCharge!!.text = "₹ "+endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.surCharge
 
 
 
@@ -414,8 +414,8 @@ if(waitingList.size>0) {
 
 
 
-        tvActualNightChages!!.text = endRideResponsePOJO!!.ride!!.nightCharges
-        tvNightChages!!.text = endRideResponsePOJO!!.ride!!.nightCharges
+        tvActualNightChages!!.text = "₹ " +endRideResponsePOJO!!.ride!!.nightCharges
+        tvNightChages!!.text = "₹ " +endRideResponsePOJO!!.ride!!.nightCharges
 
 
         tv_estTotalFare!!.text =

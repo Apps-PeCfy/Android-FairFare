@@ -274,6 +274,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var waitStartLocation: String? = ""
     var waitStartLat: String? = ""
     var waitStartLong: String? = ""
+    var vehicleName: String? = ""
 
     var passjObject: JSONObject? = null
 
@@ -331,6 +332,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         sAddress = intent.getStringExtra("SAddress")
         dAddress = intent.getStringExtra("DAddress")
         tv_carType!!.text = intent.getStringExtra("ImageName")
+        vehicleName = intent.getStringExtra("VehicleName")
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
         Glide.with(this@TrackRideActivity)
@@ -401,8 +403,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     }
 
 
-    override fun onBackPressed() {
-    }
+
 
     private fun initLocationUpdates() {
         myLocationManager?.getMyCurrentLocationChange(object :
@@ -471,7 +472,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                                 options.put("lat", waitLat!!)
                                 options.put("long", waitLong!!)
                                 arrWaitTime.add(options!!)
-
 
                             }
                             waitTime = null
@@ -1129,7 +1129,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         rlData!!.visibility = View.GONE
         llshowData!!.visibility = View.VISIBLE
         tv_ShowTrackBoard!!.visibility = View.VISIBLE
-
+        hideshow = "show"
+        rlhideview?.visibility = View.VISIBLE
     }
 
 
@@ -1166,7 +1167,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey)
             )
         )
+
         //  updateCamera(getCompassBearing(startLocation, destLocation))
+
         drawRoute()
     }
 
@@ -1313,8 +1316,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 estCurrentDuration = duration.getString("text")
                 estCurrentDurationInMin = duration.getString("value")
 
-
-
                 waitLocation = zerothLegs.getString("end_address")
                 val endLocation = zerothLegs.getJSONObject("end_location")
                 waitLat = endLocation.getString("lat")
@@ -1326,7 +1327,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 val startLocation = zerothLegs.getJSONObject("start_location")
                 waitStartLat = startLocation.getString("lat")
                 waitStartLong = startLocation.getString("lng")
-
 
 
 
@@ -1418,7 +1418,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     val estCurrentDist =
-                        DecimalFormat("####.##").format((estCurrentDistance!!.toDouble() / 1000)) + " km"
+                        DecimalFormat("####.#").format((estCurrentDistance!!.toDouble() / 1000)) + " km"
                     tvEstDistance!!.text = "Est.Distance " + estCurrentDist
                     tvEstTime!!.text = "Est.Time " + estCurrentDuration
                     progressBarDistance!!.max = (estCurrDIst)!!.toFloat().toInt()
@@ -1447,7 +1447,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         if (mPolyline != null) {
                             // mPolyline!!.remove()
                         }
+
                         //  mPolyline = mMap!!.addPolyline(lineOptions)
+
 
                         // ILOMADEV :- 10 Feb 2021
                         if (updatedPolyline != null) {
@@ -1856,7 +1858,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         myMarker = mMap!!.addMarker(
             MarkerOptions()
                 .position(newPosition)
-                .icon(getMarkerIcon(tv_carType!!.text.toString()))
+                .icon(getMarkerIcon(vehicleName))
                 .anchor(0.5f, 0.5f)
                 .draggable(true)
                 .flat(true)
@@ -2188,5 +2190,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         return bearTo
     }
 
+    override fun onBackPressed() {
+
+    }
+
 
 }
+
