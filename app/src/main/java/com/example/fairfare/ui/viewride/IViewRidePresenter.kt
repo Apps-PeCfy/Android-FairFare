@@ -1,5 +1,8 @@
 package com.example.fairfare.ui.viewride
 
+import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
+import java.util.ArrayList
+
 interface IViewRidePresenter {
     fun schduleRide(
 
@@ -18,8 +21,9 @@ interface IViewRidePresenter {
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        sorceAddress:String?,
-        destinationAddress:String?
+        sorceAddress: String?,
+        destinationAddress: String?,
+        compareRideList: ArrayList<CompareRideResponsePOJO.VehiclesItem>
 
     )
 }
