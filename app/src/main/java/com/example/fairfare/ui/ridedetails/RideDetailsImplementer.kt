@@ -62,38 +62,45 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
 
 
-            val jsonProductObj = JSONObject()
 
-
-
-            jsonProductObj.accumulate("ride_id", id)
-            jsonProductObj.accumulate("vehicle_rate_card_id", vehicle_rate_card_id)
-            jsonProductObj.accumulate("luggage_quantity", luggage_quantity)
-            jsonProductObj.accumulate("schedule_date", schedule_date)
-            jsonProductObj.accumulate("origin_place_id", origin_place_id)
-            jsonProductObj.accumulate("destination_place_id", destination_place_id)
-            jsonProductObj.accumulate("overview_polyline", overview_polyline)
-            jsonProductObj.accumulate("distance", distance)
-            jsonProductObj.accumulate("duration", duration)
-            jsonProductObj.accumulate("city_id", city_id)
-            jsonProductObj.accumulate("airport_rate_card_id", airport_rate_card_id)
-            jsonProductObj.accumulate("driver_name", driver_name)
-            jsonProductObj.accumulate("vehicle_no", vehicle_no)
-            jsonProductObj.accumulate("badge_no", badge_no)
-            jsonProductObj.accumulate("start_meter_reading", start_meter_reading)
-            jsonProductObj.accumulate("origin_place_lat", sLat)
-            jsonProductObj.accumulate("origin_place_long", sLong)
-            jsonProductObj.accumulate("destination_place_lat", dLat)
-            jsonProductObj.accumulate("destination_place_long", dLong)
-            jsonProductObj.accumulate("origin_full_address", sourceAddress)
-            jsonProductObj.accumulate("destination_full_address", destinationAddress)
-            jsonProductObj.accumulate("night_allow", nightallow)
-
-
-
+            var jsonProductObj: JSONObject? =null
             var jsonArray = JSONArray()
 
             try {
+
+
+                jsonProductObj = JSONObject()
+
+                jsonProductObj.accumulate("ride_id", id)
+                jsonProductObj.accumulate("luggage_quantity", luggage_quantity)
+                jsonProductObj.accumulate("airport_rate_card_id", airport_rate_card_id)
+                jsonProductObj.accumulate("driver_name", driver_name)
+                jsonProductObj.accumulate("vehicle_no", vehicle_no)
+                jsonProductObj.accumulate("badge_no", badge_no)
+                jsonProductObj.accumulate("start_meter_reading", start_meter_reading)
+                jsonProductObj.accumulate("origin_full_address", sourceAddress)
+                jsonProductObj.accumulate("destination_full_address", destinationAddress)
+                jsonProductObj.accumulate("night_allow", nightallow)
+
+
+
+                jsonProductObj.accumulate("vehicle_rate_card_id", vehicle_rate_card_id)
+                jsonProductObj.accumulate("schedule_date", schedule_date)
+                jsonProductObj.accumulate("origin_place_id", origin_place_id)
+                jsonProductObj.accumulate("origin_place_lat", sLat)
+                jsonProductObj.accumulate("origin_place_long", sLong)
+                jsonProductObj.accumulate("destination_place_id", destination_place_id)
+                jsonProductObj.accumulate("destination_place_lat", dLat)
+                jsonProductObj.accumulate("destination_place_long", dLong)
+                jsonProductObj.accumulate("distance", distance)
+                jsonProductObj.accumulate("duration", duration)
+                jsonProductObj.accumulate("city_id", city_id)
+                jsonProductObj.accumulate("overview_polyline", overview_polyline)
+
+
+
+
+
 
                 for (i in tolls[0].tolls!!.indices) {
                     val jsonObjectMain = JSONObject()
@@ -108,10 +115,6 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
                     jsonObjectMain.accumulate("charges", tolls[0].tolls!!.get(i).charges)
                     jsonArray.put(jsonObjectMain)
                 }
-
-
-
-
                 jsonProductObj.accumulate("tolls", jsonArray)
 
 
@@ -124,8 +127,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
             val call = ApiClient.client.startRidear(
                 "Bearer $token",
-               jsonProductObj.toString()
-            )
+               jsonProductObj.toString())
             call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
                 override fun onResponse(
                     call: Call<ScheduleRideResponsePOJO?>,
