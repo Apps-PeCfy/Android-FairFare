@@ -2447,7 +2447,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
                     if (obj != null && obj.locality != null && obj.subAdminArea != null && obj.locality.equals(
                             obj.subAdminArea,
                             ignoreCase = true

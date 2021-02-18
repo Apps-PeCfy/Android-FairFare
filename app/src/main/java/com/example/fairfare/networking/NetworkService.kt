@@ -29,6 +29,7 @@ import com.example.fairfare.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -183,8 +184,9 @@ interface NetworkService {
         @Body body: String?
     ): Call<ScheduleRideResponsePOJO?>?
 
-  @FormUrlEncoded
+
     @POST("startRide")
+    @Headers("Content-Type: application/json")
     fun startRidear(
         @Header("Authorization") header: String?,
         @Body body: String?
@@ -199,7 +201,8 @@ interface NetworkService {
         @Part file: Array<MultipartBody.Part?>,
         @PartMap map: HashMap<String?, String?>?,
         @PartMap map1: HashMap<String?, Int?>,
-        @PartMap map2: HashMap<String?, Float?>
+        @PartMap map2: HashMap<String?, Float?>,
+        @PartMap map3: HashMap<String?, String?>
 
     ): Call<ScheduleRideResponsePOJO?>?
 

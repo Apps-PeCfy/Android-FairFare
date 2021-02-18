@@ -467,11 +467,19 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                                 var options = HashMap<String, String>()
                                 options.put("waiting_time", timeDiffrence.toString())
-                                options.put("full_address", waitLocation!!)
+                                options.put("full_address", waitStartLocation!!)
                                 options.put("wait_at", waitAt!!)
                                 options.put("lat", waitLat!!)
                                 options.put("long", waitLong!!)
-                                arrWaitTime.add(options!!)
+
+                                //To Prevent Duplicate entries
+                                if (waitStartLocation != null && arrWaitTime.size > 0 && waitStartLocation?.equals(arrWaitTime[arrWaitTime.size-1].getValue("full_address"), ignoreCase = true)!!){
+                                    val totalTime = timeDiffrence + arrWaitTime[arrWaitTime.size-1].getValue("waiting_time").toDouble()
+                                    arrWaitTime[arrWaitTime.size-1]["waiting_time"] = totalTime.toString()
+                                }else{
+                                    arrWaitTime.add(options!!)
+                                }
+
 
                             }
                             waitTime = null

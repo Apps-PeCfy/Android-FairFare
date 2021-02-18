@@ -1015,7 +1015,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
 
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
                     if (obj != null && obj.locality != null && obj.subAdminArea != null && obj.locality.equals(
                             obj.subAdminArea,
                             ignoreCase = true
@@ -1064,10 +1064,30 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
-                countryName = obj.countryName
-                if (countryName != null && countryName.equals("United States", ignoreCase = true)) {
-                    countryName = "USA"
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                    var address : String
+                    if (obj != null && obj.locality != null && obj.subAdminArea != null && obj.locality.equals(
+                            obj.subAdminArea,
+                            ignoreCase = true
+                        )
+                    ) {
+                        address =
+                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea
+                    } else {
+                        address =
+                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea
+                    }
+                    address = address.replace("null, ", "")
+
+                    return address;
+
+                }else{
+                    countryName = obj.countryName
+                    if (countryName != null && countryName.equals("United States", ignoreCase = true)) {
+                        countryName = "USA"
+                    }
                 }
+
 
             }
         } catch (e: IOException) {
