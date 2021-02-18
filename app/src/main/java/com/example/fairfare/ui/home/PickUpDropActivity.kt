@@ -1015,31 +1015,20 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
 
-                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                    if (obj != null && obj.locality != null && obj.subAdminArea != null && obj.locality.equals(
-                            obj.subAdminArea,
-                            ignoreCase = true
-                        )
-                    ) {
-                        address =
-                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea
-                    } else {
-                        address =
-                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea
-                    }
-                    address = address.replace("null, ", "")
-
-                } else {
-                    address = obj.getAddressLine(0)
-                    var countryName = obj.countryName
-                    if (obj.countryName != null && obj.countryName.equals(
-                            "United States",
-                            ignoreCase = true
-                        )
-                    ) {
-                        obj.countryName = "USA"
-                    }
+                address = obj.getAddressLine(0)
+                var countryName = obj.countryName
+                if (obj.countryName != null && obj.countryName.equals(
+                        "United States",
+                        ignoreCase = true
+                    )
+                ) {
+                    obj.countryName = "USA"
+                }
+                if (!countryName.equals("")){
                     address = address.replace(", $countryName", "").replace("- $countryName", "")
+                }
+
+                if (obj != null && obj.postalCode!= null && !obj.postalCode.equals("")){
                     address = address.replace(" " + obj.postalCode, "")
                 }
 
@@ -1064,35 +1053,22 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
 
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
-                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                    var address : String
-                    if (obj != null && obj.locality != null && obj.subAdminArea != null && obj.locality.equals(
-                            obj.subAdminArea,
-                            ignoreCase = true
-                        )
-                    ) {
-                        address =
-                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea
-                    } else {
-                        address =
-                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea
-                    }
-                    address = address.replace("null, ", "")
-
-                    return address;
-
-                }else{
-                    countryName = obj.countryName
-                    if (countryName != null && countryName.equals("United States", ignoreCase = true)) {
-                        countryName = "USA"
-                    }
+                countryName = obj.countryName
+                if (countryName != null && countryName.equals("United States", ignoreCase = true)) {
+                    countryName = "USA"
                 }
 
 
             }
         } catch (e: IOException) {
         }
+        if (countryName.equals("")){
+           return selectedAddress
+        }
+
         return selectedAddress.replace(", $countryName", "").replace("- $countryName", "")
+
+
 
     }
 
