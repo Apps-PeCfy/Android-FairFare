@@ -551,6 +551,7 @@
                                 android:background="@color/secondaryLightGray" />
 
 
+                            <!-- DISTANCE -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -609,6 +610,7 @@
                                 android:layout_height="1sp"
                                 android:background="@color/secondaryLightGray" />
 
+                            <!-- RIDE TIME -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -665,6 +667,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1sp"
                                 android:background="@color/secondaryLightGray" />
+
+                            <!-- WAIT TIME -->
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -743,6 +747,67 @@
                                 android:layout_height="1sp"
                                 android:background="@color/secondaryLightGray" />
 
+                            <!-- FARE -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="3">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="Fare"
+                                    android:textColor="@color/Black"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="1sp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryLightGray" />
+
+
+                                <TextView
+                                    android:id="@+id/tv_estFare"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="120 Min" />
+
+                                <TextView
+                                    android:layout_width="1sp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryLightGray" />
+
+
+                                <TextView
+                                    android:id="@+id/tv_actualFare"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="₹ 1000 " />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1sp"
+                                android:background="@color/secondaryLightGray" />
+
+                            <!-- WAIT CHARGES -->
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -803,6 +868,7 @@
                                 android:layout_height="1sp"
                                 android:background="@color/secondaryLightGray" />
 
+                            <!-- NIGHT CHARGES -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -816,7 +882,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Fare"
+                                    android:text="Night Charges"
                                     android:textColor="@color/Black"
                                     android:textStyle="bold" />
 
@@ -827,14 +893,14 @@
 
 
                                 <TextView
-                                    android:id="@+id/tv_estFare"
+                                    android:id="@+id/tvNightChages"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:text="" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -843,135 +909,25 @@
 
 
                                 <TextView
-                                    android:id="@+id/tv_actualFare"
+                                    android:id="@+id/tvActualNightChages"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 1000 " />
+                                    android:text="" />
 
 
                             </LinearLayout>
+
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1sp"
                                 android:background="@color/secondaryLightGray" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:visibility="gone"
-                                android:weightSum="3">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Toll"
-                                    android:textColor="@color/Black"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="1sp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/secondaryLightGray" />
-
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
-
-                                <TextView
-                                    android:layout_width="1sp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/secondaryLightGray" />
-
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
-
-
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1sp"
-                                android:background="@color/secondaryLightGray" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="3">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Surcharge"
-                                    android:textColor="@color/Black"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="1sp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/secondaryLightGray" />
-
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
-
-                                <TextView
-                                    android:layout_width="1sp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/secondaryLightGray" />
-
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00 " />
-
-
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1sp"
-                                android:background="@color/secondaryLightGray" />
+                            <!-- LUGGAGE -->
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -1031,21 +987,24 @@
                                 android:layout_height="1sp"
                                 android:background="@color/secondaryLightGray" />
 
+                            <!-- TOLL -->
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
+                                android:visibility="gone"
                                 android:weightSum="3">
 
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Night Charges"
+                                    android:text="Toll"
                                     android:textColor="@color/Black"
                                     android:textStyle="bold" />
 
@@ -1056,14 +1015,13 @@
 
 
                                 <TextView
-                                    android:id="@+id/tvNightChages"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text="₹ 0.00" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -1072,18 +1030,16 @@
 
 
                                 <TextView
-                                    android:id="@+id/tvActualNightChages"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text="₹ 0.00" />
 
 
                             </LinearLayout>
-
 
                             <View
                                 android:layout_width="match_parent"
@@ -1091,8 +1047,66 @@
                                 android:background="@color/secondaryLightGray" />
 
 
+                            <!-- SURCHARGE -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="3">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="Surcharge"
+                                    android:textColor="@color/Black"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="1sp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryLightGray" />
 
 
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="₹ 0.00" />
+
+                                <TextView
+                                    android:layout_width="1sp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/secondaryLightGray" />
+
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:text="₹ 0.00 " />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1sp"
+                                android:background="@color/secondaryLightGray" />
+
+
+                            <!-- TOTAL FARE -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

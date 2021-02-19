@@ -1116,7 +1116,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 if (response.code() == 200) {
 
 
-                    tv_currentFare!!.text = response.body()!!.rate!!.total
+                    tv_currentFare!!.text = response.body()!!.rate!!.subTotal
 
 
                 }
