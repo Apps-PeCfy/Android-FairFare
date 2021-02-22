@@ -20,6 +20,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
@@ -85,10 +86,21 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
     private var iRidePresenter: IRidePresenter? = null
+
     var imageList: ArrayList<ImageModel>? = null
     var selectedImageList: ArrayList<String>? = null
+    var vehicleImageList: ArrayList<String>? = null
+    var meterImageList: ArrayList<String>? = null
+    var driverImageList: ArrayList<String>? = null
+    var badgeImageList: ArrayList<String>? = null
+    var imageClickFinder : Int ? = 1 // 1->Vehicle, 2->Meter, 3->Driver, 4->Badge
+
     var sharedpreferences: SharedPreferences? = null
-    var selectedImageAdapter: SelectedImageAdapter? = null
+    var vehicleImageAdapter: SelectedImageAdapter? = null
+    var meterImageAdapter: SelectedImageAdapter? = null
+    var driverImageAdapter: SelectedImageAdapter? = null
+    var badgeImageAdapter: SelectedImageAdapter? = null
+
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGES = 2
     var image: File? = null
@@ -109,9 +121,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     @BindView(R.id.btnTrackRide)
     var btnTrackRide: Button? = null
 
-    @JvmField
-    @BindView(R.id.selected_recycler_view)
-    var selectedImageRecyclerView: RecyclerView? = null
 
 
     var vahicalRateCardID: String? = null
@@ -245,8 +254,37 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             //ILOMADEV
             initLocationUpdates()
         }
+        setListeners()
+    }
 
+    private fun setListeners() {
+        img_vehicle_uploads.setOnClickListener(View.OnClickListener {
+            if (photoSelector?.isPermissionGranted(context)!!){
+                imageClickFinder = Constants.vehicleImageClick
+                photoSelector?.selectImage(null)
+            }
+        })
 
+        img_meter_uploads.setOnClickListener(View.OnClickListener {
+            if (photoSelector?.isPermissionGranted(context)!!){
+                imageClickFinder = Constants.meterImageClick
+                photoSelector?.selectImage(null)
+            }
+        })
+
+        img_driver_uploads.setOnClickListener(View.OnClickListener {
+            if (photoSelector?.isPermissionGranted(context)!!){
+                imageClickFinder = Constants.driverImageClick
+                photoSelector?.selectImage(null)
+            }
+        })
+
+        img_badge_uploads.setOnClickListener(View.OnClickListener {
+            if (photoSelector?.isPermissionGranted(context)!!){
+                imageClickFinder = Constants.badgeImageClick
+                photoSelector?.selectImage(null)
+            }
+        })
     }
 
     private fun initLocationUpdates() {
@@ -558,12 +596,12 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             alertDialog.setTitle("FairFare")
             alertDialog.setMessage("Make sure you record the Start Meter reading before starting the ride.")
             alertDialog.setCancelable(false)
-            alertDialog.setPositiveButton("Yes") { dialog, which ->
+            alertDialog.setPositiveButton("Skip") { dialog, which ->
 
                 callTrackButton()
 
             }
-            alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+            alertDialog.setNegativeButton("OK") { dialog, which -> dialog.cancel() }
             alertDialog.show()
         }else{
             callTrackButton()
@@ -665,30 +703,102 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     private fun setSelectedImageList() {
 
-
-        selectedImageAdapter = SelectedImageAdapter(this, selectedImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+        vehicleImageAdapter = SelectedImageAdapter(this, vehicleImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
             override fun itemClick(position: Int, imageName: String?) {
 
             }
 
             override fun onRemoveClick(position: Int, imageName: String?) {
+                imageClickFinder = Constants.vehicleImageClick
                 showConfirmationDialog(position)
             }
 
         } )
 
         val spanCount = 2
-        selectedImageRecyclerView!!.layoutManager = GridLayoutManager(this, spanCount)
+        recycler_view_vehicle!!.layoutManager = GridLayoutManager(this, spanCount)
         val spacing = 15
         val includeEdge = true
-        selectedImageRecyclerView!!.addItemDecoration(
+        recycler_view_vehicle!!.addItemDecoration(
             GridSpacingItemDecoration(
                 spanCount,
                 spacing,
                 includeEdge
             )
         )
-        selectedImageRecyclerView!!.adapter = selectedImageAdapter
+        recycler_view_vehicle!!.adapter = vehicleImageAdapter
+
+        // Meter Image Adapter
+
+        meterImageAdapter = SelectedImageAdapter(this, meterImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+                imageClickFinder = Constants.meterImageClick
+                showConfirmationDialog(position)
+            }
+
+        } )
+
+        recycler_view_trip_meter!!.layoutManager = GridLayoutManager(this, spanCount)
+        recycler_view_trip_meter!!.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
+        recycler_view_trip_meter!!.adapter = meterImageAdapter
+
+        // Driver Image Adapter
+
+        driverImageAdapter = SelectedImageAdapter(this, driverImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+                imageClickFinder = Constants.driverImageClick
+                showConfirmationDialog(position)
+            }
+
+        } )
+
+        recycler_view_driver!!.layoutManager = GridLayoutManager(this, spanCount)
+        recycler_view_driver!!.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
+        recycler_view_driver!!.adapter = driverImageAdapter
+
+        // Badge Image Adapter
+
+        badgeImageAdapter = SelectedImageAdapter(this, badgeImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+                imageClickFinder = Constants.badgeImageClick
+                showConfirmationDialog(position)
+            }
+
+        } )
+
+        recycler_view_badge!!.layoutManager = GridLayoutManager(this, spanCount)
+        recycler_view_badge!!.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
+        recycler_view_badge!!.adapter = badgeImageAdapter
 
     }
 
@@ -709,6 +819,10 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     private fun init() {
         selectedImageList = ArrayList<String>()
+        vehicleImageList = ArrayList<String>()
+        meterImageList = ArrayList<String>()
+        driverImageList = ArrayList<String>()
+        badgeImageList = ArrayList<String>()
         imageList = ArrayList()
     }
     private fun showConfirmationDialog(position: Int) {
@@ -717,9 +831,20 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         alertDialog.setMessage("Are you sure you remove this image?")
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Yes") { dialog, which ->
-            imageList!!.removeAt(position)
-            selectedImageList!!.removeAt(position)
-            selectedImageAdapter!!.notifyDataSetChanged()
+            if (imageClickFinder == Constants.vehicleImageClick){
+                vehicleImageList!!.removeAt(position)
+                vehicleImageAdapter?.updateAdapter(vehicleImageList!!)
+            }else if (imageClickFinder == Constants.meterImageClick){
+                meterImageList!!.removeAt(position)
+                meterImageAdapter?.updateAdapter(meterImageList!!)
+            }else if (imageClickFinder == Constants.driverImageClick){
+                driverImageList!!.removeAt(position)
+                driverImageAdapter?.updateAdapter(driverImageList!!)
+            }else if (imageClickFinder == Constants.badgeImageClick){
+                badgeImageList!!.removeAt(position)
+                badgeImageAdapter?.updateAdapter(badgeImageList!!)
+            }
+            setImageData()
         }
         alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
         alertDialog.show()
@@ -823,7 +948,20 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 imageModel.isSelected
                 imageList!!.add(0, imageModel)
                 selectedImageList!!.add(0, imageModel.image!!)
-                selectedImageAdapter!!.notifyDataSetChanged()
+                if (imageClickFinder == Constants.vehicleImageClick){
+                    vehicleImageList!!.add(0, imageModel.image!!)
+                    vehicleImageAdapter?.updateAdapter(vehicleImageList!!)
+                }else if (imageClickFinder == Constants.meterImageClick){
+                    meterImageList!!.add(0, imageModel.image!!)
+                    meterImageAdapter?.updateAdapter(meterImageList!!)
+                }else if (imageClickFinder == Constants.driverImageClick){
+                    driverImageList!!.add(0, imageModel.image!!)
+                    driverImageAdapter?.updateAdapter(driverImageList!!)
+                }else if (imageClickFinder == Constants.badgeImageClick){
+                    badgeImageList!!.add(0, imageModel.image!!)
+                    badgeImageAdapter?.updateAdapter(badgeImageList!!)
+                }
+
             } else if (requestCode == PhotoSelector.REQUEST_CAMERA) {
                 filePath = photoSelector!!.onCaptureImageResult()
                 val imageModel = ImageModel()
@@ -832,34 +970,96 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 imageModel.isSelected
                 imageList!!.add(0, imageModel)
                 selectedImageList!!.add(0, imageModel.image!!)
-                selectedImageAdapter!!.notifyDataSetChanged()
+                if (imageClickFinder == Constants.vehicleImageClick){
+                    vehicleImageList!!.add(0, imageModel.image!!)
+                    vehicleImageAdapter?.updateAdapter(vehicleImageList!!)
+                }else if (imageClickFinder == Constants.meterImageClick){
+                    meterImageList!!.add(0, imageModel.image!!)
+                    meterImageAdapter?.updateAdapter(meterImageList!!)
+                }else if (imageClickFinder == Constants.driverImageClick){
+                    driverImageList!!.add(0, imageModel.image!!)
+                    driverImageAdapter?.updateAdapter(driverImageList!!)
+                }else if (imageClickFinder == Constants.badgeImageClick){
+                    badgeImageList!!.add(0, imageModel.image!!)
+                    badgeImageAdapter?.updateAdapter(badgeImageList!!)
+                }
             }
+
+            setImageData()
         }
     }
 
-   /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                if (mCurrentPhotoPath != null) {
-                    addImage(mCurrentPhotoPath)
-                }
-            } else if (requestCode == PICK_IMAGES) {
-                if (data!!.clipData != null) {
-                    val mClipData = data.clipData
-                    for (i in 0 until mClipData!!.itemCount) {
-                        val item = mClipData.getItemAt(i)
-                        val uri = item.uri
-                        getImageFilePath(uri)
-                    }
-                } else if (data.data != null) {
-                    val uri = data.data
-                    getImageFilePath(uri)
-                }
-            }
+    private fun setImageData() {
+        if (vehicleImageList != null && vehicleImageList?.size!! >0){
+            txt_vehicle_number.visibility = View.VISIBLE
+            recycler_view_vehicle.visibility = View.VISIBLE
+        }else{
+            txt_vehicle_number.visibility = View.GONE
+            recycler_view_vehicle.visibility = View.GONE
+        }
+
+         if (meterImageList != null && meterImageList?.size!! >0){
+             txt_trip_meter.visibility = View.VISIBLE
+             recycler_view_trip_meter.visibility = View.VISIBLE
+        }else{
+            txt_trip_meter.visibility = View.GONE
+             recycler_view_trip_meter.visibility = View.GONE
+        }
+
+         if (driverImageList != null && driverImageList?.size!! >0){
+             txt_driver.visibility = View.VISIBLE
+             recycler_view_driver.visibility = View.VISIBLE
+        }else{
+            txt_driver.visibility = View.GONE
+            recycler_view_driver.visibility = View.GONE
+        }
+
+         if (badgeImageList != null && badgeImageList?.size!! >0){
+             txt_badge.visibility = View.VISIBLE
+             recycler_view_badge.visibility = View.VISIBLE
+        }else{
+            txt_badge.visibility = View.GONE
+            recycler_view_badge.visibility = View.GONE
+        }
+
+        selectedImageList = ArrayList()
+        imageList = ArrayList()
+        selectedImageList?.addAll(vehicleImageList!!)
+        selectedImageList?.addAll(meterImageList!!)
+        selectedImageList?.addAll(driverImageList!!)
+        selectedImageList?.addAll(badgeImageList!!)
+
+        for (imagePath : String in selectedImageList!!){
+            val imageModel = ImageModel()
+            imageModel.image = imagePath
+            imageModel.isSelected
+            imageList!!.add(0, imageModel)
         }
     }
-*/
+
+    /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+         super.onActivityResult(requestCode, resultCode, data)
+         if (resultCode == Activity.RESULT_OK) {
+             if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                 if (mCurrentPhotoPath != null) {
+                     addImage(mCurrentPhotoPath)
+                 }
+             } else if (requestCode == PICK_IMAGES) {
+                 if (data!!.clipData != null) {
+                     val mClipData = data.clipData
+                     for (i in 0 until mClipData!!.itemCount) {
+                         val item = mClipData.getItemAt(i)
+                         val uri = item.uri
+                         getImageFilePath(uri)
+                     }
+                 } else if (data.data != null) {
+                     val uri = data.data
+                     getImageFilePath(uri)
+                 }
+             }
+         }
+     }
+ */
     fun getImageFilePath(uri: Uri?) {
         val cursor =
             contentResolver.query(uri!!, projection, null, null, null)
@@ -893,7 +1093,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         imageModel.isSelected
         imageList!!.add(0, imageModel)
         selectedImageList!!.add(0, filePath!!)
-        selectedImageAdapter!!.notifyDataSetChanged()
+      //  selectedImageAdapter?.updateAdapter(selectedImageList!!)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

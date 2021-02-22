@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fairfare.R
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SelectedImageAdapter(
     var context: Context,
@@ -26,6 +27,12 @@ class SelectedImageAdapter(
         fun itemClick(position: Int, imageName: String?)
         fun onRemoveClick(position: Int, imageName: String?)
     }
+
+    fun updateAdapter(list : ArrayList<String>) {
+        stringArrayList = list
+        notifyDataSetChanged()
+    }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 

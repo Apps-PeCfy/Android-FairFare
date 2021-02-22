@@ -95,6 +95,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
     private var myMarker: Marker? = null
     private var isMapZoomed: Boolean? = false
+    private var isWaiting: Boolean? = false
+    private var lastCompassBering: Float? = null
 
 
     @JvmField
@@ -446,6 +448,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     if (currentspeed!! < 10) {   //speed less than 10 km per hr
+                        isWaiting = true
                         if (waitTime == null) {
                             waitTime = Date()
                             val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -454,7 +457,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         }
 
                     } else {
-
+                        isWaiting = false
                         if (waitTime != null) {
                             val time = Date()
 
@@ -1859,7 +1862,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         val newPosition: LatLng = LatLng(location!!.latitude, location.longitude)
         if (myMarker != null) {
-            if (prevLatLng != null) {
+            if (prevLatLng != null && !isWaiting!!) {
                 animateMarkerNew(prevLatLng!!, newPosition, myMarker)
             }
             myMarker!!.remove()
@@ -2195,6 +2198,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             java.lang.Double.valueOf(startLocation.altitude).toFloat(),
             System.currentTimeMillis()
         )
+
+        if (isWaiting!! && lastCompassBering != null){
+            return lastCompassBering!!
+        }else{
+            lastCompassBering = bearTo
+        }
 
         return bearTo
     }

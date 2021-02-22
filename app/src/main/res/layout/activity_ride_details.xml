@@ -41,10 +41,11 @@
         android:layout_above="@id/btnTrackRide">
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/White"
+            android:orientation="vertical"
             android:paddingStart="@dimen/_15sdp"
             android:paddingEnd="@dimen/_15sdp"
             android:paddingBottom="@dimen/_15sdp">
@@ -58,31 +59,67 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="Vehicle Details"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/text_18sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edt_vehicalNO"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_vehicalDetails"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:focusableInTouchMode="true"
-                android:hint="Enter Vehicle Number (Optional)"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_15sdp"
-                />
+                android:layout_marginTop="@dimen/_10sdp">
 
+                <EditText
+                    android:id="@+id/edt_vehicalNO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/img_vehicle_uploads"
+                    android:focusableInTouchMode="true"
+                    android:hint="Enter Vehicle Number (Optional)"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/text_14sp"
+                    android:paddingBottom="@dimen/_15sdp"
+                    />
 
-            <EditText
-                android:id="@+id/edt_meterReading"
+                <ImageView
+                    android:id="@+id/img_vehicle_uploads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
+                    android:src="@mipmap/ic_cam"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_vehicalNO"
-                android:hint="Start Trip Meter (Optional)"
-                android:inputType="number"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_15sdp" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_meterReading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/img_meter_uploads"
+                    android:hint="Start Trip Meter (Optional)"
+                    android:inputType="number"
+                    android:textSize="@dimen/text_14sp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_15sdp" />
+
+                <ImageView
+                    android:id="@+id/img_meter_uploads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
+                    android:src="@mipmap/ic_cam"/>
+
+            </RelativeLayout>
+
+
+
+
+
 
             <TextView
                 android:id="@+id/tv_driverDetails"
@@ -92,30 +129,63 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Driver Details"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/text_18sp"
                 android:textStyle="bold" />
 
-
-            <EditText
-                android:id="@+id/edt_DriverName"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_driverDetails"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="Enter Driver Name (Optional)"
-                android:inputType="textCapWords"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_15sdp" />
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <EditText
+                    android:id="@+id/edt_DriverName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/img_driver_uploads"
+                    android:hint="Enter Driver Name (Optional)"
+                    android:inputType="textCapWords"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/text_14sp"
+                    android:paddingBottom="@dimen/_15sdp" />
+
+                <ImageView
+                    android:id="@+id/img_driver_uploads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
+                    android:src="@mipmap/ic_cam"/>
+
+            </RelativeLayout>
 
 
-            <EditText
-                android:id="@+id/edt_bagsCount"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_DriverName"
-                android:hint="Enter Driver’s Badge Number (Optional)"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_15sdp" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_bagsCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/img_badge_uploads"
+                    android:hint="Enter Driver’s Badge Number (Optional)"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/text_14sp"
+                    android:paddingBottom="@dimen/_15sdp" />
+
+                <ImageView
+                    android:id="@+id/img_badge_uploads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
+                    android:src="@mipmap/ic_cam"/>
+
+            </RelativeLayout>
+
+
 
 
             <RelativeLayout
@@ -130,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:text="Photos"
                     android:textColor="@color/Black"
-                    android:textSize="@dimen/_15sdp"
+                    android:textSize="@dimen/text_18sp"
                     android:textStyle="bold" />
 
 
@@ -143,34 +213,98 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:text="UPLOAD PHOTO"
                     android:textColor="@color/gradientstartcolor"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/text_18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
 
             </RelativeLayout>
 
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/llno1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl_photo"
+                android:orientation="vertical"
                 android:layout_marginTop="@dimen/_5sdp">
 
+                <TextView
+                    android:id="@+id/txt_vehicle_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Vehicle Number"
+                    android:visibility="gone"
+                    android:textColor="@color/Grey"
+                    android:textSize="@dimen/text_16sp"
+                    android:textStyle="bold" />
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/selected_recycler_view"
+                    android:id="@+id/recycler_view_vehicle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
+                    android:visibility="gone" />
 
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_trip_meter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Start Trip Meter"
+                    android:visibility="gone"
+                    android:textColor="@color/Grey"
+                    android:textSize="@dimen/text_16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_trip_meter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txt_driver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Driver"
+                    android:visibility="gone"
+                    android:textColor="@color/Grey"
+                    android:textSize="@dimen/text_16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_driver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txt_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Badge Number"
+                    android:textColor="@color/Grey"
+                    android:textSize="@dimen/text_16sp"
+                    android:visibility="gone"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_badge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
 
 
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
@@ -189,7 +323,7 @@
         android:text="Track Ride"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/_14sdp" />
+        android:textSize="@dimen/text_18sp" />
 
 
 
