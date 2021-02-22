@@ -33,7 +33,6 @@
             android:layout_height="match_parent">
 
             <!--
-
                         <fragment
                             android:id="@+id/map"
                             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -75,7 +74,7 @@
                     android:id="@+id/homeView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -139,33 +138,33 @@
                                 android:textColor="@color/Black" />
 
 
-                           <LinearLayout
-                               android:id="@+id/llComments"
-                               android:layout_marginTop="@dimen/_10sdp"
-                               android:orientation="vertical"
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:id="@+id/llComments"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
 
-                               <TextView
-                                   android:textStyle="bold"
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   android:text="Additional comments:"
-                                   android:textColor="@color/Black" />
+                                <TextView
+                                    android:textStyle="bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Additional comments:"
+                                    android:textColor="@color/Black" />
 
-                               <TextView
-                                   android:id="@+id/editReview"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:layout_marginEnd="@dimen/_15sdp"
-                                   android:gravity="top"
-                                   android:paddingBottom="@dimen/_5sdp"
-                                   android:textColor="@color/Black"
-                                   android:textSize="@dimen/_10sdp"
-                                   android:visibility="visible" />
+                                <TextView
+                                    android:id="@+id/editReview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/_15sdp"
+                                    android:gravity="top"
+                                    android:paddingBottom="@dimen/_5sdp"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:visibility="visible" />
 
 
-                           </LinearLayout>
+                            </LinearLayout>
 
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -990,23 +989,40 @@
                             <!-- TOLL -->
 
                             <LinearLayout
+                                android:visibility="visible"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:visibility="gone"
                                 android:weightSum="3">
 
-                                <TextView
+                                <RelativeLayout
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-
-                                    android:layout_weight="1"
                                     android:gravity="center"
-                                    android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Toll"
-                                    android:textColor="@color/Black"
-                                    android:textStyle="bold" />
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+
+                                    <TextView
+                                        android:id="@+id/tvTollCharges"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:text="Toll Charges"
+                                        android:textColor="@color/Black"
+                                        android:textStyle="bold" />
+
+                                    <ImageView
+                                        android:layout_marginStart="@dimen/_3sdp"
+                                        android:id="@+id/ivViewTollInfo"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_toRightOf="@+id/tvTollCharges"
+                                        android:background="@drawable/view_info" />
+
+
+                                </RelativeLayout>
+
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -1015,13 +1031,14 @@
 
 
                                 <TextView
+                                    android:id="@+id/tvEstTollCharges"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
+                                    android:text="-" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -1030,13 +1047,15 @@
 
 
                                 <TextView
+                                    android:id="@+id/tvActualTollCharges"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
+                                    android:text="-" />
+
 
 
                             </LinearLayout>
@@ -1058,7 +1077,6 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
@@ -1182,5 +1200,3 @@
 
 
 </RelativeLayout>
-
-

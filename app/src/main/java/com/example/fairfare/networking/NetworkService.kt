@@ -185,15 +185,6 @@ interface NetworkService {
     ): Call<ScheduleRideResponsePOJO?>?
 
 
-    @POST("startRide")
-    @Headers("Content-Type: application/json")
-    fun startRidear(
-        @Header("Authorization") header: String?,
-        @Body body: String?
-    ): Call<ScheduleRideResponsePOJO?>?
-
-
-
     @Multipart
     @POST("startRide")
     fun uploadstartRide(
@@ -262,6 +253,26 @@ interface NetworkService {
         @Header("Authorization") header: String?,
         @Body body: String?
     ): Call<ResponseEnd?>?
+
+
+
+    @Headers("Content-Type: application/json")
+    @POST("startRide")
+    fun startRidear(
+        @Header("Authorization") header: String?,
+        @Body body: String?
+    ): Call<ScheduleRideResponsePOJO?>?
+
+
+  @Headers("Content-Type: application/json")
+    @POST("scheduleRide")
+    fun schduleRidejObj(
+        @Header("Authorization") header: String?,
+        @Body body: String?
+    ): Call<ScheduleRideResponsePOJO?>?
+
+
+
 
     @Headers("Content-Type: application/json")
     @POST("log")

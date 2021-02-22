@@ -437,9 +437,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
          myLocationManager?.getCurrentLocation(object : MyLocationManager.LocationManagerInterface {
              override fun onSuccess(location: Location?) {
                  if (location != null) {
-
                      Log.d("sdsdsdswnwe", "onLocationChanged")
-
                      currentLatitude = location!!.latitude
                      currentLongitude = location!!.longitude
                      preferencesManager!!.setStringValue(
@@ -450,11 +448,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                          Constants.SHARED_PREFERENCE_CLong,
                          currentLongitude.toString()
                      )
-
-
                      if (callOnLocation.equals("first")) {
                          if (currentLatitude != 0.0 && currentLatitude != null) {
-
                              mapAndLocationReady()
                              cityPojoList = preferencesManager!!.getCityList()
                              if (cityPojoList != null && cityPojoList.size > 0) {
@@ -462,19 +457,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                              } else {
                                  getCity()
                              }
-
                              progressDialogstart!!.dismiss()
                              mainRelativeLayout!!.visibility = View.VISIBLE
-
-
                          }
-
                      }
                  } else {
                      initLocationUpdates()
                  }
              }
-
          })
      }*/
 
@@ -715,26 +705,26 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 cityspinner.add(0, "Choose City")
 
 
-                    val toastDurationInMilliSeconds = 10000
-                    mToastToShow = Toast.makeText(this@HomeActivity, "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.", Toast.LENGTH_LONG)
-                    val toastCountDown: CountDownTimer
-                    toastCountDown = object : CountDownTimer(toastDurationInMilliSeconds.toLong(), 1000 /*Tick duration*/) {
-                        override  fun onTick(millisUntilFinished: Long) {
-                            mToastToShow!!.show()
-                        }
-
-                        override  fun onFinish() {
-                            mToastToShow!!.cancel()
-                        }
+                val toastDurationInMilliSeconds = 10000
+                mToastToShow = Toast.makeText(this@HomeActivity, "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.", Toast.LENGTH_LONG)
+                val toastCountDown: CountDownTimer
+                toastCountDown = object : CountDownTimer(toastDurationInMilliSeconds.toLong(), 1000 /*Tick duration*/) {
+                    override  fun onTick(millisUntilFinished: Long) {
+                        mToastToShow!!.show()
                     }
-                    mToastToShow!!.show()
-                    toastCountDown.start()
 
-               /* Toast.makeText(
-                    this@HomeActivity,
-                    "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
-                    Toast.LENGTH_LONG
-                ).show()*/
+                    override  fun onFinish() {
+                        mToastToShow!!.cancel()
+                    }
+                }
+                mToastToShow!!.show()
+                toastCountDown.start()
+
+                /* Toast.makeText(
+                     this@HomeActivity,
+                     "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
+                     Toast.LENGTH_LONG
+                 ).show()*/
 
             }
 
@@ -772,11 +762,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 toastCountDown.start()
 
 
-              /*  Toast.makeText(
-                    this@HomeActivity,
-                    "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
-                    Toast.LENGTH_LONG
-                ).show()*/
+                /*  Toast.makeText(
+                      this@HomeActivity,
+                      "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
+                      Toast.LENGTH_LONG
+                  ).show()*/
 
             }
         }

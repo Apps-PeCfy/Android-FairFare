@@ -232,7 +232,7 @@
                                         android:layout_width="@dimen/_65sdp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_2sdp"
-                                        android:text="Car" />
+                                        android:text="" />
 
 
                                 </LinearLayout>
@@ -379,7 +379,8 @@
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:background="@drawable/rounded_corner_charges"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            >
 
                             <!-- WAIT CHARGES -->
                             <RelativeLayout
@@ -452,6 +453,7 @@
 
                             </RelativeLayout>
 
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1sp"
@@ -505,12 +507,36 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_15sdp">
 
-                                <TextView
+
+
+                                <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Toll Charges" />
+                                    android:paddingBottom="@dimen/_8sdp">
+
+
+                                    <TextView
+                                        android:id="@+id/tvTollCharges"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:text="Toll Charges"
+                                        />
+
+                                    <ImageView
+                                        android:layout_marginStart="@dimen/_3sdp"
+                                        android:id="@+id/ivViewTollInfo"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_toRightOf="@+id/tvTollCharges"
+                                        android:background="@drawable/view_info" />
+
+
+                                </RelativeLayout>
+
+
 
                                 <TextView
                                     android:id="@+id/tv_tollCharge"
@@ -539,6 +565,7 @@
                                 android:background="@color/secondaryLightGray" />
 
                             <!-- SURCHARGES -->
+
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -572,6 +599,7 @@
                                     android:background="@color/secondaryLightGray" />
 
                             </RelativeLayout>
+
 
 
                         </LinearLayout>

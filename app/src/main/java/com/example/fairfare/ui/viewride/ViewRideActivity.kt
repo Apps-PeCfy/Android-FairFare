@@ -1,10 +1,10 @@
 package com.example.fairfare.ui.viewride
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.os.AsyncTask
@@ -17,15 +17,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
-import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
+import com.example.fairfare.ui.drawer.myrides.ridedetails.TollPopUpAdapter
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.ridedetails.RideDetailsActivity
@@ -190,6 +192,18 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
     var CITY_ID: String? = null
     var CITY_NAME: String? = null
 
+    @JvmField
+    @BindView(R.id.ivViewTollInfo)
+    var ivViewTollInfo: ImageView? = null
+    var eventInfoDialog: Dialog? = null
+    var eventDialogBind: EventDialogBind1? = null
+
+    private var TOllList: List<CompareRideResponsePOJO.TollsItem> = ArrayList()
+
+    var viewRideTollsPopUp: ViewRideTollsPopUp? = null
+
+
+
     var sourecemarker: Marker? = null
     private var mPolyline: Polyline? = null
     @RequiresApi(Build.VERSION_CODES.M)
@@ -212,6 +226,13 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         compareRideList = intent.getSerializableExtra("spinnerdata") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
+        TOllList  = compareRideList.get(0).tolls!!
+
+        if(TOllList.size==0){
+            ivViewTollInfo!!.visibility = View.GONE
+        }
+
+
         spinnerposition = intent.getIntExtra("spinnerposition", 0)
         listPosition = intent.getIntExtra("listPosition", 0)
         distance = intent.getStringExtra("distance")
@@ -351,6 +372,52 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
     }
 
 
+
+    @OnClick(R.id.ivViewTollInfo)
+    fun ivViewTollInfo() {
+
+
+        if(TOllList.size>0) {
+            eventInfoDialog = Dialog(this@ViewRideActivity, R.style.dialog_style)
+
+            eventInfoDialog!!.setCancelable(true)
+            val inflater1 =
+                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view12: View = inflater1.inflate(R.layout.toll_layout, null)
+            eventInfoDialog!!.setContentView(view12)
+            eventDialogBind = EventDialogBind1()
+            ButterKnife.bind(eventDialogBind!!, view12)
+
+
+            eventDialogBind!!.rvEventInfo!!.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            viewRideTollsPopUp = ViewRideTollsPopUp( TOllList)
+            eventDialogBind!!.rvEventInfo!!.adapter = viewRideTollsPopUp
+
+            eventInfoDialog!!.show()
+        }
+
+
+    }
+
+
+    inner class EventDialogBind1 {
+        @JvmField
+        @BindView(R.id.rvEventInfo)
+        var rvEventInfo: RecyclerView? = null
+
+
+        @JvmField
+        @BindView(R.id.ivPopUpClose)
+        var ivPopUpClose: ImageView? = null
+
+
+        @OnClick(R.id.ivPopUpClose)
+        fun ivPopUpClose() {
+            eventInfoDialog!!.dismiss()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_home_lang, menu)
         return true
@@ -418,7 +485,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
             iViewRidePresenter!!.schduleRide(token,vahicalRateCardID,luggagesQuantity,formatedDateTime,
             originPlaceID,destinationPlaceID,overviewPolyLine,distance_ViewRide,durationRide,CITY_ID,
-                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong,sAdd,dAdd)
+                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong,sAdd,dAdd,compareRideList)
 
 
          }

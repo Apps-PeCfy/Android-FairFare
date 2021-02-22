@@ -209,9 +209,12 @@ class MyTripsAdapter(
                         MyRideList[adapterPosition].destinationFullAddress
                     )
                 }
-            } else if (v!!.id == R.id.tvRateRide) {
+            } else if (v!!.id == R.id.tvRateRide)
+            {
                 iclickListener!!.rateRide(MyRideList[adapterPosition].id)
-            } else if (v!!.id == R.id.rlRideDetails) {
+            }
+            else if (v!!.id == R.id.rlRideDetails)
+            {
 
                 if ((MyRideList[adapterPosition].status.equals("Completed")) || (MyRideList[adapterPosition].status.equals(
                         "Cancelled"

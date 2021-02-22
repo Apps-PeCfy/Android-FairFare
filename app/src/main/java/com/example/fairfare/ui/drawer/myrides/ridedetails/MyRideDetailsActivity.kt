@@ -13,10 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,12 +32,14 @@ import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
 import com.google.gson.GsonBuilder
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
+import kotlinx.android.synthetic.main.event_info.*
 import kotlinx.android.synthetic.main.my_dialog.view.*
 import kotlinx.android.synthetic.main.spinner_item.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -199,10 +198,28 @@ class MyRideDetailsActivity : AppCompatActivity() {
     @BindView(R.id.ivUserIcon)
     var ivUserIcon: ImageView? = null
 
+    @JvmField
+    @BindView(R.id.rlRideDetails)
+    var rlRideDetails: RelativeLayout? = null
+
+    @JvmField
+    @BindView(R.id.tvActualTollCharges)
+    var tvActualTollCharges: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvEstTollCharges)
+    var tvEstTollCharges: TextView? = null
+
+    @JvmField
+    @BindView(R.id.ivViewTollInfo)
+    var ivViewTollInfo: ImageView? = null
+
     var eventInfoDialog: Dialog? = null
     var eventDialogBind: EventDialogBind1? = null
     var waittimePopUpAdapter: RidePopUpAdapter? = null
     private var waitingList: List<RideDetailsResponsePOJO.WaitingsItem1> = ArrayList()
+    var tollPopUpAdapter: TollPopUpAdapter? = null
+    private var TOllList: List<RideDetailsResponsePOJO.TollsItem> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -254,6 +271,32 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
     }
 
+@OnClick(R.id.ivViewTollInfo)
+    fun ivViewTollInfo() {
+
+        if(TOllList.size>0) {
+            eventInfoDialog = Dialog(this@MyRideDetailsActivity, R.style.dialog_style)
+
+            eventInfoDialog!!.setCancelable(true)
+            val inflater1 =
+                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view12: View = inflater1.inflate(R.layout.toll_layout, null)
+            eventInfoDialog!!.setContentView(view12)
+            eventDialogBind = EventDialogBind1()
+            ButterKnife.bind(eventDialogBind!!, view12)
+
+
+            eventDialogBind!!.rvEventInfo!!.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            tollPopUpAdapter = TollPopUpAdapter( TOllList)
+            eventDialogBind!!.rvEventInfo!!.adapter = tollPopUpAdapter
+
+            eventInfoDialog!!.show()
+        }
+
+
+    }
+
 
     inner class EventDialogBind1 {
         @JvmField
@@ -264,6 +307,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
         @JvmField
         @BindView(R.id.ivPopUpClose)
         var ivPopUpClose: ImageView? = null
+
 
         @OnClick(R.id.ivPopUpClose)
         fun ivPopUpClose() {
@@ -287,10 +331,18 @@ class MyRideDetailsActivity : AppCompatActivity() {
             ) {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
+
+
                     waitingList = response.body()!!.data!!.actualTrackRide!!.waitings!!
+                    TOllList = response.body()!!.data!!.actualTrackRide!!.tolls!!
 
                     if(waitingList.size==0) {
                         ivViewInfo!!.visibility=View.GONE
+                    }
+
+
+                    if(TOllList.size==0){
+                        ivViewTollInfo!!.visibility=View.GONE
                     }
 
 
@@ -367,8 +419,11 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
 
                     if ((response!!.body()!!.data!!.actualTrackRide) != null) {
+
+                        val singleDecimalKM = response!!.body()!!.data!!.actualTrackRide!!.distance
+
                         tv_actualDistance!!.text =
-                            response!!.body()!!.data!!.actualTrackRide!!.distance + " KM"
+                            DecimalFormat("####.#").format((singleDecimalKM!!.toDouble()))+ " KM"
                         tv_actualTime!!.text =
                             response!!.body()!!.data!!.actualTrackRide!!.duration+" mins"
                         tv_actualFare!!.text =
@@ -391,11 +446,31 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
                         tvActualNightChages!!.text = "₹ "+response.body()!!.data!!.nightCharges
 
+
+
+                        if(response.body()!!.data!!.actualTrackRide!!.tollCharges!!.equals("-")){
+
+                        }else{
+                            tvActualTollCharges!!.text = "₹ "+response.body()!!.data!!.actualTrackRide!!.tollCharges
+
+                        }
+
+
+
                     }
 
 
 
                     if ((response!!.body()!!.data!!.estimatedTrackRide) != null) {
+
+                        if(response.body()!!.data!!.estimatedTrackRide!!.tollCharges!!.equals("-")){
+
+                        }else{
+                            tvEstTollCharges!!.text = "₹ "+response.body()!!.data!!.estimatedTrackRide!!.tollCharges
+
+                        }
+
+
                         tv_estDistance!!.text =
                             response!!.body()!!.data!!.estimatedTrackRide!!.distance + " KM"
                         tv_estTime!!.text =

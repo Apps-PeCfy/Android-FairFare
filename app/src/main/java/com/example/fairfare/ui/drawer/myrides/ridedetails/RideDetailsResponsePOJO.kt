@@ -1,6 +1,8 @@
 package com.example.fairfare.ui.drawer.myrides.ridedetails
 
+import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 class RideDetailsResponsePOJO {
     @SerializedName("data")
@@ -173,6 +175,9 @@ class RideDetailsResponsePOJO {
         @SerializedName("distance")
         var distance: String? = null
 
+        @SerializedName("tollCharges")
+        var tollCharges: String? = null
+
         @SerializedName("originPlaceLong")
         var originPlaceLong: String? = null
 
@@ -202,6 +207,9 @@ class RideDetailsResponsePOJO {
 
         @SerializedName("waitings")
         var waitings: List<WaitingsItem1>? = null
+
+        @SerializedName("tolls")
+        var tolls: List<TollsItem>? = null
 
         @SerializedName("duration")
         var duration: String? = null
@@ -288,12 +296,50 @@ class RideDetailsResponsePOJO {
         }
     }
 
+
+    inner class TollsItem : Serializable {
+        @SerializedName("name")
+        var name: String? = null
+
+        @SerializedName("road")
+        var road: String? = null
+
+        @SerializedName("state")
+        var state: String? = null
+
+        @SerializedName("country")
+        var country: String? = null
+
+        @SerializedName("type")
+        var type: String? = null
+
+        @SerializedName("currency")
+        var currency: String? = null
+
+        @SerializedName("latitude")
+        var latitude: String? = null
+
+        @SerializedName("longitude")
+        var longitude: String? = null
+
+
+        @SerializedName("charges")
+        var charges = 0
+
+
+
+    }
+
     inner class EstimatedTrackRide {
         @SerializedName("destinationPlaceLat")
         var destinationPlaceLat: String? = null
 
         @SerializedName("distance")
         var distance: String? = null
+
+        @SerializedName("tollCharges")
+        var tollCharges: String? = null
+
 
         @SerializedName("originPlaceLong")
         var originPlaceLong: String? = null
@@ -324,6 +370,10 @@ class RideDetailsResponsePOJO {
 
         @SerializedName("waitings")
         var waitings: List<Any>? = null
+
+        @SerializedName("tolls")
+        var tolls: List<TollsItem>? = null
+
 
         @SerializedName("duration")
         var duration: String? = null

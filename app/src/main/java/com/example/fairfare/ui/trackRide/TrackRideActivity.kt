@@ -960,17 +960,15 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 intentr.putExtra("dAddress", tv_myDropUpLocation!!.text.toString())
                 intentr.putExtra("originLat", (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!)
                 intentr.putExtra("originLong", (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!)
-                intentr.putExtra(
-                    "destLat",
-                    (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!
-                )
-                intentr.putExtra(
-                    "destLong",
-                    (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!
-                )
+                intentr.putExtra("destLat", (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!)
+                intentr.putExtra("destLong", (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!)
                 intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
                 intentr.putExtra("actualDistanceTravelled", actualDistance)
                 intentr.putExtra("actualTimeTravelled", actualTime)
+                intentr.putExtra("EndRideCurrentLat", waitStartLat)
+                intentr.putExtra("EndRideCurrentLon", waitStartLong)
+                intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
+
 
 
                 startActivity(intentr)
@@ -1177,6 +1175,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         )
 
       //  updateCamera(getCompassBearing(startLocation, destLocation))
+
 
 
         drawRoute()
@@ -1458,6 +1457,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         }
 
                       //  mPolyline = mMap!!.addPolyline(lineOptions)
+
+
 
 
 
@@ -1753,10 +1754,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                   greylineOptions!!.addAll(greypoints)
                   greylineOptions!!.width(15f)
                   greylineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.Grey))
-
-
                   if (greylineOptions != null) {
-
                       if (mGreyPolyline != null) {
                       }
                       mGreyPolyline = mMap!!.addPolyline(greylineOptions)
@@ -2207,5 +2205,4 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 }
-
 

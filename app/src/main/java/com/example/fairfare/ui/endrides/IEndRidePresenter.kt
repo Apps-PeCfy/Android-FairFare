@@ -9,9 +9,16 @@ interface IEndRidePresenter {
 
         token: String?,
         rideId: String?,
-        distance: String?,
+        distance: Double?,
         duration: String?,
-        arrWaitTime: ArrayList<HashMap<String, String>>
-    )
+        arrWaitTime: ArrayList<HashMap<String, String>>,
+        endLat: String?,
+        endLon: String?,
+        endAddress: String?,
+        originLat: String?,
+        originLon: String?,
+        originAddress: String?
+
+        )
 
 }

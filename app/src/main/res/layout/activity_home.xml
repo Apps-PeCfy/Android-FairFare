@@ -211,6 +211,7 @@
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:drawableStart="@drawable/red_circle"
                                 android:drawablePadding="@dimen/_15sdp"
+                                android:includeFontPadding="false"
                                 />
 
                             <View
@@ -235,6 +236,7 @@
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:drawableStart="@drawable/triangle"
                                 android:drawablePadding="@dimen/_15sdp"
+                                android:includeFontPadding="false"
                                 android:text="Drop-off Location" />
 
 
