@@ -191,7 +191,8 @@ interface NetworkService {
         @Part file: Array<MultipartBody.Part?>,
         @PartMap map: HashMap<String?, String?>?,
         @PartMap map1: HashMap<String?, Int?>,
-        @PartMap map2: HashMap<String?, Float?>
+        @PartMap map2: HashMap<String?, Float?>,
+        @PartMap map3: HashMap<String?, String?>
 
     ): Call<ScheduleRideResponsePOJO?>?
 
