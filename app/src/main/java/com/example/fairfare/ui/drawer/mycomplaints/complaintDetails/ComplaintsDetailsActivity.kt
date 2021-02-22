@@ -13,10 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +27,7 @@ import com.example.fairfare.R
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.drawer.mydisput.DisputWaitTimePopUpAdapter
 import com.example.fairfare.ui.drawer.mydisput.disputDetail.DisputDetailActivity
+import com.example.fairfare.ui.drawer.mydisput.disputDetail.TollPopUpAdapterDisputDetails
 import com.example.fairfare.ui.drawer.mydisput.disputDetail.pojo.DisputDetailResponsePOJO
 import com.example.fairfare.ui.drawer.mydisput.disputDetail.setImgAdapter
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
@@ -72,6 +70,14 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     @JvmField
     @BindView(R.id.tvDisputReason)
     var tvDisputReason: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvActualTollCharges)
+    var tvActualTollCharges: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvEstTollCharges)
+    var tvEstTollCharges: TextView? = null
 
     @JvmField
     @BindView(R.id.tvDisputNo)
@@ -211,6 +217,19 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     var ivViewInfo: ImageView? = null
 
     @JvmField
+    @BindView(R.id.ivViewTollInfo)
+    var ivViewTollInfo: ImageView? = null
+
+  @JvmField
+    @BindView(R.id.llshowData)
+    var llshowData: LinearLayout? = null
+
+ @JvmField
+    @BindView(R.id.homeView)
+    var homeView: ScrollView? = null
+
+
+    @JvmField
     @BindView(R.id.ivUserIcon)
     var ivUserIcon: ImageView? = null
 
@@ -222,6 +241,8 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     var eventDialogBind: EventDialogBind? = null
     var waittimePopUpAdapter: DisputWaitTimePopUpAdapter? = null
     private var waitingList: List<DisputDetailResponsePOJO.WaitingsItem1> = ArrayList()
+    var tollPopUpAdapter: TollPopUpAdapterDisputDetails? = null
+    private var TollList: List<DisputDetailResponsePOJO.TollsItem> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -283,6 +304,33 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
+    @OnClick(R.id.ivViewTollInfo)
+    fun ivViewTollInfo() {
+
+        if (TollList.size > 0) {
+            eventInfoDialog = Dialog(this@ComplaintsDetailsActivity, R.style.dialog_style)
+
+            eventInfoDialog!!.setCancelable(true)
+            val inflater1 =
+                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view12: View = inflater1.inflate(R.layout.toll_layout, null)
+            eventInfoDialog!!.setContentView(view12)
+            eventDialogBind = EventDialogBind()
+            ButterKnife.bind(eventDialogBind!!, view12)
+
+
+            eventDialogBind!!.rvEventInfo!!.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            tollPopUpAdapter = TollPopUpAdapterDisputDetails(TollList)
+            eventDialogBind!!.rvEventInfo!!.adapter = tollPopUpAdapter
+
+            eventInfoDialog!!.show()
+        }
+
+
+    }
+
+
     inner class EventDialogBind {
         @JvmField
         @BindView(R.id.rvEventInfo)
@@ -316,8 +364,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             ) {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
-
-
+                    homeView!!.visibility = View.VISIBLE
                     selectedImageList = response.body()!!.dispute!!.images
                     selectedImageAdapter =
                         setImgAdapter(this@ComplaintsDetailsActivity, selectedImageList!!)
@@ -337,9 +384,14 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                     waitingList = response.body()!!.dispute!!.ride!!.actualTrackRide!!.waitings!!
+                    TollList = response.body()!!.dispute!!.ride!!.actualTrackRide!!.tolls!!
 
                     if (waitingList.size == 0) {
                         ivViewInfo!!.visibility = View.GONE
+                    }
+
+                    if (TollList.size == 0) {
+                        ivViewTollInfo!!.visibility = View.GONE
                     }
 
 
@@ -481,16 +533,36 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                         tvActualNightChages!!.text =
                             "₹ " + response.body()!!.dispute!!.ride!!.nightCharges
 
+                        if(response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.tollCharges!!.equals("-")){
+
+                        }else{
+                            tvActualTollCharges!!.text =
+                                "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.tollCharges
+
+                        }
+
+
 
                         tvActualWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingTime
                         tvActualWaitCharge!!.text =
-                            "₹ "+ response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingCharges
+                            "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingCharges
                     }
 
 
 
                     if ((response!!.body()!!.dispute!!.ride!!.estimatedTrackRide) != null) {
+
+                        if(response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.tollCharges!!.equals("-")){
+
+                        }else{
+                            tvEstTollCharges!!.text =
+                                "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.tollCharges
+
+                        }
+
+
+
                         tv_estDistance!!.text =
                             response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.distance + " KM"
                         tv_estTime!!.text =
@@ -507,7 +579,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                         tvEstWaitCharge!!.text =
-                            "₹ "+response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges
+                            "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges
                         tvEstWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingTime
 

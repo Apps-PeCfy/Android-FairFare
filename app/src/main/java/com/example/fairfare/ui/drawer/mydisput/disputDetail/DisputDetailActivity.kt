@@ -32,6 +32,7 @@ import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.drawer.mydisput.DisputWaitTimePopUpAdapter
 import com.example.fairfare.ui.drawer.mydisput.disputDetail.pojo.DisputDetailResponsePOJO
 import com.example.fairfare.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
+import com.example.fairfare.ui.drawer.myrides.ridedetails.TollPopUpAdapter
 import com.example.fairfare.ui.endrides.WaitTimePopUpAdapter
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
@@ -75,6 +76,16 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     @JvmField
     @BindView(R.id.tvDisputNo)
     var tvDisputNo: TextView? = null
+
+
+    @JvmField
+    @BindView(R.id.tvActualTollCharges)
+    var tvActualTollCharges: TextView? = null
+
+  @JvmField
+    @BindView(R.id.tvEstTollCharges)
+    var tvEstTollCharges: TextView? = null
+
 
     @JvmField
     @BindView(R.id.tvEstSurCharge)
@@ -222,8 +233,16 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     var ivViewInfo: ImageView? = null
 
     @JvmField
+    @BindView(R.id.ivViewTollInfo)
+    var ivViewTollInfo: ImageView? = null
+
+    @JvmField
     @BindView(R.id.ivUserIcon)
     var ivUserIcon: ImageView? = null
+
+    @JvmField
+    @BindView(R.id.homeView)
+    var homeView: ScrollView? = null
 
     var mMap: GoogleMap? = null
     var sourecemarker: Marker? = null
@@ -233,6 +252,10 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     var eventDialogBind: EventDialogBind1? = null
     var waittimePopUpAdapter: DisputWaitTimePopUpAdapter? = null
     private var waitingList: List<DisputDetailResponsePOJO.WaitingsItem1> = ArrayList()
+
+    var tollPopUpAdapter: TollPopUpAdapterDisputDetails? = null
+    private var TollList: List<DisputDetailResponsePOJO.TollsItem> = ArrayList()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -360,6 +383,33 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
+    @OnClick(R.id.ivViewTollInfo)
+    fun ivViewTollInfo() {
+
+        if(TollList.size>0) {
+            eventInfoDialog = Dialog(this@DisputDetailActivity, R.style.dialog_style)
+
+            eventInfoDialog!!.setCancelable(true)
+            val inflater1 =
+                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view12: View = inflater1.inflate(R.layout.toll_layout, null)
+            eventInfoDialog!!.setContentView(view12)
+            eventDialogBind = EventDialogBind1()
+            ButterKnife.bind(eventDialogBind!!, view12)
+
+
+            eventDialogBind!!.rvEventInfo!!.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            tollPopUpAdapter = TollPopUpAdapterDisputDetails( TollList)
+            eventDialogBind!!.rvEventInfo!!.adapter = tollPopUpAdapter
+
+            eventInfoDialog!!.show()
+        }
+
+
+    }
+
+
     inner class EventDialogBind1 {
         @JvmField
         @BindView(R.id.rvEventInfo)
@@ -393,7 +443,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
             ) {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
-
+                    homeView!!.visibility = View.VISIBLE
 
                     selectedImageList = response.body()!!.dispute!!.images
                     selectedImageAdapter = setImgAdapter(this@DisputDetailActivity, selectedImageList!!)
@@ -412,9 +462,14 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                     waitingList = response.body()!!.dispute!!.ride!!.actualTrackRide!!.waitings!!
+                    TollList = response.body()!!.dispute!!.ride!!.actualTrackRide!!.tolls!!
 
                     if(waitingList.size==0) {
                         ivViewInfo!!.visibility=View.GONE
+                    }
+
+                    if(TollList.size==0) {
+                        ivViewTollInfo!!.visibility=View.GONE
                     }
 
                     var dReason: String? = ""
@@ -552,6 +607,15 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                         tv_actualTotalFare!!.text =
                             "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.totalCharges
 
+
+                        if(response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.tollCharges!!.equals("-")){
+
+                        }else{
+                            tvActualTollCharges!!.text =
+                                "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.tollCharges
+
+                        }
+
                         tvActualNightChages!!.text =
                             "₹ " + response.body()!!.dispute!!.ride!!.nightCharges
 
@@ -569,6 +633,16 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                     if ((response!!.body()!!.dispute!!.ride!!.estimatedTrackRide) != null) {
+
+                        if(response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.tollCharges!!.equals("-")){
+
+                        }else{
+                            tvEstTollCharges!!.text =
+                                "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.tollCharges
+
+                        }
+
+
                         tv_estDistance!!.text =
                             response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.distance + " KM"
                         tv_estTime!!.text =

@@ -467,11 +467,19 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                                 var options = HashMap<String, String>()
                                 options.put("waiting_time", timeDiffrence.toString())
-                                options.put("full_address", waitLocation!!)
+                                options.put("full_address", waitStartLocation!!)
                                 options.put("wait_at", waitAt!!)
                                 options.put("lat", waitLat!!)
                                 options.put("long", waitLong!!)
-                                arrWaitTime.add(options!!)
+
+                                //To Prevent Duplicate entries
+                                if (waitStartLocation != null && arrWaitTime.size > 0 && waitStartLocation?.equals(arrWaitTime[arrWaitTime.size-1].getValue("full_address"), ignoreCase = true)!!){
+                                    val totalTime = timeDiffrence + arrWaitTime[arrWaitTime.size-1].getValue("waiting_time").toDouble()
+                                    arrWaitTime[arrWaitTime.size-1]["waiting_time"] = totalTime.toString()
+                                }else{
+                                    arrWaitTime.add(options!!)
+                                }
+
 
                             }
                             waitTime = null
@@ -952,17 +960,15 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 intentr.putExtra("dAddress", tv_myDropUpLocation!!.text.toString())
                 intentr.putExtra("originLat", (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!)
                 intentr.putExtra("originLong", (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!)
-                intentr.putExtra(
-                    "destLat",
-                    (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!
-                )
-                intentr.putExtra(
-                    "destLong",
-                    (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!
-                )
+                intentr.putExtra("destLat", (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!)
+                intentr.putExtra("destLong", (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!)
                 intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
                 intentr.putExtra("actualDistanceTravelled", actualDistance)
                 intentr.putExtra("actualTimeTravelled", actualTime)
+                intentr.putExtra("EndRideCurrentLat", waitStartLat)
+                intentr.putExtra("EndRideCurrentLon", waitStartLong)
+                intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
+
 
 
                 startActivity(intentr)
@@ -1108,7 +1114,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 if (response.code() == 200) {
 
 
-                    tv_currentFare!!.text = response.body()!!.rate!!.total
+                    tv_currentFare!!.text = response.body()!!.rate!!.subTotal
 
 
                 }
@@ -1169,6 +1175,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         )
 
         //  updateCamera(getCompassBearing(startLocation, destLocation))
+
 
         drawRoute()
     }
@@ -1449,6 +1456,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         }
 
                         //  mPolyline = mMap!!.addPolyline(lineOptions)
+
+
 
 
                         // ILOMADEV :- 10 Feb 2021
@@ -1742,10 +1751,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                   greylineOptions!!.addAll(greypoints)
                   greylineOptions!!.width(15f)
                   greylineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.Grey))
-
-
                   if (greylineOptions != null) {
-
                       if (mGreyPolyline != null) {
                       }
                       mGreyPolyline = mMap!!.addPolyline(greylineOptions)
@@ -2196,4 +2202,3 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 }
-

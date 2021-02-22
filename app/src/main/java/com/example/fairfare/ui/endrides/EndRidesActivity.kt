@@ -45,6 +45,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -54,6 +55,9 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
     var rideID: String? = null
     var sAdd: String? = null
+    var EndRideCurrentLat: String? = null
+    var EndRideCurrentLon: String? = null
+    var EndRideCurrentAddress: String? = null
 
 
     var actualDistanceTravelled: String? = null
@@ -75,6 +79,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     var eventInfoDialog: Dialog? = null
     var eventDialogBind: EventDialogBind? = null
     var waittimePopUpAdapter: WaitTimePopUpAdapter? = null
+    var tollsPopUPEndRIde: TollsPopUPEndRIde? = null
 
 
     @JvmField
@@ -170,6 +175,14 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     var tvEstWaitTime: TextView? = null
 
     @JvmField
+    @BindView(R.id.tvActualTollCharges)
+    var tvActualTollCharges: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvEstTollCharges)
+    var tvEstTollCharges: TextView? = null
+
+    @JvmField
     @BindView(R.id.iv_vehical)
     var iv_vehical: ImageView? = null
 
@@ -191,6 +204,10 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     var ivViewInfo: ImageView? = null
 
     @JvmField
+    @BindView(R.id.ivViewTollInfo)
+    var ivViewTollInfo: ImageView? = null
+
+    @JvmField
     @BindView(R.id.tvNightChages)
     var tvNightChages: TextView? = null
 
@@ -198,9 +215,13 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     @BindView(R.id.tvActualNightChages)
     var tvActualNightChages: TextView? = null
 
-  @JvmField
+    @JvmField
     @BindView(R.id.ivUserIcon)
     var ivUserIcon: ImageView? = null
+
+  @JvmField
+    @BindView(R.id.endRideView)
+    var endRideView: ScrollView? = null
 
 
     @JvmField
@@ -214,6 +235,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     var hideshow: String? = "show"
 
     private var waitingList: List<ResponseEnd.WaitingsItem1> = ArrayList()
+    private var tollList: List<ResponseEnd.TollsItem> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -239,9 +261,16 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         originLong = intent.getStringExtra("originLong")
         destLat = intent.getStringExtra("destLat")
         destLong = intent.getStringExtra("destLong")
+        EndRideCurrentAddress = intent.getStringExtra("EndRideCurrentAddress")
+        EndRideCurrentLat = intent.getStringExtra("EndRideCurrentLat")
+        EndRideCurrentLon = intent.getStringExtra("EndRideCurrentLon")
 
         actualTimeTravelled = intent.getStringExtra("actualTimeTravelled")
         actualDistanceTravelled = intent.getStringExtra("actualDistanceTravelled")
+
+
+        actualDistanceTravelled = DecimalFormat("####.#").format((actualDistanceTravelled!!.toDouble()))
+
 
 
         val mapFragment = supportFragmentManager
@@ -256,9 +285,15 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         iEndRidePresenter!!.endRide(
             "$token",
             rideID,
-            actualDistanceTravelled,
+            actualDistanceTravelled!!.toDouble(),
             actualTimeTravelled,
-            arrWaitTime
+            arrWaitTime,
+            EndRideCurrentLat,
+            EndRideCurrentLon,
+            EndRideCurrentAddress,
+            originLat,
+            originLong,
+            sAdd
         )
 
         mToolbar!!.title = "End Ride"
@@ -282,29 +317,59 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
     @OnClick(R.id.ivViewInfo)
     fun iiewInfo() {
-if(waitingList.size>0) {
-    eventInfoDialog = Dialog(this@EndRidesActivity, R.style.dialog_style)
-    eventInfoDialog!!.setCancelable(true)
-    val inflater1 =
-        this@EndRidesActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    val view12: View = inflater1.inflate(R.layout.event_info, null)
-    eventInfoDialog!!.setContentView(view12)
-    eventDialogBind = EventDialogBind()
-    ButterKnife.bind(eventDialogBind!!, view12)
+        if (waitingList.size > 0) {
+            eventInfoDialog = Dialog(this@EndRidesActivity, R.style.dialog_style)
+            eventInfoDialog!!.setCancelable(true)
+            val inflater1 =
+                this@EndRidesActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view12: View = inflater1.inflate(R.layout.event_info, null)
+            eventInfoDialog!!.setContentView(view12)
+            eventDialogBind = EventDialogBind()
+            ButterKnife.bind(eventDialogBind!!, view12)
 
-    eventDialogBind!!.rvEventInfo!!.layoutManager =
-        LinearLayoutManager(this@EndRidesActivity, LinearLayoutManager.VERTICAL, false)
-    eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
-        this@EndRidesActivity,
-        LinearLayoutManager.VERTICAL,
-        false
-    ) // set LayoutManager to RecyclerView
-    waittimePopUpAdapter = WaitTimePopUpAdapter(this, waitingList)
-    eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
+            eventDialogBind!!.rvEventInfo!!.layoutManager =
+                LinearLayoutManager(this@EndRidesActivity, LinearLayoutManager.VERTICAL, false)
+            eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
+                this@EndRidesActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            ) // set LayoutManager to RecyclerView
+            waittimePopUpAdapter = WaitTimePopUpAdapter(this, waitingList)
+            eventDialogBind!!.rvEventInfo!!.adapter = waittimePopUpAdapter
 
 
-    eventInfoDialog!!.show()
-}
+            eventInfoDialog!!.show()
+        }
+
+
+    }
+
+
+    @OnClick(R.id.ivViewTollInfo)
+    fun ivViewTollInfo() {
+        if (tollList.size > 0) {
+            eventInfoDialog = Dialog(this@EndRidesActivity, R.style.dialog_style)
+            eventInfoDialog!!.setCancelable(true)
+            val inflater1 =
+                this@EndRidesActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view12: View = inflater1.inflate(R.layout.event_info, null)
+            eventInfoDialog!!.setContentView(view12)
+            eventDialogBind = EventDialogBind()
+            ButterKnife.bind(eventDialogBind!!, view12)
+
+            eventDialogBind!!.rvEventInfo!!.layoutManager =
+                LinearLayoutManager(this@EndRidesActivity, LinearLayoutManager.VERTICAL, false)
+            eventDialogBind!!.rvEventInfo!!.layoutManager = LinearLayoutManager(
+                this@EndRidesActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            ) // set LayoutManager to RecyclerView
+            tollsPopUPEndRIde = TollsPopUPEndRIde(tollList)
+            eventDialogBind!!.rvEventInfo!!.adapter = tollsPopUPEndRIde
+
+
+            eventInfoDialog!!.show()
+        }
 
 
     }
@@ -352,12 +417,18 @@ if(waitingList.size>0) {
 
     override fun endRideSuccess(endRideResponsePOJO: ResponseEnd?) {
 
+        endRideView!!.visibility = View.VISIBLE
 
         waitingList = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitings!!
+        tollList = endRideResponsePOJO!!.ride!!.actualTrackRide!!.tolls!!
 
 
-        if(waitingList.size==0) {
-            ivViewInfo!!.visibility=View.GONE
+        if (waitingList.size == 0) {
+            ivViewInfo!!.visibility = View.GONE
+        }
+
+        if (tollList.size == 0) {
+            ivViewTollInfo!!.visibility = View.GONE
         }
 
 
@@ -371,17 +442,28 @@ if(waitingList.size>0) {
         tv_carName!!.text = endRideResponsePOJO!!.ride!!.vehicleName
         tv_driverName!!.text = endRideResponsePOJO!!.ride!!.vehicleDetail!!.driverName
 
-        if(endRideResponsePOJO!!.ride!!.vehicleDetail!!.driverName!!.isEmpty()){
+        if (endRideResponsePOJO!!.ride!!.vehicleDetail!!.driverName!!.isEmpty()) {
             ivUserIcon!!.visibility = View.GONE
         }
         tvEstWaitTime!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingTime
         tvActualWaitTime!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingTime
 
-        tvActualWaitCharge!!.text = "₹ "+endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingCharges
-        tvEstWaitCharge!!.text = "₹ "+endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingCharges
+        if(endRideResponsePOJO!!.ride!!.actualTrackRide!!.tollCharges.equals("-")){
 
-        tvActualSurCharge!!.text = "₹ "+endRideResponsePOJO!!.ride!!.actualTrackRide!!.surCharge
-        tvEstSurCharge!!.text = "₹ "+endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.surCharge
+        }else{
+            tvActualTollCharges!!.text =
+                "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.tollCharges
+
+        }
+
+
+        tvActualWaitCharge!!.text =
+            "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingCharges
+        tvEstWaitCharge!!.text =
+            "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingCharges
+
+        tvActualSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.surCharge
+        tvEstSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.surCharge
 
 
 
@@ -399,7 +481,8 @@ if(waitingList.size>0) {
             tv_bagCount!!.text = "No Luggage"
 
         } else {
-            tv_bagCount!!.text = endRideResponsePOJO!!.ride!!.luggageQuantity.toString() + " Luggage"
+            tv_bagCount!!.text =
+                endRideResponsePOJO!!.ride!!.luggageQuantity.toString() + " Luggage"
 
         }
 
@@ -413,9 +496,18 @@ if(waitingList.size>0) {
         tv_actualFare!!.text = "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.subTotalCharges
 
 
+        if(endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.tollCharges.equals("-")){
 
-        tvActualNightChages!!.text = "₹ " +endRideResponsePOJO!!.ride!!.nightCharges
-        tvNightChages!!.text = "₹ " +endRideResponsePOJO!!.ride!!.nightCharges
+        }else{
+            tvEstTollCharges!!.text =
+                "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.tollCharges
+
+        }
+
+
+
+        tvActualNightChages!!.text = "₹ " + endRideResponsePOJO!!.ride!!.nightCharges
+        tvNightChages!!.text = "₹ " + endRideResponsePOJO!!.ride!!.nightCharges
 
 
         tv_estTotalFare!!.text =
@@ -680,6 +772,13 @@ if(waitingList.size>0) {
 
         }
     }
+
+
+
+    override fun onBackPressed() {
+
+    }
+
 
 
 }

@@ -2,6 +2,7 @@ package com.example.fairfare.ui.drawer.mydisput.disputDetail.pojo
 
 import com.example.fairfare.ui.endrides.pojo.ResponseEnd
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 class DisputDetailResponsePOJO {
     @SerializedName("dispute")
@@ -215,7 +216,12 @@ class DisputDetailResponsePOJO {
         @SerializedName("distance")
         var distance: String? = null
 
-        @SerializedName("waitings")
+
+
+        @SerializedName("tolls")
+        var tolls: List<TollsItem>? = null
+
+   @SerializedName("waitings")
         var waitings: List<WaitingsItem1>? = null
 
 
@@ -261,6 +267,10 @@ class DisputDetailResponsePOJO {
         @SerializedName("totalCharges")
         var totalCharges:String?=null
 
+
+        @SerializedName("tollCharges")
+        var tollCharges: String? = null
+
         @SerializedName("id")
         var id = 0
 
@@ -299,8 +309,16 @@ class DisputDetailResponsePOJO {
         @SerializedName("distance")
         var distance: String? = null
 
+
+        @SerializedName("tollCharges")
+        var tollCharges: String? = null
+
         @SerializedName("surCharge")
         var surCharge: String? = null
+
+        @SerializedName("tolls")
+        var tolls: List<TollsItem>? = null
+
 
         @SerializedName("waitingTime")
         var waitingTime: String? = null
@@ -472,4 +490,39 @@ class DisputDetailResponsePOJO {
                     "}"
         }
     }
+
+
+    inner class TollsItem : Serializable {
+        @SerializedName("name")
+        var name: String? = null
+
+        @SerializedName("road")
+        var road: String? = null
+
+        @SerializedName("state")
+        var state: String? = null
+
+        @SerializedName("country")
+        var country: String? = null
+
+        @SerializedName("type")
+        var type: String? = null
+
+        @SerializedName("currency")
+        var currency: String? = null
+
+        @SerializedName("latitude")
+        var latitude: String? = null
+
+        @SerializedName("longitude")
+        var longitude: String? = null
+
+
+        @SerializedName("charges")
+        var charges = 0
+
+
+
+    }
+
 }

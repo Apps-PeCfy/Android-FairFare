@@ -437,9 +437,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
          myLocationManager?.getCurrentLocation(object : MyLocationManager.LocationManagerInterface {
              override fun onSuccess(location: Location?) {
                  if (location != null) {
-
                      Log.d("sdsdsdswnwe", "onLocationChanged")
-
                      currentLatitude = location!!.latitude
                      currentLongitude = location!!.longitude
                      preferencesManager!!.setStringValue(
@@ -450,11 +448,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                          Constants.SHARED_PREFERENCE_CLong,
                          currentLongitude.toString()
                      )
-
-
                      if (callOnLocation.equals("first")) {
                          if (currentLatitude != 0.0 && currentLatitude != null) {
-
                              mapAndLocationReady()
                              cityPojoList = preferencesManager!!.getCityList()
                              if (cityPojoList != null && cityPojoList.size > 0) {
@@ -462,21 +457,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                              } else {
                                  getCity()
                              }
-
                              progressDialogstart!!.dismiss()
                              mainRelativeLayout!!.visibility = View.VISIBLE
-
-
                          }
-
                      }
                  } else {
                      initLocationUpdates()
                  }
              }
-
          })
      }*/
+
 
 
     private fun initLocationUpdates() {
@@ -502,7 +493,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     )
 
                     //Stop Location Updates
-                    if (isFirstTimeLocationShowed!! && currentLatitude != null && currentLatitude != 0.0) {
+                    if (isFirstTimeLocationShowed!! && currentLatitude != null && currentLatitude != 0.0 ){
                         myLocationManager?.stopLocationUpdates()
                     }
 
@@ -714,26 +705,26 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 cityspinner.add(0, "Choose City")
 
 
-                    val toastDurationInMilliSeconds = 10000
-                    mToastToShow = Toast.makeText(this@HomeActivity, "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.", Toast.LENGTH_LONG)
-                    val toastCountDown: CountDownTimer
-                    toastCountDown = object : CountDownTimer(toastDurationInMilliSeconds.toLong(), 1000 /*Tick duration*/) {
-                        override  fun onTick(millisUntilFinished: Long) {
-                            mToastToShow!!.show()
-                        }
-
-                        override  fun onFinish() {
-                            mToastToShow!!.cancel()
-                        }
+                val toastDurationInMilliSeconds = 10000
+                mToastToShow = Toast.makeText(this@HomeActivity, "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.", Toast.LENGTH_LONG)
+                val toastCountDown: CountDownTimer
+                toastCountDown = object : CountDownTimer(toastDurationInMilliSeconds.toLong(), 1000 /*Tick duration*/) {
+                    override  fun onTick(millisUntilFinished: Long) {
+                        mToastToShow!!.show()
                     }
-                    mToastToShow!!.show()
-                    toastCountDown.start()
 
-               /* Toast.makeText(
-                    this@HomeActivity,
-                    "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
-                    Toast.LENGTH_LONG
-                ).show()*/
+                    override  fun onFinish() {
+                        mToastToShow!!.cancel()
+                    }
+                }
+                mToastToShow!!.show()
+                toastCountDown.start()
+
+                /* Toast.makeText(
+                     this@HomeActivity,
+                     "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
+                     Toast.LENGTH_LONG
+                 ).show()*/
 
             }
 
@@ -771,11 +762,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 toastCountDown.start()
 
 
-              /*  Toast.makeText(
-                    this@HomeActivity,
-                    "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
-                    Toast.LENGTH_LONG
-                ).show()*/
+                /*  Toast.makeText(
+                      this@HomeActivity,
+                      "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
+                      Toast.LENGTH_LONG
+                  ).show()*/
 
             }
         }
@@ -1127,11 +1118,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                 ValidationResponse::class.java
                             )
                             Toast.makeText(
-                                    this@HomeActivity,
-                                    pojo.errors!!.get(0).message,
-                                    Toast.LENGTH_LONG
-                                )
-                                .show()
+                                this@HomeActivity,
+                                pojo.errors!!.get(0).message,
+                                Toast.LENGTH_LONG
+                            ).show()
 
 
                         } catch (exception: IOException) {
@@ -2447,40 +2437,29 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             if (addresses != null && addresses!!.size > 0) {
                 val obj = addresses[0]
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                    if (obj != null && obj.locality != null && obj.subAdminArea != null && obj.locality.equals(
-                            obj.subAdminArea,
-                            ignoreCase = true
-                        )
-                    ) {
-                        address =
-                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.adminArea
-                    } else {
-                        address =
-                            obj.thoroughfare + ", " + obj.subLocality + ", " + obj.locality + ", " + obj.subAdminArea + ", " + obj.adminArea
-                    }
-                    address = address.replace("null, ", "")
-                } else
-                {
-                    address = obj.getAddressLine(0)
-                    var countryName = obj.countryName
-                    if (obj.countryName != null && obj.countryName.equals(
-                            "United States",
-                            ignoreCase = true
-                        )
-                    ) {
-                        obj.countryName = "USA"
-                    }
+                address = obj.getAddressLine(0)
+                var countryName = obj.countryName
+                if (obj.countryName != null && obj.countryName.equals(
+                        "United States",
+                        ignoreCase = true
+                    )
+                ) {
+                    obj.countryName = "USA"
+                }
+                if (!countryName.equals("")){
                     address = address.replace(", $countryName", "").replace("- $countryName", "")
+                }
+
+                if (obj != null && obj.postalCode!= null && !obj.postalCode.equals("")){
                     address = address.replace(" " + obj.postalCode, "")
                 }
+
 
                 city = obj.subAdminArea
             } else {
                 address = ""
             }
         } catch (e: IOException) {
-
             Toast.makeText(
                 this,
                 e.toString(),

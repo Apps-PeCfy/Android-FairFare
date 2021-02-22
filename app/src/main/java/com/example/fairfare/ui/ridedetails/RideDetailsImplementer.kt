@@ -54,7 +54,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
                 origin_place_id, destination_place_id,overview_polyline,distance,
                 duration,city_id,airport_rate_card_id, driver_name,vehicle_no,badge_no,
                 start_meter_reading,sLat,sLong,dLat,dLong,imageList,sourceAddress,destinationAddress,
-                nightallow
+                nightallow,tolls
             )
 
         }else{
@@ -81,9 +81,6 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
                 jsonProductObj.accumulate("origin_full_address", sourceAddress)
                 jsonProductObj.accumulate("destination_full_address", destinationAddress)
                 jsonProductObj.accumulate("night_allow", nightallow)
-
-
-
                 jsonProductObj.accumulate("vehicle_rate_card_id", vehicle_rate_card_id)
                 jsonProductObj.accumulate("schedule_date", schedule_date)
                 jsonProductObj.accumulate("origin_place_id", origin_place_id)
@@ -208,7 +205,8 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         imageList: ArrayList<ImageModel>?,
         sourceAddress: String?,
         destAddress: String?,
-        nightallow: String?
+        nightallow: String?,
+        tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>
 
     ) {
         var body: MultipartBody.Part? = null
@@ -227,6 +225,39 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
             val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
             imagesMultipart[pos] = MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, surveyBody)
         }
+
+
+        val map3 = HashMap<String?, String?>()
+
+        for (i in tolls[0].tolls!!.indices) {
+            var lattitudekey : String = "tolls." + i + ".latitude"
+            map3[lattitudekey] = tolls[0].tolls!!.get(i).latitude
+
+            var longitudekey : String = "tolls." + i + ".longitude"
+            map3[longitudekey] = tolls[0].tolls!!.get(i).longitude
+
+            var namekey : String = "tolls." + i + ".name"
+            map3[namekey] = tolls[0].tolls!!.get(i).name
+
+            var roadkey : String = "tolls." + i + ".road"
+            map3[roadkey] = tolls[0].tolls!!.get(i).road
+
+            var statekey : String = "tolls." + i + ".state"
+            map3[statekey] = tolls[0].tolls!!.get(i).state
+
+            var countrykey : String = "tolls." + i + ".country"
+            map3[countrykey] = tolls[0].tolls!!.get(i).country
+
+            var typekey : String = "tolls." + i + ".type"
+            map3[typekey] = tolls[0].tolls!!.get(i).type
+
+            var currencykey : String = "tolls." + i + ".currency"
+            map3[currencykey] = tolls[0].tolls!!.get(i).currency
+
+            var chargeskey : String = "tolls." + i + ".charges"
+            map3[chargeskey] = tolls[0].tolls!!.get(i).charges.toString()
+        }
+
 
 
         val map = HashMap<String?, String?>()
@@ -269,7 +300,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         val call = ApiClient.client.uploadstartRide(
             "Bearer $token",
             imagesMultipart,
-            map, map1, map2
+            map, map1, map2,map3
         )
         call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
             override fun onResponse(
