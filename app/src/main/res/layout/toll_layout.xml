@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:baselineAligned="false"
+    android:background="#80000000"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_180sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@android:color/transparent">
+
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/_15sdp"
+            android:id="@+id/llman"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_180sdp"
+            >
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/pop_up_background"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.8"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_25sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_4sdp"
+                        android:text="Location"
+                        android:textColor="@color/Black"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tvCharge"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.2"
+                        android:gravity="center"
+                        android:text="Charges"
+                        android:textColor="@color/Black"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/gradientstartcolor" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvEventInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/_10sdp" />
+
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_marginTop="@dimen/_5sdp"
+            android:id="@+id/ivPopUpClose"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:src="@drawable/iv_popup_close"
+
+
+            />
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:gravity="center"
+                android:src="@drawable/iv_info"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

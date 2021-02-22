@@ -32,7 +32,7 @@
                 android:layout_marginTop="@dimen/_2sdp"
                 android:id="@+id/tv_carName"
                 android:gravity="center_horizontal"
-                android:text="Car"
+                android:text=""
                 android:layout_width="@dimen/_65sdp"
                 android:layout_height="wrap_content"/>
 
