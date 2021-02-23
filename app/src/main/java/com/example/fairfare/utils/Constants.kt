@@ -27,4 +27,12 @@ object Constants {
     // ILOMADEV:- This flag must be false to run iloma optimise code
     var IS_OLD_PICK_UP_CODE = false
 
+
+    var vehicleImageClick = 1
+    var meterImageClick = 2
+    var driverImageClick = 3
+    var badgeImageClick = 4
+
+
+
 }
