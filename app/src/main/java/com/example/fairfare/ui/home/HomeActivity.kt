@@ -259,6 +259,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var myMinute = 0
     var calendar: Calendar? = null
     var estTime: String? = null
+    var legDuration: String? = null
     var estDistance: String? = null
     var estDistanceInMeter = 0
     var hideshow: String? = null
@@ -287,6 +288,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var CurrentPlaceID: String? = null
     var tvDateandTime: String? = null
     var dateToStr: String? = null
+    var addressType: String? = null
 
 
     var stDay: String? = null
@@ -549,13 +551,30 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 SourceLat = model.latitude.toString()
                 SourceLong = model.longitude.toString()
                 myCurrentLocation!!.text = model.address
+           /*     if(model.addressType!!.length==0) {
+                    myCurrentLocation!!.text = model.address
+
+
+                }else{
+                    myCurrentLocation!!.text = model.addressType
+
+                }*/
             } else {
                 //  DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
                 //  DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
                 DestinationLat = model.latitude.toString()
                 DestinationLong = model.longitude.toString()
                 myDropUpLocation!!.text = model.address
-            }
+
+             /*   if(model.addressType!!.length==0){
+                    myDropUpLocation!!.text = model.address
+
+                }else{
+
+                    myDropUpLocation!!.text = model.addressType
+
+                }*/
+              }
             drawRouteOnAddressSelection()
         }
 
@@ -1626,7 +1645,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     replacebags,
                     airportYesOrNO,
                     formaredDate,
-                    CurrentPlaceID!!
+                    CurrentPlaceID!!,legDuration
                 )
 
 
@@ -1743,7 +1762,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     replacebags,
                     airportYesOrNO,
                     formaredDate,
-                    CurrentPlaceID!!
+                    CurrentPlaceID!!,legDuration
                 )
 
 
@@ -1875,6 +1894,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 val steps = legs.getJSONObject(0)
                 val distance = steps.getJSONObject("distance")
                 val duration = steps.getJSONObject("duration")
+
+
+                 legDuration = duration.getString("value")
 
                 estTime = duration.getString("text")
                 estDistance = distance.getString("value")

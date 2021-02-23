@@ -20,7 +20,8 @@ class CompareRideImplementer(private val view: ICompareRideView) : ICompareRideP
         baggs: String?,
         airport: String?,
         formatedDate: String?,
-        currentPlaceID: String
+        currentPlaceID: String?,
+        legDuration: String?
     )
     {
         view.showWait()
@@ -28,7 +29,7 @@ class CompareRideImplementer(private val view: ICompareRideView) : ICompareRideP
             "Bearer $token",
             distance,
             placeid,
-            sPlacesID, dPlaceID, baggs, airport, formatedDate,currentPlaceID
+            sPlacesID, dPlaceID, baggs, airport, formatedDate,currentPlaceID,legDuration
         )
         call!!.enqueue(object : Callback<CompareRideResponsePOJO?> {
             override fun onResponse(call: Call<CompareRideResponsePOJO?>, response: Response<CompareRideResponsePOJO?>)

@@ -561,7 +561,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     currentLongitude,
                     isSource,
                     locateOnMapAddress,
-                    keyAirport
+                    keyAirport,""
                 )
             )
         }
@@ -722,7 +722,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     currentLongitude,
                     isSource,
                     newSelectedAddress,
-                    keyAirport
+                    keyAirport,""
                 )
             )
         }
@@ -734,7 +734,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         Toast.makeText(this, "Added in fav" + place!!.id, Toast.LENGTH_LONG).show()
     }
 
-    override fun seveRecent(placeID: String?, selectedadd: String?) {
+    override fun seveRecent(placeID: String?, selectedadd: String?,addressType:String?) {
         val placeFields =
             Arrays.asList(
                 Place.Field.LAT_LNG,
@@ -776,6 +776,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 intent.putExtra("spnTime", extras!!.getInt("spinnerTime"))
                 intent.putExtra("getcity", extras!!.getString("City"))
                 intent.putExtra("formaredDateLater", extras!!.getString("formaredDateLater"))
+                intent.putExtra("AddressType", addressType)
 
                 intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
 
@@ -793,7 +794,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                             place.latLng!!.longitude,
                             isSource,
                             newSelectedAddress,
-                            keyAirport
+                            keyAirport,addressType
                         )
                     )
                 }

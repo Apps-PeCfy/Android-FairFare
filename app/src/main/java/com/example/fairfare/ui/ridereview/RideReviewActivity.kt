@@ -96,6 +96,21 @@ class RideReviewActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+
+
+        if(ridefromDrawer.equals("DrawerMyRides")){
+
+            super.onBackPressed()
+
+
+        }else{
+
+        }
+    }
+
+
+
     private fun setStatusBarGradiant(activity: RideReviewActivity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window = activity.window
@@ -106,6 +121,8 @@ class RideReviewActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
