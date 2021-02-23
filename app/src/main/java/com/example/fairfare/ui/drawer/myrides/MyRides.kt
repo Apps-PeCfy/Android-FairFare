@@ -344,7 +344,9 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
         dLat: String?,
         dLong: String?,
         originalAddress: String?,
-        destinationAddress: String?
+        destinationAddress: String?,
+        str: String?,
+        compareRideList: ArrayList<GetRideResponsePOJO.TollsItem>?
     ) {
 
         val intent = Intent(activity, RideDetailsActivity::class.java)
@@ -357,6 +359,9 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
         intent.putExtra("MyRidesdLong", dLong)
         intent.putExtra("MyRidesoriginalAddress", originalAddress)
         intent.putExtra("MyRidesdestinationAddress", destinationAddress)
+        intent.putExtra("MyRide", str)
+        intent.putExtra("compareRideList", compareRideList)
+
         startActivity(intent)
 
 

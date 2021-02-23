@@ -318,7 +318,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
 
 
-        setListeners()
+      //  setListeners()
 
     }
 

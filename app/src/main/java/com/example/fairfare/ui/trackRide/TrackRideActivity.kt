@@ -949,6 +949,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
                 intentr.putExtra("actualDistanceTravelled", actualDistance)
                 intentr.putExtra("actualTimeTravelled", actualTime)
+                intentr.putExtra("EndRideCurrentLat", waitStartLat)
+                intentr.putExtra("EndRideCurrentLon", waitStartLong)
+                intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
+
 
 
 
@@ -1178,6 +1182,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         )
 
       //  updateCamera(getCompassBearing(startLocation, destLocation))
+
 
 
 
@@ -1460,6 +1465,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         }
 
                       //  mPolyline = mMap!!.addPolyline(lineOptions)
+
+
 
 
 

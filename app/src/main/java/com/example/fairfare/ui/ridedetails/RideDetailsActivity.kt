@@ -40,6 +40,7 @@ import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
+import com.example.fairfare.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.trackRide.TrackRideActivity
@@ -83,6 +84,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var context: Context = this
     lateinit var popupschduleResponse: ScheduleRideResponsePOJO
     private var compareRideList = ArrayList<CompareRideResponsePOJO.VehiclesItem>()
+    private var compareRideListMyRide = ArrayList<GetRideResponsePOJO.TollsItem>()
 
 
     private var iRidePresenter: IRidePresenter? = null
@@ -174,14 +176,14 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
-     //   locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-     //   locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-     //   locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-     /*   val provider: String = locationManager!!.getBestProvider(Criteria(), true)
-        val loc: Location = locationManager!!.getLastKnownLocation(provider)
-        locationChangelatitude = loc.latitude
-        locationChangelongitude = loc.longitude
-*/
+        //   locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        //   locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+        //   locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+        /*   val provider: String = locationManager!!.getBestProvider(Criteria(), true)
+           val loc: Location = locationManager!!.getLastKnownLocation(provider)
+           locationChangelatitude = loc.latitude
+           locationChangelongitude = loc.longitude
+   */
 
         strFirstTime = "firstClick"
         PreferencesManager.initializeInstance(this@RideDetailsActivity)
@@ -198,7 +200,16 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         pDialog!!.setCancelable(false)
         pDialog!!.show()
 
-        compareRideList = intent.getSerializableExtra("compareRideList") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
+        if (intent.getStringExtra("MyRide").equals("MyRide")) {
+
+
+            compareRideListMyRide = intent.getSerializableExtra("compareRideList") as ArrayList<GetRideResponsePOJO.TollsItem>
+
+
+        } else {
+            compareRideList = intent.getSerializableExtra("compareRideList") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
+
+        }
 
         CITY_ID = intent.getStringExtra("CITY_ID")
         vahicalRateCardID = intent.getStringExtra("vehicle_rate_card_id")
@@ -497,8 +508,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
             val currentTravelledTime = estCurrentDuration!!.replace(" mins", "")
 
-             distance_ViewRide = (estCurrentDistance!!.toFloat() ).toString()
-             durationRide=(estCurrentDurationValue!!.toInt()/60).toFloat().toString()
+            distance_ViewRide = (estCurrentDistance!!.toFloat() ).toString()
+            durationRide=(estCurrentDurationValue!!.toInt()/60).toFloat().toString()
             originLat = locationChangelatitude.toString()
             originLong = locationChangelongitude.toString()
 
@@ -561,7 +572,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
 
-           // Toast.makeText(this@RideDetailsActivity, "Cancel", Toast.LENGTH_LONG).show()
+            // Toast.makeText(this@RideDetailsActivity, "Cancel", Toast.LENGTH_LONG).show()
         }
 
 
@@ -622,7 +633,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
             if (actualDistanceInMeter >= 500) {
 
-                iRidePresenter!!.startRide(
+                iRidePresenter!!.startRideMyRide(
                     token,
                     MyRides_RidesID,
                     MyRides_vehicle_rate_card_id,
@@ -640,12 +651,12 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
                     originLat, originLong, "", "", imageList,MyRidesoriginalAddress,
-                    MyRidesdestinationAddress,"No",compareRideList
+                    MyRidesdestinationAddress,"No",compareRideListMyRide
                 )
 
             } else
             {
-                iRidePresenter!!.startRide(
+                iRidePresenter!!.startRideMyRide(
                     token,
                     MyRides_RidesID,
                     MyRides_vehicle_rate_card_id,
@@ -663,7 +674,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
                     "", "", "", "", imageList,MyRidesoriginalAddress,
-                    MyRidesdestinationAddress,"No",compareRideList
+                    MyRidesdestinationAddress,"No",compareRideListMyRide
                 )
 
             }
@@ -1014,9 +1025,9 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             recycler_view_driver.visibility = View.GONE
         }
 
-         if (badgeImageList != null && badgeImageList?.size!! >0){
-             txt_badge.visibility = View.VISIBLE
-             recycler_view_badge.visibility = View.VISIBLE
+        if (badgeImageList != null && badgeImageList?.size!! >0){
+            txt_badge.visibility = View.VISIBLE
+            recycler_view_badge.visibility = View.VISIBLE
         }else{
             txt_badge.visibility = View.GONE
             recycler_view_badge.visibility = View.GONE
@@ -1093,7 +1104,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         imageModel.isSelected
         imageList!!.add(0, imageModel)
         selectedImageList!!.add(0, filePath!!)
-      //  selectedImageAdapter?.updateAdapter(selectedImageList!!)
+        //  selectedImageAdapter?.updateAdapter(selectedImageList!!)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -1268,36 +1279,30 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     override fun onLocationChanged(location: Location) {
 
-      /*  if (strFirstTime.equals("firstClick")) {
-
-            strFirstTime = "secondClick"
-
-            if (location != null) {
-                locationChangelatitude = location.latitude
-                locationChangelongitude = location.longitude
-            }
-            drawRoute()
-            if ((MyRides_RidesID != null)) {
-
-                GetDistanceFromLatLonInKm(
-                    MyRidesLat!!.toDouble(),
-                    MyRidesLong!!.toDouble(),
-                    locationChangelatitude,
-                    locationChangelongitude
-                )
-
-            } else{
-                GetDistanceFromLatLonInKm(
-                    originLat!!.toDouble(),
-                    originLong!!.toDouble(),
-                    locationChangelatitude,
-                    locationChangelongitude
-                )
-            }
-
-
-        }
-*/
+        /*  if (strFirstTime.equals("firstClick")) {
+              strFirstTime = "secondClick"
+              if (location != null) {
+                  locationChangelatitude = location.latitude
+                  locationChangelongitude = location.longitude
+              }
+              drawRoute()
+              if ((MyRides_RidesID != null)) {
+                  GetDistanceFromLatLonInKm(
+                      MyRidesLat!!.toDouble(),
+                      MyRidesLong!!.toDouble(),
+                      locationChangelatitude,
+                      locationChangelongitude
+                  )
+              } else{
+                  GetDistanceFromLatLonInKm(
+                      originLat!!.toDouble(),
+                      originLong!!.toDouble(),
+                      locationChangelatitude,
+                      locationChangelongitude
+                  )
+              }
+          }
+  */
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
@@ -1548,4 +1553,3 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
 }
-

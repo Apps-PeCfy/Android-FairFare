@@ -404,7 +404,6 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         intent.putExtra("RIDEID", rideID)
         intent.putExtra("MeterReading", startMeterReading)
         startActivity(intent)
-        finish()
     }
 
     @OnClick(R.id.btnSettleandCLose)
@@ -412,6 +411,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         val intent = Intent(this@EndRidesActivity, RideReviewActivity::class.java)
         intent.putExtra("RIDEID", rideID)
         startActivity(intent)
+        finish()
     }
 
 

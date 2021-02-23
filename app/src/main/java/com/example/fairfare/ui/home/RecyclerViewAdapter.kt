@@ -97,7 +97,9 @@ class RecyclerViewAdapter(
 
             }
             if (v.id == R.id.place_item) {
-                  iclickListener!!.seveRecent(LocatoinList[adapterPosition].placeId, LocatoinList[adapterPosition].fullAddress)
+                  iclickListener!!.seveRecent(LocatoinList[adapterPosition].placeId,
+                      LocatoinList[adapterPosition].fullAddress,
+                  LocatoinList[adapterPosition].category)
             }
 
             if (v.id == R.id.ivEdit) {
@@ -136,7 +138,7 @@ class RecyclerViewAdapter(
     }
 
     interface IClickListener {
-        fun seveRecent(placeID: String?, fulladdress: String?)
+        fun seveRecent(placeID: String?, fulladdress: String?,addressType:String?)
         fun favClick(id: Int)
         fun update(id: Int,fulladdress: String?)
     }

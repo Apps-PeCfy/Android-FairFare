@@ -126,7 +126,8 @@ interface NetworkService {
         @Field("luggage") luggage: String?,
         @Field("airport") airport: String?,
         @Field("schedule_datetime") schedule_datetime: String?,
-        @Field("current_place_id") current_place_id: String?
+        @Field("current_place_id") current_place_id: String?,
+        @Field("duration") duration: String?
     ): Call<CompareRideResponsePOJO?>?
 
 

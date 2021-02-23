@@ -1,7 +1,6 @@
 package com.example.fairfare.ui.drawer.myrides
 
 import android.graphics.Color
-import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import com.example.fairfare.ui.drawer.myrides.pojo.GetRideResponsePOJO
-import com.google.maps.GeoApiContext
-import com.google.maps.GeocodingApi
-import com.google.maps.errors.ApiException
-import com.google.maps.model.GeocodingResult
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
-import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.ArrayList
 
 class MyTripsAdapter(
     var context: FragmentActivity?,
@@ -105,14 +99,16 @@ class MyTripsAdapter(
             holder.btnStartRide!!.visibility = View.GONE
         } else {
 
-            if(MyRideList[position].rideStatus.equals("Yes")){
-                holder.btnStartRide!!.visibility = View.VISIBLE
+          //  holder.btnStartRide!!.visibility = View.VISIBLE
 
-            }else{
-                holder.btnStartRide!!.visibility = View.VISIBLE
-                holder.btnStartRide!!.isEnabled = false
-                holder.btnStartRide!!.setBackgroundResource(R.drawable.btn_rounded_grey)
-            }
+             if(MyRideList[position].rideStatus.equals("Yes")){
+                 holder.btnStartRide!!.visibility = View.VISIBLE
+
+             }else{
+                 holder.btnStartRide!!.visibility = View.VISIBLE
+                 holder.btnStartRide!!.isEnabled = false
+                 holder.btnStartRide!!.setBackgroundResource(R.drawable.btn_rounded_grey)
+             }
            }
 
         if (MyRideList[position].status.equals("Completed")) {
@@ -206,7 +202,8 @@ class MyTripsAdapter(
                         MyRideList[adapterPosition].destinationPlaceLat,
                         MyRideList[adapterPosition].destinationPlaceLong,
                         MyRideList[adapterPosition].originFullAddress,
-                        MyRideList[adapterPosition].destinationFullAddress
+                        MyRideList[adapterPosition].destinationFullAddress,"MyRide",
+                        MyRideList[adapterPosition].estimatedTrackRide!!.tolls as ArrayList<GetRideResponsePOJO.TollsItem>?
                     )
                 }
             } else if (v!!.id == R.id.tvRateRide)
@@ -241,8 +238,17 @@ class MyTripsAdapter(
 
     interface IClickListener {
         fun startRide(
-            id: Int, airport: String?, vahicalRadeCardID: Int, sLat: String?, sLong: String?,
-            dLAt: String?, dLong: String?,originAddress: String?, destinationAddress: String?
+            id: Int,
+            airport: String?,
+            vahicalRadeCardID: Int,
+            sLat: String?,
+            sLong: String?,
+            dLAt: String?,
+            dLong: String?,
+            originAddress: String?,
+            destinationAddress: String?,
+            str: String?,
+            dataItem: ArrayList<GetRideResponsePOJO.TollsItem>?
         )
 
         fun rateRide(id: Int)

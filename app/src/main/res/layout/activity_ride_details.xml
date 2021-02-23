@@ -88,6 +88,7 @@
                     android:padding="5dp"
                     android:src="@mipmap/ic_cam"/>
 
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -115,11 +116,6 @@
                     android:src="@mipmap/ic_cam"/>
 
             </RelativeLayout>
-
-
-
-
-
 
             <TextView
                 android:id="@+id/tv_driverDetails"
@@ -159,7 +155,6 @@
 
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -184,9 +179,6 @@
                     android:src="@mipmap/ic_cam"/>
 
             </RelativeLayout>
-
-
-
 
             <RelativeLayout
                 android:id="@+id/rl_photo"
@@ -219,8 +211,6 @@
 
 
             </RelativeLayout>
-
-
 
             <LinearLayout
                 android:id="@+id/llno1"
@@ -300,10 +290,6 @@
 
             </LinearLayout>
 
-
-
-
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -327,6 +313,5 @@
 
 
 
+
 </RelativeLayout>
-
-
