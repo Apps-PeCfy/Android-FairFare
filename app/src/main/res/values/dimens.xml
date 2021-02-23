@@ -682,4 +682,11 @@
     <dimen name="_minus7sdp">-7.0dip</dimen>
     <dimen name="_minus8sdp">-8.0dip</dimen>
     <dimen name="_minus9sdp">-9.0dip</dimen>
+
+    <dimen name="text_12sp">12sp</dimen>
+    <dimen name="text_14sp">14sp</dimen>
+    <dimen name="text_16sp">16sp</dimen>
+    <dimen name="text_18sp">18sp</dimen>
+    <dimen name="text_20sp">20sp</dimen>
+
 </resources>

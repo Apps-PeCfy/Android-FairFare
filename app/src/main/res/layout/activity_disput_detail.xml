@@ -369,7 +369,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginBottom="@dimen/_2sdp"
                                             android:gravity="center_horizontal"
-                                            android:text="Car"
+                                            android:text=""
                                             android:textStyle="bold" />
 
 
@@ -377,7 +377,7 @@
                                             android:id="@+id/tv_vahicalNO"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="MH 12 MS-3422" />
+                                            android:text="" />
 
 
                                     </LinearLayout>
@@ -403,7 +403,7 @@
                                             android:drawableStart="@drawable/iv_bags"
                                             android:drawablePadding="@dimen/_6sdp"
                                             android:gravity="end"
-                                            android:text="No Bags" />
+                                            android:text="" />
 
 
                                         <TextView
@@ -417,7 +417,7 @@
                                             android:drawableStart="@drawable/ic_clock"
                                             android:drawablePadding="@dimen/_6sdp"
                                             android:gravity="end"
-                                            android:text="Morning Peak" />
+                                            android:text="" />
 
 
                                     </LinearLayout>
@@ -452,7 +452,7 @@
                                     android:layout_marginStart="@dimen/_70sdp"
                                     android:layout_toRightOf="@+id/tv_Person"
                                     android:drawablePadding="@dimen/_5sdp"
-                                    android:text="Vivek Patil" />
+                                    android:text="" />
 
 
                             </RelativeLayout>
