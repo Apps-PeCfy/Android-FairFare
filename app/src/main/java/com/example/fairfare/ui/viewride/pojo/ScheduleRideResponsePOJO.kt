@@ -73,8 +73,17 @@ import java.io.Serializable
         @SerializedName("vehicleNo")
         var vehicleNo: String? = null
 
-        @SerializedName("images")
-        var images: List<Any>? = null
+        @SerializedName("vehicleNoImages")
+        var vehicleNoImages: List<Any>? = null
+
+        @SerializedName("startMeterImages")
+        var startMeterImages: List<Any>? = null
+
+        @SerializedName("driverImages")
+        var driverImages: List<Any>? = null
+
+        @SerializedName("badgeNoImages")
+        var badgeNoImages: List<Any>? = null
 
         @SerializedName("startMeterReading")
         var startMeterReading = 0
@@ -91,7 +100,10 @@ import java.io.Serializable
         override fun toString(): String {
             return "VehicleDetail{" +
                     "vehicleNo = '" + vehicleNo + '\'' +
-                    ",images = '" + images + '\'' +
+                    ",vehicleNoImages = '" + vehicleNoImages + '\'' +
+                    ",startMeterImages = '" + startMeterImages + '\'' +
+                    ",driverImages = '" + driverImages + '\'' +
+                    ",badgeNoImages = '" + badgeNoImages + '\'' +
                     ",startMeterReading = '" + startMeterReading + '\'' +
                     ",driverName = '" + driverName + '\'' +
                     ",id = '" + id + '\'' +

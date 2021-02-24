@@ -98,7 +98,9 @@ public class PhotoSelector {
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(context.getContentResolver(), data.getData());
-                imgSelectPic.setImageBitmap(bm);
+                if (imgSelectPic != null){
+                    imgSelectPic.setImageBitmap(bm);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

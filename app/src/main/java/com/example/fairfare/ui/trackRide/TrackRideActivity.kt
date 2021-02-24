@@ -4,9 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.graphics.Color
 import android.hardware.GeomagneticField
 import android.icu.math.BigDecimal
@@ -32,6 +30,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.networking.ApiClient
+import com.example.fairfare.service.BackgroundLocationService
 import com.example.fairfare.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
 import com.example.fairfare.ui.endrides.EndRidesActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
@@ -41,7 +40,6 @@ import com.example.fairfare.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.example.fairfare.utils.Constants
-import com.example.fairfare.utils.MyLocationManager
 import com.example.fairfare.utils.PreferencesManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -68,8 +66,11 @@ import kotlin.collections.ArrayList
 class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListener {
     lateinit var info: ScheduleRideResponsePOJO
     protected var locationManager: LocationManager? = null
-    protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
     var waypoints = ""
+
+    //For Background Service
+    private lateinit var mService: BackgroundLocationService
+    private var mBound: Boolean = false
 
     var hideshow: String? = "show"
 
@@ -398,7 +399,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         if (Constants.IS_OLD_PICK_UP_CODE) {
             setHandler()
         } else {
-            initLocationUpdates()
+            bindBackgroundService()
         }
 
 
@@ -408,14 +409,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
     private fun initLocationUpdates() {
-        myLocationManager?.getMyCurrentLocationChange(object :
-            MyLocationManager.LocationManagerTrackInterface {
+        mService?.getMyCurrentLocationChange(object : BackgroundLocationService.LocationManagerTrackInterface {
             override fun onMyLocationChange(
                 currentLocation: MutableList<Location>?,
                 lastLocation: Location?
             ) {
                 if (lastLocation != null) {
-
                     /**
                      * iLoma Team :- Mohasin 09 Jan 2021
                      */
@@ -933,7 +932,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             if (Constants.IS_OLD_PICK_UP_CODE) {
                 handler.removeCallbacksAndMessages(null)
             } else {
-                myLocationManager?.stopLocationUpdates()
+                unBindBackgroundService()
+
             }
 
             val intentr = Intent(applicationContext, EndRidesActivity::class.java)
@@ -2218,6 +2218,48 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     override fun onBackPressed() {
 
     }
+
+
+    /** Defines callbacks for service binding, passed to bindService()  */
+    private val connection = object : ServiceConnection {
+
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            val binder = service as BackgroundLocationService.LocalBinder
+            mService = binder.getService()
+            mBound = true
+            initLocationUpdates()
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            mBound = false
+        }
+    }
+
+
+
+    private fun bindBackgroundService() {
+        // Bind to LocalService
+        Intent(this, BackgroundLocationService::class.java).also { intent ->
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    private fun unBindBackgroundService() {
+        if (mBound){
+            mService.stopLocationUpdates()
+            unbindService(connection)
+            mBound = false
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unBindBackgroundService()
+    }
+
+
 
 
 }

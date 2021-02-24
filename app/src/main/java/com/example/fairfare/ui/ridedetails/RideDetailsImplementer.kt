@@ -21,7 +21,6 @@ import java.util.*
 
 class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter {
 
-
     override fun startRide(
         token: String?,
         id: String?,
@@ -43,17 +42,21 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?,
+        vehicleImageList: ArrayList<String>?,
+        meterImageList: ArrayList<String>?,
+        driverImageList: ArrayList<String>?,
+        badgeImageList: ArrayList<String>?,
         sourceAddress:String?,
         destinationAddress: String?,
         nightallow: String?,
         tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>)
     {
-        if(imageList != null && imageList.size> 0){
+        if((vehicleImageList != null && vehicleImageList.size> 0) || (meterImageList != null && meterImageList.size> 0)
+            || (driverImageList != null && driverImageList.size> 0) || (badgeImageList != null && badgeImageList.size> 0)){
             calmultipartdata(token,id,vehicle_rate_card_id,luggage_quantity,schedule_date,
                 origin_place_id, destination_place_id,overview_polyline,distance,
                 duration,city_id,airport_rate_card_id, driver_name,vehicle_no,badge_no,
-                start_meter_reading,sLat,sLong,dLat,dLong,imageList,sourceAddress,destinationAddress,
+                start_meter_reading,sLat,sLong,dLat,dLong,vehicleImageList, meterImageList, driverImageList, badgeImageList,sourceAddress,destinationAddress,
 
                 nightallow,tolls
             )
@@ -203,17 +206,21 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?,
+        vehicleImageList: ArrayList<String>?,
+        meterImageList: ArrayList<String>?,
+        driverImageList: ArrayList<String>?,
+        badgeImageList: ArrayList<String>?,
         sourceAddress:String?,
         destinationAddress: String?,
         nightallow: String?,
         tolls: ArrayList<GetRideResponsePOJO.TollsItem>)
     {
-        if(imageList != null && imageList.size> 0){
+        if((vehicleImageList != null && vehicleImageList.size> 0) || (meterImageList != null && meterImageList.size> 0)
+            || (driverImageList != null && driverImageList.size> 0) || (badgeImageList != null && badgeImageList.size> 0)){
             calmultipartdataMyRide(token,id,vehicle_rate_card_id,luggage_quantity,schedule_date,
                 origin_place_id, destination_place_id,overview_polyline,distance,
                 duration,city_id,airport_rate_card_id, driver_name,vehicle_no,badge_no,
-                start_meter_reading,sLat,sLong,dLat,dLong,imageList,sourceAddress,destinationAddress,
+                start_meter_reading,sLat,sLong,dLat,dLong,vehicleImageList,meterImageList,driverImageList,badgeImageList,sourceAddress,destinationAddress,
                 nightallow,tolls
             )
 
@@ -362,29 +369,56 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?,
+        vehicleImageList: ArrayList<String>?,
+        meterImageList: ArrayList<String>?,
+        driverImageList: ArrayList<String>?,
+        badgeImageList: ArrayList<String>?,
         sourceAddress: String?,
         destAddress: String?,
         nightallow: String?,
         tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>)
 
     {
-        var body: MultipartBody.Part? = null
+        val multipartSize : Int = vehicleImageList!!.size + meterImageList!!.size + driverImageList!!.size + badgeImageList!!.size
         val imagesMultipart = arrayOfNulls<MultipartBody.Part>(
-            imageList!!.size
+            multipartSize
         )
 
-        var requestFile: RequestBody
-        for (pos in imageList!!.indices) {
+        var currentMultiPartPosition : Int = 0
+
+        for (pos in vehicleImageList!!.indices) {
             /* val file = File(imageList[pos].image!!)
              requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
              body =
                  MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, requestFile)*/
 
-            val file = File(imageList[pos].image!!)
+            val file = File(vehicleImageList[pos])
             val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-            imagesMultipart[pos] = MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, surveyBody)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("vehicle_no_image_files[]", vehicleImageList[pos], surveyBody)
+            currentMultiPartPosition++
         }
+
+        for (pos in meterImageList!!.indices) {
+            val file = File(meterImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("start_meter_image_files[]", meterImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in driverImageList!!.indices) {
+            val file = File(driverImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("driver_image_files[]", driverImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in badgeImageList!!.indices) {
+            val file = File(badgeImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("badge_no_image_files[]", badgeImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
 
         val map3 = HashMap<String?, String?>()
 
@@ -537,28 +571,54 @@ private fun calmultipartdataMyRide(
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?,
+        vehicleImageList: ArrayList<String>?,
+        meterImageList: ArrayList<String>?,
+        driverImageList: ArrayList<String>?,
+        badgeImageList: ArrayList<String>?,
         sourceAddress: String?,
         destAddress: String?,
         nightallow: String?,
         tolls: ArrayList<GetRideResponsePOJO.TollsItem>)
 
     {
-        var body: MultipartBody.Part? = null
+        val multipartSize : Int = vehicleImageList!!.size + meterImageList!!.size + driverImageList!!.size + badgeImageList!!.size
         val imagesMultipart = arrayOfNulls<MultipartBody.Part>(
-            imageList!!.size
+            multipartSize
         )
 
-        var requestFile: RequestBody
-        for (pos in imageList!!.indices) {
+        var currentMultiPartPosition : Int = 0
+
+        for (pos in vehicleImageList!!.indices) {
             /* val file = File(imageList[pos].image!!)
              requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
              body =
                  MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, requestFile)*/
 
-            val file = File(imageList[pos].image!!)
+            val file = File(vehicleImageList[pos])
             val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-            imagesMultipart[pos] = MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, surveyBody)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("vehicle_no_image_files[]", vehicleImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in meterImageList!!.indices) {
+            val file = File(meterImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("start_meter_image_files[]", meterImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in driverImageList!!.indices) {
+            val file = File(driverImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("driver_image_files[]", driverImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in badgeImageList!!.indices) {
+            val file = File(badgeImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("badge_no_image_files[]", badgeImageList[pos], surveyBody)
+            currentMultiPartPosition++
         }
 
 
