@@ -1,5 +1,7 @@
 package com.example.fairfare.ui.drawer.myrides
 
+import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import com.example.fairfare.ui.drawer.myrides.pojo.GetRideResponsePOJO
+import com.example.fairfare.utils.AddressPopUp
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import java.text.SimpleDateFormat
 import java.util.ArrayList
@@ -48,10 +51,10 @@ class MyTripsAdapter(
         holder.ratingBar!!.visibility = View.GONE
         holder.btnStartRide!!.visibility = View.GONE
 
-        if(MyRideList.get(position).status.equals("Completed")){
+        if (MyRideList.get(position).status.equals("Completed")) {
             holder.tv_status!!.text = MyRideList.get(position).status
             holder.tv_status!!.setTextColor(Color.parseColor("#749E47"))
-        }else{
+        } else {
             holder.tv_status!!.text = MyRideList.get(position).status
             holder.tv_status!!.setTextColor(Color.parseColor("#F15E38"))
 
@@ -99,17 +102,17 @@ class MyTripsAdapter(
             holder.btnStartRide!!.visibility = View.GONE
         } else {
 
-          //  holder.btnStartRide!!.visibility = View.VISIBLE
+            //  holder.btnStartRide!!.visibility = View.VISIBLE
 
-             if(MyRideList[position].rideStatus.equals("Yes")){
-                 holder.btnStartRide!!.visibility = View.VISIBLE
+            if (MyRideList[position].rideStatus.equals("Yes")) {
+                holder.btnStartRide!!.visibility = View.VISIBLE
 
-             }else{
-                 holder.btnStartRide!!.visibility = View.VISIBLE
-                 holder.btnStartRide!!.isEnabled = false
-                 holder.btnStartRide!!.setBackgroundResource(R.drawable.btn_rounded_grey)
-             }
-           }
+            } else {
+                holder.btnStartRide!!.visibility = View.VISIBLE
+                holder.btnStartRide!!.isEnabled = false
+                holder.btnStartRide!!.setBackgroundResource(R.drawable.btn_rounded_grey)
+            }
+        }
 
         if (MyRideList[position].status.equals("Completed")) {
 
@@ -176,12 +179,17 @@ class MyTripsAdapter(
         @BindView(R.id.iv_vehical)
         var iv_vehical: ImageView? = null
 
+        @JvmField
+        @BindView(R.id.ivViewInfo)
+        var ivViewInfo: ImageView? = null
+
 
         init {
             ButterKnife.bind(this, itemView)
             btnStartRide!!.setOnClickListener(this)
             tvRateRide!!.setOnClickListener(this)
             rlRideDetails!!.setOnClickListener(this)
+            ivViewInfo!!.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
@@ -202,16 +210,13 @@ class MyTripsAdapter(
                         MyRideList[adapterPosition].destinationPlaceLat,
                         MyRideList[adapterPosition].destinationPlaceLong,
                         MyRideList[adapterPosition].originFullAddress,
-                        MyRideList[adapterPosition].destinationFullAddress,"MyRide",
+                        MyRideList[adapterPosition].destinationFullAddress, "MyRide",
                         MyRideList[adapterPosition].estimatedTrackRide!!.tolls as ArrayList<GetRideResponsePOJO.TollsItem>?
                     )
                 }
-            } else if (v!!.id == R.id.tvRateRide)
-            {
+            } else if (v!!.id == R.id.tvRateRide) {
                 iclickListener!!.rateRide(MyRideList[adapterPosition].id)
-            }
-            else if (v!!.id == R.id.rlRideDetails)
-            {
+            } else if (v!!.id == R.id.rlRideDetails) {
 
                 if ((MyRideList[adapterPosition].status.equals("Completed")) || (MyRideList[adapterPosition].status.equals(
                         "Cancelled"
@@ -225,6 +230,24 @@ class MyTripsAdapter(
                 }
 
 
+            } else {
+
+
+                var eventDialogBind = AddressPopUp()
+
+                eventDialogBind?.eventInfoDialog = context?.let { Dialog(it, R.style.dialog_style) }
+                eventDialogBind?.eventInfoDialog!!.setCancelable(true)
+                val inflater1 =
+                    context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val view12: View = inflater1.inflate(R.layout.destination_address_popup, null)
+                eventDialogBind?.eventInfoDialog!!.setContentView(view12)
+                ButterKnife.bind(eventDialogBind!!, view12)
+
+                eventDialogBind!!.tvDestinationAddress!!.text =
+                    MyRideList[adapterPosition].estimatedTrackRide!!.destinationFullAddress
+                eventDialogBind!!.eventInfoDialog!!.show()
+
+
             }
         }
 
@@ -235,6 +258,7 @@ class MyTripsAdapter(
     fun setClickListener(iclickListener: IClickListener?) {
         this.iclickListener = iclickListener
     }
+
 
     interface IClickListener {
         fun startRide(

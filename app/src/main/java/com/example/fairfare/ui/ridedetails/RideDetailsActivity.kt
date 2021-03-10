@@ -90,7 +90,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     private var iRidePresenter: IRidePresenter? = null
 
     var imageList: ArrayList<ImageModel>? = null
-    var selectedImageList: ArrayList<String>? = null
     var vehicleImageList: ArrayList<String>? = null
     var meterImageList: ArrayList<String>? = null
     var driverImageList: ArrayList<String>? = null
@@ -265,7 +264,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             //ILOMADEV
             initLocationUpdates()
         }
-      //  setListeners()
+        setListeners()
     }
 
     private fun setListeners() {
@@ -607,7 +606,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             alertDialog.setTitle("FairFare")
             alertDialog.setMessage("Make sure you record the Start Meter reading before starting the ride.")
             alertDialog.setCancelable(false)
-            alertDialog.setPositiveButton("Skip") { dialog, which ->
+            alertDialog.setPositiveButton("SKIP") { dialog, which ->
 
                 callTrackButton()
 
@@ -650,7 +649,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,
+                    originLat, originLong, "", "", vehicleImageList, meterImageList, driverImageList, badgeImageList,MyRidesoriginalAddress,
                     MyRidesdestinationAddress,"No",compareRideListMyRide
                 )
 
@@ -673,7 +672,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    "", "", "", "", imageList,MyRidesoriginalAddress,
+                    "", "", "", "", vehicleImageList, meterImageList, driverImageList, badgeImageList, MyRidesoriginalAddress,
                     MyRidesdestinationAddress,"No",compareRideListMyRide
                 )
 
@@ -705,7 +704,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 edt_vehicalNO!!.text.toString(),
                 edt_bagsCount!!.text.toString(),
                 edt_meterReading!!.text.toString(),
-                originLat, originLong, destiLat, destiLong,imageList,sAddress,dAddress,"No",compareRideList
+                originLat, originLong, destiLat, destiLong, vehicleImageList, meterImageList, driverImageList, badgeImageList ,sAddress,dAddress,"No",compareRideList
             )
 
         }
@@ -829,7 +828,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     }
 
     private fun init() {
-        selectedImageList = ArrayList<String>()
         vehicleImageList = ArrayList<String>()
         meterImageList = ArrayList<String>()
         driverImageList = ArrayList<String>()
@@ -958,7 +956,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 imageModel.image = photoSelector!!.getPath(filePath, context)
                 imageModel.isSelected
                 imageList!!.add(0, imageModel)
-                selectedImageList!!.add(0, imageModel.image!!)
                 if (imageClickFinder == Constants.vehicleImageClick){
                     vehicleImageList!!.add(0, imageModel.image!!)
                     vehicleImageAdapter?.updateAdapter(vehicleImageList!!)
@@ -980,7 +977,6 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 imageModel.image = photoSelector!!.getPath(filePath, context)
                 imageModel.isSelected
                 imageList!!.add(0, imageModel)
-                selectedImageList!!.add(0, imageModel.image!!)
                 if (imageClickFinder == Constants.vehicleImageClick){
                     vehicleImageList!!.add(0, imageModel.image!!)
                     vehicleImageAdapter?.updateAdapter(vehicleImageList!!)
@@ -1032,80 +1028,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             txt_badge.visibility = View.GONE
             recycler_view_badge.visibility = View.GONE
         }
-
-        selectedImageList = ArrayList()
-        imageList = ArrayList()
-        selectedImageList?.addAll(vehicleImageList!!)
-        selectedImageList?.addAll(meterImageList!!)
-        selectedImageList?.addAll(driverImageList!!)
-        selectedImageList?.addAll(badgeImageList!!)
-
-        for (imagePath : String in selectedImageList!!){
-            val imageModel = ImageModel()
-            imageModel.image = imagePath
-            imageModel.isSelected
-            imageList!!.add(0, imageModel)
-        }
     }
 
-    /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-         super.onActivityResult(requestCode, resultCode, data)
-         if (resultCode == Activity.RESULT_OK) {
-             if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                 if (mCurrentPhotoPath != null) {
-                     addImage(mCurrentPhotoPath)
-                 }
-             } else if (requestCode == PICK_IMAGES) {
-                 if (data!!.clipData != null) {
-                     val mClipData = data.clipData
-                     for (i in 0 until mClipData!!.itemCount) {
-                         val item = mClipData.getItemAt(i)
-                         val uri = item.uri
-                         getImageFilePath(uri)
-                     }
-                 } else if (data.data != null) {
-                     val uri = data.data
-                     getImageFilePath(uri)
-                 }
-             }
-         }
-     }
- */
-    fun getImageFilePath(uri: Uri?) {
-        val cursor =
-            contentResolver.query(uri!!, projection, null, null, null)
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                val absolutePathOfImage =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))
-                absolutePathOfImage?.let { checkImage(it) } ?: checkImage(uri.toString())
-            }
-        }
-    }
-
-    fun checkImage(filePath: String?) {
-        // Check before adding a new image to ArrayList to avoid duplicate images
-        if (!selectedImageList!!.contains(filePath!!)) {
-            for (pos in imageList!!.indices) {
-                if (imageList!!.get(pos).image != null) {
-                    if (imageList!!.get(pos).image.equals(filePath)) {
-                        imageList!!.removeAt(pos)
-                    }
-                }
-            }
-            addImage(filePath)
-        }
-    }
-
-
-    fun addImage(filePath: String?) {
-        val imageModel = ImageModel()
-        imageModel.image = filePath
-        imageModel.isSelected
-        imageList!!.add(0, imageModel)
-        selectedImageList!!.add(0, filePath!!)
-        //  selectedImageAdapter?.updateAdapter(selectedImageList!!)
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -1171,6 +1095,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             intentr.putExtra("MyRidesoriginalAddress", MyRidesoriginalAddress)
             intentr.putExtra("MyRidesdestinationAddress", MyRidesdestinationAddress)
             intentr.putExtra("MyRidesID", MyRides_RidesID)
+            intentr.putExtra("City_ID", CITY_ID)
+
             startActivity(intentr)
             finish()
 
@@ -1184,6 +1110,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             intentr.putExtra("ImageName", intent.getStringExtra("ImgName"))
             intentr.putExtra("VehicleName", intent.getStringExtra("VehicleName"))
             intentr.putExtra("ResponsePOJOScheduleRide", info)
+            intentr.putExtra("City_ID", CITY_ID)
+
             startActivity(intentr)
             finish()
 
@@ -1218,7 +1146,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    originLat, originLong, "", "", imageList,MyRidesoriginalAddress,
+                    originLat, originLong, "", "", vehicleImageList, meterImageList, driverImageList, badgeImageList, MyRidesoriginalAddress,
                     MyRidesdestinationAddress,"Yes",compareRideList
                 )
 
@@ -1241,7 +1169,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                     edt_vehicalNO!!.text.toString(),
                     edt_bagsCount!!.text.toString(),
                     edt_meterReading!!.text.toString(),
-                    "", "", "", "", imageList,MyRidesoriginalAddress,
+                    "", "", "", "", vehicleImageList, meterImageList, driverImageList, badgeImageList, MyRidesoriginalAddress,
                     MyRidesdestinationAddress,"Yes",compareRideList
                 )
 

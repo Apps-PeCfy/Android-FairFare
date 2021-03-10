@@ -17,7 +17,8 @@ interface IEndRidePresenter {
         endAddress: String?,
         originLat: String?,
         originLon: String?,
-        originAddress: String?
+        originAddress: String?,
+        DistanceNightCharge: String?
 
         )
 

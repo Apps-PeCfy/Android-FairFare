@@ -1,5 +1,7 @@
 package com.example.fairfare.ui.drawer.mycomplaints
 
+import android.app.Dialog
+import android.content.Context
 import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import com.example.fairfare.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
+import com.example.fairfare.utils.AddressPopUp
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,47 +71,6 @@ class MyComplaintsAdapter(
         holder.tv_vahicalName!!.text =
             complaintList[position].vehicleName + " " + complaintList[position].vehicleNo
 
-
-       /* val geocoder = Geocoder(context, Locale.getDefault())
-        try {
-            val addresses =
-                geocoder.getFromLocation(
-                    (complaintList[position].originPlaceLat)!!.toDouble(),
-                    (complaintList[position].originPlaceLong)!!.toDouble(), 1
-                )
-            if (addresses != null) {
-                val returnedAddress = addresses[0]
-                val strReturnedAddress =
-                    StringBuilder()
-                for (j in 0..returnedAddress.maxAddressLineIndex) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                }
-                streetAddress = strReturnedAddress.toString()
-            }
-        } catch (e: IOException) {
-        }
-
-
-        val geocoderDestination = Geocoder(context, Locale.getDefault())
-        try {
-            val addresses =
-                geocoderDestination.getFromLocation(
-                    (complaintList[position].destinationPlaceLat)!!.toDouble(),
-                    (complaintList[position].destinationPlaceLong)!!.toDouble(), 1
-                )
-            if (addresses != null) {
-                val returnedAddress = addresses[0]
-                val strReturnedAddress =
-                    StringBuilder()
-                for (j in 0..returnedAddress.maxAddressLineIndex) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(j))
-                }
-                deststreetAddress = strReturnedAddress.toString()
-            }
-        } catch (e: IOException) {
-        }*/
-
-
         holder.tv_myCurrentLocation!!.text = complaintList[position].originFullAddress
         holder.destnationAddress!!.text = complaintList[position].destinationFullAddress
         holder.tv_status!!.text = complaintList[position].status
@@ -161,18 +123,37 @@ class MyComplaintsAdapter(
         var iv_vehical: ImageView? = null
 
         @JvmField
+        @BindView(R.id.ivViewInfo)
+        var ivViewInfo: ImageView? = null
+
+
+        @JvmField
         @BindView(R.id.rlHome)
         var rlHome: RelativeLayout? = null
 
         init {
             ButterKnife.bind(this, itemView)
             rlHome!!.setOnClickListener(this)
+            ivViewInfo!!.setOnClickListener(this)
 
           }
 
         override fun onClick(v: View?) {
             if (v!!.id == R.id.rlHome) {
                 iDisputClick!!.detailDisputClick(complaintList[adapterPosition].id)
+            }else{
+                var eventDialogBind = AddressPopUp()
+
+                eventDialogBind?.eventInfoDialog = context?.let { Dialog(it, R.style.dialog_style) }
+                eventDialogBind?.eventInfoDialog!!.setCancelable(true)
+                val inflater1 =
+                    context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val view12: View = inflater1.inflate(R.layout.destination_address_popup, null)
+                eventDialogBind?.eventInfoDialog!!.setContentView(view12)
+                ButterKnife.bind(eventDialogBind!!, view12)
+
+                eventDialogBind!!.tvDestinationAddress!!.text =complaintList[adapterPosition].estimatedDestinationFullAddress
+                eventDialogBind!!.eventInfoDialog!!.show()
             }
         }
 

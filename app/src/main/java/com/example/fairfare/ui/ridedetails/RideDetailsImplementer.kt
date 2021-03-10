@@ -21,7 +21,6 @@ import java.util.*
 
 class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter {
 
-
     override fun startRide(
         token: String?,
         id: String?,
@@ -43,17 +42,22 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?,
+        vehicleImageList: ArrayList<String>?,
+        meterImageList: ArrayList<String>?,
+        driverImageList: ArrayList<String>?,
+        badgeImageList: ArrayList<String>?,
         sourceAddress:String?,
         destinationAddress: String?,
         nightallow: String?,
         tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>)
     {
-        if(imageList != null && imageList.size> 0){
+        if((vehicleImageList != null && vehicleImageList.size> 0) || (meterImageList != null && meterImageList.size> 0)
+            || (driverImageList != null && driverImageList.size> 0) || (badgeImageList != null && badgeImageList.size> 0)){
             calmultipartdata(token,id,vehicle_rate_card_id,luggage_quantity,schedule_date,
                 origin_place_id, destination_place_id,overview_polyline,distance,
                 duration,city_id,airport_rate_card_id, driver_name,vehicle_no,badge_no,
-                start_meter_reading,sLat,sLong,dLat,dLong,imageList,sourceAddress,destinationAddress,
+                start_meter_reading,sLat,sLong,dLat,dLong,vehicleImageList, meterImageList, driverImageList, badgeImageList,sourceAddress,destinationAddress,
+
                 nightallow,tolls
             )
 
@@ -96,23 +100,21 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
 
 
-
-
-
                 for (i in tolls[0].tolls!!.indices) {
                     val jsonObjectMain = JSONObject()
-                    jsonObjectMain.accumulate("latitude", tolls[0].tolls!!.get(i).latitude)
-                    jsonObjectMain.accumulate("longitude", tolls[0].tolls!!.get(i).longitude)
-                    jsonObjectMain.accumulate("name", tolls[0].tolls!!.get(i).name)
-                    jsonObjectMain.accumulate("road", tolls[0].tolls!!.get(i).road)
-                    jsonObjectMain.accumulate("state", tolls[0].tolls!!.get(i).state)
-                    jsonObjectMain.accumulate("country", tolls[0].tolls!!.get(i).country)
-                    jsonObjectMain.accumulate("type", tolls[0].tolls!!.get(i).type)
-                    jsonObjectMain.accumulate("currency", tolls[0].tolls!!.get(i).currency)
-                    jsonObjectMain.accumulate("charges", tolls[0].tolls!!.get(i).charges)
+                    jsonObjectMain.put("latitude", tolls[0].tolls!!.get(i).latitude)
+                    jsonObjectMain.put("longitude", tolls[0].tolls!!.get(i).longitude)
+                    jsonObjectMain.put("name", tolls[0].tolls!!.get(i).name)
+                    jsonObjectMain.put("road", tolls[0].tolls!!.get(i).road)
+                    jsonObjectMain.put("state", tolls[0].tolls!!.get(i).state)
+                    jsonObjectMain.put("country", tolls[0].tolls!!.get(i).country)
+                    jsonObjectMain.put("type", tolls[0].tolls!!.get(i).type)
+                    jsonObjectMain.put("currency", tolls[0].tolls!!.get(i).currency)
+                    jsonObjectMain.put("charges", tolls[0].tolls!!.get(i).charges)
                     jsonArray.put(jsonObjectMain)
                 }
-                jsonProductObj.accumulate("tolls", jsonArray)
+
+
 
 
             } catch (e: JSONException) {
@@ -124,7 +126,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
             val call = ApiClient.client.startRidear(
                 "Bearer $token",
-               jsonProductObj.toString())
+                jsonProductObj.toString())
             call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
                 override fun onResponse(
                     call: Call<ScheduleRideResponsePOJO?>,
@@ -204,17 +206,21 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?,
+        vehicleImageList: ArrayList<String>?,
+        meterImageList: ArrayList<String>?,
+        driverImageList: ArrayList<String>?,
+        badgeImageList: ArrayList<String>?,
         sourceAddress:String?,
         destinationAddress: String?,
         nightallow: String?,
         tolls: ArrayList<GetRideResponsePOJO.TollsItem>)
     {
-        if(imageList != null && imageList.size> 0){
+        if((vehicleImageList != null && vehicleImageList.size> 0) || (meterImageList != null && meterImageList.size> 0)
+            || (driverImageList != null && driverImageList.size> 0) || (badgeImageList != null && badgeImageList.size> 0)){
             calmultipartdataMyRide(token,id,vehicle_rate_card_id,luggage_quantity,schedule_date,
                 origin_place_id, destination_place_id,overview_polyline,distance,
                 duration,city_id,airport_rate_card_id, driver_name,vehicle_no,badge_no,
-                start_meter_reading,sLat,sLong,dLat,dLong,imageList,sourceAddress,destinationAddress,
+                start_meter_reading,sLat,sLong,dLat,dLong,vehicleImageList,meterImageList,driverImageList,badgeImageList,sourceAddress,destinationAddress,
                 nightallow,tolls
             )
 
@@ -285,7 +291,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
             val call = ApiClient.client.startRidear(
                 "Bearer $token",
-               jsonProductObj.toString())
+                jsonProductObj.toString())
             call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
                 override fun onResponse(
                     call: Call<ScheduleRideResponsePOJO?>,
@@ -363,28 +369,54 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?,
+        vehicleImageList: ArrayList<String>?,
+        meterImageList: ArrayList<String>?,
+        driverImageList: ArrayList<String>?,
+        badgeImageList: ArrayList<String>?,
         sourceAddress: String?,
         destAddress: String?,
         nightallow: String?,
         tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>)
 
     {
-        var body: MultipartBody.Part? = null
+        val multipartSize : Int = vehicleImageList!!.size + meterImageList!!.size + driverImageList!!.size + badgeImageList!!.size
         val imagesMultipart = arrayOfNulls<MultipartBody.Part>(
-            imageList!!.size
+            multipartSize
         )
 
-        var requestFile: RequestBody
-        for (pos in imageList!!.indices) {
+        var currentMultiPartPosition : Int = 0
+
+        for (pos in vehicleImageList!!.indices) {
             /* val file = File(imageList[pos].image!!)
              requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
              body =
                  MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, requestFile)*/
 
-            val file = File(imageList[pos].image!!)
+            val file = File(vehicleImageList[pos])
             val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-            imagesMultipart[pos] = MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, surveyBody)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("vehicle_no_image_files[]", vehicleImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in meterImageList!!.indices) {
+            val file = File(meterImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("start_meter_image_files[]", meterImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in driverImageList!!.indices) {
+            val file = File(driverImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("driver_image_files[]", driverImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in badgeImageList!!.indices) {
+            val file = File(badgeImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("badge_no_image_files[]", badgeImageList[pos], surveyBody)
+            currentMultiPartPosition++
         }
 
 
@@ -418,8 +450,6 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
             var chargeskey : String = "tolls." + i + ".charges"
             map3[chargeskey] = tolls[0].tolls!!.get(i).charges.toString()
         }
-
-
 
         val map = HashMap<String?, String?>()
 
@@ -520,7 +550,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
     }
 
-private fun calmultipartdataMyRide(
+    private fun calmultipartdataMyRide(
         token: String?,
         id: String?,
         vehicleRateCardId: String?,
@@ -541,28 +571,54 @@ private fun calmultipartdataMyRide(
         sLong: String?,
         dLat: String?,
         dLong: String?,
-        imageList: ArrayList<ImageModel>?,
+        vehicleImageList: ArrayList<String>?,
+        meterImageList: ArrayList<String>?,
+        driverImageList: ArrayList<String>?,
+        badgeImageList: ArrayList<String>?,
         sourceAddress: String?,
         destAddress: String?,
         nightallow: String?,
         tolls: ArrayList<GetRideResponsePOJO.TollsItem>)
 
     {
-        var body: MultipartBody.Part? = null
+        val multipartSize : Int = vehicleImageList!!.size + meterImageList!!.size + driverImageList!!.size + badgeImageList!!.size
         val imagesMultipart = arrayOfNulls<MultipartBody.Part>(
-            imageList!!.size
+            multipartSize
         )
 
-        var requestFile: RequestBody
-        for (pos in imageList!!.indices) {
+        var currentMultiPartPosition : Int = 0
+
+        for (pos in vehicleImageList!!.indices) {
             /* val file = File(imageList[pos].image!!)
              requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
              body =
                  MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, requestFile)*/
 
-            val file = File(imageList[pos].image!!)
+            val file = File(vehicleImageList[pos])
             val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-            imagesMultipart[pos] = MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, surveyBody)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("vehicle_no_image_files[]", vehicleImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in meterImageList!!.indices) {
+            val file = File(meterImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("start_meter_image_files[]", meterImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in driverImageList!!.indices) {
+            val file = File(driverImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("driver_image_files[]", driverImageList[pos], surveyBody)
+            currentMultiPartPosition++
+        }
+
+        for (pos in badgeImageList!!.indices) {
+            val file = File(badgeImageList[pos])
+            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("badge_no_image_files[]", badgeImageList[pos], surveyBody)
+            currentMultiPartPosition++
         }
 
 

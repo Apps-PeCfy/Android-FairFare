@@ -82,6 +82,9 @@ class GetDisputResponsePOJO {
         @SerializedName("destinationFullAddress")
         var destinationFullAddress: String? = null
 
+        @SerializedName("estimatedDestinationFullAddress")
+        var estimatedDestinationFullAddress: String? = null
+
 
 
         @SerializedName("vehicleImageUrl")

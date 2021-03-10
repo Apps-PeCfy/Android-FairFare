@@ -1,5 +1,7 @@
 package com.example.fairfare.ui.drawer.mydisput
 
+import android.app.Dialog
+import android.content.Context
 import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import com.example.fairfare.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
+import com.example.fairfare.utils.AddressPopUp
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -119,11 +122,18 @@ class MyDisPutesAdapter(var context: FragmentActivity?, private val MyDisputsLis
         @BindView(R.id.iv_vehical)
         var iv_vehical: ImageView? = null
 
+
+        @JvmField
+        @BindView(R.id.ivViewInfo)
+        var ivViewInfo: ImageView? = null
+
+
         init {
             ButterKnife.bind(this, itemView)
             tv_fileCompllaint!!.setOnClickListener(this)
             tv_deleteDisput!!.setOnClickListener(this)
             rlVehicalDetails!!.setOnClickListener(this)
+            ivViewInfo!!.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
@@ -131,7 +141,23 @@ class MyDisPutesAdapter(var context: FragmentActivity?, private val MyDisputsLis
                 iDisputClick!!.fileComplaintClick(MyDisputsListList[adapterPosition].id)
             } else if (v!!.id == R.id.tv_deleteDisput) {
                 iDisputClick!!.deleteDisputClick(MyDisputsListList[adapterPosition].id)
-            }else{
+            }else if(v!!.id == R.id.ivViewInfo){
+
+                var eventDialogBind = AddressPopUp()
+
+                eventDialogBind?.eventInfoDialog = context?.let { Dialog(it, R.style.dialog_style) }
+                eventDialogBind?.eventInfoDialog!!.setCancelable(true)
+                val inflater1 =
+                    context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val view12: View = inflater1.inflate(R.layout.destination_address_popup, null)
+                eventDialogBind?.eventInfoDialog!!.setContentView(view12)
+                ButterKnife.bind(eventDialogBind!!, view12)
+
+                eventDialogBind!!.tvDestinationAddress!!.text =MyDisputsListList[adapterPosition].estimatedDestinationFullAddress
+                eventDialogBind!!.eventInfoDialog!!.show()
+
+
+            }else {
                 iDisputClick!!.detailDisputClick(MyDisputsListList[adapterPosition].id)
             }
 

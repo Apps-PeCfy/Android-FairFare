@@ -7,9 +7,11 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.location.Geocoder
@@ -17,6 +19,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.*
+import android.text.Html
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.Gravity
@@ -27,6 +30,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -302,14 +306,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     var progressDialogstart: ProgressDialog? = null
 
-
     @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
+
         progressDialogstart = ProgressDialog(this@HomeActivity)
         progressDialogstart!!.setCancelable(false) // set cancelable to false
         progressDialogstart!!.setMessage("Please Wait") // set message
@@ -509,6 +514,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                             cityPojoList = preferencesManager!!.getCityList()
                             if (cityPojoList != null && cityPojoList.size > 0) {
                                 setCitySpinner()
+
+
                             } else {
                                 getCity()
                             }
@@ -1058,10 +1065,18 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             if (mDrawerLayout!!.isDrawerOpen(Gravity.LEFT)) {
                 mDrawerLayout!!.closeDrawer(Gravity.LEFT)
             } else {
+
+              /*  val first = "Credit Points "
+                val next = "<font color='#F15E38'>"+preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)+"</font> "
+                tvEmailAddress!!.text =(Html.fromHtml(first + next.toUpperCase()))
+*/
+
+
+                tvEmailAddress!!.text ="Credit Points "+preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
+
                 tvUserName!!.text =
                     preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
-                tvEmailAddress!!.text =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL)
+
                 tvUserLocation!!.text =
                     preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION)
 
@@ -2127,6 +2142,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 cityPojoList = preferencesManager!!.getCityList()
                 if (cityPojoList != null && cityPojoList.size > 0) {
                     setCitySpinner()
+
+
                 } else {
                     getCity()
                 }
@@ -2494,7 +2511,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onBackPressed() {
         if (doubleBackPressed!!) {
-            finish()
+            finishAffinity()
         } else {
             doubleBackPressed = true
             Toast.makeText(

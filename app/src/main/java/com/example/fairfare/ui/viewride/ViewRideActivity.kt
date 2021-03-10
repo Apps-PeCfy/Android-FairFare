@@ -226,7 +226,9 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         compareRideList = intent.getSerializableExtra("spinnerdata") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
-        TOllList  = compareRideList.get(0).tolls!!
+        listPosition = intent.getIntExtra("listPosition", 0)
+
+        TOllList  = compareRideList.get(listPosition).tolls!!
 
         if(TOllList.size==0){
             ivViewTollInfo!!.visibility = View.GONE
@@ -234,7 +236,6 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
 
         spinnerposition = intent.getIntExtra("spinnerposition", 0)
-        listPosition = intent.getIntExtra("listPosition", 0)
         distance = intent.getStringExtra("distance")
         CITY_ID = intent.getStringExtra("CITY_ID")
         CITY_NAME = intent.getStringExtra("CITY_NAME")
@@ -318,7 +319,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
 
 
-      //  setListeners()
+        setListeners()
 
     }
 

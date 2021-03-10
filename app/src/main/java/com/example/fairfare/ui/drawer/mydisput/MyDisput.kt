@@ -148,7 +148,7 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
 
             rlEmpty!!.visibility = View.VISIBLE
             ivImg!!.setBackgroundResource(R.drawable.empty_disput)
-            tvEmptyTxt!!.text = "You have not registered any Disputes yet!"
+            tvEmptyTxt!!.text = "You have not registered any Disputes yet."
         }
 
 
