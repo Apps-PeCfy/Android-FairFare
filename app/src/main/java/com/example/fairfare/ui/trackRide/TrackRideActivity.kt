@@ -547,7 +547,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                         if (City_ID!!.toInt().equals(cityPojoList.get(i).id)) {
 
-                            if (cityPojoList.get(i).nightFromHours <= currentTime && cityPojoList.get(i).nightToHours >= currentTime) {
+                            if (cityPojoList.get(i).nightFromHours != null && cityPojoList.get(i).nightToHours != null && cityPojoList.get(i).nightFromHours <= currentTime && cityPojoList.get(i).nightToHours >= currentTime) {
 
                                 actualTravelDistanceForNightCharges.add(actulDis)
 
@@ -1989,7 +1989,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         if (!isMapZoomed!!) {
             isMapZoomed = true
             return 18.0f
-        } else if (mMap!!.cameraPosition.zoom < 5) {
+        } else if (mMap!!.cameraPosition.zoom < 10) {
             return 18.0f
         }
         return mMap!!.cameraPosition.zoom
@@ -2055,7 +2055,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            valueAnimator.duration = 2000 // duration 2 second
+            valueAnimator.duration = 1000 // duration 2 second
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener { animation ->
                 try {
