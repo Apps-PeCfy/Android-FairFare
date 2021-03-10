@@ -9,6 +9,7 @@ object Constants {
 
 
     var SHARED_PREFERENCE_LOGIN_ID = "id"
+    var SHARED_PREFERENCE_USER_REWARD = "reward"
     var SHARED_PREFERENCE_LOGIN_NAME = "name"
     var SHARED_PREFERENCE_LOGIN_EMAIL = "email"
     var SHARED_PREFERENCE_LOGIN_PHONENO = "phoneNo"
