@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/myDynamicLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/White"
-    android:id="@+id/myDynamicLayout"
     android:orientation="vertical"
     android:paddingStart="@dimen/_15sdp"
     android:paddingEnd="@dimen/_15sdp"
@@ -12,15 +12,12 @@
     >
 
 
-
-
-
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/llRateCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -35,21 +32,21 @@
 
 
         <com.google.android.material.tabs.TabLayout
-            android:layout_marginTop="@dimen/_30sdp"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
             android:visibility="visible"
             app:tabIndicatorColor="@color/gradientstartcolor"
             app:tabIndicatorHeight="1dp"
             app:tabSelectedTextColor="@color/Black" />
 
 
-       <!-- <TextView
-            android:id="@+id/idf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
--->
+        <!-- <TextView
+             android:id="@+id/idf"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+ -->
 
         <TextView
             android:id="@+id/tvCarName"
@@ -64,46 +61,62 @@
 
         <LinearLayout
 
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
             android:weightSum="2">
 
             <Spinner
-                android:visibility="gone"
+
                 android:id="@+id/spinner_city"
+
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_3sdp"
-                android:background="@drawable/spinner_rate_card"
                 android:layout_weight="1"
-                android:spinnerMode="dropdown" />
+                android:background="@drawable/spinner_rate_card"
+                android:spinnerMode="dropdown"
+                android:visibility="gone" />
 
 
             <Spinner
-                android:visibility="gone"
+
                 android:id="@+id/spinner_type_rate_card"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@drawable/spinner_rate_card"
                 android:layout_marginStart="@dimen/_3sdp"
                 android:layout_weight="1"
-                android:spinnerMode="dropdown" />
+                android:background="@drawable/spinner_rate_card"
+                android:spinnerMode="dropdown"
+                android:visibility="gone" />
+
+
+            <TextView
+
+                android:id="@+id/tvEmptySpinner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_29sdp"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:background="@drawable/empty_spinner"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_5sdp"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_12sdp" />
 
 
         </LinearLayout>
 
 
-
-
         <RadioGroup
-            android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/radiogroup"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical" />
 
 
         <LinearLayout
@@ -191,6 +204,7 @@
             android:layout_below="@+id/tv_myCurrentLocation"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/secondaryLightGray" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -297,9 +311,6 @@
 
 
         </LinearLayout>
-
-
-
 
 
         <androidx.viewpager.widget.ViewPager

@@ -74,7 +74,7 @@
                     android:id="@+id/homeView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
 
                     <LinearLayout
@@ -112,6 +112,7 @@
                         </RelativeLayout>
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
@@ -516,7 +517,8 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Estimated"
@@ -534,7 +536,8 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Actual"
@@ -580,7 +583,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="120 Min" />
@@ -596,7 +600,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Rs.1000 " />
@@ -638,7 +643,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="120 Min" />
@@ -654,7 +660,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Rs.1000 " />
@@ -716,7 +723,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="-" />
@@ -732,7 +740,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="12 Min " />
@@ -761,7 +770,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Fare"
+                                    android:text="Basic Fare"
                                     android:textColor="@color/Black"
                                     android:textStyle="bold" />
 
@@ -776,7 +785,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="120 Min" />
@@ -792,7 +802,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 1000 " />
@@ -836,7 +847,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -853,7 +865,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=" " />
@@ -896,7 +909,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -912,7 +926,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -957,7 +972,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="120 Min" />
@@ -973,7 +989,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 1000 " />
@@ -1035,7 +1052,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="-" />
@@ -1051,7 +1069,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="-" />
@@ -1095,7 +1114,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 0.00" />
@@ -1110,7 +1130,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 0.00 " />
@@ -1153,7 +1174,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="120 Min"
@@ -1171,7 +1193,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                   android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="₹ 1000 "

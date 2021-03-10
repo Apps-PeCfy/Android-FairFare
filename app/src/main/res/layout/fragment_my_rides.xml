@@ -9,6 +9,7 @@
 
     <RelativeLayout
 
+        android:visibility="gone"
         android:padding="@dimen/_10sdp"
         android:id="@+id/rl_sort"
         android:layout_width="match_parent"

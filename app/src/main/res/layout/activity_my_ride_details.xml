@@ -248,8 +248,9 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Estimated"
                                     android:textColor="@color/Black"
@@ -266,8 +267,9 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Actual"
                                     android:textColor="@color/Black"
@@ -311,8 +313,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -327,8 +330,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -369,8 +373,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -385,8 +390,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -447,8 +454,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -463,8 +472,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="-" />
 
@@ -492,7 +503,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Fare"
+                                    android:text="Basic Fare"
                                     android:textColor="@color/Black"
                                     android:textStyle="bold" />
 
@@ -507,8 +518,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -523,8 +536,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=" " />
 
@@ -568,8 +583,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -585,8 +602,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=" " />
 
@@ -629,8 +648,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -645,8 +666,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -690,8 +713,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -706,8 +731,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -721,21 +748,20 @@
                                 android:background="@color/secondaryLightGray" />
 
 
-
                             <!-- TOLL CHARGES -->
 
                             <LinearLayout
-                                android:visibility="visible"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
+                                android:visibility="visible"
                                 android:weightSum="3">
 
                                 <RelativeLayout
                                     android:layout_width="0dp"
-                                    android:gravity="center"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1">
+                                    android:layout_weight="1"
+                                    android:gravity="center">
 
 
                                     <TextView
@@ -748,11 +774,11 @@
                                         android:textStyle="bold" />
 
                                     <ImageView
-                                        android:layout_marginStart="@dimen/_3sdp"
                                         android:id="@+id/ivViewTollInfo"
                                         android:layout_width="@dimen/_16sdp"
                                         android:layout_height="@dimen/_16sdp"
                                         android:layout_centerInParent="true"
+                                        android:layout_marginStart="@dimen/_3sdp"
                                         android:layout_toRightOf="@+id/tvTollCharges"
                                         android:background="@drawable/view_info" />
 
@@ -771,8 +797,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="-" />
 
@@ -787,8 +815,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="-" />
 
@@ -832,8 +862,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -848,8 +879,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
 
@@ -860,7 +893,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1sp"
                                 android:background="@color/secondaryLightGray" />
-
 
 
                             <!-- TOTAL FARES -->
@@ -893,8 +925,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=""
                                     android:textColor="@color/gradientstartcolor"
@@ -911,8 +945,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=""
                                     android:textColor="@color/gradientstartcolor"
