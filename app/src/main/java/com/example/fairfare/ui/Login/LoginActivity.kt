@@ -168,7 +168,7 @@ class LoginActivity : AppCompatActivity(),
 
     override fun onBackPressed() {
         if (doubleBackPressed!!) {
-            finish()
+            finishAffinity()
         } else {
             doubleBackPressed = true
             Toast.makeText(
@@ -540,6 +540,7 @@ class LoginActivity : AppCompatActivity(),
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, response.body()!!.token)
                         mPreferencesManager!!.setIntegerValue(Constants.SHARED_PREFERENCE_LOGIN_ID, loginResponsepojo!!.user!!.id)
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME, loginResponsepojo!!.user!!.name)
+                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, loginResponsepojo!!.user!!.rewards)
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL, loginResponsepojo!!.user!!.email)
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO, loginResponsepojo!!.user!!.phoneNo)
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER, loginResponsepojo!!.user!!.gender)
@@ -630,6 +631,8 @@ class LoginActivity : AppCompatActivity(),
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, response.body()!!.token)
                         mPreferencesManager!!.setIntegerValue(Constants.SHARED_PREFERENCE_LOGIN_ID, loginResponsepojo!!.user!!.id)
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME, loginResponsepojo!!.user!!.name)
+                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, loginResponsepojo!!.user!!.rewards)
+
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL, loginResponsepojo!!.user!!.email)
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO, loginResponsepojo!!.user!!.phoneNo)
                         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER, loginResponsepojo!!.user!!.gender)
@@ -763,6 +766,7 @@ class LoginActivity : AppCompatActivity(),
             mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, loginResponsepojo.token)
             mPreferencesManager!!.setIntegerValue(Constants.SHARED_PREFERENCE_LOGIN_ID, loginResponsepojo!!.user!!.id)
             mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME, loginResponsepojo!!.user!!.name)
+            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, loginResponsepojo!!.user!!.rewards)
             mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL, loginResponsepojo!!.user!!.email)
             mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO, loginResponsepojo!!.user!!.phoneNo)
             mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER, loginResponsepojo!!.user!!.gender)

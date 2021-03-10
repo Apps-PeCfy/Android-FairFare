@@ -71,7 +71,7 @@
                 <ScrollView
 
                     android:id="@+id/endRideView"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -157,29 +157,69 @@
                                     android:layout_marginEnd="@dimen/_15sdp"
                                     android:background="@color/secondaryLightGray" />
 
+                                <RelativeLayout
 
-                                <TextView
-                                    android:paddingTop="@dimen/_10sdp"
-                                    android:paddingBottom="@dimen/_10sdp"
-
-                                    android:id="@+id/tv_myDropUpLocation"
+                                    android:id="@+id/destnationAddresslayout"
+                                    android:layout_marginEnd="@dimen/_10sdp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@+id/view"
-                                    android:layout_marginStart="@dimen/_10sdp"
-                                    android:layout_marginEnd="@dimen/_10sdp"
-                                    android:drawableStart="@drawable/triangle"
-                                    android:drawablePadding="@dimen/_15sdp"
-                                    android:fontFamily="@font/notosansjp_regular"
-                                    android:gravity="center_vertical"
-                                    android:includeFontPadding="false"
-                                    android:text="Drop-off Location " />
+                                    android:layout_below="@+id/view">
 
+
+
+                                    <TextView
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_10sdp"
+                                        android:layout_toStartOf="@+id/ivViewInfoAddress"
+                                        android:id="@+id/tv_myDropUpLocation"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_10sdp"
+                                        android:drawableStart="@drawable/triangle"
+                                        android:drawablePadding="@dimen/_15sdp"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:gravity="center_vertical"
+                                        android:includeFontPadding="false"
+                                        android:text="Drop-off Location " />
+
+
+                                    <ImageView
+                                        android:layout_alignParentEnd="true"
+                                        android:id="@+id/ivViewInfoAddress"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:background="@drawable/view_info" />
+
+
+                                </RelativeLayout>
+
+
+
+
+                                <!--    <TextView
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_10sdp"
+
+                                        android:id="@+id/tv_myDropUpLocation"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/view"
+                                        android:layout_marginStart="@dimen/_10sdp"
+                                        android:layout_marginEnd="@dimen/_10sdp"
+                                        android:drawableStart="@drawable/triangle"
+                                        android:drawablePadding="@dimen/_15sdp"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:gravity="center_vertical"
+                                        android:includeFontPadding="false"
+                                        android:text="Drop-off Location " />
+    -->
 
                                 <View
                                     android:layout_width="@dimen/_1sdp"
                                     android:layout_height="match_parent"
-                                    android:layout_above="@+id/tv_myDropUpLocation"
+                                    android:layout_above="@+id/destnationAddresslayout"
                                     android:layout_below="@+id/tv_myCurrentLocation"
                                     android:layout_marginStart="@dimen/_14sdp"
                                     android:layout_marginTop="-17dp"
@@ -385,7 +425,8 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Estimated"
@@ -403,7 +444,8 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Actual"
@@ -448,7 +490,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -464,7 +507,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp" />
 
@@ -505,7 +549,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -521,7 +566,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp" />
 
@@ -583,7 +629,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -600,7 +647,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=" " />
@@ -627,7 +675,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Fare"
+                                    android:text="Basic Fare"
                                     android:textColor="@color/Black"
                                     android:textStyle="bold" />
 
@@ -642,7 +690,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -658,7 +707,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp" />
 
@@ -701,7 +751,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -718,7 +769,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=" " />
@@ -760,7 +812,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -776,7 +829,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -820,7 +874,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="" />
@@ -836,7 +891,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp" />
 
@@ -896,7 +952,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="-" />
@@ -913,7 +970,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="-" />
@@ -956,7 +1014,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp" />
 
@@ -972,7 +1031,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp" />
 
@@ -1015,7 +1075,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=""
@@ -1033,7 +1094,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:gravity="end"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=""

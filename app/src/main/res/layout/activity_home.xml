@@ -379,7 +379,8 @@
                     android:gravity="center"
                     android:textColor="@color/White"
                     android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/notosansjp_bold"
+                    />
 
                 <TextView
                     android:id="@+id/tvEmailAddress"
@@ -387,9 +388,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvUserName"
                     android:gravity="center"
-                    android:visibility="gone"
+                    android:fontFamily="@font/notosansjp_bold"
+                    android:visibility="visible"
                     android:textColor="@color/White"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout
                     android:id="@+id/usertypelayout"

@@ -52,6 +52,8 @@ class LoginResponsepojo {
         val location: String? = null
 
 
+        @SerializedName("rewards")
+        val rewards: String? = null
 
 
         @SerializedName("id")

@@ -30,7 +30,8 @@ class EndRideImplementer(private val view: IEndRideView) : IEndRidePresenter {
         endAddress: String?,
         originLat: String?,
         originLon: String?,
-        originAddress: String?
+        originAddress: String?,
+        nightChargeDistance: String?
 
     ) {
 
@@ -83,6 +84,7 @@ class EndRideImplementer(private val view: IEndRideView) : IEndRidePresenter {
 
         try {
             jsonMainObj = JSONObject()
+            jsonMainObj.accumulate("km_of_night", nightChargeDistance)
             jsonMainObj.accumulate("distance", distance)
             jsonMainObj.accumulate("duration", duration)
             jsonMainObj.accumulate("ride_id", rideId)

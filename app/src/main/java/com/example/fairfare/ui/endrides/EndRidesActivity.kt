@@ -29,6 +29,7 @@ import com.example.fairfare.ui.endrides.pojo.ResponseEnd
 import com.example.fairfare.ui.mapDraw.DrawMap
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.ridereview.RideReviewActivity
+import com.example.fairfare.utils.AddressPopUp
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
 import com.example.fairfare.utils.ProjectUtilities
@@ -37,7 +38,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import kotlinx.android.synthetic.main.spinner_item.view.*
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -48,11 +48,13 @@ import java.net.URL
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
     private var iEndRidePresenter: IEndRidePresenter? = null
 
+    var estAddressPopup: String? = ""
     var rideID: String? = null
     var sAdd: String? = null
     var EndRideCurrentLat: String? = null
@@ -62,6 +64,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
     var actualDistanceTravelled: String? = null
     var actualTimeTravelled: String? = null
+    var actualDistanceTravelledForNightCharges: String? = null
 
 
     var dAdd: String? = null
@@ -219,7 +222,11 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     @BindView(R.id.ivUserIcon)
     var ivUserIcon: ImageView? = null
 
-  @JvmField
+    @JvmField
+    @BindView(R.id.ivViewInfoAddress)
+    var ivViewInfoAddress: ImageView? = null
+
+    @JvmField
     @BindView(R.id.endRideView)
     var endRideView: ScrollView? = null
 
@@ -266,11 +273,15 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         EndRideCurrentLon = intent.getStringExtra("EndRideCurrentLon")
 
         actualTimeTravelled = intent.getStringExtra("actualTimeTravelled")
+        actualDistanceTravelledForNightCharges =
+            intent.getStringExtra("actualDistanceTravelledForNightCharges")
+
+        actualTimeTravelled = actualTimeTravelled!!.toFloat().roundToInt().toString()
         actualDistanceTravelled = intent.getStringExtra("actualDistanceTravelled")
 
 
-        actualDistanceTravelled = DecimalFormat("####.#").format((actualDistanceTravelled!!.toDouble()))
-
+        actualDistanceTravelled =
+            DecimalFormat("####.#").format((actualDistanceTravelled!!.toDouble()))
 
 
         val mapFragment = supportFragmentManager
@@ -278,7 +289,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         mapFragment!!.getMapAsync(this)
 
         tv_myCurrentLocation!!.text = sAdd
-        tv_myDropUpLocation!!.text = dAdd
+        tv_myDropUpLocation!!.text = EndRideCurrentAddress
 
 
         iEndRidePresenter = EndRideImplementer(this)
@@ -293,7 +304,8 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
             EndRideCurrentAddress,
             originLat,
             originLong,
-            sAdd
+            sAdd,
+            actualDistanceTravelledForNightCharges
         )
 
         mToolbar!!.title = "End Ride"
@@ -313,6 +325,26 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
             window.statusBarColor = activity.resources.getColor(android.R.color.transparent)
             window.setBackgroundDrawable(background)
         }
+    }
+
+
+    @OnClick(R.id.ivViewInfoAddress)
+    fun setAddress() {
+        var eventDialogBindAddressPopup = AddressPopUp()
+
+        eventDialogBindAddressPopup?.eventInfoDialog =
+            Dialog(this@EndRidesActivity, R.style.dialog_style)
+        eventDialogBindAddressPopup?.eventInfoDialog!!.setCancelable(true)
+        val inflater1 =
+            this@EndRidesActivity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view12: View = inflater1.inflate(R.layout.destination_address_popup, null)
+        eventDialogBindAddressPopup?.eventInfoDialog!!.setContentView(view12)
+        ButterKnife.bind(eventDialogBindAddressPopup!!, view12)
+
+        eventDialogBindAddressPopup!!.tvDestinationAddress!!.text = estAddressPopup
+        eventDialogBindAddressPopup!!.eventInfoDialog!!.show()
+
+
     }
 
     @OnClick(R.id.ivViewInfo)
@@ -419,6 +451,9 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
         endRideView!!.visibility = View.VISIBLE
 
+
+        estAddressPopup = endRideResponsePOJO?.ride!!.estimatedTrackRide!!.destinationFullAddress
+
         waitingList = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitings!!
         tollList = endRideResponsePOJO!!.ride!!.actualTrackRide!!.tolls!!
 
@@ -448,9 +483,9 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         tvEstWaitTime!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingTime
         tvActualWaitTime!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingTime
 
-        if(endRideResponsePOJO!!.ride!!.actualTrackRide!!.tollCharges.equals("-")){
+        if (endRideResponsePOJO!!.ride!!.actualTrackRide!!.tollCharges.equals("-")) {
 
-        }else{
+        } else {
             tvActualTollCharges!!.text =
                 "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.tollCharges
 
@@ -496,9 +531,9 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         tv_actualFare!!.text = "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.subTotalCharges
 
 
-        if(endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.tollCharges.equals("-")){
+        if (endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.tollCharges.equals("-")) {
 
-        }else{
+        } else {
             tvEstTollCharges!!.text =
                 "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.tollCharges
 
@@ -774,11 +809,9 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     }
 
 
-
     override fun onBackPressed() {
 
     }
-
 
 
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -74,6 +76,10 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
     @JvmField
     @BindView(R.id.ivImg)
     var ivImg: ImageView? = null
+
+    @JvmField
+    @BindView(R.id.rl_sort)
+    var rl_sort: RelativeLayout? = null
 
     @JvmField
     @BindView(R.id.tvEmptyTxt)
@@ -289,6 +295,8 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
     }
 
     override fun getRidesSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {
+
+
         myRideList = getRideResponsePOJO!!.data!!
         CurrentpageCount = getRideResponsePOJO.currentPage
         totalPageCount = getRideResponsePOJO.lastPage
@@ -296,6 +304,8 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
 
 
         if (myRideList.size > 0) {
+            rl_sort!!.visibility = View.VISIBLE
+
 
             for (i in myRideList!!.indices) {
                 if (mylist.contains(myRideList.get(i).status)) {
@@ -314,9 +324,10 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
             myTripsAdapter!!.setClickListener(this@MyRides)
             myTripsAdapter!!.notifyDataSetChanged()
         } else {
+            rl_sort!!.visibility = View.GONE
             rlEmpty!!.visibility = View.VISIBLE
             ivImg!!.setBackgroundResource(R.drawable.empty_ride)
-            tvEmptyTxt!!.text = "You have not taken any Rides yet!"
+            tvEmptyTxt!!.text = "You have not taken any Rides yet."
 
         }
 

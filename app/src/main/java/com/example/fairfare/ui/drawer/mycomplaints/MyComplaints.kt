@@ -107,7 +107,7 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
                     }else{
                         rlEmpty!!.visibility=View.VISIBLE
                         ivImg!!.setBackgroundResource(R.drawable.empty_complaint)
-                        tvEmptyTxt!!.text="You have not filed any Complaints yet!"
+                        tvEmptyTxt!!.text="You have not filed any Complaints yet."
 
                     }
 

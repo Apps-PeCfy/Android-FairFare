@@ -327,7 +327,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
             currentPlaceId!!
         )*/
 
-     //   setListeners()
+        setListeners()
 
     }
 

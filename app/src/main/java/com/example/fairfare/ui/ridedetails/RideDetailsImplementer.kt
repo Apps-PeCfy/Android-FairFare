@@ -126,7 +126,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
             val call = ApiClient.client.startRidear(
                 "Bearer $token",
-               jsonProductObj.toString())
+                jsonProductObj.toString())
             call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
                 override fun onResponse(
                     call: Call<ScheduleRideResponsePOJO?>,
@@ -291,7 +291,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
             val call = ApiClient.client.startRidear(
                 "Bearer $token",
-               jsonProductObj.toString())
+                jsonProductObj.toString())
             call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
                 override fun onResponse(
                     call: Call<ScheduleRideResponsePOJO?>,
@@ -550,7 +550,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
     }
 
-private fun calmultipartdataMyRide(
+    private fun calmultipartdataMyRide(
         token: String?,
         id: String?,
         vehicleRateCardId: String?,

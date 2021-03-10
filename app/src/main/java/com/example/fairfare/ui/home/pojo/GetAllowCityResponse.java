@@ -68,6 +68,12 @@ public class GetAllowCityResponse{
 		@SerializedName("name")
 		private String name;
 
+		@SerializedName("nightFromHours")
+		private String nightFromHours;
+
+		@SerializedName("nightToHours")
+		private String nightToHours;
+
 		@SerializedName("id")
 		private int id;
 
@@ -79,6 +85,14 @@ public class GetAllowCityResponse{
 			return name;
 		}
 
+		public void setNightFromHours(String nightFromHours){ this.nightFromHours = nightFromHours; }
+
+		public String getNightFromHours(){ return nightFromHours; }
+
+		public void setNightToHours(String nightToHours){ this.nightToHours = nightToHours; }
+
+		public String getNightToHours(){ return nightToHours; }
+
 		public void setId(int id){
 			this.id = id;
 		}
@@ -87,11 +101,14 @@ public class GetAllowCityResponse{
 			return id;
 		}
 
+
 		@Override
 		public String toString(){
 			return
 					"CitiesItem{" +
 							"name = '" + name + '\'' +
+							"nightFromHours = '" + nightFromHours + '\'' +
+							"nightToHours = '" + nightToHours + '\'' +
 							",id = '" + id + '\'' +
 							"}";
 		}

@@ -159,7 +159,6 @@ class BackgroundLocationService : Service() {
         }else{
             permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
         }
-            
         if (!hasPermissions(this, *permission)) {
             ActivityCompat.requestPermissions(
                 (this as Activity?)!!,

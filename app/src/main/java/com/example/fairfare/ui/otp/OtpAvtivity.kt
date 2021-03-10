@@ -242,6 +242,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, verifyOTPResponsePojo!!.token)
         mPreferencesManager!!.setIntegerValue(Constants.SHARED_PREFERENCE_LOGIN_ID, verifyOTPResponsePojo!!.user!!.id)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME, verifyOTPResponsePojo!!.user!!.name)
+        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, verifyOTPResponsePojo!!.user!!.rewards)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL, verifyOTPResponsePojo!!.user!!.email)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO, verifyOTPResponsePojo!!.user!!.phoneNo)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER, verifyOTPResponsePojo!!.user!!.gender)

@@ -54,6 +54,10 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
     var viewPager: ViewPager? = null
 
     @JvmField
+    @BindView(R.id.tvEmptySpinner)
+    var tvEmptySpinner: TextView? = null
+
+    @JvmField
     @BindView(R.id.llRateCard)
     var llRateCard: LinearLayout? = null
 
@@ -210,12 +214,11 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
         progressDialog.show() // show progress dialog
 
 
-
         val cLat = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_CLat)
         val cLong = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_CLong)
 
 
-        ApiClient.client.getAllowCities("Bearer $token",cLat,cLong)!!.enqueue(object :
+        ApiClient.client.getAllowCities("Bearer $token", cLat, cLong)!!.enqueue(object :
             Callback<GetAllowCityResponse?> {
             override fun onResponse(
                 call: Call<GetAllowCityResponse?>,
@@ -376,12 +379,22 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
 
+                        if (getRateCardList.get(0).rateCards!!.size > 1) {
+                            tvEmptySpinner!!.visibility = View.GONE
+                            spinner_type_rate_card!!.visibility = View.VISIBLE
 
-                        spinnr = java.util.ArrayList()
-                        for (i in (getRateCardList.get(0).rateCards)!!.indices) {
-                            (spinnr as ArrayList<String?>).add(
-                                getRateCardList[0]!!.rateCards!!.get(i).name
-                            )
+                            spinnr = java.util.ArrayList()
+                            for (i in (getRateCardList.get(0).rateCards)!!.indices) {
+                                (spinnr as ArrayList<String?>).add(
+                                    getRateCardList[0]!!.rateCards!!.get(i).name
+                                )
+
+                            }
+                        }else{
+                            tvEmptySpinner!!.visibility = View.VISIBLE
+                            spinner_type_rate_card!!.visibility = View.GONE
+                            tvEmptySpinner!!.text =  getRateCardList[0]!!.rateCards!!.get(0).name
+                            ZerothPosition()
 
                         }
 
@@ -397,32 +410,63 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                             rdbtn.id = View.generateViewId()
                             rdbtn.setOnClickListener(this@RateCard)
 
-                            if(cityId.equals("2707")){
-                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                            if (cityId.equals("2707")) {
+                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(
+                                        i
+                                    ).rateCardType)!!.contains("DOMS")
+                                ) {
                                     val imgResource: Int = R.drawable.domestic_icon
-                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(
+                                        0,
+                                        0,
+                                        imgResource,
+                                        0
+                                    )
                                     rdbtn.setCompoundDrawablePadding(100)
                                 }
 
 
-                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(
+                                        i
+                                    ).rateCardType)!!.contains("INTL")
+                                ) {
                                     val imgResource: Int = R.drawable.international_icon
-                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(
+                                        0,
+                                        0,
+                                        imgResource,
+                                        0
+                                    )
                                     rdbtn.setCompoundDrawablePadding(130)
                                 }
 
-                            }else
-                            {
-                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                            } else {
+                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(
+                                        i
+                                    ).rateCardType)!!.contains("DOMS")
+                                ) {
                                     val imgResource: Int = R.drawable.pune_dom
-                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(
+                                        0,
+                                        0,
+                                        imgResource,
+                                        0
+                                    )
                                     rdbtn.setCompoundDrawablePadding(100)
                                 }
 
 
-                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(
+                                        i
+                                    ).rateCardType)!!.contains("INTL")
+                                ) {
                                     val imgResource: Int = R.drawable.pune_intl
-                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(
+                                        0,
+                                        0,
+                                        imgResource,
+                                        0
+                                    )
                                     rdbtn.setCompoundDrawablePadding(130)
                                 }
 
@@ -430,7 +474,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
 
-                            rdbtn.text = (getRateCardList.get(0).rateCards!!.get(0).rateCards!!.get(i).rateCardType) + ""
+                            rdbtn.text =
+                                (getRateCardList.get(0).rateCards!!.get(0).rateCards!!.get(i).rateCardType) + ""
                             mRgAllButtons!!.addView(rdbtn)
 
                             if (i == 0) {
@@ -442,13 +487,25 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                         spinner_type_rate_card!!.visibility = View.VISIBLE
                         spinner_city!!.visibility = View.VISIBLE
 
-                        val auto: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                            context!!,
-                            android.R.layout.simple_spinner_dropdown_item,
-                            spinnr!!
-                        )
-                        auto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        spinner_type_rate_card!!.adapter = auto
+                        if (getRateCardList.get(0).rateCards!!.size > 1) {
+
+                            tvEmptySpinner!!.visibility = View.GONE
+                            spinner_type_rate_card!!.visibility = View.VISIBLE
+
+
+                            val auto: ArrayAdapter<*> = ArrayAdapter<Any?>(
+                                context!!,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                spinnr!!
+                            )
+                            auto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                            spinner_type_rate_card!!.adapter = auto
+                        }else{
+                            tvEmptySpinner!!.visibility = View.VISIBLE
+                            spinner_type_rate_card!!.visibility = View.GONE
+                            tvEmptySpinner!!.text =  getRateCardList[0]!!.rateCards!!.get(0).name
+
+                        }
 
 
                         //  viewPager!!.adapter = adapter
@@ -466,25 +523,39 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                                 tvCarName!!.text = getRateCardList[tab.position].name
 
 
-                                spinnr = java.util.ArrayList()
-                                for (i in (getRateCardList.get(tab.position).rateCards)!!.indices) {
-                                    (spinnr as ArrayList<String?>).add(
-                                        getRateCardList[tab.position]!!.rateCards!!.get(
-                                            i
-                                        ).name
+
+                                if (getRateCardList.get(tab.position).rateCards!!.size > 1) {
+
+                                    tvEmptySpinner!!.visibility = View.GONE
+                                    spinner_type_rate_card!!.visibility = View.VISIBLE
+                                    spinnr = java.util.ArrayList()
+
+                                    for (i in (getRateCardList.get(tab.position).rateCards)!!.indices) {
+                                        (spinnr as ArrayList<String?>).add(
+                                            getRateCardList[tab.position]!!.rateCards!!.get(
+                                                i
+                                            ).name
+                                        )
+
+                                    }
+
+
+
+                                    val auto: ArrayAdapter<*> = ArrayAdapter<Any?>(
+                                        context!!,
+                                        android.R.layout.simple_spinner_dropdown_item,
+                                        spinnr!!
                                     )
+                                    auto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                                    spinner_type_rate_card!!.adapter = auto
+                                    spinner_type_rate_card!!.onItemSelectedListener = this@RateCard
+                                }else{
+                                    tvEmptySpinner!!.visibility = View.VISIBLE
+                                    spinner_type_rate_card!!.visibility = View.GONE
+                                    tvEmptySpinner!!.text =  getRateCardList[tab.position]!!.rateCards!!.get(0).name
+                                    ZerothPosition()
 
                                 }
-
-
-                                val auto: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                                    context!!,
-                                    android.R.layout.simple_spinner_dropdown_item,
-                                    spinnr!!
-                                )
-                                auto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                                spinner_type_rate_card!!.adapter = auto
-                                spinner_type_rate_card!!.onItemSelectedListener = this@RateCard
 
 
                                 //
@@ -569,8 +640,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 citycalles = "second"
             }
 
-        } else {
-
+        } else
+        {
 
 
             itemSelectedPosition = position
@@ -583,30 +654,41 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 rdbtn.id = View.generateViewId()
 
                 rdbtn.setOnClickListener(this)
-                if(cityID1.equals("2707")){
-                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                if (cityID1.equals("2707")) {
+                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)!!.contains(
+                            "DOMS"
+                        )
+                    ) {
                         val imgResource: Int = R.drawable.domestic_icon
                         rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
                         rdbtn.setCompoundDrawablePadding(100)
                     }
 
 
-                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)!!.contains(
+                            "INTL"
+                        )
+                    ) {
                         val imgResource: Int = R.drawable.international_icon
                         rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
                         rdbtn.setCompoundDrawablePadding(130)
                     }
 
-                }else
-                {
-                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("DOMS")) {
+                } else {
+                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)!!.contains(
+                            "DOMS"
+                        )
+                    ) {
                         val imgResource: Int = R.drawable.pune_dom
                         rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
                         rdbtn.setCompoundDrawablePadding(100)
                     }
 
 
-                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains("INTL")) {
+                    if ((getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)!!.contains(
+                            "INTL"
+                        )
+                    ) {
                         val imgResource: Int = R.drawable.pune_intl
                         rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
                         rdbtn.setCompoundDrawablePadding(130)
@@ -615,7 +697,9 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 }
 
                 rdbtn.text =
-                    (getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(i).rateCardType)
+                    (getRateCardList.get(selectedPosition).rateCards!!.get(position).rateCards!!.get(
+                        i
+                    ).rateCardType)
                 mRgAllButtons!!.addView(rdbtn)
 
                 if (i == 0) {
@@ -789,6 +873,128 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
         }
 
+
+    }
+
+
+    fun ZerothPosition(){
+
+
+        mRgAllButtons = activity!!.findViewById(R.id.radiogroup)
+
+        mRgAllButtons!!.removeAllViews()
+        mRgAllButtons!!.setOrientation(LinearLayout.VERTICAL)
+        for (i in (getRateCardList.get(selectedPosition).rateCards)!!.get(0).rateCards!!.indices) {
+            val rdbtn = RadioButton(activity)
+            rdbtn.id = View.generateViewId()
+
+            rdbtn.setOnClickListener(this)
+            if (cityID1.equals("2707")) {
+                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains(
+                        "DOMS"
+                    )
+                ) {
+                    val imgResource: Int = R.drawable.domestic_icon
+                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                    rdbtn.setCompoundDrawablePadding(100)
+                }
+
+
+                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains(
+                        "INTL"
+                    )
+                ) {
+                    val imgResource: Int = R.drawable.international_icon
+                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                    rdbtn.setCompoundDrawablePadding(130)
+                }
+
+            } else {
+                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains(
+                        "DOMS"
+                    )
+                ) {
+                    val imgResource: Int = R.drawable.pune_dom
+                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                    rdbtn.setCompoundDrawablePadding(100)
+                }
+
+
+                if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(i).rateCardType)!!.contains(
+                        "INTL"
+                    )
+                ) {
+                    val imgResource: Int = R.drawable.pune_intl
+                    rdbtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, imgResource, 0)
+                    rdbtn.setCompoundDrawablePadding(130)
+                }
+
+            }
+
+            rdbtn.text =
+                (getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(
+                    i
+                ).rateCardType)
+            mRgAllButtons!!.addView(rdbtn)
+
+            if (i == 0) {
+                mRgAllButtons!!.check(rdbtn.id)
+            }
+        }
+
+
+        tvCarName!!.text = getRateCardList[selectedPosition].rateCards!!.get(0).name
+
+
+        tvFare!!.text =
+            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
+                0
+            ).minBaseFare +
+                    " for first 1.50 km and thereafter ₹ " +
+                    getRateCardList[selectedPosition].rateCards!!.get(0).rateCards!!.get(
+                        0
+                    ).fareAfterMinbdist +
+                    " for every additional km."
+
+
+
+        tvNightCharges!!.text =
+            getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
+                0
+            ).nightChargesInPercentage + " of the Fare"
+
+        tvWaitingCharges!!.text =
+            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
+                0
+            ).waitingCharges + " per minute "
+
+
+
+
+
+
+
+        if ((getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge).equals(
+                "0"
+            )
+        ) {
+            tvSurCHarges!!.text = "Surcharge Not Applicable"
+
+        } else {
+            tvSurCHarges!!.text =
+                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
+                    0
+                ).surcharge + " per booking"
+
+        }
+
+
+
+        tvLuggage!!.text =
+            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
+                0
+            ).chargesPerLuggage +
+                    " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
 
     }
 

@@ -88,7 +88,7 @@
                 <RelativeLayout
                     android:id="@+id/addressDetails"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_140sdp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/view"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -191,28 +191,53 @@
                             android:background="@color/secondaryLightGray" />
 
 
-                        <TextView
-                            android:paddingTop="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_10sdp"
-
-                            android:id="@+id/destnationAddress"
+                        <RelativeLayout
+                            android:id="@+id/destnationAddresslayout"
+                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/view1"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:drawableStart="@drawable/triangle"
-                            android:drawablePadding="@dimen/_15sdp"
-                            android:fontFamily="@font/notosansjp_bold"
-                            android:gravity="center_vertical"
-                            android:includeFontPadding="false"
-                            android:text="Drop-off Location " />
+                            android:layout_below="@+id/view1">
+
+
+                            <TextView
+
+                                android:id="@+id/destnationAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:drawableStart="@drawable/triangle"
+                                android:drawablePadding="@dimen/_15sdp"
+                                android:fontFamily="@font/notosansjp_bold"
+                                android:layout_toLeftOf="@+id/ivViewInfo"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="Drop-off Location " />
+
+
+
+
+
+
+
+                            <ImageView
+                                android:layout_alignParentEnd="true"
+                                android:id="@+id/ivViewInfo"
+                                android:layout_width="@dimen/_16sdp"
+                                android:layout_height="@dimen/_16sdp"
+                                android:layout_centerInParent="true"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:background="@drawable/view_info" />
+
+
+                        </RelativeLayout>
 
 
                         <View
                             android:layout_width="@dimen/_1sdp"
                             android:layout_height="match_parent"
-                            android:layout_above="@+id/destnationAddress"
+                            android:layout_above="@+id/destnationAddresslayout"
                             android:layout_below="@+id/tv_myCurrentLocation"
                             android:layout_marginStart="@dimen/_14sdp"
                             android:layout_marginTop="-17dp"
