@@ -450,6 +450,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     override fun endRideSuccess(endRideResponsePOJO: ResponseEnd?) {
 
         endRideView!!.visibility = View.VISIBLE
+        preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, endRideResponsePOJO!!.rewards)
 
 
         estAddressPopup = endRideResponsePOJO?.ride!!.estimatedTrackRide!!.destinationFullAddress

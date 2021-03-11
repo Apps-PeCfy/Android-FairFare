@@ -284,6 +284,11 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var waitStartLong: String? = ""
     var vehicleName: String? = ""
 
+    var destinationLat:String=""
+    var destinationLong:String=""
+    var actualRemainingDistanceInMeter: Int = 0
+
+
     var passjObject: JSONObject? = null
 
 
@@ -399,7 +404,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         }
 
 
-        //   tv_estimatedDistance!!.text = info.ride!!.estimatedTrackRide!!.distance + " km"
+
+
+            //   tv_estimatedDistance!!.text = info.ride!!.estimatedTrackRide!!.distance + " km"
         tv_travelTime!!.text = info.ride!!.estimatedTrackRide!!.duration
 
 
@@ -933,8 +940,218 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
         travelledDistance = R * c
+        tracelledPopUP(travelledDistance)
         return R * c
     }
+
+    private fun tracelledPopUP(Distancetravelled: Double?) {
+
+       // var twoDecimal = Distancetravelled!!.toFloat()
+        var twoDecimal = String.format("%.02f", Distancetravelled!!.toFloat())
+
+
+        if (twoDecimal.equals("0.00")) {
+            actualRemainingDistanceInMeter = 100
+        } else {
+
+            var InMeter: Float
+
+            InMeter = twoDecimal!!.toFloat()
+            actualRemainingDistanceInMeter = (InMeter * 1000).toInt()
+
+
+        }
+
+        if (actualRemainingDistanceInMeter >= 500) {
+
+            val alertDialog = AlertDialog.Builder(this)
+            alertDialog.setTitle("FairFare")
+            alertDialog.setMessage("You have not reached the destination yet. Are you sure you want to end the ride?")
+            alertDialog.setCancelable(false)
+            alertDialog.setPositiveButton("Yes") { dialog, which ->
+
+                if (Constants.IS_OLD_PICK_UP_CODE) {
+                    handler.removeCallbacksAndMessages(null)
+                } else {
+                    unBindBackgroundService()
+
+                }
+
+
+                var totalActualDistanceForNightCharges = 0.0
+
+
+                if (actualTravelDistanceForNightCharges.size > 0) {
+                    for (i in actualTravelDistanceForNightCharges.indices) {
+                        totalActualDistanceForNightCharges = totalActualDistanceForNightCharges + actualTravelDistanceForNightCharges[i]
+
+                    }
+
+                    val strDistCalForKM = (totalActualDistanceForNightCharges / 1000).toString()//meter
+                    val distForNightCharges = String.format("%.02f", strDistCalForKM!!.toDouble())
+
+                    actualDistanceForNightCharg = distForNightCharges
+
+                }
+
+
+                val intentr = Intent(applicationContext, EndRidesActivity::class.java)
+                if ((intent.getStringExtra("MyRidesLat")) != null) {
+
+                    intentr.putExtra("RideID", intent.getStringExtra("MyRidesID"))
+                    intentr.putExtra("sAddress", tv_myCurrentLocation!!.text.toString())
+                    intentr.putExtra("dAddress", tv_myDropUpLocation!!.text.toString())
+                    intentr.putExtra("originLat", intent.getStringExtra("MyRidesLat"))
+                    intentr.putExtra("originLong", intent.getStringExtra("MyRidesLong"))
+                    intentr.putExtra("destLat", intent.getStringExtra("MyRidesDLat"))
+                    intentr.putExtra("destLong", intent.getStringExtra("MyRidesDLong"))
+                    intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
+                    intentr.putExtra("actualDistanceTravelled", actualDistance)
+                    intentr.putExtra("actualDistanceTravelledForNightCharges", actualDistanceForNightCharg)
+                    intentr.putExtra("actualTimeTravelled", actualTime)
+                    intentr.putExtra("EndRideCurrentLat", waitStartLat)
+                    intentr.putExtra("EndRideCurrentLon", waitStartLong)
+                    intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
+
+
+
+
+                    startActivity(intentr)
+                    finish()
+
+                } else {
+
+
+                    intentr.putExtra("RideID", (info.ride!!.id).toString())
+                    intentr.putExtra("sAddress", tv_myCurrentLocation!!.text.toString())
+                    intentr.putExtra("dAddress", tv_myDropUpLocation!!.text.toString())
+                    intentr.putExtra("originLat", (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!)
+                    intentr.putExtra("originLong", (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!)
+                    intentr.putExtra(
+                        "destLat",
+                        (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!
+                    )
+                    intentr.putExtra(
+                        "destLong",
+                        (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!
+                    )
+                    intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
+                    intentr.putExtra("actualDistanceTravelled", actualDistance)
+                    intentr.putExtra("actualDistanceTravelledForNightCharges", actualDistanceForNightCharg)
+                    intentr.putExtra("actualTimeTravelled", actualTime)
+                    intentr.putExtra("EndRideCurrentLat", waitStartLat)
+                    intentr.putExtra("EndRideCurrentLon", waitStartLong)
+                    intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
+
+
+
+                    startActivity(intentr)
+                    finish()
+                }
+
+
+            }
+            alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+            alertDialog.show()
+
+
+        } else {
+
+
+            val alertDialog = AlertDialog.Builder(this)
+            alertDialog.setTitle("FairFare")
+            alertDialog.setMessage("Are you sure you want to end this Ride?")
+            alertDialog.setCancelable(false)
+            alertDialog.setPositiveButton("Yes") { dialog, which ->
+
+                if (Constants.IS_OLD_PICK_UP_CODE) {
+                    handler.removeCallbacksAndMessages(null)
+                } else {
+                    unBindBackgroundService()
+
+                }
+
+
+                var totalActualDistanceForNightCharges = 0.0
+
+
+                if (actualTravelDistanceForNightCharges.size > 0) {
+                    for (i in actualTravelDistanceForNightCharges.indices) {
+                        totalActualDistanceForNightCharges = totalActualDistanceForNightCharges + actualTravelDistanceForNightCharges[i]
+
+                    }
+
+                    val strDistCalForKM = (totalActualDistanceForNightCharges / 1000).toString()//meter
+                    val distForNightCharges = String.format("%.02f", strDistCalForKM!!.toDouble())
+
+                    actualDistanceForNightCharg = distForNightCharges
+
+                }
+
+
+                val intentr = Intent(applicationContext, EndRidesActivity::class.java)
+                if ((intent.getStringExtra("MyRidesLat")) != null) {
+
+                    intentr.putExtra("RideID", intent.getStringExtra("MyRidesID"))
+                    intentr.putExtra("sAddress", tv_myCurrentLocation!!.text.toString())
+                    intentr.putExtra("dAddress", tv_myDropUpLocation!!.text.toString())
+                    intentr.putExtra("originLat", intent.getStringExtra("MyRidesLat"))
+                    intentr.putExtra("originLong", intent.getStringExtra("MyRidesLong"))
+                    intentr.putExtra("destLat", intent.getStringExtra("MyRidesDLat"))
+                    intentr.putExtra("destLong", intent.getStringExtra("MyRidesDLong"))
+                    intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
+                    intentr.putExtra("actualDistanceTravelled", actualDistance)
+                    intentr.putExtra("actualDistanceTravelledForNightCharges", actualDistanceForNightCharg)
+                    intentr.putExtra("actualTimeTravelled", actualTime)
+                    intentr.putExtra("EndRideCurrentLat", waitStartLat)
+                    intentr.putExtra("EndRideCurrentLon", waitStartLong)
+                    intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
+
+
+
+
+                    startActivity(intentr)
+                    finish()
+
+                } else {
+
+
+                    intentr.putExtra("RideID", (info.ride!!.id).toString())
+                    intentr.putExtra("sAddress", tv_myCurrentLocation!!.text.toString())
+                    intentr.putExtra("dAddress", tv_myDropUpLocation!!.text.toString())
+                    intentr.putExtra("originLat", (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!)
+                    intentr.putExtra("originLong", (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!)
+                    intentr.putExtra(
+                        "destLat",
+                        (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!
+                    )
+                    intentr.putExtra(
+                        "destLong",
+                        (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!
+                    )
+                    intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
+                    intentr.putExtra("actualDistanceTravelled", actualDistance)
+                    intentr.putExtra("actualDistanceTravelledForNightCharges", actualDistanceForNightCharg)
+                    intentr.putExtra("actualTimeTravelled", actualTime)
+                    intentr.putExtra("EndRideCurrentLat", waitStartLat)
+                    intentr.putExtra("EndRideCurrentLon", waitStartLong)
+                    intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
+
+
+
+                    startActivity(intentr)
+                    finish()
+                }
+
+
+            }
+            alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+            alertDialog.show()
+
+        }
+
+    }
+
 
 
     private fun deg2rad(deg: Double): Double {
@@ -970,95 +1187,24 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     @OnClick(R.id.btnEndRide)
     fun endRide() {
 
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("FairFare")
-        alertDialog.setMessage("Are you sure you want to end this Ride?")
-        alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Yes") { dialog, which ->
+        if ((intent.getStringExtra("MyRidesLat")) != null) {
+            destinationLat = intent.getStringExtra("MyRidesDLat")!!.toString()
+            destinationLong = intent.getStringExtra("MyRidesDLong")!!.toString()
 
-            if (Constants.IS_OLD_PICK_UP_CODE) {
-                handler.removeCallbacksAndMessages(null)
-            } else {
-                unBindBackgroundService()
-
-            }
-
-
-            var totalActualDistanceForNightCharges = 0.0
-
-
-            if (actualTravelDistanceForNightCharges.size > 0) {
-                for (i in actualTravelDistanceForNightCharges.indices) {
-                    totalActualDistanceForNightCharges = totalActualDistanceForNightCharges + actualTravelDistanceForNightCharges[i]
-
-                }
-
-                val strDistCalForKM = (totalActualDistanceForNightCharges / 1000).toString()//meter
-                val distForNightCharges = String.format("%.02f", strDistCalForKM!!.toDouble())
-
-                actualDistanceForNightCharg = distForNightCharges
-
-            }
-
-
-            val intentr = Intent(applicationContext, EndRidesActivity::class.java)
-            if ((intent.getStringExtra("MyRidesLat")) != null) {
-
-                intentr.putExtra("RideID", intent.getStringExtra("MyRidesID"))
-                intentr.putExtra("sAddress", tv_myCurrentLocation!!.text.toString())
-                intentr.putExtra("dAddress", tv_myDropUpLocation!!.text.toString())
-                intentr.putExtra("originLat", intent.getStringExtra("MyRidesLat"))
-                intentr.putExtra("originLong", intent.getStringExtra("MyRidesLong"))
-                intentr.putExtra("destLat", intent.getStringExtra("MyRidesDLat"))
-                intentr.putExtra("destLong", intent.getStringExtra("MyRidesDLong"))
-                intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
-                intentr.putExtra("actualDistanceTravelled", actualDistance)
-                intentr.putExtra("actualDistanceTravelledForNightCharges", actualDistanceForNightCharg)
-                intentr.putExtra("actualTimeTravelled", actualTime)
-                intentr.putExtra("EndRideCurrentLat", waitStartLat)
-                intentr.putExtra("EndRideCurrentLon", waitStartLong)
-                intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
-
-
-
-
-                startActivity(intentr)
-                finish()
-
-            } else {
-
-
-                intentr.putExtra("RideID", (info.ride!!.id).toString())
-                intentr.putExtra("sAddress", tv_myCurrentLocation!!.text.toString())
-                intentr.putExtra("dAddress", tv_myDropUpLocation!!.text.toString())
-                intentr.putExtra("originLat", (info.ride!!.estimatedTrackRide!!.originPlaceLat)!!)
-                intentr.putExtra("originLong", (info.ride!!.estimatedTrackRide!!.originPlaceLong)!!)
-                intentr.putExtra(
-                    "destLat",
-                    (info.ride!!.estimatedTrackRide!!.destinationPlaceLat)!!
-                )
-                intentr.putExtra(
-                    "destLong",
-                    (info.ride!!.estimatedTrackRide!!.destinationPlaceLong)!!
-                )
-                intentr.putExtra("ride_waitings", arrWaitTimePostEndRide())
-                intentr.putExtra("actualDistanceTravelled", actualDistance)
-                intentr.putExtra("actualDistanceTravelledForNightCharges", actualDistanceForNightCharg)
-                intentr.putExtra("actualTimeTravelled", actualTime)
-                intentr.putExtra("EndRideCurrentLat", waitStartLat)
-                intentr.putExtra("EndRideCurrentLon", waitStartLong)
-                intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
-
-
-
-                startActivity(intentr)
-                finish()
-            }
-
-
+        }else{
+            destinationLat = (info!!.ride!!.estimatedTrackRide!!.destinationPlaceLat).toString()
+            destinationLong = (info!!.ride!!.estimatedTrackRide!!.destinationPlaceLong).toString()
         }
-        alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
-        alertDialog.show()
+
+
+
+        GetDistanceFromLatLonInKm(
+            destinationLat!!.toDouble(),
+            destinationLong!!.toDouble(),
+            locationChangelatitude,
+            locationChangelongitude
+        )
+
 
     }
 
