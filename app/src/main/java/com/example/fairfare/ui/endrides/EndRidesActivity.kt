@@ -150,6 +150,10 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     var tvEstSurCharge: TextView? = null
 
     @JvmField
+    @BindView(R.id.tvActualRewardPoints)
+    var tvActualRewardPoints: TextView? = null
+
+    @JvmField
     @BindView(R.id.tv_myCurrentLocation)
     var tv_myCurrentLocation: TextView? = null
 
@@ -500,6 +504,14 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
         tvActualSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.surCharge
         tvEstSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.surCharge
+
+        if(endRideResponsePOJO.rewards != null){
+            tvActualRewardPoints?.visibility = View.VISIBLE
+            tvActualRewardPoints?.text = "Reward points earned for this ride " +endRideResponsePOJO!!.rewards
+        }else{
+            tvActualRewardPoints?.visibility = View.GONE
+        }
+
 
 
 

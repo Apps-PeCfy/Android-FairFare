@@ -97,19 +97,48 @@
         android:orientation="vertical">
 
         <!-- Log In -->
-        <TextView
+
+        <LinearLayout
             android:id="@+id/log_in"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:orientation="vertical"
             android:layout_marginLeft="@dimen/_18sdp"
-            android:layout_marginTop="@dimen/_25sdp"
-            android:fontFamily="@font/notosansjp_bold"
-            android:gravity="center_horizontal|top"
-            android:includeFontPadding="false"
-            android:text="@string/logIn"
-            android:textAppearance="@style/log_in" />
+            android:layout_marginTop="@dimen/_20sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosansjp_bold"
+                android:gravity="center_horizontal|top"
+                android:includeFontPadding="false"
+                android:text="@string/logIn"
+                android:textAppearance="@style/log_in" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosansjp_bold"
+                android:gravity="center_horizontal|top"
+                android:includeFontPadding="false"
+                android:text="Sign up and get 200 reward points."
+                android:textSize="@dimen/text_16sp"
+                android:textAppearance="@style/log_in" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosansjp_regular"
+                android:gravity="center_horizontal|top"
+                android:includeFontPadding="false"
+                android:textSize="@dimen/text_14sp"
+                android:text="@string/str_valid_for_new_users_only"
+                android:textAppearance="@style/log_in" />
+
+        </LinearLayout>
+
+
+
 
 
         <LinearLayout
@@ -267,7 +296,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/btnLogin"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp"
@@ -346,7 +375,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/_5sdp">

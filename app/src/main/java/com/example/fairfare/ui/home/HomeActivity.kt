@@ -1072,7 +1072,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 */
 
 
-                tvEmailAddress!!.text ="Credit Points "+preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
+                tvEmailAddress!!.text ="Available Reward Points "+preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
 
                 tvUserName!!.text =
                     preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)

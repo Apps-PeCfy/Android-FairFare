@@ -7,7 +7,7 @@ class ResponseEnd {
     @SerializedName("message")
     var message: String? = null
 
-    @SerializedName("rewards")
+    @SerializedName("rideRewards")
     var rewards: String? = null
 
     @SerializedName("ride")

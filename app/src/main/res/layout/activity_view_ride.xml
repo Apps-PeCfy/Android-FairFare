@@ -618,7 +618,8 @@
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:paddingTop="@dimen/_8sdp"
-                            android:paddingBottom="@dimen/_8sdp">
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -649,6 +650,7 @@
                             android:layout_height="1sp"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
+                            android:visibility="gone"
                             android:background="@color/secondaryLightGray" />
 
                         <RelativeLayout
