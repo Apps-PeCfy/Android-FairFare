@@ -280,6 +280,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
     var waitStartLocation: String? = ""
+    var waitStartLocationNew: String? = ""
     var waitStartLat: String? = ""
     var waitStartLong: String? = ""
     var vehicleName: String? = ""
@@ -475,7 +476,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             waitTime = Date()
                             val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                             waitAt = formatter.format(waitTime)
-
+                            waitStartLocationNew = getAddressFromLocation(lastLocation)
                         }
 
                     } else {
@@ -486,19 +487,20 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             val calculateDate =
                                 ((time!!.getTime() - waitTime!!.getTime()) / 1000) //time in second
 
-                            if (calculateDate > 60) {
-                                val timeDiffrence = (calculateDate - 60).toDouble()//time in min
+                            if (calculateDate > 0) {
+                                val timeDiffrence = (calculateDate - 0).toDouble()//time in min
 
 
                                 var options = HashMap<String, String>()
                                 options.put("waiting_time", timeDiffrence.toString())
-                                options.put("full_address", waitStartLocation!!)
+                                options.put("full_address", waitStartLocationNew!!)
+                             //   options.put("full_address", waitStartLocation!!)
                                 options.put("wait_at", waitAt!!)
                                 options.put("lat", waitLat!!)
                                 options.put("long", waitLong!!)
 
                                 //To Prevent Duplicate entries
-                                if (waitStartLocation != null && arrWaitTime.size > 0 && waitStartLocation?.equals(
+                                if (waitStartLocationNew != null && arrWaitTime.size > 0 && waitStartLocationNew?.equals(
                                         arrWaitTime[arrWaitTime.size - 1].getValue("full_address"),
                                         ignoreCase = true
                                     )!!
@@ -1774,13 +1776,14 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val calculateDate =
                 ((time!!.getTime() - waitTime!!.getTime()) / 1000)//time calculate in second
 
-            if (calculateDate > 60) {
-                val timeDiffrence = (calculateDate - 60).toDouble()//time difference in min
+            if (calculateDate > 0) {
+                val timeDiffrence = (calculateDate - 0).toDouble()//time difference in min
 
 
                 var options = HashMap<String, String>()
                 options.put("waiting_time", timeDiffrence.toString())
-                options.put("full_address", waitStartLocation!!)
+                options.put("full_address", waitStartLocationNew!!)
+              //  options.put("full_address", waitStartLocation!!)
                 options.put("wait_at", waitAt!!)
                 options.put("lat", waitStartLat!!)
                 options.put("long", waitStartLong!!)
@@ -2043,8 +2046,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         val calculateDate =
                             ((time!!.getTime() - waitTime!!.getTime()) / 1000) //time in second
 
-                        if (calculateDate > 60) {
-                            val timeDiffrence = (calculateDate - 60).toDouble()//time in min
+                        if (calculateDate > 0) {
+                            val timeDiffrence = (calculateDate - 0).toDouble()//time in min
 
 
                             var options = HashMap<String, String>()
@@ -2502,6 +2505,54 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     override fun onDestroy() {
         super.onDestroy()
         unBindBackgroundService()
+    }
+
+    private fun getAddressFromLocation(location: Location): String? {
+        var address: String = ""
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+
+            if (addresses != null && addresses!!.size > 0) {
+                val obj = addresses[0]
+                address = obj.getAddressLine(0)
+                var countryName = obj.countryName
+                if (obj.countryName != null && obj.countryName.equals(
+                        "United States",
+                        ignoreCase = true
+                    )
+                ) {
+                    obj.countryName = "USA"
+                }
+                if (!countryName.equals("")){
+                    address = address.replace(", $countryName", "").replace("- $countryName", "")
+                }
+
+                if (obj != null && obj.postalCode!= null && !obj.postalCode.equals("")){
+                    address = address.replace(" " + obj.postalCode, "")
+                }
+            } else {
+                address = ""
+            }
+        } catch (e: IOException) {
+            Toast.makeText(
+                this,
+                e.toString(),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        return address
+    }
+
+    override fun onResume() {
+        super.onResume()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
 }
