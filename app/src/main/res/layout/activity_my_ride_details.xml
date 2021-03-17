@@ -56,7 +56,7 @@
                         android:orientation="vertical">
 
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -64,6 +64,7 @@
                             android:background="@drawable/rounded_corner_charges"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingBottom="@dimen/_5sdp"
+                            android:orientation="vertical"
                             android:visibility="visible">
 
 
@@ -207,8 +208,7 @@
 
                             </RelativeLayout>
 
-
-                        </RelativeLayout>
+                        </LinearLayout>
 
 
                         <LinearLayout
@@ -972,7 +972,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Ride Ratings"
+                                android:textSize="@dimen/text_18sp"
                                 android:textColor="@color/Black"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textStyle="bold" />
 
                             <com.iarcuschin.simpleratingbar.SimpleRatingBar
@@ -1004,6 +1006,98 @@
                             android:paddingBottom="@dimen/_5sdp"
                             android:textSize="@dimen/_10sdp"
                             android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/txt_photos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Photos"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/text_18sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:visibility="gone"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="@dimen/_5sdp">
+
+                            <TextView
+                                android:id="@+id/txt_vehicle_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Vehicle Number"
+                                android:visibility="gone"
+                                android:textColor="@color/Grey"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textSize="@dimen/text_16sp"
+                                android:textStyle="bold" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_view_vehicle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_trip_meter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Start Trip Meter"
+                                android:visibility="gone"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textColor="@color/Grey"
+                                android:textSize="@dimen/text_16sp"
+                                android:textStyle="bold" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_view_trip_meter"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_driver"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Driver"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:visibility="gone"
+                                android:textColor="@color/Grey"
+                                android:textSize="@dimen/text_16sp"
+                                android:textStyle="bold" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_view_driver"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Badge Number"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textColor="@color/Grey"
+                                android:textSize="@dimen/text_16sp"
+                                android:visibility="gone"
+                                android:textStyle="bold" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_view_badge"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
 
 
                     </LinearLayout>

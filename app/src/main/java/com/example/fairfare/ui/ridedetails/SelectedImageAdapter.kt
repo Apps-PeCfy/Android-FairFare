@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import java.io.File
 import java.util.*
@@ -47,15 +49,25 @@ class SelectedImageAdapter(
          * iLoma Team :- Mohasin 8 Jan
          */
 
-        if (stringArrayList[position] != null) {
+        if (stringArrayList[position] != null && stringArrayList[position].contains("http" , ignoreCase = true)) {
+            Glide.with(context!!)
+                .load(stringArrayList[position])
+                .apply(
+                    RequestOptions()
+                        .dontAnimate()
+                        .dontTransform()
+                ).into(holder.image!!)
+            holder.image.setScaleType(ImageView.ScaleType.CENTER_CROP)
+            holder.imgRemove.visibility = View.GONE
 
+        }else {
             val imgFile = File(stringArrayList[position])
             if (imgFile.exists()) {
                 val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
                 holder.image.setImageBitmap(myBitmap)
             }
             holder.image.setScaleType(ImageView.ScaleType.CENTER_CROP)
-
+            holder.imgRemove.visibility = View.VISIBLE
         }
 
         holder.image.setOnClickListener(View.OnClickListener {

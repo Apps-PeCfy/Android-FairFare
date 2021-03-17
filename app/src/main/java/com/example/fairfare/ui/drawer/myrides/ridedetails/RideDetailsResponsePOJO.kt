@@ -47,6 +47,18 @@ class RideDetailsResponsePOJO {
         @SerializedName("reviews")
         var reviews: List<ReviewsItem>? = null
 
+        @SerializedName("vehicleNoImages")
+        var vehicleNoImages: List<String>? = null
+
+        @SerializedName("startMeterImages")
+        var startMeterImages: List<String>? = null
+
+        @SerializedName("driverImages")
+        var driverImages: List<String>? = null
+
+        @SerializedName("badgeNoImages")
+        var badgeNoImages: List<String>? = null
+
         @SerializedName("airportRateCardId")
         var airportRateCardId: String? = null
 
@@ -126,6 +138,10 @@ class RideDetailsResponsePOJO {
                     ",airportRateCardId = '" + airportRateCardId + '\'' +
                     ",id = '" + id + '\'' +
                     ",badgeNo = '" + badgeNo + '\'' +
+                    ",vehicleNoImages = '" + vehicleNoImages + '\'' +
+                    ",startMeterImages = '" + startMeterImages + '\'' +
+                    ",driverImages = '" + driverImages + '\'' +
+                    ",badgeNoImages = '" + badgeNoImages + '\'' +
                     ",destinationPlaceLat = '" + destinationPlaceLat + '\'' +
                     ",estimatedTrackRide = '" + estimatedTrackRide + '\'' +
                     ",vehicleImageUrl = '" + vehicleImageUrl + '\'' +

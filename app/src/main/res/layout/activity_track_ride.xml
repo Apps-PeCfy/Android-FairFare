@@ -322,7 +322,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Actual travelled distance"
+                        android:text="Actual travelled/Remaining distance"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
 

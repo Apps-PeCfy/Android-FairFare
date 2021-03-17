@@ -254,6 +254,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var preferencesManager: PreferencesManager? = null
     var token: String? = null
     var estCurrentDistance: String? = null
+    var estCurrentDistanceInKm: String? = null
     var estCurrentDuration: String? = null
     var estCurrentDurationInMin: String? = null
     var travelledDistance: Double? = null
@@ -920,7 +921,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val dist = String.format("%.1f", strDistCal!!.toDouble())
 
             actualDistance = dist
-            tv_travelledDistance!!.text = dist + " km"
+            tv_travelledDistance!!.text = dist + " km/" + estCurrentDistanceInKm
             tv_estimatedDistance!!.text = strDistCal.toString() + " km"
 
         }
@@ -1550,6 +1551,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                 estCurrentDistance = distance.getString("value")
+                estCurrentDistanceInKm = distance.getString("text")
                 estCurrentDuration = duration.getString("text")
                 estCurrentDurationInMin = duration.getString("value")
 
