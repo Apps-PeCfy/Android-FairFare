@@ -212,6 +212,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var tvTravelTime: TextView? = null
 
     @JvmField
+    @BindView(R.id.tv_currentSpeed)
+    var tv_currentSpeed: TextView? = null
+
+    @JvmField
     @BindView(R.id.ivAtm)
     var ivAtm: ImageView? = null
 
@@ -455,6 +459,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     var currentspeed = (((lastLocation.speed) * 3600) / 1000).toInt()
+
+                    tv_currentSpeed?.text = currentspeed.toString() + " Kmph"
 
                     if (prevLatLng != null && getDistanceBetweenTwoLatLng(
                             LatLng(locationChangelatitude, locationChangelongitude),
@@ -1620,29 +1626,15 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                 }
 
-
-
-
-
-
-
+                lineOptions?.addAll(points)
+                lineOptions?.width(15f)
+                lineOptions?.color(this@TrackRideActivity.resources.getColor(R.color.gradientendcolor))
 
                 if (trackBoard.equals("currentCordinate")) {
 
-                    lineOptions!!.addAll(points)
-                    lineOptions!!.width(15f)
-                    //  lineOptions.color(Color.GREEN);
-                    lineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.gradientendcolor))
-
 
                     if (lineOptions != null) {
-
-                        if (updatedPolyline != null) {
-                            updatedPolyline!!.remove()
-                            if (mPolyline != null) {
-                                mPolyline!!.remove()
-                            }
-                        }
+                        updatedPolyline?.remove()
                         updatedPolyline = mMap!!.addPolyline(lineOptions)
                     } else {
                         Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
@@ -1655,7 +1647,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                    // val estCurrDIst = (estCurrentDistance!!.toDouble() / 1000)
                     val estCurrDIst = (estCurrentDistance!!.toInt())
-
 
                     val estCurrentDist =
                         DecimalFormat("####.#").format((estCurrentDistance!!.toDouble() / 1000)) + " km"
@@ -1676,28 +1667,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         "(Est.Distance:" + estCurrentDist + ") / " + "(Est.Time:" + estCurrentDuration + ")"
 
 
-
-
-                    lineOptions!!.addAll(points)
-                    lineOptions!!.width(15f)
-                    //  lineOptions.color(Color.GREEN);
-                    lineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.gradientstartcolor))
-
                     if (lineOptions != null) {
-
-                        if (mPolyline != null) {
-                            // mPolyline!!.remove()
-                        }
-
-                      //  mPolyline = mMap!!.addPolyline(lineOptions)
-
-
-
-
                         // ILOMADEV :- 10 Feb 2021
-                        if (updatedPolyline != null) {
-                            updatedPolyline!!.remove()
-                        }
+                        updatedPolyline?.remove()
                         updatedPolyline = mMap!!.addPolyline(lineOptions)
                     } else {
                         Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
@@ -2450,12 +2422,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         }
 
-        geoField = GeomagneticField(
+       /* geoField = GeomagneticField(
             java.lang.Double.valueOf(startLocation.latitude).toFloat(),
             java.lang.Double.valueOf(startLocation.longitude).toFloat(),
             java.lang.Double.valueOf(startLocation.altitude).toFloat(),
             System.currentTimeMillis()
-        )
+        )*/
 
         if (isWaiting!! && lastCompassBering != null) {
             return lastCompassBering!!

@@ -294,12 +294,40 @@
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
+                <RelativeLayout
+                    android:id="@+id/rlSpeed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_distance"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_currentSpeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:inputType="numberDecimal"
+                        android:textSize="@dimen/_8sdp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current Speed"
+                        android:textSize="@dimen/_9sdp"
+                        android:visibility="visible" />
+
+
+                </RelativeLayout>
+
 
                 <RelativeLayout
                     android:id="@+id/rlDistance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_distance"
+                    android:layout_below="@+id/rlSpeed"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp">
 
@@ -322,7 +350,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Actual travelled/Remaining distance"
+                        android:text="Actual distance/Remaining distance"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
 
