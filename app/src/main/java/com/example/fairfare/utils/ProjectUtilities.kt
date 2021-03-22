@@ -10,6 +10,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -136,17 +137,33 @@ object ProjectUtilities {
     }
 
     fun checkPermission(mContext: Context?): Boolean {
-        val PERMISSIONS = arrayOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+        var PERMISSIONS: Array<String>?
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            PERMISSIONS = arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        }else{
+            PERMISSIONS = arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        }
         var size = 0
         for (i in PERMISSIONS.indices) {
             if (PermissionChecker.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mContext!!, PERMISSIONS[i]))
             {
+                size++
+            }
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && "android.permission.ACCESS_BACKGROUND_LOCATION".equals(PERMISSIONS[i], ignoreCase = true)) {
                 size++
             }
         }

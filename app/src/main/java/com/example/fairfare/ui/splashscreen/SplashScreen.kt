@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.view.WindowManager
@@ -68,24 +69,30 @@ class SplashScreen : AppCompatActivity() {
         isAccepted = ProjectUtilities.checkPermission(applicationContext)
 
 
-
         if (isAccepted) {
             checkUpdate()
 
 
         } else {
-            ActivityCompat.requestPermissions(
-                this@SplashScreen, arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                REQUEST_PERMISSION
-            )
+            reuestPermissions()
         }
 
+        requestBatteryOptimisationDisabled()
 
+    }
+
+    private fun requestBatteryOptimisationDisabled() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val intent = Intent()
+            val packageName = packageName
+            val pm =
+                getSystemService(Context.POWER_SERVICE) as PowerManager
+            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                intent.data = Uri.parse("package:$packageName")
+                startActivity(intent)
+            }
+        }
     }
 
     private fun setStatusBarGradiant(activity: SplashScreen) {
@@ -118,63 +125,83 @@ class SplashScreen : AppCompatActivity() {
     }
 
     private fun checkUpdate() {
-          val h = Handler()
-               h.postDelayed({
+        val h = Handler()
+        h.postDelayed({
 
-        try {
-            if (!isGPSEnabled && !isNetworkEnabled) {
-                val alertDialog =
-                    AlertDialog.Builder(this)
-                alertDialog.setTitle("GPS is settings")
-                alertDialog.setCancelable(false)
-                alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?")
-                alertDialog.setPositiveButton("Settings") { dialog, which ->
-                    val intent =
-                        Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    this.startActivity(intent)
-                }
-                alertDialog.setNegativeButton("Cancel") {
-                        dialog, which -> dialog.dismiss()
-                }
-                alertDialog.show()
-
-            } else {
-                if (isLogin == "true" && requestCodeq == REQUEST_PERMISSION && isAccepted) {
-                    callOnResune = "second"
-                    val intent = Intent(applicationContext, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-
-                } else if (requestCodeq == REQUEST_PERMISSION && isAccepted) {
-
-
-                    callOnResune = "second"
-
-                    Log.d("onRequestPermissi", "2")
-
-                    val intent = Intent(applicationContext, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
+            try {
+                if (!isGPSEnabled && !isNetworkEnabled) {
+                    val alertDialog =
+                        AlertDialog.Builder(this)
+                    alertDialog.setTitle("GPS is settings")
+                    alertDialog.setCancelable(false)
+                    alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?")
+                    alertDialog.setPositiveButton("Settings") { dialog, which ->
+                        val intent =
+                            Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                        this.startActivity(intent)
+                    }
+                    alertDialog.setNegativeButton("Cancel") { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    alertDialog.show()
 
                 } else {
-                    ActivityCompat.requestPermissions(
-                        this@SplashScreen, arrayOf(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                        ),
-                        REQUEST_PERMISSION
-                    )
+                    if (isLogin == "true" && requestCodeq == REQUEST_PERMISSION && isAccepted) {
+                        callOnResune = "second"
+                        val intent = Intent(applicationContext, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
+                    } else if (requestCodeq == REQUEST_PERMISSION && isAccepted) {
+
+
+                        callOnResune = "second"
+
+                        Log.d("onRequestPermissi", "2")
+
+                        val intent = Intent(applicationContext, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
+                    } else {
+                        reuestPermissions()
+                    }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+
+
+        }, 1000 * 1.toLong())
+
+    }
+
+    private fun reuestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+            ActivityCompat.requestPermissions(
+                this@SplashScreen, arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                REQUEST_PERMISSION
+            )
+        } else {
+            ActivityCompat.requestPermissions(
+                this@SplashScreen, arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                REQUEST_PERMISSION
+            )
         }
-
-
-         }, 1000 * 1.toLong())
-
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -187,6 +214,9 @@ class SplashScreen : AppCompatActivity() {
             for (i in permissions.indices) {
                 val permission = permissions[i]
                 if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && "android.permission.ACCESS_BACKGROUND_LOCATION".equals(permission, ignoreCase = true)) {
+                        continue
+                    }
                     val showRationale = shouldShowRequestPermissionRationale(permission)
                     if (!showRationale) {
 
@@ -201,30 +231,34 @@ class SplashScreen : AppCompatActivity() {
                 }
 
             }
+            afterAllowedPermissionFunctionality(requestCode)
         } else {
+            afterAllowedPermissionFunctionality(requestCode)
+        }
+    }
 
-            requestCodeq = requestCode
-            if (requestCode == REQUEST_PERMISSION) {
-                if (isLogin == "true" && isGPSEnabled && isNetworkEnabled && isAccepted) {
-                    callOnResune = "second"
+    private fun afterAllowedPermissionFunctionality(requestCode: Int) {
+        requestCodeq = requestCode
+        if (requestCode == REQUEST_PERMISSION) {
+            if (isLogin == "true" && isGPSEnabled && isNetworkEnabled && isAccepted) {
+                callOnResune = "second"
 
-                    val intent = Intent(applicationContext, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                val intent = Intent(applicationContext, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
 
-                } else if (isGPSEnabled && isNetworkEnabled && isAccepted) {
-                    callOnResune = "second"
+            } else if (isGPSEnabled && isNetworkEnabled && isAccepted) {
+                callOnResune = "second"
 
-                    Log.d("onRequestPermissi", "1")
+                Log.d("onRequestPermissi", "1")
 
-                    val intent = Intent(applicationContext, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
 
-                } else {
-                    if (callOnResune.equals("first")) {
-                        checkUpdate()
-                    }
+            } else {
+                if (callOnResune.equals("first")) {
+                    checkUpdate()
                 }
             }
         }

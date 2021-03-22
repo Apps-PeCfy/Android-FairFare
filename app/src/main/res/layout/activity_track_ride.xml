@@ -405,7 +405,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Actual travelled time"
+                        android:text="Actual time/ Remaining Time"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
 

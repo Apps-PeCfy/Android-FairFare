@@ -451,6 +451,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     addCurrentLocationMarker(lastLocation)
 
 
+
                     locationChangelatitude = lastLocation!!.latitude
                     locationChangelongitude = lastLocation!!.longitude
 
@@ -460,7 +461,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                     var currentspeed = (((lastLocation.speed) * 3600) / 1000).toInt()
 
-                    tv_currentSpeed?.text = currentspeed.toString() + " Kmph"
+                    //tv_currentSpeed?.text = currentspeed.toString() + " Kmph"
 
                     if (prevLatLng != null && getDistanceBetweenTwoLatLng(
                             LatLng(locationChangelatitude, locationChangelongitude),
@@ -485,6 +486,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             waitAt = formatter.format(waitTime)
                             waitStartLocationNew = getAddressFromLocation(lastLocation)
                         }
+                     //   Toast.makeText(applicationContext, "On Wait Start Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
 
                     } else {
                         isWaiting = false
@@ -517,13 +519,16 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                                             .toDouble()
                                     arrWaitTime[arrWaitTime.size - 1]["waiting_time"] =
                                         totalTime.toString()
+                                 //   Toast.makeText(applicationContext, "On Ride wait location same as previous added Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
                                 } else {
                                     arrWaitTime.add(options!!)
+                                 //   Toast.makeText(applicationContext, "On Ride wait time added Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
                                 }
 
 
                             }
                             waitTime = null
+                            waitStartLocationNew = null
                             calculateWaitTime()
 
                         }
@@ -906,7 +911,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         if (Constants.IS_OLD_PICK_UP_CODE) {
             tvTravelTime!!.text = strescimal + " Min"
         } else {
-            tvTravelTime!!.text = formatTime(todayRefresh.getTime() - today!!.getTime())
+            if (estCurrentDurationInMin != null){
+                tvTravelTime!!.text = formatTime(todayRefresh.getTime() - today!!.getTime()) + "/" + formatTime(estCurrentDurationInMin!!.toLong()*1000)
+            }else{
+                tvTravelTime!!.text = formatTime(todayRefresh.getTime() - today!!.getTime())
+            }
+
         }
 
 
@@ -1630,18 +1640,16 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 lineOptions?.width(15f)
                 lineOptions?.color(this@TrackRideActivity.resources.getColor(R.color.gradientendcolor))
 
-                if (trackBoard.equals("currentCordinate")) {
-
-
-                    if (lineOptions != null) {
-                        updatedPolyline?.remove()
-                        updatedPolyline = mMap!!.addPolyline(lineOptions)
-                    } else {
-                        Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
-                            .show()
-                    }
-
+                if (lineOptions != null) {
+                    // ILOMADEV :- 10 Feb 2021
+                    updatedPolyline?.remove()
+                    updatedPolyline = mMap!!.addPolyline(lineOptions)
                 } else {
+                    Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+                        .show()
+                }
+
+                if (!trackBoard.equals("currentCordinate")) {
                     //ILOMADEV
                     isFirstTimeSetUpDone = true
 
@@ -1665,16 +1673,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     }
                     tv_distance!!.text =
                         "(Est.Distance:" + estCurrentDist + ") / " + "(Est.Time:" + estCurrentDuration + ")"
-
-
-                    if (lineOptions != null) {
-                        // ILOMADEV :- 10 Feb 2021
-                        updatedPolyline?.remove()
-                        updatedPolyline = mMap!!.addPolyline(lineOptions)
-                    } else {
-                        Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
-                            .show()
-                    }
                 }
             }
 
