@@ -478,7 +478,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     }
 
 
-                    if (currentspeed!! < 10) {   //speed less than 10 km per hr
+                    if (currentspeed!! < 5) {   //speed less than 10 km per hr
                         isWaiting = true
                         if (waitTime == null) {
                             waitTime = Date()
@@ -1628,7 +1628,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         markerPoints!!.add(position)
                     }
 
-                    updateCamera(getCompassBearing(points[0]!!, points[1]!!))
+                    if (points.size >= 2){
+                        updateCamera(getCompassBearing(points[0]!!, points[1]!!))
+                    }
+
 
 
                     // Fetching all the points in i-th route
@@ -1814,7 +1817,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val key = "key=" + getString(R.string.google_maps_key)
 
         // Building the parameters to the web service
-        val parameters = "$str_origin&$str_dest&$key"
+        val parameters = "$str_origin&$str_dest&alternatives=false&$key"
 
         // Output format
         val output = "json"

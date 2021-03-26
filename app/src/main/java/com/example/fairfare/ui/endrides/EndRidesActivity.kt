@@ -457,10 +457,10 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, endRideResponsePOJO!!.rewards)
 
 
-        estAddressPopup = endRideResponsePOJO?.ride!!.estimatedTrackRide!!.destinationFullAddress
+        estAddressPopup = endRideResponsePOJO?.ride?.estimatedTrackRide?.destinationFullAddress
 
-        waitingList = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitings!!
-        tollList = endRideResponsePOJO!!.ride!!.actualTrackRide!!.tolls!!
+        waitingList = endRideResponsePOJO!!.ride?.actualTrackRide?.waitings!!
+        tollList = endRideResponsePOJO!!.ride?.actualTrackRide?.tolls!!
 
 
         if (waitingList.size == 0) {
@@ -473,37 +473,37 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
 
 
-        imgurl = endRideResponsePOJO!!.ride!!.vehicleImageUrl
+        imgurl = endRideResponsePOJO!!.ride?.vehicleImageUrl
 
         startMeterReading =
-            endRideResponsePOJO!!.ride!!.vehicleDetail!!.startMeterReading.toString()
+            endRideResponsePOJO!!.ride?.vehicleDetail?.startMeterReading?.toString()
 
-        tv_vahicalNO!!.text = endRideResponsePOJO!!.ride!!.vehicleDetail!!.vehicleNo
-        tv_carName!!.text = endRideResponsePOJO!!.ride!!.vehicleName
-        tv_driverName!!.text = endRideResponsePOJO!!.ride!!.vehicleDetail!!.driverName
+        tv_vahicalNO!!.text = endRideResponsePOJO!!.ride?.vehicleDetail?.vehicleNo
+        tv_carName!!.text = endRideResponsePOJO!!.ride?.vehicleName
+        tv_driverName!!.text = endRideResponsePOJO!!.ride?.vehicleDetail?.driverName
 
-        if (endRideResponsePOJO!!.ride!!.vehicleDetail!!.driverName!!.isEmpty()) {
+        if (endRideResponsePOJO.ride?.vehicleDetail?.driverName?.isEmpty()!!) {
             ivUserIcon!!.visibility = View.GONE
         }
-        tvEstWaitTime!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingTime
-        tvActualWaitTime!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingTime
+        tvEstWaitTime!!.text = endRideResponsePOJO!!.ride?.estimatedTrackRide?.waitingTime
+        tvActualWaitTime!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.waitingTime
 
-        if (endRideResponsePOJO!!.ride!!.actualTrackRide!!.tollCharges.equals("-")) {
+        if (endRideResponsePOJO!!.ride?.actualTrackRide?.tollCharges?.equals("-")!!) {
 
         } else {
             tvActualTollCharges!!.text =
-                "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.tollCharges
+                "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.tollCharges
 
         }
 
 
         tvActualWaitCharge!!.text =
-            "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.waitingCharges
+            "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.waitingCharges
         tvEstWaitCharge!!.text =
-            "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.waitingCharges
+            "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.waitingCharges
 
-        tvActualSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.surCharge
-        tvEstSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.surCharge
+        tvActualSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.surCharge
+        tvEstSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.surCharge
 
         if(endRideResponsePOJO.rewards != null){
             tvActualRewardPoints?.visibility = View.VISIBLE
@@ -517,7 +517,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
 
         Glide.with(this@EndRidesActivity)
-            .load(endRideResponsePOJO!!.ride!!.vehicleImageUrl)
+            .load(endRideResponsePOJO!!.ride?.vehicleImageUrl)
             .apply(
                 RequestOptions()
                     .centerCrop()
@@ -525,53 +525,53 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
                     .dontTransform()
             ).into(iv_vehical!!)
 
-        if (endRideResponsePOJO!!.ride!!.luggageQuantity.equals("0")) {
+        if (endRideResponsePOJO!!.ride?.luggageQuantity.equals("0")) {
             tv_bagCount!!.text = "No Luggage"
 
         } else {
             tv_bagCount!!.text =
-                endRideResponsePOJO!!.ride!!.luggageQuantity.toString() + " Luggage"
+                endRideResponsePOJO!!.ride?.luggageQuantity.toString() + " Luggage"
 
         }
 
-        tv_actualDistance!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.distance + " KM"
-        tv_estDistance!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.distance + " KM"
+        tv_actualDistance!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.distance + " KM"
+        tv_estDistance!!.text = endRideResponsePOJO!!.ride?.estimatedTrackRide?.distance + " KM"
 
-        tv_estTime!!.text = endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.duration
-        tv_actualTime!!.text = endRideResponsePOJO!!.ride!!.actualTrackRide!!.duration + " mins"
+        tv_estTime!!.text = endRideResponsePOJO!!.ride?.estimatedTrackRide?.duration
+        tv_actualTime!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.duration + " mins"
 
-        tv_estFare!!.text = "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.subTotalCharges
-        tv_actualFare!!.text = "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.subTotalCharges
+        tv_estFare!!.text = "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.subTotalCharges
+        tv_actualFare!!.text = "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.subTotalCharges
 
 
         if (endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.tollCharges.equals("-")) {
 
         } else {
             tvEstTollCharges!!.text =
-                "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.tollCharges
+                "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.tollCharges
 
         }
 
 
 
-        tvActualNightChages!!.text = "₹ " + endRideResponsePOJO!!.ride!!.nightCharges
-        tvNightChages!!.text = "₹ " + endRideResponsePOJO!!.ride!!.nightCharges
+        tvActualNightChages!!.text = "₹ " + endRideResponsePOJO!!.ride?.nightCharges
+        tvNightChages!!.text = "₹ " + endRideResponsePOJO!!.ride?.nightCharges
 
 
         tv_estTotalFare!!.text =
-            "₹ " + endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.totalCharges
+            "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.totalCharges
         tv_actualTotalFare!!.text =
-            "₹ " + endRideResponsePOJO!!.ride!!.actualTrackRide!!.totalCharges
+            "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.totalCharges
 
-        tv_estLuggage!!.text = "₹ " + endRideResponsePOJO!!.ride!!.luggageCharges
-        tv_actualLuggage!!.text = "₹ " + endRideResponsePOJO!!.ride!!.luggageCharges
+        tv_estLuggage!!.text = "₹ " + endRideResponsePOJO!!.ride?.luggageCharges
+        tv_actualLuggage!!.text = "₹ " + endRideResponsePOJO!!.ride?.luggageCharges
 
 
         val formatviewRide = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
         val formatRide = SimpleDateFormat("dd MMM, hh:mm a")
         val formaredDate =
-            formatRide.format(formatviewRide.parse((endRideResponsePOJO.ride!!.endDate).toString()))
+            formatRide.format(formatviewRide.parse((endRideResponsePOJO.ride?.endDate).toString()))
 
         val strformaredDate = formaredDate.replace("am", "AM").replace("pm", "PM")
 
