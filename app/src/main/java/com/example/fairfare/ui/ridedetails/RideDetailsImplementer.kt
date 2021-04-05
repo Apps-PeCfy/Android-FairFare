@@ -7,6 +7,7 @@ import com.example.fairfare.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.google.gson.GsonBuilder
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONArray
@@ -393,28 +394,28 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
                  MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, requestFile)*/
 
             val file = File(vehicleImageList[pos])
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("vehicle_no_image_files[]", vehicleImageList[pos], surveyBody)
             currentMultiPartPosition++
         }
 
         for (pos in meterImageList!!.indices) {
             val file = File(meterImageList[pos])
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("start_meter_image_files[]", meterImageList[pos], surveyBody)
             currentMultiPartPosition++
         }
 
         for (pos in driverImageList!!.indices) {
             val file = File(driverImageList[pos])
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("driver_image_files[]", driverImageList[pos], surveyBody)
             currentMultiPartPosition++
         }
 
         for (pos in badgeImageList!!.indices) {
             val file = File(badgeImageList[pos])
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("badge_no_image_files[]", badgeImageList[pos], surveyBody)
             currentMultiPartPosition++
         }
@@ -595,28 +596,28 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
                  MultipartBody.Part.createFormData("vehicle_detail_images[]", imageList[pos].image!!, requestFile)*/
 
             val file = File(vehicleImageList[pos])
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("vehicle_no_image_files[]", vehicleImageList[pos], surveyBody)
             currentMultiPartPosition++
         }
 
         for (pos in meterImageList!!.indices) {
             val file = File(meterImageList[pos])
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("start_meter_image_files[]", meterImageList[pos], surveyBody)
             currentMultiPartPosition++
         }
 
         for (pos in driverImageList!!.indices) {
             val file = File(driverImageList[pos])
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("driver_image_files[]", driverImageList[pos], surveyBody)
             currentMultiPartPosition++
         }
 
         for (pos in badgeImageList!!.indices) {
             val file = File(badgeImageList[pos])
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[currentMultiPartPosition] = MultipartBody.Part.createFormData("badge_no_image_files[]", badgeImageList[pos], surveyBody)
             currentMultiPartPosition++
         }

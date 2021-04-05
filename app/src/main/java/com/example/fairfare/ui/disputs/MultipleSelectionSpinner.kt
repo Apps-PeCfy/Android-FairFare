@@ -20,7 +20,7 @@ class MultipleSelectionSpinner : AppCompatSpinner, OnMultiChoiceClickListener {
     private var sbLength = 0
     val numbers = ArrayList<Int>()
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context?) : super(context!!) {
         simple_adapter = ArrayAdapter(
             context!!,
             R.layout.simple_spinner_item
@@ -29,7 +29,7 @@ class MultipleSelectionSpinner : AppCompatSpinner, OnMultiChoiceClickListener {
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(
-        context,
+        context!!,
         attrs
     ) {
         simple_adapter = ArrayAdapter(
