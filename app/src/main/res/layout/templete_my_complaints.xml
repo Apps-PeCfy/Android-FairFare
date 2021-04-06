@@ -16,6 +16,7 @@
 
 
         <RelativeLayout
+            android:background="@drawable/rounded_corner_night_mode"
             android:id="@+id/rlHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -48,6 +49,8 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
+
                         android:id="@+id/tv_dateandTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -57,6 +60,8 @@
                         android:text="Mon, Sept 3, 23:35 AM" />
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
+
                         android:id="@+id/tv_vahicalName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -97,6 +102,8 @@
 
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
+
                         android:id="@+id/tvDisputNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -114,6 +121,8 @@
                         android:gravity="center"
                         android:textSize="@dimen/_9sdp"
                         android:text="Filed Date : 17 Dec, 04:27 pm"
+
+                        android:textColor="@color/colorGreyText"
 
                         android:fontFamily="@font/notosansjp_regular"
 
@@ -203,7 +212,7 @@
 
 
                         <TextView
-
+                            android:textColor="@color/colorGreyText"
                             android:id="@+id/destnationAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

@@ -223,6 +223,15 @@ class MyRideDetailsActivity : AppCompatActivity() {
     @BindView(R.id.tvEstTollCharges)
     var tvEstTollCharges: TextView? = null
 
+ @JvmField
+    @BindView(R.id.homeView)
+    var homeView: ScrollView? = null
+
+
+    @JvmField
+    @BindView(R.id.tvActualRewardPoints)
+    var tvActualRewardPoints: TextView? = null
+
     @JvmField
     @BindView(R.id.ivViewTollInfo)
     var ivViewTollInfo: ImageView? = null
@@ -295,7 +304,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
     }
 
-@OnClick(R.id.ivViewTollInfo)
+    @OnClick(R.id.ivViewTollInfo)
     fun ivViewTollInfo() {
 
         if(TOllList.size>0) {
@@ -452,7 +461,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
             ) {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
-
+                    homeView!!.visibility = View.VISIBLE
                     vehicleImageList = response.body()!!.data!!.vehicleNoImages as ArrayList<String>?
                     badgeImageList = response.body()!!.data!!.badgeNoImages as ArrayList<String>?
                     driverImageList = response.body()!!.data!!.driverImages as ArrayList<String>?
@@ -492,6 +501,14 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
                         }
 
+                    }
+
+
+                    if(response.body()!!.data!!.rewards != null){
+                        tvActualRewardPoints?.visibility = View.VISIBLE
+                        tvActualRewardPoints?.text = "Reward points earned for this ride " +response.body()!!.data!!!!.rewards
+                    }else{
+                        tvActualRewardPoints?.visibility = View.GONE
                     }
 
                     tv_vahicalNO!!.text = response.body()!!.data!!.vehicleNo

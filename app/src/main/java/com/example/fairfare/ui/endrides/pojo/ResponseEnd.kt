@@ -10,6 +10,9 @@ class ResponseEnd {
     @SerializedName("rideRewards")
     var rewards: String? = null
 
+    @SerializedName("rewards")
+    var rewardsupdate: String? = null
+
     @SerializedName("ride")
     var ride: Ride? = null
 

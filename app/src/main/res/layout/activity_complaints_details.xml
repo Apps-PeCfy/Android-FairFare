@@ -49,37 +49,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
-                android:background="@color/White"
+                android:background="@color/colorBackground"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/tvhideShow"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_gravity="center_horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_3sdp"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:layout_marginBottom="@dimen/_15sdp"
-                        android:background="@drawable/roundedcorner"
-                        android:visibility="gone" />
-                </RelativeLayout>
 
 
                 <ScrollView
                     android:id="@+id/homeView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_20sdp"
                         android:orientation="vertical">
 
 
@@ -96,7 +82,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:text="Complaint Details"
-                                android:textColor="@color/Black"
+                                android:textColor="@color/colorText"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -105,7 +91,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:text="#MUM1223344TR34"
-                                android:textColor="@color/Black"
+                                android:textColor="@color/colorText"
                                 android:textStyle="bold" />
 
 
@@ -129,14 +115,14 @@
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:text="Dispute reasons:"
                                 android:textStyle="bold"
-                                android:textColor="@color/Black" />
+                                android:textColor="@color/colorText" />
 
                             <TextView
                                 android:id="@+id/tvDisputReason"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Driver arrogance"
-                                android:textColor="@color/Black" />
+                                android:textColor="@color/colorText" />
 
 
                             <LinearLayout
@@ -151,7 +137,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Additional comments:"
-                                    android:textColor="@color/Black" />
+                                    android:textColor="@color/colorText" />
 
                                 <TextView
                                     android:id="@+id/editReview"
@@ -160,7 +146,7 @@
                                     android:layout_marginEnd="@dimen/_15sdp"
                                     android:gravity="top"
                                     android:paddingBottom="@dimen/_5sdp"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textSize="@dimen/_10sdp"
                                     android:visibility="visible" />
 
@@ -197,7 +183,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="str metr reading=10"
-                                android:textColor="@color/Black" />
+                                android:textColor="@color/colorText" />
 
                             <TextView
                                 android:id="@+id/tv_endMeterReading"
@@ -206,7 +192,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
 
                                 android:text="end metr reading=20"
-                                android:textColor="@color/Black" />
+                                android:textColor="@color/colorText" />
 
 
                             <TextView
@@ -215,7 +201,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:text="actual meter fare=150"
-                                android:textColor="@color/Black" />
+                                android:textColor="@color/colorText" />
 
 
                         </LinearLayout>
@@ -237,7 +223,7 @@
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:text="Ride Details"
-                            android:textColor="@color/Black"
+                            android:textColor="@color/colorText"
                             android:textStyle="bold"
                             android:visibility="gone" />
 
@@ -372,6 +358,7 @@
 
 
                                         <TextView
+                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_carName"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -382,6 +369,7 @@
 
 
                                         <TextView
+                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_vahicalNO"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -402,6 +390,7 @@
 
 
                                         <TextView
+                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_bagCount"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -418,6 +407,7 @@
 
 
                                         <TextView
+                                            android:textColor="@color/colorGreyText"
                                             android:layout_marginTop="@dimen/_2sdp"
                                             android:layout_below="@+id/tv_bagCount"
                                             android:id="@+id/tv_Datetime"
@@ -462,6 +452,7 @@
 
 
                                 <TextView
+                                    android:textColor="@color/colorGreyText"
                                     android:id="@+id/tv_driverName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -503,7 +494,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -522,7 +513,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Estimated"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -541,7 +532,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Actual"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
 
@@ -569,7 +560,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Distance"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -584,6 +575,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -601,6 +593,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -629,7 +622,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Ride Time"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -644,6 +637,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -661,6 +655,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -697,7 +692,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerInParent="true"
                                         android:text="Wait Time"
-                                        android:textColor="@color/Black"
+                                        android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
                                     <ImageView
@@ -724,6 +719,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -741,6 +737,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -771,7 +768,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Basic Fare"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -786,6 +783,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -803,6 +801,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -833,7 +832,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Wait Charges"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -848,6 +847,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -866,6 +866,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -895,7 +896,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Night Charges"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -910,6 +911,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -927,6 +929,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -958,7 +961,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Luggage"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -973,6 +976,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -990,6 +994,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -1025,7 +1030,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:text="Toll Charges"
-                                        android:textColor="@color/Black"
+                                        android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
                                     <ImageView
@@ -1053,6 +1058,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -1070,6 +1076,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -1101,7 +1108,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Surcharge"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -1115,6 +1122,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -1131,6 +1139,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
@@ -1160,7 +1169,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Total Fare"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView

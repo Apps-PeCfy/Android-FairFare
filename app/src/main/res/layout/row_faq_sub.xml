@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
 
 
@@ -41,7 +42,7 @@
             android:layout_marginRight="@dimen/_5sdp"
             android:layout_marginLeft="@dimen/_15sdp"
             android:text="Answae "
-            android:textColor="@color/Black"
+            android:textColor="@color/colorText"
             android:textSize="@dimen/_11sdp"
             android:visibility="gone" />
 

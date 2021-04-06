@@ -43,7 +43,7 @@ import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PhotoSelector
 import com.example.fairfare.utils.PreferencesManager
 import com.google.gson.GsonBuilder
-import okhttp3.MediaType
+
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -144,10 +144,7 @@ class RegisterDisputActivity : AppCompatActivity() {
     @BindView(R.id.selected_recycler_view)
     var selectedImageRecyclerView: RecyclerView? = null
 
-    /*  @JvmField
-      @BindView(R.id.spinnerReason)
-      var spinnerReason: Spinner? = null
-  */
+
 
     var mSpinner: MultipleSelectionSpinner? = null
 

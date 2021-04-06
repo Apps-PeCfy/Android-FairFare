@@ -270,7 +270,6 @@ class SplashScreen : AppCompatActivity() {
             AlertDialog.Builder(this)
         builder.setMessage(
             """Please permit the permission through Settings screen.
-
 Select Permissions -> Enable permission
                 """.trimIndent()
         )

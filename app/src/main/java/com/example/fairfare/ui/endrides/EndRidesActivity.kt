@@ -454,14 +454,13 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     override fun endRideSuccess(endRideResponsePOJO: ResponseEnd?) {
 
         endRideView!!.visibility = View.VISIBLE
-        preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, endRideResponsePOJO!!.rewards)
+        preferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, endRideResponsePOJO!!.rewardsupdate)
 
 
-        estAddressPopup = endRideResponsePOJO?.ride?.estimatedTrackRide?.destinationFullAddress
+        estAddressPopup = endRideResponsePOJO?.ride?.estimatedTrackRide!!.destinationFullAddress
 
         waitingList = endRideResponsePOJO!!.ride?.actualTrackRide?.waitings!!
         tollList = endRideResponsePOJO!!.ride?.actualTrackRide?.tolls!!
-
 
         if (waitingList.size == 0) {
             ivViewInfo!!.visibility = View.GONE
@@ -476,11 +475,12 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         imgurl = endRideResponsePOJO!!.ride?.vehicleImageUrl
 
         startMeterReading =
-            endRideResponsePOJO!!.ride?.vehicleDetail?.startMeterReading?.toString()
+            endRideResponsePOJO!!.ride?.vehicleDetail!!.startMeterReading.toString()
 
         tv_vahicalNO!!.text = endRideResponsePOJO!!.ride?.vehicleDetail?.vehicleNo
         tv_carName!!.text = endRideResponsePOJO!!.ride?.vehicleName
         tv_driverName!!.text = endRideResponsePOJO!!.ride?.vehicleDetail?.driverName
+
 
         if (endRideResponsePOJO.ride?.vehicleDetail?.driverName?.isEmpty()!!) {
             ivUserIcon!!.visibility = View.GONE
@@ -488,12 +488,12 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         tvEstWaitTime!!.text = endRideResponsePOJO!!.ride?.estimatedTrackRide?.waitingTime
         tvActualWaitTime!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.waitingTime
 
+
         if (endRideResponsePOJO!!.ride?.actualTrackRide?.tollCharges?.equals("-")!!) {
 
         } else {
             tvActualTollCharges!!.text =
                 "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.tollCharges
-
         }
 
 
@@ -502,8 +502,11 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         tvEstWaitCharge!!.text =
             "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.waitingCharges
 
+
         tvActualSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.surCharge
         tvEstSurCharge!!.text = "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.surCharge
+
+
 
         if(endRideResponsePOJO.rewards != null){
             tvActualRewardPoints?.visibility = View.VISIBLE
@@ -533,15 +536,18 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
                 endRideResponsePOJO!!.ride?.luggageQuantity.toString() + " Luggage"
 
         }
-
         tv_actualDistance!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.distance + " KM"
         tv_estDistance!!.text = endRideResponsePOJO!!.ride?.estimatedTrackRide?.distance + " KM"
+
 
         tv_estTime!!.text = endRideResponsePOJO!!.ride?.estimatedTrackRide?.duration
         tv_actualTime!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.duration + " mins"
 
+
         tv_estFare!!.text = "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.subTotalCharges
         tv_actualFare!!.text = "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.subTotalCharges
+
+
 
 
         if (endRideResponsePOJO!!.ride!!.estimatedTrackRide!!.tollCharges.equals("-")) {
@@ -549,7 +555,6 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         } else {
             tvEstTollCharges!!.text =
                 "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.tollCharges
-
         }
 
 
@@ -558,10 +563,12 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         tvNightChages!!.text = "₹ " + endRideResponsePOJO!!.ride?.nightCharges
 
 
+
         tv_estTotalFare!!.text =
             "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.totalCharges
         tv_actualTotalFare!!.text =
             "₹ " + endRideResponsePOJO!!.ride?.actualTrackRide?.totalCharges
+
 
         tv_estLuggage!!.text = "₹ " + endRideResponsePOJO!!.ride?.luggageCharges
         tv_actualLuggage!!.text = "₹ " + endRideResponsePOJO!!.ride?.luggageCharges

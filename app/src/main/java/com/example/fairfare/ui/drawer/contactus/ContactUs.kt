@@ -116,6 +116,7 @@ class ContactUs : Fragment() {
                 response: Response<ContactUsResponsePojo?>
             ) {
                 progressDialog.dismiss()
+                editReview!!.setText("")
                 if (response.code() == 200) {
                     if (response.body() != null) {
                         //Toast.makeText(activity, response!!.body()!!.message, Toast.LENGTH_LONG).show()

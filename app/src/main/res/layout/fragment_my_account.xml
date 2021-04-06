@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/White"
+    android:background="@color/colorBackground"
 
     >
 
@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="-50dp"
-        android:background="@drawable/top_corner"
         android:paddingBottom="@dimen/_15sdp">
 
 
@@ -28,24 +27,24 @@
 
 
         <EditText
-            android:background="@android:color/transparent"
             android:id="@+id/userName"
-            android:inputType="textCapWords"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/emptylayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@android:color/transparent"
             android:gravity="center_horizontal"
-            />
+            android:inputType="textCapWords" />
 
         <ScrollView
-            android:layout_below="@+id/userName"
             android:id="@+id/homeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/userName"
             android:layout_marginBottom="@dimen/_10sdp"
             android:visibility="visible">
+
             <LinearLayout
                 android:id="@+id/userDetails"
                 android:layout_width="wrap_content"
@@ -55,19 +54,20 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/White"
+                    android:background="@color/colorBackground"
                     app:cardCornerRadius="@dimen/_10sdp"
                     app:cardElevation="@dimen/_10sdp"
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
+
+                        android:background="@drawable/rounded_corner_night_mode"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
                         <TextView
-                            android:hint="Enter Phone Number"
-
                             android:id="@+id/tvUserNumber"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
@@ -77,10 +77,13 @@
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
+                            android:hint="Enter Phone Number"
                             android:includeFontPadding="false"
-                            android:textSize="@dimen/_11sdp"
                             android:maxLines="1"
-                            android:text="+91 1234567890" />
+                            android:text="+91 1234567890"
+                            android:textColor="@color/colorGreyText"
+                            android:textColorHint="@color/colorGreyText"
+                            android:textSize="@dimen/_11sdp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -93,24 +96,22 @@
 
                         <EditText
 
-                            android:hint="Enter Email Id"
-                            android:background="@android:color/transparent"
-
                             android:id="@+id/tvUserEmailID"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@android:color/transparent"
                             android:drawableStart="@drawable/ic_profile_email"
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
+                            android:hint="Enter Email Id"
                             android:includeFontPadding="false"
-                            android:textSize="@dimen/_11sdp"
                             android:maxLines="1"
-                            />
-
-
+                            android:textColor="@color/colorGreyText"
+                            android:textColorHint="@color/colorGreyText"
+                            android:textSize="@dimen/_11sdp" />
 
 
                         <View
@@ -121,32 +122,32 @@
                             android:background="@color/secondaryLightGray" />
 
 
-
                         <RelativeLayout
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
+                           
                             android:id="@+id/rlGender"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp">
 
 
                             <ImageView
                                 android:id="@+id/ivGender"
-                                android:layout_centerVertical="true"
-
-                                android:background="@drawable/ic_profile_gender"
                                 android:layout_width="@dimen/_23sdp"
-                                android:layout_height="@dimen/_23sdp"/>
+
+                                android:layout_height="@dimen/_23sdp"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/ic_profile_gender" />
 
                             <Spinner
-                                android:layout_toEndOf="@+id/ivGender"
                                 android:id="@+id/tvUserGender"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_toEndOf="@+id/ivGender"
                                 android:drawableStart="@drawable/ic_profile_gender"
                                 android:gravity="bottom"
-
+                                android:textColor="@color/colorGreyText"
                                 android:spinnerMode="dialog"
                                 android:textSize="@dimen/_5sdp" />
 
@@ -179,20 +180,20 @@
 
                         <TextView
                             android:id="@+id/tvUserDOB"
-                            android:drawableStart="@drawable/ic_dob"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
+                            android:drawableStart="@drawable/ic_dob"
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
-                            android:textColor="@color/Black"
                             android:hint="Enter Birthdate"
                             android:includeFontPadding="false"
-                            android:textSize="@dimen/_11sdp"
                             android:maxLines="1"
-                            />
+                            android:textColor="@color/colorGreyText"
+                            android:textColorHint="@color/colorGreyText"
+                            android:textSize="@dimen/_11sdp" />
 
 
                         <View
@@ -203,13 +204,9 @@
                             android:background="@color/secondaryLightGray" />
 
 
-
-
-
                         <EditText
-                            android:inputType="textCapWords"
-
                             android:id="@+id/tvUserPosotion"
+
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
                             android:layout_marginStart="@dimen/_10sdp"
@@ -221,7 +218,11 @@
                             android:gravity="center_vertical"
                             android:hint="Enter Profession"
                             android:includeFontPadding="false"
+                            android:inputType="textCapWords"
                             android:maxLines="1"
+                            android:textColor="@color/colorGreyText"
+                            android:textColorHint="@color/colorGreyText"
+
                             android:textSize="@dimen/_11sdp" />
 
 
@@ -234,12 +235,9 @@
                             android:background="@color/secondaryLightGray" />
 
 
-
-
                         <EditText
-                            android:inputType="textCapWords"
-
                             android:id="@+id/tvUserLocation"
+
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
                             android:layout_marginStart="@dimen/_10sdp"
@@ -251,6 +249,10 @@
                             android:gravity="center_vertical"
                             android:hint="Enter Home City"
                             android:includeFontPadding="false"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/colorGreyText"
+                            android:textColorHint="@color/colorGreyText"
+
                             android:maxLines="1"
                             android:textSize="@dimen/_11sdp" />
 
@@ -263,29 +265,27 @@
             </LinearLayout>
 
 
-        </ScrollView>>
-
-
+        </ScrollView>
+        >
 
 
         <TextView
 
             android:id="@+id/tvEmpty"
-            android:layout_below="@+id/homeView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp">
+            android:layout_height="@dimen/_100sdp"
+            android:layout_below="@+id/homeView">
 
 
         </TextView>
 
 
-
         <Button
 
-            android:layout_below="@+id/tvEmpty"
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tvEmpty"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/shape_roundedbtn"

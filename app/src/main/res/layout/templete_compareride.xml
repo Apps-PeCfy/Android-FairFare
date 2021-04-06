@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_60sdp"
-    app:cardBackgroundColor="@color/White"
+    app:cardBackgroundColor="@color/colorBackground"
     app:cardElevation="@dimen/_3sdp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:background="@drawable/night_mode_square"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -29,6 +30,7 @@
                 />
 
             <TextView
+                android:textColor="@color/colorGreyText"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:id="@+id/tv_carName"
                 android:gravity="center_horizontal"
@@ -53,6 +55,7 @@
             android:weightSum="2">
 
             <TextView
+                android:textColor="@color/colorGreyText"
                 android:id="@+id/tv_vehialType"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -72,6 +75,8 @@
                 android:weightSum="5">
 
                 <TextView
+                    android:textColor="@color/colorGreyText"
+
                     android:id="@+id/place_area"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -82,6 +87,8 @@
 
 
                 <TextView
+                    android:textColor="@color/colorGreyText"
+
                     android:visibility="visible"
                     android:id="@+id/tv_preson"
                     android:layout_width="0dp"
@@ -94,6 +101,8 @@
                     android:gravity="end" />
 
                 <TextView
+                    android:textColor="@color/colorGreyText"
+
                     android:visibility="gone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -127,6 +136,7 @@
                 android:text="₹ 250" />
 
             <TextView
+                android:textColor="@color/colorGreyText"
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

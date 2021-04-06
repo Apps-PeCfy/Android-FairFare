@@ -108,7 +108,6 @@
                             android:layout_height="wrap_content"
                             android:background="@color/White"
                             android:drawableStart="@drawable/ic_search"
-                            android:drawableEnd="@drawable/iv_search"
                             android:drawablePadding="@dimen/_10sdp"
                             android:focusableInTouchMode="true"
                             android:fontFamily="@font/notosansjp_regular"
@@ -122,6 +121,7 @@
 
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
                         android:id="@+id/tv_locateonmap"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -134,10 +134,26 @@
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
 
+                    <TextView
+                        android:textColor="@color/colorGreyText"
+                        android:id="@+id/tv_currentLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_22sdp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+
+                        android:drawableStart="@drawable/iv_search"
+                        android:gravity="center_vertical"
+                        android:text="Current Location"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
-
                         android:layout_height="@dimen/_200sdp"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
@@ -160,6 +176,7 @@
                                 android:layout_weight="1">
 
                                 <TextView
+                                    android:textColor="@color/colorGreyText"
                                     android:id="@+id/tv_searches"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -184,6 +201,7 @@
                                 android:layout_weight="1">
 
                                 <TextView
+                                    android:textColor="@color/colorGreyText"
                                     android:id="@+id/tv_saved"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -251,6 +269,7 @@
 
 
                 <LinearLayout
+
                     android:id="@+id/lladdress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

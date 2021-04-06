@@ -83,7 +83,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     var sourecemarker: Marker? = null
     var context: Context = this
     lateinit var popupschduleResponse: ScheduleRideResponsePOJO
-    private var compareRideList = ArrayList<CompareRideResponsePOJO.VehiclesItem>()
+    private var compareRideList = ArrayList<CompareRideResponsePOJO.TollsItem>()
     private var compareRideListMyRide = ArrayList<GetRideResponsePOJO.TollsItem>()
 
 
@@ -206,7 +206,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
         } else {
-            compareRideList = intent.getSerializableExtra("compareRideList") as ArrayList<CompareRideResponsePOJO.VehiclesItem>
+            compareRideList = intent.getSerializableExtra("compareRideList") as ArrayList<CompareRideResponsePOJO.TollsItem>
 
         }
 

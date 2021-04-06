@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White">
+    android:background="@color/colorBackground">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_rideDetails"
@@ -22,8 +22,8 @@
         android:id="@+id/homeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_rideDetails"
-        android:layout_above="@id/btnSaveDisputes">
+        android:layout_above="@id/btnSaveDisputes"
+        android:layout_below="@+id/toolbar_rideDetails">
 
 
         <RelativeLayout
@@ -31,9 +31,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:background="@color/White"
+            android:background="@color/colorBackground"
             android:paddingBottom="@dimen/_15sdp">
-
 
 
             <RelativeLayout
@@ -43,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/rounded_corner_charges"
+                android:background="@drawable/rounded_corner_night_mode"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:visibility="visible">
@@ -77,7 +76,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:weightSum="2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -85,24 +83,25 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_toEndOf="@+id/llCar"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
 
                         <LinearLayout
-                            android:layout_weight="1"
                             android:layout_width="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_height="match_parent">
-
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
 
                             <TextView
                                 android:id="@+id/tv_carName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
                                 android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center_horizontal"
                                 android:text=""
+                                android:textColor="@color/colorGreyText"
                                 android:textStyle="bold" />
 
 
@@ -110,20 +109,19 @@
                                 android:id="@+id/tv_vahicalNO"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="" />
-
+                                android:text=""
+                                android:textColor="@color/colorGreyText" />
 
 
                         </LinearLayout>
 
 
                         <LinearLayout
-                            android:paddingStart="@dimen/_15sdp"
-                            android:layout_weight="1"
                             android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:orientation="vertical"
-                            android:layout_height="match_parent">
-
+                            android:paddingStart="@dimen/_15sdp">
 
 
                             <TextView
@@ -132,39 +130,34 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_gravity="start"
-                                android:layout_marginBottom="@dimen/_2sdp"
-
                                 android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
                                 android:drawableStart="@drawable/iv_bags"
                                 android:drawablePadding="@dimen/_6sdp"
                                 android:gravity="end"
-                                android:text="" />
-
+                                android:text=""
+                                android:textColor="@color/colorGreyText" />
 
 
                             <TextView
-                                android:layout_marginTop="@dimen/_2sdp"
-                                android:layout_below="@+id/tv_bagCount"
                                 android:id="@+id/tv_Datetime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:layout_below="@+id/tv_bagCount"
                                 android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/_2sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:drawableStart="@drawable/ic_clock"
                                 android:drawablePadding="@dimen/_6sdp"
                                 android:gravity="end"
-                                android:text="" />
-
+                                android:text=""
+                                android:textColor="@color/colorGreyText" />
 
 
                         </LinearLayout>
 
 
-
                     </LinearLayout>
-
-
-
 
 
                 </RelativeLayout>
@@ -196,12 +189,10 @@
                         android:text="" />
 
 
-
                 </RelativeLayout>
 
 
             </RelativeLayout>
-
 
 
             <TextView
@@ -212,11 +203,13 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/register_disputes"
-                android:textColor="@color/Black"
+                android:textColor="@color/colorText"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="bold" />
 
             <com.example.fairfare.ui.disputs.MultipleSelectionSpinner
+                android:background="@drawable/tap_to_select"
+
                 android:id="@+id/spinnerReason"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -235,8 +228,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/spinnerReason"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/roundedcorner"
+                android:background="@drawable/rounded_corner_grey_border"
                 android:gravity="top"
+                android:textColor="@color/colorGreyText"
+                android:textColorHint="@color/colorGreyText"
                 android:hint="Dispute reason"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
@@ -245,7 +240,6 @@
 
 
             <EditText
-
                 android:id="@+id/editReview"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
@@ -256,6 +250,8 @@
                 android:hint="Additional comments"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
+                android:textColor="@color/colorGreyText"
+                android:textColorHint="@color/colorGreyText"
                 android:textSize="@dimen/_10sdp" />
 
 
@@ -264,24 +260,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editReview"
-                android:enabled="false"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:enabled="false"
                 android:hint="Start Trip Meter"
                 android:inputType="number"
-                android:paddingEnd="@dimen/_10sdp" />
+                android:paddingEnd="@dimen/_10sdp"
+                android:textColor="@color/colorGreyText"
+                android:textColorHint="@color/colorGreyText"
+                android:backgroundTint="@color/colorGreyText"
+                />
 
 
             <EditText
+                android:textColor="@color/colorGreyText"
+                android:textColorHint="@color/colorGreyText"
+                android:backgroundTint="@color/colorGreyText"
                 android:id="@+id/edtEndMeterReading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
                 android:layout_below="@+id/edt_meterReading"
                 android:hint="End Trip Meter"
+                android:inputType="number"
                 android:paddingEnd="@dimen/_10sdp" />
 
 
             <EditText
+                android:textColor="@color/colorGreyText"
+                android:textColorHint="@color/colorGreyText"
+                android:backgroundTint="@color/colorGreyText"
                 android:id="@+id/edtTotalFareCharged"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -304,7 +310,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Photos"
-                    android:textColor="@color/Black"
+                    android:textColor="@color/colorText"
                     android:textSize="@dimen/_15sdp"
                     android:textStyle="bold" />
 

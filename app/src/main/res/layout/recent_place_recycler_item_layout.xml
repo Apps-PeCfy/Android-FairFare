@@ -16,6 +16,7 @@
         android:paddingBottom="@dimen/_5sdp">
 
         <TextView
+            android:textColor="@color/colorGreyText"
             android:layout_centerVertical="true"
             android:id="@+id/place_address"
             android:layout_width="match_parent"

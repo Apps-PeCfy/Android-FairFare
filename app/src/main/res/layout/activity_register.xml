@@ -53,6 +53,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textColor="@color/colorText"
                     android:id="@+id/sign_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -102,11 +103,13 @@
                             android:fontFamily="@font/notosansjp_regular"
                             android:includeFontPadding="false"
                             android:hint="Phone Number"
+                            android:textColor="@color/colorGreyText"
+                            android:textColorHint="@color/colorGreyText"
 
                             android:inputType="phone"
                             android:nextFocusDown="@id/btnLogin"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_15sdp" />
+                            android:paddingTop="@dimen/_8sdp"
+                            />
 
                         <TextView
                             android:id="@+id/tvPhoneNumberError"
@@ -144,6 +147,9 @@
                     android:fontFamily="@font/notosansjp_regular"
                     android:hint="Email Id (Optional)"
                     android:includeFontPadding="false"
+                    android:textColor="@color/colorGreyText"
+                    android:textColorHint="@color/colorGreyText"
+
                     android:inputType="textEmailAddress"
                     android:nextFocusDown="@id/edt_name"
                     android:paddingTop="@dimen/_8sdp" />
@@ -180,8 +186,11 @@
                     android:includeFontPadding="false"
                     android:inputType="textCapWords"
                     android:nextFocusDown="@id/radioButtonmale"
+                    android:textColor="@color/colorGreyText"
+                    android:textColorHint="@color/colorGreyText"
+
                     android:paddingTop="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_12sdp" />
+                    />
 
 
                 <TextView
@@ -212,16 +221,20 @@
                     android:weightSum="3.5">
 
                     <RadioButton
+                        android:checked="true"
+                        android:buttonTint="@color/colorGreyText"
+                        android:textColor="@color/colorText"
                         android:id="@+id/radioButtonmale"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:checked="true"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
                         android:text="Male" />
 
                     <RadioButton
+                        android:buttonTint="@color/colorGreyText"
+                        android:textColor="@color/colorText"
                         android:id="@+id/radioButtonfemale"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -231,6 +244,8 @@
                         android:text="Female" />
 
                     <RadioButton
+                        android:buttonTint="@color/colorGreyText"
+                        android:textColor="@color/colorText"
                         android:id="@+id/radioButtonOther"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -271,7 +286,7 @@
                     android:fontFamily="@font/notosansjp_regular"
                     android:includeFontPadding="false"
                     android:text="@string/continuetxt"
-                    android:textColor="@color/Grey"
+                    android:textColor="@color/colorGreyText"
                     android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout
@@ -300,7 +315,7 @@
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingRight="@dimen/_4sdp"
                         android:text="and"
-                        android:textColor="@color/Grey"
+                        android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
 
@@ -310,6 +325,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/notosansjp_regular"
                         android:includeFontPadding="false"
+                        android:textColor="@color/gradientstartcolor"
                         android:text="@string/termsofuse"
                         android:textSize="@dimen/_12sdp" />
 
@@ -355,7 +371,7 @@
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingRight="@dimen/_4sdp"
                         android:text="Already have an account? "
-                        android:textColor="@color/Grey"
+                        android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
 

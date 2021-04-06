@@ -6,7 +6,6 @@ import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
 import com.example.fairfare.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.google.gson.GsonBuilder
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -50,7 +49,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         sourceAddress:String?,
         destinationAddress: String?,
         nightallow: String?,
-        tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>)
+        tolls: ArrayList<CompareRideResponsePOJO.TollsItem>)
     {
         if((vehicleImageList != null && vehicleImageList.size> 0) || (meterImageList != null && meterImageList.size> 0)
             || (driverImageList != null && driverImageList.size> 0) || (badgeImageList != null && badgeImageList.size> 0)){
@@ -101,20 +100,24 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
 
 
-                for (i in tolls[0].tolls!!.indices) {
+
+
+
+                for (i in tolls!!.indices) {
                     val jsonObjectMain = JSONObject()
-                    jsonObjectMain.put("latitude", tolls[0].tolls!!.get(i).latitude)
-                    jsonObjectMain.put("longitude", tolls[0].tolls!!.get(i).longitude)
-                    jsonObjectMain.put("name", tolls[0].tolls!!.get(i).name)
-                    jsonObjectMain.put("road", tolls[0].tolls!!.get(i).road)
-                    jsonObjectMain.put("state", tolls[0].tolls!!.get(i).state)
-                    jsonObjectMain.put("country", tolls[0].tolls!!.get(i).country)
-                    jsonObjectMain.put("type", tolls[0].tolls!!.get(i).type)
-                    jsonObjectMain.put("currency", tolls[0].tolls!!.get(i).currency)
-                    jsonObjectMain.put("charges", tolls[0].tolls!!.get(i).charges)
+                    jsonObjectMain.put("latitude", tolls[i].latitude)
+                    jsonObjectMain.put("longitude", tolls[i].longitude)
+                    jsonObjectMain.put("name", tolls[i].name)
+                    jsonObjectMain.put("road", tolls[i].road)
+                    jsonObjectMain.put("state", tolls[i].state)
+                    jsonObjectMain.put("country", tolls[i].country)
+                    jsonObjectMain.put("type", tolls[i].type)
+                    jsonObjectMain.put("currency", tolls[i].currency)
+                    jsonObjectMain.put("charges", tolls[i].charges)
                     jsonArray.put(jsonObjectMain)
                 }
 
+                jsonProductObj.accumulate("tolls", jsonArray)
 
 
 
@@ -377,7 +380,7 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
         sourceAddress: String?,
         destAddress: String?,
         nightallow: String?,
-        tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>)
+        tolls: ArrayList<CompareRideResponsePOJO.TollsItem>)
 
     {
         val multipartSize : Int = vehicleImageList!!.size + meterImageList!!.size + driverImageList!!.size + badgeImageList!!.size
@@ -423,33 +426,33 @@ class RideDetailsImplementer(private val view: IRideDetaisView) : IRidePresenter
 
         val map3 = HashMap<String?, String?>()
 
-        for (i in tolls[0].tolls!!.indices) {
+        for (i in tolls.indices) {
             var lattitudekey : String = "tolls." + i + ".latitude"
-            map3[lattitudekey] = tolls[0].tolls!!.get(i).latitude
+            map3[lattitudekey] = tolls[i].latitude
 
             var longitudekey : String = "tolls." + i + ".longitude"
-            map3[longitudekey] = tolls[0].tolls!!.get(i).longitude
+            map3[longitudekey] = tolls[i].longitude
 
             var namekey : String = "tolls." + i + ".name"
-            map3[namekey] = tolls[0].tolls!!.get(i).name
+            map3[namekey] = tolls[i].name
 
             var roadkey : String = "tolls." + i + ".road"
-            map3[roadkey] = tolls[0].tolls!!.get(i).road
+            map3[roadkey] = tolls[i].road
 
             var statekey : String = "tolls." + i + ".state"
-            map3[statekey] = tolls[0].tolls!!.get(i).state
+            map3[statekey] = tolls[i].state
 
             var countrykey : String = "tolls." + i + ".country"
-            map3[countrykey] = tolls[0].tolls!!.get(i).country
+            map3[countrykey] = tolls[i].country
 
             var typekey : String = "tolls." + i + ".type"
-            map3[typekey] = tolls[0].tolls!!.get(i).type
+            map3[typekey] = tolls[i].type
 
             var currencykey : String = "tolls." + i + ".currency"
-            map3[currencykey] = tolls[0].tolls!!.get(i).currency
+            map3[currencykey] = tolls[i].currency
 
             var chargeskey : String = "tolls." + i + ".charges"
-            map3[chargeskey] = tolls[0].tolls!!.get(i).charges.toString()
+            map3[chargeskey] = tolls[i].charges.toString()
         }
 
         val map = HashMap<String?, String?>()

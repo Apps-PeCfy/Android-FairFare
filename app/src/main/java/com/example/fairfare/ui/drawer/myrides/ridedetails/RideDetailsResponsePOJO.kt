@@ -32,6 +32,9 @@ class RideDetailsResponsePOJO {
         @SerializedName("cityId")
         var cityId: String? = null
 
+        @SerializedName("rewards")
+        var rewards: String? = null
+
         @SerializedName("originPlaceLat")
         var originPlaceLat: String? = null
 

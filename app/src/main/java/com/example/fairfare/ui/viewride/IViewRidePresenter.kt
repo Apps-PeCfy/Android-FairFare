@@ -23,7 +23,5 @@ interface IViewRidePresenter {
         dLong: String?,
         sorceAddress: String?,
         destinationAddress: String?,
-        compareRideList: ArrayList<CompareRideResponsePOJO.VehiclesItem>
-
-    )
+        tolls: ArrayList<CompareRideResponsePOJO.TollsItem>)
 }

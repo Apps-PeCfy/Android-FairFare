@@ -82,11 +82,11 @@ class FAQAdapter(
 
 
             if (selectedPosition == position) {
-                holder!!.tvQuestion!!.setTextColor(Color.parseColor("#000000"))
+              //  holder!!.tvQuestion!!.setTextColor(Color.parseColor("#000000"))
                 holder.recyclerView!!.setVisibility(View.VISIBLE)
                 holder.ivExpand!!.setImageResource(R.drawable.downarrow)
             } else {
-                holder.tvQuestion!!.setTextColor(Color.parseColor("#000000"))
+                //holder.tvQuestion!!.setTextColor(Color.parseColor("#000000"))
                 holder.recyclerView!!.setVisibility(View.GONE)
                 holder.ivExpand!!.setImageResource(R.drawable.rightarrow)
             }

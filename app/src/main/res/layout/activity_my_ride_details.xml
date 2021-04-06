@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".ui.drawer.myrides.ridedetails.MyRideDetailsActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -22,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_endRide"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="0dp"
+        android:background="@color/colorBackground">
 
 
         <RelativeLayout
@@ -37,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
-                android:background="@color/White"
+                android:background="@color/colorBackground"
                 android:orientation="vertical">
 
 
@@ -45,7 +47,7 @@
                     android:id="@+id/homeView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -62,9 +64,9 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/rounded_corner_charges"
+                            android:orientation="vertical"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:orientation="vertical"
                             android:visibility="visible">
 
 
@@ -115,6 +117,7 @@
 
 
                                         <TextView
+                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_carName"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -125,6 +128,7 @@
 
 
                                         <TextView
+                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_vahicalNO"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -149,15 +153,16 @@
                                             android:layout_alignParentEnd="true"
                                             android:layout_gravity="start"
                                             android:layout_marginEnd="@dimen/_10sdp"
-
                                             android:layout_marginBottom="@dimen/_2sdp"
                                             android:drawableStart="@drawable/iv_bags"
                                             android:drawablePadding="@dimen/_6sdp"
                                             android:gravity="end"
-                                            android:text="" />
+                                            android:text=""
+                                            android:textColor="@color/colorGreyText" />
 
 
                                         <TextView
+                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_Datetime"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
@@ -197,6 +202,7 @@
 
 
                                 <TextView
+                                    android:textColor="@color/colorGreyText"
                                     android:id="@+id/tv_driverName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -212,6 +218,7 @@
 
 
                         <LinearLayout
+
                             android:id="@+id/llAdditionalCharges"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -234,7 +241,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -253,7 +260,7 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Estimated"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -272,7 +279,7 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Actual"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
 
@@ -299,7 +306,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Distance"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -317,7 +324,8 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -334,7 +342,8 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -359,7 +368,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Ride Time"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -377,7 +386,8 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -392,10 +402,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -427,7 +437,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerInParent="true"
                                         android:text="Wait Time"
-                                        android:textColor="@color/Black"
+                                        android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
                                     <ImageView
@@ -456,10 +466,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -474,10 +484,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-" />
+                                    android:text="-"
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -504,7 +514,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Basic Fare"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -520,10 +530,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -538,10 +548,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text=" " />
+                                    android:text=" "
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -569,7 +579,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Wait Charges"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -585,10 +595,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -598,16 +608,15 @@
 
                                 <TextView
                                     android:id="@+id/tvActualWaitCharge"
-
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text=" " />
+                                    android:text=" "
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -634,7 +643,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Night Charges"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -650,10 +659,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -668,10 +677,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -699,7 +708,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Luggage"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -715,10 +724,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -733,10 +742,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -770,7 +779,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:text="Toll Charges"
-                                        android:textColor="@color/Black"
+                                        android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
                                     <ImageView
@@ -799,10 +808,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-" />
+                                    android:text="-"
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -817,10 +826,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-" />
+                                    android:text="-"
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -848,7 +857,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Surcharge"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -862,11 +871,12 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:paddingTop="@dimen/_8sdp"
                                     android:gravity="end"
+                                    android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -881,10 +891,10 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
-
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
 
 
                             </LinearLayout>
@@ -911,7 +921,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text="Total Fare"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -959,6 +969,18 @@
 
                         </LinearLayout>
 
+                        <TextView
+                            android:id="@+id/tvActualRewardPoints"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:fontFamily="@font/notosansjp_bold"
+                            android:textColor="@color/colorGreyText"
+                            android:textSize="@dimen/text_16sp"
+                            android:visibility="gone" />
+
+
                         <LinearLayout
                             android:id="@+id/llRating"
                             android:layout_width="wrap_content"
@@ -971,10 +993,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Ride Ratings"
-                                android:textSize="@dimen/text_18sp"
-                                android:textColor="@color/Black"
                                 android:fontFamily="@font/notosansjp_regular"
+                                android:text="Ride Ratings"
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_18sp"
                                 android:textStyle="bold" />
 
                             <com.iarcuschin.simpleratingbar.SimpleRatingBar
@@ -1004,6 +1026,7 @@
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingBottom="@dimen/_5sdp"
+                            android:textColor="@color/colorGreyText"
                             android:textSize="@dimen/_10sdp"
                             android:visibility="gone" />
 
@@ -1011,31 +1034,31 @@
                             android:id="@+id/txt_photos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Photos"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:textColor="@color/Black"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:text="Photos"
+                            android:textColor="@color/colorText"
                             android:textSize="@dimen/text_18sp"
                             android:textStyle="bold"
-                            android:fontFamily="@font/notosansjp_regular"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginTop="@dimen/_5sdp">
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/txt_vehicle_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Vehicle Number"
-                                android:visibility="gone"
-                                android:textColor="@color/Grey"
                                 android:fontFamily="@font/notosansjp_regular"
+                                android:text="Vehicle Number"
+                                android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler_view_vehicle"
@@ -1048,12 +1071,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Start Trip Meter"
-                                android:visibility="gone"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:textColor="@color/Grey"
+                                android:text="Start Trip Meter"
+                                android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler_view_trip_meter"
@@ -1066,12 +1089,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Driver"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:visibility="gone"
-                                android:textColor="@color/Grey"
+                                android:text="Driver"
+                                android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler_view_driver"
@@ -1084,12 +1107,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Badge Number"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:textColor="@color/Grey"
+                                android:text="Badge Number"
+                                android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_16sp"
-                                android:visibility="gone"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler_view_badge"

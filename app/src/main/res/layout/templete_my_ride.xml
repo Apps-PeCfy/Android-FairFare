@@ -9,7 +9,6 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/White"
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardElevation="@dimen/_5sdp"
         app:cardUseCompatPadding="true">
@@ -17,8 +16,10 @@
 
         <RelativeLayout
             android:id="@+id/rlRideDetails"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_night_mode"
             android:paddingBottom="@dimen/_10sdp">
 
             <RelativeLayout
@@ -56,6 +57,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
                             android:id="@+id/tv_dateandTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -65,6 +67,7 @@
                             android:text="Mon, Sept 3, 23:35 AM" />
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
                             android:id="@+id/tv_vahicalName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -217,39 +220,34 @@
 
                     <RelativeLayout
                         android:id="@+id/destnationAddresslayout"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view1">
+                        android:layout_below="@+id/view1"
+                        android:layout_marginEnd="@dimen/_10sdp">
 
 
                         <TextView
-
                             android:id="@+id/destnationAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_toLeftOf="@+id/ivViewInfo"
                             android:drawableStart="@drawable/triangle"
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_bold"
-                            android:layout_toLeftOf="@+id/ivViewInfo"
                             android:gravity="center_vertical"
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Drop-off Location " />
-
-
-
-
-
+                            android:text="Drop-off Location "
+                            android:textColor="@color/colorGreyText" />
 
 
                         <ImageView
-                            android:layout_alignParentEnd="true"
                             android:id="@+id/ivViewInfo"
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
+                            android:layout_alignParentEnd="true"
                             android:layout_centerInParent="true"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:background="@drawable/view_info" />

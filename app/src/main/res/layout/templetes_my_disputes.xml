@@ -16,6 +16,7 @@
 
 
         <RelativeLayout
+            android:background="@drawable/rounded_corner_night_mode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -53,6 +54,8 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
+
                             android:id="@+id/tv_dateandTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -62,6 +65,8 @@
                             android:text="Mon, Sept 3, 23:35 AM" />
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
+
                             android:id="@+id/tv_vahicalName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -111,7 +116,8 @@
                             android:includeFontPadding="false"
                             android:padding="@dimen/_10sdp"
                             android:text="ID:#MUM7656RT56"
-                            android:textColor="@color/Black" />
+                            android:textColor="@color/colorText"
+                            />
 
                         <View
                             android:layout_width="@dimen/_2sdp"
@@ -200,6 +206,7 @@
 
 
                             <TextView
+                                android:textColor="@color/colorGreyText"
 
                                 android:id="@+id/destnationAddress"
                                 android:layout_width="match_parent"
@@ -287,7 +294,7 @@
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
                     android:text="File Complaint"
-                    android:textColor="@color/Black" />
+                    android:textColor="@color/colorText" />
 
                 <View
                     android:layout_width="@dimen/_2sdp"
@@ -304,7 +311,7 @@
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
                     android:text="Delete Dispute"
-                    android:textColor="@color/Black" />
+                    android:textColor="@color/colorText" />
 
             </LinearLayout>
 

@@ -28,6 +28,7 @@ class PrivacyPolicyActivity : AppCompatActivity() {
 
     var preferencesManager: PreferencesManager? = null
     var token: String? = null
+    var contentPadeText: String? = null
     @JvmField
     @BindView(R.id.webView)
     var webView: WebView? = null
@@ -41,16 +42,27 @@ class PrivacyPolicyActivity : AppCompatActivity() {
         setContentView(R.layout.activity_privacy_policy)
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
-        callApi()
 
-        mToolbar!!.title = "Privacy Policy"
+        contentPadeText = intent.getStringExtra("ContentPageData")
+
+        mToolbar!!.title = contentPadeText
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
+        if(contentPadeText.equals("Privacy Policy")){
+
+            callApi("Privacy-Policy")
+
+        }else{
+            callApi("Terms-Of-Use")
+
+        }
+
+
     }
 
-    private fun callApi() {
+    private fun callApi(contentData: String) {
 
         val progressDialog = ProgressDialog(this@PrivacyPolicyActivity)
         progressDialog.setCancelable(false) // set cancelable to false
@@ -58,7 +70,7 @@ class PrivacyPolicyActivity : AppCompatActivity() {
         progressDialog.show() // show progress dialog
 
 
-        val call = ApiClient.client.pageContents( "Privacy-Policy")
+        val call = ApiClient.client.pageContents( contentData)
         call!!.enqueue(object : Callback<ContentResponsePOJO?> {
             override fun onResponse(
                 call: Call<ContentResponsePOJO?>,

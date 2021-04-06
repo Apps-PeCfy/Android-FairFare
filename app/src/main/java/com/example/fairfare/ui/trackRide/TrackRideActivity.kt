@@ -412,7 +412,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 
-            //   tv_estimatedDistance!!.text = info.ride!!.estimatedTrackRide!!.distance + " km"
+        //   tv_estimatedDistance!!.text = info.ride!!.estimatedTrackRide!!.distance + " km"
         tv_travelTime!!.text = info.ride!!.estimatedTrackRide!!.duration
 
 
@@ -478,7 +478,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     }
 
 
-                    if (currentspeed!! < 5) {   //speed less than 10 km per hr
+
+                    if (currentspeed!! < 2) {   //speed less than 10 km per hr
                         isWaiting = true
                         if (waitTime == null) {
                             waitTime = Date()
@@ -486,7 +487,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             waitAt = formatter.format(waitTime)
                             waitStartLocationNew = getAddressFromLocation(lastLocation)
                         }
-                     //   Toast.makeText(applicationContext, "On Wait Start Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
+
+                        //   Toast.makeText(applicationContext, "On Wait Start Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
+
 
                     } else {
                         isWaiting = false
@@ -503,7 +506,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                                 var options = HashMap<String, String>()
                                 options.put("waiting_time", timeDiffrence.toString())
                                 options.put("full_address", waitStartLocationNew!!)
-                             //   options.put("full_address", waitStartLocation!!)
+
+                                //   options.put("full_address", waitStartLocation!!)
+
                                 options.put("wait_at", waitAt!!)
                                 options.put("lat", waitLat!!)
                                 options.put("long", waitLong!!)
@@ -519,10 +524,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                                             .toDouble()
                                     arrWaitTime[arrWaitTime.size - 1]["waiting_time"] =
                                         totalTime.toString()
-                                 //   Toast.makeText(applicationContext, "On Ride wait location same as previous added Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
+                                    //   Toast.makeText(applicationContext, "On Ride wait location same as previous added Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
                                 } else {
                                     arrWaitTime.add(options!!)
-                                 //   Toast.makeText(applicationContext, "On Ride wait time added Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
+                                    //   Toast.makeText(applicationContext, "On Ride wait time added Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
                                 }
 
 
@@ -642,7 +647,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                             actulDis = distanceBetweenCurrent!!
                             actualTravelDistance.add(actulDis)
-                          //  actualTravelDistanceForNightCharges.add(actulDis)
+                            //  actualTravelDistanceForNightCharges.add(actulDis)
 
 
 
@@ -932,7 +937,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             }
 
             strDistCal = (totalActualDistance / 1000).toString()//meter
-           // progressBarDistance!!.progress = (totalActualDistance/1000).toInt()//km
+            // progressBarDistance!!.progress = (totalActualDistance/1000).toInt()//km
             progressBarDistance!!.progress = (totalActualDistance).toInt()//km
             val dist = String.format("%.1f", strDistCal!!.toDouble())
 
@@ -1424,6 +1429,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 
+
         drawRoute()
     }
 
@@ -1476,8 +1482,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val key = "key=" + getString(R.string.google_maps_key)
 
         // Building the parameters to the web service
-        val parameters = "$str_origin&$str_dest&$key"
-
+       // val parameters = "$str_origin&$str_dest&$key"
+        val parameters = "$str_origin&$str_dest&alternatives=false&$key"
         // Output format
         val output = "json"
 
@@ -1633,7 +1639,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     }
 
 
-
                     // Fetching all the points in i-th route
 
 
@@ -1656,14 +1661,14 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     //ILOMADEV
                     isFirstTimeSetUpDone = true
 
-                   // val estCurrDIst = (estCurrentDistance!!.toDouble() / 1000)
+                    // val estCurrDIst = (estCurrentDistance!!.toDouble() / 1000)
                     val estCurrDIst = (estCurrentDistance!!.toInt())
 
                     val estCurrentDist =
                         DecimalFormat("####.#").format((estCurrentDistance!!.toDouble() / 1000)) + " km"
                     tvEstDistance!!.text = "Est.Distance " + estCurrentDist
                     tvEstTime!!.text = "Est.Time " + estCurrentDuration
-                 //   progressBarDistance!!.max = (estCurrDIst)!!.toFloat().toInt()
+                    //   progressBarDistance!!.max = (estCurrDIst)!!.toFloat().toInt()
                     progressBarDistance!!.max = estCurrDIst
 
 
@@ -1701,11 +1706,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val timeDiffrence = (calculateDate).toDouble()
             totalWaitTime = totalWaitTime + timeDiffrence
 
-           /* if (calculateDate > 60) {
-                val timeDiffrence = (calculateDate - 60).toDouble()
-                totalWaitTime = totalWaitTime + timeDiffrence
-
-            }*/
+            /* if (calculateDate > 60) {
+                 val timeDiffrence = (calculateDate - 60).toDouble()
+                 totalWaitTime = totalWaitTime + timeDiffrence
+             }*/
         }
 
         var timeInMin = 0.0
@@ -1758,7 +1762,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 var options = HashMap<String, String>()
                 options.put("waiting_time", timeDiffrence.toString())
                 options.put("full_address", waitStartLocationNew!!)
-              //  options.put("full_address", waitStartLocation!!)
+
+                //  options.put("full_address", waitStartLocation!!)
                 options.put("wait_at", waitAt!!)
                 options.put("lat", waitStartLat!!)
                 options.put("long", waitStartLong!!)
@@ -2005,7 +2010,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 
-                if (currentspeed!! < 10) {   //speed less than 10 km per hr
+                if (currentspeed!! < 2) {   //speed less than 10 km per hr
                     if (waitTime == null) {
                         waitTime = Date()
                         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -2423,12 +2428,13 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         }
 
-       /* geoField = GeomagneticField(
-            java.lang.Double.valueOf(startLocation.latitude).toFloat(),
-            java.lang.Double.valueOf(startLocation.longitude).toFloat(),
-            java.lang.Double.valueOf(startLocation.altitude).toFloat(),
-            System.currentTimeMillis()
-        )*/
+
+        /* geoField = GeomagneticField(
+             java.lang.Double.valueOf(startLocation.latitude).toFloat(),
+             java.lang.Double.valueOf(startLocation.longitude).toFloat(),
+             java.lang.Double.valueOf(startLocation.altitude).toFloat(),
+             System.currentTimeMillis()
+         )*/
 
         if (isWaiting!! && lastCompassBering != null) {
             return lastCompassBering!!
@@ -2529,6 +2535,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         super.onPause()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
+
 
 }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/review"
-                android:textColor="@color/Black" />
+                android:textColor="@color/colorText" />
 
 
             <RelativeLayout
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@color/White"
+                android:background="@color/colorBackground"
                 android:padding="@dimen/_5sdp">
 
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
@@ -93,6 +93,8 @@
                     android:layout_below="@+id/ratingBar"
                     android:layout_marginTop="@dimen/_40sdp"
                     android:background="@drawable/roundedcorner"
+                    android:textColor="@color/colorGreyText"
+                    android:textColorHint="@color/colorGreyText"
                     android:gravity="top"
                     android:hint="Enter your review"
                     android:paddingStart="@dimen/_10sdp"

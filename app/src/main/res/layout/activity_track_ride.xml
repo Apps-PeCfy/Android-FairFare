@@ -22,8 +22,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_trackRide"
         android:layout_above="@id/add"
+        android:layout_below="@+id/toolbar_trackRide"
         android:layout_marginTop="0dp">
 
 
@@ -115,7 +115,7 @@
                             android:layout_centerVertical="true"
                             android:text="Auto"
                             android:textAllCaps="true"
-                            android:textColor="@color/Black"
+                            android:textColor="@color/colorText"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
@@ -133,17 +133,16 @@
                         app:cardUseCompatPadding="true">
 
                         <RelativeLayout
+                            android:background="@drawable/rounded_corner_night_mode"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical">
 
                             <TextView
 
-                                android:paddingTop="@dimen/_10sdp"
-                                android:paddingBottom="@dimen/_10sdp"
-
                                 android:id="@+id/tv_myCurrentLocation"
                                 android:layout_width="match_parent"
+
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
@@ -152,6 +151,8 @@
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
                                 android:text="Pick-up Location"
                                 android:textColor="@color/gradientstartcolor" />
 
@@ -166,9 +167,6 @@
 
 
                             <TextView
-                                android:paddingTop="@dimen/_10sdp"
-                                android:paddingBottom="@dimen/_10sdp"
-
                                 android:id="@+id/tv_myDropUpLocation"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -180,7 +178,10 @@
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
-                                android:text="Drop-off Location " />
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="Drop-off Location "
+                                android:textColor="@color/colorGreyText" />
 
 
                             <View
@@ -208,14 +209,16 @@
                             android:id="@+id/tvEstDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Est.Distance" />
+                            android:text="Est.Distance"
+                            android:textColor="@color/colorGreyText" />
 
                         <TextView
                             android:id="@+id/tvEstTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="Est.Time" />
+                            android:text="Est.Time"
+                            android:textColor="@color/colorGreyText" />
 
                     </RelativeLayout>
 
@@ -244,6 +247,7 @@
             </LinearLayout>
 
             <RelativeLayout
+
                 android:id="@+id/rlData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -279,7 +283,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_close"
                     android:text="Distance/Time"
-                    android:textColor="@color/Black"
+                    android:textColor="@color/colorText"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
@@ -290,7 +294,7 @@
                     android:layout_below="@+id/tv_trackBoard"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="(Est.Distance:7.5 KM) / (Est.Time:7 Mins)"
-                    android:textColor="@color/Black"
+                    android:textColor="@color/colorText"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
@@ -341,6 +345,7 @@
 
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
                         android:id="@+id/tv_estimatedDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -348,6 +353,7 @@
                         android:visibility="gone" />
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Actual distance/Remaining distance"
@@ -396,6 +402,7 @@
 
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
                         android:id="@+id/tv_travelTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -403,6 +410,7 @@
                         android:visibility="gone" />
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Actual time/ Remaining Time"
@@ -428,11 +436,12 @@
                         android:layout_height="wrap_content"
                         android:paddingEnd="@dimen/_15sdp"
                         android:text="Wait Time"
-                        android:textColor="@color/Black"
+                        android:textColor="@color/colorText"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
                         android:id="@+id/tv_currentwaitTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -465,7 +474,7 @@
                         android:drawablePadding="@dimen/_15sdp"
                         android:paddingEnd="@dimen/_15sdp"
                         android:text="Current Fare"
-                        android:textColor="@color/Black"
+                        android:textColor="@color/colorText"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
 
@@ -501,13 +510,12 @@
                     android:layout_below="@+id/view2"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Places Nearby within 1 km "
-                    android:textColor="@color/Black"
+                    android:textColor="@color/colorText"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/rl_atm_hotel"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/nearbyPlaces"
@@ -531,6 +539,7 @@
                             android:layout_height="@dimen/_15sdp" />
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
                             android:id="@+id/tv_atm"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -554,6 +563,7 @@
                             android:layout_height="@dimen/_15sdp" />
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
                             android:id="@+id/museum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -577,6 +587,7 @@
                             android:layout_height="@dimen/_15sdp" />
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
                             android:id="@+id/tv_hotel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -601,6 +612,7 @@
                             android:layout_height="@dimen/_15sdp" />
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
                             android:id="@+id/hospital"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
