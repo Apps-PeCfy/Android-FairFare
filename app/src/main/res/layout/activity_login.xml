@@ -52,350 +52,385 @@
 
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/app_gradient"
-    android:orientation="vertical"
-    android:weightSum="4"
-    tools:context=".ui.Login.LoginActivity">
-
-
-
-
-
-
-    <LinearLayout
-        android:id="@+id/rectangle_1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.2"
+        android:layout_height="match_parent"
         android:background="@drawable/app_gradient"
-        android:gravity="center_vertical"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        android:weightSum="4"
+        tools:context=".ui.Login.LoginActivity">
 
 
-        <ImageView
-            android:id="@+id/vector"
-            android:layout_width="@dimen/_144sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/logo"
-            tools:ignore="ObsoleteLayoutParam" />
-
-    </LinearLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.8"
-        android:background="@drawable/top_corner"
-        android:orientation="vertical">
-
-        <!-- Log In -->
-        <TextView
-            android:id="@+id/log_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/_18sdp"
-            android:layout_marginTop="@dimen/_25sdp"
-            android:fontFamily="@font/notosansjp_bold"
-            android:gravity="center_horizontal|top"
-            android:includeFontPadding="false"
-            android:text="@string/logIn"
-            android:textAppearance="@style/log_in" />
 
 
         <LinearLayout
-            android:id="@+id/ll_user"
+            android:id="@+id/rectangle_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/log_in"
-            android:layout_marginLeft="@dimen/_18sdp"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="1.2"
+            android:background="@drawable/app_gradient"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
-            <com.rilixtech.widget.countrycodepicker.CountryCodePicker
-                android:id="@+id/ccpr"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/edit_text"
-                android:gravity="center_vertical"
-                app:ccp_autoFormatNumber="true"
-                app:ccp_defaultNameCode="IN"
-                app:ccp_enablePhoneAutoFormatter="true"
-                app:ccp_hideNameCode="true"
-                app:ccp_textColor="@color/Red"
-                app:ccp_textFont="notosansjp_regular.ttf"
-                app:ccp_textSize="@dimen/_14sdp" />
+
+            <ImageView
+                android:id="@+id/vector"
+                android:layout_width="@dimen/_144sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/logo"
+                tools:ignore="ObsoleteLayoutParam" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.8"
+            android:background="@drawable/top_corner"
+            android:orientation="vertical">
+
+            <!-- Log In -->
 
             <LinearLayout
+                android:id="@+id/log_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/log_in"
-                    android:backgroundTint="@color/gradientstartcolor"
-                    android:fontFamily="@font/notosansjp_regular"
-                    android:hint="Phone Number"
-                    android:includeFontPadding="false"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/btnLogin"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_15sdp" />
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_20sdp">
 
                 <TextView
-                    android:id="@+id/tvPhoneNumberError"
-                    android:layout_width="match_parent"
-
+                    android:textColor="@color/colorText"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/edt_email"
-                    android:layout_marginTop="-8dp"
-                    android:layout_marginEnd="@dimen/_18sdp"
-                    android:backgroundTint="@color/gradientstartcolor"
+                    android:fontFamily="@font/notosansjp_bold"
+                    android:gravity="center_horizontal|top"
+                    android:includeFontPadding="false"
+                    android:text="@string/logIn"
+                    android:textAppearance="@style/log_in" />
+
+                <TextView
+                    android:textColor="@color/colorText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosansjp_bold"
+                    android:gravity="center_horizontal|top"
+                    android:includeFontPadding="false"
+                    android:text="@string/str_reward_points"
+                    android:textSize="@dimen/text_16sp"
+                    android:textAppearance="@style/log_in" />
+
+                <TextView
+                    android:textColor="@color/colorGreyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/notosansjp_regular"
-                    android:text="Plese"
-                    android:textColor="@color/Red"
-                    android:textSize="@dimen/_9sdp"
-                    android:visibility="gone" />
+                    android:gravity="center_horizontal|top"
+                    android:includeFontPadding="false"
+                    android:textSize="@dimen/text_14sp"
+                    android:text="@string/str_valid_for_new_users_only"
+                    android:textAppearance="@style/log_in" />
+
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/log_in"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:orientation="horizontal">
+
+                <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                    android:id="@+id/ccpr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/edit_text"
+                    android:gravity="center_vertical"
+                    app:ccp_autoFormatNumber="true"
+                    app:ccp_defaultNameCode="IN"
+                    app:ccp_enablePhoneAutoFormatter="true"
+                    app:ccp_hideNameCode="true"
+                    app:ccp_textColor="@color/Red"
+                    app:ccp_textFont="notosansjp_regular.ttf"
+                    app:ccp_textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:textColor="@color/colorGreyText"
+                        android:textColorHint="@color/colorGreyText"
+                        android:id="@+id/edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/log_in"
+                        android:backgroundTint="@color/gradientstartcolor"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:hint="Phone Number"
+                        android:includeFontPadding="false"
+                        android:inputType="number"
+                        android:nextFocusDown="@id/btnLogin"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_15sdp" />
+
+                    <TextView
+                        android:id="@+id/tvPhoneNumberError"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/edt_email"
+                        android:layout_marginTop="-8dp"
+                        android:layout_marginEnd="@dimen/_18sdp"
+                        android:backgroundTint="@color/gradientstartcolor"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:text="Plese"
+                        android:textColor="@color/Red"
+                        android:textSize="@dimen/_9sdp"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
 
-        </LinearLayout>
+            <!-- <com.hbb20.CountryCodePicker
+                 android:layout_marginLeft="@dimen/_18sdp"
+                 android:layout_marginTop="@dimen/_15sdp"
+                 android:layout_below="@+id/edit_text"
+                 android:id="@+id/ccp"
+                 android:layout_width="@dimen/_200sdp"
+                 android:layout_height="@dimen/_40sdp"
+                 android:layout_centerVertical="true"
+                 app:ccpDialog_keyboardAutoPopup="false"
+                 app:ccp_autoFormatNumber="false"
+                 app:ccp_countryPreference="in"
+                 app:ccp_defaultNameCode="IN"/>-->
 
-
-        <!-- <com.hbb20.CountryCodePicker
-             android:layout_marginLeft="@dimen/_18sdp"
-             android:layout_marginTop="@dimen/_15sdp"
-             android:layout_below="@+id/edit_text"
-             android:id="@+id/ccp"
-             android:layout_width="@dimen/_200sdp"
-             android:layout_height="@dimen/_40sdp"
-             android:layout_centerVertical="true"
-             app:ccpDialog_keyboardAutoPopup="false"
-             app:ccp_autoFormatNumber="false"
-             app:ccp_countryPreference="in"
-             app:ccp_defaultNameCode="IN"/>-->
-
-
-        <TextView
-            android:id="@+id/txt_continue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_user"
-            android:layout_marginLeft="@dimen/_18sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/notosansjp_regular"
-            android:includeFontPadding="false"
-            android:text="@string/continuetxt"
-            android:textColor="@color/Grey"
-            android:textSize="@dimen/_12sdp" />
-
-        <LinearLayout
-            android:id="@+id/ll_privacy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_continue"
-            android:layout_marginLeft="@dimen/_18sdp"
-            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvPrivacy"
+                android:id="@+id/txt_continue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_user"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/notosansjp_regular"
                 android:includeFontPadding="false"
-                android:text="@string/privacypolicy"
-                android:textColor="@color/gradientstartcolor"
+                android:text="@string/continuetxt"
+                android:textColor="@color/colorGreyText"
                 android:textSize="@dimen/_12sdp" />
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/ll_privacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/notosansjp_regular"
-                android:includeFontPadding="false"
-                android:paddingLeft="@dimen/_4sdp"
-                android:paddingRight="@dimen/_4sdp"
-                android:text="and"
-                android:textColor="@color/Grey"
-                android:textSize="@dimen/_12sdp"
-                android:visibility="visible" />
+                android:layout_below="@+id/txt_continue"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvTerms"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvPrivacy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:includeFontPadding="false"
+                    android:text="@string/privacypolicy"
+                    android:textColor="@color/gradientstartcolor"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:text="and"
+                    android:textColor="@color/colorGreyText"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tvTerms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/gradientstartcolor"
+                    android:text="@string/termsofuse"
+                    android:textSize="@dimen/_12sdp" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/notosansjp_regular"
-                android:includeFontPadding="false"
-                android:text="@string/termsofuse"
-                android:textSize="@dimen/_12sdp" />
-
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_privacy"
-            android:layout_marginStart="@dimen/_18sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_18sdp"
-            android:background="@drawable/shape_roundedbtn"
-            android:fontFamily="@font/notosansjp_regular"
-            android:includeFontPadding="false"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
-            android:text="@string/register"
-            android:textAllCaps="false"
-            android:textColor="@color/White"
-            android:textSize="@dimen/_15sdp" />
-
-        <LinearLayout
-            android:id="@+id/viewor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnLogin"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:weightSum="5">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_below="@+id/ll_privacy"
                 android:layout_marginStart="@dimen/_18sdp"
-                android:layout_weight="1.5"
-                android:background="@color/Grey" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="2"
-                android:fontFamily="@font/notosansjp_regular"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="Or continue with"
-                android:textColor="@color/Grey"
-                android:textSize="@dimen/_12sdp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:layout_weight="1.5"
-                android:background="@color/Grey" />
+                android:background="@drawable/shape_roundedbtn"
+                android:fontFamily="@font/notosansjp_regular"
+                android:includeFontPadding="false"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="@string/register"
+                android:textAllCaps="false"
+                android:textColor="@color/White"
+                android:textSize="@dimen/_15sdp" />
+
+            <LinearLayout
+                android:id="@+id/viewor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnLogin"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="5">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_weight="1.5"
+                    android:background="@color/Grey" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Or continue with"
+                    android:textColor="@color/colorGreyText"
+                    android:textSize="@dimen/_12sdp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:layout_weight="1.5"
+                    android:background="@color/Grey" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewor"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewor"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center">
 
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <com.facebook.login.widget.LoginButton
-                    xmlns:fb="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/btnFBK"
+                    <com.facebook.login.widget.LoginButton
+                        xmlns:fb="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/btnFBK"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:visibility="visible"
+                        android:id="@+id/btnLoginFacebook"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/ic_fb" />
+
+
+
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:id="@+id/iv_gmail"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    android:visibility="gone" />
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:background="@drawable/ic_gmail" />
+            </LinearLayout>
 
-               <Button
-                   android:visibility="visible"
-                    android:id="@+id/btnLoginFacebook"
-                    android:layout_width="@dimen/_35sdp"
-                    android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/ic_fb" />
-
-
-
-            </RelativeLayout>
-
-
-            <ImageView
-                android:id="@+id/iv_gmail"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginStart="@dimen/_7sdp"
-                android:background="@drawable/ic_gmail" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_15sdp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/_5sdp">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/notosansjp_regular"
-                android:includeFontPadding="false"
-                android:paddingLeft="@dimen/_4sdp"
-                android:paddingRight="@dimen/_4sdp"
-                android:text="Don't have an account? "
-                android:textColor="@color/Grey"
-                android:textSize="@dimen/_12sdp"
-                android:visibility="visible" />
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:text="Don't have an account? "
+                    android:textColor="@color/colorGreyText"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="visible" />
 
 
 
-            <TextView
-                android:id="@+id/tvSignUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/notosansjp_regular"
-                android:includeFontPadding="false"
-                android:text="@string/signup"
-                android:textColor="@color/gradientstartcolor"
-                android:textSize="@dimen/_12sdp" />
+                <TextView
+                    android:id="@+id/tvSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:includeFontPadding="false"
+                    android:text="@string/signup"
+                    android:textColor="@color/gradientstartcolor"
+                    android:textSize="@dimen/_12sdp" />
 
 
 
-          <!--  <TextView
-                android:id="@+id/tvSignUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/notosansjp_regular"
-                android:includeFontPadding="false"
-                android:text="@string/signup"
-                android:textColor="@color/gradientstartcolor"
-                android:textSize="@dimen/_12sdp" />-->
+                <!--  <TextView
+                      android:id="@+id/tvSignUp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:fontFamily="@font/notosansjp_regular"
+                      android:includeFontPadding="false"
+                      android:text="@string/signup"
+                      android:textColor="@color/gradientstartcolor"
+                      android:textSize="@dimen/_12sdp" />-->
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </RelativeLayout>
-
-
+        </RelativeLayout>
 
 
-</LinearLayout>
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

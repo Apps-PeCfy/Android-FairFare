@@ -38,6 +38,7 @@
     <string name="drawer_faq">FAQs</string>
     <string name="drawer_contactus">Contact Us</string>
     <string name="drawer_privacypolicy">Privacy Policy</string>
+    <string name="drawer_term_of_use">Terms Of Use</string>
     <string name="drawer_setting">Settings</string>
 
 
@@ -70,6 +71,10 @@
     <string name="time_hours_minutes_seconds_formatter" translatable="false">%02d:%02d:%02d</string>
     <string name="time_minutes_seconds_formatter" translatable="false">%02d</string>
     <string name="time_seconds_formatter" translatable="false">%02d</string>
+
+
+    <string name="str_valid_for_new_users_only">Valid for New Users Only</string>
+    <string name="str_reward_points">Sign Up and Get 200 Reward Points</string>
 
 
 </resources>

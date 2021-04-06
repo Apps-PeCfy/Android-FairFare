@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White">
+    android:background="@color/colorBackground">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_home"
@@ -54,6 +54,7 @@
 
 
             <fragment
+
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
@@ -68,12 +69,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/homeView"
-                app:cardBackgroundColor="@color/White"
+                android:background="@color/colorBackground"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_10sdp"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
+                    android:background="@drawable/rounded_corner_night_mode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical">
@@ -100,7 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_below="@+id/tv_myCurrentLocation"
-                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginStart="@dimen/_35sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:background="@color/secondaryLightGray" />
 
@@ -108,6 +110,7 @@
                     <TextView
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
+                        android:textColor="@color/colorGreyText"
 
                         android:id="@+id/tv_myDropUpLocation"
                         android:layout_width="match_parent"
@@ -143,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="@dimen/_50sdp"
-                android:background="@color/White"
+                android:background="@color/colorBackground"
                 android:orientation="vertical">
                 <RelativeLayout
                     android:id="@+id/tvhideShow"
@@ -195,6 +198,7 @@
 
 
                             <TextView
+
                                 android:textStyle="bold"
                                 android:paddingTop="@dimen/_5sdp"
                                 android:paddingBottom="@dimen/_5sdp"
@@ -204,7 +208,7 @@
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:gravity="start"
                                 android:text="02 Nov, 08:44 pm"
-                                android:textColor="@color/Black"
+                                android:textColor="@color/colorText"
                                 android:textSize="15dp" />
 
 
@@ -235,7 +239,7 @@
                                 android:layout_weight="1"
                                 android:gravity="start"
                                 android:text="2"
-                                android:textColor="@color/Black"
+                                android:textColor="@color/colorText"
                                 android:textSize="15dp" />
 
 
@@ -253,6 +257,7 @@
 
 
                         <TextView
+                            android:textColor="@color/colorGreyText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/notosansjp_bold"
@@ -273,6 +278,8 @@
                             android:drawablePadding="@dimen/_4sdp"
                             android:fontFamily="@font/notosansjp_bold"
                             android:includeFontPadding="false"
+                            android:textColor="@color/colorGreyText"
+
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
                             android:text="Sort"
@@ -302,7 +309,6 @@
                 android:background="@drawable/ic_add"
                 android:gravity="center"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
                 android:textSize="@dimen/_14sdp"
                 android:visibility="visible" />
 

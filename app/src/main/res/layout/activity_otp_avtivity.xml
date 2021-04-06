@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
 
 
@@ -14,7 +15,7 @@
 
 
         <TextView
-            android:textColor="@color/Black"
+            android:textColor="@color/colorText"
             android:id="@+id/custom_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,6 +29,7 @@
 
 
     <TextView
+        android:textColor="@color/colorGreyText"
         android:fontFamily="@font/notosansjp_regular"
         android:includeFontPadding="false"
         android:id="@+id/top_line"
@@ -57,6 +59,9 @@
 
 
     <EditText
+        android:textColor="@color/colorGreyText"
+        android:textColorHint="@color/colorGreyText"
+        android:backgroundTint="@color/colorGreyText"
         android:id="@+id/edt_otp"
         android:layout_marginTop="@dimen/_60sdp"
         android:layout_width="@dimen/_200sdp"
@@ -79,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="You will get OTP by SMS in"
-            android:textColor="@color/Black" />
+            android:textColor="@color/colorText" />
 
         <TextView
             android:layout_marginStart="@dimen/_5sdp"

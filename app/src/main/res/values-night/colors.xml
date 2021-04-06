@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#202020</color>
-    <color name="colorPrimaryDark">#202020</color>
+    <color name="colorPrimary">#F15E38</color>
+    <color name="colorPrimaryDark">#F15E38</color>
     <color name="colorAccent">#F15E38</color>
 
     <color name="colorBackground">#000000</color>
     <color name="colorText">#FFFFFF</color>
+    <color name="colorGreyText">#FFFFFF</color>
+
+
+    <color name="contactUsGrey">#000000</color>
+    <color name="contactUsGreyBorder">#E0E0E0</color>
+
+    <color name="cardBackgroundColor">#000000</color>
+    <color name="cardstrokeColor">#818285</color>
+
+    <color name="squareCardBackgroundColor">#000000</color>
+    <color name="squarecardstrokeColor">#818285</color>
+
+
+
+
 </resources>
