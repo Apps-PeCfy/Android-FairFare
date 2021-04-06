@@ -118,6 +118,10 @@ class RegisterActivity : AppCompatActivity(),
     @BindView(R.id.tvPrivacy)
     var tvPrivacy: TextView? = null
 
+    @JvmField
+    @BindView(R.id.tvTerms)
+    var tvTerms: TextView? = null
+
 
     @JvmField
     @BindView(R.id.edt_name)
@@ -215,6 +219,15 @@ class RegisterActivity : AppCompatActivity(),
     fun tvPrivacy() {
 
         val intent = Intent(applicationContext, PrivacyPolicyActivity::class.java)
+        intent.putExtra("ContentPageData", "Privacy Policy")
+        startActivity(intent)
+
+    }
+
+    @OnClick(R.id.tvTerms)
+    fun tvTerms() {
+        val intent = Intent(applicationContext, PrivacyPolicyActivity::class.java)
+        intent.putExtra("ContentPageData", "Terms of Use")
         startActivity(intent)
 
     }
@@ -289,7 +302,9 @@ class RegisterActivity : AppCompatActivity(),
         if (numbervalidation == "false") {
             tvPhoneNumberError!!.text = "Please enter a valid phone no."
             tvPhoneNumberError!!.visibility = View.VISIBLE
-        } else if (edt_email!!.text.toString().isNotEmpty() && (!emailRegex.matcher(edt_email!!.text.toString()).matches())) {
+        } else if (edt_email!!.text.toString()
+                .isNotEmpty() && (!emailRegex.matcher(edt_email!!.text.toString()).matches())
+        ) {
 
 
             tvEmailError!!.text = "Please enter a valid email."

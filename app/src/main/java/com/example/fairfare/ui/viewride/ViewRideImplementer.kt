@@ -33,7 +33,7 @@ class ViewRideImplementer(private val view: IViesRideView) : IViewRidePresenter 
         dLong: String?,
         sourceAdddress: String?,
         destinationAddress: String?,
-        tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>
+        tolls: ArrayList<CompareRideResponsePOJO.TollsItem>
     )
     {
         view.showWait()
@@ -63,17 +63,17 @@ class ViewRideImplementer(private val view: IViesRideView) : IViewRidePresenter 
 
 
 
-            for (i in tolls[0].tolls!!.indices) {
+            for (i in tolls!!.indices) {
                 val jsonObjectMain = JSONObject()
-                jsonObjectMain.accumulate("latitude", tolls[0].tolls!!.get(i).latitude)
-                jsonObjectMain.accumulate("longitude", tolls[0].tolls!!.get(i).longitude)
-                jsonObjectMain.accumulate("name", tolls[0].tolls!!.get(i).name)
-                jsonObjectMain.accumulate("road", tolls[0].tolls!!.get(i).road)
-                jsonObjectMain.accumulate("state", tolls[0].tolls!!.get(i).state)
-                jsonObjectMain.accumulate("country", tolls[0].tolls!!.get(i).country)
-                jsonObjectMain.accumulate("type", tolls[0].tolls!!.get(i).type)
-                jsonObjectMain.accumulate("currency", tolls[0].tolls!!.get(i).currency)
-                jsonObjectMain.accumulate("charges", tolls[0].tolls!!.get(i).charges)
+                jsonObjectMain.accumulate("latitude", tolls!!.get(i).latitude)
+                jsonObjectMain.accumulate("longitude", tolls!!.get(i).longitude)
+                jsonObjectMain.accumulate("name", tolls!!.get(i).name)
+                jsonObjectMain.accumulate("road", tolls!!.get(i).road)
+                jsonObjectMain.accumulate("state", tolls!!.get(i).state)
+                jsonObjectMain.accumulate("country", tolls!!.get(i).country)
+                jsonObjectMain.accumulate("type", tolls!!.get(i).type)
+                jsonObjectMain.accumulate("currency", tolls!!.get(i).currency)
+                jsonObjectMain.accumulate("charges", tolls!!.get(i).charges)
                 jsonArray.put(jsonObjectMain)
             }
             jsonProductObj.accumulate("tolls", jsonArray)

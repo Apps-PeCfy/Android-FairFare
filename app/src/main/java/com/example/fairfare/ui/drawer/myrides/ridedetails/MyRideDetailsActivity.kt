@@ -15,6 +15,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
@@ -28,10 +29,22 @@ import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.drawer.mydisput.DisputWaitTimePopUpAdapter
 import com.example.fairfare.ui.drawer.mydisput.disputDetail.DisputDetailActivity
 import com.example.fairfare.ui.drawer.mydisput.disputDetail.pojo.DisputDetailResponsePOJO
+import com.example.fairfare.ui.ridedetails.GridSpacingItemDecoration
+import com.example.fairfare.ui.ridedetails.SelectedImageAdapter
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
 import com.google.gson.GsonBuilder
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
+import kotlinx.android.synthetic.main.activity_my_ride_details.*
+import kotlinx.android.synthetic.main.activity_ride_details.*
+import kotlinx.android.synthetic.main.activity_ride_details.recycler_view_badge
+import kotlinx.android.synthetic.main.activity_ride_details.recycler_view_driver
+import kotlinx.android.synthetic.main.activity_ride_details.recycler_view_trip_meter
+import kotlinx.android.synthetic.main.activity_ride_details.recycler_view_vehicle
+import kotlinx.android.synthetic.main.activity_ride_details.txt_badge
+import kotlinx.android.synthetic.main.activity_ride_details.txt_driver
+import kotlinx.android.synthetic.main.activity_ride_details.txt_trip_meter
+import kotlinx.android.synthetic.main.activity_ride_details.txt_vehicle_number
 import kotlinx.android.synthetic.main.event_info.*
 import kotlinx.android.synthetic.main.my_dialog.view.*
 import kotlinx.android.synthetic.main.spinner_item.view.*
@@ -210,6 +223,15 @@ class MyRideDetailsActivity : AppCompatActivity() {
     @BindView(R.id.tvEstTollCharges)
     var tvEstTollCharges: TextView? = null
 
+ @JvmField
+    @BindView(R.id.homeView)
+    var homeView: ScrollView? = null
+
+
+    @JvmField
+    @BindView(R.id.tvActualRewardPoints)
+    var tvActualRewardPoints: TextView? = null
+
     @JvmField
     @BindView(R.id.ivViewTollInfo)
     var ivViewTollInfo: ImageView? = null
@@ -220,6 +242,16 @@ class MyRideDetailsActivity : AppCompatActivity() {
     private var waitingList: List<RideDetailsResponsePOJO.WaitingsItem1> = ArrayList()
     var tollPopUpAdapter: TollPopUpAdapter? = null
     private var TOllList: List<RideDetailsResponsePOJO.TollsItem> = ArrayList()
+
+    var vehicleImageAdapter: SelectedImageAdapter? = null
+    var meterImageAdapter: SelectedImageAdapter? = null
+    var driverImageAdapter: SelectedImageAdapter? = null
+    var badgeImageAdapter: SelectedImageAdapter? = null
+
+    var vehicleImageList: ArrayList<String>? = ArrayList()
+    var meterImageList: ArrayList<String>? = ArrayList()
+    var driverImageList: ArrayList<String>? = ArrayList()
+    var badgeImageList: ArrayList<String>? = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -238,6 +270,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
+        setSelectedImageList()
         getRideDetails()
 
     }
@@ -271,7 +304,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
     }
 
-@OnClick(R.id.ivViewTollInfo)
+    @OnClick(R.id.ivViewTollInfo)
     fun ivViewTollInfo() {
 
         if(TOllList.size>0) {
@@ -315,6 +348,103 @@ class MyRideDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun setSelectedImageList() {
+
+        vehicleImageAdapter = SelectedImageAdapter(this, vehicleImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+
+            }
+
+        } )
+
+        val spanCount = 2
+        recycler_view_vehicle!!.layoutManager = GridLayoutManager(this, spanCount)
+        val spacing = 15
+        val includeEdge = true
+        recycler_view_vehicle!!.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
+        recycler_view_vehicle!!.adapter = vehicleImageAdapter
+
+        // Meter Image Adapter
+
+        meterImageAdapter = SelectedImageAdapter(this, meterImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+
+            }
+
+        } )
+
+        recycler_view_trip_meter!!.layoutManager = GridLayoutManager(this, spanCount)
+        recycler_view_trip_meter!!.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
+        recycler_view_trip_meter!!.adapter = meterImageAdapter
+
+        // Driver Image Adapter
+
+        driverImageAdapter = SelectedImageAdapter(this, driverImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+
+            }
+
+        } )
+
+        recycler_view_driver!!.layoutManager = GridLayoutManager(this, spanCount)
+        recycler_view_driver!!.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
+        recycler_view_driver!!.adapter = driverImageAdapter
+
+        // Badge Image Adapter
+
+        badgeImageAdapter = SelectedImageAdapter(this, badgeImageList!!, object : SelectedImageAdapter.SelectedImageAdapterInterface{
+            override fun itemClick(position: Int, imageName: String?) {
+
+            }
+
+            override fun onRemoveClick(position: Int, imageName: String?) {
+
+            }
+
+        } )
+
+        recycler_view_badge!!.layoutManager = GridLayoutManager(this, spanCount)
+        recycler_view_badge!!.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
+        recycler_view_badge!!.adapter = badgeImageAdapter
+
+    }
+
     private fun getRideDetails() {
 
         val progressDialog = ProgressDialog(this@MyRideDetailsActivity)
@@ -331,7 +461,12 @@ class MyRideDetailsActivity : AppCompatActivity() {
             ) {
                 progressDialog.dismiss()
                 if (response.code() == 200) {
-
+                    homeView!!.visibility = View.VISIBLE
+                    vehicleImageList = response.body()!!.data!!.vehicleNoImages as ArrayList<String>?
+                    badgeImageList = response.body()!!.data!!.badgeNoImages as ArrayList<String>?
+                    driverImageList = response.body()!!.data!!.driverImages as ArrayList<String>?
+                    meterImageList = response.body()!!.data!!.startMeterImages as ArrayList<String>?
+                    setImageData();
 
                     waitingList = response.body()!!.data!!.actualTrackRide!!.waitings!!
                     TOllList = response.body()!!.data!!.actualTrackRide!!.tolls!!
@@ -366,6 +501,14 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
                         }
 
+                    }
+
+
+                    if(response.body()!!.data!!.rewards != null){
+                        tvActualRewardPoints?.visibility = View.VISIBLE
+                        tvActualRewardPoints?.text = "Reward points earned for this ride " +response.body()!!.data!!!!.rewards
+                    }else{
+                        tvActualRewardPoints?.visibility = View.GONE
                     }
 
                     tv_vahicalNO!!.text = response.body()!!.data!!.vehicleNo
@@ -533,6 +676,55 @@ class MyRideDetailsActivity : AppCompatActivity() {
             }
         })
 
+
+    }
+
+    private fun setImageData() {
+        if (vehicleImageList != null && vehicleImageList?.size!! >0){
+            txt_vehicle_number.visibility = View.VISIBLE
+            recycler_view_vehicle.visibility = View.VISIBLE
+        }else{
+            txt_vehicle_number.visibility = View.GONE
+            recycler_view_vehicle.visibility = View.GONE
+        }
+
+        vehicleImageAdapter?.updateAdapter(vehicleImageList!!)
+
+        if (meterImageList != null && meterImageList?.size!! >0){
+            txt_trip_meter.visibility = View.VISIBLE
+            recycler_view_trip_meter.visibility = View.VISIBLE
+        }else{
+            txt_trip_meter.visibility = View.GONE
+            recycler_view_trip_meter.visibility = View.GONE
+        }
+
+        meterImageAdapter?.updateAdapter(meterImageList!!)
+
+        if (driverImageList != null && driverImageList?.size!! >0){
+            txt_driver.visibility = View.VISIBLE
+            recycler_view_driver.visibility = View.VISIBLE
+        }else{
+            txt_driver.visibility = View.GONE
+            recycler_view_driver.visibility = View.GONE
+        }
+
+        driverImageAdapter?.updateAdapter(driverImageList!!)
+
+        if (badgeImageList != null && badgeImageList?.size!! >0){
+            txt_badge.visibility = View.VISIBLE
+            recycler_view_badge.visibility = View.VISIBLE
+        }else{
+            txt_badge.visibility = View.GONE
+            recycler_view_badge.visibility = View.GONE
+        }
+
+        badgeImageAdapter?.updateAdapter(badgeImageList!!)
+
+        if (meterImageList?.size!! >0 || vehicleImageList?.size!! >0 || driverImageList?.size!! >0 || badgeImageList?.size!! >0){
+            txt_photos.visibility = View.VISIBLE
+        }else{
+            txt_photos.visibility = View.GONE
+        }
 
     }
 

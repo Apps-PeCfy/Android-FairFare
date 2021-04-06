@@ -43,7 +43,7 @@ import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PhotoSelector
 import com.example.fairfare.utils.PreferencesManager
 import com.google.gson.GsonBuilder
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONException
@@ -143,10 +143,7 @@ class RegisterDisputActivity : AppCompatActivity() {
     @BindView(R.id.selected_recycler_view)
     var selectedImageRecyclerView: RecyclerView? = null
 
-    /*  @JvmField
-      @BindView(R.id.spinnerReason)
-      var spinnerReason: Spinner? = null
-  */
+
 
     var mSpinner: MultipleSelectionSpinner? = null
 
@@ -445,7 +442,7 @@ class RegisterDisputActivity : AppCompatActivity() {
 
         for (pos in imageList!!.indices) {
             val file = File(imageList!![pos].image!!)
-            val surveyBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val surveyBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             imagesMultipart[pos] = MultipartBody.Part.createFormData("dispute_images[]", imageList!![pos].image!!, surveyBody)
         }
 

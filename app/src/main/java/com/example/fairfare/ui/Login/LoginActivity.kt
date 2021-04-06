@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity(),
     CountryCodePicker.OnCountryChangeListener, ILoginView {
     var facebookLoginClick = 0
     var googleAccessTokem: String? = null
-    var strNumberValidation:String? = "false"
+    var strNumberValidation: String? = "false"
 
     var doubleBackPressed: Boolean? = false
 
@@ -99,6 +99,10 @@ class LoginActivity : AppCompatActivity(),
     @JvmField
     @BindView(R.id.tvPrivacy)
     var tvPrivacy: TextView? = null
+
+    @JvmField
+    @BindView(R.id.tvTerms)
+    var tvTerms: TextView? = null
 
     @JvmField
     @BindView(R.id.ccpr)
@@ -199,6 +203,17 @@ class LoginActivity : AppCompatActivity(),
     fun tvPrivacy() {
 
         val intent = Intent(applicationContext, PrivacyPolicyActivity::class.java)
+        intent.putExtra("ContentPageData", "Privacy Policy")
+        startActivity(intent)
+
+
+    }
+
+    @OnClick(R.id.tvTerms)
+    fun tvTerms() {
+
+        val intent = Intent(applicationContext, PrivacyPolicyActivity::class.java)
+        intent.putExtra("ContentPageData", "Terms of Use")
         startActivity(intent)
 
 
@@ -354,7 +369,15 @@ class LoginActivity : AppCompatActivity(),
                                                         }
                                                     });
                     */
-                        iLoginPresenter!!.socialLogin("Android", "FBK", fbFirstName, facebook_uid, token, fbEmail,deviceID)
+                        iLoginPresenter!!.socialLogin(
+                            "Android",
+                            "FBK",
+                            fbFirstName,
+                            facebook_uid,
+                            token,
+                            fbEmail,
+                            deviceID
+                        )
                     }
                 val parameters = Bundle()
                 parameters.putString(
@@ -402,16 +425,16 @@ class LoginActivity : AppCompatActivity(),
         } catch (e: NumberParseException) {
             e.printStackTrace()
         }
-         if (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile) {
-             strNumberValidation = "true"
+        if (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile) {
+            strNumberValidation = "true"
         } else if (PhoneNumberUtil.PhoneNumberType.FIXED_LINE == isMobile) {
-             strNumberValidation = "false"
+            strNumberValidation = "false"
         } else {
-             strNumberValidation = "false"
+            strNumberValidation = "false"
         }
 
 
-      if (strNumberValidation == "false") {
+        if (strNumberValidation == "false") {
             tvPhoneNumberError!!.text = "Please enter a valid phone no."
             tvPhoneNumberError!!.visibility = View.VISIBLE
             //   Toast.makeText(this, "Plese enter valid phone no.", Toast.LENGTH_LONG).show();
@@ -422,7 +445,7 @@ class LoginActivity : AppCompatActivity(),
                 "NOR", countryCode, "", "", ""
             )
 
-           }
+        }
     }
 
     private fun signIn() {
@@ -459,7 +482,10 @@ class LoginActivity : AppCompatActivity(),
             val client = OkHttpClient()
             val requestBody = FormEncodingBuilder()
                 .add("grant_type", "authorization_code")
-                .add("client_id", "254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
+                .add(
+                    "client_id",
+                    "254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com"
+                )
                 .add("client_secret", "-ZAJiv8WoSGTb5pHPl_kdtSA")
                 .add("redirect_uri", "")
                 .add("code", acct.serverAuthCode)
@@ -492,8 +518,6 @@ class LoginActivity : AppCompatActivity(),
             gmailPersonEmail = acct.email
             gToken = acct.idToken //Token
             providerid = acct.id //proderid
-            val auth = acct.serverAuthCode
-            val personPhoto = acct.photoUrl
             mGoogleSignInClient!!.signOut().addOnCompleteListener(
                 this
             ) { }
@@ -510,7 +534,7 @@ class LoginActivity : AppCompatActivity(),
         progressDialoggmail.show() // show progress dialog
         client.sociallogin(
             "Android", "GGL", gmailPersonName,
-            providerid, gToken, gmailPersonEmail,deviceID
+            providerid, gToken, gmailPersonEmail, deviceID
         )!!.enqueue(object : Callback<LoginResponsepojo?> {
             override fun onResponse(
                 call: Call<LoginResponsepojo?>,
@@ -537,24 +561,58 @@ class LoginActivity : AppCompatActivity(),
 
 
 
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, response.body()!!.token)
-                        mPreferencesManager!!.setIntegerValue(Constants.SHARED_PREFERENCE_LOGIN_ID, loginResponsepojo!!.user!!.id)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME, loginResponsepojo!!.user!!.name)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, loginResponsepojo!!.user!!.rewards)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL, loginResponsepojo!!.user!!.email)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO, loginResponsepojo!!.user!!.phoneNo)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER, loginResponsepojo!!.user!!.gender)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION, loginResponsepojo!!.user!!.profession)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB, loginResponsepojo!!.user!!.dateOfBirth)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK, loginResponsepojo!!.user!!.profilePic)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION, loginResponsepojo!!.user!!.location)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID, deviceID)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_ISLOGIN, "true")
-
-
-
-
-
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_TOKEN,
+                            response.body()!!.token
+                        )
+                        mPreferencesManager!!.setIntegerValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_ID,
+                            loginResponsepojo!!.user!!.id
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_NAME,
+                            loginResponsepojo!!.user!!.name
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_USER_REWARD,
+                            loginResponsepojo!!.user!!.rewards
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_EMAIL,
+                            loginResponsepojo!!.user!!.email
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_PHONENO,
+                            loginResponsepojo!!.user!!.phoneNo
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_GENDER,
+                            loginResponsepojo!!.user!!.gender
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_PROFESTION,
+                            loginResponsepojo!!.user!!.profession
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_DOB,
+                            loginResponsepojo!!.user!!.dateOfBirth
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK,
+                            loginResponsepojo!!.user!!.profilePic
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_LOCATION,
+                            loginResponsepojo!!.user!!.location
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_DEVICEID,
+                            deviceID
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_ISLOGIN,
+                            "true"
+                        )
 
 
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
@@ -563,7 +621,7 @@ class LoginActivity : AppCompatActivity(),
 
                         //  Toast.makeText(LoginActivity.this, loginResponsepojo.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                } else if (response.code() == 400 || response.code()==422 ) {
+                } else if (response.code() == 400 || response.code() == 422) {
                     val gson = GsonBuilder().create()
                     var pojo = ValidationResponse()
                     try {
@@ -605,7 +663,7 @@ class LoginActivity : AppCompatActivity(),
     private fun CallAPIRepeate() {
         client.sociallogin(
             "Android", "GGL", gmailPersonName,
-            providerid, gToken, gmailPersonEmail,deviceID
+            providerid, gToken, gmailPersonEmail, deviceID
         )!!.enqueue(object : Callback<LoginResponsepojo?> {
             override fun onResponse(
                 call: Call<LoginResponsepojo?>,
@@ -628,20 +686,59 @@ class LoginActivity : AppCompatActivity(),
                         finish()
                     } else if (loginResponsepojo!!.redirectTo.equals("home", ignoreCase = true)) {
                         assert(response.body() != null)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, response.body()!!.token)
-                        mPreferencesManager!!.setIntegerValue(Constants.SHARED_PREFERENCE_LOGIN_ID, loginResponsepojo!!.user!!.id)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME, loginResponsepojo!!.user!!.name)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, loginResponsepojo!!.user!!.rewards)
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_TOKEN,
+                            response.body()!!.token
+                        )
+                        mPreferencesManager!!.setIntegerValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_ID,
+                            loginResponsepojo!!.user!!.id
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_NAME,
+                            loginResponsepojo!!.user!!.name
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_USER_REWARD,
+                            loginResponsepojo!!.user!!.rewards
+                        )
 
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL, loginResponsepojo!!.user!!.email)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO, loginResponsepojo!!.user!!.phoneNo)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER, loginResponsepojo!!.user!!.gender)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION, loginResponsepojo!!.user!!.profession)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB, loginResponsepojo!!.user!!.dateOfBirth)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK, loginResponsepojo!!.user!!.profilePic)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION, loginResponsepojo!!.user!!.location)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID, deviceID)
-                        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_ISLOGIN, "true")
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_EMAIL,
+                            loginResponsepojo!!.user!!.email
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_PHONENO,
+                            loginResponsepojo!!.user!!.phoneNo
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_GENDER,
+                            loginResponsepojo!!.user!!.gender
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_PROFESTION,
+                            loginResponsepojo!!.user!!.profession
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_DOB,
+                            loginResponsepojo!!.user!!.dateOfBirth
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK,
+                            loginResponsepojo!!.user!!.profilePic
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_LOCATION,
+                            loginResponsepojo!!.user!!.location
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_LOGIN_DEVICEID,
+                            deviceID
+                        )
+                        mPreferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_ISLOGIN,
+                            "true"
+                        )
 
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                         startActivity(intent)
@@ -649,7 +746,7 @@ class LoginActivity : AppCompatActivity(),
 
                         // Toast.makeText(LoginActivity.this, loginResponsepojo.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                } else if (response.code() == 400 || response.code()==422) {
+                } else if (response.code() == 400 || response.code() == 422) {
                     val gson = GsonBuilder().create()
                     var pojo = ValidationResponse()
                     try {
@@ -737,17 +834,15 @@ class LoginActivity : AppCompatActivity(),
     override fun validationError(pojo: ValidationResponse?) {
 
 
-
-
-                    Toast.makeText(
-                        this@LoginActivity,
-                        pojo!!.errors!![0].message,
-                        Toast.LENGTH_LONG
-                    ).show()
-
+        Toast.makeText(
+            this@LoginActivity,
+            pojo!!.errors!![0].message,
+            Toast.LENGTH_LONG
+        ).show()
 
 
     }
+
     override fun socialLoginSuccess(loginResponsepojo: LoginResponsepojo?) {
         if (loginResponsepojo!!.redirectTo.equals("Register", ignoreCase = true)) {
             val intent = Intent(applicationContext, RegisterActivity::class.java)
@@ -763,20 +858,55 @@ class LoginActivity : AppCompatActivity(),
             finish()
         } else if (loginResponsepojo.redirectTo.equals("home", ignoreCase = true)) {
 
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, loginResponsepojo.token)
-            mPreferencesManager!!.setIntegerValue(Constants.SHARED_PREFERENCE_LOGIN_ID, loginResponsepojo!!.user!!.id)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME, loginResponsepojo!!.user!!.name)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, loginResponsepojo!!.user!!.rewards)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL, loginResponsepojo!!.user!!.email)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO, loginResponsepojo!!.user!!.phoneNo)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER, loginResponsepojo!!.user!!.gender)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION, loginResponsepojo!!.user!!.profession)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB, loginResponsepojo!!.user!!.dateOfBirth)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK, loginResponsepojo!!.user!!.profilePic)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION, loginResponsepojo!!.user!!.location)
-            mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID, deviceID)
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_TOKEN,
+                loginResponsepojo.token
+            )
+            mPreferencesManager!!.setIntegerValue(
+                Constants.SHARED_PREFERENCE_LOGIN_ID,
+                loginResponsepojo!!.user!!.id
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_NAME,
+                loginResponsepojo!!.user!!.name
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_USER_REWARD,
+                loginResponsepojo!!.user!!.rewards
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_EMAIL,
+                loginResponsepojo!!.user!!.email
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_PHONENO,
+                loginResponsepojo!!.user!!.phoneNo
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_GENDER,
+                loginResponsepojo!!.user!!.gender
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_PROFESTION,
+                loginResponsepojo!!.user!!.profession
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_DOB,
+                loginResponsepojo!!.user!!.dateOfBirth
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK,
+                loginResponsepojo!!.user!!.profilePic
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_LOCATION,
+                loginResponsepojo!!.user!!.location
+            )
+            mPreferencesManager!!.setStringValue(
+                Constants.SHARED_PREFERENCE_LOGIN_DEVICEID,
+                deviceID
+            )
             mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_ISLOGIN, "true")
-
 
 
             val intent = Intent(this@LoginActivity, HomeActivity::class.java)

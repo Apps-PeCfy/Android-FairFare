@@ -212,6 +212,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var tvTravelTime: TextView? = null
 
     @JvmField
+    @BindView(R.id.tv_currentSpeed)
+    var tv_currentSpeed: TextView? = null
+
+    @JvmField
     @BindView(R.id.ivAtm)
     var ivAtm: ImageView? = null
 
@@ -254,6 +258,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var preferencesManager: PreferencesManager? = null
     var token: String? = null
     var estCurrentDistance: String? = null
+    var estCurrentDistanceInKm: String? = null
     var estCurrentDuration: String? = null
     var estCurrentDurationInMin: String? = null
     var travelledDistance: Double? = null
@@ -280,6 +285,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
     var waitStartLocation: String? = ""
+    var waitStartLocationNew: String? = ""
     var waitStartLat: String? = ""
     var waitStartLong: String? = ""
     var vehicleName: String? = ""
@@ -406,7 +412,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 
-            //   tv_estimatedDistance!!.text = info.ride!!.estimatedTrackRide!!.distance + " km"
+        //   tv_estimatedDistance!!.text = info.ride!!.estimatedTrackRide!!.distance + " km"
         tv_travelTime!!.text = info.ride!!.estimatedTrackRide!!.duration
 
 
@@ -430,6 +436,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
     private fun initLocationUpdates() {
+
         mService?.getMyCurrentLocationChange(object :
             BackgroundLocationService.LocationManagerTrackInterface {
             override fun onMyLocationChange(
@@ -444,6 +451,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     addCurrentLocationMarker(lastLocation)
 
 
+
                     locationChangelatitude = lastLocation!!.latitude
                     locationChangelongitude = lastLocation!!.longitude
 
@@ -452,6 +460,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                     var currentspeed = (((lastLocation.speed) * 3600) / 1000).toInt()
+
+                    //tv_currentSpeed?.text = currentspeed.toString() + " Kmph"
 
                     if (prevLatLng != null && getDistanceBetweenTwoLatLng(
                             LatLng(locationChangelatitude, locationChangelongitude),
@@ -468,14 +478,15 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     }
 
 
-                    if (currentspeed!! < 10) {   //speed less than 10 km per hr
+                    if (currentspeed!! < 2) {   //speed less than 10 km per hr
                         isWaiting = true
                         if (waitTime == null) {
                             waitTime = Date()
                             val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                             waitAt = formatter.format(waitTime)
-
+                            waitStartLocationNew = getAddressFromLocation(lastLocation)
                         }
+                        //   Toast.makeText(applicationContext, "On Wait Start Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
 
                     } else {
                         isWaiting = false
@@ -485,19 +496,20 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             val calculateDate =
                                 ((time!!.getTime() - waitTime!!.getTime()) / 1000) //time in second
 
-                            if (calculateDate > 60) {
-                                val timeDiffrence = (calculateDate - 60).toDouble()//time in min
+                            if (calculateDate > 0) {
+                                val timeDiffrence = (calculateDate - 0).toDouble()//time in min
 
 
                                 var options = HashMap<String, String>()
                                 options.put("waiting_time", timeDiffrence.toString())
-                                options.put("full_address", waitStartLocation!!)
+                                options.put("full_address", waitStartLocationNew!!)
+                                //   options.put("full_address", waitStartLocation!!)
                                 options.put("wait_at", waitAt!!)
                                 options.put("lat", waitLat!!)
                                 options.put("long", waitLong!!)
 
                                 //To Prevent Duplicate entries
-                                if (waitStartLocation != null && arrWaitTime.size > 0 && waitStartLocation?.equals(
+                                if (waitStartLocationNew != null && arrWaitTime.size > 0 && waitStartLocationNew?.equals(
                                         arrWaitTime[arrWaitTime.size - 1].getValue("full_address"),
                                         ignoreCase = true
                                     )!!
@@ -507,13 +519,16 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                                             .toDouble()
                                     arrWaitTime[arrWaitTime.size - 1]["waiting_time"] =
                                         totalTime.toString()
+                                    //   Toast.makeText(applicationContext, "On Ride wait location same as previous added Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
                                 } else {
                                     arrWaitTime.add(options!!)
+                                    //   Toast.makeText(applicationContext, "On Ride wait time added Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
                                 }
 
 
                             }
                             waitTime = null
+                            waitStartLocationNew = null
                             calculateWaitTime()
 
                         }
@@ -553,7 +568,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                         if (City_ID!!.toInt().equals(cityPojoList.get(i).id)) {
 
-                            if (cityPojoList.get(i).nightFromHours <= currentTime && cityPojoList.get(i).nightToHours >= currentTime) {
+                            if (cityPojoList.get(i).nightFromHours != null && cityPojoList.get(i).nightToHours != null && cityPojoList.get(i).nightFromHours <= currentTime && cityPojoList.get(i).nightToHours >= currentTime) {
 
                                 actualTravelDistanceForNightCharges.add(actulDis)
 
@@ -627,7 +642,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                             actulDis = distanceBetweenCurrent!!
                             actualTravelDistance.add(actulDis)
-                          //  actualTravelDistanceForNightCharges.add(actulDis)
+                            //  actualTravelDistanceForNightCharges.add(actulDis)
 
 
 
@@ -896,7 +911,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         if (Constants.IS_OLD_PICK_UP_CODE) {
             tvTravelTime!!.text = strescimal + " Min"
         } else {
-            tvTravelTime!!.text = formatTime(todayRefresh.getTime() - today!!.getTime())
+            if (estCurrentDurationInMin != null){
+                tvTravelTime!!.text = formatTime(todayRefresh.getTime() - today!!.getTime()) + "/" + formatTime(estCurrentDurationInMin!!.toLong()*1000)
+            }else{
+                tvTravelTime!!.text = formatTime(todayRefresh.getTime() - today!!.getTime())
+            }
+
         }
 
 
@@ -912,12 +932,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             }
 
             strDistCal = (totalActualDistance / 1000).toString()//meter
-           // progressBarDistance!!.progress = (totalActualDistance/1000).toInt()//km
+            // progressBarDistance!!.progress = (totalActualDistance/1000).toInt()//km
             progressBarDistance!!.progress = (totalActualDistance).toInt()//km
             val dist = String.format("%.1f", strDistCal!!.toDouble())
 
             actualDistance = dist
-            tv_travelledDistance!!.text = dist + " km"
+            tv_travelledDistance!!.text = dist + " km/" + estCurrentDistanceInKm
             tv_estimatedDistance!!.text = strDistCal.toString() + " km"
 
         }
@@ -946,7 +966,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
     private fun tracelledPopUP(Distancetravelled: Double?) {
 
-       // var twoDecimal = Distancetravelled!!.toFloat()
+        // var twoDecimal = Distancetravelled!!.toFloat()
         var twoDecimal = String.format("%.02f", Distancetravelled!!.toFloat())
 
 
@@ -1403,6 +1423,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         //  updateCamera(getCompassBearing(startLocation, destLocation))
 
 
+
         drawRoute()
     }
 
@@ -1455,8 +1476,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val key = "key=" + getString(R.string.google_maps_key)
 
         // Building the parameters to the web service
-        val parameters = "$str_origin&$str_dest&$key"
-
+       // val parameters = "$str_origin&$str_dest&$key"
+        val parameters = "$str_origin&$str_dest&alternatives=false&$key"
         // Output format
         val output = "json"
 
@@ -1546,6 +1567,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
                 estCurrentDistance = distance.getString("value")
+                estCurrentDistanceInKm = distance.getString("text")
                 estCurrentDuration = duration.getString("text")
                 estCurrentDurationInMin = duration.getString("value")
 
@@ -1606,56 +1628,40 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         markerPoints!!.add(position)
                     }
 
-                    updateCamera(getCompassBearing(points[0]!!, points[1]!!))
-
+                    if (points.size >= 2){
+                        updateCamera(getCompassBearing(points[0]!!, points[1]!!))
+                    }
 
                     // Fetching all the points in i-th route
 
 
                 }
 
+                lineOptions?.addAll(points)
+                lineOptions?.width(15f)
+                lineOptions?.color(this@TrackRideActivity.resources.getColor(R.color.gradientendcolor))
 
-
-
-
-
-
-
-                if (trackBoard.equals("currentCordinate")) {
-
-                    lineOptions!!.addAll(points)
-                    lineOptions!!.width(15f)
-                    //  lineOptions.color(Color.GREEN);
-                    lineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.gradientendcolor))
-
-
-                    if (lineOptions != null) {
-
-                        if (updatedPolyline != null) {
-                            updatedPolyline!!.remove()
-                            if (mPolyline != null) {
-                                mPolyline!!.remove()
-                            }
-                        }
-                        updatedPolyline = mMap!!.addPolyline(lineOptions)
-                    } else {
-                        Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
-                            .show()
-                    }
-
+                if (lineOptions != null) {
+                    // ILOMADEV :- 10 Feb 2021
+                    updatedPolyline?.remove()
+                    updatedPolyline = mMap!!.addPolyline(lineOptions)
                 } else {
+                    Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+                        .show()
+                }
+
+                if (!trackBoard.equals("currentCordinate")) {
                     //ILOMADEV
                     isFirstTimeSetUpDone = true
 
-                   // val estCurrDIst = (estCurrentDistance!!.toDouble() / 1000)
+                    // val estCurrDIst = (estCurrentDistance!!.toDouble() / 1000)
                     val estCurrDIst = (estCurrentDistance!!.toInt())
-
 
                     val estCurrentDist =
                         DecimalFormat("####.#").format((estCurrentDistance!!.toDouble() / 1000)) + " km"
                     tvEstDistance!!.text = "Est.Distance " + estCurrentDist
                     tvEstTime!!.text = "Est.Time " + estCurrentDuration
-                 //   progressBarDistance!!.max = (estCurrDIst)!!.toFloat().toInt()
+                    //   progressBarDistance!!.max = (estCurrDIst)!!.toFloat().toInt()
                     progressBarDistance!!.max = estCurrDIst
 
 
@@ -1668,33 +1674,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     }
                     tv_distance!!.text =
                         "(Est.Distance:" + estCurrentDist + ") / " + "(Est.Time:" + estCurrentDuration + ")"
-
-
-
-
-                    lineOptions!!.addAll(points)
-                    lineOptions!!.width(15f)
-                    //  lineOptions.color(Color.GREEN);
-                    lineOptions!!.color(this@TrackRideActivity.resources.getColor(R.color.gradientstartcolor))
-
-                    if (lineOptions != null) {
-
-                        if (mPolyline != null) {
-                            // mPolyline!!.remove()
-                        }
-
-                        //  mPolyline = mMap!!.addPolyline(lineOptions)
-
-
-                        // ILOMADEV :- 10 Feb 2021
-                        if (updatedPolyline != null) {
-                            updatedPolyline!!.remove()
-                        }
-                        updatedPolyline = mMap!!.addPolyline(lineOptions)
-                    } else {
-                        Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
-                            .show()
-                    }
                 }
             }
 
@@ -1720,11 +1699,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val timeDiffrence = (calculateDate).toDouble()
             totalWaitTime = totalWaitTime + timeDiffrence
 
-           /* if (calculateDate > 60) {
-                val timeDiffrence = (calculateDate - 60).toDouble()
-                totalWaitTime = totalWaitTime + timeDiffrence
-
-            }*/
+            /* if (calculateDate > 60) {
+                 val timeDiffrence = (calculateDate - 60).toDouble()
+                 totalWaitTime = totalWaitTime + timeDiffrence
+             }*/
         }
 
         var timeInMin = 0.0
@@ -1770,13 +1748,14 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val calculateDate =
                 ((time!!.getTime() - waitTime!!.getTime()) / 1000)//time calculate in second
 
-            if (calculateDate > 60) {
-                val timeDiffrence = (calculateDate - 60).toDouble()//time difference in min
+            if (calculateDate > 0) {
+                val timeDiffrence = (calculateDate - 0).toDouble()//time difference in min
 
 
                 var options = HashMap<String, String>()
                 options.put("waiting_time", timeDiffrence.toString())
-                options.put("full_address", waitStartLocation!!)
+                options.put("full_address", waitStartLocationNew!!)
+                //  options.put("full_address", waitStartLocation!!)
                 options.put("wait_at", waitAt!!)
                 options.put("lat", waitStartLat!!)
                 options.put("long", waitStartLong!!)
@@ -2023,7 +2002,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
 
-                if (currentspeed!! < 10) {   //speed less than 10 km per hr
+                if (currentspeed!! < 2) {   //speed less than 10 km per hr
                     if (waitTime == null) {
                         waitTime = Date()
                         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -2039,8 +2018,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         val calculateDate =
                             ((time!!.getTime() - waitTime!!.getTime()) / 1000) //time in second
 
-                        if (calculateDate > 60) {
-                            val timeDiffrence = (calculateDate - 60).toDouble()//time in min
+                        if (calculateDate > 0) {
+                            val timeDiffrence = (calculateDate - 0).toDouble()//time in min
 
 
                             var options = HashMap<String, String>()
@@ -2132,7 +2111,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         if (!isMapZoomed!!) {
             isMapZoomed = true
             return 18.0f
-        } else if (mMap!!.cameraPosition.zoom < 5) {
+        } else if (mMap!!.cameraPosition.zoom < 10) {
             return 18.0f
         }
         return mMap!!.cameraPosition.zoom
@@ -2198,7 +2177,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            valueAnimator.duration = 2000 // duration 2 second
+            valueAnimator.duration = 1000 // duration 2 second
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener { animation ->
                 try {
@@ -2441,12 +2420,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         }
 
-        geoField = GeomagneticField(
-            java.lang.Double.valueOf(startLocation.latitude).toFloat(),
-            java.lang.Double.valueOf(startLocation.longitude).toFloat(),
-            java.lang.Double.valueOf(startLocation.altitude).toFloat(),
-            System.currentTimeMillis()
-        )
+        /* geoField = GeomagneticField(
+             java.lang.Double.valueOf(startLocation.latitude).toFloat(),
+             java.lang.Double.valueOf(startLocation.longitude).toFloat(),
+             java.lang.Double.valueOf(startLocation.altitude).toFloat(),
+             System.currentTimeMillis()
+         )*/
 
         if (isWaiting!! && lastCompassBering != null) {
             return lastCompassBering!!
@@ -2500,5 +2479,52 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         unBindBackgroundService()
     }
 
+    private fun getAddressFromLocation(location: Location): String? {
+        var address: String = ""
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+
+            if (addresses != null && addresses!!.size > 0) {
+                val obj = addresses[0]
+                address = obj.getAddressLine(0)
+                var countryName = obj.countryName
+                if (obj.countryName != null && obj.countryName.equals(
+                        "United States",
+                        ignoreCase = true
+                    )
+                ) {
+                    obj.countryName = "USA"
+                }
+                if (!countryName.equals("")){
+                    address = address.replace(", $countryName", "").replace("- $countryName", "")
+                }
+
+                if (obj != null && obj.postalCode!= null && !obj.postalCode.equals("")){
+                    address = address.replace(" " + obj.postalCode, "")
+                }
+            } else {
+                address = ""
+            }
+        } catch (e: IOException) {
+            Toast.makeText(
+                this,
+                e.toString(),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        return address
+    }
+
+    override fun onResume() {
+        super.onResume()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
 
 }

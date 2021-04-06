@@ -4,10 +4,16 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
+import android.graphics.BlendMode
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +31,8 @@ import com.example.fairfare.utils.PreferencesManager
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.GsonBuilder
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.my_dialog.view.*
+import kotlinx.android.synthetic.main.spinner_item.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -112,6 +120,10 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
     @JvmField
     @BindView(R.id.wCharge)
     var wCharge: TextView? = null
+
+    @JvmField
+    @BindView(R.id.rateCardIncentive)
+    var rateCardIncentive: ImageView? = null
 
     @JvmField
     @BindView(R.id.sCharge)
@@ -331,15 +343,16 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
                             tvFare!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).minBaseFare +
-                                        " for first 1.50 km and thereafter ₹ " +
+                                "Minimum fare of ₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).minBaseFare +
+                                        " for the first 1.5 KM\n" +
+                                        "Subsequently, fare will be chargeable at ₹ " +
                                         getRateCardList[0].rateCards!!.get(0).rateCards!!.get(0).fareAfterMinbdist +
-                                        " for every additional km."
+                                        " per KM."
 
 
 
-                            tvNightCharges!!.text =
-                                getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).nightChargesInPercentage + " of the Fare"
+                            tvNightCharges!!.text ="Additional charge of "+
+                                getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
 
                             tvWaitingCharges!!.text =
                                 "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).waitingCharges + " per minute "
@@ -348,7 +361,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                                     "0"
                                 )
                             ) {
-                                tvSurCHarges!!.text = "Surcharge Not Applicable"
+                                tvSurCHarges!!.text = "Not Applicable"
                             } else {
                                 tvSurCHarges!!.text =
                                     "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge + " per booking"
@@ -361,14 +374,14 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
                             tvLuggage!!.text =
                                 "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).chargesPerLuggage +
-                                        " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
+                                        " per luggage item other than a briefcase or hand bag."
 
                             tvNightChargeTime!!.text = "(00:00 AM to 5:00 AM)"
                             nCharge!!.text = "Night Charges"
                             wCharge!!.text = "Waiting Charges"
                             sCharge!!.text = "Surcharges"
-                            cLuggage!!.text = "Luggage"
-                            sFare!!.text = "Fare"
+                            cLuggage!!.text = "Luggage Charges"
+                            sFare!!.text = " Basic Fare"
 
 
                         }
@@ -408,6 +421,10 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                         for (i in (getRateCardList.get(0).rateCards)!!.get(0).rateCards!!.indices) {
                             val rdbtn = RadioButton(activity)
                             rdbtn.id = View.generateViewId()
+                            rdbtn.setTextColor(getResources().getColor(R.color.colorText))
+                            rdbtn.setCircleColor(getResources().getColor(R.color.gradientstartcolor))
+
+
                             rdbtn.setOnClickListener(this@RateCard)
 
                             if (cityId.equals("2707")) {
@@ -518,7 +535,14 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                             TabLayout.OnTabSelectedListener {
                             override fun onTabSelected(tab: TabLayout.Tab) {
 
+                                rateCardIncentive?.visibility = View.GONE
+
                                 selectedPosition = tab.position
+
+                                if(selectedPosition ==2){
+                                    itemSelectedPosition = 0
+                                }
+
 
                                 tvCarName!!.text = getRateCardList[tab.position].name
 
@@ -652,6 +676,9 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             for (i in (getRateCardList.get(selectedPosition).rateCards)!!.get(position).rateCards!!.indices) {
                 val rdbtn = RadioButton(activity)
                 rdbtn.id = View.generateViewId()
+                rdbtn.setTextColor(getResources().getColor(R.color.colorText))
+                rdbtn.setCircleColor(getResources().getColor(R.color.gradientstartcolor))
+
 
                 rdbtn.setOnClickListener(this)
                 if (cityID1.equals("2707")) {
@@ -712,21 +739,22 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
             tvFare!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
+                "Minimum fare of ₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                     position
                 ).minBaseFare +
-                        " for first 1.50 km and thereafter ₹ " +
+                        " for the first 1.5 KM\n" +
+                        "Subsequently, fare will be chargeable at ₹ " +
                         getRateCardList[selectedPosition].rateCards!!.get(position).rateCards!!.get(
                             position
                         ).fareAfterMinbdist +
-                        " for every additional km."
+                        " per KM."
 
 
 
-            tvNightCharges!!.text =
+            tvNightCharges!!.text ="Additional charge of "+
                 getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                     position
-                ).nightChargesInPercentage + " of the Fare"
+                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
 
             tvWaitingCharges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
@@ -743,7 +771,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                     "0"
                 )
             ) {
-                tvSurCHarges!!.text = "Surcharge Not Applicable"
+                tvSurCHarges!!.text = "Not Applicable"
 
             } else {
                 tvSurCHarges!!.text =
@@ -759,7 +787,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                     position
                 ).chargesPerLuggage +
-                        " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
+                        " per luggage item other than a briefcase or hand bag."
 
 
         }
@@ -773,23 +801,25 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
         if (position == 0) {
+            rateCardIncentive?.visibility = View.GONE
 
 
             tvFare!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                "Minimum fare of ₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).minBaseFare +
-                        " for first 1.50 km and thereafter ₹ " +
+                        " for the first 1.5 KM\n" +
+                        "Subsequently, fare will be chargeable at ₹ " +
                         getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                             position
                         ).fareAfterMinbdist +
-                        " for every additional km."
+                        " per KM."
 
 
-            tvNightCharges!!.text =
+            tvNightCharges!!.text ="Additional charge of "+
                 getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).nightChargesInPercentage + " of the Fare"
+                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
 
             tvWaitingCharges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
@@ -801,7 +831,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                     position
                 ).surcharge).equals("0")
             ) {
-                tvSurCHarges!!.text = "Surcharge Not Applicable"
+                tvSurCHarges!!.text = "Not Applicable"
 
             } else {
                 tvSurCHarges!!.text =
@@ -816,45 +846,58 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).chargesPerLuggage +
-                        " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
+                        " per luggage item other than a briefcase or hand bag."
 
 
         } else {
-            tvFare!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+
+            rateCardIncentive?.visibility = View.VISIBLE
+
+            if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(position).rateCardType)!!.contains("DOMS"))
+            {
+               rateCardIncentive?.setBackgroundResource(R.drawable.rate_card_incentive)
+            }
+            else
+            {
+                rateCardIncentive?.setBackgroundResource(R.drawable.rate_card_incentive_international)
+            }
+
+
+            tvFare!!.text ="Fare will be chargeable for a minimum distance of "+
+                    getRateCardList[selectedPosition].rateCards!!.get(
+                        itemSelectedPosition
+                    ).rateCards!!.get(
+                        position
+                    ).minBaseDistance +" KM at ₹ "+
+
+             getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).minBaseFare +
-                        " for minimum base distance of " + getRateCardList[selectedPosition].rateCards!!.get(
+                ).minBaseFare + " per KM. " +
+                    "Subsequently, fare will be chargeable in the distance slabs of " +
+                    getRateCardList[selectedPosition].rateCards!!.get(
                     itemSelectedPosition
                 ).rateCards!!.get(
                     position
-                ).minBaseDistance + " km and thereafter ₹ " +
-                        getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                            position
-                        ).fareAfterMinbdist +
-                        " for every distance slab of " + getRateCardList[selectedPosition].rateCards!!.get(
-                    itemSelectedPosition
-                ).rateCards!!.get(
-                    position
-                ).minBaseDistance + " km"
+                ).distanceSlab + " KM at ₹ "+getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                position
+            ).fareAfterMinbdist+" per KM. Additionally, incentives are offered to the drivers for providing Pre-Paid Services from the international terminal."
 
 
-            tvNightCharges!!.text =
+
+
+            tvNightCharges!!.text ="Additional charge of "+
                 getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).nightChargesInPercentage + " of the Fare"
+                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
 
-            tvWaitingCharges!!.text =
-                "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
-                    position
-                ).waitingCharges + " per minute "
+            tvWaitingCharges!!.text ="Not Applicable"
 
 
             if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).surcharge).equals("0")
             ) {
-                tvSurCHarges!!.text = "Surcharge Not Applicable"
+                tvSurCHarges!!.text = "Not Applicable"
 
             } else {
                 tvSurCHarges!!.text =
@@ -869,7 +912,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).chargesPerLuggage +
-                        " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
+                        " per luggage item other than a briefcase or hand bag."
 
         }
 
@@ -887,6 +930,9 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
         for (i in (getRateCardList.get(selectedPosition).rateCards)!!.get(0).rateCards!!.indices) {
             val rdbtn = RadioButton(activity)
             rdbtn.id = View.generateViewId()
+            rdbtn.setTextColor(getResources().getColor(R.color.colorText))
+            rdbtn.setCircleColor(getResources().getColor(R.color.gradientstartcolor))
+
 
             rdbtn.setOnClickListener(this)
             if (cityID1.equals("2707")) {
@@ -939,6 +985,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
             if (i == 0) {
                 mRgAllButtons!!.check(rdbtn.id)
+
+
             }
         }
 
@@ -947,21 +995,22 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
         tvFare!!.text =
-            "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
+            "Minimum fare of ₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
             ).minBaseFare +
-                    " for first 1.50 km and thereafter ₹ " +
+                    " for the first 1.5 KM\n" +
+                    "Subsequently, fare will be chargeable at ₹ " +
                     getRateCardList[selectedPosition].rateCards!!.get(0).rateCards!!.get(
                         0
                     ).fareAfterMinbdist +
-                    " for every additional km."
+                    " per KM."
 
 
 
-        tvNightCharges!!.text =
+        tvNightCharges!!.text ="Additional charge of "+
             getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
-            ).nightChargesInPercentage + " of the Fare"
+            ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
 
         tvWaitingCharges!!.text =
             "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
@@ -978,7 +1027,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 "0"
             )
         ) {
-            tvSurCHarges!!.text = "Surcharge Not Applicable"
+            tvSurCHarges!!.text = "Not Applicable"
 
         } else {
             tvSurCHarges!!.text =
@@ -994,9 +1043,55 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
             ).chargesPerLuggage +
-                    " shall be charged as extra luggage charges. The Driver / Operator shall not apply any Luggage charges for shopping bags and small suitcases."
+                    " per luggage item other than a briefcase or hand bag."
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun RadioButton.setCircleColor(color: Int){
+        val colorStateList = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_checked), // unchecked
+                intArrayOf(android.R.attr.state_checked) // checked
+            ), intArrayOf(
+                Color.GRAY, // unchecked color
+                color // checked color
+            )
+        )
+
+        // finally, set the radio button's button tint list
+        buttonTintList = colorStateList
+
+        // optionally set the button tint mode or tint blend mode
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            buttonTintBlendMode = BlendMode.SRC_IN
+        }else{
+            buttonTintMode = PorterDuff.Mode.SRC_IN
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

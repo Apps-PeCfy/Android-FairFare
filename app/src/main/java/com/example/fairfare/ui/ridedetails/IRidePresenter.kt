@@ -35,7 +35,7 @@ interface IRidePresenter {
         sourceAddress: String?,
         destinationAddress: String?,
         night_allow: String?,
-        tolls: ArrayList<CompareRideResponsePOJO.VehiclesItem>)
+        tolls: ArrayList<CompareRideResponsePOJO.TollsItem>)
 
 
 

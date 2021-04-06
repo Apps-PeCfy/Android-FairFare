@@ -327,7 +327,7 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
             rl_sort!!.visibility = View.GONE
             rlEmpty!!.visibility = View.VISIBLE
             ivImg!!.setBackgroundResource(R.drawable.empty_ride)
-            tvEmptyTxt!!.text = "You have not taken any Rides yet."
+            tvEmptyTxt!!.text = "You have not taken any Rides yet"
 
         }
 

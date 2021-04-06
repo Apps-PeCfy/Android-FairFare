@@ -65,6 +65,12 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     private var mMap: GoogleMap? = null
     var currentLatitude = 0.0
     var currentLongitude = 0.0
+    var currentAddressLatitude = 0.0
+    var currentAddressLongitude = 0.0
+    var currentUserAddress: String? = null
+
+
+
     var extras: Bundle? = null
     var isSource: Boolean? = false
 
@@ -79,6 +85,10 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     @JvmField
     @BindView(R.id.homeView)
     var homeView: LinearLayout? = null
+
+    @JvmField
+    @BindView(R.id.tv_currentLocation)
+    var tv_currentLocation: TextView? = null
 
     @JvmField
     @BindView(R.id.lladdress)
@@ -178,6 +188,11 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         if (extras != null) {
             currentLatitude = extras!!.getDouble("currentLatitude")
             currentLongitude = extras!!.getDouble("currentLongitude")
+
+            currentAddressLatitude = extras!!.getDouble("currentUserLatitude")
+            currentAddressLongitude = extras!!.getDouble("currentUserLongitude")
+            currentUserAddress = extras!!.getString("currentUserAddress")
+
         }
         setToolbar()
     }
@@ -561,11 +576,62 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     currentLongitude,
                     isSource,
                     locateOnMapAddress,
-                    keyAirport,""
+                    keyAirport, ""
                 )
             )
         }
 
+
+    }
+
+
+    @OnClick(R.id.tv_currentLocation)
+    fun cLocation() {
+
+        if (extras!!.getString("Toolbar_Title") == "Pick-Up") {
+            isSource = true
+            sharedpreferences!!.edit().remove("SourceLat")
+            sharedpreferences!!.edit().remove("SourceLong")
+            editor!!.putString(SourceLat, currentAddressLatitude.toString())
+            editor!!.putString(SourceLong, currentAddressLongitude.toString())
+            editor!!.putString(fromLocation, currentUserAddress)
+        } else {
+            isSource = false
+            sharedpreferences!!.edit().remove("DestinationLat")
+            sharedpreferences!!.edit().remove("DestinationLong")
+            editor!!.putString(DestinationLat, currentAddressLatitude.toString())
+            editor!!.putString(DestinationLong, currentAddressLongitude.toString())
+            editor!!.putString(destiNationLocation, currentUserAddress)
+        }
+        editor!!.commit()
+        editor!!.apply()
+        val intent = Intent(applicationContext, HomeActivity::class.java)
+        intent.putExtra("Toolbar_Title", extras!!.getString("Toolbar_Title"))
+        intent.putExtra("currentLatitude", currentAddressLatitude)
+        intent.putExtra("currentLongitude", currentAddressLongitude)
+        intent.putExtra("spnbg", extras!!.getInt("spinnerbag"))
+        intent.putExtra("spnTime", extras!!.getInt("spinnerTime"))
+        intent.putExtra("getcity", extras!!.getString("City"))
+        intent.putExtra("TvDateTime", extras!!.getString("spinnerTimeDate"))
+        intent.putExtra("formaredDateLater", extras!!.getString("formaredDateLater"))
+
+        //Old Code
+        if (Constants.IS_OLD_PICK_UP_CODE) {
+            startActivity(intent)
+        } else {
+            // ILOMADEV
+            finish()
+
+            EventBus.getDefault().post(
+                PickUpLocationModel(
+                    currentAddressLatitude,
+                    currentAddressLongitude,
+                    isSource,
+                    currentUserAddress,
+                    keyAirport, ""
+                )
+            )
+        }
 
     }
 
@@ -722,7 +788,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     currentLongitude,
                     isSource,
                     newSelectedAddress,
-                    keyAirport,""
+                    keyAirport, ""
                 )
             )
         }
@@ -734,7 +800,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
         Toast.makeText(this, "Added in fav" + place!!.id, Toast.LENGTH_LONG).show()
     }
 
-    override fun seveRecent(placeID: String?, selectedadd: String?,addressType:String?) {
+    override fun seveRecent(placeID: String?, selectedadd: String?, addressType: String?) {
         val placeFields =
             Arrays.asList(
                 Place.Field.LAT_LNG,
@@ -794,7 +860,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                             place.latLng!!.longitude,
                             isSource,
                             newSelectedAddress,
-                            keyAirport,addressType
+                            keyAirport, addressType
                         )
                     )
                 }
@@ -1017,11 +1083,11 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                 ) {
                     obj.countryName = "USA"
                 }
-                if (!countryName.equals("")){
+                if (!countryName.equals("")) {
                     address = address.replace(", $countryName", "").replace("- $countryName", "")
                 }
 
-                if (obj != null && obj.postalCode!= null && !obj.postalCode.equals("")){
+                if (obj != null && obj.postalCode != null && !obj.postalCode.equals("")) {
                     address = address.replace(" " + obj.postalCode, "")
                 }
 
@@ -1055,12 +1121,11 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
             }
         } catch (e: IOException) {
         }
-        if (countryName.equals("")){
+        if (countryName.equals("")) {
             return selectedAddress
         }
 
         return selectedAddress.replace(", $countryName", "").replace("- $countryName", "")
-
 
 
     }

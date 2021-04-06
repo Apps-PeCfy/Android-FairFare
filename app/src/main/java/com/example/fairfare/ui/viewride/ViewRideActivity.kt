@@ -27,7 +27,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.fairfare.R
 import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.compareride.pojo.CompareRideResponsePOJO
-import com.example.fairfare.ui.drawer.myrides.ridedetails.TollPopUpAdapter
 import com.example.fairfare.ui.home.HomeActivity
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.ui.ridedetails.RideDetailsActivity
@@ -173,9 +172,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
     @BindView(R.id.tv_dateandTime)
     var tv_dateandTime: TextView? = null
 
-    @JvmField
-    @BindView(R.id.switchdata)
-    var switchdata: Switch? = null
+
     private var compareRideList = ArrayList<CompareRideResponsePOJO.VehiclesItem>()
     var sourceLatitude: String? = null
     var sourceLongitude: String? = null
@@ -305,11 +302,6 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         tv_additional_charges!!.text =
             "₹ " + compareRideList[listPosition].additionalCharges
 
-        if (compareRideList[listPosition].nightCharge == "0.00") {
-            switchdata!!.isChecked = true
-        } else {
-            switchdata!!.isChecked = false
-        }
 
         mToolbar!!.title = "View Ride"
         mToolbar!!.setTitleTextColor(Color.WHITE)
@@ -467,7 +459,8 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
             intent.putExtra("ImgName", compareRideList[listPosition].name)
             intent.putExtra("VehicleName", compareRideList[listPosition].vehicleName)
 
-            intent.putExtra("compareRideList", compareRideList)
+          //  intent.putExtra("compareRideList", TOllList)
+            intent.putStringArrayListExtra("compareRideList", TOllList as ArrayList<String?>?)
 
 
             startActivity(intent)
@@ -485,7 +478,9 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
 
             iViewRidePresenter!!.schduleRide(token,vahicalRateCardID,luggagesQuantity,formatedDateTime,
             originPlaceID,destinationPlaceID,overviewPolyLine,distance_ViewRide,durationRide,CITY_ID,
-                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong,sAdd,dAdd,compareRideList)
+                airportCardID,sourceLatitude,sourceLongitude,destLat,destLong,sAdd,dAdd,
+                TOllList as ArrayList<CompareRideResponsePOJO.TollsItem>
+            )
 
 
          }
