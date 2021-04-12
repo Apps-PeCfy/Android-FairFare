@@ -38,6 +38,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -83,6 +84,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
     var eventDialogBind: EventDialogBind? = null
     var waittimePopUpAdapter: WaitTimePopUpAdapter? = null
     var tollsPopUPEndRIde: TollsPopUPEndRIde? = null
+    var tollsJSONArrayFromTollGuru : JSONArray = JSONArray()
 
 
     @JvmField
@@ -283,6 +285,14 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         actualTimeTravelled = actualTimeTravelled!!.toFloat().roundToInt().toString()
         actualDistanceTravelled = intent.getStringExtra("actualDistanceTravelled")
 
+        tollsJSONArrayFromTollGuru =  JSONArray(intent.getStringExtra("tollGuruJsonArray"))
+
+        Toast.makeText(
+            this,
+            tollsJSONArrayFromTollGuru.toString(),
+            Toast.LENGTH_LONG
+        )
+            .show()
 
         actualDistanceTravelled =
             DecimalFormat("####.#").format((actualDistanceTravelled!!.toDouble()))
@@ -309,7 +319,8 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
             originLat,
             originLong,
             sAdd,
-            actualDistanceTravelledForNightCharges
+            actualDistanceTravelledForNightCharges,
+            tollsJSONArrayFromTollGuru
         )
 
         mToolbar!!.title = "End Ride"

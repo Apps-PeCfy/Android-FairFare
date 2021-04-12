@@ -45,6 +45,9 @@ class ScheduleRideResponsePOJO : Serializable {
       @SerializedName("userId")
       var userId = 0
 
+      @SerializedName("canToll")
+      var canToll : String? = null
+
       @SerializedName("nightCharges")
       var nightCharges: String? = null
 

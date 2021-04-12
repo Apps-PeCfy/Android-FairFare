@@ -11,12 +11,17 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.util.Log
+import android.os.Environment
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
 import com.example.fairfare.R
+import com.example.fairfare.ui.trackRide.NearByPlacesPOJO.Location
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStreamWriter
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -211,5 +216,54 @@ object ProjectUtilities {
             "\\.[0-9]+".toRegex(),
             ""
         ) else formattedNumber
+    }
+
+    @Throws(IOException::class)
+    fun downloadCSVFile(list: ArrayList<Location>?, context: Context):File {
+        var myFile: File
+        var root: String? = fetchStoragePath(context)
+        myFile = File("$root/FairFare")
+        if (!myFile.exists()) {
+            myFile.mkdirs()
+            myFile = File("$root/FairFare/CSVFiles")
+            if (!myFile.exists()) {
+                myFile.mkdirs()
+            }
+        } else {
+            myFile = File("$root/FairFare/CSVFiles")
+            if (!myFile.exists()) {
+                myFile.mkdirs()
+            }
+        }
+        val fname = "google_path_${System.currentTimeMillis()}.csv"
+        val file = File(myFile, fname)
+        file.createNewFile()
+        val fOut = FileOutputStream(file)
+        val myOutWriter = OutputStreamWriter(fOut)
+        myOutWriter.append("latitude,longitude,timestamp")
+        myOutWriter.append("\n")
+        if (list != null && list.size > 0) {
+            for (model in list) {
+                myOutWriter.append(
+                    model.lat
+                        .toString() + "," + model.lng.toString() + "," + model.timestamp.toString())
+                myOutWriter.append("\n")
+            }
+            myOutWriter.close()
+            fOut.close()
+        }
+
+        return file;
+    }
+
+    fun fetchStoragePath(context: Context): String? {
+        var path: String? = null
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            path = Environment.getExternalStorageDirectory()
+                .toString() + File.separator
+        } else {
+            path = context.getExternalFilesDir(null).toString() + File.separator
+        }
+        return path
     }
 }

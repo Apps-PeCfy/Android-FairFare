@@ -31,8 +31,8 @@ class EndRideImplementer(private val view: IEndRideView) : IEndRidePresenter {
         originLat: String?,
         originLon: String?,
         originAddress: String?,
-        nightChargeDistance: String?
-
+        nightChargeDistance: String?,
+        tollsJSONArrayFromTollGuru: JSONArray
     ) {
 
 
@@ -97,6 +97,7 @@ class EndRideImplementer(private val view: IEndRideView) : IEndRidePresenter {
             jsonMainObj.accumulate("destination_place_lat", endLat)
             jsonMainObj.accumulate("destination_place_long", endLon)
             jsonMainObj.accumulate("destination_full_address", endAddress)
+            jsonMainObj.accumulate("tolls", tollsJSONArrayFromTollGuru)
 
 
 

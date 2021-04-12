@@ -17,19 +17,21 @@ import com.example.fairfare.ui.drawer.myrides.ridedetails.RideDetailsResponsePOJ
 import com.example.fairfare.ui.drawer.privacypolicy.ContentResponsePOJO
 import com.example.fairfare.ui.drawer.ratecard.pojo.RateCardResponsePOJO
 import com.example.fairfare.ui.drawer.setting.pojo.SettingResponsePojo
+import com.example.fairfare.ui.endrides.pojo.ResponseEnd
 import com.example.fairfare.ui.home.pojo.DeleteSaveDataResponsePOJO
 import com.example.fairfare.ui.home.pojo.GetAllowCityResponse
 import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.ui.otp.pojo.VerifyOTPResponsePojo
-import com.example.fairfare.ui.endrides.pojo.ResponseEnd
 import com.example.fairfare.ui.trackRide.NearByPlacesPOJO.NearByResponse
+import com.example.fairfare.ui.trackRide.TollGuruPOJO.TollGuruResponse
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
 import com.example.fairfare.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -465,5 +467,12 @@ interface NetworkService {
         @Query("latitude") latitude: String?,
         @Query("longitude") longitude: String?
     ): Call<GetAllowCityResponse?>?
+
+    @Headers("Content-Type: application/json")
+    @POST("route/upload")
+    fun uploadCSVTollGuru(
+        @Header("x-api-key") header: String?,
+        @Body file: RequestBody?
+    ): Call<ResponseBody?>?
 
 }
