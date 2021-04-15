@@ -1296,31 +1296,14 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                     tracelledPopUP(travelledDistance)
 
-                }else if (response.code() == 422) {
-                    val gson = GsonBuilder().create()
-                    var pojo: ValidationResponse? = ValidationResponse()
-                    try {
-                        pojo = gson.fromJson(
-                            response.errorBody()!!.string(),
-                            ValidationResponse::class.java
-                        )
-                        Toast.makeText(
-                            this@TrackRideActivity,
-                            pojo.errors!!.get(0).message,
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-
-
-                    } catch (exception: IOException) {
-                    }
-
                 } else {
-                    Toast.makeText(
+                    /*Toast.makeText(
                         this@TrackRideActivity,
                         "Internal server error",
                         Toast.LENGTH_LONG
-                    ).show()
+                    ).show()*/
+
+                    tracelledPopUP(travelledDistance)
                 }
 
                 if (file.exists()){
