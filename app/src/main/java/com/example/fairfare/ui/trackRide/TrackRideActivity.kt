@@ -2167,15 +2167,27 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             }
             myMarker!!.remove()
         }
-        myMarker = mMap!!.addMarker(
-            MarkerOptions()
-                .position(newPosition)
-                .icon(getMarkerIcon(vehicleName))
-                .anchor(0.5f, 0.5f)
-                .draggable(true)
-                .flat(true)
-                .rotation(location.bearing)
-        )
+        if (isWaiting!! && lastCompassBering != null) {
+            myMarker = mMap!!.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+            )
+        } else {
+            myMarker = mMap!!.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+                    .rotation(location.bearing)
+            )
+        }
+
 
         prevLatLng = newPosition
 
@@ -2275,7 +2287,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            valueAnimator.duration = 1000 // duration 2 second
+            if (mMap!!.cameraPosition.zoom <= 18.0){
+                valueAnimator.duration = 1000 // duration 2 second
+            }else{
+                valueAnimator.duration = 500 // duration 2 second
+            }
+
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener { animation ->
                 try {
