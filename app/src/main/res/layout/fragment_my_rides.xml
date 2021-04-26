@@ -63,6 +63,7 @@
                 android:layout_height="@dimen/_50sdp"/>
 
             <TextView
+                android:textColor="@color/colorText"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/tvEmptyTxt"
                 android:layout_below="@+id/ivImg"

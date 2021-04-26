@@ -28,6 +28,7 @@
 
         <EditText
             android:id="@+id/userName"
+            android:textColor="@color/colorText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/emptylayout"
@@ -80,7 +81,6 @@
                             android:hint="Enter Phone Number"
                             android:includeFontPadding="false"
                             android:maxLines="1"
-                            android:text="+91 1234567890"
                             android:textColor="@color/colorGreyText"
                             android:textColorHint="@color/colorGreyText"
                             android:textSize="@dimen/_11sdp" />
@@ -147,6 +147,7 @@
                                 android:layout_toEndOf="@+id/ivGender"
                                 android:drawableStart="@drawable/ic_profile_gender"
                                 android:gravity="bottom"
+                                android:backgroundTint="@color/colorGreyText"
                                 android:textColor="@color/colorGreyText"
                                 android:spinnerMode="dialog"
                                 android:textSize="@dimen/_5sdp" />

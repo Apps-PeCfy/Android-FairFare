@@ -21,6 +21,7 @@
 
 
     <RelativeLayout
+        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_viewRide"
@@ -28,6 +29,7 @@
 
 
         <RelativeLayout
+            android:background="@color/colorBackground"
             android:id="@+id/rl_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -124,7 +126,7 @@
                 android:id="@+id/llshowData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/addvertise"
+                android:layout_above="@+id/rlBtnLogin"
                 android:background="@color/colorBackground"
                 android:orientation="vertical">
 
@@ -737,24 +739,6 @@
                         </RelativeLayout>
 
 
-                        <Button
-                            android:id="@+id/btnLogin"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/ll_privacy"
-                            android:layout_marginStart="@dimen/_18sdp"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:layout_marginEnd="@dimen/_18sdp"
-                            android:layout_marginBottom="@dimen/_15sdp"
-                            android:background="@drawable/shape_roundedbtn"
-                            android:fontFamily="@font/notosansjp_regular"
-                            android:includeFontPadding="false"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:text="Start Ride"
-                            android:textAllCaps="false"
-                            android:textColor="@color/White"
-                            android:textSize="@dimen/_15sdp" />
 
                     </LinearLayout>
 
@@ -762,6 +746,38 @@
 
 
             </LinearLayout>
+
+            <RelativeLayout
+                android:background="@color/colorBackground"
+                android:id="@+id/rlBtnLogin"
+                android:layout_above="@+id/addvertise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/shape_roundedbtn"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:includeFontPadding="false"
+                    android:paddingTop="@dimen/_7sdp"
+                    android:paddingBottom="@dimen/_7sdp"
+                    android:text="Start Ride"
+                    android:textAllCaps="false"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/_15sdp" />
+
+
+            </RelativeLayout>
+
+
+
 
 
             <Button

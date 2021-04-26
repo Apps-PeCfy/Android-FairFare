@@ -44,6 +44,7 @@
         android:textAppearance="@style/top_line" />
 
     <TextView
+        android:textColor="@color/colorGreyText"
         android:fontFamily="@font/notosansjp_bold"
         android:includeFontPadding="false"
         android:id="@+id/otp"
@@ -53,7 +54,6 @@
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:lineSpacingExtra="2sp"
-        android:textColor="@color/Black"
         android:textStyle="bold"
         android:textAppearance="@style/top_line" />
 
