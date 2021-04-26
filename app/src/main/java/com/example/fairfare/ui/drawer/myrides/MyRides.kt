@@ -11,10 +11,7 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
@@ -151,6 +148,11 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initView() {
+
+        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
+        spinnerLang.visibility = View.GONE
+
+
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
         toolbar.title = "My Rides"
 

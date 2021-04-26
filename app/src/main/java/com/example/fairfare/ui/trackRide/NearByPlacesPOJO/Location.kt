@@ -7,8 +7,11 @@ import com.google.gson.annotations.SerializedName
 data class Location(
 
 	@field:SerializedName("lng")
-	val lng: Double? = null,
+	var lng: Double? = null,
 
 	@field:SerializedName("lat")
-	val lat: Double? = null
+	var lat: Double? = null,
+
+	@field:SerializedName("timestamp")
+	var timestamp: String? = null
 )

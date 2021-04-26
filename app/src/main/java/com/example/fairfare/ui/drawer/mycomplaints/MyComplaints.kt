@@ -7,10 +7,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -176,6 +173,10 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
 
 
     private fun initView() {
+
+        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
+        spinnerLang.visibility = View.GONE
+
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
         toolbar.title = "My Complaints"
 

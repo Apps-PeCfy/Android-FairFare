@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.*
 import android.graphics.Color
 import android.hardware.GeomagneticField
@@ -31,6 +32,7 @@ import com.example.fairfare.R
 import com.example.fairfare.base.BaseLocationClass
 import com.example.fairfare.networking.ApiClient
 import com.example.fairfare.service.BackgroundLocationService
+import com.example.fairfare.ui.Login.pojo.ValidationResponse
 import com.example.fairfare.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
 import com.example.fairfare.ui.endrides.EndRidesActivity
 import com.example.fairfare.ui.home.pojo.GetAllowCityResponse
@@ -42,20 +44,24 @@ import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
 import com.example.fairfare.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
+import com.example.fairfare.utils.ProjectUtilities
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.gson.GsonBuilder
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
 import java.text.DecimalFormat
@@ -88,6 +94,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
     var actulDis = 0.0
 
     var actualTravelDistance = ArrayList<Double>()
+    var googlePathListForTolls = ArrayList<com.example.fairfare.ui.trackRide.NearByPlacesPOJO.Location>()
+    var tollsJSONArrayFromTollGuru : JSONArray = JSONArray()
     var actualTravelDistanceForNightCharges = ArrayList<Double>()
 
 
@@ -478,6 +486,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     }
 
 
+
                     if (currentspeed!! < 2) {   //speed less than 10 km per hr
                         isWaiting = true
                         if (waitTime == null) {
@@ -486,7 +495,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                             waitAt = formatter.format(waitTime)
                             waitStartLocationNew = getAddressFromLocation(lastLocation)
                         }
+
                         //   Toast.makeText(applicationContext, "On Wait Start Speed : + ${currentspeed.toString()}", Toast.LENGTH_LONG).show()
+
 
                     } else {
                         isWaiting = false
@@ -503,7 +514,9 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                                 var options = HashMap<String, String>()
                                 options.put("waiting_time", timeDiffrence.toString())
                                 options.put("full_address", waitStartLocationNew!!)
+
                                 //   options.put("full_address", waitStartLocation!!)
+
                                 options.put("wait_at", waitAt!!)
                                 options.put("lat", waitLat!!)
                                 options.put("long", waitLong!!)
@@ -536,10 +549,21 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                     }
 
+                    addLocationListToCreateCSVFile(lastLocation)
                 }
             }
 
         })
+    }
+
+    private fun addLocationListToCreateCSVFile(lastLocation: Location) {
+        var location: com.example.fairfare.ui.trackRide.NearByPlacesPOJO.Location = com.example.fairfare.ui.trackRide.NearByPlacesPOJO.Location()
+        location.lat = lastLocation.latitude
+        location.lng = lastLocation.longitude
+        location.timestamp = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(Date())
+
+        googlePathListForTolls.add(location)
+
     }
 
     private fun logicToShowActualDistanceTravelled() {
@@ -922,6 +946,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         var totalActualDistance = 0.0
 
+        progressBarDistance!!.getProgressDrawable().setColorFilter(
+            Color.RED, android.graphics.PorterDuff.Mode.SRC_IN)
 
         // actualTravelDistance add value when draw new route
 
@@ -960,7 +986,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
         travelledDistance = R * c
-        tracelledPopUP(travelledDistance)
+        if (info?.ride?.canToll.equals("Yes", ignoreCase = true)){
+            uploadCSVFile()
+        }else{
+            tracelledPopUP(travelledDistance)
+        }
+
         return R * c
     }
 
@@ -1032,6 +1063,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     intentr.putExtra("EndRideCurrentLat", waitStartLat)
                     intentr.putExtra("EndRideCurrentLon", waitStartLong)
                     intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
+                    intentr.putExtra("tollGuruJsonArray", tollsJSONArrayFromTollGuru.toString())
 
 
 
@@ -1062,7 +1094,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     intentr.putExtra("EndRideCurrentLat", waitStartLat)
                     intentr.putExtra("EndRideCurrentLon", waitStartLong)
                     intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
-
+                    intentr.putExtra("tollGuruJsonArray", tollsJSONArrayFromTollGuru.toString())
 
 
                     startActivity(intentr)
@@ -1126,7 +1158,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     intentr.putExtra("EndRideCurrentLat", waitStartLat)
                     intentr.putExtra("EndRideCurrentLon", waitStartLong)
                     intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
-
+                    intentr.putExtra("tollGuruJsonArray", tollsJSONArrayFromTollGuru.toString())
 
 
 
@@ -1156,7 +1188,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                     intentr.putExtra("EndRideCurrentLat", waitStartLat)
                     intentr.putExtra("EndRideCurrentLon", waitStartLong)
                     intentr.putExtra("EndRideCurrentAddress", waitStartLocation)
-
+                    intentr.putExtra("tollGuruJsonArray", tollsJSONArrayFromTollGuru.toString())
 
 
                     startActivity(intentr)
@@ -1226,6 +1258,71 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         )
 
 
+
+    }
+
+    private fun uploadCSVFile() {
+        // create RequestBody instance from file
+        val file: File = ProjectUtilities.downloadCSVFile(googlePathListForTolls, this)
+
+        val requestFile: RequestBody = RequestBody.create(
+            "text/csv".toMediaTypeOrNull(),
+            file
+        )
+
+        // MultipartBody.Part is used to send also the actual file name
+
+        // MultipartBody.Part is used to send also the actual file name
+        val body =
+            MultipartBody.Part.create(requestFile)
+
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setCancelable(false) // set cancelable to false
+        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.show()
+
+        val call = ApiClient.clientTollGuru.uploadCSVTollGuru(
+            "RBGRLTfRBf3J4Jgt686H3QfFPrDN3D8N",
+            requestFile
+        )
+        call!!.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(
+                call: Call<ResponseBody?>,
+                response: Response<ResponseBody?>
+            ) {
+                progressDialog.dismiss()
+                if (response.code() == 200) {
+                    val stringResponse = response.body()?.string()
+                    val jObject = JSONObject(stringResponse)
+                    tollsJSONArrayFromTollGuru = jObject.getJSONObject("route").getJSONArray("tolls")
+
+                    tracelledPopUP(travelledDistance)
+
+                } else {
+                    /*Toast.makeText(
+                        this@TrackRideActivity,
+                        "Internal server error",
+                        Toast.LENGTH_LONG
+                    ).show()*/
+
+                    tracelledPopUP(travelledDistance)
+                }
+
+                if (file.exists()){
+                    file.delete()
+                }
+            }
+
+            override fun onFailure(
+                call: Call<ResponseBody?>,
+                t: Throwable
+            ) {
+                progressDialog.dismiss()
+                if (file.exists()){
+                    file.delete()
+                }
+            }
+        })
     }
 
     private fun nearByPlaceses() {
@@ -1360,8 +1457,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 if (response.code() == 200) {
 
 
-                    tv_currentFare!!.text = response.body()!!.rate!!.subTotal
-
+                    var sTotal = response.body()!!.rate!!.subTotal!!.toFloat() + response.body()!!.rate!!.waitingCharges!!.toFloat()
+                    tv_currentFare!!.text = sTotal.toString()+"0"
 
                 }
             }
@@ -1374,7 +1471,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         })
 
     }
-
 
     @OnClick(R.id.tv_close)
     fun closeCoard() {
@@ -1421,6 +1517,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         )
 
         //  updateCamera(getCompassBearing(startLocation, destLocation))
+
 
 
 
@@ -1476,7 +1573,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val key = "key=" + getString(R.string.google_maps_key)
 
         // Building the parameters to the web service
-       // val parameters = "$str_origin&$str_dest&$key"
+        // val parameters = "$str_origin&$str_dest&$key"
         val parameters = "$str_origin&$str_dest&alternatives=false&$key"
         // Output format
         val output = "json"
@@ -1632,6 +1729,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                         updateCamera(getCompassBearing(points[0]!!, points[1]!!))
                     }
 
+
                     // Fetching all the points in i-th route
 
 
@@ -1755,6 +1853,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 var options = HashMap<String, String>()
                 options.put("waiting_time", timeDiffrence.toString())
                 options.put("full_address", waitStartLocationNew!!)
+
                 //  options.put("full_address", waitStartLocation!!)
                 options.put("wait_at", waitAt!!)
                 options.put("lat", waitStartLat!!)
@@ -1814,7 +1913,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val key = "key=" + getString(R.string.google_maps_key)
 
         // Building the parameters to the web service
-        val parameters = "$str_origin&$str_dest&$key"
+        val parameters = "$str_origin&$str_dest&alternatives=false&$key"
 
         // Output format
         val output = "json"
@@ -2069,15 +2168,27 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             }
             myMarker!!.remove()
         }
-        myMarker = mMap!!.addMarker(
-            MarkerOptions()
-                .position(newPosition)
-                .icon(getMarkerIcon(vehicleName))
-                .anchor(0.5f, 0.5f)
-                .draggable(true)
-                .flat(true)
-                .rotation(location.bearing)
-        )
+        if (isWaiting!! && lastCompassBering != null) {
+            myMarker = mMap!!.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+            )
+        } else {
+            myMarker = mMap!!.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+                    .rotation(location.bearing)
+            )
+        }
+
 
         prevLatLng = newPosition
 
@@ -2177,7 +2288,12 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
             val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            valueAnimator.duration = 1000 // duration 2 second
+            if (mMap!!.cameraPosition.zoom <= 18.0){
+                valueAnimator.duration = 1000 // duration 2 second
+            }else{
+                valueAnimator.duration = 500 // duration 2 second
+            }
+
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener { animation ->
                 try {
@@ -2420,6 +2536,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         }
 
+
         /* geoField = GeomagneticField(
              java.lang.Double.valueOf(startLocation.latitude).toFloat(),
              java.lang.Double.valueOf(startLocation.longitude).toFloat(),
@@ -2526,5 +2643,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         super.onPause()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
+
 
 }

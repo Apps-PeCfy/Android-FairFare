@@ -59,4 +59,17 @@ object ApiClient {
             return retrofitPlaces!!.create(NetworkService::class.java)
         }
 
+    private var retrofitTollGuru: Retrofit? = null
+    @JvmStatic
+    val clientTollGuru: NetworkService
+        get() {
+            if (retrofitTollGuru == null) {
+                retrofitTollGuru = Retrofit.Builder()
+                    .baseUrl("https://dev.TollGuru.com/v1/calc/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            }
+            return retrofitTollGuru!!.create(NetworkService::class.java)
+        }
+
 }

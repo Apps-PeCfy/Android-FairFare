@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.webkit.WebView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -133,6 +134,10 @@ class Covid : Fragment() {
 
 
     private fun initView() {
+        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
+        spinnerLang.visibility = View.GONE
+
+
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
         toolbar.title = "Covid-19"
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)

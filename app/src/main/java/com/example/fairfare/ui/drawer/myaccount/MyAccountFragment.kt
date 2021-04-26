@@ -231,6 +231,10 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
 
     private fun initView() {
+
+        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
+        spinnerLang.visibility = View.GONE
+
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
         toolbar.title = "My Account"
 

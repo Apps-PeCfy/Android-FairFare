@@ -1,5 +1,6 @@
 package com.example.fairfare.ui.endrides
 
+import org.json.JSONArray
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -18,8 +19,9 @@ interface IEndRidePresenter {
         originLat: String?,
         originLon: String?,
         originAddress: String?,
-        DistanceNightCharge: String?
+        DistanceNightCharge: String?,
+        tollsJSONArrayFromTollGuru: JSONArray
 
-        )
+    )
 
 }

@@ -9,6 +9,7 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -31,6 +32,7 @@ import com.example.fairfare.utils.PreferencesManager
 import com.example.fairfare.utils.ProjectUtilities.dismissProgressDialog
 import com.example.fairfare.utils.ProjectUtilities.showProgressDialog
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlin.random.Random
 
 
@@ -45,6 +47,9 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     var gender: String? = null
     var deviceID: String? = null
     var smsReceiver: SmsReceiver? = null
+
+    var device_token: String? = null
+
 
     @JvmField
     @BindView(R.id.otp)
@@ -87,6 +92,14 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         PreferencesManager.initializeInstance(this@OtpAvtivity)
         mPreferencesManager = PreferencesManager.instance
         deviceID = String.format("%08d", Random.nextInt(100000000))
+
+        device_token = FirebaseInstanceId.getInstance().token
+
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
+            device_token = instanceIdResult.token
+            Log.d("sdsdsdsdsdwdwdw1", device_token!!)
+        }
+
 
 
         setToolbar()
@@ -205,7 +218,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         }
         iOtpPresenter!!.verifyOtp(
             MobileNo, type, "Android",
-            LoginType, CountryCode, Username, UserMail, gender, edt_otp!!.text.toString(),deviceID)
+            LoginType, CountryCode, Username, UserMail, gender, edt_otp!!.text.toString(),deviceID,device_token)
     }
 
     private fun setToolbar() {

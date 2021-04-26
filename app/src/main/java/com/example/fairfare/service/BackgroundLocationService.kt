@@ -1,8 +1,7 @@
 package com.example.fairfare.service
 
 import android.Manifest
-import android.app.Activity
-import android.app.Service
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
@@ -13,10 +12,14 @@ import android.os.Binder
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.provider.Settings
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
+import com.example.fairfare.R
+
 
 class BackgroundLocationService : Service() {
     // Binder given to clients
@@ -28,6 +31,10 @@ class BackgroundLocationService : Service() {
     //For My CurrentLocation Changed
     private var locationRequest: LocationRequest? = null
     private var locationCallback: LocationCallback? = null
+
+    private var notifManager: NotificationManager? = null
+    private var id = 0
+    var CHANNEL_ID = "1"
 
     interface LocationManagerTrackInterface {
         fun onMyLocationChange(currentLocation: MutableList<Location>?, lastLocation: Location?)
@@ -159,7 +166,6 @@ class BackgroundLocationService : Service() {
         }else{
             permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
         }
-
         if (!hasPermissions(this, *permission)) {
             ActivityCompat.requestPermissions(
                 (this as Activity?)!!,
@@ -204,5 +210,51 @@ class BackgroundLocationService : Service() {
 
     override fun onBind(intent: Intent): IBinder {
         return binder
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        startForeground(1, sendNotification("Location Service Started"))
+    }
+
+    private fun sendNotification(message: String): Notification? {
+
+        //id = (int) System.currentTimeMillis();
+
+        //keep same so previous notification get replaced
+        id = 0
+        if (notifManager == null) {
+            notifManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        }
+        val builder =
+            NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle("Fair Fare")
+                .setContentText(message)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+        builder.setAutoCancel(true)
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notification = builder.build()
+        if (notificationManager != null) {
+            // Since android Oreo notification channel is needed.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(
+                    CHANNEL_ID,
+                    "1",
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                notificationManager.createNotificationChannel(channel)
+            }
+            notificationManager.notify(
+                id++ /* ID of notification */,
+                notification
+            )
+        }
+        return notification
     }
 }

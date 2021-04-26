@@ -41,57 +41,55 @@ class FAQAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
 
-
-
-            holder.tvQuestion!!.text = complaintList[position].key
-            for (q in complaintList.indices) {
-                if (complaintList[position].values!!.isNotEmpty()) {
-                    faqSubQuestionArrayList = complaintList[position]!!.values!!
-                }
+        holder.tvQuestion!!.text = complaintList[position].key
+        for (q in complaintList.indices) {
+            if (complaintList[position].values!!.isNotEmpty()) {
+                faqSubQuestionArrayList = complaintList[position]!!.values!!
             }
+        }
 
 
-            val mLayoutManager = LinearLayoutManager(context)
-            mLayoutManager.stackFromEnd = true
-            mLayoutManager.reverseLayout = true
-            holder.recyclerView!!.setLayoutManager(mLayoutManager)
+        val mLayoutManager = LinearLayoutManager(context)
+        mLayoutManager.stackFromEnd = true
+        mLayoutManager.reverseLayout = true
+        holder.recyclerView!!.setLayoutManager(mLayoutManager)
 
-            if (faqSubQuestionArrayList.isNotEmpty()) {
-                val adapter = FaqSubAdapter(context, faqSubQuestionArrayList)
-                holder.recyclerView!!.setAdapter(adapter)
-                adapter.notifyDataSetChanged()
-            }
+        if (faqSubQuestionArrayList.isNotEmpty()) {
+            val adapter = FaqSubAdapter(context, faqSubQuestionArrayList)
+            holder.recyclerView!!.setAdapter(adapter)
+            adapter.notifyDataSetChanged()
+        }
 
-            holder.ivExpand!!.setOnClickListener(View.OnClickListener {
-                if (selectedPosition == position) {
-                    selectedPosition = -1
-                } else {
-                    selectedPosition = position
-                }
-                notifyDataSetChanged()
-            })
-
-            holder!!.tvQuestion!!.setOnClickListener(View.OnClickListener {
-                if (selectedPosition == position) {
-                    selectedPosition = -1
-                } else {
-                    selectedPosition = position
-                }
-                notifyDataSetChanged()
-            })
-
-
+        holder.ivExpand!!.setOnClickListener(View.OnClickListener {
             if (selectedPosition == position) {
-              //  holder!!.tvQuestion!!.setTextColor(Color.parseColor("#000000"))
-                holder.recyclerView!!.setVisibility(View.VISIBLE)
-                holder.ivExpand!!.setImageResource(R.drawable.downarrow)
+                selectedPosition = -1
             } else {
-                //holder.tvQuestion!!.setTextColor(Color.parseColor("#000000"))
-                holder.recyclerView!!.setVisibility(View.GONE)
-                holder.ivExpand!!.setImageResource(R.drawable.rightarrow)
+                selectedPosition = position
             }
+            notifyDataSetChanged()
+        })
 
-        
+        holder!!.tvQuestion!!.setOnClickListener(View.OnClickListener {
+            if (selectedPosition == position) {
+                selectedPosition = -1
+            } else {
+                selectedPosition = position
+            }
+            notifyDataSetChanged()
+        })
+
+        if (selectedPosition == -1) {
+            holder.recyclerView!!.setVisibility(View.VISIBLE)
+           // holder.ivExpand!!.setImageResource(R.drawable.downarrow)
+        } else if (selectedPosition == position) {
+            holder.recyclerView!!.setVisibility(View.VISIBLE)
+            //holder.ivExpand!!.setImageResource(R.drawable.downarrow)
+        } else {
+            holder.recyclerView!!.setVisibility(View.GONE)
+            //holder.ivExpand!!.setImageResource(R.drawable.rightarrow)
+        }
+
+
     }
 
 

@@ -567,8 +567,15 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
                         tv_actualDistance!!.text =
                             DecimalFormat("####.#").format((singleDecimalKM!!.toDouble()))+ " KM"
-                        tv_actualTime!!.text =
-                            response!!.body()!!.data!!.actualTrackRide!!.duration+" mins"
+
+                        if(response!!.body()!!.data!!.actualTrackRide!!.duration.equals("1")){
+                            tv_actualTime!!.text = response!!.body()!!.data!!.actualTrackRide!!.duration+" min"
+
+                        }else{
+
+                            tv_actualTime!!.text = response!!.body()!!.data!!.actualTrackRide!!.duration+" mins"
+
+                        }
                         tv_actualFare!!.text =
                             "₹ " + response!!.body()!!.data!!.actualTrackRide!!.subTotalCharges
                         tv_actualTotalFare!!.text =

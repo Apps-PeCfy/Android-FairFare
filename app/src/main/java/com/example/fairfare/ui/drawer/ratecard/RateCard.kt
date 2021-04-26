@@ -198,6 +198,10 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
     private fun initView() {
+
+        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
+        spinnerLang.visibility = View.GONE
+
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
         toolbar.title = "Rate Card"
 
@@ -251,7 +255,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                     val cityspinneradapter: ArrayAdapter<*> =
                         ArrayAdapter<Any?>(
                             context!!,
-                            android.R.layout.simple_spinner_dropdown_item,
+                            R.layout.simple_spinner,
                             cityspinner!! as List<Any?>
                         )
                     cityspinneradapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -352,19 +356,19 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
                             tvNightCharges!!.text ="Additional charge of "+
-                                getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
+                                getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
 
                             tvWaitingCharges!!.text =
-                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).waitingCharges + " per minute "
+                                "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).waitingCharges + " per minute."
 
                             if ((getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge).equals(
                                     "0"
                                 )
                             ) {
-                                tvSurCHarges!!.text = "Not Applicable"
+                                tvSurCHarges!!.text = "Not Applicable."
                             } else {
                                 tvSurCHarges!!.text =
-                                    "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge + " per booking"
+                                    "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge + " per booking."
 
                             }
 
@@ -512,7 +516,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
                             val auto: ArrayAdapter<*> = ArrayAdapter<Any?>(
                                 context!!,
-                                android.R.layout.simple_spinner_dropdown_item,
+                                R.layout.simple_spinner,
                                 spinnr!!
                             )
                             auto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -567,7 +571,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
                                     val auto: ArrayAdapter<*> = ArrayAdapter<Any?>(
                                         context!!,
-                                        android.R.layout.simple_spinner_dropdown_item,
+                                        R.layout.simple_spinner,
                                         spinnr!!
                                     )
                                     auto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -754,12 +758,12 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             tvNightCharges!!.text ="Additional charge of "+
                 getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                     position
-                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
+                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
 
             tvWaitingCharges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                     position
-                ).waitingCharges + " per minute "
+                ).waitingCharges + " per minute."
 
 
 
@@ -771,13 +775,13 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                     "0"
                 )
             ) {
-                tvSurCHarges!!.text = "Not Applicable"
+                tvSurCHarges!!.text = "Not Applicable."
 
             } else {
                 tvSurCHarges!!.text =
                     "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                         0
-                    ).surcharge + " per booking"
+                    ).surcharge + " per booking."
 
             }
 
@@ -819,26 +823,26 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             tvNightCharges!!.text ="Additional charge of "+
                 getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
+                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
 
             tvWaitingCharges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).waitingCharges + " per minute "
+                ).waitingCharges + " per minute."
 
 
             if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).surcharge).equals("0")
             ) {
-                tvSurCHarges!!.text = "Not Applicable"
+                tvSurCHarges!!.text = "Not Applicable."
 
             } else {
                 tvSurCHarges!!.text =
                     "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                         position
                     ).surcharge +
-                            " per booking"
+                            " per booking."
 
             }
 
@@ -851,15 +855,19 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
         } else {
 
-            rateCardIncentive?.visibility = View.VISIBLE
 
-            if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(position).rateCardType)!!.contains("DOMS"))
-            {
-               rateCardIncentive?.setBackgroundResource(R.drawable.rate_card_incentive)
-            }
-            else
-            {
-                rateCardIncentive?.setBackgroundResource(R.drawable.rate_card_incentive_international)
+
+            if (cityID1.equals("2707")) {
+                rateCardIncentive?.visibility = View.VISIBLE
+
+                if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                        position
+                    ).rateCardType)!!.contains("DOMS")
+                ) {
+                    rateCardIncentive?.setBackgroundResource(R.drawable.rate_card_incentive)
+                } else {
+                    rateCardIncentive?.setBackgroundResource(R.drawable.rate_card_incentive_international)
+                }
             }
 
 
@@ -888,23 +896,23 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             tvNightCharges!!.text ="Additional charge of "+
                 getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
+                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
 
-            tvWaitingCharges!!.text ="Not Applicable"
+            tvWaitingCharges!!.text ="Not Applicable."
 
 
             if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).surcharge).equals("0")
             ) {
-                tvSurCHarges!!.text = "Not Applicable"
+                tvSurCHarges!!.text = "Not Applicable."
 
             } else {
                 tvSurCHarges!!.text =
                     "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                         position
                     ).surcharge +
-                            " per booking"
+                            " per booking."
 
             }
 
@@ -1010,12 +1018,12 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
         tvNightCharges!!.text ="Additional charge of "+
             getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
-            ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM"
+            ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
 
         tvWaitingCharges!!.text =
             "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
-            ).waitingCharges + " per minute "
+            ).waitingCharges + " per minute."
 
 
 
@@ -1027,13 +1035,13 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 "0"
             )
         ) {
-            tvSurCHarges!!.text = "Not Applicable"
+            tvSurCHarges!!.text = "Not Applicable."
 
         } else {
             tvSurCHarges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                     0
-                ).surcharge + " per booking"
+                ).surcharge + " per booking."
 
         }
 
