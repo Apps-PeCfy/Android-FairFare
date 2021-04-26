@@ -21,12 +21,13 @@ class OtpPresenterImplmenter(var view: IOtpView) : IOtpPresenter {
         email: String?,
         gender: String?,
         otp: String?,
-        deviceId: String?
+        deviceId: String?,
+        device_token: String?
     ) {
         view.showWait()
         val call = client.verifyOtp(
             phoneNo, type, deviceType, loginType,
-            countryCode, name, email, gender, otp,deviceId)
+            countryCode, name, email, gender, otp,deviceId,device_token)
         call!!.enqueue(object : Callback<VerifyOTPResponsePojo?> {
             override fun onResponse(call: Call<VerifyOTPResponsePojo?>, response: Response<VerifyOTPResponsePojo?>) {
                 view.removeWait()

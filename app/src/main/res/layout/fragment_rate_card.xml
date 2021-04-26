@@ -18,7 +18,6 @@
 
 
     <LinearLayout
-
         android:id="@+id/llRateCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -145,7 +144,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:text="The fare charges mentioned are effective from 1 st March 2021"
+                android:text="The fare charges mentioned are effective from 1 st March 2021."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -194,12 +193,12 @@
 
 
             <ImageView
+
                 android:layout_marginTop="@dimen/_3sdp"
                 android:visibility="gone"
                 android:id="@+id/rateCardIncentive"
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="@dimen/_75sdp"
-                android:background="@drawable/rate_card_incentive"
                 />
 
 
@@ -354,7 +353,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:text="Toll will be chargeable at actual"
+                android:text="Toll will be chargeable at actual."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"

@@ -236,6 +236,10 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun initView() {
+        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
+        spinnerLang.visibility = View.GONE
+
+
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
         toolbar.title = "Settings"
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)

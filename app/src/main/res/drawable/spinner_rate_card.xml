@@ -10,11 +10,15 @@
                     android:shape="rectangle">
 
 
-                    <solid android:color="@color/White" />
+
+                    <stroke android:color="@color/contactUsGreyBorder"
+                        android:width="@dimen/_1sdp"/>
+
+
+                    <solid android:color="@color/colorBackground"/>
 
                     <corners android:radius="1dp"></corners>
-                    <stroke android:width="@dimen/_1sdp" />
-
+                  
 
                     <padding android:bottom="0dp" android:left="1dp" android:right="0dp" android:top="0dp"></padding>
 

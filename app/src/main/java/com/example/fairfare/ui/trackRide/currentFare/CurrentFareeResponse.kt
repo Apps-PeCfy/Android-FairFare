@@ -40,6 +40,9 @@ data class Rate(
 	@field:SerializedName("subTotal")
 	val subTotal: String? = null,
 
+	@field:SerializedName("waitingCharges")
+	val waitingCharges: String? = null,
+
 	@field:SerializedName("surCharge")
 	val surCharge: String? = null
 )

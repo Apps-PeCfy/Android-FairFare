@@ -52,9 +52,11 @@ class MyTripsAdapter(
         holder.btnStartRide!!.visibility = View.GONE
 
         if (MyRideList.get(position).status.equals("Completed")) {
+            holder.ivViewInfo!!.visibility = View.VISIBLE
             holder.tv_status!!.text = MyRideList.get(position).status
             holder.tv_status!!.setTextColor(Color.parseColor("#749E47"))
         } else {
+            holder.ivViewInfo!!.visibility = View.GONE
             holder.tv_status!!.text = MyRideList.get(position).status
             holder.tv_status!!.setTextColor(Color.parseColor("#F15E38"))
 

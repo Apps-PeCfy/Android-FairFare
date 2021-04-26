@@ -133,9 +133,9 @@
                         app:cardUseCompatPadding="true">
 
                         <RelativeLayout
-                            android:background="@drawable/rounded_corner_night_mode"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:background="@drawable/rounded_corner_night_mode"
                             android:gravity="center_vertical">
 
                             <TextView
@@ -259,20 +259,20 @@
 
                 <TextView
                     android:id="@+id/tv_refresh"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:layout_toStartOf="@+id/tv_close"
                     android:background="@drawable/refresh_black_small" />
 
                 <TextView
-
                     android:id="@+id/tv_close"
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@drawable/ic_track_board_close" />
 
@@ -336,6 +336,7 @@
                     android:layout_marginEnd="@dimen/_15sdp">
 
                     <TextView
+                        android:textColor="@color/colorGreyText"
                         android:id="@+id/tv_travelledDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -345,18 +346,18 @@
 
 
                     <TextView
-                        android:textColor="@color/colorGreyText"
                         android:id="@+id/tv_estimatedDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_8sdp"
                         android:visibility="gone" />
 
                     <TextView
-                        android:textColor="@color/colorGreyText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Actual distance/Remaining distance"
+                        android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
 
@@ -366,12 +367,14 @@
 
                 <ProgressBar
                     android:id="@+id/progressBarDistance"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    style="@style/progrssbarTheme"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlDistance"
                     android:layout_marginTop="@dimen/_3sdp"
-                    android:layout_marginEnd="@dimen/_15sdp" />
+                    android:layout_marginEnd="@dimen/_15sdp"
+
+                    />
 
 
                 <ProgressBar
@@ -397,23 +400,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-
+                        android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_8sdp" />
 
 
                     <TextView
-                        android:textColor="@color/colorGreyText"
                         android:id="@+id/tv_travelTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_8sdp"
                         android:visibility="gone" />
 
                     <TextView
-                        android:textColor="@color/colorGreyText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Actual time/ Remaining Time"
+                        android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
 
@@ -441,11 +444,11 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:textColor="@color/colorGreyText"
                         android:id="@+id/tv_currentwaitTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorGreyText" />
 
 
                 </RelativeLayout>
@@ -539,12 +542,12 @@
                             android:layout_height="@dimen/_15sdp" />
 
                         <TextView
-                            android:textColor="@color/colorGreyText"
                             android:id="@+id/tv_atm"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
-                            android:textAllCaps="false" />
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorGreyText" />
 
 
                     </LinearLayout>
@@ -563,13 +566,13 @@
                             android:layout_height="@dimen/_15sdp" />
 
                         <TextView
-                            android:textColor="@color/colorGreyText"
                             android:id="@+id/museum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
-                            android:textAllCaps="false" />
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorGreyText" />
 
                     </LinearLayout>
 
@@ -587,13 +590,13 @@
                             android:layout_height="@dimen/_15sdp" />
 
                         <TextView
-                            android:textColor="@color/colorGreyText"
                             android:id="@+id/tv_hotel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
-                            android:textAllCaps="false" />
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorGreyText" />
 
                     </LinearLayout>
 
@@ -612,13 +615,13 @@
                             android:layout_height="@dimen/_15sdp" />
 
                         <TextView
-                            android:textColor="@color/colorGreyText"
                             android:id="@+id/hospital"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
-                            android:textAllCaps="false" />
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorGreyText" />
 
                     </LinearLayout>
 

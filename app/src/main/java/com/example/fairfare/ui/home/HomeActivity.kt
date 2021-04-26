@@ -26,6 +26,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -64,6 +65,7 @@ import com.example.fairfare.ui.home.pojo.GetAllowCityResponse
 import com.example.fairfare.ui.home.pojo.PickUpLocationModel
 import com.example.fairfare.ui.placeDirection.DirectionsJSONParser
 import com.example.fairfare.utils.*
+import com.example.fairfare.utils.ProjectUtilities.activity
 import com.example.fairfare.utils.ProjectUtilities.showProgressDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -300,6 +302,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var strhr: String? = null
     var strMinute: String? = null
     var callOnLocation: String? = null
+    var actionNotify: String? = null
 
     var loc: Location? = null
 
@@ -368,6 +371,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             spnrtime = extras!!.getInt("spnTime")
             tvDateandTime = extras!!.getString("TvDateTime")
             formaredDateLater = extras!!.getString("formaredDateLater")
+            actionNotify = extras!!.getString("notifyAction")
+
         } else {
             spnrbag = 0
             spnrtime = 0
@@ -389,7 +394,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         mapFragment!!.getMapAsync(this)
 
         val NowLater: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, timeSpinner)
+            ArrayAdapter<Any?>(this, R.layout.simple_spinner, timeSpinner)
         NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_time!!.adapter = NowLater
         spinner_time!!.setSelection(spnrtime)
@@ -397,11 +402,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
         val spinnerLuggage: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, luggageSpinner)
+            ArrayAdapter<Any?>(this, R.layout.simple_spinner, luggageSpinner)
         spinnerLuggage.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_Luggage?.adapter = spinnerLuggage
         spinner_Luggage?.setSelection(spnrbag)
         spinner_Luggage!!.setOnItemSelectedListener(this)
+
 
 
         if (action == "schduleRideSuccess") {
@@ -413,11 +419,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         } else if (action == "filecomplaintSuccess") {
             spinnerLang!!.visibility = View.GONE
             setFragment(MyComplaints())
+        } else if (action == "MyRides") {
+            spinnerLang!!.visibility = View.GONE
+            setFragment(MyRides())
         }
 
 
 
-        SourceLat = sharedpreferences!!.getString("SourceLat", "")
+        SourceLat = sharedpreferences!!.getString(
+            "SourceLat", "" +
+                    ""
+        )
         SourceLong = sharedpreferences!!.getString("SourceLong", "")
         DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
         DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
@@ -473,14 +485,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                             mapAndLocationReady()
                             getCity()
-                         /*   cityPojoList = preferencesManager!!.getCityList()
-                            if (cityPojoList != null && cityPojoList.size > 0) {
-                                setCitySpinner()
+                            /*   cityPojoList = preferencesManager!!.getCityList()
+                               if (cityPojoList != null && cityPojoList.size > 0) {
+                                   setCitySpinner()
 
 
-                            } else {
-                                getCity()
-                            }*/
+                               } else {
+                                   getCity()
+                               }*/
 
                             progressDialogstart!!.dismiss()
                             mainRelativeLayout!!.visibility = View.VISIBLE
@@ -817,7 +829,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             DrawerPojo(
                 6,
                 getString(R.string.drawer_faq),
-                R.drawable.ic_nav_helpandsupport
+                R.drawable.ic_nav_faqs
             )
         )
 
@@ -826,7 +838,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             DrawerPojo(
                 7,
                 getString(R.string.drawer_contactus),
-                R.drawable.ic_nav_helpandsupport
+                R.drawable.ic_nav_contactus
             )
         )
 
@@ -928,12 +940,42 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
             6 -> {
-                spinnerLang!!.visibility = View.GONE
-                homeMain!!.visibility = View.GONE
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                mDrawerLayout!!.closeDrawer(Gravity.START)
 
-                replaceFragment(ContactUs())
+
+                if (preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL)!!
+                        .isNotEmpty()
+                ) {
+                    spinnerLang!!.visibility = View.GONE
+                    homeMain!!.visibility = View.GONE
+                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+                    mDrawerLayout!!.closeDrawer(Gravity.START)
+
+                    replaceFragment(ContactUs())
+
+                } else {
+
+                    val alertDialog = AlertDialog.Builder(this@HomeActivity, R.style.alertDialog)
+                    alertDialog.setTitle("FairFare")
+                    alertDialog.setMessage("Email id is required. Please edit it in My Accounts.")
+                    alertDialog.setCancelable(false)
+                    alertDialog.setPositiveButton("NO") { dialog, which ->
+                        dialog.cancel()
+                    }
+                    alertDialog.setNegativeButton("YES") { dialog, which ->
+                        spinnerLang!!.visibility = View.GONE
+                        homeMain!!.visibility = View.GONE
+                        mDrawerLayout!!.closeDrawer(Gravity.LEFT)
+                        mDrawerLayout!!.closeDrawer(Gravity.START)
+
+                        replaceFragment(MyAccountFragment())
+
+
+                    }
+                    alertDialog.show()
+
+
+                }
+
             }
 
 
@@ -1355,9 +1397,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             intent.putExtra("currentUserAddress", streetAddress)
 
 
-
-
-
         } else {
             intent.putExtra("Toolbar_Title", "Pick-Up")
             intent.putExtra("currentLatitude", SourceLat!!.toDouble())
@@ -1372,7 +1411,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             intent.putExtra("currentUserLatitude", currentUserLatitude)
             intent.putExtra("currentUserLongitude", currentUserLongitude)
             intent.putExtra("currentUserAddress", streetAddress)
-
 
 
         }
@@ -1411,7 +1449,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             intent.putExtra("currentUserAddress", streetAddress)
 
 
-
         } else {
             intent.putExtra("Toolbar_Title", "Drop-off")
             intent.putExtra("currentLatitude", DestinationLat!!.toDouble())
@@ -1426,7 +1463,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             intent.putExtra("currentUserLatitude", currentUserLatitude)
             intent.putExtra("currentUserLongitude", currentUserLongitude)
             intent.putExtra("currentUserAddress", streetAddress)
-
 
 
         }
@@ -2181,8 +2217,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         if (currentLatitude == 0.0) {
             Toast.makeText(this, "Unable to find CURRENT LOCATION", Toast.LENGTH_LONG).show()
-        } else
-        {
+        } else {
 //            Toast.makeText(this, "On Start Location Ready", Toast.LENGTH_LONG).show()
 
 
@@ -2274,7 +2309,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     address = address.replace(" " + obj.postalCode, "")
                 }
 
-               //   city = obj.subAdminArea
+                //   city = obj.subAdminArea
             } else {
                 address = ""
             }

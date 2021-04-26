@@ -1,35 +1,50 @@
 {
   "project_info": {
-    "project_number": "936977611572",
-    "firebase_url": "https://fairfaretest.firebaseio.com",
-    "project_id": "fairfaretest",
-    "storage_bucket": "fairfaretest.appspot.com"
+    "project_number": "637140199197",
+    "firebase_url": "https://fairfares-a474a.firebaseio.com",
+    "project_id": "fairfares-a474a",
+    "storage_bucket": "fairfares-a474a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:936977611572:android:8be49e811e44a0b2530361",
+        "mobilesdk_app_id": "1:637140199197:android:e1b907db5e2fac403ca3f4",
         "android_client_info": {
           "package_name": "com.example.fairfare"
         }
       },
       "oauth_client": [
         {
-          "client_id": "936977611572-5nlr8n96eqig9rnppolb4nbq51hr2q6e.apps.googleusercontent.com",
+          "client_id": "637140199197-4mogaoad7mrvhrbn3gst1q19ra2detuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fairfare",
+            "certificate_hash": "fe38236024417c8f6323a684362f02690eabf8af"
+          }
+        },
+        {
+          "client_id": "637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAZzxGPyZB0FA-FQ48j27PB356EClG2a9U"
+          "current_key": "AIzaSyBLp331jDPN8s3tyfV0Hg6-5aKrmmtJNi8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "936977611572-5nlr8n96eqig9rnppolb4nbq51hr2q6e.apps.googleusercontent.com",
+              "client_id": "637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "637140199197-j1rllph9bt22840900tkqf44t7094a6c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.FairFare"
+              }
             }
           ]
         }

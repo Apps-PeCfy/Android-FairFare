@@ -24,7 +24,6 @@ import com.example.fairfare.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.example.fairfare.ui.home.pojo.SaveLocationResponsePojo
 import com.example.fairfare.ui.otp.pojo.VerifyOTPResponsePojo
 import com.example.fairfare.ui.trackRide.NearByPlacesPOJO.NearByResponse
-import com.example.fairfare.ui.trackRide.TollGuruPOJO.TollGuruResponse
 import com.example.fairfare.ui.trackRide.currentFare.CurrentFareeResponse
 import com.example.fairfare.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
 import com.example.fairfare.ui.trackRide.snaptoRoad.SnapTORoadResponse
@@ -64,7 +63,8 @@ interface NetworkService {
         @Field("provider_id") provider_id: String?,
         @Field("token") token: String?,
         @Field("email") email: String?,
-        @Field("device_id") deviceId: String?
+        @Field("device_id") deviceId: String?,
+        @Field("device_token") device_token: String?
     ): Call<LoginResponsepojo?>?
 
     @FormUrlEncoded
@@ -79,7 +79,8 @@ interface NetworkService {
         @Field("email") email: String?,
         @Field("gender") gender: String?,
         @Field("otp") otp: String?,
-        @Field("device_id") deviceId: String?
+        @Field("device_id") deviceId: String?,
+        @Field("device_token") device_token: String?
     ): Call<VerifyOTPResponsePojo?>?
 
     @FormUrlEncoded
@@ -225,7 +226,7 @@ interface NetworkService {
         @Header("Authorization") header: String?,
         @Query("ride_id") ride_id: Int,
         @Query("distance") distance: String?,
-        @Query("wating_time") wating_time: String?
+        @Query("waiting_time") wating_time: String?
     ): Call<CurrentFareeResponse?>?
 
     @POST("currentFare")
@@ -467,6 +468,7 @@ interface NetworkService {
         @Query("latitude") latitude: String?,
         @Query("longitude") longitude: String?
     ): Call<GetAllowCityResponse?>?
+
 
     @Headers("Content-Type: application/json")
     @POST("route/upload")

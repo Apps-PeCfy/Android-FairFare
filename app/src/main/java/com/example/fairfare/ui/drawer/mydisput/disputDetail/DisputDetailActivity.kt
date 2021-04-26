@@ -598,8 +598,13 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                     if ((response!!.body()!!.dispute!!.ride!!.actualTrackRide) != null) {
                         tv_actualDistance!!.text =
                             response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.distance + " KM"
-                        tv_actualTime!!.text =
-                            response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.duration + " mins"
+                        if(response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.duration.equals("1")){
+                            tv_actualTime!!.text = response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.duration + " min"
+
+                        }else{
+                            tv_actualTime!!.text = response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.duration + " mins"
+
+                        }
                         tv_actualFare!!.text =
                             "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.subTotalCharges
                         tv_actualLuggage!!.text =

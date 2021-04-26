@@ -5,11 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.os.Handler
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +43,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.GsonBuilder
 import com.rilixtech.widget.countrycodepicker.Country
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker
@@ -81,6 +82,7 @@ class LoginActivity : AppCompatActivity(),
     var countryCodeISO = "IN"
     var countryCode = "91"
     var deviceID: String? = null
+    var device_token: String? = null
 
     private var callbackManager: CallbackManager? = null
 
@@ -139,6 +141,27 @@ class LoginActivity : AppCompatActivity(),
 
         // FacebookSdk.sdkInitialize(getApplicationContext());
         // hashkey();
+
+
+        device_token = FirebaseInstanceId.getInstance().token
+
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
+            device_token = instanceIdResult.token
+                Log.d("sdsdsdsdsdwdwdw1", device_token!!)
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
         iLoginPresenter = LoginPresenterImplementer(this)
         PreferencesManager.initializeInstance(this@LoginActivity)
         mPreferencesManager = PreferencesManager.instance
@@ -150,8 +173,10 @@ class LoginActivity : AppCompatActivity(),
         ccp!!.setOnCountryChangeListener(this)
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
-                .requestServerAuthCode("254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
+               // .requestIdToken("254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
+                .requestIdToken("637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com")
+                .requestServerAuthCode("637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com")
+             //   .requestServerAuthCode("254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
                 .requestId()
                 .requestEmail()
                 .build()
@@ -376,7 +401,8 @@ class LoginActivity : AppCompatActivity(),
                             facebook_uid,
                             token,
                             fbEmail,
-                            deviceID
+                            deviceID,
+                            device_token
                         )
                     }
                 val parameters = Bundle()
@@ -482,11 +508,9 @@ class LoginActivity : AppCompatActivity(),
             val client = OkHttpClient()
             val requestBody = FormEncodingBuilder()
                 .add("grant_type", "authorization_code")
-                .add(
-                    "client_id",
-                    "254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com"
-                )
-                .add("client_secret", "-ZAJiv8WoSGTb5pHPl_kdtSA")
+                .add("client_id", "637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com")
+              //  .add("client_id", "254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
+                .add("client_secret", "2jw6dz4Fmqf6ce7uvFjFrp55")
                 .add("redirect_uri", "")
                 .add("code", acct.serverAuthCode)
                 .build()
@@ -518,9 +542,7 @@ class LoginActivity : AppCompatActivity(),
             gmailPersonEmail = acct.email
             gToken = acct.idToken //Token
             providerid = acct.id //proderid
-            mGoogleSignInClient!!.signOut().addOnCompleteListener(
-                this
-            ) { }
+            mGoogleSignInClient!!.signOut().addOnCompleteListener(this) { }
         }
         if (!TextUtils.isEmpty(gToken)) {
             CallAPI()
@@ -534,7 +556,7 @@ class LoginActivity : AppCompatActivity(),
         progressDialoggmail.show() // show progress dialog
         client.sociallogin(
             "Android", "GGL", gmailPersonName,
-            providerid, gToken, gmailPersonEmail, deviceID
+            providerid, gToken, gmailPersonEmail, deviceID,device_token
         )!!.enqueue(object : Callback<LoginResponsepojo?> {
             override fun onResponse(
                 call: Call<LoginResponsepojo?>,
@@ -663,7 +685,7 @@ class LoginActivity : AppCompatActivity(),
     private fun CallAPIRepeate() {
         client.sociallogin(
             "Android", "GGL", gmailPersonName,
-            providerid, gToken, gmailPersonEmail, deviceID
+            providerid, gToken, gmailPersonEmail, deviceID,device_token
         )!!.enqueue(object : Callback<LoginResponsepojo?> {
             override fun onResponse(
                 call: Call<LoginResponsepojo?>,

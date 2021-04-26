@@ -287,12 +287,6 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
         tollsJSONArrayFromTollGuru =  JSONArray(intent.getStringExtra("tollGuruJsonArray"))
 
-        Toast.makeText(
-            this,
-            tollsJSONArrayFromTollGuru.toString(),
-            Toast.LENGTH_LONG
-        )
-            .show()
 
         actualDistanceTravelled =
             DecimalFormat("####.#").format((actualDistanceTravelled!!.toDouble()))
@@ -552,7 +546,15 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
 
         tv_estTime!!.text = endRideResponsePOJO!!.ride?.estimatedTrackRide?.duration
-        tv_actualTime!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.duration + " mins"
+
+        if(endRideResponsePOJO!!.ride?.actualTrackRide?.duration.equals("1")){
+            tv_actualTime!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.duration + " min"
+
+        }else{
+            tv_actualTime!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.duration + " mins"
+
+        }
+
 
 
         tv_estFare!!.text = "₹ " + endRideResponsePOJO!!.ride?.estimatedTrackRide?.subTotalCharges

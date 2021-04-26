@@ -19,6 +19,7 @@ interface ILoginPresenter {
         providerId: String?,
         token: String?,
         email: String?,
-        deviceID: String?
+        deviceID: String?,
+        device_token: String?
     )
 }

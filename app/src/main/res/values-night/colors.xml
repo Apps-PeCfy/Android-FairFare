@@ -8,6 +8,8 @@
     <color name="colorText">#FFFFFF</color>
     <color name="colorGreyText">#FFFFFF</color>
 
+    <color name="progressbar">#FFFFFF</color>
+
 
     <color name="contactUsGrey">#000000</color>
     <color name="contactUsGreyBorder">#E0E0E0</color>

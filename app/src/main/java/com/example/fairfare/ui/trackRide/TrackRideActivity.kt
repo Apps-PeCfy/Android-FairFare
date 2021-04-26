@@ -946,6 +946,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
         var totalActualDistance = 0.0
 
+        progressBarDistance!!.getProgressDrawable().setColorFilter(
+            Color.RED, android.graphics.PorterDuff.Mode.SRC_IN)
 
         // actualTravelDistance add value when draw new route
 
@@ -1455,8 +1457,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
                 if (response.code() == 200) {
 
 
-                    tv_currentFare!!.text = response.body()!!.rate!!.subTotal
-
+                    var sTotal = response.body()!!.rate!!.subTotal!!.toFloat() + response.body()!!.rate!!.waitingCharges!!.toFloat()
+                    tv_currentFare!!.text = sTotal.toString()+"0"
 
                 }
             }
@@ -1469,7 +1471,6 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         })
 
     }
-
 
     @OnClick(R.id.tv_close)
     fun closeCoard() {
@@ -1516,6 +1517,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         )
 
       //  updateCamera(getCompassBearing(startLocation, destLocation))
+
 
 
 
@@ -1572,7 +1574,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         val key = "key=" + getString(R.string.google_maps_key)
 
         // Building the parameters to the web service
-       // val parameters = "$str_origin&$str_dest&$key"
+        // val parameters = "$str_origin&$str_dest&$key"
         val parameters = "$str_origin&$str_dest&alternatives=false&$key"
         // Output format
         val output = "json"
