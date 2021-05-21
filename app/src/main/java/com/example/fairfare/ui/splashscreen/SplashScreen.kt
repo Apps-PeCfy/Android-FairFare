@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import com.example.fairfare.R
 import com.example.fairfare.ui.Login.LoginActivity
 import com.example.fairfare.ui.home.HomeActivity
+import com.example.fairfare.utils.CommonAppPermission
 import com.example.fairfare.utils.Constants
 import com.example.fairfare.utils.PreferencesManager
 import com.example.fairfare.utils.ProjectUtilities
@@ -35,6 +36,8 @@ class SplashScreen : AppCompatActivity() {
     var locationManager: LocationManager? = null
     var isGPSEnabled = false
     var isNetworkEnabled = false
+    var isAlertWithPermissionInstructionVisible = false
+    var totalPermissionAskedCounter = 0
 
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -49,6 +52,7 @@ class SplashScreen : AppCompatActivity() {
     var requestCodeq: Int? = 0
 
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,17 +70,23 @@ class SplashScreen : AppCompatActivity() {
 
         isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
         isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        isAccepted = ProjectUtilities.checkPermission(applicationContext)
+//        isAccepted = ProjectUtilities.checkPermission(applicationContext)
 
 
-        if (isAccepted) {
-            checkUpdate()
+//        isAccepted = CommonAppPermission.requestPermissionGranted(this@SplashScreen)
+//
+//
+//
+//        if (isAccepted) {
+//            checkUpdate()
+//
+//
+//        } else {
+//            //reuestPermissions()
+//            CommonAppPermission.requestPermissionGranted(this@SplashScreen)
+//        }
 
-
-        } else {
-            reuestPermissions()
-        }
-
+       // displayNeverAskAgainDialog()
         requestBatteryOptimisationDisabled()
 
     }
@@ -108,18 +118,22 @@ class SplashScreen : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onResume() {
-        isAccepted = ProjectUtilities.checkPermission(applicationContext)
+     //   isAccepted = ProjectUtilities.checkPermission(applicationContext)
+
+       // isAccepted =   CommonAppPermission.requestPermissionGranted(this@SplashScreen)
+
         isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
         isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        if (isAccepted || isGPSEnabled || isNetworkEnabled) {
+       // if (isAccepted || isGPSEnabled || isNetworkEnabled) {
             if (callOnResune.equals("first")) {
                 checkUpdate()
             }
 
-        } else {
-
-        }
+//        } else {
+//
+//        }
 
         super.onResume()
     }
@@ -129,6 +143,9 @@ class SplashScreen : AppCompatActivity() {
         h.postDelayed({
 
             try {
+
+
+
                 if (!isGPSEnabled && !isNetworkEnabled) {
                     val alertDialog =
                         AlertDialog.Builder(this)
@@ -146,25 +163,87 @@ class SplashScreen : AppCompatActivity() {
                     alertDialog.show()
 
                 } else {
-                    if (isLogin == "true" && requestCodeq == REQUEST_PERMISSION && isAccepted) {
-                        callOnResune = "second"
-                        val intent = Intent(applicationContext, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
 
-                    } else if (requestCodeq == REQUEST_PERMISSION && isAccepted) {
+                    if(CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)){
+                   // if (CommonAppPermission.requestPermissionGranted(this@SplashScreen)) {
+                        isAccepted = true
+//                        if (isLogin == "true" && requestCodeq == REQUEST_PERMISSION && isAccepted) {
+                        if (isLogin == "true"  && isAccepted) {
+
+                            callOnResune = "second"
+                            val intent = Intent(applicationContext, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+
+                        } else if (isAccepted) {
 
 
-                        callOnResune = "second"
+                            callOnResune = "second"
 
-                        Log.d("onRequestPermissi", "2")
+                            Log.d("onRequestPermissi", "2")
 
-                        val intent = Intent(applicationContext, LoginActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                            val intent = Intent(applicationContext, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
 
-                    } else {
-                        reuestPermissions()
+                        } else {
+                            //reuestPermissions()
+
+                        }
+                    }
+                    else{
+
+                        if (!isAlertWithPermissionInstructionVisible) {
+
+                            var alertMessage =
+                                "Please provide following permissions to smooth working of the application"
+
+                            if (!CommonAppPermission.hasCameraPermission(this)) {
+                                alertMessage += "\n\nCamera: Please provide camera permission"
+                            }
+                            if (!CommonAppPermission.hasExternalStoragePermission(this)) {
+                                alertMessage += "\n\nMedia: Please provide Media permission"
+                            }
+                            if (!CommonAppPermission.hasLocationPermission(this)) {
+                                //make the message as per android 10 and above and below
+
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ){
+                                    alertMessage += "\n\nLocation: Please provide \"Allow all the time\" location permission for accurate pick-up and drop-off locations, availability of autos/taxis in the area and tracking the ride until trip ends."
+                                }
+                                else{
+                                    alertMessage += "\n\nLocation: Please provide location permission"
+                                }
+                            }
+
+                            val alertDialog =
+                                AlertDialog.Builder(this)
+                            alertDialog.setTitle("Permissions")
+                            alertDialog.setCancelable(false)
+                            alertDialog.setMessage(alertMessage)
+                            alertDialog.setPositiveButton("Okay") { dialog, which ->
+
+                                dialog.dismiss()
+
+                                if (totalPermissionAskedCounter < 2){
+                                    CommonAppPermission.requestPermissionGranted(this@SplashScreen)
+                                    totalPermissionAskedCounter ++;
+                                }
+                                else {
+                                    val intent = Intent()
+                                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                    val uri = Uri.fromParts("package", packageName, null)
+                                    intent.data = uri
+                                    startActivity(intent)
+                                }
+                                isAlertWithPermissionInstructionVisible = false
+                            }
+
+                            alertDialog.show()
+
+                            isAlertWithPermissionInstructionVisible = true
+                        }
+
                     }
                 }
             } catch (e: Exception) {
@@ -211,29 +290,31 @@ class SplashScreen : AppCompatActivity() {
     ) {
 
         if (!isAccepted && isGPSEnabled && isNetworkEnabled) {
-            for (i in permissions.indices) {
-                val permission = permissions[i]
-                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && "android.permission.ACCESS_BACKGROUND_LOCATION".equals(permission, ignoreCase = true)) {
-                        continue
-                    }
-                    val showRationale = shouldShowRequestPermissionRationale(permission)
-                    if (!showRationale) {
+            //displayNeverAskAgainDialog()
 
-                        if (checkPopup.equals("first")) {
-                            checkPopup = "second"
-                            displayNeverAskAgainDialog()
-
-
-                        }
-
-                    }
-                }
-
-            }
-            afterAllowedPermissionFunctionality(requestCode)
+//            for (i in permissions.indices) {
+//                val permission = permissions[i]
+//                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+//                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && "android.permission.ACCESS_BACKGROUND_LOCATION".equals(permission, ignoreCase = true)) {
+//                        continue
+//                    }
+//                    val showRationale = shouldShowRequestPermissionRationale(permission)
+//                    if (!showRationale) {
+//
+//                        if (checkPopup.equals("first")) {
+//                            checkPopup = "second"
+//                            displayNeverAskAgainDialog()
+//
+//
+//                        }
+//
+//                    }
+//                }
+//
+//            }
+           // afterAllowedPermissionFunctionality(requestCode)
         } else {
-            afterAllowedPermissionFunctionality(requestCode)
+           // afterAllowedPermissionFunctionality(requestCode)
         }
     }
 
@@ -264,14 +345,13 @@ class SplashScreen : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun displayNeverAskAgainDialog() {
 
         val builder =
             AlertDialog.Builder(this)
         builder.setMessage(
-            """Please permit the permission through Settings screen.
-Select Permissions -> Enable permission
-                """.trimIndent()
+            "Please provide location always allow permission to proceed".trimIndent()
         )
         builder.setCancelable(false)
         builder.setPositiveButton(
@@ -283,6 +363,8 @@ Select Permissions -> Enable permission
             val uri = Uri.fromParts("package", packageName, null)
             intent.data = uri
             startActivity(intent)
+
+           // CommonAppPermission.requestPermissionGranted(this@SplashScreen)
         }
         builder.setNegativeButton("Cancel", null)
         builder.show()
