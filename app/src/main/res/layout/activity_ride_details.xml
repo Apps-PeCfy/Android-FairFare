@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_10sdp"
         android:layout_above="@+id/llshowData"
-        tools:context=".ui.location.MyLocationActivity" />
+        tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
 
 
 

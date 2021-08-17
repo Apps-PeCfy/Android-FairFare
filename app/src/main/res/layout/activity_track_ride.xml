@@ -41,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/llshowData"
                 android:layout_marginBottom="-20dp"
-                tools:context=".ui.location.MyLocationActivity" />
+                tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
 
 
             <TextView
@@ -639,9 +639,9 @@
     <Button
         android:id="@+id/add"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_1sdp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/ic_add"
+        android:background="@color/White"
         android:gravity="center"
         android:textAllCaps="false"
         android:textColor="@android:color/white"

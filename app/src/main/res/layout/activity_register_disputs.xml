@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/rounded_corner_night_mode"
+                android:background="@drawable/rounded_corner_grey_border"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:visibility="visible">
@@ -208,7 +208,7 @@
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="bold" />
 
-            <com.example.fairfare.ui.disputs.MultipleSelectionSpinner
+            <com.fairfareindia.ui.disputs.MultipleSelectionSpinner
                 android:background="@drawable/tap_to_select"
 
                 android:id="@+id/spinnerReason"

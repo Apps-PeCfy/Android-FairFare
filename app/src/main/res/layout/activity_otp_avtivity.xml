@@ -11,7 +11,8 @@
         android:includeFontPadding="false"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="@dimen/_60sdp"
+        >
 
 
         <TextView
@@ -123,7 +124,6 @@
         android:id="@+id/btnFinish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_privacy"
         android:layout_marginStart="@dimen/_18sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_18sdp"

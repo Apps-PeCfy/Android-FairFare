@@ -60,7 +60,7 @@
                     android:layout_height="match_parent"
                     android:layout_above="@+id/homeView"
                     android:layout_centerInParent="true"
-                    tools:context=".ui.location.MyLocationActivity" />
+                    tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
 
 
                 <LinearLayout
@@ -259,19 +259,19 @@
                             android:visibility="gone">
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
                                 android:id="@+id/tvEstDistance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Est.Distance" />
+                                android:text="Est.Distance"
+                                android:textColor="@color/colorGreyText" />
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
                                 android:id="@+id/tvEstTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:text="Est.Time" />
+                                android:text="Est.Time"
+                                android:textColor="@color/colorGreyText" />
 
                         </RelativeLayout>
 
@@ -301,11 +301,13 @@
 
 
             <Button
+
                 android:id="@+id/add"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="@dimen/_1sdp"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/ic_add"
+                android:background="@color/White"
+
                 android:gravity="center"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
@@ -351,7 +353,7 @@
             android:paddingStart="@dimen/_30sdp">
 
 
-            <com.example.fairfare.utils.RoundedImageView
+            <com.fairfareindia.utils.RoundedImageView
                 android:id="@+id/logoLayout"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"

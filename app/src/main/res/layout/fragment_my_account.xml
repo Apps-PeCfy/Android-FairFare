@@ -298,7 +298,7 @@
     </RelativeLayout>
 
 
-    <com.example.fairfare.utils.RoundedImageView
+    <com.fairfareindia.utils.RoundedImageView
         android:id="@+id/iv_user"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_70sdp"

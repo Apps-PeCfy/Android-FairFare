@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/llshowData"
                 android:layout_marginBottom="-30dp"
-                tools:context=".ui.location.MyLocationActivity" />
+                tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
 
 
             <LinearLayout
@@ -82,7 +82,7 @@
                         android:orientation="vertical">
 
 
-                        <com.example.fairfare.utils.RoundedImageView
+                        <com.fairfareindia.utils.RoundedImageView
                             android:id="@+id/iv_user"
                             android:layout_width="@dimen/_50sdp"
                             android:layout_height="@dimen/_50sdp"
@@ -118,6 +118,7 @@
                             android:textStyle="bold" />
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/locationCardView"
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

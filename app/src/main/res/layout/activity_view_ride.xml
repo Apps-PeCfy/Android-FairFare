@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="-30dp"
-                tools:context=".ui.location.MyLocationActivity" />
+                tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
 
 
             <androidx.cardview.widget.CardView
@@ -303,8 +303,8 @@
                             android:visibility="visible">
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
-
+                                android:textColor="@color/colorText"
+                                android:textStyle="bold"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Estimated Fare" />
@@ -343,8 +343,8 @@
 
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
-
+                                    android:textColor="@color/colorText"
+                                    android:textStyle="bold"
                                     android:id="@+id/tv_additionalCharges"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -783,9 +783,9 @@
             <Button
                 android:id="@+id/addvertise"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="@dimen/_1sdp"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/ic_add"
+                android:background="@color/White"
                 android:gravity="center"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"

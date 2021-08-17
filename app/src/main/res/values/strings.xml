@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FairFare</string>
+    <string name="app_name">FairFareIndia</string>
     <string name="logIn">Sign In</string>
     <string name="continuetxt">By continuing, you agree to Fair Fare</string>
     <string name="privacypolicy">Privacy Policy</string>
@@ -8,7 +8,7 @@
 
     <string name="str_alert_exit_app">Press once again to exit</string>
     <string name="register">Accept &amp; Continue</string>
-    <string name="internet_error">No internet connection found.</string>
+    <string name="internet_error">No internet connection</string>
     <string name="btn_ok">OK</string>
     <string name="warning">Warning</string>
     <string name="enter_otp">Enter OTP</string>
