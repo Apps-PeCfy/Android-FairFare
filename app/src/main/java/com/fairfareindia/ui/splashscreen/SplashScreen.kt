@@ -158,6 +158,7 @@ class SplashScreen : AppCompatActivity() {
         if (requestCode == MY_REQUEST_CODE) {
             if (resultCode != Activity.RESULT_OK) {
                 checkUpdate()
+
             }
         }
     }
