@@ -8,13 +8,14 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
 
 android {
+
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.fairfareindia"
         minSdkVersion 19
         targetSdkVersion 30
         multiDexEnabled true
-        versionCode 4
+        versionCode 5
         versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -25,6 +26,7 @@ android {
     }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
@@ -112,5 +114,7 @@ dependencies {
     implementation 'commons-validator:commons-validator:1.5.0'
 
     implementation group: 'com.github.seratch', name: 'java-time-backport', version: '1.0.0'
+
+    implementation 'com.google.android.play:core:1.10.0'
 
 }
