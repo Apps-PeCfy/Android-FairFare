@@ -2,8 +2,10 @@ package com.fairfareindia.ui.splashscreen
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.SharedPreferences
 import android.location.LocationManager
 import android.net.Uri
@@ -14,10 +16,12 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.fairfareindia.BuildConfig
 import com.fairfareindia.R
 import com.fairfareindia.ui.Login.LoginActivity
 import com.fairfareindia.ui.home.HomeActivity
@@ -26,6 +30,10 @@ import com.fairfareindia.utils.CommonAppPermission
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PreferencesManager
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 
 
 class SplashScreen : AppCompatActivity() {
@@ -38,6 +46,7 @@ class SplashScreen : AppCompatActivity() {
     var isNetworkEnabled = false
     var isAlertWithPermissionInstructionVisible = false
     var totalPermissionAskedCounter = 0
+    private val MY_REQUEST_CODE = 201
 
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -128,12 +137,13 @@ class SplashScreen : AppCompatActivity() {
         //   isAccepted = ProjectUtilities.checkPermission(applicationContext)
 
         // isAccepted =   CommonAppPermission.requestPermissionGranted(this@SplashScreen)
-
+        val versionCode: Int = BuildConfig.VERSION_CODE
         isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
         isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         // if (isAccepted || isGPSEnabled || isNetworkEnabled) {
         if (callOnResune.equals("first")) {
-            checkUpdate()
+           // checkUpdate()
+            checkAppUpdate()
         }
 
 //        } else {
@@ -143,6 +153,16 @@ class SplashScreen : AppCompatActivity() {
         super.onResume()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == MY_REQUEST_CODE) {
+            if (resultCode != Activity.RESULT_OK) {
+                checkUpdate()
+            }
+        }
+    }
+
+    @SuppressLint("NewApi")
     private fun checkUpdate() {
         val h = Handler()
         h.postDelayed({
@@ -312,7 +332,8 @@ class SplashScreen : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("MissingSuperCall")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>,
         grantResults: IntArray
@@ -368,7 +389,8 @@ class SplashScreen : AppCompatActivity() {
 
             } else {
                 if (callOnResune.equals("first")) {
-                    checkUpdate()
+                    //checkUpdate()
+                    checkAppUpdate()
                 }
             }
         }
@@ -403,5 +425,27 @@ class SplashScreen : AppCompatActivity() {
         private const val REQUEST_PERMISSION = 100
     }
 
-
+fun checkAppUpdate(){
+// Creates instance of the manager.
+    val appUpdateManager = AppUpdateManagerFactory.create(this@SplashScreen)
+    //    gotoScreen();
+// Returns an intent object that you use to check for an update.
+    val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+    // Checks that the platform will allow the specified type of update.
+    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo: AppUpdateInfo ->
+        if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE // For a flexible update, use AppUpdateType.FLEXIBLE
+            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+            try {
+                appUpdateManager.startUpdateFlowForResult( // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                    appUpdateInfo,  // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                    AppUpdateType.IMMEDIATE,  // The current activity making the update request.
+                    this@SplashScreen,  // Include a request code to later monitor this update request.
+                    MY_REQUEST_CODE)
+            } catch (e: IntentSender.SendIntentException) {
+            }
+        } else {
+            checkUpdate()
+        }
+    }
+}
 }
