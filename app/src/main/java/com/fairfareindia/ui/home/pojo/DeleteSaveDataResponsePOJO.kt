@@ -3,6 +3,7 @@ package com.fairfareindia.ui.home.pojo
 import com.google.gson.annotations.SerializedName
 
 class DeleteSaveDataResponsePOJO {
+
     @SerializedName("data")
     var data: List<Any>? = null
 
