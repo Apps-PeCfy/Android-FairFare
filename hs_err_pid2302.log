@@ -1,0 +1,1563 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 164626432 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2753), pid=2302, tid=0x00007f4ac59f9700
+#
+# JRE version: OpenJDK Runtime Environment (8.0_202) (build 1.8.0_202-release-1483-b49-5587405)
+# Java VM: OpenJDK 64-Bit Server VM (25.202-b49-5587405 mixed mode linux-amd64 compressed oops)
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f4ad8079800):  VMThread [stack: 0x00007f4ac58fa000,0x00007f4ac59fa000] [id=2310]
+
+Stack: [0x00007f4ac58fa000,0x00007f4ac59fa000],  sp=0x00007f4ac59f8530,  free space=1017k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0xa08b78]  VMError::report_and_die()+0x148
+V  [libjvm.so+0x4d412a]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*)+0x8a
+V  [libjvm.so+0x870478]  os::pd_commit_memory(char*, unsigned long, unsigned long, bool)+0xd8
+V  [libjvm.so+0x867f9f]  os::commit_memory(char*, unsigned long, unsigned long, bool)+0x1f
+V  [libjvm.so+0x8e14eb]  PSVirtualSpace::expand_by(unsigned long)+0x5b
+V  [libjvm.so+0x8d234b]  PSOldGen::expand_by(unsigned long) [clone .part.109]+0x1b
+V  [libjvm.so+0x8d250b]  PSOldGen::expand(unsigned long) [clone .part.111]+0xdb
+V  [libjvm.so+0x8d2de8]  PSOldGen::resize(unsigned long)+0x188
+V  [libjvm.so+0x8d83cc]  PSParallelCompact::invoke_no_policy(bool)+0x94c
+V  [libjvm.so+0x8df48d]  PSScavenge::invoke()+0x17d
+V  [libjvm.so+0x893763]  ParallelScavengeHeap::failed_mem_allocate(unsigned long)+0x63
+V  [libjvm.so+0xa0a644]  VM_ParallelGCFailedAllocation::doit()+0x84
+V  [libjvm.so+0xa0ea17]  VM_Operation::evaluate()+0x47
+V  [libjvm.so+0xa0d498]  VMThread::evaluate_operation(VM_Operation*)+0x218
+V  [libjvm.so+0xa0d8d1]  VMThread::loop()+0x1f1
+V  [libjvm.so+0xa0dd02]  VMThread::run()+0x72
+V  [libjvm.so+0x86d652]  java_start(Thread*)+0xf2
+
+VM_Operation (0x00007f4a40f1a450): ParallelGCFailedAllocation, mode: safepoint, requested by thread 0x00007f4ac016a800
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007f4abc0a7800 JavaThread "ForkJoinPool.commonPool-worker-3" daemon [_thread_blocked, id=8381, stack(0x00007f4a40018000,0x00007f4a40119000)]
+  0x00007f4a98fb0800 JavaThread "ForkJoinPool.commonPool-worker-2" daemon [_thread_blocked, id=8380, stack(0x00007f4a25dfe000,0x00007f4a25eff000)]
+  0x00007f4a98faf800 JavaThread "ForkJoinPool.commonPool-worker-1" daemon [_thread_blocked, id=8379, stack(0x00007f4a25cfd000,0x00007f4a25dfe000)]
+  0x00007f4a701be000 JavaThread "WorkerExecutor Queue Thread 7" [_thread_blocked, id=8378, stack(0x00007f4a3c082000,0x00007f4a3c183000)]
+  0x00007f4ab811a000 JavaThread "Cache worker for Java compile cache (/home/dell/Kiran/WorkSpace/FairFareKotlin/.gradle/5.4.1/javaCompile)" [_thread_blocked, id=8377, stack(0x00007f4a42894000,0x00007f4a42995000)]
+  0x00007f4a70153800 JavaThread "WorkerExecutor Queue Thread 6" [_thread_blocked, id=8364, stack(0x00007f4a8d416000,0x00007f4a8d517000)]
+  0x00007f4a804c5000 JavaThread "RMI TCP Connection(idle)" daemon [_thread_blocked, id=8363, stack(0x00007f4a44e5b000,0x00007f4a44f5c000)]
+  0x00007f4ac016a800 JavaThread "WorkerExecutor Queue Thread 5" [_thread_blocked, id=8330, stack(0x00007f4a40e1c000,0x00007f4a40f1d000)]
+  0x00007f4a54039800 JavaThread "stdout" [_thread_in_native, id=8321, stack(0x00007f4a8e39f000,0x00007f4a8e4a0000)]
+  0x00007f4a5452d800 JavaThread "stderr" [_thread_in_native, id=8320, stack(0x00007f4a42995000,0x00007f4a42a96000)]
+  0x00007f4a54578000 JavaThread "process reaper" daemon [_thread_in_native, id=8319, stack(0x00007f4a8f57c000,0x00007f4a8f5b5000)]
+  0x00007f4a50425000 JavaThread "stdout" [_thread_in_native, id=8318, stack(0x00007f4a8f862000,0x00007f4a8f963000)]
+  0x00007f4a500c0800 JavaThread "stderr" [_thread_in_native, id=8317, stack(0x00007f4a3f816000,0x00007f4a3f917000)]
+  0x00007f4a50080800 JavaThread "process reaper" daemon [_thread_in_native, id=8315, stack(0x00007f4a8f5b5000,0x00007f4a8f5ee000)]
+  0x00007f4a4c02d800 JavaThread "stdout" [_thread_in_native, id=8313, stack(0x00007f4a4021a000,0x00007f4a4031b000)]
+  0x00007f4a4c13b000 JavaThread "stderr" [_thread_in_native, id=8312, stack(0x00007f4a3e89d000,0x00007f4a3e99e000)]
+  0x00007f4a4c481800 JavaThread "process reaper" daemon [_thread_in_native, id=8311, stack(0x00007f4a8f627000,0x00007f4a8f660000)]
+  0x00007f4a4836f800 JavaThread "stdout" [_thread_in_native, id=8309, stack(0x00007f4a3eecd000,0x00007f4a3efce000)]
+  0x00007f4a48353000 JavaThread "stderr" [_thread_in_native, id=8308, stack(0x00007f4a41a33000,0x00007f4a41b34000)]
+  0x00007f4a48361800 JavaThread "process reaper" daemon [_thread_in_native, id=8307, stack(0x00007f4a8f5ee000,0x00007f4a8f627000)]
+  0x00007f4a48368000 JavaThread "pool-119-thread-1" [_thread_blocked, id=8305, stack(0x00007f4a25eff000,0x00007f4a26000000)]
+  0x00007f4ac016a000 JavaThread "WorkerExecutor Queue Thread 4" [_thread_blocked, id=8300, stack(0x00007f4a3f4a5000,0x00007f4a3f5a6000)]
+  0x00007f4ac0228000 JavaThread "WorkerExecutor Queue Thread 2" [_thread_blocked, id=8298, stack(0x00007f4a8f45e000,0x00007f4a8f55f000)]
+  0x00007f4ab8119000 JavaThread "Cache worker for execution history cache (/home/dell/Kiran/WorkSpace/FairFareKotlin/.gradle/5.4.1/executionHistory)" [_thread_blocked, id=8285, stack(0x00007f4a3f2a3000,0x00007f4a3f3a4000)]
+  0x00007f4a7017c800 JavaThread "Execution worker for ':' Thread 3" [_thread_blocked, id=8284, stack(0x00007f4a8d214000,0x00007f4a8d315000)]
+  0x00007f4a70195000 JavaThread "Execution worker for ':' Thread 2" [_thread_blocked, id=8283, stack(0x00007f4a42793000,0x00007f4a42894000)]
+  0x00007f4a70194800 JavaThread "Execution worker for ':'" [_thread_blocked, id=8282, stack(0x00007f4a41b34000,0x00007f4a41c35000)]
+  0x00007f4a70109800 JavaThread "Cache worker for file content cache (/home/dell/Kiran/WorkSpace/FairFareKotlin/.gradle/5.4.1/fileContent)" [_thread_blocked, id=8279, stack(0x00007f4a8db19000,0x00007f4a8dc1a000)]
+  0x00007f4a70108800 JavaThread "Cache worker for Build Output Cleanup Cache (/home/dell/Kiran/WorkSpace/FairFareKotlin/.gradle/buildOutputCleanup)" [_thread_blocked, id=8278, stack(0x00007f4a3e783000,0x00007f4a3e884000)]
+  0x00007f4a70147800 JavaThread "Build operations Thread 4" [_thread_blocked, id=8277, stack(0x00007f4a46df3000,0x00007f4a46ef4000)]
+  0x00007f4a700df800 JavaThread "Build operations Thread 3" [_thread_blocked, id=8276, stack(0x00007f4a4151e000,0x00007f4a4161f000)]
+  0x00007f4a70122800 JavaThread "Build operations Thread 2" [_thread_blocked, id=8275, stack(0x00007f4a41f53000,0x00007f4a42054000)]
+  0x00007f4a701a4000 JavaThread "Build operations" [_thread_blocked, id=8274, stack(0x00007f4a259fc000,0x00007f4a25afd000)]
+  0x00007f4a7019a800 JavaThread "Cache worker for cache directory md-rule (/home/dell/.gradle/caches/5.4.1/md-rule)" [_thread_blocked, id=8273, stack(0x00007f4a41e52000,0x00007f4a41f53000)]
+  0x00007f4a70199000 JavaThread "Cache worker for cache directory md-supplier (/home/dell/.gradle/caches/5.4.1/md-supplier)" [_thread_blocked, id=8272, stack(0x00007f4a8f761000,0x00007f4a8f862000)]
+  0x00007f4a70127000 JavaThread "Cache worker for file hash cache (/home/dell/Kiran/WorkSpace/FairFareKotlin/.gradle/5.4.1/fileHashes)" [_thread_blocked, id=8271, stack(0x00007f4a257fa000,0x00007f4a258fb000)]
+  0x00007f4a70241800 JavaThread "Thread-1388" [_thread_blocked, id=8270, stack(0x00007f4a8d517000,0x00007f4a8d618000)]
+  0x00007f4a7019e000 JavaThread "Asynchronous log dispatcher for DefaultDaemonConnection: socket connection from /127.0.0.1:34129 to /127.0.0.1:53350" [_thread_blocked, id=8267, stack(0x00007f4a41c35000,0x00007f4a41d36000)]
+  0x00007f4a54003800 JavaThread "Cancel handler" [_thread_blocked, id=8265, stack(0x00007f4a46af0000,0x00007f4a46bf1000)]
+  0x00007f4a54158000 JavaThread "Handler for socket connection from /127.0.0.1:34129 to /127.0.0.1:53350" [_thread_in_native, id=8264, stack(0x00007f4a42acf000,0x00007f4a42bd0000)]
+  0x00007f4a80063800 JavaThread "RMI TCP Connection(idle)" daemon [_thread_blocked, id=8215, stack(0x00007f4a46cf2000,0x00007f4a46df3000)]
+  0x00007f4a80060800 JavaThread "RMI TCP Connection(idle)" daemon [_thread_blocked, id=8214, stack(0x00007f4a46bf1000,0x00007f4a46cf2000)]
+  0x00007f4a8001f800 JavaThread "RMI TCP Connection(293)-127.0.0.1" daemon [_thread_in_native, id=8209, stack(0x00007f4a258fb000,0x00007f4a259fc000)]
+  0x00007f4a5416e800 JavaThread "Daemon worker Thread 38" [_thread_blocked, id=8182, stack(0x00007f4a3f917000,0x00007f4a3fa18000)]
+  0x00007f4a80067000 JavaThread "Daemon Thread 38" [_thread_blocked, id=8179, stack(0x00007f4a40119000,0x00007f4a4021a000)]
+  0x00007f4aa808a800 JavaThread "RMI Reaper" [_thread_blocked, id=28234, stack(0x00007f4a8f660000,0x00007f4a8f761000)]
+  0x00007f4aa808a000 JavaThread "GC Daemon" daemon [_thread_blocked, id=28232, stack(0x00007f4a3f3a4000,0x00007f4a3f4a5000)]
+  0x00007f4a683b0000 JavaThread "RMI TCP Accept-0" daemon [_thread_in_native, id=26963, stack(0x00007f4a3e99e000,0x00007f4a3ea9f000)]
+  0x00007f4a7c00f800 JavaThread "MarlinRenderer Disposer" daemon [_thread_blocked, id=9661, stack(0x00007f4a8e29e000,0x00007f4a8e39f000)]
+  0x00007f4a700f2000 JavaThread "Java2D Disposer" daemon [_thread_blocked, id=9660, stack(0x00007f4a8eb59000,0x00007f4a8ec5a000)]
+  0x00007f4ac011e800 JavaThread "Cache worker for Java compile cache (/home/dell/.gradle/caches/5.4.1/javaCompile)" [_thread_blocked, id=4237, stack(0x00007f4a40d1b000,0x00007f4a40e1c000)]
+  0x00007f4ac014a800 JavaThread "RMI TCP Accept-0" daemon [_thread_in_native, id=4223, stack(0x00007f4a41d36000,0x00007f4a41e37000)]
+  0x00007f4ac0130800 JavaThread "RMI Scheduler(0)" daemon [_thread_blocked, id=4219, stack(0x00007f4a42054000,0x00007f4a42155000)]
+  0x00007f4ac0114800 JavaThread "process reaper" daemon [_thread_in_native, id=4196, stack(0x00007f4a42155000,0x00007f4a4218e000)]
+  0x00007f4a69330800 JavaThread "Cache worker for file content cache (/home/dell/.gradle/caches/5.4.1/fileContent)" [_thread_blocked, id=4182, stack(0x00007f4a8f35d000,0x00007f4a8f45e000)]
+  0x00007f4a7444d000 JavaThread "Memory manager" [_thread_blocked, id=2391, stack(0x00007f4a473f5000,0x00007f4a474f6000)]
+  0x00007f4a74f65000 JavaThread "Cache worker for execution history cache (/home/dell/.gradle/caches/5.4.1/executionHistory)" [_thread_blocked, id=2372, stack(0x00007f4a8da18000,0x00007f4a8db19000)]
+  0x00007f4a74158000 JavaThread "Cache worker for journal cache (/home/dell/.gradle/caches/journal-1)" [_thread_blocked, id=2352, stack(0x00007f4a8ee5a000,0x00007f4a8ef5b000)]
+  0x00007f4a74155800 JavaThread "File lock request listener" [_thread_in_native, id=2350, stack(0x00007f4a8ef5b000,0x00007f4a8f05c000)]
+  0x00007f4a7411d800 JavaThread "Cache worker for file hash cache (/home/dell/.gradle/caches/5.4.1/fileHashes)" [_thread_blocked, id=2349, stack(0x00007f4a8f05c000,0x00007f4a8f15d000)]
+  0x00007f4ad8412000 JavaThread "Daemon periodic checks" [_thread_blocked, id=2339, stack(0x00007f4a8fa64000,0x00007f4a8fb65000)]
+  0x00007f4ad811c000 JavaThread "Incoming local TCP Connector on port 34129" [_thread_in_native, id=2338, stack(0x00007f4a8fb6c000,0x00007f4a8fc6d000)]
+  0x00007f4ad90fa800 JavaThread "Daemon health stats" [_thread_blocked, id=2333, stack(0x00007f4a8fe71000,0x00007f4a8ff72000)]
+  0x00007f4ad80c2000 JavaThread "Service Thread" daemon [_thread_blocked, id=2317, stack(0x00007f4ac4f14000,0x00007f4ac5015000)]
+  0x00007f4ad80be800 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=2316, stack(0x00007f4ac5016000,0x00007f4ac5116000)]
+  0x00007f4ad80bd000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=2315, stack(0x00007f4ac5117000,0x00007f4ac5217000)]
+  0x00007f4ad80ba000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=2314, stack(0x00007f4ac5218000,0x00007f4ac5318000)]
+  0x00007f4ad80b6000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=2313, stack(0x00007f4ac5318000,0x00007f4ac5419000)]
+  0x00007f4ad8085800 JavaThread "Finalizer" daemon [_thread_blocked, id=2312, stack(0x00007f4ac56f7000,0x00007f4ac57f8000)]
+  0x00007f4ad8083000 JavaThread "Reference Handler" daemon [_thread_blocked, id=2311, stack(0x00007f4ac57f8000,0x00007f4ac58f9000)]
+  0x00007f4ad800b800 JavaThread "main" [_thread_blocked, id=2304, stack(0x00007f4ae0917000,0x00007f4ae0a17000)]
+
+Other Threads:
+=>0x00007f4ad8079800 VMThread [stack: 0x00007f4ac58fa000,0x00007f4ac59fa000] [id=2310]
+  0x00007f4ad80c4800 WatcherThread [stack: 0x00007f4ac4e14000,0x00007f4ac4f14000] [id=2318]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007f4ad8007c60] ExpandHeap_lock - owner thread: 0x00007f4ad8079800
+[0x00007f4ad80082e0] Threads_lock - owner thread: 0x00007f4ad8079800
+[0x00007f4ad80087e0] Heap_lock - owner thread: 0x00007f4ac016a800
+
+heap address: 0x00000000a0000000, size: 1536 MB, Compressed Oops mode: 32-bit
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 3
+Compressed class space size: 1073741824 Address: 0x0000000100000000
+
+Heap:
+ PSYoungGen      total 421376K, used 0K [0x00000000e0000000, 0x00000000ff800000, 0x0000000100000000)
+  eden space 335872K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000f4800000)
+  from space 85504K, 0% used [0x00000000fa480000,0x00000000fa480000,0x00000000ff800000)
+  to   space 90112K, 0% used [0x00000000f4800000,0x00000000f4800000,0x00000000fa000000)
+ ParOldGen       total 594432K, used 315393K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 53% used [0x00000000a0000000,0x00000000b3400690,0x00000000c4480000)
+ Metaspace       used 226923K, capacity 240404K, committed 241868K, reserved 1261568K
+  class space    used 27775K, capacity 30159K, committed 30720K, reserved 1048576K
+
+Card table byte_map: [0x00007f4adde29000,0x00007f4ade12a000] byte_map_base: 0x00007f4add929000
+
+Marking Bits: (ParMarkBitMap*) 0x00007f4adffdd920
+ Begin Bits: [0x00007f4ac6000000, 0x00007f4ac7800000)
+ End Bits:   [0x00007f4ac7800000, 0x00007f4ac9000000)
+
+Polling page: 0x00007f4ae0a35000
+
+CodeCache: size=245760Kb used=151183Kb max_used=151452Kb free=94576Kb
+ bounds [0x00007f4ac9000000, 0x00007f4ad2510000, 0x00007f4ad8000000]
+ total_blobs=39924 nmethods=38839 adapters=994
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 24819.819 Thread 0x00007f4ad80be800 61270       3       com.android.tools.r8.ir.code.IRCode::j (36 bytes)
+Event: 24819.836 Thread 0x00007f4ad80be800 nmethod 61270 0x00007f4ac96a29d0 code [0x00007f4ac96a2c00, 0x00007f4ac96a36a8]
+Event: 24819.861 Thread 0x00007f4ad80be800 61271       2       com.android.tools.r8.ir.regalloc.LinearScanRegisterAllocator::getArgumentOrAllocateRegisterForValue (26 bytes)
+Event: 24819.862 Thread 0x00007f4ad80be800 nmethod 61271 0x00007f4ac9c2bc50 code [0x00007f4ac9c2bde0, 0x00007f4ac9c2bfd8]
+Event: 24819.880 Thread 0x00007f4ad80be800 61272       2       com.android.tools.r8.ir.code.If$Type::b (78 bytes)
+Event: 24819.881 Thread 0x00007f4ad80be800 nmethod 61272 0x00007f4aca289490 code [0x00007f4aca289620, 0x00007f4aca2898e8]
+Event: 24819.885 Thread 0x00007f4ad80be800 61273       3       com.android.tools.r8.ir.optimize.f::a (193 bytes)
+Event: 24819.897 Thread 0x00007f4ad80be800 nmethod 61273 0x00007f4ad026e0d0 code [0x00007f4ad026e5a0, 0x00007f4ad02715f8]
+Event: 24819.910 Thread 0x00007f4ad80be800 61274       2       com.android.tools.r8.m.a.a.b.x::a (23 bytes)
+Event: 24819.911 Thread 0x00007f4ad80be800 nmethod 61274 0x00007f4ac97f3b50 code [0x00007f4ac97f3d00, 0x00007f4ac97f4158]
+
+GC Heap History (10 events):
+Event: 24817.549 GC heap after
+Heap after GC invocations=333 (full 19):
+ PSYoungGen      total 413184K, used 45059K [0x00000000e0000000, 0x0000000100000000, 0x0000000100000000)
+  eden space 318464K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000f3700000)
+  from space 94720K, 47% used [0x00000000fa380000,0x00000000fcf80c90,0x0000000100000000)
+  to   space 102912K, 0% used [0x00000000f3700000,0x00000000f3700000,0x00000000f9b80000)
+ ParOldGen       total 594432K, used 391796K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 65% used [0x00000000a0000000,0x00000000b7e9d370,0x00000000c4480000)
+ Metaspace       used 227713K, capacity 241300K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+}
+Event: 24817.997 GC heap before
+{Heap before GC invocations=334 (full 19):
+ PSYoungGen      total 413184K, used 363523K [0x00000000e0000000, 0x0000000100000000, 0x0000000100000000)
+  eden space 318464K, 100% used [0x00000000e0000000,0x00000000f3700000,0x00000000f3700000)
+  from space 94720K, 47% used [0x00000000fa380000,0x00000000fcf80c90,0x0000000100000000)
+  to   space 102912K, 0% used [0x00000000f3700000,0x00000000f3700000,0x00000000f9b80000)
+ ParOldGen       total 594432K, used 391812K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 65% used [0x00000000a0000000,0x00000000b7ea1380,0x00000000c4480000)
+ Metaspace       used 227714K, capacity 241300K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+Event: 24818.090 GC heap after
+Heap after GC invocations=334 (full 19):
+ PSYoungGen      total 421376K, used 53582K [0x00000000e0000000, 0x0000000100000000, 0x0000000100000000)
+  eden space 318464K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000f3700000)
+  from space 102912K, 52% used [0x00000000f3700000,0x00000000f6b53af8,0x00000000f9b80000)
+  to   space 102400K, 0% used [0x00000000f9c00000,0x00000000f9c00000,0x0000000100000000)
+ ParOldGen       total 594432K, used 425267K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 71% used [0x00000000a0000000,0x00000000b9f4cc98,0x00000000c4480000)
+ Metaspace       used 227714K, capacity 241300K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+}
+Event: 24818.525 GC heap before
+{Heap before GC invocations=335 (full 19):
+ PSYoungGen      total 421376K, used 372046K [0x00000000e0000000, 0x0000000100000000, 0x0000000100000000)
+  eden space 318464K, 100% used [0x00000000e0000000,0x00000000f3700000,0x00000000f3700000)
+  from space 102912K, 52% used [0x00000000f3700000,0x00000000f6b53af8,0x00000000f9b80000)
+  to   space 102400K, 0% used [0x00000000f9c00000,0x00000000f9c00000,0x0000000100000000)
+ ParOldGen       total 594432K, used 425268K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 71% used [0x00000000a0000000,0x00000000b9f4d3a0,0x00000000c4480000)
+ Metaspace       used 227718K, capacity 241300K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+Event: 24818.621 GC heap after
+Heap after GC invocations=335 (full 19):
+ PSYoungGen      total 408576K, used 36665K [0x00000000e0000000, 0x00000000ff380000, 0x0000000100000000)
+  eden space 318976K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000f3780000)
+  from space 89600K, 40% used [0x00000000f9c00000,0x00000000fbfce608,0x00000000ff380000)
+  to   space 96256K, 0% used [0x00000000f3780000,0x00000000f3780000,0x00000000f9580000)
+ ParOldGen       total 594432K, used 476970K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 80% used [0x00000000a0000000,0x00000000bd1ca948,0x00000000c4480000)
+ Metaspace       used 227718K, capacity 241300K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+}
+Event: 24819.164 GC heap before
+{Heap before GC invocations=336 (full 19):
+ PSYoungGen      total 408576K, used 355641K [0x00000000e0000000, 0x00000000ff380000, 0x0000000100000000)
+  eden space 318976K, 100% used [0x00000000e0000000,0x00000000f3780000,0x00000000f3780000)
+  from space 89600K, 40% used [0x00000000f9c00000,0x00000000fbfce608,0x00000000ff380000)
+  to   space 96256K, 0% used [0x00000000f3780000,0x00000000f3780000,0x00000000f9580000)
+ ParOldGen       total 594432K, used 476973K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 80% used [0x00000000a0000000,0x00000000bd1cb518,0x00000000c4480000)
+ Metaspace       used 227721K, capacity 241304K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+Event: 24819.286 GC heap after
+Heap after GC invocations=336 (full 19):
+ PSYoungGen      total 415232K, used 27925K [0x00000000e0000000, 0x00000000ffe80000, 0x0000000100000000)
+  eden space 318976K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000f3780000)
+  from space 96256K, 29% used [0x00000000f3780000,0x00000000f52c54b0,0x00000000f9580000)
+  to   space 92160K, 0% used [0x00000000fa480000,0x00000000fa480000,0x00000000ffe80000)
+ ParOldGen       total 594432K, used 512218K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 86% used [0x00000000a0000000,0x00000000bf436b68,0x00000000c4480000)
+ Metaspace       used 227721K, capacity 241304K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+}
+Event: 24819.984 GC heap before
+{Heap before GC invocations=337 (full 19):
+ PSYoungGen      total 415232K, used 346901K [0x00000000e0000000, 0x00000000ffe80000, 0x0000000100000000)
+  eden space 318976K, 100% used [0x00000000e0000000,0x00000000f3780000,0x00000000f3780000)
+  from space 96256K, 29% used [0x00000000f3780000,0x00000000f52c54b0,0x00000000f9580000)
+  to   space 92160K, 0% used [0x00000000fa480000,0x00000000fa480000,0x00000000ffe80000)
+ ParOldGen       total 594432K, used 512221K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 86% used [0x00000000a0000000,0x00000000bf437768,0x00000000c4480000)
+ Metaspace       used 227727K, capacity 241304K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+Event: 24820.128 GC heap after
+Heap after GC invocations=337 (full 19):
+ PSYoungGen      total 421376K, used 17864K [0x00000000e0000000, 0x00000000ff800000, 0x0000000100000000)
+  eden space 335872K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000f4800000)
+  from space 85504K, 20% used [0x00000000fa480000,0x00000000fb5f2380,0x00000000ff800000)
+  to   space 90112K, 0% used [0x00000000f4800000,0x00000000f4800000,0x00000000fa000000)
+ ParOldGen       total 594432K, used 536381K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 90% used [0x00000000a0000000,0x00000000c0bcf430,0x00000000c4480000)
+ Metaspace       used 227727K, capacity 241304K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+}
+Event: 24820.128 GC heap before
+{Heap before GC invocations=338 (full 20):
+ PSYoungGen      total 421376K, used 17864K [0x00000000e0000000, 0x00000000ff800000, 0x0000000100000000)
+  eden space 335872K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000f4800000)
+  from space 85504K, 20% used [0x00000000fa480000,0x00000000fb5f2380,0x00000000ff800000)
+  to   space 90112K, 0% used [0x00000000f4800000,0x00000000f4800000,0x00000000fa000000)
+ ParOldGen       total 594432K, used 536381K [0x00000000a0000000, 0x00000000c4480000, 0x00000000e0000000)
+  object space 594432K, 90% used [0x00000000a0000000,0x00000000c0bcf430,0x00000000c4480000)
+ Metaspace       used 227727K, capacity 241304K, committed 241868K, reserved 1261568K
+  class space    used 27852K, capacity 30268K, committed 30720K, reserved 1048576K
+
+Deoptimization events (10 events):
+Event: 24818.756 Thread 0x00007f4a701be000 Uncommon trap: reason=bimorphic action=maybe_recompile pc=0x00007f4acafb7658 method=com.android.tools.r8.ir.code.k0.a(Lcom/android/tools/r8/ir/analysis/type/TypeLatticeElement;)Lcom/android/tools/r8/ir/code/k0; @ 29
+Event: 24818.756 Thread 0x00007f4a701be000 Uncommon trap: reason=bimorphic action=maybe_recompile pc=0x00007f4acafb7658 method=com.android.tools.r8.ir.code.k0.a(Lcom/android/tools/r8/ir/analysis/type/TypeLatticeElement;)Lcom/android/tools/r8/ir/code/k0; @ 29
+Event: 24818.902 Thread 0x00007f4a70153800 Uncommon trap: reason=bimorphic action=maybe_recompile pc=0x00007f4aca13e218 method=com.android.tools.r8.m.a.a.b.d0.a(Ljava/util/Collection;)Lcom/android/tools/r8/m/a/a/b/d0; @ 11
+Event: 24818.903 Thread 0x00007f4a701be000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f4ad0c53c40 method=com.android.tools.r8.ir.conversion.N.b(Lcom/android/tools/r8/t/a/a/G/a;)Z @ 21
+Event: 24818.941 Thread 0x00007f4a701be000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f4ad0c80b88 method=com.android.tools.r8.graph.y.a(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Lcom/android/tools/r8/t/a/a/u; @ 7
+Event: 24819.044 Thread 0x00007f4a70153800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f4ad0380b04 method=com.android.tools.r8.graph.y.a(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)Lcom/android/tools/r8/t/a/a/n; @ 7
+Event: 24819.777 Thread 0x00007f4a701be000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f4ad200ce78 method=com.android.tools.r8.ir.regalloc.LiveIntervals.e()I @ 73
+Event: 24819.778 Thread 0x00007f4a701be000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f4ad08e60cc method=com.android.tools.r8.ir.regalloc.LiveIntervals.e()I @ 73
+Event: 24819.788 Thread 0x00007f4a701be000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f4ad16068f8 method=com.android.tools.r8.ir.regalloc.LiveIntervals.e()I @ 73
+Event: 24819.851 Thread 0x00007f4ac0228000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f4ad1a11a08 method=com.android.tools.r8.ir.regalloc.LiveIntervals.getSplitCovering(I)Lcom/android/tools/r8/ir/regalloc/LiveIntervals; @ 132
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 24818.813 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e5cee390) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.814 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e5d372e0) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.816 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e5d3fd90) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.818 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e5d45c60) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.818 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e5d4ebc0) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.819 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e5d56b98) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.819 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e63f4e70) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.819 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e643ad40) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.820 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e6481ae0) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 24818.821 Thread 0x00007f4ac016a000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e64879a8) thrown at [/usr/local/google/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+
+Events (10 events):
+Event: 24819.922 Thread 0x00007f4ad80be800 flushing nmethod 0x00007f4acb8f9650
+Event: 24819.922 Thread 0x00007f4ad80be800 flushing nmethod 0x00007f4acb928150
+Event: 24819.922 Thread 0x00007f4ad80be800 flushing nmethod 0x00007f4acb97f7d0
+Event: 24819.922 Thread 0x00007f4ad80be800 flushing nmethod 0x00007f4acb97fdd0
+Event: 24819.922 Thread 0x00007f4ad80be800 flushing nmethod 0x00007f4acb980d50
+Event: 24819.922 Thread 0x00007f4ad80be800 flushing nmethod 0x00007f4acb981190
+Event: 24819.923 Thread 0x00007f4ad80be800 flushing nmethod 0x00007f4acb9a9f50
+Event: 24819.962 Executing VM operation: RevokeBias
+Event: 24819.967 Executing VM operation: RevokeBias done
+Event: 24819.980 Executing VM operation: ParallelGCFailedAllocation
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 08:01 12977570                           /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/bin/java
+00401000-00402000 rw-p 00000000 08:01 12977570                           /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/bin/java
+01288000-0153f000 rw-p 00000000 00:00 0                                  [heap]
+a0000000-c4480000 rw-p 00000000 00:00 0 
+ce180000-e0000000 ---p 00000000 00:00 0 
+e0000000-ff800000 rw-p 00000000 00:00 0 
+ff800000-100000000 ---p 00000000 00:00 0 
+100000000-101e00000 rw-p 00000000 00:00 0 
+101e00000-140000000 ---p 00000000 00:00 0 
+7f4a18000000-7f4a18c17000 rw-p 00000000 00:00 0 
+7f4a18c17000-7f4a1c000000 ---p 00000000 00:00 0 
+7f4a20000000-7f4a23ff6000 rw-p 00000000 00:00 0 
+7f4a23ff6000-7f4a24000000 ---p 00000000 00:00 0 
+7f4a252e0000-7f4a25320000 rw-p 00000000 00:00 0 
+7f4a25320000-7f4a254e0000 ---p 00000000 00:00 0 
+7f4a254e0000-7f4a256e0000 rw-p 00000000 00:00 0 
+7f4a257fa000-7f4a257fd000 ---p 00000000 00:00 0 
+7f4a257fd000-7f4a258fb000 rw-p 00000000 00:00 0 
+7f4a258fb000-7f4a258fe000 ---p 00000000 00:00 0 
+7f4a258fe000-7f4a259fc000 rw-p 00000000 00:00 0 
+7f4a259fc000-7f4a259ff000 ---p 00000000 00:00 0 
+7f4a259ff000-7f4a25cfd000 rw-p 00000000 00:00 0 
+7f4a25cfd000-7f4a25d00000 ---p 00000000 00:00 0 
+7f4a25d00000-7f4a25dfe000 rw-p 00000000 00:00 0 
+7f4a25dfe000-7f4a25e01000 ---p 00000000 00:00 0 
+7f4a25e01000-7f4a25eff000 rw-p 00000000 00:00 0 
+7f4a25eff000-7f4a25f02000 ---p 00000000 00:00 0 
+7f4a25f02000-7f4a26200000 rw-p 00000000 00:00 0 
+7f4a26200000-7f4a26400000 rw-p 00000000 00:00 0 
+7f4a26400000-7f4a26600000 rw-p 00000000 00:00 0 
+7f4a26600000-7f4a26800000 rw-p 00000000 00:00 0 
+7f4a26800000-7f4a26a00000 rw-p 00000000 00:00 0 
+7f4a26a00000-7f4a26c00000 rw-p 00000000 00:00 0 
+7f4a26c00000-7f4a26e00000 rw-p 00000000 00:00 0 
+7f4a26e00000-7f4a27000000 rw-p 00000000 00:00 0 
+7f4a27000000-7f4a27200000 rw-p 00000000 00:00 0 
+7f4a27200000-7f4a27400000 rw-p 00000000 00:00 0 
+7f4a27400000-7f4a27600000 rw-p 00000000 00:00 0 
+7f4a27600000-7f4a27800000 rw-p 00000000 00:00 0 
+7f4a27800000-7f4a27a00000 rw-p 00000000 00:00 0 
+7f4a27a00000-7f4a27c00000 rw-p 00000000 00:00 0 
+7f4a27c00000-7f4a27e00000 rw-p 00000000 00:00 0 
+7f4a27e00000-7f4a28000000 rw-p 00000000 00:00 0 
+7f4a28000000-7f4a2bff5000 rw-p 00000000 00:00 0 
+7f4a2bff5000-7f4a2c000000 ---p 00000000 00:00 0 
+7f4a2c000000-7f4a2e5bd000 rw-p 00000000 00:00 0 
+7f4a2e5bd000-7f4a30000000 ---p 00000000 00:00 0 
+7f4a30000000-7f4a319c2000 rw-p 00000000 00:00 0 
+7f4a319c2000-7f4a34000000 ---p 00000000 00:00 0 
+7f4a34000000-7f4a3489a000 rw-p 00000000 00:00 0 
+7f4a3489a000-7f4a38000000 ---p 00000000 00:00 0 
+7f4a38000000-7f4a3bff5000 rw-p 00000000 00:00 0 
+7f4a3bff5000-7f4a3c000000 ---p 00000000 00:00 0 
+7f4a3c082000-7f4a3c085000 ---p 00000000 00:00 0 
+7f4a3c085000-7f4a3c383000 rw-p 00000000 00:00 0 
+7f4a3c383000-7f4a3c583000 rw-p 00000000 00:00 0 
+7f4a3c583000-7f4a3c783000 rw-p 00000000 00:00 0 
+7f4a3c783000-7f4a3c983000 rw-p 00000000 00:00 0 
+7f4a3c983000-7f4a3cb83000 rw-p 00000000 00:00 0 
+7f4a3cb83000-7f4a3cd83000 rw-p 00000000 00:00 0 
+7f4a3cd83000-7f4a3cf83000 rw-p 00000000 00:00 0 
+7f4a3cf83000-7f4a3d183000 rw-p 00000000 00:00 0 
+7f4a3d183000-7f4a3d383000 rw-p 00000000 00:00 0 
+7f4a3d383000-7f4a3d583000 rw-p 00000000 00:00 0 
+7f4a3d583000-7f4a3d783000 rw-p 00000000 00:00 0 
+7f4a3d783000-7f4a3d983000 rw-p 00000000 00:00 0 
+7f4a3d983000-7f4a3db83000 rw-p 00000000 00:00 0 
+7f4a3db83000-7f4a3dd83000 rw-p 00000000 00:00 0 
+7f4a3dd83000-7f4a3df83000 rw-p 00000000 00:00 0 
+7f4a3df83000-7f4a3e183000 rw-p 00000000 00:00 0 
+7f4a3e183000-7f4a3e383000 rw-p 00000000 00:00 0 
+7f4a3e383000-7f4a3e583000 rw-p 00000000 00:00 0 
+7f4a3e583000-7f4a3e783000 rw-p 00000000 00:00 0 
+7f4a3e783000-7f4a3e786000 ---p 00000000 00:00 0 
+7f4a3e786000-7f4a3e884000 rw-p 00000000 00:00 0 
+7f4a3e89d000-7f4a3e8a0000 ---p 00000000 00:00 0 
+7f4a3e8a0000-7f4a3e99e000 rw-p 00000000 00:00 0 
+7f4a3e99e000-7f4a3e9a1000 ---p 00000000 00:00 0 
+7f4a3e9a1000-7f4a3ec9f000 rw-p 00000000 00:00 0 
+7f4a3ec9f000-7f4a3ee9f000 rw-p 00000000 00:00 0 
+7f4a3eecd000-7f4a3eed0000 ---p 00000000 00:00 0 
+7f4a3eed0000-7f4a3efce000 rw-p 00000000 00:00 0 
+7f4a3efce000-7f4a3f072000 r-xp 00000000 08:01 12977661                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libawt.so
+7f4a3f072000-7f4a3f07f000 rw-p 000a4000 08:01 12977661                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libawt.so
+7f4a3f07f000-7f4a3f2a3000 rw-p 00000000 00:00 0 
+7f4a3f2a3000-7f4a3f2a6000 ---p 00000000 00:00 0 
+7f4a3f2a6000-7f4a3f3a4000 rw-p 00000000 00:00 0 
+7f4a3f3a4000-7f4a3f3a7000 ---p 00000000 00:00 0 
+7f4a3f3a7000-7f4a3f4a5000 rw-p 00000000 00:00 0 
+7f4a3f4a5000-7f4a3f4a8000 ---p 00000000 00:00 0 
+7f4a3f4a8000-7f4a3f7a6000 rw-p 00000000 00:00 0 
+7f4a3f816000-7f4a3f819000 ---p 00000000 00:00 0 
+7f4a3f819000-7f4a3f917000 rw-p 00000000 00:00 0 
+7f4a3f917000-7f4a3f91a000 ---p 00000000 00:00 0 
+7f4a3f91a000-7f4a3fc18000 rw-p 00000000 00:00 0 
+7f4a3fc18000-7f4a3fe18000 rw-p 00000000 00:00 0 
+7f4a3fe18000-7f4a40018000 rw-p 00000000 00:00 0 
+7f4a40018000-7f4a4001b000 ---p 00000000 00:00 0 
+7f4a4001b000-7f4a40119000 rw-p 00000000 00:00 0 
+7f4a40119000-7f4a4011c000 ---p 00000000 00:00 0 
+7f4a4011c000-7f4a4021a000 rw-p 00000000 00:00 0 
+7f4a4021a000-7f4a4021d000 ---p 00000000 00:00 0 
+7f4a4021d000-7f4a4051b000 rw-p 00000000 00:00 0 
+7f4a4051b000-7f4a4071b000 rw-p 00000000 00:00 0 
+7f4a4071b000-7f4a4091b000 rw-p 00000000 00:00 0 
+7f4a4091b000-7f4a40b1b000 rw-p 00000000 00:00 0 
+7f4a40b1b000-7f4a40d1b000 rw-p 00000000 00:00 0 
+7f4a40d1b000-7f4a40d1e000 ---p 00000000 00:00 0 
+7f4a40d1e000-7f4a40e1c000 rw-p 00000000 00:00 0 
+7f4a40e1c000-7f4a40e1f000 ---p 00000000 00:00 0 
+7f4a40e1f000-7f4a40f1d000 rw-p 00000000 00:00 0 
+7f4a40f8d000-7f4a410a7000 r--s 01317000 08:01 15339127                   /home/dell/Android/Sdk/platforms/android-29/android.jar
+7f4a410a7000-7f4a410ac000 r--s 002f9000 08:01 12977632                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/charsets.jar
+7f4a4111e000-7f4a4131e000 rw-p 00000000 00:00 0 
+7f4a4131e000-7f4a4151e000 rw-p 00000000 00:00 0 
+7f4a4151e000-7f4a41521000 ---p 00000000 00:00 0 
+7f4a41521000-7f4a4161f000 rw-p 00000000 00:00 0 
+7f4a4161f000-7f4a4181f000 rw-p 00000000 00:00 0 
+7f4a4181f000-7f4a41a1f000 rw-p 00000000 00:00 0 
+7f4a41a1f000-7f4a41a33000 r--s 0013d000 08:01 6162108                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.70/e5d97e25bb5b30dcfc022ec1c8f3959a875257fb/kotlin-stdlib-1.3.70.jar
+7f4a41a33000-7f4a41a36000 ---p 00000000 00:00 0 
+7f4a41a36000-7f4a41b34000 rw-p 00000000 00:00 0 
+7f4a41b34000-7f4a41b37000 ---p 00000000 00:00 0 
+7f4a41b37000-7f4a41c35000 rw-p 00000000 00:00 0 
+7f4a41c35000-7f4a41c38000 ---p 00000000 00:00 0 
+7f4a41c38000-7f4a41d36000 rw-p 00000000 00:00 0 
+7f4a41d36000-7f4a41d39000 ---p 00000000 00:00 0 
+7f4a41d39000-7f4a41e37000 rw-p 00000000 00:00 0 
+7f4a41e37000-7f4a41e52000 r--s 00394000 08:01 12977642                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/ext/cldrdata.jar
+7f4a41e52000-7f4a41e55000 ---p 00000000 00:00 0 
+7f4a41e55000-7f4a41f53000 rw-p 00000000 00:00 0 
+7f4a41f53000-7f4a41f56000 ---p 00000000 00:00 0 
+7f4a41f56000-7f4a42054000 rw-p 00000000 00:00 0 
+7f4a42054000-7f4a42057000 ---p 00000000 00:00 0 
+7f4a42057000-7f4a42155000 rw-p 00000000 00:00 0 
+7f4a42155000-7f4a42158000 ---p 00000000 00:00 0 
+7f4a42158000-7f4a4218e000 rw-p 00000000 00:00 0 
+7f4a4218e000-7f4a42193000 r-xp 00000000 08:01 6160934                    /tmp/native-platform3188842174863900666dir/libnative-platform.so
+7f4a42193000-7f4a42392000 ---p 00005000 08:01 6160934                    /tmp/native-platform3188842174863900666dir/libnative-platform.so
+7f4a42392000-7f4a42393000 rw-p 00004000 08:01 6160934                    /tmp/native-platform3188842174863900666dir/libnative-platform.so
+7f4a42393000-7f4a42593000 rw-p 00000000 00:00 0 
+7f4a42593000-7f4a42793000 rw-p 00000000 00:00 0 
+7f4a42793000-7f4a42796000 ---p 00000000 00:00 0 
+7f4a42796000-7f4a42894000 rw-p 00000000 00:00 0 
+7f4a42894000-7f4a42897000 ---p 00000000 00:00 0 
+7f4a42897000-7f4a42995000 rw-p 00000000 00:00 0 
+7f4a42995000-7f4a42998000 ---p 00000000 00:00 0 
+7f4a42998000-7f4a42a96000 rw-p 00000000 00:00 0 
+7f4a42acf000-7f4a42ad2000 ---p 00000000 00:00 0 
+7f4a42ad2000-7f4a42dd0000 rw-p 00000000 00:00 0 
+7f4a42dd0000-7f4a42fd0000 rw-p 00000000 00:00 0 
+7f4a42fd0000-7f4a431d0000 rw-p 00000000 00:00 0 
+7f4a431d0000-7f4a433d0000 rw-p 00000000 00:00 0 
+7f4a433d0000-7f4a435d0000 rw-p 00000000 00:00 0 
+7f4a435d0000-7f4a437d0000 rw-p 00000000 00:00 0 
+7f4a437d0000-7f4a439cd000 rw-p 00000000 00:00 0 
+7f4a439cd000-7f4a439d0000 ---p 00000000 00:00 0 
+7f4a439d0000-7f4a43bd0000 rw-p 00000000 00:00 0 
+7f4a43bf3000-7f4a43c0b000 r--s 00115000 08:01 6162091                    /home/dell/.gradle/caches/modules-2/files-2.1/xerces/xercesImpl/2.9.1/1136d197e2755bbde296ceee217ec5fe2917477b/xercesImpl-2.9.1.jar
+7f4a43c0b000-7f4a43c0f000 r--s 0003c000 08:01 6162089                    /home/dell/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.4/16313e02a793435009f1e458fa4af5d879f6fb11/commons-lang-2.4.jar
+7f4a43c0f000-7f4a43c12000 r--s 00013000 08:01 6162090                    /home/dell/.gradle/caches/modules-2/files-2.1/net.sf.ezmorph/ezmorph/1.0.6/1e55d2a0253ea37745d33062852fd2c90027432/ezmorph-1.0.6.jar
+7f4a43c12000-7f4a43c20000 r--s 0007f000 08:01 6162088                    /home/dell/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.1/761ea405b9b37ced573d2df0d1e3a4e0f9edc668/commons-collections-3.2.1.jar
+7f4a43c20000-7f4a43c25000 r--s 00034000 08:01 6162086                    /home/dell/.gradle/caches/modules-2/files-2.1/commons-beanutils/commons-beanutils/1.8.0/c651d5103c649c12b20d53731643e5fffceb536/commons-beanutils-1.8.0.jar
+7f4a43c25000-7f4a43c27000 r--s 00013000 08:01 6161423                    /home/dell/.gradle/caches/modules-2/files-2.1/xml-resolver/xml-resolver/1.2/3d0f97750b3a03e0971831566067754ba4bfd68c/xml-resolver-1.2.jar
+7f4a43c27000-7f4a43c2a000 r--s 0001c000 08:01 6161422                    /home/dell/.gradle/caches/modules-2/files-2.1/net.sourceforge.nekohtml/nekohtml/1.9.16/61e35204e5a8fdb864152f84e2e3b33ab56f50ab/nekohtml-1.9.16.jar
+7f4a43c2a000-7f4a43df2000 r--s 0330e000 08:01 13898866                   /home/dell/.gradle/caches/jars-3/01497fe505d287d5625b30a7fe1ce224/android.jar
+7f4a43df2000-7f4a44064000 r--s 01914000 08:01 13769628                   /home/dell/.gradle/caches/jars-3/0a28c8704832800a117c175dfe23a0f3/gradle-api-impldep-4.10.3.jar
+7f4a44064000-7f4a441bf000 r--s 00bb0000 08:01 13769625                   /home/dell/.gradle/caches/jars-3/8c0c682498be444601f9083c4f1918be/gradle-api-4.10.3.jar
+7f4a441bf000-7f4a441ce000 r-xp 00000000 08:01 10490534                   /lib/x86_64-linux-gnu/libnss_myhostname.so.2
+7f4a441ce000-7f4a443ce000 ---p 0000f000 08:01 10490534                   /lib/x86_64-linux-gnu/libnss_myhostname.so.2
+7f4a443ce000-7f4a443d1000 r--p 0000f000 08:01 10490534                   /lib/x86_64-linux-gnu/libnss_myhostname.so.2
+7f4a443d1000-7f4a443d2000 rw-p 00012000 08:01 10490534                   /lib/x86_64-linux-gnu/libnss_myhostname.so.2
+7f4a443d2000-7f4a443e9000 r-xp 00000000 08:01 10490848                   /lib/x86_64-linux-gnu/libresolv-2.27.so
+7f4a443e9000-7f4a445e9000 ---p 00017000 08:01 10490848                   /lib/x86_64-linux-gnu/libresolv-2.27.so
+7f4a445e9000-7f4a445ea000 r--p 00017000 08:01 10490848                   /lib/x86_64-linux-gnu/libresolv-2.27.so
+7f4a445ea000-7f4a445eb000 rw-p 00018000 08:01 10490848                   /lib/x86_64-linux-gnu/libresolv-2.27.so
+7f4a445eb000-7f4a445ed000 rw-p 00000000 00:00 0 
+7f4a445ed000-7f4a445f2000 r-xp 00000000 08:01 10490841                   /lib/x86_64-linux-gnu/libnss_dns-2.27.so
+7f4a445f2000-7f4a447f2000 ---p 00005000 08:01 10490841                   /lib/x86_64-linux-gnu/libnss_dns-2.27.so
+7f4a447f2000-7f4a447f3000 r--p 00005000 08:01 10490841                   /lib/x86_64-linux-gnu/libnss_dns-2.27.so
+7f4a447f3000-7f4a447f4000 rw-p 00006000 08:01 10490841                   /lib/x86_64-linux-gnu/libnss_dns-2.27.so
+7f4a447f4000-7f4a447f6000 r-xp 00000000 08:01 10490572                   /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
+7f4a447f6000-7f4a449f5000 ---p 00002000 08:01 10490572                   /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
+7f4a449f5000-7f4a449f6000 r--p 00001000 08:01 10490572                   /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
+7f4a449f6000-7f4a449f7000 rw-p 00002000 08:01 10490572                   /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
+7f4a449f7000-7f4a449fb000 r--s 00022000 08:01 6161421                    /home/dell/.gradle/caches/modules-2/files-2.1/net.sf.json-lib/json-lib/2.3/f35340c0a0380141f62c72b76c8fb4bfa638d8c1/json-lib-2.3-jdk15.jar
+7f4a449fb000-7f4a44a01000 r-xp 00000000 08:01 12977666                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libawt_headless.so
+7f4a44a01000-7f4a44a02000 rw-p 00006000 08:01 12977666                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libawt_headless.so
+7f4a44a02000-7f4a44a0c000 r--s 00116000 08:01 12977640                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/ext/localedata.jar
+7f4a44a0c000-7f4a44c0c000 rw-p 00000000 00:00 0 
+7f4a44c0c000-7f4a44e0c000 rw-p 00000000 00:00 0 
+7f4a44e0c000-7f4a44e3e000 r-xp 00000000 08:01 12977664                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libsunec.so
+7f4a44e3e000-7f4a44e45000 rw-p 00031000 08:01 12977664                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libsunec.so
+7f4a44e45000-7f4a44e56000 rw-p 00000000 00:00 0 
+7f4a44e56000-7f4a44e58000 r--s 00008000 08:01 12977635                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/ext/sunec.jar
+7f4a44e58000-7f4a44e5b000 r--s 00039000 08:01 12977643                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/ext/sunpkcs11.jar
+7f4a44e5b000-7f4a44e5e000 ---p 00000000 00:00 0 
+7f4a44e5e000-7f4a4515c000 rw-p 00000000 00:00 0 
+7f4a4515c000-7f4a4535c000 rw-p 00000000 00:00 0 
+7f4a4535c000-7f4a4555c000 rw-p 00000000 00:00 0 
+7f4a4555c000-7f4a4575c000 rw-p 00000000 00:00 0 
+7f4a4575c000-7f4a4595c000 rw-p 00000000 00:00 0 
+7f4a4595c000-7f4a45b5c000 rw-p 00000000 00:00 0 
+7f4a45b5c000-7f4a45d5c000 rw-p 00000000 00:00 0 
+7f4a45d5c000-7f4a45d5d000 r--s 00000000 08:01 6162869                    /home/dell/.gradle/caches/modules-2/files-2.1/org.codehaus.mojo/animal-sniffer-annotations/1.14/775b7e22fb10026eed3f86e8dc556dfafe35f2d5/animal-sniffer-annotations-1.14.jar
+7f4a45d5d000-7f4a45d66000 r--s 00085000 08:01 6162868                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.3.21/b5282a8f1152d443f2cdc6ea0bbe895ee30b1239/kotlin-daemon-client-1.3.21.jar
+7f4a45d66000-7f4a45d6d000 r--s 0004c000 08:01 6162866                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.3.21/9fafa0a2bec9a6d530afbff04e894bc85ebfed01/kotlin-build-common-1.3.21.jar
+7f4a45d6d000-7f4a45d6f000 r--s 00009000 08:01 6162865                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.21/29363d474ee6fda354900636320a177c7286def9/kotlin-script-runtime-1.3.21.jar
+7f4a45d6f000-7f4a45d76000 r--s 0001f000 08:01 6162864                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.21/f30e4a9897913e53d778f564110bafa1fef46643/kotlin-stdlib-common-1.3.21.jar
+7f4a45d76000-7f4a45d78000 r--s 00002000 08:01 6162863                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.2.0/88e3c593e9b3586e1c6177f89267da6fc6986f0c/error_prone_annotations-2.2.0.jar
+7f4a45d78000-7f4a45d7c000 r--s 0002a000 08:01 6162301                    /home/dell/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar
+7f4a45d7c000-7f4a45d7d000 r--s 00003000 08:01 6162861                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/3.4.0/767805331463128dfb118a15813e6ff65290dda6/baseLibrary-3.4.0.jar
+7f4a45d7d000-7f4a45d7e000 r--s 00003000 08:01 6162862                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/3.4.0/265b8ca5d867c32dd0b9032bd7e7bf49a1af199/databinding-common-3.4.0.jar
+7f4a45d7e000-7f4a45f7e000 rw-p 00000000 00:00 0 
+7f4a45f7e000-7f4a45f83000 r--s 00034000 08:01 6162860                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.0/c4ba5371a29ac9b2ad6129b1d39ea38750043eff/gson-2.8.0.jar
+7f4a45f83000-7f4a46183000 rw-p 00000000 00:00 0 
+7f4a46183000-7f4a461b5000 r--s 0026c000 08:01 6162859                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/26.0-jre/6a806eff209f36f635f943e16d97491f00f6bfab/guava-26.0-jre.jar
+7f4a461b5000-7f4a461b7000 r--s 00001000 08:01 6162858                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/annotations/26.4.0/99ccefd34e8488ece2098165d0ae1eedb6491797/annotations-26.4.0.jar
+7f4a461b7000-7f4a461bc000 r--s 0003f000 08:01 6162856                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apksig/3.4.0/5f67d13c63f838b3add79f01e7bb7ffe0e1c2e66/apksig-3.4.0.jar
+7f4a461bc000-7f4a461c1000 r--s 0002a000 08:01 6162857                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apkzlib/3.4.0/3cd3ade50ba5b812f77e24cb24e5fa9c567cf156/apkzlib-3.4.0.jar
+7f4a461c1000-7f4a461c4000 r--s 00008000 08:01 6162855                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.4.0/768154ff0029313694e6b7d1576ef79dfe7e2b7e/builder-model-3.4.0.jar
+7f4a461c4000-7f4a461cb000 r--s 00039000 08:01 6162854                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-embeddable/1.3.21/510f640ddab3074a890450f870e65630cf5e0055/kotlin-scripting-compiler-embeddable-1.3.21.jar
+7f4a461cb000-7f4a461cd000 r--s 00004000 08:01 6162853                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.3.21/2dd0fb04b6e1440e8bcf822f693630ffa1216615/kotlin-compiler-runner-1.3.21.jar
+7f4a461cd000-7f4a461e0000 r--s 0010f000 08:01 6162852                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.21/4bcc2012b84840e19e1e28074284cac908be0295/kotlin-stdlib-1.3.21.jar
+7f4a461e0000-7f4a461e1000 r--s 00000000 08:01 6162851                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.21/d207ce2c9bcf17dc8e51bab4dbfdac4d013e7138/kotlin-stdlib-jdk7-1.3.21.jar
+7f4a461e1000-7f4a46218000 r--s 00255000 08:01 6162849                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.21/d0d5ff2ac2ebd8a42697af41e20fc225a23c5d3b/kotlin-reflect-1.3.21.jar
+7f4a46218000-7f4a463f7000 r--s 01b19000 08:01 6162848                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.3.21/677cc9553b8964c895abc76da9b6a0faea8f671d/kotlin-compiler-embeddable-1.3.21.jar
+7f4a463f7000-7f4a463ff000 r--s 0004d000 08:01 6162850                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.3.21/311c0d1cbb0a194e8712edaef7b92a8f0919ca26/kotlin-android-extensions-1.3.21.jar
+7f4a463ff000-7f4a46406000 r--s 00050000 08:01 6162847                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.3.21/225aacd70ddfe71c72796bb317b3f12254c1ff3a/kotlin-annotation-processing-gradle-1.3.21.jar
+7f4a46406000-7f4a46408000 r--s 0000e000 08:01 6162846                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-native-utils/1.3.21/81929ae402824cfad58663ba500e0aaa0d327b8e/kotlin-native-utils-1.3.21.jar
+7f4a46408000-7f4a46429000 r--s 002f8000 08:01 6162841                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/26.4.0/850cd51c9aa8ab2e39a2a0cb8d7e90282d4d18db/protos-26.4.0.jar
+7f4a46429000-7f4a46637000 r--s 01b8a000 08:01 6162867                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.4.0/b237d03672bae54a1013deab3bbd936d78f07e79/builder-3.4.0.jar
+7f4a46637000-7f4a466f0000 r--s 00832000 08:01 6162820                    /home/dell/.gradle/caches/modules-2/files-2.1/io.fabric.tools/gradle/1.28.0/a7014c836c910b70d18f20e2e939c5c222a87e9b/gradle-1.28.0.jar
+7f4a466f0000-7f4a468f0000 rw-p 00000000 00:00 0 
+7f4a468f0000-7f4a46af0000 rw-p 00000000 00:00 0 
+7f4a46af0000-7f4a46af3000 ---p 00000000 00:00 0 
+7f4a46af3000-7f4a46bf1000 rw-p 00000000 00:00 0 
+7f4a46bf1000-7f4a46bf4000 ---p 00000000 00:00 0 
+7f4a46bf4000-7f4a46cf2000 rw-p 00000000 00:00 0 
+7f4a46cf2000-7f4a46cf5000 ---p 00000000 00:00 0 
+7f4a46cf5000-7f4a46df3000 rw-p 00000000 00:00 0 
+7f4a46df3000-7f4a46df6000 ---p 00000000 00:00 0 
+7f4a46df6000-7f4a46ef4000 rw-p 00000000 00:00 0 
+7f4a46f69000-7f4a46f6b000 r--s 00008000 08:01 6163118                    /home/dell/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar
+7f4a46f6b000-7f4a46f6d000 r--s 00005000 08:01 6554412                    /home/dell/.gradle/caches/transforms-2/files-2.1/d47793063bdc905881e94ad4615021a3/jetified-bolts-applinks-1.4.0.jar
+7f4a46f6d000-7f4a46f6f000 r--s 00006000 08:01 6167710                    /home/dell/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.25.0/eebabd88cab3bb27ecd309eb244faa143385efc0/grpc-context-1.25.0.jar
+7f4a46f6f000-7f4a46f71000 r--s 00007000 08:01 6164008                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.dagger/dagger/2.27/7bee2792b10523e298a7de508635c6eed0c309be/dagger-2.27.jar
+7f4a46f71000-7f4a46f78000 r--s 0007e000 08:01 6163112                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.3.3/b640badcc97f18867c4dfd249ef8d20ec0204c07/core-3.3.3.jar
+7f4a46f78000-7f4a46f79000 r--s 00000000 08:01 6163111                    /home/dell/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.4.0/cc174c559b5177982887bf6e1b76003aebad9516/bolts-android-1.4.0.jar
+7f4a46f79000-7f4a46f81000 r--s 00024000 08:01 6162116                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.70/3fa8dd6c896d635e78201e5e811545f3846dec04/kotlin-stdlib-common-1.3.70.jar
+7f4a46f81000-7f4a46f82000 r--s 00001000 08:01 6163280                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.auto.value/auto-value-annotations/1.6.2/ed193d86e0af90cc2342aedbe73c5d86b03fa09b/auto-value-annotations-1.6.2.jar
+7f4a46f82000-7f4a46f85000 r--s 00018000 08:01 4067138                    /home/dell/.gradle/caches/transforms-2/files-2.1/3e089919d8bb5b86d0361ba167eec4a3/jetified-volley-1.1.1-runtime.jar
+7f4a46f85000-7f4a46f8b000 r--s 00016000 08:01 6163110                    /home/dell/.gradle/caches/modules-2/files-2.1/org.androidannotations/androidannotations-api/3.2/89b33bb1e996eb2c4089f79d1b8651c71fe8e2d1/androidannotations-api-3.2.jar
+7f4a46f8b000-7f4a46f8d000 r--s 00009000 08:01 6167712                    /home/dell/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.26/77100a62c2e6f04b53977b9f541044d7d722693d/slf4j-api-1.7.26.jar
+7f4a46f8d000-7f4a46f97000 r--s 0004c000 08:01 6167709                    /home/dell/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-api/0.25.0/c3206a039fc480c7b6ff288865a4a961c4496e62/opencensus-api-0.25.0.jar
+7f4a46f97000-7f4a46f99000 r--s 00015000 08:01 6167707                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.17.2/78c7820b205002da4d2d137f6f312bd64b3d6049/okio-1.17.2.jar
+7f4a46f99000-7f4a46f9e000 r--s 00063000 08:01 6167708                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.14.4/4f6f76315e70d9af39a1125dc6ff7145e26e3040/okhttp-3.14.4.jar
+7f4a46f9e000-7f4a46f9f000 r--s 00000000 08:01 6163094                    /home/dell/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/annotations/4.9.0/ccdd6bc8b4f3c001fbddec29ecddd515a13203c4/annotations-4.9.0.jar
+7f4a46f9f000-7f4a46fa0000 r--s 00004000 08:01 6163093                    /home/dell/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/disklrucache/4.9.0/cbb185635e8f265d6391c7d43118d3856574dc3a/disklrucache-4.9.0.jar
+7f4a46fa0000-7f4a46fa1000 r--s 00000000 08:01 5770532                    /home/dell/.gradle/caches/transforms-2/files-2.1/e61dd86c6462c6d7c21bbab6e1783550/annotation-experimental-1.0.0-runtime.jar
+7f4a46fa1000-7f4a46fa3000 r--s 0001c000 08:01 6162544                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.constraintlayout/constraintlayout-solver/1.1.3/54abe9ffb22cc9019b0b6fcc10f185cc4e67b34e/constraintlayout-solver-1.1.3.jar
+7f4a46fa3000-7f4a46fa5000 r--s 00005000 08:01 6162677                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation/1.1.0/e3a6fb2f40e3a3842e6b7472628ba4ce416ea4c8/annotation-1.1.0.jar
+7f4a46fa5000-7f4a46fa6000 r--s 0000a000 08:01 6162671                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.collection/collection/1.1.0/1f27220b47669781457de0d600849a5de0e89909/collection-1.1.0.jar
+7f4a46fa6000-7f4a46fa7000 r--s 00007000 08:01 6949313                    /home/dell/.gradle/caches/transforms-2/files-2.1/04985bd03b4a80fff2f92b2655a8d7c8/versionedparcelable-1.1.0-runtime.jar
+7f4a46fa7000-7f4a46fa8000 r--s 00002000 08:01 7209964                    /home/dell/.gradle/caches/transforms-2/files-2.1/031216bee9d59ee0f9324bef58368a41/cursoradapter-1.0.0-runtime.jar
+7f4a46fa8000-7f4a46fa9000 r--s 00001000 08:01 7209969                    /home/dell/.gradle/caches/transforms-2/files-2.1/0be3b990ab65035e0852d45775632382/interpolator-1.0.0-runtime.jar
+7f4a46fa9000-7f4a46fab000 r--s 00003000 08:01 6163090                    /home/dell/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/10.0.0/bfac5a77e20734be4373037d47dfe8bd9b441366/butterknife-annotations-10.0.0.jar
+7f4a46fab000-7f4a46fac000 r--s 00003000 08:01 7209977                    /home/dell/.gradle/caches/transforms-2/files-2.1/2d0f0fed7d65a1fc9a253728cb1acd6a/print-1.0.0-runtime.jar
+7f4a46fac000-7f4a46fad000 r--s 00001000 08:01 7209982                    /home/dell/.gradle/caches/transforms-2/files-2.1/4dfc4eaec1da06beb29c992104c62880/localbroadcastmanager-1.0.0-runtime.jar
+7f4a46fad000-7f4a46fae000 r--s 00002000 08:01 7209987                    /home/dell/.gradle/caches/transforms-2/files-2.1/b563945db90e90fdce4418e11543d9f1/documentfile-1.0.0-runtime.jar
+7f4a46fae000-7f4a46fb0000 r--s 0000a000 08:01 14942455                   /home/dell/.gradle/caches/transforms-2/files-2.1/601dbcf8dbbca8e99cf12725d61a69ae/exifinterface-1.0.0-runtime.jar
+7f4a46fb0000-7f4a46fb1000 r--s 00003000 08:01 6167578                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-encoders/16.0.0/cdb2969254af26490ff30f05f5a2ccedebd49e98/firebase-encoders-16.0.0.jar
+7f4a46fb1000-7f4a46fb3000 r--s 00006000 08:01 7209994                    /home/dell/.gradle/caches/transforms-2/files-2.1/7b24fa93faaa9c72acb08b0d0dd59edc/firebase-encoders-json-17.0.0-runtime.jar
+7f4a46fb3000-7f4a46fb5000 r--s 00008000 08:01 7209999                    /home/dell/.gradle/caches/transforms-2/files-2.1/f03d087a8dcd2b1c47c1e091defbd175/jetified-firebase-components-16.0.0-runtime.jar
+7f4a46fb5000-7f4a46fb6000 r--s 00001000 08:01 7210004                    /home/dell/.gradle/caches/transforms-2/files-2.1/5f288bfb9a89da1261dbcacd40fbddff/jetified-transport-api-2.2.1-runtime.jar
+7f4a46fb6000-7f4a46fbc000 r--s 00022000 08:01 7210009                    /home/dell/.gradle/caches/transforms-2/files-2.1/aeafc3f1949c77289987a6be489749ac/jetified-transport-runtime-2.2.4-runtime.jar
+7f4a46fbc000-7f4a46fbe000 r--s 0000a000 08:01 7210014                    /home/dell/.gradle/caches/transforms-2/files-2.1/457480778897c47874cf62a8bb851ca8/jetified-transport-backend-cct-2.3.1-runtime.jar
+7f4a46fbe000-7f4a46fbf000 r--s 00004000 08:01 7210019                    /home/dell/.gradle/caches/transforms-2/files-2.1/ac0eae9530203bca17c94cd234c5232a/jetified-gifdecoder-4.9.0-runtime.jar
+7f4a46fbf000-7f4a46fc0000 r--s 00002000 08:01 7210027                    /home/dell/.gradle/caches/transforms-2/files-2.1/bb3f9ecf6ccf94c52d16eb7b14c46d79/lifecycle-viewmodel-2.2.0-runtime.jar
+7f4a46fc0000-7f4a46fc2000 r--s 00004000 08:01 6164379                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-common/2.2.0/4ef09a745007778eef83b92f8f23987a8ea59496/lifecycle-common-2.2.0.jar
+7f4a46fc2000-7f4a46fc3000 r--s 00002000 08:01 6162676                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.1.0/b3152fc64428c9354344bd89848ecddc09b6f07e/core-common-2.1.0.jar
+7f4a46fc3000-7f4a46fc4000 r--s 00002000 08:01 7210035                    /home/dell/.gradle/caches/transforms-2/files-2.1/d6c81c4be6059167846d6c26977a22c6/savedstate-1.0.0-runtime.jar
+7f4a46fc4000-7f4a46fc5000 r--s 00001000 08:01 7210040                    /home/dell/.gradle/caches/transforms-2/files-2.1/e4b16099f29dc33d4f149bc625b3b8a4/core-runtime-2.1.0-runtime.jar
+7f4a46fc5000-7f4a46fc7000 r--s 00001000 08:01 7210045                    /home/dell/.gradle/caches/transforms-2/files-2.1/bbf7a91d0bbfd6cb60f08f659d4b7a5c/lifecycle-livedata-core-2.2.0-runtime.jar
+7f4a46fc7000-7f4a46fc8000 r--s 00003000 08:01 7210050                    /home/dell/.gradle/caches/transforms-2/files-2.1/91f420e856b2749d9300e28bf35b3e33/lifecycle-viewmodel-savedstate-1.0.0-runtime.jar
+7f4a46fc8000-7f4a46fc9000 r--s 00002000 08:01 7210055                    /home/dell/.gradle/caches/transforms-2/files-2.1/08867a6f59f6ddcb29090a45f4677b49/lifecycle-livedata-2.2.0-runtime.jar
+7f4a46fc9000-7f4a46fca000 r--s 00002000 08:01 7210059                    /home/dell/.gradle/caches/transforms-2/files-2.1/a782ffcc12428e77e4173bfa2bd4531b/lifecycle-runtime-2.2.0-runtime.jar
+7f4a46fca000-7f4a46fcb000 r--s 00000000 08:01 7210064                    /home/dell/.gradle/caches/transforms-2/files-2.1/263e4a9ede0d3ccfc14b76dd733625ce/lifecycle-service-2.2.0-runtime.jar
+7f4a46fcb000-7f4a46fcd000 r--s 00001000 08:01 7210070                    /home/dell/.gradle/caches/transforms-2/files-2.1/f634c144d3a1e3250382c078213fb723/lifecycle-process-2.2.0-runtime.jar
+7f4a46fcd000-7f4a46fcf000 r--s 00004000 08:01 7210072                    /home/dell/.gradle/caches/transforms-2/files-2.1/f8d18919ebc4a048aa96bde6451eb6c9/cardview-1.0.0-runtime.jar
+7f4a46fcf000-7f4a46fdb000 r--s 000a0000 08:01 7210079                    /home/dell/.gradle/caches/transforms-2/files-2.1/1181c2ab83732cbf69d0904b87110ab5/core-1.2.0-runtime.jar
+7f4a46fdb000-7f4a46fdd000 r--s 00002000 08:01 7210082                    /home/dell/.gradle/caches/transforms-2/files-2.1/d29bbd87c2f744421a51bdfe2b0e20d5/activity-1.1.0-runtime.jar
+7f4a46fdd000-7f4a46fde000 r--s 0000c000 08:01 7210087                    /home/dell/.gradle/caches/transforms-2/files-2.1/bdd9132b041635d81c11c8fb93bb9860/navigation-common-2.0.0-runtime.jar
+7f4a46fde000-7f4a46fdf000 r--s 00001000 08:01 7210092                    /home/dell/.gradle/caches/transforms-2/files-2.1/6f5b300f70a7eb3fc5661b679f49daea/asynclayoutinflater-1.0.0-runtime.jar
+7f4a46fdf000-7f4a46fe1000 r--s 00007000 08:01 7210099                    /home/dell/.gradle/caches/transforms-2/files-2.1/ee4d3133aa38f9788224d5376a7d6504/swiperefreshlayout-1.0.0-runtime.jar
+7f4a46fe1000-7f4a46fe3000 r--s 00007000 08:01 13908584                   /home/dell/.gradle/caches/transforms-2/files-2.1/debb3753280de005ac9f3e30df48a976/customview-1.0.0-runtime.jar
+7f4a46fe3000-7f4a46fe9000 r--s 00058000 08:01 14291388                   /home/dell/.gradle/caches/transforms-2/files-2.1/85c4f9764a863b8ae0aa0e14f3abfa82/recyclerview-1.1.0-runtime.jar
+7f4a46fe9000-7f4a46feb000 r--s 0000c000 08:01 15473136                   /home/dell/.gradle/caches/transforms-2/files-2.1/2e0fe005218e4f41d11d33fcdb38329a/viewpager-1.0.0-runtime.jar
+7f4a46feb000-7f4a46fed000 r--s 00007000 08:01 1185944                    /home/dell/.gradle/caches/transforms-2/files-2.1/fe77b2157a98d0f471f6537eb942776a/loader-1.0.0-runtime.jar
+7f4a46fed000-7f4a46ff5000 r--s 00043000 08:01 2894054                    /home/dell/.gradle/caches/transforms-2/files-2.1/da8a17a4ea4864d6a5158a2d5c147f83/jetified-play-services-basement-17.3.0-runtime.jar
+7f4a46ff5000-7f4a471f5000 rw-p 00000000 00:00 0 
+7f4a471f5000-7f4a473f5000 rw-p 00000000 00:00 0 
+7f4a473f5000-7f4a473f8000 ---p 00000000 00:00 0 
+7f4a473f8000-7f4a474f6000 rw-p 00000000 00:00 0 
+7f4a474f6000-7f4a474f7000 r--s 00002000 08:01 6162845                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-model/1.3.21/4a5711a73924e753730e2afcd610af6ff983efa5/kotlin-gradle-plugin-model-1.3.21.jar
+7f4a474f7000-7f4a474fa000 r--s 0000e000 08:01 6162844                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.3.21/9eadd21553b39ec3bd9549ce702064de4ab49ecd/kotlin-gradle-plugin-api-1.3.21.jar
+7f4a474fa000-7f4a47500000 r--s 0008b000 08:01 6162843                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/aapt2-proto/0.3.1/8311800abb3dcd84426a0de834a6b884a173d864/aapt2-proto-0.3.1.jar
+7f4a47500000-7f4a4754e000 r--s 00481000 08:01 6162840                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/bundletool/0.7.2/31f71b66edcbe41de0268e14c961a7799a03d42a/bundletool-0.7.2.jar
+7f4a4754e000-7f4a47550000 r--s 00002000 08:01 6162842                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.21/d0634d54452abc421db494ad32dd215e6591c49f/kotlin-stdlib-jdk8-1.3.21.jar
+7f4a47550000-7f4a47554000 r--s 00032000 08:01 6162839                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/common/26.4.0/539939e284fba9fe343b890a6e21c9333767c886/common-26.4.0.jar
+7f4a47554000-7f4a4755a000 r--s 00032000 08:01 6162838                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/repository/26.4.0/d91be89a520ae1e1d0abcc41e87afa5f905a8dad/repository-26.4.0.jar
+7f4a4755a000-7f4a4755c000 r--s 00006000 08:01 6162837                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/26.4.0/48ac12dd54ff16487d3553861e108d9e38d5b2f7/dvlib-26.4.0.jar
+7f4a4755c000-7f4a4755f000 r--s 00019000 08:01 6162836                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.4.0/c76e05e0c19ae0f5fffe2dcc190bd5a0aa7b546b/layoutlib-api-26.4.0.jar
+7f4a4755f000-7f4a4756a000 r--s 0009f000 08:01 6162835                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.4.0/2249d66f8d8392630a03f59e23f0eef871f795a5/sdklib-26.4.0.jar
+7f4a4756a000-7f4a47570000 r--s 00051000 08:01 6162834                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/26.4.0/889c2419aefceeb31749d49615eb64e798747458/ddmlib-26.4.0.jar
+7f4a47570000-7f4a47589000 r--s 0013f000 08:01 6162832                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/sdk-common/26.4.0/7cda5b1442edfbd2f81c0b525f80d72ef960bc07/sdk-common-26.4.0.jar
+7f4a47589000-7f4a4758d000 r--s 0002c000 08:01 6162831                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/manifest-merger/26.4.0/97ad7348b1c018f304378c9b72094fb9cbfe6433/manifest-merger-26.4.0.jar
+7f4a4758d000-7f4a4758f000 r--s 00009000 08:01 6162830                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.android.gms/strict-version-matcher-plugin/1.1.0/2f2740b60768460c48ee9e504332b68afec006d1/strict-version-matcher-plugin-1.1.0.jar
+7f4a4758f000-7f4a47596000 r--s 00053000 08:01 6162829                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-compiler-common/3.4.0/9a080792ea0c78422230c02bc8f457e7a6c19f17/databinding-compiler-common-3.4.0.jar
+7f4a47596000-7f4a475b0000 r--s 0013b000 08:01 6162827                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.3.21/b6a5758c55aa1c0189b136fb888d24bfec5978cf/kotlin-gradle-plugin-1.3.21.jar
+7f4a475b0000-7f4a475ed000 r--s 00380000 08:01 6162822                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.4.0/16af40a504b8f8ff572c8c2bbf4ace3dccd2f5b/gradle-3.4.0.jar
+7f4a475ed000-7f4a47600000 r--s 00345000 08:01 12977687                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/resources.jar
+7f4a47600000-7f4a47800000 rw-p 00000000 00:00 0 
+7f4a47800000-7f4a47a00000 rw-p 00000000 00:00 0 
+7f4a47a00000-7f4a47c00000 rw-p 00000000 00:00 0 
+7f4a47c00000-7f4a47e00000 rw-p 00000000 00:00 0 
+7f4a47e00000-7f4a48000000 rw-p 00000000 00:00 0 
+7f4a48000000-7f4a49595000 rw-p 00000000 00:00 0 
+7f4a49595000-7f4a4c000000 ---p 00000000 00:00 0 
+7f4a4c000000-7f4a4fff1000 rw-p 00000000 00:00 0 
+7f4a4fff1000-7f4a50000000 ---p 00000000 00:00 0 
+7f4a50000000-7f4a52712000 rw-p 00000000 00:00 0 
+7f4a52712000-7f4a54000000 ---p 00000000 00:00 0 
+7f4a54000000-7f4a57ff6000 rw-p 00000000 00:00 0 
+7f4a57ff6000-7f4a58000000 ---p 00000000 00:00 0 
+7f4a58000000-7f4a58572000 rw-p 00000000 00:00 0 
+7f4a58572000-7f4a5c000000 ---p 00000000 00:00 0 
+7f4a5c000000-7f4a5c8b4000 rw-p 00000000 00:00 0 
+7f4a5c8b4000-7f4a60000000 ---p 00000000 00:00 0 
+7f4a60000000-7f4a60240000 rw-p 00000000 00:00 0 
+7f4a60240000-7f4a64000000 ---p 00000000 00:00 0 
+7f4a64000000-7f4a650bc000 rw-p 00000000 00:00 0 
+7f4a650bc000-7f4a68000000 ---p 00000000 00:00 0 
+7f4a68000000-7f4a69dd9000 rw-p 00000000 00:00 0 
+7f4a69dd9000-7f4a6c000000 ---p 00000000 00:00 0 
+7f4a6c000000-7f4a6ffff000 rw-p 00000000 00:00 0 
+7f4a6ffff000-7f4a70000000 ---p 00000000 00:00 0 
+7f4a70000000-7f4a70ce3000 rw-p 00000000 00:00 0 
+7f4a70ce3000-7f4a74000000 ---p 00000000 00:00 0 
+7f4a74000000-7f4a77ff1000 rw-p 00000000 00:00 0 
+7f4a77ff1000-7f4a78000000 ---p 00000000 00:00 0 
+7f4a78000000-7f4a7835b000 rw-p 00000000 00:00 0 
+7f4a7835b000-7f4a7c000000 ---p 00000000 00:00 0 
+7f4a7c000000-7f4a7f19a000 rw-p 00000000 00:00 0 
+7f4a7f19a000-7f4a80000000 ---p 00000000 00:00 0 
+7f4a80000000-7f4a80772000 rw-p 00000000 00:00 0 
+7f4a80772000-7f4a84000000 ---p 00000000 00:00 0 
+7f4a84000000-7f4a84d72000 rw-p 00000000 00:00 0 
+7f4a84d72000-7f4a88000000 ---p 00000000 00:00 0 
+7f4a88000000-7f4a88b38000 rw-p 00000000 00:00 0 
+7f4a88b38000-7f4a8c000000 ---p 00000000 00:00 0 
+7f4a8c000000-7f4a8c001000 r--s 00003000 08:01 6162833                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.4.0/c7b44da938640cb249dcc719ede09c2e9896711d/builder-test-api-3.4.0.jar
+7f4a8c001000-7f4a8c005000 r--s 00013000 08:01 6162828                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-api/3.4.0/ac85b2c363dbcad0303df561c8c4f99a925c2878/gradle-api-3.4.0.jar
+7f4a8c005000-7f4a8c006000 r--s 00004000 08:01 6162826                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-gradle-api/26.4.0/931c6d23146c4d8286aa814eb8d5d8af9b69af11/lint-gradle-api-26.4.0.jar
+7f4a8c006000-7f4a8c007000 r--s 00003000 08:01 6162825                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/crash/26.4.0/45f30743b0d2fb45f1e1458e56baa104221f5501/crash-26.4.0.jar
+7f4a8c007000-7f4a8c009000 r--s 0000b000 08:01 6162824                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/26.4.0/2d083560f501898bcd0c42e704abcfb7746ef20f/shared-26.4.0.jar
+7f4a8c009000-7f4a8c00a000 r--s 00008000 08:01 6162823                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/tracker/26.4.0/b3f28a0cfe0b5424e280f97123e4f7d4b7aa2ce9/tracker-26.4.0.jar
+7f4a8c00a000-7f4a8c00b000 r--s 00009000 08:01 6162821                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.gms/google-services/4.2.0/4b8cdb1daaed013c1523add39c8158d86e549d6c/google-services-4.2.0.jar
+7f4a8c00b000-7f4a8c20b000 rw-p 00000000 00:00 0 
+7f4a8c20b000-7f4a8c20d000 r--s 00016000 08:01 12977694                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/jce.jar
+7f4a8c20d000-7f4a8c40d000 rw-p 00000000 00:00 0 
+7f4a8c40d000-7f4a8c40e000 r--s 00005000 08:01 14683601                   /home/dell/.gradle/caches/transforms-2/files-2.1/7e4e2c3d02c7b34189d8e4aa396b054f/slidingpanelayout-1.0.0-runtime.jar
+7f4a8c40e000-7f4a8c411000 r--s 00026000 08:01 6161369                    /home/dell/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy.modules.http-builder/http-builder/0.7.2/323092cd786480311c1cf693770f9e6fc20a8bef/http-builder-0.7.2.jar
+7f4a8c411000-7f4a8c414000 r--s 00018000 08:01 6161366                    /home/dell/.gradle/caches/modules-2/files-2.1/net.saliman/gradle-cobertura-plugin/2.3.0/f5cacd10bf11dd35fb8fa21fdfa48dae3e48de6/gradle-cobertura-plugin-2.3.0.jar
+7f4a8c414000-7f4a8c415000 r--s 00004000 08:01 6161266                    /home/dell/.gradle/caches/modules-2/files-2.1/com.stanfy.android/gradle-plugin-java-robolectric/2.0/9c97baefad177b765d5297a035f8628e434ed527/gradle-plugin-java-robolectric-2.0.jar
+7f4a8c415000-7f4a8c416000 r--s 00002000 08:01 6161264                    /home/dell/.gradle/caches/modules-2/files-2.1/com.github.dcendents/android-maven-gradle-plugin/1.3/56f44bee48445bcb6b1f1e0f04576de3fee13426/android-maven-gradle-plugin-1.3.jar
+7f4a8c416000-7f4a8c419000 r--s 00025000 08:01 6161255                    /home/dell/.gradle/caches/modules-2/files-2.1/com.jfrog.bintray.gradle/gradle-bintray-plugin/1.0/fd62ff54e292b47b04f276347703756987d3c20b/gradle-bintray-plugin-1.0.jar
+7f4a8c419000-7f4a8c41e000 r--s 0003c000 08:01 12977639                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/ext/sunjce_provider.jar
+7f4a8c41e000-7f4a8c426000 r--s 00022000 08:01 6161139                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.50/3d9cd3e1bc7b92e95f43d45be3bfbcf38e36ab87/kotlin-stdlib-common-1.3.50.jar
+7f4a8c426000-7f4a8c43a000 r--s 00130000 08:01 6161132                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.50/b529d1738c7e98bbfa36a4134039528f2ce78ebf/kotlin-stdlib-1.3.50.jar
+7f4a8c43a000-7f4a8c43b000 r--s 00000000 08:01 6161131                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.50/50ad05ea1c2595fb31b800e76db464d08d599af3/kotlin-stdlib-jdk7-1.3.50.jar
+7f4a8c43b000-7f4a8c43c000 r--s 00003000 08:01 6161130                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/3.5.3/5da8b7daa2f10ec359a13ee778eeabf15c1758b1/baseLibrary-3.5.3.jar
+7f4a8c43c000-7f4a8c43d000 r--s 00003000 08:01 6161129                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/3.5.3/72bb6cb779ae61710a01ff76d9d3cab355c44a4f/databinding-common-3.5.3.jar
+7f4a8c43d000-7f4a8c475000 r--s 00272000 08:01 6161128                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.50/b499f22fd7c3e9c2e5b6c4005221fa47fc7f9a7a/kotlin-reflect-1.3.50.jar
+7f4a8c475000-7f4a8c476000 r--s 00002000 08:01 6161126                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/annotations/26.5.3/87a36f2086b41d1ec162a6e74c4f999d58eb1310/annotations-26.5.3.jar
+7f4a8c476000-7f4a8c47d000 r--s 0004f000 08:01 6161125                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apksig/3.5.3/d5ffda89f909743ad8e77b3c28ed351695037543/apksig-3.5.3.jar
+7f4a8c47d000-7f4a8c481000 r--s 0002d000 08:01 6161124                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apkzlib/3.5.3/8e17d7b8bb5f756c139619d86facca1675bc6164/apkzlib-3.5.3.jar
+7f4a8c481000-7f4a8c484000 r--s 00008000 08:01 6161123                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.5.3/775377503072e1b6a701c3ea923c468cedd4e2eb/builder-model-3.5.3.jar
+7f4a8c484000-7f4a8c4a8000 r--s 00344000 08:01 6161121                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/26.5.3/16d70f0d597eac5d39180b1ce2d9b274f8802cf9/protos-26.5.3.jar
+7f4a8c4a8000-7f4a8c4a9000 r--s 00003000 08:01 6161120                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.50/bf65725d4ae2cf00010d84e945fcbc201f590e11/kotlin-stdlib-jdk8-1.3.50.jar
+7f4a8c4a9000-7f4a8c4ad000 r--s 00039000 08:01 6160928                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/common/26.5.3/47409edcd2331596b42c33160101a86046e1c6f5/common-26.5.3.jar
+7f4a8c4ad000-7f4a8c4af000 r--s 00014000 08:01 6160927                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/26.5.3/594abc68f0518057cdb150e4c8cc73bc5c94183e/shared-26.5.3.jar
+7f4a8c4af000-7f4a8c4b4000 r--s 00033000 08:01 6160926                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/repository/26.5.3/91466e99a63da0267b17bdfb617f54582e311618/repository-26.5.3.jar
+7f4a8c4b4000-7f4a8c4b8000 r--s 00019000 08:01 6160924                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.5.3/6549e729f3f27c7d05049494f25cfd01890c00e0/layoutlib-api-26.5.3.jar
+7f4a8c4b8000-7f4a8c50e000 r--s 00776000 08:01 6160908                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.5.3/39bba1af533b25f6c1140e3c795ff815a6ad86ba/builder-3.5.3.jar
+7f4a8c50e000-7f4a8c70e000 rw-p 00000000 00:00 0 
+7f4a8c70e000-7f4a8c90e000 rw-p 00000000 00:00 0 
+7f4a8c90e000-7f4a8cb0e000 rw-p 00000000 00:00 0 
+7f4a8cb0e000-7f4a8cb0f000 r--s 00005000 08:01 6162334                    /home/dell/.gradle/caches/modules-2/files-2.1/com.sun.istack/istack-commons-runtime/2.21/c969d8f15c467f0ef7d7b04889afbe7b5d48e22f/istack-commons-runtime-2.21.jar
+7f4a8cb0f000-7f4a8cb11000 r--s 0000f000 08:01 6162333                    /home/dell/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/txw2/2.2.11/2df047d8c187a62f2177bf6013f1f9786cdfc8a2/txw2-2.2.11.jar
+7f4a8cb11000-7f4a8cb14000 r--s 00016000 08:01 6162332                    /home/dell/.gradle/caches/modules-2/files-2.1/javax.xml.bind/jaxb-api/2.2.12-b140109.1041/7ed0e0d01198614194d56dfb03d9d95aa311824c/jaxb-api-2.2.12-b140109.1041.jar
+7f4a8cb14000-7f4a8cb19000 r--s 00044000 08:01 6162331                    /home/dell/.gradle/caches/modules-2/files-2.1/com.sun.xml.fastinfoset/FastInfoset/1.2.13/98f56b9354e27bd2941cc5d461344e240ae51ae/FastInfoset-1.2.13.jar
+7f4a8cb19000-7f4a8cb1b000 r--s 00007000 08:01 6162330                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jvnet.staxex/stax-ex/1.7.7/18bed5a0da27a6b43efe01282f2dc911b1cb3a72/stax-ex-1.7.7.jar
+7f4a8cb1b000-7f4a8cb20000 r--s 00021000 08:01 6162329                    /home/dell/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/jaxb-core/2.2.11/f5745049f5fb9cb9d9b5f513c207727f475983e9/jaxb-core-2.2.11.jar
+7f4a8cb20000-7f4a8cb31000 r--s 000eb000 08:01 6162328                    /home/dell/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/jaxb-runtime/2.2.11/65510afc78679e347b0d774617a97fedac94f8/jaxb-runtime-2.2.11.jar
+7f4a8cb31000-7f4a8cb34000 r--s 00011000 08:01 6162326                    /home/dell/.gradle/caches/modules-2/files-2.1/com.sun.activation/javax.activation/1.2.0/bf744c1e2776ed1de3c55c8dac1057ec331ef744/javax.activation-1.2.0.jar
+7f4a8cb34000-7f4a8cb35000 r--s 0000a000 08:01 6162318                    /home/dell/.gradle/caches/modules-2/files-2.1/net.sf.kxml/kxml2/2.3.0/ccbc77a5fd907ef863c29f3596c6f54ffa4e9442/kxml2-2.3.0.jar
+7f4a8cb35000-7f4a8cb40000 r--s 00081000 08:01 6161135                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.trove4j/trove4j/20160824/33c3e174a9c8368d93761d3d12712db18e903959/trove4j-20160824.jar
+7f4a8cb40000-7f4a8cb49000 r--s 00064000 08:01 6162317                    /home/dell/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.12/84caa68576e345eb5e7ae61a0e5a9229eb100d7b/commons-compress-1.12.jar
+7f4a8cb49000-7f4a8cb50000 r--s 0003f000 08:01 6162327                    /home/dell/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.10/4b95f4897fa13f2cd904aee711aeafc0c5295cd8/commons-codec-1.10.jar
+7f4a8cb50000-7f4a8cb52000 r--s 0000e000 08:01 6162325                    /home/dell/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar
+7f4a8cb52000-7f4a8cb54000 r--s 00003000 08:01 6162315                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar
+7f4a8cb54000-7f4a8cb5c000 r--s 00027000 08:01 6164356                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.10/6229be3465805c99db1142ad75e6c6ddeac0b04c/kotlin-stdlib-common-1.4.10.jar
+7f4a8cb5c000-7f4a8cb6d000 r--s 00100000 08:01 6162114                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.2.1/3839faf625f4197acaeceeb6da000f011a2acb49/kotlinx-coroutines-core-1.2.1.jar
+7f4a8cb6d000-7f4a8cb74000 r--s 0005d000 08:01 6162113                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.3.70/1cb213aca2e90bd920116755bc263be4337708c9/kotlin-build-common-1.3.70.jar
+7f4a8cb74000-7f4a8cb7f000 r--s 00081000 08:01 6162311                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.intellij.deps/trove4j/1.0.20181211/216c2e14b070f334479d800987affe4054cd563f/trove4j-1.0.20181211.jar
+7f4a8cb7f000-7f4a8cb96000 r--s 00108000 08:01 6162112                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-embeddable/1.3.70/2e8b285baf0e62b1b61edefe61d029d535551d6a/kotlin-daemon-embeddable-1.3.70.jar
+7f4a8cb96000-7f4a8cb98000 r--s 00009000 08:01 6162111                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.70/28a3923786ef1a651ebea81ff0f211dfd7436070/kotlin-script-runtime-1.3.70.jar
+7f4a8cb98000-7f4a8cb9e000 r--s 00045000 08:01 6162309                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.6/6f14738ec2e9dd0011e343717fa624a10f8aab64/jdom2-2.0.6.jar
+7f4a8cb9e000-7f4a8cbbd000 r--s 0016b000 08:01 6162307                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.auto.value/auto-value/1.5.2/1b94ab7ec707e2220a0d1a7517488d1843236345/auto-value-1.5.2.jar
+7f4a8cbbd000-7f4a8cbd2000 r--s 00123000 08:01 6162305                    /home/dell/.gradle/caches/modules-2/files-2.1/net.sf.proguard/proguard-base/6.0.3/7135739d2d3834964c543ed21e2936ce34747aca/proguard-base-6.0.3.jar
+7f4a8cbd2000-7f4a8cbd4000 r--s 00015000 08:01 6162304                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.8.0/e858dc62ef484048540d27d36f3ec2177a3fa9b1/javapoet-1.8.0.jar
+7f4a8cbd4000-7f4a8cbd7000 r--s 00033000 08:01 6162303                    /home/dell/.gradle/caches/modules-2/files-2.1/com.googlecode.juniversalchardet/juniversalchardet/1.0.3/cd49678784c46aa8789c060538e0154013bb421b/juniversalchardet-1.0.3.jar
+7f4a8cbd7000-7f4a8cbee000 r--s 00154000 08:01 6162302                    /home/dell/.gradle/caches/modules-2/files-2.1/org.antlr/antlr4/4.5.3/f35db7e4b2446e4174ba6a73db7bd6b3e6bb5da1/antlr4-4.5.3.jar
+7f4a8cbee000-7f4a8cbef000 r--s 00003000 08:01 6164166                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/3.5.4/8d6e308beba7242cdae35cf4fd27e642d9c973ca/baseLibrary-3.5.4.jar
+7f4a8cbef000-7f4a8cbf0000 r--s 00003000 08:01 6164167                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/3.5.4/6c02f6a4a55b3ee69345055fb9c63acf931bc972/databinding-common-3.5.4.jar
+7f4a8cbf0000-7f4a8cbf7000 r--s 00049000 08:01 6162300                    /home/dell/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.10/acc54d9b28bdffe4bbde89ed2e4a1e86b5285e2b/httpcore-4.4.10.jar
+7f4a8cbf7000-7f4a8cbf8000 r--s 00002000 08:01 6164165                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/annotations/26.5.4/f3165077d2dc34a2fed93ed248f3b958fec162af/annotations-26.5.4.jar
+7f4a8cbf8000-7f4a8cbf9000 r--s 00003000 08:01 6162291                    /home/dell/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar
+7f4a8cbf9000-7f4a8cd1e000 r--s 00f5d000 08:01 6162293                    /home/dell/.gradle/caches/modules-2/files-2.1/it.unimi.dsi/fastutil/7.2.0/5ad3a2bb04143f70aa0765fc29fc29571a7d6b34/fastutil-7.2.0.jar
+7f4a8cd1e000-7f4a8cd1f000 r--s 00000000 08:01 6162290                    /home/dell/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar
+7f4a8cd1f000-7f4a8cd6a000 r--s 002ff000 08:01 6162289                    /home/dell/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk15on/1.56/a153c6f9744a3e9dd6feab5e210e1c9861362ec7/bcprov-jdk15on-1.56.jar
+7f4a8cd6a000-7f4a8cd7b000 r--s 00097000 08:01 6162288                    /home/dell/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15on/1.56/4648af70268b6fdb24674fb1fd7c1fcc73db1231/bcpkix-jdk15on-1.56.jar
+7f4a8cd7b000-7f4a8cd7d000 r--s 00002000 08:01 6162287                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.5.0/81241ff7078ef14f42ea2a8995fa09c096256e6b/javawriter-2.5.0.jar
+7f4a8cd7d000-7f4a8cd84000 r--s 0004f000 08:01 6164163                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apksig/3.5.4/25e48bdb40ac1e627248575dba64ab5fda63389a/apksig-3.5.4.jar
+7f4a8cd84000-7f4a8cd87000 r--s 00008000 08:01 6164162                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.5.4/ce9181b0c254dba36f8a1d5ae57fd0ec56c9584c/builder-model-3.5.4.jar
+7f4a8cd87000-7f4a8cd8b000 r--s 00031000 08:01 6166898                    /home/dell/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.6/815893df5f31da2ece4040fe0a12fd44b577afaf/commons-io-2.6.jar
+7f4a8cd8b000-7f4a8cd8d000 r--s 0000c000 08:01 6166895                    /home/dell/.gradle/caches/modules-2/files-2.1/commons-cli/commons-cli/1.4/c51c00206bb913cd8612b24abd9fa98ae89719b1/commons-cli-1.4.jar
+7f4a8cd8d000-7f4a8cd9a000 r--s 000af000 08:01 6162297                    /home/dell/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.6/1afe5621985efe90a92d0fbc9be86271efbe796f/httpclient-4.5.6.jar
+7f4a8cd9a000-7f4a8cd9c000 r--s 00009000 08:01 6162296                    /home/dell/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.5.6/164343da11db817e81e24e0d9869527e069850c9/httpmime-4.5.6.jar
+7f4a8cd9c000-7f4a8cd9d000 r--s 00000000 08:01 6161138                    /home/dell/.gradle/caches/modules-2/files-2.1/org.codehaus.mojo/animal-sniffer-annotations/1.17/f97ce6decaea32b36101e37979f8b647f00681fb/animal-sniffer-annotations-1.17.jar
+7f4a8cd9d000-7f4a8cd9f000 r--s 00001000 08:01 6162323                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.j2objc/j2objc-annotations/1.1/ed28ded51a8b1c6b112568def5f4b455e6809019/j2objc-annotations-1.1.jar
+7f4a8cd9f000-7f4a8cda1000 r--s 00002000 08:01 6161134                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.3.1/a6a2b2df72fd13ec466216049b303f206bd66c5d/error_prone_annotations-2.3.1.jar
+7f4a8cda1000-7f4a8cdab000 r--s 00026000 08:01 6162322                    /home/dell/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/2.5.2/cea74543d5904a30861a61b4643a5f2bb372efc4/checker-qual-2.5.2.jar
+7f4a8cdab000-7f4a8cdac000 r--s 00000000 08:01 6161137                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/b421526c5f297295adef1c886e5246c39d4ac629/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar
+7f4a8cdac000-7f4a8cdae000 r--s 00000000 08:01 6161136                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.guava/failureaccess/1.0.1/1dcf1de382a0bf95a3d8b0849546c88bac1292c9/failureaccess-1.0.1.jar
+7f4a8cdae000-7f4a8cdb0000 r--s 00003000 08:01 6162319                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar
+7f4a8cdb0000-7f4a8cdd3000 r--s 0014d000 08:01 6162110                    /home/dell/.gradle/caches/modules-2/files-2.1/de.undercouch/gradle-download-task/4.0.2/2aaf2b081cd0dd5b3cf25fde69a20b043dd46fbd/gradle-download-task-4.0.2.jar
+7f4a8cdd3000-7f4a8cde8000 r--s 00157000 08:01 6164368                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.10/ea29e063d2bbe695be13e9d044dcfb0c7add398e/kotlin-stdlib-1.4.10.jar
+7f4a8cde8000-7f4a8cde9000 r--s 00000000 08:01 6164357                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.4.10/30e46450b0bb3dbf43898d2f461be4a942784780/kotlin-stdlib-jdk7-1.4.10.jar
+7f4a8cde9000-7f4a8cdeb000 r--s 0000b000 08:01 6162104                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-util-io/1.3.70/fe4d0ae44ce77a56af663aab39c45e480471eec4/kotlin-util-io-1.3.70.jar
+7f4a8cdeb000-7f4a8cdf0000 r--s 00026000 08:01 6162103                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-common/1.3.70/74a96e3d496437e9b9bb02433f997b7e8868b36e/kotlin-scripting-common-1.3.70.jar
+7f4a8cdf0000-7f4a8cdf4000 r--s 00027000 08:01 6162102                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-jvm/1.3.70/b2af86b5d6380cbf6a0eb6d15fec26cd48b20869/kotlin-scripting-jvm-1.3.70.jar
+7f4a8cdf4000-7f4a8cdf9000 r--s 0002c000 08:01 6162101                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-util-klib/1.3.70/eb88e3da15b8f23e7f62372ce7b6ea3c51e7d445/kotlin-util-klib-1.3.70.jar
+7f4a8cdf9000-7f4a8cdfc000 r--s 00010000 08:01 6162098                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-native-utils/1.3.70/d3653a2c79ad715b053d5aea2a24e6025f06829a/kotlin-native-utils-1.3.70.jar
+7f4a8cdfc000-7f4a8cdfd000 r--s 00002000 08:01 6162097                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-model/1.3.70/8b3a54fbacab7f232f374fd5803df33a6fb63ccd/kotlin-gradle-plugin-model-1.3.70.jar
+7f4a8cdfd000-7f4a8ce00000 r--s 00011000 08:01 6162096                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.3.70/23796c7dc4c8bb90f6bb7c5918453a350fcf36da/kotlin-gradle-plugin-api-1.3.70.jar
+7f4a8ce00000-7f4a8ce3a000 r--s 00284000 08:01 6162099                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.70/75a87c4141e55abbaf418b8495550ced8894045d/kotlin-reflect-1.3.70.jar
+7f4a8ce3a000-7f4a8ce46000 r--s 0009a000 08:01 6161156                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.3.70/557416272d20aee752a3048b69643695eb63e479/kotlin-daemon-client-1.3.70.jar
+7f4a8ce46000-7f4a8ce4c000 r--s 00045000 08:01 6161155                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-impl-embeddable/1.3.70/800e7611e0cf3eb6ee8e05eba1915230d1c9d1d7/kotlin-scripting-compiler-impl-embeddable-1.3.70.jar
+7f4a8ce4c000-7f4a8ce54000 r--s 0004b000 08:01 6161154                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-embeddable/1.3.70/58cca8e23668d6b0938be1a4e17f672b04cfcc68/kotlin-scripting-compiler-embeddable-1.3.70.jar
+7f4a8ce54000-7f4a8d0ae000 r--s 023fa000 08:01 6162100                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.3.70/ffdb726044ef157be84b9c003b1332430aadea9f/kotlin-compiler-embeddable-1.3.70.jar
+7f4a8d0ae000-7f4a8d0b5000 r--s 0004f000 08:01 6161151                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.3.70/3a57c3118c2af9a47fbf8d189653ca7f920ec7db/kotlin-android-extensions-1.3.70.jar
+7f4a8d0b5000-7f4a8d0bd000 r--s 00065000 08:01 6161149                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.3.70/9616e21529c19fd61d03a38d37b195904cde7631/kotlin-annotation-processing-gradle-1.3.70.jar
+7f4a8d0bd000-7f4a8d0cc000 r--s 00143000 08:01 6162265                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.4.0/b32aba0cbe737a4ca953f71688725972e3ee927c/protobuf-java-3.4.0.jar
+7f4a8d0cc000-7f4a8d0d3000 r--s 00090000 08:01 6161122                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/aapt2-proto/0.4.0/d4db96aa0d2e161d08a038731e08c3ebf612cd12/aapt2-proto-0.4.0.jar
+7f4a8d0d3000-7f4a8d0f7000 r--s 00344000 08:01 6164153                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/26.5.4/60c319aa5d271e400787987ae15e61e1e73dc4c5/protos-26.5.4.jar
+7f4a8d0f7000-7f4a8d129000 r--s 0026d000 08:01 6161127                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/27.0.1-jre/bd41a290787b5301e63929676d792c507bbc00ae/guava-27.0.1-jre.jar
+7f4a8d129000-7f4a8d180000 r--s 00776000 08:01 6164138                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.5.4/287ffb45bab7531f677cb1411b1f157b43d1f4ab/builder-3.5.4.jar
+7f4a8d180000-7f4a8d1d1000 r--s 004b1000 08:01 6160898                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/bundletool/0.9.0/6c7492aedf12ff02ed7c634246026ac7f7372dd2/bundletool-0.9.0.jar
+7f4a8d1d1000-7f4a8d214000 r--s 00336000 08:01 6161150                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.3.70/2dad629a0950b38bb344f860e0e04e527a17a531/kotlin-gradle-plugin-1.3.70.jar
+7f4a8d214000-7f4a8d217000 ---p 00000000 00:00 0 
+7f4a8d217000-7f4a8d315000 rw-p 00000000 00:00 0 
+7f4a8d315000-7f4a8d316000 r--s 00007000 08:01 15077830                   /home/dell/.gradle/caches/transforms-2/files-2.1/b66bfff08940918f832918fcb4d1b58f/drawerlayout-1.0.0-runtime.jar
+7f4a8d316000-7f4a8d319000 r--s 0002e000 08:01 2497193                    /home/dell/.gradle/caches/transforms-2/files-2.1/3fa657e0277f55f6cce2b3a8dd23c58c/fragment-1.2.0-runtime.jar
+7f4a8d319000-7f4a8d31e000 r--s 00039000 08:01 3281422                    /home/dell/.gradle/caches/transforms-2/files-2.1/f0ff324e933cf90cc700b2d279b0e012/play-services-measurement-base-17.6.0-runtime.jar
+7f4a8d31e000-7f4a8d320000 r--s 0000a000 08:01 3678313                    /home/dell/.gradle/caches/transforms-2/files-2.1/68ea11c0309323502c6b02d740dd3a6a/play-services-measurement-sdk-api-17.6.0-runtime.jar
+7f4a8d320000-7f4a8d322000 r--s 00002000 08:01 4067140                    /home/dell/.gradle/caches/transforms-2/files-2.1/c3c064c2bffd6a481663b1fe110be8ec/play-services-ads-identifier-17.0.0-runtime.jar
+7f4a8d322000-7f4a8d323000 r--s 00000000 08:01 4462267                    /home/dell/.gradle/caches/transforms-2/files-2.1/8be98ebc5da35ba61101aecf302989f1/play-services-places-placereport-17.0.0-runtime.jar
+7f4a8d323000-7f4a8d326000 r--s 00008000 08:01 4856231                    /home/dell/.gradle/caches/transforms-2/files-2.1/f8cb7ce1c8acc72d870250f37af3b0e1/play-services-tasks-17.1.0-runtime.jar
+7f4a8d326000-7f4a8d327000 r--s 00001000 08:01 5247883                    /home/dell/.gradle/caches/transforms-2/files-2.1/6fe4ea2011ae97c8e6b3e7d638e102fc/firebase-installations-interop-16.0.0-runtime.jar
+7f4a8d327000-7f4a8d328000 r--s 00000000 08:01 5639820                    /home/dell/.gradle/caches/transforms-2/files-2.1/0f23b8e0dd714de367de343fef54cbcd/firebase-measurement-connector-18.0.0-runtime.jar
+7f4a8d328000-7f4a8d32a000 r--s 00008000 08:01 6032187                    /home/dell/.gradle/caches/transforms-2/files-2.1/badd12896247ec3dab43fda54d50bfe5/jetified-firebase-common-19.3.1-runtime.jar
+7f4a8d32a000-7f4a8d32c000 r--s 0001d000 08:01 6167638                    /home/dell/.gradle/caches/transforms-2/files-2.1/0a94a71178843b2dda8cab54303c031a/firebase-installations-16.3.3-runtime.jar
+7f4a8d32c000-7f4a8d337000 r--s 00066000 08:01 6825011                    /home/dell/.gradle/caches/transforms-2/files-2.1/6dfa24adb071490bb732f8ad3d35e8cc/play-services-base-17.3.0-runtime.jar
+7f4a8d337000-7f4a8d33b000 r--s 0001b000 08:01 7210105                    /home/dell/.gradle/caches/transforms-2/files-2.1/01a66eef94647286d7c7267cf817d3cc/play-services-auth-base-17.0.0-runtime.jar
+7f4a8d33b000-7f4a8d33c000 r--s 00002000 08:01 7210110                    /home/dell/.gradle/caches/transforms-2/files-2.1/c6ea093d9f0cbfb8495fa137aa39fdc8/play-services-auth-api-phone-17.0.0-runtime.jar
+7f4a8d33c000-7f4a8d33f000 r--s 0000e000 08:01 7210115                    /home/dell/.gradle/caches/transforms-2/files-2.1/fd052f4771477bb6b27ddea7111dc717/viewpager2-1.0.0-runtime.jar
+7f4a8d33f000-7f4a8d341000 r--s 00007000 08:01 7210120                    /home/dell/.gradle/caches/transforms-2/files-2.1/2571e856a93b8658ffd2e7a814f6b0d6/vectordrawable-1.1.0-runtime.jar
+7f4a8d341000-7f4a8d343000 r--s 00007000 08:01 7210124                    /home/dell/.gradle/caches/transforms-2/files-2.1/d0ad250fa3cbff5f7ab959354ac45f24/vectordrawable-animated-1.1.0-runtime.jar
+7f4a8d343000-7f4a8d345000 r--s 0000e000 08:01 7210129                    /home/dell/.gradle/caches/transforms-2/files-2.1/9992802078ca4186c94eea0fb566fb72/appcompat-resources-1.1.0-runtime.jar
+7f4a8d345000-7f4a8d349000 r--s 0002a000 08:01 7210134                    /home/dell/.gradle/caches/transforms-2/files-2.1/fbfdcb8024dea755ce5341a4008bfd7a/transition-1.2.0-runtime.jar
+7f4a8d349000-7f4a8d34b000 r--s 00009000 08:01 7210139                    /home/dell/.gradle/caches/transforms-2/files-2.1/6abb6a3622a0b110e29feb2c813d13c9/coordinatorlayout-1.1.0-runtime.jar
+7f4a8d34b000-7f4a8d34d000 r--s 00001000 08:01 7210144                    /home/dell/.gradle/caches/transforms-2/files-2.1/bbbd0aff0379f0092e4aaba85fcbad68/butterknife-runtime-10.0.0-runtime.jar
+7f4a8d34d000-7f4a8d356000 r--s 00051000 08:01 7210149                    /home/dell/.gradle/caches/transforms-2/files-2.1/127c4fc0ccff37b08bd0835952d566eb/media-1.0.0-runtime.jar
+7f4a8d356000-7f4a8d357000 r--s 00000000 08:01 7210152                    /home/dell/.gradle/caches/transforms-2/files-2.1/61978f43101bb1937e269fd429a2a244/legacy-support-core-utils-1.0.0-runtime.jar
+7f4a8d357000-7f4a8d358000 r--s 00001000 08:01 7210157                    /home/dell/.gradle/caches/transforms-2/files-2.1/4d7aa6b6563fadfa43d7017b748d500b/play-services-stats-17.0.0-runtime.jar
+7f4a8d358000-7f4a8d365000 r--s 0006c000 08:01 7210164                    /home/dell/.gradle/caches/transforms-2/files-2.1/3a54c17032803bce234ae4adf8d6a9e6/play-services-measurement-impl-17.6.0-runtime.jar
+7f4a8d365000-7f4a8d366000 r--s 00002000 08:01 7210169                    /home/dell/.gradle/caches/transforms-2/files-2.1/e32a989b9de2d13de772b97b0b5a619e/play-services-measurement-sdk-17.6.0-runtime.jar
+7f4a8d366000-7f4a8d368000 r--s 00005000 08:01 7210173                    /home/dell/.gradle/caches/transforms-2/files-2.1/e5c9fbf25bf96301b563827a4e16c067/play-services-measurement-api-17.6.0-runtime.jar
+7f4a8d368000-7f4a8d36c000 r--s 00039000 08:01 7210180                    /home/dell/.gradle/caches/transforms-2/files-2.1/ec5a79061853fafcecfca42db0b29894/play-services-measurement-17.6.0-runtime.jar
+7f4a8d36c000-7f4a8d36e000 r--s 00007000 08:01 7210181                    /home/dell/.gradle/caches/transforms-2/files-2.1/15f4fbfba12a8cf713d5a288ef77d4d4/navigation-runtime-2.0.0-runtime.jar
+7f4a8d36e000-7f4a8d36f000 r--s 00002000 08:01 7210188                    /home/dell/.gradle/caches/transforms-2/files-2.1/48c9c299f12376a46180ca2273321268/legacy-support-core-ui-1.0.0-runtime.jar
+7f4a8d36f000-7f4a8d379000 r--s 0007b000 08:01 7210198                    /home/dell/.gradle/caches/transforms-2/files-2.1/3f2947167a21a150f0da26df0098ea47/jetified-facebook-core-5.13.0-runtime.jar
+7f4a8d379000-7f4a8d382000 r--s 0003c000 08:01 7210221                    /home/dell/.gradle/caches/transforms-2/files-2.1/3a4da1779782d1d2d2460faa39ae170a/play-services-maps-17.0.0-runtime.jar
+7f4a8d382000-7f4a8d388000 r--s 00032000 08:01 6167711                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.maps/google-maps-services/0.14.0/d944077382143396233915b093266488e0c7aaaa/google-maps-services-0.14.0.jar
+7f4a8d388000-7f4a8d38b000 r--s 00018000 08:01 7210236                    /home/dell/.gradle/caches/transforms-2/files-2.1/6ad2324c825f5f838e462ca918dcf535/libphonenumber-android-8.12.6-runtime.jar
+7f4a8d38b000-7f4a8d38e000 r--s 0001b000 08:01 14942460                   /home/dell/.gradle/caches/transforms-2/files-2.1/7726b1194d9d1654ad295733226a721a/jetified-picasso-2.71828-runtime.jar
+7f4a8d38e000-7f4a8d393000 r--s 0004b000 08:01 6163676                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.6.0/212387a39088ecd3daff8e3bfc3bdc4123e33c67/okhttp-2.6.0.jar
+7f4a8d393000-7f4a8d395000 r--s 00002000 08:01 6163045                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/3.12.1/f0304756a8d9f745fd7de3f82a32090cf5b71166/logging-interceptor-3.12.1.jar
+7f4a8d395000-7f4a8d398000 r--s 00018000 08:01 6163044                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.5.0/713ce36037bf24a76a3974c05cb85c3f754b1cc3/retrofit-2.5.0.jar
+7f4a8d398000-7f4a8d39a000 r--s 00002000 08:01 6161400                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-scalars/2.5.0/4a33cf3185767a7296eca385932668786e0c7772/converter-scalars-2.5.0.jar
+7f4a8d39a000-7f4a8d39b000 r--s 00001000 08:01 6161399                    /home/dell/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.5.0/1c96fc5d0230f57d36cd09e2541d10829a3352a7/converter-gson-2.5.0.jar
+7f4a8d39b000-7f4a8d39d000 r--s 0000c000 08:01 7210256                    /home/dell/.gradle/caches/transforms-2/files-2.1/3ee8e97a09151da5542c9aba5d6e51fa/jetified-countrycodepicker-2.4.2-runtime.jar
+7f4a8d39d000-7f4a8d3a1000 r--s 0001d000 08:01 7210261                    /home/dell/.gradle/caches/transforms-2/files-2.1/b0c2845a24ce1409ded737b8b20b8830/play-services-auth-18.1.0-runtime.jar
+7f4a8d3a1000-7f4a8d3ae000 r--s 00109000 08:01 7210266                    /home/dell/.gradle/caches/transforms-2/files-2.1/ec0a816f3a819c489cfa9fb5d8243b23/firebase-crashlytics-17.2.2-runtime.jar
+7f4a8d3ae000-7f4a8d3bd000 r--s 00097000 08:01 7210275                    /home/dell/.gradle/caches/transforms-2/files-2.1/df341e49d0a8870562d905ae97d2a736/jetified-glide-4.9.0-runtime.jar
+7f4a8d3bd000-7f4a8d3be000 r--s 00000000 08:01 7210280                    /home/dell/.gradle/caches/transforms-2/files-2.1/57f3ead3318e215a7fb6ea42cd747287/lifecycle-extensions-2.2.0-runtime.jar
+7f4a8d3be000-7f4a8d3c0000 r--s 00002000 08:01 14162251                   /home/dell/.gradle/caches/transforms-2/files-2.1/3c05a09392bb10833d022e07df1dbed8/navigation-fragment-2.0.0-runtime.jar
+7f4a8d3c0000-7f4a8d3c1000 r--s 00004000 08:01 14162420                   /home/dell/.gradle/caches/transforms-2/files-2.1/6d4a6b611da0a9e49a4eb0c0f7b90334/jetified-simpleratingbar-0.1.5-runtime.jar
+7f4a8d3c1000-7f4a8d3c2000 r--s 00000000 08:01 14683603                   /home/dell/.gradle/caches/transforms-2/files-2.1/fc78264de4a8b064fdb96318d35dd9be/butterknife-10.0.0-runtime.jar
+7f4a8d3c2000-7f4a8d3c4000 r--s 0000e000 08:01 15077832                   /home/dell/.gradle/caches/transforms-2/files-2.1/59968b02bae156f0ad2b88f368abc890/constraintlayout-1.1.3-runtime.jar
+7f4a8d3c4000-7f4a8d3c8000 r--s 00023000 08:01 15473138                   /home/dell/.gradle/caches/transforms-2/files-2.1/c5df44dd008918e2802e030c4bbefaca/core-ktx-1.0.2-runtime.jar
+7f4a8d3c8000-7f4a8d3d2000 r--s 0009d000 08:01 1185946                    /home/dell/.gradle/caches/transforms-2/files-2.1/4d612b00ecd84c0ad84ea335c1dbcb79/appcompat-1.1.0-runtime.jar
+7f4a8d3d2000-7f4a8d3d3000 r--s 00004000 08:01 2497195                    /home/dell/.gradle/caches/transforms-2/files-2.1/124235c6afe8646f19bb86944ea3e884/jetified-fastscroll-0.2.5-runtime.jar
+7f4a8d3d3000-7f4a8d3dc000 r--s 00061000 08:01 2894056                    /home/dell/.gradle/caches/transforms-2/files-2.1/4e01f612703b8c0009ca711d47ea2d35/jetified-facebook-common-5.13.0-runtime.jar
+7f4a8d3dc000-7f4a8d3e0000 r--s 00016000 08:01 3281424                    /home/dell/.gradle/caches/transforms-2/files-2.1/58a21fc21f4cd817c30d89a8725e0611/jetified-facebook-share-5.13.0-runtime.jar
+7f4a8d3e0000-7f4a8d401000 r--s 000f5000 08:01 4462269                    /home/dell/.gradle/caches/transforms-2/files-2.1/0ffee1a79f793585e329029ef23335ee/places-2.4.0-runtime.jar
+7f4a8d401000-7f4a8d404000 r--s 0000e000 08:01 7210193                    /home/dell/.gradle/caches/transforms-2/files-2.1/97b22903d26e188640ac20d88891df69/browser-1.0.0-runtime.jar
+7f4a8d404000-7f4a8d405000 r--s 00002000 08:01 7210203                    /home/dell/.gradle/caches/transforms-2/files-2.1/4a849d7c60f4b48353d1ba2a457bc434/facebook-messenger-5.13.0-runtime.jar
+7f4a8d405000-7f4a8d406000 r--s 00003000 08:01 7210208                    /home/dell/.gradle/caches/transforms-2/files-2.1/359763ed49c01c99499d47718e98a4a9/jetified-facebook-applinks-5.13.0-runtime.jar
+7f4a8d406000-7f4a8d408000 r--s 0000d000 08:01 7210213                    /home/dell/.gradle/caches/transforms-2/files-2.1/938f1f4922ccaaa4f05aafc3dccfb9a1/facebook-places-5.13.0-runtime.jar
+7f4a8d408000-7f4a8d410000 r--s 00048000 08:01 7210226                    /home/dell/.gradle/caches/transforms-2/files-2.1/8a757ceb3cfc737de3b1cbef99a70349/play-services-places-17.0.0-runtime.jar
+7f4a8d410000-7f4a8d415000 r--s 00027000 08:01 7210231                    /home/dell/.gradle/caches/transforms-2/files-2.1/de0b404e13182418a006fa5fdec1a70c/play-services-location-17.1.0-runtime.jar
+7f4a8d415000-7f4a8d416000 r--s 00003000 08:01 6167693                    /home/dell/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/1.7.25/8dacf9514f0c707cbbcdd6fd699e8940d42fb54e/slf4j-simple-1.7.25.jar
+7f4a8d416000-7f4a8d419000 ---p 00000000 00:00 0 
+7f4a8d419000-7f4a8d517000 rw-p 00000000 00:00 0 
+7f4a8d517000-7f4a8d51a000 ---p 00000000 00:00 0 
+7f4a8d51a000-7f4a8d80e000 rw-p 00000000 00:00 0 
+7f4a8d80e000-7f4a8d818000 ---p 00000000 00:00 0 
+7f4a8d818000-7f4a8da18000 rw-p 00000000 00:00 0 
+7f4a8da18000-7f4a8da1b000 ---p 00000000 00:00 0 
+7f4a8da1b000-7f4a8db19000 rw-p 00000000 00:00 0 
+7f4a8db19000-7f4a8db1c000 ---p 00000000 00:00 0 
+7f4a8db1c000-7f4a8de1a000 rw-p 00000000 00:00 0 
+7f4a8de1a000-7f4a8e01a000 rw-p 00000000 00:00 0 
+7f4a8e01a000-7f4a8e21a000 rw-p 00000000 00:00 0 
+7f4a8e21a000-7f4a8e21c000 r--s 00004000 08:01 6161153                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.3.70/f7776a1f7c39ba356a0158dea5f02ea2a256023d/kotlin-compiler-runner-1.3.70.jar
+7f4a8e21c000-7f4a8e21d000 r--s 00003000 08:01 6162259                    /home/dell/.gradle/caches/modules-2/files-2.1/net.sf.proguard/proguard-gradle/6.0.3/e5becf2356695a396b788110e386c38bad523bfc/proguard-gradle-6.0.3.jar
+7f4a8e21d000-7f4a8e21f000 r--s 0000f000 08:01 6162258                    /home/dell/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/4.9/ee9e9eaa0a35360dcfeac129ff4923215fd65904/jopt-simple-4.9.jar
+7f4a8e21f000-7f4a8e221000 r--s 00016000 08:01 6162257                    /home/dell/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/6.0/bc6fa6b19424bb9592fe43bbc20178f92d403105/asm-6.0.jar
+7f4a8e221000-7f4a8e223000 r--s 0000a000 08:01 6162256                    /home/dell/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/6.0/a624f1a6e4e428dcd680a01bab2d4c56b35b18f0/asm-tree-6.0.jar
+7f4a8e223000-7f4a8e225000 r--s 00010000 08:01 6162255                    /home/dell/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/6.0/430b2fc839b5de1f3643b528853d5cf26096c1de/asm-util-6.0.jar
+7f4a8e225000-7f4a8e226000 r--s 00012000 08:01 6162254                    /home/dell/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/6.0/f256fd215d8dd5a4fa2ab3201bf653de266ed4ec/asm-commons-6.0.jar
+7f4a8e226000-7f4a8e227000 r--s 00007000 08:01 6162253                    /home/dell/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/6.0/dd1cc1381a970800268160203aae2d3784da779b/asm-analysis-6.0.jar
+7f4a8e227000-7f4a8e228000 r--s 00000000 08:01 6162250                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/transform-api/2.0.0-deprecated-use-gradle-api/47f6c56527c42425742fa9b56ffd3fd80763fe03/transform-api-2.0.0-deprecated-use-gradle-api.jar
+7f4a8e228000-7f4a8e229000 r--s 00003000 08:01 6164235                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.4.10/998caa30623f73223194a8b657abd2baec4880ea/kotlin-stdlib-jdk8-1.4.10.jar
+7f4a8e229000-7f4a8e22d000 r--s 0002f000 08:01 6162294                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.jimfs/jimfs/1.1/8fbd0579dc68aba6186935cc1bee21d2f3e7ec1c/jimfs-1.1.jar
+7f4a8e22d000-7f4a8e231000 r--s 0002d000 08:01 6164164                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apkzlib/3.5.4/a590af8131b6b03b6b638d716cd46c6529c3dd40/apkzlib-3.5.4.jar
+7f4a8e231000-7f4a8e236000 r--s 00039000 08:01 6164151                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/common/26.5.4/354eee31a9c52abc71a9b49969ef40da9afc5bd8/common-26.5.4.jar
+7f4a8e236000-7f4a8e23b000 r--s 00033000 08:01 6164150                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/repository/26.5.4/41dc1986340a058bcee2124128c5ba9e1b52cb1f/repository-26.5.4.jar
+7f4a8e23b000-7f4a8e23c000 r--s 00008000 08:01 6164149                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/26.5.4/fc9828a5c4a02bf510b8bde2733e2eb81c34bf64/dvlib-26.5.4.jar
+7f4a8e23c000-7f4a8e240000 r--s 00019000 08:01 6164147                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.5.4/50e2abfb1721624c03e3f48f08f08403a425a919/layoutlib-api-26.5.4.jar
+7f4a8e240000-7f4a8e246000 r--s 00052000 08:01 6164148                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/26.5.4/befefae046c5666818dab0d597a878960bd42c56/ddmlib-26.5.4.jar
+7f4a8e246000-7f4a8e247000 r--s 00003000 08:01 6164144                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.5.4/d7c771aebbdcf2e07dde87cec1339c6f28e12636/builder-test-api-3.5.4.jar
+7f4a8e247000-7f4a8e24b000 r--s 00013000 08:01 6164168                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-api/3.5.4/b7e85ab17eee5cc049702b127512c1993a85b5bb/gradle-api-3.5.4.jar
+7f4a8e24b000-7f4a8e24c000 r--s 00003000 08:01 6164140                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/crash/26.5.4/4020841b8009414df8663161527d035528686e2/crash-26.5.4.jar
+7f4a8e24c000-7f4a8e251000 r--s 00036000 08:01 6162286                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/f645ed69d595b24d4cf8b3fbb64cc505bede8829/gson-2.8.5.jar
+7f4a8e251000-7f4a8e25b000 r--s 00092000 08:01 6164145                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.5.4/c1a4303d0e148a08be80c9ac1d9ea1c88ee0a85f/sdklib-26.5.4.jar
+7f4a8e25b000-7f4a8e29e000 r--s 003ba000 08:01 6164139                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.5.4/a72c4b804b2bf0bcee270adf0bdf2e83fa9ad50f/gradle-3.5.4.jar
+7f4a8e29e000-7f4a8e2a1000 ---p 00000000 00:00 0 
+7f4a8e2a1000-7f4a8e39f000 rw-p 00000000 00:00 0 
+7f4a8e39f000-7f4a8e3a2000 ---p 00000000 00:00 0 
+7f4a8e3a2000-7f4a8e4a0000 rw-p 00000000 00:00 0 
+7f4a8e4a0000-7f4a8e51a000 r--s 01102000 08:01 12977564                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/lib/tools.jar
+7f4a8e51a000-7f4a8e51c000 r--s 00014000 08:01 6164152                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/26.5.4/1a0f988f591d492d82b1bc30d5771f074037bd58/shared-26.5.4.jar
+7f4a8e51c000-7f4a8e51e000 r--s 00007000 08:01 6164146                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/tracker/26.5.4/7ebda91f709dcd3234d948ad3f5c04c1be38fe83/tracker-26.5.4.jar
+7f4a8e51e000-7f4a8e538000 r--s 00147000 08:01 6164143                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/sdk-common/26.5.4/79236d1cf1374b157a92e2fd473e572279f2551d/sdk-common-26.5.4.jar
+7f4a8e538000-7f4a8e53c000 r--s 0002d000 08:01 6164142                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/manifest-merger/26.5.4/ee71136e9023cd90b3e431e506e4f5d0386ad55d/manifest-merger-26.5.4.jar
+7f4a8e53c000-7f4a8e53d000 r--s 00004000 08:01 6164137                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-gradle-api/26.5.4/5f3ddac230dc3f2cd241b3cd2d1f3fddb995bba4/lint-gradle-api-26.5.4.jar
+7f4a8e53d000-7f4a8e53f000 r--s 0000f000 08:01 6162262                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.4.0/96aba8ab71c16018c6adf66771ce15c6491bc0fe/protobuf-java-util-3.4.0.jar
+7f4a8e53f000-7f4a8e541000 r--s 0001d000 08:01 6162261                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build.jetifier/jetifier-core/1.0.0-beta04/92ae18564fc833685f30f5a20297dd32349a9f6e/jetifier-core-1.0.0-beta04.jar
+7f4a8e541000-7f4a8e545000 r--s 00021000 08:01 6162251                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build.jetifier/jetifier-processor/1.0.0-beta04/8ed1fee7b1d03709dd8bd0224f21ef243e5c4a4c/jetifier-processor-1.0.0-beta04.jar
+7f4a8e545000-7f4a8e54d000 r--s 00068000 08:01 6164141                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-compiler-common/3.5.4/e3a2ee3bc2c0295d9d2b4519c1bba5786e8a5435/databinding-compiler-common-3.5.4.jar
+7f4a8e54d000-7f4a8e553000 r--s 00029000 08:01 6166897                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-crashlytics-buildtools/2.3.0/760fec8f9ffeea0dc6baba6f3db76e62fa7f35cd/firebase-crashlytics-buildtools-2.3.0.jar
+7f4a8e553000-7f4a8e555000 r--s 00009000 08:01 6164366                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.android.gms/strict-version-matcher-plugin/1.2.2/2c0d2f9d874dddd7c8a12664111e89be8bfb2c23/strict-version-matcher-plugin-1.2.2.jar
+7f4a8e555000-7f4a8e557000 r--s 00011000 08:01 6166896                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-crashlytics-gradle/2.3.0/a790f1b5c8ce4cc9b0437d2a18b81b5a1e0bb001/firebase-crashlytics-gradle-2.3.0.jar
+7f4a8e557000-7f4a8e559000 r--s 00008000 08:01 6164367                    /home/dell/.gradle/caches/modules-2/files-2.1/com.google.gms/google-services/4.3.4/47ac73f12375b90588fe92ce61d0979b409a3355/google-services-4.3.4.jar
+7f4a8e559000-7f4a8e759000 rw-p 00000000 00:00 0 
+7f4a8e759000-7f4a8e959000 rw-p 00000000 00:00 0 
+7f4a8e959000-7f4a8eb59000 rw-p 00000000 00:00 0 
+7f4a8eb59000-7f4a8eb5c000 ---p 00000000 00:00 0 
+7f4a8eb5c000-7f4a8ee5a000 rw-p 00000000 00:00 0 
+7f4a8ee5a000-7f4a8ee5d000 ---p 00000000 00:00 0 
+7f4a8ee5d000-7f4a8ef5b000 rw-p 00000000 00:00 0 
+7f4a8ef5b000-7f4a8ef5e000 ---p 00000000 00:00 0 
+7f4a8ef5e000-7f4a8f05c000 rw-p 00000000 00:00 0 
+7f4a8f05c000-7f4a8f05f000 ---p 00000000 00:00 0 
+7f4a8f05f000-7f4a8f35d000 rw-p 00000000 00:00 0 
+7f4a8f35d000-7f4a8f360000 ---p 00000000 00:00 0 
+7f4a8f360000-7f4a8f45e000 rw-p 00000000 00:00 0 
+7f4a8f45e000-7f4a8f461000 ---p 00000000 00:00 0 
+7f4a8f461000-7f4a8f55f000 rw-p 00000000 00:00 0 
+7f4a8f55f000-7f4a8f561000 r--s 00007000 08:01 3678315                    /home/dell/.gradle/caches/transforms-2/files-2.1/5dd63348209d93b8bdb5e5198d0e04f5/jetified-facebook-login-5.13.0-runtime.jar
+7f4a8f561000-7f4a8f562000 r--s 00000000 08:01 4067142                    /home/dell/.gradle/caches/transforms-2/files-2.1/5381320a2c1e629f6f2c2239e512d36a/facebook-android-sdk-5.13.0-runtime.jar
+7f4a8f562000-7f4a8f564000 r--s 00013000 08:01 4593547                    /home/dell/.gradle/caches/transforms-2/files-2.1/e7c92faf03f07002a2b796e96b7b4db8/jetified-ccp-2.2.9-runtime.jar
+7f4a8f564000-7f4a8f579000 r--s 00102000 08:01 5247885                    /home/dell/.gradle/caches/transforms-2/files-2.1/617361ced5db1a027e90e3863a300991/material-1.2.1-runtime.jar
+7f4a8f579000-7f4a8f57b000 r--s 00004000 08:01 5639822                    /home/dell/.gradle/caches/transforms-2/files-2.1/5b0bd67f88bf6f1b6850a811697a3af4/jetified-navigation-ui-2.0.0-runtime.jar
+7f4a8f57b000-7f4a8f57c000 r--s 00000000 08:01 6162352                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.70/95aee922bc2a0fff3b7bfa1b6503ff0afe38264a/kotlin-stdlib-jdk7-1.3.70.jar
+7f4a8f57c000-7f4a8f57f000 ---p 00000000 00:00 0 
+7f4a8f57f000-7f4a8f5b5000 rw-p 00000000 00:00 0 
+7f4a8f5b5000-7f4a8f5b8000 ---p 00000000 00:00 0 
+7f4a8f5b8000-7f4a8f5ee000 rw-p 00000000 00:00 0 
+7f4a8f5ee000-7f4a8f5f1000 ---p 00000000 00:00 0 
+7f4a8f5f1000-7f4a8f627000 rw-p 00000000 00:00 0 
+7f4a8f627000-7f4a8f62a000 ---p 00000000 00:00 0 
+7f4a8f62a000-7f4a8f660000 rw-p 00000000 00:00 0 
+7f4a8f660000-7f4a8f663000 ---p 00000000 00:00 0 
+7f4a8f663000-7f4a8f761000 rw-p 00000000 00:00 0 
+7f4a8f761000-7f4a8f764000 ---p 00000000 00:00 0 
+7f4a8f764000-7f4a8f862000 rw-p 00000000 00:00 0 
+7f4a8f862000-7f4a8f865000 ---p 00000000 00:00 0 
+7f4a8f865000-7f4a8f963000 rw-p 00000000 00:00 0 
+7f4a8f963000-7f4a8f964000 r--s 00008000 08:01 6160925                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/26.5.3/9caa13fe83508ba5687199c02b7ddb885abd8f14/dvlib-26.5.3.jar
+7f4a8f964000-7f4a8f96e000 r--s 00092000 08:01 6160923                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.5.3/8c305bc044ad81115859eb964c2829cbea70b036/sdklib-26.5.3.jar
+7f4a8f96e000-7f4a8f970000 r--s 00007000 08:01 6160922                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/tracker/26.5.3/6a84a345f5155eca774cd238c233a2f6fad551b9/tracker-26.5.3.jar
+7f4a8f970000-7f4a8f976000 r--s 00052000 08:01 6160921                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/26.5.3/804a61e67286eeec17d195c78a135f0ed2fbdb8a/ddmlib-26.5.3.jar
+7f4a8f976000-7f4a8f977000 r--s 00003000 08:01 6160920                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.5.3/cf9ce50cd19a816c5bc7d4c6362699aa98c8ac0f/builder-test-api-3.5.3.jar
+7f4a8f977000-7f4a8f991000 r--s 00147000 08:01 6160918                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools/sdk-common/26.5.3/cce8ff081940bb7c9b1368a4052f987091996887/sdk-common-26.5.3.jar
+7f4a8f991000-7f4a8f995000 r--s 0002d000 08:01 6160916                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/manifest-merger/26.5.3/36674041b9d2644a30b75b6d8b7106bc16eac78a/manifest-merger-26.5.3.jar
+7f4a8f995000-7f4a8f99d000 r--s 00068000 08:01 6160915                    /home/dell/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-compiler-common/3.5.3/32bfc30c00fdc550723ffd9bff3ef2471fbd4a3a/databinding-compiler-common-3.5.3.jar
+7f4a8f99d000-7f4a8f9a1000 r--s 00013000 08:01 6160914                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-api/3.5.3/c1d6a6b3e5b744caaf6eea2452d8db62c8e2882f/gradle-api-3.5.3.jar
+7f4a8f9a1000-7f4a8f9a2000 r--s 00004000 08:01 6160912                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-gradle-api/26.5.3/34f6edb87863c7e9f89f24c36485374ad350166a/lint-gradle-api-26.5.3.jar
+7f4a8f9a2000-7f4a8f9a3000 r--s 00003000 08:01 6160913                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/crash/26.5.3/d199e964be1fa3e7162344b91336afae6c7ea789/crash-26.5.3.jar
+7f4a8f9a3000-7f4a8f9e6000 r--s 003ba000 08:01 6160911                    /home/dell/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.5.3/12e36e5f81cc2face28e0c14cb98941d773cae6a/gradle-3.5.3.jar
+7f4a8f9e6000-7f4a8f9e8000 r--s 00001000 08:01 6162351                    /home/dell/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions-runtime/1.3.70/716c0bc31362fbd4eea34280cf2957efa4a8c551/kotlin-android-extensions-runtime-1.3.70.jar
+7f4a8f9e8000-7f4a8f9e9000 r--s 00006000 08:01 6554494                    /home/dell/.gradle/caches/transforms-2/files-2.1/7ab70e66b5e5d6d0d3104a4f53a16314/multidex-2.0.0-runtime.jar
+7f4a8f9e9000-7f4a8f9eb000 r--s 00003000 08:01 14419372                   /home/dell/Android/Sdk/build-tools/28.0.3/core-lambda-stubs.jar
+7f4a8f9eb000-7f4a8f9ed000 r--s 0000c000 08:01 6163640                    /home/dell/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-compiler/10.0.0/5fd767ab760e2003a596df6a611fe44457647068/butterknife-compiler-10.0.0.jar
+7f4a8f9ed000-7f4a8f9ee000 r--s 00000000 08:01 13769646                   /home/dell/.gradle/caches/jars-3/497c99dc43ce8fece95d0e589f2459bd/gradle-appengine-builder-model-0.1.0.jar
+7f4a8f9ee000-7f4a8f9ef000 r--s 00005000 08:01 14289389                   /home/dell/.gradle/caches/jars-3/215b093df51f09409737d356e2d8bf8e/kapt3-idea.jar
+7f4a8f9ef000-7f4a8f9f0000 r--s 00002000 08:01 2895293                    /home/dell/.gradle/caches/jars-3/e88871ab6780c9cf9c9695616afca86e/kotlin-gradle-plugin-model-1.3.50.jar
+7f4a8f9f0000-7f4a8f9f2000 r--s 00010000 08:01 13769640                   /home/dell/.gradle/caches/jars-3/18b875defd7886ee3a99cf2cd6ee8986/gradle-tooling-extension-api.jar
+7f4a8f9f2000-7f4a8fa06000 r--s 00130000 08:01 13769636                   /home/dell/.gradle/caches/jars-3/8d8f8b6e3c56f28da647b3aa6237de29/kotlin-stdlib-1.3.50.jar
+7f4a8fa06000-7f4a8fa0a000 r--s 00089000 08:01 2895291                    /home/dell/.gradle/caches/jars-3/83302694c2940c803d639c2667d3f52e/android-base-common.jar
+7f4a8fa0a000-7f4a8fa3c000 r--s 0026a000 08:01 13898870                   /home/dell/.gradle/caches/jars-3/1292525a786f20744e75964100cf9267/guava-25.1-jre.jar
+7f4a8fa3c000-7f4a8fa64000 r--s 0210c000 08:01 13769638                   /home/dell/.gradle/caches/jars-3/906e5463f7efb56f8d5b88428d9e2489/sdk-tools.jar
+7f4a8fa64000-7f4a8fa67000 ---p 00000000 00:00 0 
+7f4a8fa67000-7f4a8fb65000 rw-p 00000000 00:00 0 
+7f4a8fb65000-7f4a8fb6c000 r--s 00000000 08:01 8917607                    /usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache
+7f4a8fb6c000-7f4a8fb6f000 ---p 00000000 00:00 0 
+7f4a8fb6f000-7f4a8fc6d000 rw-p 00000000 00:00 0 
+7f4a8fc6d000-7f4a8fc71000 r--s 000a1000 08:01 12977715                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/jsse.jar
+7f4a8fc71000-7f4a8fe71000 rw-p 00000000 00:00 0 
+7f4a8fe71000-7f4a8fe74000 ---p 00000000 00:00 0 
+7f4a8fe74000-7f4a8ff72000 rw-p 00000000 00:00 0 
+7f4a8ff72000-7f4a8ff7a000 r-xp 00000000 08:01 12977660                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libmanagement.so
+7f4a8ff7a000-7f4a8ff7b000 rw-p 00007000 08:01 12977660                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libmanagement.so
+7f4a8ff7b000-7f4a8ff7d000 r--s 0000f000 08:01 13768501                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-tooling-api-builders-5.4.1.jar
+7f4a8ff7d000-7f4a8ff7e000 r--s 00005000 08:01 13768522                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-build-profile-5.4.1.jar
+7f4a8ff7e000-7f4a8ff80000 r--s 00003000 08:01 13768481                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-tooling-native-5.4.1.jar
+7f4a8ff80000-7f4a8ff84000 r--s 00017000 08:01 13768483                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-testing-native-5.4.1.jar
+7f4a8ff84000-7f4a8ff86000 r--s 0000f000 08:01 13768579                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jcommander-1.72.jar
+7f4a8ff86000-7f4a8ff8f000 r--s 00089000 08:01 13768555                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/testng-6.3.1.jar
+7f4a8ff8f000-7f4a8ff94000 r--s 0005a000 08:01 13768559                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/bsh-2.0b6.jar
+7f4a8ff94000-7f4a8ff98000 r--s 0001c000 08:01 13768502                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-testing-jvm-5.4.1.jar
+7f4a8ff98000-7f4a8ff9b000 r--s 00011000 08:01 13768597                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/junit-platform-commons-1.3.1.jar
+7f4a8ff9b000-7f4a8ff9c000 r--s 00001000 08:01 13768599                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/opentest4j-1.1.1.jar
+7f4a8ff9c000-7f4a8ffa0000 r--s 0001d000 08:01 13768596                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/junit-platform-engine-1.3.1.jar
+7f4a8ffa0000-7f4a8ffa1000 r--s 00000000 08:01 13768598                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/apiguardian-api-1.0.0.jar
+7f4a8ffa1000-7f4a8ffa4000 r--s 00015000 08:01 13768560                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/junit-platform-launcher-1.3.1.jar
+7f4a8ffa4000-7f4a8ffa6000 r--s 00009000 08:01 13768577                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/hamcrest-core-1.3.jar
+7f4a8ffa6000-7f4a8ffae000 r--s 00045000 08:01 13768558                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/junit-4.12.jar
+7f4a8ffae000-7f4a8ffaf000 r--s 00003000 08:01 13768500                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-testing-junit-platform-5.4.1.jar
+7f4a8ffaf000-7f4a8ffb7000 r--s 00034000 08:01 13768510                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-testing-base-5.4.1.jar
+7f4a8ffb7000-7f4a8ffbf000 r--s 00048000 08:01 13768549                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/bcpg-jdk15on-1.61.jar
+7f4a8ffbf000-7f4a8ffc1000 r--s 0000f000 08:01 13768480                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-signing-5.4.1.jar
+7f4a8ffc1000-7f4a8ffc3000 r--s 00009000 08:01 13768489                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-scala-5.4.1.jar
+7f4a8ffc3000-7f4a8ffc4000 r--s 00004000 08:01 13768521                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-resources-sftp-5.4.1.jar
+7f4a8ffc4000-7f4a8ffcd000 r--s 0005b000 08:01 13768527                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/aws-java-sdk-kms-1.11.407.jar
+7f4a8ffcd000-7f4a8ffe0000 r--s 000ca000 08:01 13768526                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/aws-java-sdk-s3-1.11.407.jar
+7f4a8ffe0000-7f4a8ffea000 r--s 00081000 08:01 13768595                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/ion-java-1.0.2.jar
+7f4a8ffea000-7f4a90000000 r--s 000ca000 08:01 13768528                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/aws-java-sdk-core-1.11.407.jar
+7f4a90000000-7f4a90d1d000 rw-p 00000000 00:00 0 
+7f4a90d1d000-7f4a94000000 ---p 00000000 00:00 0 
+7f4a94000000-7f4a97ff2000 rw-p 00000000 00:00 0 
+7f4a97ff2000-7f4a98000000 ---p 00000000 00:00 0 
+7f4a98000000-7f4a9bffb000 rw-p 00000000 00:00 0 
+7f4a9bffb000-7f4a9c000000 ---p 00000000 00:00 0 
+7f4a9c000000-7f4a9ff21000 rw-p 00000000 00:00 0 
+7f4a9ff21000-7f4aa0000000 ---p 00000000 00:00 0 
+7f4aa0000000-7f4aa3ffa000 rw-p 00000000 00:00 0 
+7f4aa3ffa000-7f4aa4000000 ---p 00000000 00:00 0 
+7f4aa4000000-7f4aa8000000 rw-p 00000000 00:00 0 
+7f4aa8000000-7f4aa8b5d000 rw-p 00000000 00:00 0 
+7f4aa8b5d000-7f4aac000000 ---p 00000000 00:00 0 
+7f4aac000000-7f4aaf131000 rw-p 00000000 00:00 0 
+7f4aaf131000-7f4ab0000000 ---p 00000000 00:00 0 
+7f4ab0000000-7f4ab0b86000 rw-p 00000000 00:00 0 
+7f4ab0b86000-7f4ab4000000 ---p 00000000 00:00 0 
+7f4ab4000000-7f4ab7ffc000 rw-p 00000000 00:00 0 
+7f4ab7ffc000-7f4ab8000000 ---p 00000000 00:00 0 
+7f4ab8000000-7f4ab8dfb000 rw-p 00000000 00:00 0 
+7f4ab8dfb000-7f4abc000000 ---p 00000000 00:00 0 
+7f4abc000000-7f4abcbd4000 rw-p 00000000 00:00 0 
+7f4abcbd4000-7f4ac0000000 ---p 00000000 00:00 0 
+7f4ac0000000-7f4ac3fff000 rw-p 00000000 00:00 0 
+7f4ac3fff000-7f4ac4000000 ---p 00000000 00:00 0 
+7f4ac4000000-7f4ac4002000 r--s 00005000 08:01 13768566                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jmespath-java-1.11.407.jar
+7f4ac4002000-7f4ac4004000 r--s 00004000 08:01 13768517                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-resources-s3-5.4.1.jar
+7f4ac4004000-7f4ac4015000 r--s 0008c000 08:01 13768570                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/joda-time-2.10.jar
+7f4ac4015000-7f4ac4027000 r--s 00137000 08:01 13768567                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jackson-databind-2.9.8.jar
+7f4ac4027000-7f4ac402a000 r--s 0000e000 08:01 13768569                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jackson-annotations-2.9.8.jar
+7f4ac402a000-7f4ac402e000 r--s 0004c000 08:01 13768568                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jackson-core-2.9.8.jar
+7f4ac402e000-7f4ac402f000 r--s 00001000 08:01 13768535                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/google-http-client-jackson2-1.25.0.jar
+7f4ac402f000-7f4ac4039000 r--s 00056000 08:01 13768536                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/google-http-client-1.25.0.jar
+7f4ac4039000-7f4ac403c000 r--s 0000d000 08:01 13768534                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/google-oauth-client-1.25.0.jar
+7f4ac403c000-7f4ac4041000 r--s 0002d000 08:01 13768533                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/google-api-client-1.25.0.jar
+7f4ac4041000-7f4ac4045000 r--s 0001d000 08:01 13768532                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/google-api-services-storage-v1-rev136-1.25.0.jar
+7f4ac4045000-7f4ac4047000 r--s 00003000 08:01 13768518                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-resources-gcs-5.4.1.jar
+7f4ac4047000-7f4ac4049000 r--s 00010000 08:01 13768516                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-reporting-5.4.1.jar
+7f4ac4049000-7f4ac404b000 r--s 00008000 08:01 13768509                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-publish-5.4.1.jar
+7f4ac404b000-7f4ac4053000 r--s 00046000 08:01 13768497                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-plugins-5.4.1.jar
+7f4ac4053000-7f4ac4055000 r--s 0000c000 08:01 13768485                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-plugin-development-5.4.1.jar
+7f4ac4055000-7f4ac405b000 r--s 00030000 08:01 13768492                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-platform-play-5.4.1.jar
+7f4ac405b000-7f4ac4061000 r--s 0003d000 08:01 13768556                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/snakeyaml-1.17.jar
+7f4ac4061000-7f4ac4073000 r--s 00078000 08:01 13768507                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-platform-native-5.4.1.jar
+7f4ac4073000-7f4ac4077000 r--s 0001b000 08:01 13768506                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-platform-jvm-5.4.1.jar
+7f4ac4077000-7f4ac407e000 r--s 0002a000 08:01 13768511                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-platform-base-5.4.1.jar
+7f4ac407e000-7f4ac40ab000 r--s 0025e000 08:01 13768540                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/biz.aQute.bndlib-4.0.0.jar
+7f4ac40ab000-7f4ac40ac000 r--s 00004000 08:01 13768479                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-osgi-5.4.1.jar
+7f4ac40ac000-7f4ac40af000 r--s 0000c000 08:01 13768545                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/pmaven-groovy-0.8-20100325.jar
+7f4ac40af000-7f4ac40b0000 r--s 00004000 08:01 13768544                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/pmaven-common-0.8-20100325.jar
+7f4ac40b0000-7f4ac40b1000 r--s 00008000 08:01 13768531                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/wagon-http-shared-3.0.0.jar
+7f4ac40b1000-7f4ac40b2000 r--s 00002000 08:01 13768530                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/wagon-http-3.0.0.jar
+7f4ac40b2000-7f4ac40b3000 r--s 00002000 08:01 13768546                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/wagon-file-3.0.0.jar
+7f4ac40b3000-7f4ac40b5000 r--s 00006000 08:01 13768548                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/aether-connector-wagon-1.13.1.jar
+7f4ac40b5000-7f4ac40bc000 r--s 00031000 08:01 13768486                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-maven-5.4.1.jar
+7f4ac40bc000-7f4ac40be000 r--s 0000c000 08:01 13768499                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-language-scala-5.4.1.jar
+7f4ac40be000-7f4ac40c9000 r--s 00054000 08:01 13768484                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-language-native-5.4.1.jar
+7f4ac40c9000-7f4ac40cb000 r--s 00005000 08:01 13768505                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-language-jvm-5.4.1.jar
+7f4ac40cb000-7f4ac40d4000 r--s 00042000 08:01 13768503                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-language-java-5.4.1.jar
+7f4ac40d4000-7f4ac40d6000 r--s 0000b000 08:01 13768498                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-language-groovy-5.4.1.jar
+7f4ac40d6000-7f4ac40dd000 r--s 00035000 08:01 13768552                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/simple-4.1.21.jar
+7f4ac40dd000-7f4ac40ea000 r--s 00125000 08:01 13768550                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/rhino-1.7.10.jar
+7f4ac40ea000-7f4ac40ee000 r--s 00012000 08:01 13768493                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-javascript-5.4.1.jar
+7f4ac40ee000-7f4ac40f2000 r--s 00011000 08:01 13768495                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-jacoco-5.4.1.jar
+7f4ac40f2000-7f4ac40f6000 r--s 00015000 08:01 13768494                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-ivy-5.4.1.jar
+7f4ac40f6000-7f4ac40f8000 r--s 00002000 08:01 13768487                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-ide-play-5.4.1.jar
+7f4ac40f8000-7f4ac40fa000 r--s 00011000 08:01 13768557                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/dd-plist-1.21.jar
+7f4ac40fa000-7f4ac4101000 r--s 00034000 08:01 13768482                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-ide-native-5.4.1.jar
+7f4ac4101000-7f4ac410b000 r--s 0005f000 08:01 13768488                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-ide-5.4.1.jar
+7f4ac410b000-7f4ac410d000 r--s 00008000 08:01 13768491                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-ear-5.4.1.jar
+7f4ac410d000-7f4ac410f000 r--s 00006000 08:01 13768553                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jatl-0.2.3.jar
+7f4ac410f000-7f4ac4115000 r--s 0003e000 08:01 13768508                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-diagnostics-5.4.1.jar
+7f4ac4115000-7f4ac411a000 r--s 00028000 08:01 13768478                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-code-quality-5.4.1.jar
+7f4ac411a000-7f4ac411c000 r--s 0000b000 08:01 13768554                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-plugin-api-3.0.4.jar
+7f4ac411c000-7f4ac411e000 r--s 0000c000 08:01 13768592                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/wagon-provider-api-3.0.0.jar
+7f4ac411e000-7f4ac4124000 r--s 0003f000 08:01 13768542                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-compat-3.0.4.jar
+7f4ac4124000-7f4ac4127000 r--s 0000a000 08:01 13768589                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/plexus-classworlds-2.5.1.jar
+7f4ac4127000-7f4ac412b000 r--s 00021000 08:01 13768594                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/xbean-reflect-3.7.jar
+7f4ac412b000-7f4ac4132000 r--s 00032000 08:01 13768547                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/plexus-container-default-1.7.1.jar
+7f4ac4132000-7f4ac4138000 r--s 00031000 08:01 13768496                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-build-init-5.4.1.jar
+7f4ac4138000-7f4ac413e000 r--s 0002e000 08:01 13768490                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-build-comparison-5.4.1.jar
+7f4ac413e000-7f4ac4140000 r--s 00002000 08:01 13768519                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-build-cache-http-5.4.1.jar
+7f4ac4140000-7f4ac4142000 r--s 00009000 08:01 13768477                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-antlr-5.4.1.jar
+7f4ac4142000-7f4ac4143000 r--s 00005000 08:01 13768476                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-announce-5.4.1.jar
+7f4ac4143000-7f4ac4146000 r--s 00017000 08:01 13768524                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-kotlin-dsl-tooling-builders-5.4.1.jar
+7f4ac4146000-7f4ac414c000 r--s 00029000 08:01 13768523                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-kotlin-dsl-provider-plugins-5.4.1.jar
+7f4ac414c000-7f4ac414d000 r--s 00000000 08:01 13768398                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-runtime-api-info-5.4.1.jar
+7f4ac414d000-7f4ac4152000 r--s 00040000 08:01 13768564                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jsch-0.1.54.jar
+7f4ac4152000-7f4ac4154000 r--s 00010000 08:01 13768580                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jzlib-1.1.3.jar
+7f4ac4154000-7f4ac4179000 r--s 00265000 08:01 13768529                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/org.eclipse.jgit-5.0.3.201809091024-r.jar
+7f4ac4179000-7f4ac417c000 r--s 0000c000 08:01 13768513                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-version-control-5.4.1.jar
+7f4ac417c000-7f4ac4195000 r--s 0013a000 08:01 13768563                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/xercesImpl-2.12.0.jar
+7f4ac4195000-7f4ac4197000 r--s 0001d000 08:01 13768562                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/nekohtml-1.9.22.jar
+7f4ac4197000-7f4ac419d000 r--s 0005b000 08:01 13768561                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/jcifs-1.3.17.jar
+7f4ac419d000-7f4ac41a4000 r--s 0004b000 08:01 13768538                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/commons-codec-1.11.jar
+7f4ac41a4000-7f4ac41ab000 r--s 00049000 08:01 13768578                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/httpcore-4.4.10.jar
+7f4ac41ab000-7f4ac41b8000 r--s 000af000 08:01 13768537                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/httpclient-4.5.6.jar
+7f4ac41b8000-7f4ac41bb000 r--s 0000e000 08:01 13768520                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-resources-http-5.4.1.jar
+7f4ac41bb000-7f4ac41be000 r--s 0000c000 08:01 13768512                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-plugin-use-5.4.1.jar
+7f4ac41be000-7f4ac41c1000 r--s 0000d000 08:01 13768515                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-composite-builds-5.4.1.jar
+7f4ac41c1000-7f4ac41c2000 r--s 00000000 08:01 13768401                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-installation-beacon-5.4.1.jar
+7f4ac41c2000-7f4ac41c4000 r--s 00006000 08:01 13768584                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-repository-metadata-3.0.4.jar
+7f4ac41c4000-7f4ac41c6000 r--s 0000c000 08:01 13768572                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-aether-provider-3.0.4.jar
+7f4ac41c6000-7f4ac41c7000 r--s 00003000 08:01 13768574                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/aether-spi-1.13.1.jar
+7f4ac41c7000-7f4ac41ca000 r--s 0001d000 08:01 13768573                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/aether-impl-1.13.1.jar
+7f4ac41ca000-7f4ac41ce000 r--s 0001c000 08:01 13768575                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/aether-util-1.13.1.jar
+7f4ac41ce000-7f4ac41d1000 r--s 00013000 08:01 13768576                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/aether-api-1.13.1.jar
+7f4ac41d1000-7f4ac41d3000 r--s 0000b000 08:01 13768581                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-artifact-3.0.4.jar
+7f4ac41d3000-7f4ac41d7000 r--s 00021000 08:01 13768582                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-model-builder-3.0.4.jar
+7f4ac41d7000-7f4ac41d9000 r--s 00026000 08:01 13768583                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-model-3.0.4.jar
+7f4ac41d9000-7f4ac41db000 r--s 0000a000 08:01 13768586                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-settings-3.0.4.jar
+7f4ac41db000-7f4ac41dd000 r--s 00002000 08:01 13768588                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/plexus-cipher-1.7.jar
+7f4ac41dd000-7f4ac41de000 r--s 00006000 08:01 13768587                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/plexus-sec-dispatcher-1.3.jar
+7f4ac41de000-7f4ac41e0000 r--s 00000000 08:01 13768590                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/plexus-component-annotations-1.5.5.jar
+7f4ac41e0000-7f4ac41e2000 r--s 0000d000 08:01 13768591                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/plexus-interpolation-1.14.jar
+7f4ac41e2000-7f4ac41e6000 r--s 0003c000 08:01 13768593                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/plexus-utils-3.1.0.jar
+7f4ac41e6000-7f4ac41e9000 r--s 00008000 08:01 13768585                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-settings-builder-3.0.4.jar
+7f4ac41e9000-7f4ac41fe000 r--s 00116000 08:01 13768541                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/ivy-2.3.0.jar
+7f4ac41fe000-7f4ac425d000 r--s 003f7000 08:01 13768571                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/bcprov-jdk15on-1.61.jar
+7f4ac425d000-7f4ac4290000 r--s 001c3000 08:01 13768514                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-dependency-management-5.4.1.jar
+7f4ac4290000-7f4ac42a7000 r-xp 00000000 08:01 10490344                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f4ac42a7000-7f4ac44a6000 ---p 00017000 08:01 10490344                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f4ac44a6000-7f4ac44a7000 r--p 00016000 08:01 10490344                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f4ac44a7000-7f4ac44a8000 rw-p 00017000 08:01 10490344                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f4ac44a8000-7f4ac4621000 r-xp 00000000 08:01 8650778                    /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+7f4ac4621000-7f4ac4821000 ---p 00179000 08:01 8650778                    /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+7f4ac4821000-7f4ac482b000 r--p 00179000 08:01 8650778                    /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+7f4ac482b000-7f4ac482d000 rw-p 00183000 08:01 8650778                    /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+7f4ac482d000-7f4ac4831000 rw-p 00000000 00:00 0 
+7f4ac4831000-7f4ac483d000 r--s 0007d000 08:01 13768543                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/maven-core-3.0.4.jar
+7f4ac483d000-7f4ac4842000 r--s 00036000 08:01 13768551                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gson-2.8.5.jar
+7f4ac4842000-7f4ac4843000 r--s 00013000 08:01 13768539                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/asm-util-7.0.jar
+7f4ac4843000-7f4ac4846000 r--s 0000e000 08:01 13768525                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/plugins/gradle-workers-5.4.1.jar
+7f4ac4846000-7f4ac484c000 r-xp 00000000 08:01 13769601                   /home/dell/.gradle/native/29/linux-amd64/libnative-platform.so
+7f4ac484c000-7f4ac4a4b000 ---p 00006000 08:01 13769601                   /home/dell/.gradle/native/29/linux-amd64/libnative-platform.so
+7f4ac4a4b000-7f4ac4a4c000 rw-p 00005000 08:01 13769601                   /home/dell/.gradle/native/29/linux-amd64/libnative-platform.so
+7f4ac4a4c000-7f4ac4a5c000 r-xp 00000000 08:01 12977684                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libnio.so
+7f4ac4a5c000-7f4ac4a5d000 rw-p 00010000 08:01 12977684                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libnio.so
+7f4ac4a5d000-7f4ac4a73000 r-xp 00000000 08:01 12977663                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libnet.so
+7f4ac4a73000-7f4ac4a74000 rw-p 00016000 08:01 12977663                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libnet.so
+7f4ac4a74000-7f4ac4a76000 r--s 00006000 08:01 13768400                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-wrapper-5.4.1.jar
+7f4ac4a76000-7f4ac4a85000 r--s 0004c000 08:01 13768399                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-tooling-api-5.4.1.jar
+7f4ac4a85000-7f4ac4a90000 r--s 00081000 08:01 13768458                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/trove4j-1.0.20181211.jar
+7f4ac4a90000-7f4ac4a92000 r--s 00009000 08:01 13768457                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlin-script-runtime-1.3.21.jar
+7f4ac4a92000-7f4ac4ac9000 r--s 00255000 08:01 13768451                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlin-reflect-1.3.21.jar
+7f4ac4ac9000-7f4ac4ca8000 r--s 01b1b000 08:01 13768424                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlin-compiler-embeddable-1.3.21-patched-for-gradle-5.4.1.jar
+7f4ac4ca8000-7f4ac4ca9000 r--s 00001000 08:01 13768435                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-kotlin-dsl-tooling-models-5.4.1.jar
+7f4ac4ca9000-7f4ac4cb7000 r--s 00236000 08:01 13768438                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlinx-metadata-jvm-0.0.5.jar
+7f4ac4cb7000-7f4ac4cb8000 r--s 00002000 08:01 13768437                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlin-sam-with-receiver-compiler-plugin-1.3.21.jar
+7f4ac4cb8000-7f4ac4cb9000 r--s 00000000 08:01 13768452                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlin-stdlib-jdk7-1.3.21.jar
+7f4ac4cb9000-7f4ac4cbb000 r--s 00003000 08:01 13768454                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/annotations-13.0.jar
+7f4ac4cbb000-7f4ac4cc2000 r--s 0001f000 08:01 13768474                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlin-stdlib-common-1.3.21.jar
+7f4ac4cc2000-7f4ac4cd5000 r--s 0010f000 08:01 13768453                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlin-stdlib-1.3.21.jar
+7f4ac4cd5000-7f4ac4cd7000 r--s 00002000 08:01 13768436                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kotlin-stdlib-jdk8-1.3.21.jar
+7f4ac4cd7000-7f4ac4cf2000 r--s 0015d000 08:01 13768402                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-kotlin-dsl-5.4.1.jar
+7f4ac4cf2000-7f4ac4cf6000 r--s 00013000 08:01 13768407                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-build-cache-5.4.1.jar
+7f4ac4cf6000-7f4ac4cf8000 r--s 00006000 08:01 13768406                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-build-cache-packaging-5.4.1.jar
+7f4ac4cf8000-7f4ac4cfd000 r--s 0001f000 08:01 13768405                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-execution-5.4.1.jar
+7f4ac4cfd000-7f4ac4d01000 r--s 0001a000 08:01 13768409                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-files-5.4.1.jar
+7f4ac4d01000-7f4ac4d06000 r--s 00026000 08:01 13768408                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-snapshots-5.4.1.jar
+7f4ac4d06000-7f4ac4d0b000 r--s 00015000 08:01 13768416                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-resources-5.4.1.jar
+7f4ac4d0b000-7f4ac4d12000 r--s 00036000 08:01 13768413                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-persistent-cache-5.4.1.jar
+7f4ac4d12000-7f4ac4d13000 r--s 00003000 08:01 13768421                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-build-option-5.4.1.jar
+7f4ac4d13000-7f4ac4d15000 r--s 00005000 08:01 13768422                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-cli-5.4.1.jar
+7f4ac4d15000-7f4ac4d17000 r--s 00004000 08:01 13768433                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/log4j-over-slf4j-1.7.25.jar
+7f4ac4d17000-7f4ac4d19000 r--s 00000000 08:01 13768432                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/jul-to-slf4j-1.7.25.jar
+7f4ac4d19000-7f4ac4d1b000 r--s 00003000 08:01 13768431                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/jcl-over-slf4j-1.7.25.jar
+7f4ac4d1b000-7f4ac4d23000 r--s 00038000 08:01 13768414                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-logging-5.4.1.jar
+7f4ac4d23000-7f4ac4d38000 r--s 000c1000 08:01 13768411                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-model-core-5.4.1.jar
+7f4ac4d38000-7f4ac4d3a000 r--s 00006000 08:01 13768418                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-base-services-groovy-5.4.1.jar
+7f4ac4d3a000-7f4ac4d3c000 r--s 00007000 08:01 13768410                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-model-groovy-5.4.1.jar
+7f4ac4d3c000-7f4ac4d3d000 r--s 00007000 08:01 13768423                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-docs-5.4.1.jar
+7f4ac4d3d000-7f4ac4d46000 r--s 0002d000 08:01 13768447                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/xml-apis-1.4.01.jar
+7f4ac4d46000-7f4ac4d47000 r--s 00000000 08:01 13768444                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/javax.inject-1.jar
+7f4ac4d47000-7f4ac4dcc000 r--s 007a7000 08:01 13768442                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/groovy-all-1.0-2.5.4.jar
+7f4ac4dcc000-7f4ac4dd7000 r--s 00086000 08:01 13768446                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/commons-compress-1.18.jar
+7f4ac4dd7000-7f4ac4dd9000 r--s 00007000 08:01 13768426                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/asm-analysis-7.0.jar
+7f4ac4dd9000-7f4ac4ddb000 r--s 0000b000 08:01 13768427                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/asm-tree-7.0.jar
+7f4ac4ddb000-7f4ac4ddd000 r--s 00012000 08:01 13768425                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/asm-commons-7.0.jar
+7f4ac4ddd000-7f4ac4dde000 r--s 00004000 08:01 13768459                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-freebsd-amd64-libcpp-0.17.jar
+7f4ac4dde000-7f4ac4ddf000 r--s 00004000 08:01 13768460                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-freebsd-amd64-libstdcpp-0.17.jar
+7f4ac4ddf000-7f4ac4de0000 r--s 00004000 08:01 13768461                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-freebsd-i386-libcpp-0.17.jar
+7f4ac4de0000-7f4ac4de1000 r--s 00004000 08:01 13768462                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-freebsd-i386-libstdcpp-0.17.jar
+7f4ac4de1000-7f4ac4de2000 r--s 00002000 08:01 13768463                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-linux-amd64-0.17.jar
+7f4ac4de2000-7f4ac4de3000 r--s 00002000 08:01 13768464                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-linux-i386-0.17.jar
+7f4ac4de3000-7f4ac4e13000 r--s 0024b000 08:01 13768439                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/guava-26.0-android.jar
+7f4ac4e13000-7f4ac4e14000 ---p 00000000 00:00 0 
+7f4ac4e14000-7f4ac4f14000 rw-p 00000000 00:00 0 
+7f4ac4f14000-7f4ac4f17000 ---p 00000000 00:00 0 
+7f4ac4f17000-7f4ac5015000 rw-p 00000000 00:00 0 
+7f4ac5015000-7f4ac5016000 ---p 00000000 00:00 0 
+7f4ac5016000-7f4ac5019000 ---p 00000000 00:00 0 
+7f4ac5019000-7f4ac5116000 rw-p 00000000 00:00 0 
+7f4ac5116000-7f4ac5117000 ---p 00000000 00:00 0 
+7f4ac5117000-7f4ac511a000 ---p 00000000 00:00 0 
+7f4ac511a000-7f4ac5217000 rw-p 00000000 00:00 0 
+7f4ac5217000-7f4ac5218000 ---p 00000000 00:00 0 
+7f4ac5218000-7f4ac521b000 ---p 00000000 00:00 0 
+7f4ac521b000-7f4ac5318000 rw-p 00000000 00:00 0 
+7f4ac5318000-7f4ac531b000 ---p 00000000 00:00 0 
+7f4ac531b000-7f4ac5419000 rw-p 00000000 00:00 0 
+7f4ac5419000-7f4ac56f7000 r--p 00000000 08:01 8653887                    /usr/lib/locale/locale-archive
+7f4ac56f7000-7f4ac56fa000 ---p 00000000 00:00 0 
+7f4ac56fa000-7f4ac57f8000 rw-p 00000000 00:00 0 
+7f4ac57f8000-7f4ac57fb000 ---p 00000000 00:00 0 
+7f4ac57fb000-7f4ac58f9000 rw-p 00000000 00:00 0 
+7f4ac58f9000-7f4ac58fa000 ---p 00000000 00:00 0 
+7f4ac58fa000-7f4ac9000000 rw-p 00000000 00:00 0 
+7f4ac9000000-7f4ad2510000 rwxp 00000000 00:00 0 
+7f4ad2510000-7f4ad8000000 ---p 00000000 00:00 0 
+7f4ad8000000-7f4adbff7000 rw-p 00000000 00:00 0 
+7f4adbff7000-7f4adc000000 ---p 00000000 00:00 0 
+7f4adc000000-7f4adc001000 r--s 00003000 08:01 13768465                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-osx-amd64-0.17.jar
+7f4adc001000-7f4adc002000 r--s 00010000 08:01 13768466                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-windows-amd64-0.17.jar
+7f4adc002000-7f4adc003000 r--s 00010000 08:01 13768467                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-windows-amd64-min-0.17.jar
+7f4adc003000-7f4adc004000 r--s 0000e000 08:01 13768468                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-windows-i386-0.17.jar
+7f4adc004000-7f4adc005000 r--s 0000e000 08:01 13768469                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-windows-i386-min-0.17.jar
+7f4adc005000-7f4adc007000 r--s 00001000 08:01 13768470                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-linux-amd64-ncurses5-0.17.jar
+7f4adc007000-7f4adc008000 r--s 00001000 08:01 13768471                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-linux-amd64-ncurses6-0.17.jar
+7f4adc008000-7f4adc009000 r--s 00001000 08:01 13768472                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-linux-i386-ncurses5-0.17.jar
+7f4adc009000-7f4adc00e000 r--s 0001a000 08:01 13768445                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-0.17.jar
+7f4adc00e000-7f4adc012000 r--s 00042000 08:01 13768448                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/jansi-1.17.1.jar
+7f4adc012000-7f4adc016000 r--s 0000c000 08:01 13768417                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-native-5.4.1.jar
+7f4adc016000-7f4adc018000 r--s 0000c000 08:01 13768450                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/objenesis-2.6.jar
+7f4adc018000-7f4adc01a000 r--s 00000000 08:01 13768456                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/minlog-1.2.jar
+7f4adc01a000-7f4adc020000 r--s 0004d000 08:01 13768449                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/kryo-2.24.0.jar
+7f4adc020000-7f4adc027000 r--s 00030000 08:01 13768419                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-messaging-5.4.1.jar
+7f4adc027000-7f4adc029000 r--s 00006000 08:01 13768415                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-process-services-5.4.1.jar
+7f4adc029000-7f4adc02b000 r--s 00000000 08:01 13768404                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-jvm-services-5.4.1.jar
+7f4adc02b000-7f4adc02d000 r--s 00003000 08:01 13768440                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/jsr305-3.0.2.jar
+7f4adc02d000-7f4adc030000 r--s 0001c000 08:01 13768441                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/fastutil-8.2.1-min.jar
+7f4adc030000-7f4adc04f000 r--s 001da000 08:01 13768443                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/ant-1.9.13.jar
+7f4adc04f000-7f4adc08b000 r--s 00203000 08:01 13768403                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-core-5.4.1.jar
+7f4adc08b000-7f4adc09a000 r--s 00043000 08:01 13768412                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-core-api-5.4.1.jar
+7f4adc09a000-7f4adc0a7000 r--s 00067000 08:01 13768420                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-base-services-5.4.1.jar
+7f4adc0a7000-7f4adca82000 rw-p 00000000 00:00 0 
+7f4adca82000-7f4adcc54000 r--s 03cad000 08:01 12977700                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/rt.jar
+7f4adcc54000-7f4add825000 rw-p 00000000 00:00 0 
+7f4add825000-7f4add826000 ---p 00000000 00:00 0 
+7f4add826000-7f4add926000 rw-p 00000000 00:00 0 
+7f4add926000-7f4add927000 ---p 00000000 00:00 0 
+7f4add927000-7f4adda27000 rw-p 00000000 00:00 0 
+7f4adda27000-7f4adda28000 ---p 00000000 00:00 0 
+7f4adda28000-7f4addb28000 rw-p 00000000 00:00 0 
+7f4addb28000-7f4addb29000 ---p 00000000 00:00 0 
+7f4addb29000-7f4addd4c000 rw-p 00000000 00:00 0 
+7f4addd4c000-7f4adde29000 ---p 00000000 00:00 0 
+7f4adde29000-7f4addf4c000 rw-p 00000000 00:00 0 
+7f4addf4c000-7f4ade029000 ---p 00000000 00:00 0 
+7f4ade029000-7f4ade125000 rw-p 00000000 00:00 0 
+7f4ade125000-7f4ade129000 ---p 00000000 00:00 0 
+7f4ade129000-7f4ade37f000 rw-p 00000000 00:00 0 
+7f4ade37f000-7f4ade4ea000 ---p 00000000 00:00 0 
+7f4ade4ea000-7f4ade4f5000 r-xp 00000000 08:01 10490842                   /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f4ade4f5000-7f4ade6f4000 ---p 0000b000 08:01 10490842                   /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f4ade6f4000-7f4ade6f5000 r--p 0000a000 08:01 10490842                   /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f4ade6f5000-7f4ade6f6000 rw-p 0000b000 08:01 10490842                   /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f4ade6f6000-7f4ade6fc000 rw-p 00000000 00:00 0 
+7f4ade6fc000-7f4ade713000 r-xp 00000000 08:01 10490839                   /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f4ade713000-7f4ade912000 ---p 00017000 08:01 10490839                   /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f4ade912000-7f4ade913000 r--p 00016000 08:01 10490839                   /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f4ade913000-7f4ade914000 rw-p 00017000 08:01 10490839                   /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f4ade914000-7f4ade916000 rw-p 00000000 00:00 0 
+7f4ade916000-7f4ade921000 r-xp 00000000 08:01 10490844                   /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f4ade921000-7f4adeb20000 ---p 0000b000 08:01 10490844                   /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f4adeb20000-7f4adeb21000 r--p 0000a000 08:01 10490844                   /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f4adeb21000-7f4adeb22000 rw-p 0000b000 08:01 10490844                   /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f4adeb22000-7f4adeb2a000 r-xp 00000000 08:01 10490840                   /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f4adeb2a000-7f4aded2a000 ---p 00008000 08:01 10490840                   /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f4aded2a000-7f4aded2b000 r--p 00008000 08:01 10490840                   /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f4aded2b000-7f4aded2c000 rw-p 00009000 08:01 10490840                   /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f4aded2c000-7f4aded33000 r-xp 00000000 08:01 10490849                   /lib/x86_64-linux-gnu/librt-2.27.so
+7f4aded33000-7f4adef32000 ---p 00007000 08:01 10490849                   /lib/x86_64-linux-gnu/librt-2.27.so
+7f4adef32000-7f4adef33000 r--p 00006000 08:01 10490849                   /lib/x86_64-linux-gnu/librt-2.27.so
+7f4adef33000-7f4adef34000 rw-p 00007000 08:01 10490849                   /lib/x86_64-linux-gnu/librt-2.27.so
+7f4adef34000-7f4adf0d1000 r-xp 00000000 08:01 10490836                   /lib/x86_64-linux-gnu/libm-2.27.so
+7f4adf0d1000-7f4adf2d0000 ---p 0019d000 08:01 10490836                   /lib/x86_64-linux-gnu/libm-2.27.so
+7f4adf2d0000-7f4adf2d1000 r--p 0019c000 08:01 10490836                   /lib/x86_64-linux-gnu/libm-2.27.so
+7f4adf2d1000-7f4adf2d2000 rw-p 0019d000 08:01 10490836                   /lib/x86_64-linux-gnu/libm-2.27.so
+7f4adf2d2000-7f4adfef8000 r-xp 00000000 08:01 12977677                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/server/libjvm.so
+7f4adfef8000-7f4adffc8000 rw-p 00c26000 08:01 12977677                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/server/libjvm.so
+7f4adffc8000-7f4ae000c000 rw-p 00000000 00:00 0 
+7f4ae000c000-7f4ae01f3000 r-xp 00000000 08:01 10490830                   /lib/x86_64-linux-gnu/libc-2.27.so
+7f4ae01f3000-7f4ae03f3000 ---p 001e7000 08:01 10490830                   /lib/x86_64-linux-gnu/libc-2.27.so
+7f4ae03f3000-7f4ae03f7000 r--p 001e7000 08:01 10490830                   /lib/x86_64-linux-gnu/libc-2.27.so
+7f4ae03f7000-7f4ae03f9000 rw-p 001eb000 08:01 10490830                   /lib/x86_64-linux-gnu/libc-2.27.so
+7f4ae03f9000-7f4ae03fd000 rw-p 00000000 00:00 0 
+7f4ae03fd000-7f4ae0400000 r-xp 00000000 08:01 10490833                   /lib/x86_64-linux-gnu/libdl-2.27.so
+7f4ae0400000-7f4ae05ff000 ---p 00003000 08:01 10490833                   /lib/x86_64-linux-gnu/libdl-2.27.so
+7f4ae05ff000-7f4ae0600000 r--p 00002000 08:01 10490833                   /lib/x86_64-linux-gnu/libdl-2.27.so
+7f4ae0600000-7f4ae0601000 rw-p 00003000 08:01 10490833                   /lib/x86_64-linux-gnu/libdl-2.27.so
+7f4ae0601000-7f4ae061b000 r-xp 00000000 08:01 10490847                   /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f4ae061b000-7f4ae081a000 ---p 0001a000 08:01 10490847                   /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f4ae081a000-7f4ae081b000 r--p 00019000 08:01 10490847                   /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f4ae081b000-7f4ae081c000 rw-p 0001a000 08:01 10490847                   /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f4ae081c000-7f4ae0820000 rw-p 00000000 00:00 0 
+7f4ae0820000-7f4ae0847000 r-xp 00000000 08:01 10490474                   /lib/x86_64-linux-gnu/ld-2.27.so
+7f4ae0847000-7f4ae084c000 r--s 00041000 08:01 13768430                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/commons-lang-2.6.jar
+7f4ae084c000-7f4ae0850000 r--s 00031000 08:01 13768429                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/commons-io-2.6.jar
+7f4ae0850000-7f4ae0852000 r--s 0001a000 08:01 13768428                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/asm-7.0.jar
+7f4ae0852000-7f4ae085f000 r--s 0006d000 08:01 13768397                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-launcher-5.4.1.jar
+7f4ae085f000-7f4ae08c6000 rw-p 00000000 00:00 0 
+7f4ae08c6000-7f4ae08e1000 r-xp 00000000 08:01 12977659                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libzip.so
+7f4ae08e1000-7f4ae08e2000 rw-p 0001a000 08:01 12977659                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libzip.so
+7f4ae08e2000-7f4ae08ea000 rw-s 00000000 08:01 6160885                    /tmp/hsperfdata_dell/2302
+7f4ae08ea000-7f4ae0914000 r-xp 00000000 08:01 12977667                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libjava.so
+7f4ae0914000-7f4ae0916000 rw-p 0002a000 08:01 12977667                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libjava.so
+7f4ae0916000-7f4ae0917000 ---p 00000000 00:00 0 
+7f4ae0917000-7f4ae091a000 ---p 00000000 00:00 0 
+7f4ae091a000-7f4ae0a19000 rw-p 00000000 00:00 0 
+7f4ae0a19000-7f4ae0a2f000 r-xp 00000000 08:01 12977558                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/lib/amd64/jli/libjli.so
+7f4ae0a2f000-7f4ae0a30000 rw-p 00015000 08:01 12977558                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/lib/amd64/jli/libjli.so
+7f4ae0a30000-7f4ae0a31000 r--s 00001000 08:01 13768473                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/native-platform-linux-i386-ncurses6-0.17.jar
+7f4ae0a31000-7f4ae0a33000 r--s 00009000 08:01 13768434                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/slf4j-api-1.7.25.jar
+7f4ae0a33000-7f4ae0a34000 r--s 00004000 08:01 13768455                   /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/ant-launcher-1.9.13.jar
+7f4ae0a34000-7f4ae0a35000 rw-p 00000000 00:00 0 
+7f4ae0a35000-7f4ae0a36000 ---p 00000000 00:00 0 
+7f4ae0a36000-7f4ae0a43000 r-xp 00000000 08:01 12977655                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libverify.so
+7f4ae0a43000-7f4ae0a45000 rw-p 0000c000 08:01 12977655                   /home/dell/Kiran/android-studio-ide-191.6010548-linux/android-studio/jre/jre/lib/amd64/libverify.so
+7f4ae0a45000-7f4ae0a47000 rw-p 00000000 00:00 0 
+7f4ae0a47000-7f4ae0a48000 r--p 00027000 08:01 10490474                   /lib/x86_64-linux-gnu/ld-2.27.so
+7f4ae0a48000-7f4ae0a49000 rw-p 00028000 08:01 10490474                   /lib/x86_64-linux-gnu/ld-2.27.so
+7f4ae0a49000-7f4ae0a4a000 rw-p 00000000 00:00 0 
+7fff97aa0000-7fff97ac1000 rw-p 00000000 00:00 0                          [stack]
+7fff97b4e000-7fff97b51000 r--p 00000000 00:00 0                          [vvar]
+7fff97b51000-7fff97b53000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -Xmx1536m -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant 
+java_command: org.gradle.launcher.daemon.bootstrap.GradleDaemon 5.4.1
+java_class_path (initial): /home/dell/.gradle/wrapper/dists/gradle-5.4.1-all/3221gyojl5jsh0helicew7rwx/gradle-5.4.1/lib/gradle-launcher-5.4.1.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+USERNAME=dell
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0xa09650], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0xa09650], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x86bc60], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x86bc60], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x86bc60], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x86bc60], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x86bb30], sa_mask[0]=00100000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.so+0x86bd20], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: [libjvm.so+0x86bd20], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGTERM: [libjvm.so+0x86bd20], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.so+0x86bd20], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.4 LTS"
+
+uname:Linux 4.15.0-123-generic #126-Ubuntu SMP Wed Oct 21 09:40:11 UTC 2020 x86_64
+libc:glibc 2.27 NPTL 2.27 
+rlimit: STACK 8192k, CORE 0k, NPROC 31153, NOFILE 4096, AS infinity
+load average:3.75 3.44 2.58
+
+/proc/meminfo:
+MemTotal:        8037904 kB
+MemFree:          126004 kB
+MemAvailable:      37964 kB
+Buffers:            1732 kB
+Cached:           538932 kB
+SwapCached:         1364 kB
+Active:          6760180 kB
+Inactive:         868228 kB
+Active(anon):    6742852 kB
+Inactive(anon):   843704 kB
+Active(file):      17328 kB
+Inactive(file):    24524 kB
+Unevictable:          48 kB
+Mlocked:              48 kB
+SwapTotal:       2097148 kB
+SwapFree:            884 kB
+Dirty:               212 kB
+Writeback:             0 kB
+AnonPages:       7086936 kB
+Mapped:            60508 kB
+Shmem:            498428 kB
+Slab:             117116 kB
+SReclaimable:      51388 kB
+SUnreclaim:        65728 kB
+KernelStack:       16416 kB
+PageTables:        82476 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     6116100 kB
+Committed_AS:   15996564 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:           0 kB
+VmallocChunk:          0 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      365364 kB
+DirectMap2M:     7892992 kB
+DirectMap1G:     1048576 kB
+
+container (cgroup) information:
+container_type: cgroupv1
+cpu_cpuset_cpus: 0-3
+cpu_memory_nodes: 0
+active_processor_count: 4
+cpu_quota: -1
+cpu_period: 100000
+cpu_shares: -1
+memory_limit_in_bytes: -1
+memory_and_swap_limit_in_bytes: -2
+memory_soft_limit_in_bytes: -1
+memory_usage_in_bytes: 7812120576
+memory_max_usage_in_bytes: 11280384
+
+
+CPU:total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 61 stepping 4, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, rtm, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 61
+model name	: Intel(R) Core(TM) i5-5300U CPU @ 2.30GHz
+stepping	: 4
+microcode	: 0x2f
+cpu MHz		: 2227.965
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap intel_pt xsaveopt dtherm ida arat pln pts md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit srbds
+bogomips	: 4589.13
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 61
+model name	: Intel(R) Core(TM) i5-5300U CPU @ 2.30GHz
+stepping	: 4
+microcode	: 0x2f
+cpu MHz		: 2530.911
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap intel_pt xsaveopt dtherm ida arat pln pts md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit srbds
+bogomips	: 4589.13
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 61
+model name	: Intel(R) Core(TM) i5-5300U CPU @ 2.30GHz
+stepping	: 4
+microcode	: 0x2f
+cpu MHz		: 2283.286
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap intel_pt xsaveopt dtherm ida arat pln pts md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit srbds
+bogomips	: 4589.13
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 61
+model name	: Intel(R) Core(TM) i5-5300U CPU @ 2.30GHz
+stepping	: 4
+microcode	: 0x2f
+cpu MHz		: 2303.386
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap intel_pt xsaveopt dtherm ida arat pln pts md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit srbds
+bogomips	: 4589.13
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 8037904k(125756k free), swap 2097148k(884k free)
+
+vm_info: OpenJDK 64-Bit Server VM (25.202-b49-5587405) for linux-amd64 JRE (1.8.0_202-release-1483-b49-5587405), built by "android-build" with gcc 4.8
+
+time: Wed Jan 13 16:54:48 2021
+timezone: IST
+elapsed time: 24822 seconds (0d 6h 53m 42s)
+

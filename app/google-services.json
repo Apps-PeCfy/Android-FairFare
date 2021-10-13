@@ -1,7 +1,6 @@
 {
   "project_info": {
     "project_number": "637140199197",
-    "firebase_url": "https://fairfares-a474a.firebaseio.com",
     "project_id": "fairfares-a474a",
     "storage_bucket": "fairfares-a474a.appspot.com"
   },
@@ -19,6 +18,50 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.fairfare",
+            "certificate_hash": "fe38236024417c8f6323a684362f02690eabf8af"
+          }
+        },
+        {
+          "client_id": "637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLp331jDPN8s3tyfV0Hg6-5aKrmmtJNi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "637140199197-j1rllph9bt22840900tkqf44t7094a6c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.FairFare"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637140199197:android:3ef993619f6829153ca3f4",
+        "android_client_info": {
+          "package_name": "com.fairfareindia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637140199197-4lm7jk9tab4uq7l3g1ks05eukj3bucga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fairfareindia",
             "certificate_hash": "fe38236024417c8f6323a684362f02690eabf8af"
           }
         },
