@@ -16,7 +16,6 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -74,7 +73,7 @@ class SplashScreen : AppCompatActivity() {
         PreferencesManager.initializeInstance(this@SplashScreen)
         mPreferencesManager = PreferencesManager.instance
         appSharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        appFirst = appSharedpreferences!!.getString("AppOpen","")
+        appFirst = appSharedpreferences!!.getString("AppOpen", "")
 
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
         sharedpreferences!!.edit().clear().commit()
@@ -142,7 +141,7 @@ class SplashScreen : AppCompatActivity() {
         isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         // if (isAccepted || isGPSEnabled || isNetworkEnabled) {
         if (callOnResune.equals("first")) {
-           // checkUpdate()
+            // checkUpdate()
             checkAppUpdate()
         }
 
@@ -171,7 +170,6 @@ class SplashScreen : AppCompatActivity() {
             try {
 
 
-
                 if (!isGPSEnabled && !isNetworkEnabled) {
                     val alertDialog =
                         AlertDialog.Builder(this)
@@ -190,14 +188,14 @@ class SplashScreen : AppCompatActivity() {
 
                 } else {
 
-                    if(CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)){
+                    if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)) {
                         // if (CommonAppPermission.requestPermissionGranted(this@SplashScreen)) {
                         isAccepted = true
 //                        if (isLogin == "true" && requestCodeq == REQUEST_PERMISSION && isAccepted) {
-                        if (isLogin == "true"  && isAccepted) {
+                        if (isLogin == "true" && isAccepted) {
 
                             callOnResune = "second"
-                            if(appFirst!!.isEmpty()){
+                            if (appFirst!!.isEmpty()) {
 
                                 val editor = appSharedpreferences!!.edit()
                                 editor.putString("AppOpen", "appOpenFirst")
@@ -219,18 +217,20 @@ class SplashScreen : AppCompatActivity() {
                             Log.d("onRequestPermissi", "2")
                             if (callOnlyOne.equals("OnlyOne")) {
 
-                                if(appFirst!!.isEmpty()){
+                                if (appFirst!!.isEmpty()) {
 
                                     val editor = appSharedpreferences!!.edit()
                                     editor.putString("AppOpen", "appOpenFirst")
                                     editor.commit()
                                     callOnlyOne = "SecondTime"
-                                    val intent = Intent(applicationContext, IntroActivity::class.java)
+                                    val intent =
+                                        Intent(applicationContext, IntroActivity::class.java)
                                     startActivity(intent)
                                     finish()
                                 } else {
                                     callOnlyOne = "SecondTime"
-                                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                                    val intent =
+                                        Intent(applicationContext, LoginActivity::class.java)
                                     startActivity(intent)
                                     finish()
 
@@ -240,8 +240,7 @@ class SplashScreen : AppCompatActivity() {
                             //reuestPermissions()
 
                         }
-                    }
-                    else{
+                    } else {
 
                         if (!isAlertWithPermissionInstructionVisible) {
 
@@ -258,10 +257,9 @@ class SplashScreen : AppCompatActivity() {
                                 //make the message as per android 10 and above and below
 
 
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                     alertMessage += "\n\nLocation: Please provide \"Allow all the time\" location permission for accurate pick-up and drop-off locations, availability of autos/taxis in the area and tracking the ride until trip ends."
-                                }
-                                else{
+                                } else {
                                     alertMessage += "\n\nLocation: Please provide location permission"
                                 }
                             }
@@ -275,11 +273,10 @@ class SplashScreen : AppCompatActivity() {
 
                                 dialog.dismiss()
 
-                                if (totalPermissionAskedCounter < 2){
+                                if (totalPermissionAskedCounter < 2) {
                                     CommonAppPermission.requestPermissionGranted(this@SplashScreen)
-                                    totalPermissionAskedCounter ++;
-                                }
-                                else {
+                                    totalPermissionAskedCounter++;
+                                } else {
                                     val intent = Intent()
                                     intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                                     val uri = Uri.fromParts("package", packageName, null)
@@ -426,27 +423,34 @@ class SplashScreen : AppCompatActivity() {
         private const val REQUEST_PERMISSION = 100
     }
 
-fun checkAppUpdate(){
+    fun checkAppUpdate() {
 // Creates instance of the manager.
-    val appUpdateManager = AppUpdateManagerFactory.create(this@SplashScreen)
-    //    gotoScreen();
+        val appUpdateManager = AppUpdateManagerFactory.create(this@SplashScreen)
+        //    gotoScreen();
 // Returns an intent object that you use to check for an update.
-    val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-    // Checks that the platform will allow the specified type of update.
-    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo: AppUpdateInfo ->
-        if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE // For a flexible update, use AppUpdateType.FLEXIBLE
-            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-            try {
-                appUpdateManager.startUpdateFlowForResult( // Pass the intent that is returned by 'getAppUpdateInfo()'.
-                    appUpdateInfo,  // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
-                    AppUpdateType.IMMEDIATE,  // The current activity making the update request.
-                    this@SplashScreen,  // Include a request code to later monitor this update request.
-                    MY_REQUEST_CODE)
-            } catch (e: IntentSender.SendIntentException) {
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo: AppUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE // For a flexible update, use AppUpdateType.FLEXIBLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) {
+                try {
+                    appUpdateManager.startUpdateFlowForResult( // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                        appUpdateInfo,  // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                        AppUpdateType.IMMEDIATE,  // The current activity making the update request.
+                        this@SplashScreen,  // Include a request code to later monitor this update request.
+                        MY_REQUEST_CODE
+                    )
+                } catch (e: IntentSender.SendIntentException) {
+                    checkUpdate()
+                }
+            } else {
+                checkUpdate()
             }
-        } else {
+        }
+
+        appUpdateInfoTask.addOnFailureListener {
             checkUpdate()
         }
     }
-}
 }
