@@ -62,6 +62,20 @@
                     android:layout_centerInParent="true"
                     tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
 
+                <Button
+                    android:id="@+id/btn_intercity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/shape_roundedbtn"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/title_intercity"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:layout_above="@id/homeView"
+                    android:textSize="@dimen/text_14sp" />
 
                 <LinearLayout
 

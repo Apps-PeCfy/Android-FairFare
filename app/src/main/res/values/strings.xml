@@ -75,6 +75,9 @@
 
     <string name="str_valid_for_new_users_only">Valid for New Users Only</string>
     <string name="str_reward_points">Sign Up and Get 200 Reward Points</string>
+    <string name="title_intercity">Intercity</string>
+    <string name="title_intercity_rides">Intercity Rides</string>
+    <string name="btn_compare_rides">Compare Rides</string>
 
 
 </resources>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.intercity.InterCityActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_home"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:background="@drawable/app_gradient"
+            app:title="@string/title_intercity_rides"
+            app:titleTextColor="@color/White"
+            app:buttonGravity="center_vertical"
+            app:navigationIcon="?attr/homeAsUpIndicator">
+
+
+            <Spinner
+                android:id="@+id/spinner_city"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:backgroundTint="@color/White"
+                android:dropDownWidth="120dp"
+                android:gravity="end" />
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar_home">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:text="One Way"/>
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:text="One Way"/>
+
+                </RadioGroup>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/roundedcorner"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+                    <Spinner
+
+                        android:id="@+id/spinner_time"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapespinner"
+                        android:gravity="bottom"
+                        android:paddingStart="@dimen/_30sdp"
+                        android:spinnerMode="dropdown"
+                        android:textSize="10dp" />
+
+                    <Spinner
+
+                        android:id="@+id/spinner_Luggage"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/spinnerbags"
+                        android:gravity="bottom"
+                        android:paddingStart="@dimen/_30sdp"
+                        android:spinnerMode="dropdown"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+
+                    android:id="@+id/rlRideScheduled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:visibility="visible">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:text="Ride Scheduled On"
+                        android:textColor="@color/colorGreyText"
+                        android:textSize="@dimen/_15sdp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_RideScheduled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawableStart="@drawable/ic_schduled_time"
+                        android:drawablePadding="@dimen/_12sdp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:includeFontPadding="false"
+                        android:text="2 sep,11:52 PM"
+                        android:textColor="@color/gradientstartcolor"
+                        android:textSize="@dimen/_12sdp"
+
+
+                        />
+                </RelativeLayout>
+
+
+                <androidx.cardview.widget.CardView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_10sdp"
+                    app:cardUseCompatPadding="true"
+                    android:elevation="8dp"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="0.0px"
+                    android:clipToPadding="false"
+                    android:clipChildren="false"
+                    android:layout_margin="4dp"
+                    app:cardPreventCornerOverlap="false">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_corner_night_mode"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_myCurrentLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:drawableStart="@drawable/red_circle"
+                            android:drawablePadding="@dimen/_15sdp"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:text="Pick-up Location"
+                            android:textColor="@color/gradientstartcolor" />
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_below="@+id/tv_myCurrentLocation"
+                            android:layout_marginStart="@dimen/_30sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:background="@color/secondaryLightGray" />
+
+
+                        <TextView
+                            android:id="@+id/tv_myDropUpLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:drawableStart="@drawable/triangle"
+                            android:drawablePadding="@dimen/_15sdp"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:text="Drop-off Location"
+                            android:textColor="@color/colorGreyText" />
+
+
+                        <View
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"
+                            android:layout_above="@+id/tv_myDropUpLocation"
+                            android:layout_below="@+id/tv_myCurrentLocation"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            android:layout_marginTop="-17dp"
+                            android:layout_marginBottom="-17dp"
+                            android:background="@color/secondaryLightGray" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_estimation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txt_est_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Est.Distance"
+                        android:textColor="@color/colorGreyText" />
+
+                    <TextView
+                        android:id="@+id/txt_est_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="Est.Time"
+                        android:textColor="@color/colorGreyText" />
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_compare_rides"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/shape_roundedbtn"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/btn_compare_rides"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

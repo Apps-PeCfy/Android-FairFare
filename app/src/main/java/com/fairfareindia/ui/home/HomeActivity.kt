@@ -63,6 +63,7 @@ import com.fairfareindia.ui.drawer.ratecard.RateCard
 import com.fairfareindia.ui.drawer.setting.Setting
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
+import com.fairfareindia.ui.intercity.InterCityActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.utils.*
 import com.fairfareindia.utils.ProjectUtilities.showProgressDialog
@@ -1369,6 +1370,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             )
         }
 
+    }
+
+    @OnClick(R.id.btn_intercity)
+    fun Intercity() {
+        startActivity(Intent(this, InterCityActivity::class.java))
     }
 
 

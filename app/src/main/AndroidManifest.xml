@@ -40,8 +40,8 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.introduction.IntroActivity"></activity>
+        <activity android:name=".ui.intercity.InterCityActivity"></activity>
+        <activity android:name=".ui.introduction.IntroActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
