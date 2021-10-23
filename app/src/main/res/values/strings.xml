@@ -78,6 +78,19 @@
     <string name="title_intercity">Intercity</string>
     <string name="title_intercity_rides">Intercity Rides</string>
     <string name="btn_compare_rides">Compare Rides</string>
+    <string name="str_one_way">One Way</string>
+    <string name="str_round_trip">Round Trip</string>
+    <string name="hint_select_city">Select City</string>
+    <string name="str_from">From</string>
+    <string name="str_to">To</string>
+    <string name="str_ride_scheduled_on">Ride Scheduled On</string>
+    <string name="hint_pick_up_location">Pick-up Location</string>
+    <string name="hint_drop_off_location">Drop-off Location</string>
+    <string name="str_est_distance">Est.Distance</string>
+    <string name="str_est_time">Est.Time</string>
+    <string name="str_now">Now</string>
+    <string name="str_later">Later</string>
+    <string name="str_book_ride_on">Book Ride On</string>
 
 
 </resources>

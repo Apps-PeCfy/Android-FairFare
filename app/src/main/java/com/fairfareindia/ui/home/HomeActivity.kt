@@ -1374,7 +1374,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     @OnClick(R.id.btn_intercity)
     fun Intercity() {
-        startActivity(Intent(this, InterCityActivity::class.java))
+        startActivity(Intent(this, InterCityActivity::class.java)
+            .putExtra("current_latitude", currentLatitude)
+            .putExtra("current_longitude", currentLongitude))
     }
 
 

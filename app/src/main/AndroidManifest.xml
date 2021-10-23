@@ -40,8 +40,10 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.viewridepay.ViewRidePayActivity"></activity>
-        <activity android:name=".ui.intercity.InterCityActivity" />
+        <activity android:name=".ui.viewridepay.ViewRidePayActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.intercity.InterCityActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.introduction.IntroActivity" />
 
         <uses-library
@@ -60,7 +62,8 @@
         <activity android:name=".ui.trackRide.TrackRideActivity" />
         <activity android:name=".ui.viewride.ViewRideActivity" />
         <activity android:name=".ui.compareride.CompareRideActivity" />
-        <activity android:name=".ui.home.HomeActivity" />
+        <activity android:name=".ui.home.HomeActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.home.GooglePlace" />
         <activity
             android:name=".ui.home.PickUpDropActivity"

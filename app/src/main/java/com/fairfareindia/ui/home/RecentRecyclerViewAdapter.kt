@@ -31,7 +31,7 @@ class RecentRecyclerViewAdapter(
         holder: MyViewHolder,
         position: Int
     ) {
-        holder.place_address!!.text = LocatoinList[position].fullAddress
+        holder.place_address?.text = LocatoinList[position].fullAddress
     }
 
     override fun getItemCount(): Int {
@@ -58,7 +58,7 @@ class RecentRecyclerViewAdapter(
 
         init {
             ButterKnife.bind(this, itemView!!)
-            place_item!!.setOnClickListener(this)
+            place_item?.setOnClickListener(this)
         }
     }
 
