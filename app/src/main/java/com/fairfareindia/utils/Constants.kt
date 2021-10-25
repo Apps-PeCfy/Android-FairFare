@@ -38,5 +38,5 @@ object Constants {
     var badgeImageClick = 4
 
 
-
+    var REQUEST_TIMEOUT: Int = 1000 * 60
 }

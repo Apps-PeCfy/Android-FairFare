@@ -16,91 +16,38 @@ import java.io.IOException
 import java.util.ArrayList
 
 class InterCityImplementer(private val view: IIntercityView) : IInterCityPresenter {
-    override fun scheduleRide(
+    override fun getCompareRideData(
         token: String?,
-        vehicle_rate_card_id: String?,
-        luggage_quantity: String?,
-        schedule_date: String?,
-        origin_place_id: String?,
-        destination_place_id: String?,
-        overview_polyline: String?,
         distance: String?,
-        duration: String?,
-        city_id: String?,
-        airport_rate_card_id: String?,
-        sLat: String?,
-        sLong: String?,
-        dLat: String?,
-        dLong: String?,
-        sourceAdddress: String?,
-        destinationAddress: String?,
-        tolls: ArrayList<CompareRideResponsePOJO.TollsItem>
+        placeid: String?,
+        sPlacesID: String?,
+        dPlaceID: String?,
+        baggs: String?,
+        airport: String?,
+        formatedDate: String?,
+        currentPlaceID: String?,
+        legDuration: String?
     )
     {
         view.showWait()
-
-        var jsonProductObj: JSONObject? =null
-        var jsonArray = JSONArray()
-
-        try {
-            jsonProductObj = JSONObject()
-
-            jsonProductObj.accumulate("vehicle_rate_card_id", vehicle_rate_card_id)
-            jsonProductObj.accumulate("luggage_quantity", luggage_quantity)
-            jsonProductObj.accumulate("schedule_date", schedule_date)
-            jsonProductObj.accumulate("origin_place_id", origin_place_id)
-            jsonProductObj.accumulate("destination_place_id", destination_place_id)
-            jsonProductObj.accumulate("overview_polyline", overview_polyline)
-            jsonProductObj.accumulate("distance", distance)
-            jsonProductObj.accumulate("duration", duration)
-            jsonProductObj.accumulate("city_id", city_id)
-            jsonProductObj.accumulate("airport_rate_card_id", airport_rate_card_id)
-            jsonProductObj.accumulate("origin_place_lat", sLat)
-            jsonProductObj.accumulate("origin_place_long", sLong)
-            jsonProductObj.accumulate("destination_place_lat", dLat)
-            jsonProductObj.accumulate("destination_place_long", dLong)
-            jsonProductObj.accumulate("origin_full_address", sourceAdddress)
-            jsonProductObj.accumulate("destination_full_address", destinationAddress)
-
-
-
-            for (i in tolls!!.indices) {
-                val jsonObjectMain = JSONObject()
-                jsonObjectMain.accumulate("latitude", tolls!!.get(i).latitude)
-                jsonObjectMain.accumulate("longitude", tolls!!.get(i).longitude)
-                jsonObjectMain.accumulate("name", tolls!!.get(i).name)
-                jsonObjectMain.accumulate("road", tolls!!.get(i).road)
-                jsonObjectMain.accumulate("state", tolls!!.get(i).state)
-                jsonObjectMain.accumulate("country", tolls!!.get(i).country)
-                jsonObjectMain.accumulate("type", tolls!!.get(i).type)
-                jsonObjectMain.accumulate("currency", tolls!!.get(i).currency)
-                jsonObjectMain.accumulate("charges", tolls!!.get(i).charges)
-                jsonArray.put(jsonObjectMain)
-            }
-            jsonProductObj.accumulate("tolls", jsonArray)
-
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-
-
-        val call = ApiClient.client.schduleRidejObj(
+        val call = ApiClient.client.getCompareRide(
             "Bearer $token",
-            jsonProductObj.toString())
-        call!!.enqueue(object : Callback<ScheduleRideResponsePOJO?> {
-            override fun onResponse(
-                call: Call<ScheduleRideResponsePOJO?>,
-                response: Response<ScheduleRideResponsePOJO?>
-            ) {
+            distance,
+            placeid,
+            sPlacesID, dPlaceID, baggs, airport, formatedDate,currentPlaceID,legDuration
+        )
+        call!!.enqueue(object : Callback<CompareRideResponsePOJO?> {
+            override fun onResponse(call: Call<CompareRideResponsePOJO?>, response: Response<CompareRideResponsePOJO?>)
+            {
                 view.removeWait()
+
                 if (response.code() == 200) {
-                    if (response.body() != null) {
-                        view.removeWait()
-                        view.scheduleRideSuccess(response.body())
-                    }
-                } else if (response.code() == 422) {
                     view.removeWait()
+
+                    view.compareRideSuccess(response.body())
+                }else if (response.code() == 400 || response.code() ==422) {
+                    view.removeWait()
+
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
                     try {
@@ -111,12 +58,13 @@ class InterCityImplementer(private val view: IIntercityView) : IInterCityPresent
                         view.validationError(pojo)
                     } catch (exception: IOException) {
                     }
-
+                }else{
+                    view.onFailure(response.message())
                 }
             }
 
             override fun onFailure(
-                call: Call<ScheduleRideResponsePOJO?>,
+                call: Call<CompareRideResponsePOJO?>,
                 t: Throwable
             ) {
                 view.removeWait()
@@ -165,4 +113,5 @@ class InterCityImplementer(private val view: IIntercityView) : IInterCityPresent
             }
         })
     }
+
 }

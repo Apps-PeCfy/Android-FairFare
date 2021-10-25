@@ -92,6 +92,7 @@
     <string name="str_later">Later</string>
     <string name="str_book_ride_on">Book Ride On</string>
 
-
+    <string name="session_expired">Session Expired!</string>
+    <string name="hint_search">Search</string>
 </resources>
 

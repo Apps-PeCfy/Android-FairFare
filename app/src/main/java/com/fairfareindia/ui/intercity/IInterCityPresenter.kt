@@ -1,31 +1,24 @@
 package com.fairfareindia.ui.intercity
 
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
-import java.util.ArrayList
 
 interface IInterCityPresenter {
-    fun scheduleRide(
+    fun getCompareRideData(
         token: String?,
-        vehicle_rate_card_id: String?,
-        luggage_quantity: String?,
-        schedule_date: String?,
-        origin_place_id: String?,
-        destination_place_id: String?,
-        overview_polyline: String?,
         distance: String?,
-        duration: String?,
-        city_id: String?,
-        airport_rate_card_id: String?,
-        sLat: String?,
-        sLong: String?,
-        dLat: String?,
-        dLong: String?,
-        sorceAddress: String?,
-        destinationAddress: String?,
-        tolls: ArrayList<CompareRideResponsePOJO.TollsItem>)
+        placeid: String?,
+        sPlacesID: String?,
+        dPlaceID: String?,
+        baggs: String?,
+        airport: String?,
+        fdate: String?,
+        currentPlaceID: String?,
+        legDuration: String?
+
+    )
 
     fun getCity(
         token: String?,
         lat: String?,
         long: String?)
+
 }

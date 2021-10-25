@@ -21,8 +21,8 @@ android {
 
 
         //    buildConfigField 'String', 'API_URL', '"https://dev.fairfareindia.com/api/"'
-        buildConfigField 'String', 'API_URL', '"https://stage.fairfareindia.com/api/"'
-      //  buildConfigField 'String', 'API_URL', '"https://test.fairfareindia.com/api/"'
+       // buildConfigField 'String', 'API_URL', '"https://stage.fairfareindia.com/api/"'
+        buildConfigField 'String', 'API_URL', '"https://test.fairfareindia.com/api/"'
     }
     buildTypes {
         release {
@@ -74,6 +74,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //For Volley
+    implementation 'com.android.volley:volley:1.2.1'
 
     
     implementation 'com.google.android.gms:play-services-auth:18.1.0'

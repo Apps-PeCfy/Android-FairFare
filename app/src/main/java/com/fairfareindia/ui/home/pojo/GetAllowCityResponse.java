@@ -1,12 +1,13 @@
 package com.fairfareindia.ui.home.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 public class GetAllowCityResponse{
 
 	@SerializedName("cities")
-	private List<CitiesItem> cities;
+	private ArrayList<CitiesItem> cities;
 
 	@SerializedName("message")
 	private String message;
@@ -21,11 +22,11 @@ public class GetAllowCityResponse{
 @SerializedName("currentAddress")
 	private String currentAddress;
 
-	public void setCities(List<CitiesItem> cities){
+	public void setCities(ArrayList<CitiesItem> cities){
 		this.cities = cities;
 	}
 
-	public List<CitiesItem> getCities(){
+	public ArrayList<CitiesItem> getCities(){
 		return cities;
 	}
 
