@@ -135,6 +135,21 @@ interface NetworkService {
         @Field("duration") duration: String?
     ): Call<CompareRideResponsePOJO?>?
 
+    @FormUrlEncoded
+    @POST("compareRide")
+    fun getIntercityCompareRide(
+        @Header("Authorization") header: String?,
+        @Field("distance") distance: String?,
+        @Field("travel_time") estTime: String?,
+        @Field("city_id") fromCityID: String?,
+        @Field("to_city_id") toCityID: String?,
+        @Field("origin_place_id") fromPlaceID: String?,
+        @Field("destination_place_id") toPlaceID: String?,
+        @Field("luggage") luggage: String?,
+        @Field("airport") airport: String?,
+        @Field("schedule_datetime") schedule_datetime: String?
+    ): Call<CompareRideResponsePOJO?>?
+
 
     @FormUrlEncoded
     @POST("scheduleRide")

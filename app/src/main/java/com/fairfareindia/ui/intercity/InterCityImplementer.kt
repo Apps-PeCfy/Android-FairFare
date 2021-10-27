@@ -4,38 +4,28 @@ import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
-import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.google.gson.GsonBuilder
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import java.util.ArrayList
 
 class InterCityImplementer(private val view: IIntercityView) : IInterCityPresenter {
     override fun getCompareRideData(
         token: String?,
         distance: String?,
-        placeid: String?,
-        sPlacesID: String?,
-        dPlaceID: String?,
-        baggs: String?,
+        estTime: String?,
+        fromCityID: String?,
+        toCityID: String?,
+        fromPlaceID: String?,
+        toPlaceID: String?,
+        luggage: String?,
         airport: String?,
-        formatedDate: String?,
-        currentPlaceID: String?,
-        legDuration: String?
-    )
+        date: String?)
     {
         view.showWait()
-        val call = ApiClient.client.getCompareRide(
-            "Bearer $token",
-            distance,
-            placeid,
-            sPlacesID, dPlaceID, baggs, airport, formatedDate,currentPlaceID,legDuration
-        )
+        val call = ApiClient.client.getIntercityCompareRide("Bearer $token", distance, estTime, toCityID,
+            fromCityID, fromPlaceID, toPlaceID, luggage, airport,date)
         call!!.enqueue(object : Callback<CompareRideResponsePOJO?> {
             override fun onResponse(call: Call<CompareRideResponsePOJO?>, response: Response<CompareRideResponsePOJO?>)
             {

@@ -83,7 +83,7 @@
     <string name="hint_select_city">Select City</string>
     <string name="str_from">From</string>
     <string name="str_to">To</string>
-    <string name="str_ride_scheduled_on">Ride Scheduled On</string>
+    <string name="str_ride_scheduled_on">Book your ride</string>
     <string name="hint_pick_up_location">Pick-up Location</string>
     <string name="hint_drop_off_location">Drop-off Location</string>
     <string name="str_est_distance">Est.Distance</string>
@@ -94,5 +94,24 @@
 
     <string name="session_expired">Session Expired!</string>
     <string name="hint_search">Search</string>
+    <string name="str_luggage">Luggage</string>
+    <string name="str_luggage_1">1 Luggage</string>
+    <string name="str_luggage_2">2 Luggage</string>
+    <string name="str_luggage_3">3 Luggage</string>
+    <string name="str_luggage_4">4 Luggage</string>
+    <string name="str_luggage_5">5 Luggage</string>
+
+    <!--Compare Ride Screen-->
+    <string name="title_compare_rides">Compare Rides</string>
+    <string name="txt_available_rides">Available Rides</string>
+    <string name="lbl_sort">Sort</string>
+
+    <!--View Ride Screen-->
+    <string name="title_view_ride">View Ride</string>
+    <string name="str_estimated_fare_payable">Estimated Fare Payable</string>
+    <string name="str_additional_charges">Additional Charges</string>
+    <string name="str_rules_and_restrictions">Rules and Restrictions</string>
+    <string name="str_rules">Rs 50/hr will be applicable on waiting for more than half an hour when the ride is active\nRs 15/km will be charged for extra km.</string>
+
 </resources>
 

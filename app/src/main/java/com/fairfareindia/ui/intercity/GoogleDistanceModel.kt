@@ -39,6 +39,6 @@ class GoogleDistanceModel {
         var text: String? = null
 
         @SerializedName("value")
-        var value:String? = null
+        var value:Double = 0.0
     }
 }

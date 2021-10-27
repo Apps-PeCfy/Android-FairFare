@@ -17,10 +17,16 @@ import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.home.PickUpDropActivity
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
+import com.fairfareindia.ui.intercitycompareride.IntercityCompareRideActivity
 import com.fairfareindia.utils.*
+import com.google.maps.GeoApiContext
+import com.google.maps.GeocodingApi
+import com.google.maps.errors.ApiException
+import com.google.maps.model.GeocodingResult
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.IOException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,6 +40,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     private var toCityID: String? = null
     private var fromCityName: String? = null
     private var fromCityID: String? = null
+    private var luggage: String = "0"
 
     private var cityList: ArrayList<GetAllowCityResponse.CitiesItem> = ArrayList()
 
@@ -43,6 +50,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     var destinationLong: String? = null
     var estTime: String? = null
     var estDistance: String? = null
+    var estDistanceInKM: Double? = null
     var citySelectionDialog: CitySelectionDialog? = null
 
     var preferencesManager: PreferencesManager? = null
@@ -54,10 +62,8 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     var token: String? = null
     var calendar: Calendar? = null
 
-    var timeSpinner : Array<String> ?= null
-    var luggageSpinner = arrayOf<String?>(
-        "Luggage", "1 Luggage", "2 Luggage", "3 Luggage", "4 Luggage", "5 Luggage"
-    )
+    private var timeSpinner : Array<String> ?= null
+    private var luggageSpinner : Array<String> ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,12 +99,14 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
         calendar = Calendar.getInstance()
         if (binding.spinnerTime.selectedItem.toString().equals(getString(R.string.str_now), ignoreCase = true)) {
             calendar?.add(Calendar.MINUTE, 50)
-            binding.txtRideScheduled.text = AppUtils.dateToRequiredFormat(calendar?.time, "dd MMM hh:mm a")
+            binding.txtRideScheduled.text = AppUtils.dateToRequiredFormat(calendar?.time, "dd MMM yyyy hh:mm a")
         }
     }
 
     private fun setSpinners() {
         timeSpinner = arrayOf<String>(context.resources.getString(R.string.str_now), context.resources.getString(R.string.str_later))
+        luggageSpinner = arrayOf<String>( getString(R.string.str_luggage), getString(R.string.str_luggage_1), getString(R.string.str_luggage_2), getString(R.string.str_luggage_3), getString(R.string.str_luggage_4), getString(R.string.str_luggage_5))
+
         val NowLater: ArrayAdapter<*> =
             ArrayAdapter<Any?>(this, R.layout.simple_spinner, timeSpinner!!)
         NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -107,7 +115,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
 
         val spinnerLuggage: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, R.layout.simple_spinner, luggageSpinner)
+            ArrayAdapter<Any?>(this, R.layout.simple_spinner, luggageSpinner!!)
         spinnerLuggage.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerLuggage.adapter = spinnerLuggage
 
@@ -120,17 +128,18 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             btnCompareRides.setOnClickListener {
                 if (ProjectUtilities.checkInternetAvailable(context)) {
                     if (isValid()){
-                      /*  iInterCityPresenter?.getCompareRideData(
+                        iInterCityPresenter?.getCompareRideData(
                             token,
-                            replacedistance,
-                            cityID,
-                            sourcePlaceID,
-                            DestinationPlaceID,
-                            replacebags,
-                            airportYesOrNO,
-                            formaredDate,
-                            CurrentPlaceID!!, legDuration
-                        )*/
+                            estDistanceInKM.toString(),
+                            estTime.toString(),
+                            fromCityID,
+                            toCityID,
+                            AppUtils.getPlaceID(context,sourceLat, sourceLong),
+                            AppUtils.getPlaceID(context,destinationLat, destinationLong),
+                            luggage,
+                            "NO",
+                            AppUtils.changeDateFormat(txtRideScheduled.text.toString(),"dd MMM yyyy hh:mm a", "yyyy-MM-dd hh:mm:ss")
+                        )
                     }
                 } else {
                     ProjectUtilities.showToast(context, getString(R.string.internet_error))
@@ -164,7 +173,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
             spinnerLuggage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
+                    luggage = position.toString()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -204,6 +213,8 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
         }
     }
 
+
+
     private fun openCitySelectionDialog(title: String) {
         citySelectionDialog =  CitySelectionDialog(context, title, cityList, object : CitySelectionDialog.SelectionDialogInterface{
             override fun onItemSelected(model: GetAllowCityResponse.CitiesItem?) {
@@ -226,6 +237,18 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
         binding.apply {
             if (!rdOneWay.isChecked && !rdRoundTrip.isChecked){
                 Toast.makeText(context, "Please select journey type", Toast.LENGTH_SHORT).show()
+                return false
+            }else if (fromCityID.isNullOrEmpty()){
+                Toast.makeText(context, "Please select from city", Toast.LENGTH_SHORT).show()
+                return false
+            }else if (toCityID.isNullOrEmpty()){
+                Toast.makeText(context, "Please select to city", Toast.LENGTH_SHORT).show()
+                return false
+            }else if (sourceLat.isNullOrEmpty()){
+                Toast.makeText(context, "Please select pick up location", Toast.LENGTH_SHORT).show()
+                return false
+            }else if (destinationLat.isNullOrEmpty()){
+                Toast.makeText(context, "Please select drop off location", Toast.LENGTH_SHORT).show()
                 return false
             }
         }
@@ -341,6 +364,9 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                 var model: GoogleDistanceModel = resultObj as GoogleDistanceModel
                 binding.rlEstimation.visibility = View.VISIBLE
                 estDistance = model.rows?.elementAt(0)?.elements?.get(0)?.distance?.text
+                estDistanceInKM = (model.rows?.elementAt(0)?.elements?.get(0)?.distance?.value)?.div(
+                    1000
+                )
                 estTime = model.rows?.elementAt(0)?.elements?.get(0)?.duration?.text
                 binding.txtEstDistance.text = "Est.Distance $estDistance"
                 binding.txtEstTime.text = "Est.Time $estTime"
@@ -373,25 +399,15 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
 
     override fun compareRideSuccess(info: CompareRideResponsePOJO?) {
-        val intent = Intent(applicationContext, CompareRideActivity::class.java)
+        val intent = Intent(applicationContext, IntercityCompareRideActivity::class.java)
         intent.putExtra("SourceLat", sourceLat)
         intent.putExtra("SourceLong", sourceLong)
         intent.putExtra("DestinationLat", destinationLat)
         intent.putExtra("DestinationLong", destinationLong)
-        intent.putExtra("Distance", estDistance)
-        intent.putExtra("CITY_ID", toCityID)
-        intent.putExtra("CITY_NAME", toCityName)
-        intent.putExtra("EstTime", estTime)
-        intent.putExtra("Liggage", binding.spinnerLuggage.selectedItem.toString())
-        intent.putExtra("TimeSpinner", binding.spinnerTime.selectedItem.toString())
-
 
         intent.putExtra("Airport", "NO")
         intent.putExtra("SourceAddress", binding.txtPickUpLocation.text.toString())
         intent.putExtra("DestinationAddress", binding.txtDropUpLocation.text.toString())
-        intent.putExtra("currentDate", binding.txtRideScheduled.text.toString())
-        intent.putExtra("currentFormatedDate", AppUtils.changeDateFormat(binding.txtRideScheduled.text.toString(), "dd MMM yyyy hh:mm a", "yyyy-MM-dd hh:mm:ss"))
-     //   intent.putExtra("currentPlaceId", CurrentPlaceID)
         intent.putExtra("MyPOJOClass", info)
 
 

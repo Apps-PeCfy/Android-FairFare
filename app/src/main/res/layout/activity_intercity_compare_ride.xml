@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        tools:context=".ui.intercitycompareride.IntercityCompareRideActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_home"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/app_gradient"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/_10sdp"
+            app:title="@string/title_compare_rides"
+            android:theme="@style/BaseTheme"
+            app:titleTextColor="@color/White"
+            app:buttonGravity="center_vertical"
+            app:navigationIcon="?attr/homeAsUpIndicator" />
+
+       
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_home"
+            android:layout_marginTop="0dp">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <fragment
+
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/ll_home_view"
+                    android:layout_marginBottom="-30dp"
+                    tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/crd_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ll_home_view"
+                    android:background="@color/colorBackground"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_10sdp"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
+                        android:background="@drawable/rounded_corner_night_mode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+
+                            android:id="@+id/txt_pick_up_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:drawableStart="@drawable/red_circle"
+                            android:drawablePadding="@dimen/_15sdp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:text="Pick-up Location"
+                            android:textColor="@color/gradientstartcolor" />
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_below="@+id/txt_pick_up_location"
+                            android:layout_marginStart="@dimen/_35sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:background="@color/secondaryLightGray" />
+
+
+                        <TextView
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:textColor="@color/colorGreyText"
+                            android:id="@+id/txt_drop_off_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:drawableStart="@drawable/triangle"
+                            android:drawablePadding="@dimen/_15sdp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:text="Drop-off Location " />
+
+
+                        <View
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"
+                            android:layout_above="@+id/txt_drop_off_location"
+                            android:layout_below="@+id/txt_pick_up_location"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            android:layout_marginTop="-17dp"
+                            android:layout_marginBottom="-17dp"
+                            android:background="@color/secondaryLightGray" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_home_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/colorBackground"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:id="@+id/rl_hide_show"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_30sdp">
+
+                        <TextView
+                            android:layout_centerInParent="true"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_3sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginBottom="@dimen/_15sdp"
+                            android:background="@drawable/roundedcorner" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txt_journey_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/str_one_way"
+                        android:textColor="@color/colorText"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:textSize="@dimen/text_16sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_hide_view"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_175sdp"
+                        android:orientation="vertical">
+
+
+                        <RelativeLayout
+                            android:id="@+id/rl_bags"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:background="@drawable/roundedcorner"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingVertical="@dimen/_5sdp">
+
+
+                            <TextView
+                                android:id="@+id/txt_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:layout_toStartOf="@id/txt_luggage"
+                                android:layout_marginEnd="10dp"
+                                android:text="02 Nov, 08:44 pm"
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp" />
+
+
+                            <TextView
+                                android:id="@+id/txt_luggage"
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2 bags"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentEnd="true"
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/rl_bags"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginEnd="@dimen/_15sdp">
+
+
+                            <TextView
+                                android:textColor="@color/colorGreyText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/notosansjp_bold"
+                                android:includeFontPadding="false"
+                                android:paddingStart="@dimen/_5sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/txt_available_rides"
+                                android:textSize="@dimen/_12sdp" />
+
+
+                            <TextView
+                                android:id="@+id/txt_sort"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:drawableStart="@drawable/ic_sort_"
+                                android:drawablePadding="@dimen/_4sdp"
+                                android:fontFamily="@font/notosansjp_bold"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/colorGreyText"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/lbl_sort"
+                                android:textSize="@dimen/_12sdp" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+
+                                android:id="@+id/recycler_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_below="@+id/txt_sort" />
+
+
+                        </RelativeLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <Button
+                    android:id="@+id/addvertise"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/White"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/_14sdp"
+                    android:visibility="visible" />
+
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</layout>

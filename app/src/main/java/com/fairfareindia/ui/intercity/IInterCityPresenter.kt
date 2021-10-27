@@ -5,16 +5,14 @@ interface IInterCityPresenter {
     fun getCompareRideData(
         token: String?,
         distance: String?,
-        placeid: String?,
-        sPlacesID: String?,
-        dPlaceID: String?,
-        baggs: String?,
+        estTime: String?,
+        fromCityID: String?,
+        toCityID: String?,
+        fromPlaceID: String?,
+        toPlaceID: String?,
+        luggage: String?,
         airport: String?,
-        fdate: String?,
-        currentPlaceID: String?,
-        legDuration: String?
-
-    )
+        date: String?)
 
     fun getCity(
         token: String?,
