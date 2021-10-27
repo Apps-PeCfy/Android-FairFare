@@ -8,13 +8,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityIntercityViewRideBinding
 import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
-import com.fairfareindia.ui.viewride.ViewRideActivity
 import com.fairfareindia.ui.viewride.ViewRideTollsPopUp
 import com.fairfareindia.utils.AppUtils
 import com.fairfareindia.utils.Constants
