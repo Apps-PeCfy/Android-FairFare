@@ -35,11 +35,10 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_90sdp"
                     android:visibility="visible"
-                    app:cardBackgroundColor="@color/White"
+                    app:cardBackgroundColor="@color/colorBackground"
                     app:cardCornerRadius="@dimen/_10sdp"
                     app:cardElevation="@dimen/_8sdp"
                     app:cardUseCompatPadding="true">
@@ -47,6 +46,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_corner_night_mode"
                         android:layout_gravity="center_vertical">
 
                         <LinearLayout
@@ -69,7 +69,7 @@
 
                             <TextView
                                 android:id="@+id/txt_vehicle_name"
-                                android:textColor="@color/colorGreyText"
+                                android:textColor="@color/colorText"
                                 android:layout_width="@dimen/_65sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_2sdp"
@@ -92,11 +92,13 @@
 
                             <TextView
                                 android:id="@+id/txt_date"
-                                android:textColor="@color/colorGreyText"
+                                android:textColor="@color/colorText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/_5sdp"
                                 android:paddingBottom="@dimen/_5sdp"
+                                android:layout_gravity="end"
+                                android:gravity="end"
                                 android:text="Thu, Sept 3, at 23:35" />
 
 
@@ -104,27 +106,29 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/_5sdp"
-                                android:paddingBottom="@dimen/_5sdp">
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:layout_gravity="end">
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
+                                    android:textColor="@color/colorText"
                                     android:id="@+id/txt_person"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:drawableStart="@drawable/iv_person"
                                     android:drawablePadding="@dimen/_3sdp"
                                     android:text="4"
+                                    android:gravity="end"
                                     android:visibility="visible" />
 
 
                                 <TextView
                                     android:id="@+id/txt_distance_time"
-                                    android:textColor="@color/colorGreyText"
+                                    android:textColor="@color/colorText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_10sdp"
                                     android:layout_toEndOf="@+id/txt_person"
-                                    android:text="8 KM(15 Min)" />
+                                    android:gravity="end" />
 
 
                             </RelativeLayout>
@@ -257,7 +261,7 @@
 
 
                         <RelativeLayout
-                            android:id="@+id/tv_additional"
+                            android:id="@+id/rl_additional"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent">
 
@@ -368,7 +372,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:gravity="end"
-
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingEnd="@dimen/_5sdp"
                                 android:paddingBottom="@dimen/_8sdp"
@@ -563,7 +566,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_total"
+                            android:id="@+id/txt_total_payable"
                             android:layout_width="@dimen/_60sdp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"

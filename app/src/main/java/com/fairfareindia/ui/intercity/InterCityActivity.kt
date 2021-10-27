@@ -12,21 +12,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityInterCityBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
-import com.fairfareindia.ui.compareride.CompareRideActivity
 import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.home.PickUpDropActivity
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.intercitycompareride.IntercityCompareRideActivity
 import com.fairfareindia.utils.*
-import com.google.maps.GeoApiContext
-import com.google.maps.GeocodingApi
-import com.google.maps.errors.ApiException
-import com.google.maps.model.GeocodingResult
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.io.IOException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -138,7 +132,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                             AppUtils.getPlaceID(context,destinationLat, destinationLong),
                             luggage,
                             "NO",
-                            AppUtils.changeDateFormat(txtRideScheduled.text.toString(),"dd MMM yyyy hh:mm a", "yyyy-MM-dd hh:mm:ss")
+                            AppUtils.changeDateFormat(txtRideScheduled.text.toString(),"dd MMM yyyy hh:mm a", "yyyy-MM-dd HH:mm:ss")
                         )
                     }
                 } else {
