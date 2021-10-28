@@ -21,6 +21,7 @@ import com.fairfareindia.utils.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -428,7 +429,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             GoogleDistanceModel::class.java,
             context,
             object : APIManager.APIManagerInterface {
-                override fun onSuccess(resultObj: Any?) {
+                override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
                     var model: GoogleDistanceModel = resultObj as GoogleDistanceModel
                     binding.rlEstimation.visibility = View.VISIBLE
                     estDistance = model.rows?.elementAt(0)?.elements?.get(0)?.distance?.text

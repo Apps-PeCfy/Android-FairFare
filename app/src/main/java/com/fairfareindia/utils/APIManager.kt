@@ -20,7 +20,7 @@ open class APIManager private constructor() {
 
 
     interface APIManagerInterface {
-        fun onSuccess(resultObj: Any?)
+        fun onSuccess(resultObj: Any?, jsonObject: JSONObject)
         fun onError(error: String?)
     }
 
@@ -38,7 +38,7 @@ open class APIManager private constructor() {
                         val jsonString = response.toString()
 
                         val model: Any? = gson.fromJson(jsonString,classType)
-                        listener?.onSuccess(model)
+                        listener?.onSuccess(model, response)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                         if (listener != null) {
@@ -92,7 +92,7 @@ open class APIManager private constructor() {
                         val jsonString = response.toString()
 
                         val model: Any? = gson.fromJson(jsonString,classType)
-                        listener?.onSuccess(model)
+                        listener?.onSuccess(model, response)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                         if (listener != null) {

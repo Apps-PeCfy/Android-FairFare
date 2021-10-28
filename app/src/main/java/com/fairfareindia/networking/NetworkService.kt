@@ -513,13 +513,13 @@ interface NetworkService {
         @Query("longitude") longitude: String?
     ): Call<GetAllowCityResponse?>?
 
-    @GET("driver/getToCities")
+    @GET("getToCities")
     fun getToInterCities(
         @Header("Authorization") header: String?,
         @Query("from_city_id") fromCityID: String?
     ): Call<GetAllowCityResponse?>?
 
-    @GET("driver/getFromCities")
+    @GET("getFromCities")
     fun getFromInterCities(
         @Header("Authorization") header: String?
     ): Call<GetAllowCityResponse?>?
