@@ -15,17 +15,18 @@ class InterCityImplementer(private val view: IIntercityView) : IInterCityPresent
         token: String?,
         distance: String?,
         estTime: String?,
+        permitType: String?,
         fromCityID: String?,
         toCityID: String?,
         fromPlaceID: String?,
         toPlaceID: String?,
         luggage: String?,
-        airport: String?,
+        wayFlag: String?,
         date: String?)
     {
         view.showWait()
-        val call = ApiClient.client.getIntercityCompareRide("Bearer $token", distance, estTime, toCityID,
-            fromCityID, fromPlaceID, toPlaceID, luggage, airport,date)
+        val call = ApiClient.client.getIntercityCompareRide("Bearer $token", distance, estTime, permitType ,fromCityID,
+            toCityID, fromPlaceID, toPlaceID, luggage, wayFlag,date)
         call!!.enqueue(object : Callback<CompareRideResponsePOJO?> {
             override fun onResponse(call: Call<CompareRideResponsePOJO?>, response: Response<CompareRideResponsePOJO?>)
             {

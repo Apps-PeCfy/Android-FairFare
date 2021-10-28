@@ -6,12 +6,13 @@ interface IInterCityPresenter {
         token: String?,
         distance: String?,
         estTime: String?,
+        permitType: String?,
         fromCityID: String?,
         toCityID: String?,
         fromPlaceID: String?,
         toPlaceID: String?,
         luggage: String?,
-        airport: String?,
+        wayFlag: String?,
         date: String?)
 
     fun getCity(

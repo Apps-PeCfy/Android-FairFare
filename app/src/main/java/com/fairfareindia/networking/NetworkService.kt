@@ -142,14 +142,17 @@ interface NetworkService {
         @Header("Authorization") header: String?,
         @Field("distance") distance: String?,
         @Field("travel_time") estTime: String?,
-        @Field("city_id") fromCityID: String?,
-        @Field("to_city_id") toCityID: String?,
+        @Field("permit_type") permitType: String?,
+        @Field("from_city_id") fromCityID: String?,
+        @Field("city_id") toCityID: String?,
         @Field("origin_place_id") fromPlaceID: String?,
         @Field("destination_place_id") toPlaceID: String?,
         @Field("luggage") luggage: String?,
-        @Field("airport") airport: String?,
+        @Field("way_flag") airport: String?,
         @Field("schedule_datetime") schedule_datetime: String?
     ): Call<CompareRideResponsePOJO?>?
+
+
 
     @FormUrlEncoded
     @POST("bookingRequest")
@@ -166,7 +169,7 @@ interface NetworkService {
         @Field("shedule_date") schedule_date: String?,
         @Field("way_flag") way_flag: String?,
         @Field("vehicle_rate_card_id") vehicle_rate_card_id: String?,
-        @Field("intercity_ratecard_id") intercity_ratecard_id: String?,
+        @Field("intercity_rate_card_id") intercity_rate_card_id: String?,
         @Field("status") status: String?
     ): Call<BookingRequestModel?>?
 

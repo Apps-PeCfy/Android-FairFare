@@ -143,7 +143,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
             override fun onButtonClick() {
                 paymentDialog?.dismiss()
                 if (btnName == getString(R.string.btn_pay_now)){
-                   iInterCityViewRidePresenter?.bookingRequest(token, "1", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  vehicleModel?.vehicleRateCardId, "1", "Pending")
+                   iInterCityViewRidePresenter?.bookingRequest(token, "4", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  vehicleModel?.vehicleRateCardId, "1", "Pending")
                 }else{
 
                 }

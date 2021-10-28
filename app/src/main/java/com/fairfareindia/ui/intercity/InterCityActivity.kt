@@ -50,15 +50,16 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
     var preferencesManager: PreferencesManager? = null
 
-    private var currentLatitude : Double = 0.0
-    private var currentLongitude : Double = 0.0
+    private var currentLatitude: Double = 0.0
+    private var currentLongitude: Double = 0.0
 
     private var iInterCityPresenter: IInterCityPresenter? = null
     var token: String? = null
     var calendar: Calendar? = null
 
-    private var timeSpinner : Array<String> ?= null
-    private var luggageSpinner : Array<String> ?= null
+    private var timeSpinner: Array<String>? = null
+    private var luggageSpinner: Array<String>? = null
+    var wayFlag: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +70,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     }
 
     private fun init() {
-       // setSupportActionBar(binding.toolbarHome)
+        // setSupportActionBar(binding.toolbarHome)
 
         currentLatitude = intent.getDoubleExtra("current_latitude", 0.0)
         currentLongitude = intent.getDoubleExtra("current_longitude", 0.0)
@@ -92,21 +93,33 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
     private fun setInitialDate() {
         calendar = Calendar.getInstance()
-        if (binding.spinnerTime.selectedItem.toString().equals(getString(R.string.str_now), ignoreCase = true)) {
+        if (binding.spinnerTime.selectedItem.toString()
+                .equals(getString(R.string.str_now), ignoreCase = true)
+        ) {
             calendar?.add(Calendar.MINUTE, 50)
-            binding.txtRideScheduled.text = AppUtils.dateToRequiredFormat(calendar?.time, "dd MMM yyyy hh:mm a")
+            binding.txtRideScheduled.text =
+                AppUtils.dateToRequiredFormat(calendar?.time, "dd MMM yyyy hh:mm a")
         }
     }
 
     private fun setSpinners() {
-        timeSpinner = arrayOf<String>(context.resources.getString(R.string.str_now), context.resources.getString(R.string.str_later))
-        luggageSpinner = arrayOf<String>( getString(R.string.str_luggage), getString(R.string.str_luggage_1), getString(R.string.str_luggage_2), getString(R.string.str_luggage_3), getString(R.string.str_luggage_4), getString(R.string.str_luggage_5))
+        timeSpinner = arrayOf<String>(
+            context.resources.getString(R.string.str_now),
+            context.resources.getString(R.string.str_later)
+        )
+        luggageSpinner = arrayOf<String>(
+            getString(R.string.str_luggage),
+            getString(R.string.str_luggage_1),
+            getString(R.string.str_luggage_2),
+            getString(R.string.str_luggage_3),
+            getString(R.string.str_luggage_4),
+            getString(R.string.str_luggage_5)
+        )
 
         val NowLater: ArrayAdapter<*> =
             ArrayAdapter<Any?>(this, R.layout.simple_spinner, timeSpinner!!)
         NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerTime.adapter = NowLater
-
 
 
         val spinnerLuggage: ArrayAdapter<*> =
@@ -122,18 +135,23 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
             btnCompareRides.setOnClickListener {
                 if (ProjectUtilities.checkInternetAvailable(context)) {
-                    if (isValid()){
+                    if (isValid()) {
                         iInterCityPresenter?.getCompareRideData(
                             token,
                             estDistanceInKM.toString(),
                             estTime.toString(),
+                            "Intercity",
                             fromCityID,
                             toCityID,
-                            AppUtils.getPlaceID(context,sourceLat, sourceLong),
-                            AppUtils.getPlaceID(context,destinationLat, destinationLong),
+                            AppUtils.getPlaceID(context, sourceLat, sourceLong),
+                            AppUtils.getPlaceID(context, destinationLat, destinationLong),
                             luggage,
-                            "NO",
-                            AppUtils.changeDateFormat(txtRideScheduled.text.toString(),"dd MMM yyyy hh:mm a", "yyyy-MM-dd HH:mm:ss")
+                            wayFlag,
+                            AppUtils.changeDateFormat(
+                                txtRideScheduled.text.toString(),
+                                "dd MMM yyyy hh:mm a",
+                                "yyyy-MM-dd HH:mm:ss"
+                            )
                         )
                     }
                 } else {
@@ -167,7 +185,12 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             }
 
             spinnerLuggage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
                     luggage = position.toString()
                 }
 
@@ -177,14 +200,20 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             }
 
             spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                    if (timeSpinner?.get(position)?.equals(getString(R.string.str_now))!!){
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (timeSpinner?.get(position)?.equals(getString(R.string.str_now))!!) {
                         txtRideBook.text = getString(R.string.str_book_ride_on)
-                        txtRideBook.text = "Ride will be serviced 45 minutes after the payment is done"
+                        txtRideBook.text =
+                            "Ride will be serviced 45 minutes after the payment is done"
                         txtRideScheduled.visibility = View.GONE
 
-                    }else{
-                       txtRideBook.text = getString(R.string.str_ride_scheduled_on)
+                    } else {
+                        txtRideBook.text = getString(R.string.str_ride_scheduled_on)
                         txtRideScheduled.visibility = View.VISIBLE
                     }
                 }
@@ -199,21 +228,22 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             }
 
             edtFromCity.setOnClickListener {
-                if (fromCityList.isNullOrEmpty()){
+                if (fromCityList.isNullOrEmpty()) {
                     iInterCityPresenter?.getFromInterCities(token)
-                }else{
+                } else {
                     openCitySelectionDialog("Select From City", fromCityList)
                 }
 
             }
 
             edtToCity.setOnClickListener {
-                if (fromCityID.isNullOrEmpty()){
-                    Toast.makeText(context, "Please select From City first.", Toast.LENGTH_SHORT).show()
-                }else{
-                    if (toCityList.isNullOrEmpty()){
+                if (fromCityID.isNullOrEmpty()) {
+                    Toast.makeText(context, "Please select From City first.", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    if (toCityList.isNullOrEmpty()) {
                         iInterCityPresenter?.getToInterCities(token, fromCityID)
-                    }else{
+                    } else {
                         openCitySelectionDialog("Select To City", toCityList)
                     }
                 }
@@ -222,46 +252,56 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     }
 
 
-
     private fun openCitySelectionDialog(
         title: String,
         cityList: ArrayList<GetAllowCityResponse.CitiesItem>
     ) {
-        citySelectionDialog =  CitySelectionDialog(context, title, cityList, object : CitySelectionDialog.SelectionDialogInterface{
-            override fun onItemSelected(model: GetAllowCityResponse.CitiesItem?) {
-                citySelectionDialog?.dismiss()
-                if (title == "Select From City"){
-                    binding.edtFromCity.setText(model?.name)
-                    fromCityID = model?.id.toString()
-                    iInterCityPresenter?.getToInterCities(token, fromCityID)
-                }else{
-                    binding.edtToCity.setText(model?.name)
-                    toCityID = model?.id.toString()
+        citySelectionDialog = CitySelectionDialog(
+            context,
+            title,
+            cityList,
+            object : CitySelectionDialog.SelectionDialogInterface {
+                override fun onItemSelected(model: GetAllowCityResponse.CitiesItem?) {
+                    citySelectionDialog?.dismiss()
+                    if (title == "Select From City") {
+                        binding.edtFromCity.setText(model?.name)
+                        fromCityID = model?.id.toString()
+                        iInterCityPresenter?.getToInterCities(token, fromCityID)
+                    } else {
+                        binding.edtToCity.setText(model?.name)
+                        toCityID = model?.id.toString()
+                    }
                 }
-            }
 
-        })
+            })
 
         citySelectionDialog?.show()
     }
 
     private fun isValid(): Boolean {
         binding.apply {
-            if (!rdOneWay.isChecked && !rdRoundTrip.isChecked){
+            if (!rdOneWay.isChecked && !rdRoundTrip.isChecked) {
                 Toast.makeText(context, "Please select journey type", Toast.LENGTH_SHORT).show()
                 return false
-            }else if (fromCityID.isNullOrEmpty()){
+            } else if (fromCityID.isNullOrEmpty()) {
                 Toast.makeText(context, "Please select from city", Toast.LENGTH_SHORT).show()
                 return false
-            }else if (toCityID.isNullOrEmpty()){
+            } else if (toCityID.isNullOrEmpty()) {
                 Toast.makeText(context, "Please select to city", Toast.LENGTH_SHORT).show()
                 return false
-            }else if (sourceLat.isNullOrEmpty()){
+            } else if (sourceLat.isNullOrEmpty()) {
                 Toast.makeText(context, "Please select pick up location", Toast.LENGTH_SHORT).show()
                 return false
-            }else if (destinationLat.isNullOrEmpty()){
-                Toast.makeText(context, "Please select drop off location", Toast.LENGTH_SHORT).show()
+            } else if (destinationLat.isNullOrEmpty()) {
+                Toast.makeText(context, "Please select drop off location", Toast.LENGTH_SHORT)
+                    .show()
                 return false
+            }
+
+            if (rdOneWay.isChecked) {
+                wayFlag = rdOneWay.text.toString()
+            } else if (rdRoundTrip.isChecked) {
+                wayFlag = rdRoundTrip.text.toString()
             }
         }
 
@@ -313,18 +353,27 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     private fun showTimePickerDialog(dateString: String, txtDate: TextView) {
         var hour = calendar?.get(Calendar.HOUR_OF_DAY)
         var minute = calendar?.get(Calendar.MINUTE)
-        val timePickerDialog = TimePickerDialog(context, object : TimePickerDialog.OnTimeSetListener{
-            override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                var dateTimeString = dateString + " $hourOfDay:$minute"
-                if (validateDate(dateTimeString)){
-                    txtDate.text = AppUtils.changeDateFormat(dateTimeString, "yyyy-MM-dd HH:mm", "dd MMM yyyy hh:mm a")
-                }else{
-                    Toast.makeText(context, "Please select valid date and time", Toast.LENGTH_SHORT).show()
+        val timePickerDialog =
+            TimePickerDialog(context, object : TimePickerDialog.OnTimeSetListener {
+                override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                    var dateTimeString = dateString + " $hourOfDay:$minute"
+                    if (validateDate(dateTimeString)) {
+                        txtDate.text = AppUtils.changeDateFormat(
+                            dateTimeString,
+                            "yyyy-MM-dd HH:mm",
+                            "dd MMM yyyy hh:mm a"
+                        )
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Please select valid date and time",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 }
 
-            }
-
-        },hour!!, minute!!, DateFormat.is24HourFormat(this))
+            }, hour!!, minute!!, DateFormat.is24HourFormat(this))
 
         timePickerDialog.show()
     }
@@ -360,7 +409,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
             }
 
-            if (!sourceLat.isNullOrEmpty() && !destinationLat.isNullOrEmpty()){
+            if (!sourceLat.isNullOrEmpty() && !destinationLat.isNullOrEmpty()) {
                 getDistanceAPI()
             }
         }
@@ -369,25 +418,33 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
     private fun getDistanceAPI() {
         val url =
-            "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=" + sourceLat + "," + sourceLong + "&destinations=" + destinationLat + "," + destinationLong + "&key=" + getString(R.string.google_maps_key)
+            "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=" + sourceLat + "," + sourceLong + "&destinations=" + destinationLat + "," + destinationLong + "&key=" + getString(
+                R.string.google_maps_key
+            )
 
-        APIManager.getInstance(context).postAPI(url, null, GoogleDistanceModel::class.java, context, object : APIManager.APIManagerInterface{
-            override fun onSuccess(resultObj: Any?) {
-                var model: GoogleDistanceModel = resultObj as GoogleDistanceModel
-                binding.rlEstimation.visibility = View.VISIBLE
-                estDistance = model.rows?.elementAt(0)?.elements?.get(0)?.distance?.text
-                estDistanceInKM = (model.rows?.elementAt(0)?.elements?.get(0)?.distance?.value)?.div(
-                    1000
-                )
-                estTime = model.rows?.elementAt(0)?.elements?.get(0)?.duration?.text
-                binding.txtEstDistance.text = "Est.Distance $estDistance"
-                binding.txtEstTime.text = "Est.Time $estTime"
-            }
+        APIManager.getInstance(context).postAPI(
+            url,
+            null,
+            GoogleDistanceModel::class.java,
+            context,
+            object : APIManager.APIManagerInterface {
+                override fun onSuccess(resultObj: Any?) {
+                    var model: GoogleDistanceModel = resultObj as GoogleDistanceModel
+                    binding.rlEstimation.visibility = View.VISIBLE
+                    estDistance = model.rows?.elementAt(0)?.elements?.get(0)?.distance?.text
+                    estDistanceInKM =
+                        (model.rows?.elementAt(0)?.elements?.get(0)?.distance?.value)?.div(
+                            1000
+                        )
+                    estTime = model.rows?.elementAt(0)?.elements?.get(0)?.duration?.text
+                    binding.txtEstDistance.text = "Est.Distance $estDistance"
+                    binding.txtEstTime.text = "Est.Time $estTime"
+                }
 
-            override fun onError(error: String?) {
-            }
+                override fun onError(error: String?) {
+                }
 
-        })
+            })
     }
 
 
@@ -407,7 +464,6 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
      * API RESPONSES
      *
      */
-
 
 
     override fun compareRideSuccess(info: CompareRideResponsePOJO?) {
