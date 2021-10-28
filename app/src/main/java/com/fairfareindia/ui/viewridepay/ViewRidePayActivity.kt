@@ -1,16 +1,10 @@
 package com.fairfareindia.ui.viewridepay
 
-import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.InsetDrawable
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -54,38 +48,9 @@ class ViewRidePayActivity : AppCompatActivity() {
 
     @OnClick(R.id.btnPayNow)
     fun btnBookRide() {
-        showAlertDialog()
     }
 
-    private fun showAlertDialog() {
-        val alertDialog = AlertDialog.Builder(this@ViewRidePayActivity)
-        val customLayout: android.view.View? =
-            getLayoutInflater().inflate(R.layout.custom_alert_dialog, null)
-        alertDialog.setView(customLayout)
 
-        val btnSubmit: Button = customLayout!!.findViewById(R.id.btnOK)
-
-
-        val alert = alertDialog.create()
-        alert.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val back = ColorDrawable(Color.TRANSPARENT)
-        val inset = InsetDrawable(back, 40)
-        alert.window!!.setBackgroundDrawable(inset)
-        alert.setCanceledOnTouchOutside(false)
-        alert.show()
-
-
-        btnSubmit.setOnClickListener(View.OnClickListener {
-
-            alert.dismiss()
-            alert.cancel()
-
-
-
-
-        })
-
-    }
 
 
 }

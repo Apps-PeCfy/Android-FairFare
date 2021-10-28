@@ -23,6 +23,7 @@ import com.fairfareindia.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.fairfareindia.ui.home.pojo.SaveLocationResponsePojo
 import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
 import com.fairfareindia.ui.endrides.pojo.ResponseEnd
+import com.fairfareindia.ui.intercityviewride.BookingRequestModel
 import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.fairfareindia.ui.trackRide.currentFare.CurrentFareeResponse
 import com.fairfareindia.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
@@ -149,6 +150,25 @@ interface NetworkService {
         @Field("airport") airport: String?,
         @Field("schedule_datetime") schedule_datetime: String?
     ): Call<CompareRideResponsePOJO?>?
+
+    @FormUrlEncoded
+    @POST("bookingRequest")
+    fun bookingRequest(
+        @Header("Authorization") header: String?,
+        @Field("driver_id") driver_id: String?,
+        @Field("permit_type") permit_type: String?,
+        @Field("origin_address") origin_address: String?,
+        @Field("destination_address") destination_address: String?,
+        @Field("origin_latitude") origin_latitude: String?,
+        @Field("origin_longitude") origin_longitude: String?,
+        @Field("destination_latitude") destination_latitude: String?,
+        @Field("destination_longitude") destination_longitude: String?,
+        @Field("shedule_date") schedule_date: String?,
+        @Field("way_flag") way_flag: String?,
+        @Field("vehicle_rate_card_id") vehicle_rate_card_id: String?,
+        @Field("intercity_ratecard_id") intercity_ratecard_id: String?,
+        @Field("status") status: String?
+    ): Call<BookingRequestModel?>?
 
 
     @FormUrlEncoded
@@ -488,6 +508,17 @@ interface NetworkService {
         @Header("Authorization") header: String?,
         @Query("latitude") latitude: String?,
         @Query("longitude") longitude: String?
+    ): Call<GetAllowCityResponse?>?
+
+    @GET("driver/getToCities")
+    fun getToInterCities(
+        @Header("Authorization") header: String?,
+        @Query("from_city_id") fromCityID: String?
+    ): Call<GetAllowCityResponse?>?
+
+    @GET("driver/getFromCities")
+    fun getFromInterCities(
+        @Header("Authorization") header: String?
     ): Call<GetAllowCityResponse?>?
 
 

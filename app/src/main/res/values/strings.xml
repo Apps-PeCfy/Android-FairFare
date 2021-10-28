@@ -94,12 +94,16 @@
 
     <string name="session_expired">Session Expired!</string>
     <string name="hint_search">Search</string>
-    <string name="str_luggage">Luggage</string>
-    <string name="str_luggage_1">1 Luggage</string>
-    <string name="str_luggage_2">2 Luggage</string>
-    <string name="str_luggage_3">3 Luggage</string>
-    <string name="str_luggage_4">4 Luggage</string>
-    <string name="str_luggage_5">5 Luggage</string>
+    <string name="str_luggage">Bag</string>
+    <string name="str_luggage_1">1 Bag</string>
+    <string name="str_luggage_2">2 Bags</string>
+    <string name="str_luggage_3">3 Bags</string>
+    <string name="str_luggage_4">4 Bags</string>
+    <string name="str_luggage_5">5 Bags</string>
+
+    <string name="str_no_bags">No bag</string>
+    <string name="str_bag">Bag</string>
+    <string name="str_bags">Bags</string>
 
     <!--Compare Ride Screen-->
     <string name="title_compare_rides">Compare Rides</string>
@@ -112,6 +116,7 @@
     <string name="str_additional_charges">Additional Charges</string>
     <string name="str_rules_and_restrictions">Rules and Restrictions</string>
     <string name="str_rules">Rs 50/hr will be applicable on waiting for more than half an hour when the ride is active\nRs 15/km will be charged for extra km.</string>
+    <string name="btn_pay_now">Pay Now</string>
 
 </resources>
 

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,27 +13,38 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityIntercityViewRideBinding
+import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
+import com.fairfareindia.ui.intercity.IInterCityPresenter
+import com.fairfareindia.ui.intercity.InterCityImplementer
 import com.fairfareindia.ui.viewride.ViewRideTollsPopUp
 import com.fairfareindia.utils.AppUtils
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PreferencesManager
+import com.fairfareindia.utils.ProjectUtilities
 import com.google.gson.Gson
 
-class IntercityViewRideActivity : AppCompatActivity() {
+class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
     lateinit var binding: ActivityIntercityViewRideBinding
     private var context: Context = this
 
     private var sourceAddress: String? = null
     private var destinationAddress: String? = null
+    var sourceLat: String? = null
+    var sourceLong: String? = null
+    var destinationLat: String? = null
+    var destinationLong: String? = null
+
     private lateinit var info: CompareRideResponsePOJO
     private  var vehicleModel : CompareRideResponsePOJO.VehiclesItem ? = null
 
     private var token: String? = null
     private var preferencesManager: PreferencesManager? = null
+    private var iInterCityViewRidePresenter: IInterCityViewRidePresenter? = null
 
     var eventInfoDialog: Dialog? = null
     var viewRideTollsPopUp: ViewRideTollsPopUp? = null
+    var paymentDialog: PaymentDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +60,16 @@ class IntercityViewRideActivity : AppCompatActivity() {
         preferencesManager = PreferencesManager.instance
         token = preferencesManager?.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
+        iInterCityViewRidePresenter = InterCityViewRideImplementer(this)
+
         info = intent.getSerializableExtra("MyPOJOClass") as CompareRideResponsePOJO
+        vehicleModel = Gson().fromJson(intent.getStringExtra("vehicle_model"), CompareRideResponsePOJO.VehiclesItem::class.java)
         sourceAddress = intent.getStringExtra("SourceAddress")
         destinationAddress = intent.getStringExtra("DestinationAddress")
-        vehicleModel = Gson().fromJson(intent.getStringExtra("vehicle_model"), CompareRideResponsePOJO.VehiclesItem::class.java)
+        sourceLat = intent.getStringExtra("SourceLat")
+        sourceLong = intent.getStringExtra("SourceLong")
+        destinationLat = intent.getStringExtra("DestinationLat")
+        destinationLong = intent.getStringExtra("DestinationLong")
 
         setListeners()
         setData()
@@ -111,8 +129,29 @@ class IntercityViewRideActivity : AppCompatActivity() {
 
             }
 
+            btnBookRide.setOnClickListener {
+                var message = "Kindly pay the amount ₹${vehicleModel?.total} for the booking and confirm."
+                openPaymentDialog(getString(R.string.btn_pay_now), message)
+            }
+
 
         }
+    }
+
+    private fun openPaymentDialog(btnName: String, message: String) {
+        paymentDialog = PaymentDialog(context, btnName, message, object : PaymentDialog.PaymentDialogInterface{
+            override fun onButtonClick() {
+                paymentDialog?.dismiss()
+                if (btnName == getString(R.string.btn_pay_now)){
+                   iInterCityViewRidePresenter?.bookingRequest(token, "1", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  vehicleModel?.vehicleRateCardId, "1", "Pending")
+                }else{
+
+                }
+            }
+
+        })
+
+        paymentDialog?.show()
     }
 
     private fun showTollInfoDialog() {
@@ -134,5 +173,36 @@ class IntercityViewRideActivity : AppCompatActivity() {
 
             eventInfoDialog!!.show()
         }
+    }
+
+    /**
+     * API CALLING
+     */
+
+    override fun bookingRequestSuccess(model: BookingRequestModel?) {
+        var  message1 = "Your ride is confirmed on ${binding.txtDate.text}. Driver details will be shared 15 minutes before the ride."
+        openPaymentDialog(getString(R.string.btn_ok), message1)
+    }
+
+    override fun validationError(validationResponse: ValidationResponse?) {
+        Toast.makeText(
+            context,
+            validationResponse!!.errors!![0].message,
+            Toast.LENGTH_LONG
+        ).show()
+
+
+    }
+
+    override fun showWait() {
+        ProjectUtilities.showProgressDialog(context)
+    }
+
+    override fun removeWait() {
+        ProjectUtilities.dismissProgressDialog()
+    }
+
+    override fun onFailure(appErrorMessage: String?) {
+        Toast.makeText(context, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 }

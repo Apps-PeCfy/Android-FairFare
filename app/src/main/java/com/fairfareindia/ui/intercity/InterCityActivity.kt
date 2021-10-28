@@ -36,7 +36,8 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     private var fromCityID: String? = null
     private var luggage: String = "0"
 
-    private var cityList: ArrayList<GetAllowCityResponse.CitiesItem> = ArrayList()
+    private var fromCityList: ArrayList<GetAllowCityResponse.CitiesItem> = ArrayList()
+    private var toCityList: ArrayList<GetAllowCityResponse.CitiesItem> = ArrayList()
 
     var sourceLat: String? = null
     var sourceLong: String? = null
@@ -80,7 +81,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
 
         iInterCityPresenter = InterCityImplementer(this)
-        iInterCityPresenter?.getCity(token, "", "")
+        iInterCityPresenter?.getFromInterCities(token)
 
         EventBus.getDefault().register(this)
         setSpinners()
@@ -198,24 +199,41 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             }
 
             edtFromCity.setOnClickListener {
-                openCitySelectionDialog("Select From City")
+                if (fromCityList.isNullOrEmpty()){
+                    iInterCityPresenter?.getFromInterCities(token)
+                }else{
+                    openCitySelectionDialog("Select From City", fromCityList)
+                }
+
             }
 
             edtToCity.setOnClickListener {
-                openCitySelectionDialog("Select To City")
+                if (fromCityID.isNullOrEmpty()){
+                    Toast.makeText(context, "Please select From City first.", Toast.LENGTH_SHORT).show()
+                }else{
+                    if (toCityList.isNullOrEmpty()){
+                        iInterCityPresenter?.getToInterCities(token, fromCityID)
+                    }else{
+                        openCitySelectionDialog("Select To City", toCityList)
+                    }
+                }
             }
         }
     }
 
 
 
-    private fun openCitySelectionDialog(title: String) {
+    private fun openCitySelectionDialog(
+        title: String,
+        cityList: ArrayList<GetAllowCityResponse.CitiesItem>
+    ) {
         citySelectionDialog =  CitySelectionDialog(context, title, cityList, object : CitySelectionDialog.SelectionDialogInterface{
             override fun onItemSelected(model: GetAllowCityResponse.CitiesItem?) {
                 citySelectionDialog?.dismiss()
                 if (title == "Select From City"){
                     binding.edtFromCity.setText(model?.name)
                     fromCityID = model?.id.toString()
+                    iInterCityPresenter?.getToInterCities(token, fromCityID)
                 }else{
                     binding.edtToCity.setText(model?.name)
                     toCityID = model?.id.toString()
@@ -409,11 +427,16 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     }
 
     override fun getCitySuccess(getAllowCityResponse: GetAllowCityResponse?) {
-        toCityName = getAllowCityResponse?.getallowCityName()
-        cityList = getAllowCityResponse?.cities!!
 
     }
 
+    override fun getFromInterCitiesSuccess(getAllowCityResponse: GetAllowCityResponse?) {
+        fromCityList = getAllowCityResponse?.cities!!
+    }
+
+    override fun getToInterCitiesSuccess(getAllowCityResponse: GetAllowCityResponse?) {
+        toCityList = getAllowCityResponse?.cities!!
+    }
 
 
     override fun validationError(validationResponse: ValidationResponse?) {

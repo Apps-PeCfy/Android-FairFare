@@ -1,4 +1,4 @@
-package com.fairfareindia.ui.intercity
+package com.fairfareindia.ui.intercityviewride
 
 import com.fairfareindia.base.IBaseView
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
@@ -6,11 +6,8 @@ import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
 
-interface IIntercityView : IBaseView {
-    fun compareRideSuccess(info: CompareRideResponsePOJO?)
-    fun getCitySuccess(getAllowCityResponse: GetAllowCityResponse?)
-    fun getFromInterCitiesSuccess(getAllowCityResponse: GetAllowCityResponse?)
-    fun getToInterCitiesSuccess(getAllowCityResponse: GetAllowCityResponse?)
+interface IIntercityViewRideView : IBaseView {
+    fun bookingRequestSuccess(model: BookingRequestModel?)
     fun validationError(validationResponse: ValidationResponse?)
 
 }

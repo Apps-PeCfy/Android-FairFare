@@ -19,4 +19,8 @@ interface IInterCityPresenter {
         lat: String?,
         long: String?)
 
+    fun getFromInterCities(token: String?)
+
+    fun getToInterCities(token: String?, fromCityID: String?)
+
 }

@@ -104,4 +104,86 @@ class InterCityImplementer(private val view: IIntercityView) : IInterCityPresent
         })
     }
 
+    override fun getFromInterCities(token: String?) {
+        view.showWait()
+
+        val call = ApiClient.client.getFromInterCities("Bearer $token")
+        call!!.enqueue(object : Callback<GetAllowCityResponse?> {
+            override fun onResponse(
+                call: Call<GetAllowCityResponse?>,
+                response: Response<GetAllowCityResponse?>
+            ) {
+                view.removeWait()
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        view.removeWait()
+                        view.getFromInterCitiesSuccess(response.body())
+                    }
+                } else if (response.code() == 422) {
+                    view.removeWait()
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        view.validationError(pojo)
+                    } catch (exception: IOException) {
+                    }
+
+                }
+            }
+
+            override fun onFailure(
+                call: Call<GetAllowCityResponse?>,
+                t: Throwable
+            ) {
+                view.removeWait()
+                view.onFailure(t.message)
+            }
+        })
+    }
+
+    override fun getToInterCities(token: String?, fromCityID: String?) {
+        view.showWait()
+
+        val call = ApiClient.client.getToInterCities("Bearer $token", fromCityID)
+        call!!.enqueue(object : Callback<GetAllowCityResponse?> {
+            override fun onResponse(
+                call: Call<GetAllowCityResponse?>,
+                response: Response<GetAllowCityResponse?>
+            ) {
+                view.removeWait()
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        view.removeWait()
+                        view.getToInterCitiesSuccess(response.body())
+                    }
+                } else if (response.code() == 422) {
+                    view.removeWait()
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        view.validationError(pojo)
+                    } catch (exception: IOException) {
+                    }
+
+                }
+            }
+
+            override fun onFailure(
+                call: Call<GetAllowCityResponse?>,
+                t: Throwable
+            ) {
+                view.removeWait()
+                view.onFailure(t.message)
+            }
+        })
+    }
+
 }

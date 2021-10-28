@@ -2240,16 +2240,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (parent!!.id == R.id.spinner_Luggage) {
             spnrbag = position
             spinnerLuggagetxt = spinner_Luggage!!.selectedItem.toString()
-        } else if (parent!!.id == R.id.spinnerLang) {
-            city_Name = cityPojoList!!.get(position).name
-            if (city_Name.equals("Choose City")) {
-
-            } else {
-
+        } else if (parent.id == R.id.spinnerLang) {
+            if (!city_Name.equals("Choose City")) {
                 if (cityspinner.contains("Choose City")) {
                     if (position > 0) {
-                        cityID = cityPojoList!!.get(position - 1).id.toString()
-                        city_Name = cityPojoList!!.get(position - 1).name
+                        cityID = cityPojoList[position - 1].id.toString()
+                        city_Name = cityPojoList[position - 1].name
                         preferencesManager!!.setStringValue(
                             Constants.SHARED_PREFERENCE_CITY_ID,
                             cityID
@@ -2259,23 +2255,21 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         cityID = ""
                         preferencesManager!!.setStringValue(
                             Constants.SHARED_PREFERENCE_CITY_ID,
-                            cityPojoList!!.get(position).id.toString()
+                            cityPojoList[position].id.toString()
                         )
                     }
 
 
                 } else {
-                    cityID = cityPojoList!!.get(position).id.toString()
-                    city_Name = cityPojoList!!.get(position).name
-                    preferencesManager!!.setStringValue(
+                    cityID = cityPojoList[position].id.toString()
+                    city_Name = cityPojoList[position].name
+                    preferencesManager?.setStringValue(
                         Constants.SHARED_PREFERENCE_CITY_ID,
                         cityID
                     )
 
                 }
             }
-
-
         } else {
             spnrtime = position
             spinnertxt = spinner_time!!.selectedItem.toString()
