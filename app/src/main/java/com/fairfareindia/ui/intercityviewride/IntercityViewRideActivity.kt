@@ -2,6 +2,7 @@ package com.fairfareindia.ui.intercityviewride
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.intercity.IInterCityPresenter
 import com.fairfareindia.ui.intercity.InterCityImplementer
+import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
 import com.fairfareindia.ui.viewride.ViewRideTollsPopUp
 import com.fairfareindia.utils.AppUtils
 import com.fairfareindia.utils.Constants
@@ -145,13 +147,25 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
                 if (btnName == getString(R.string.btn_pay_now)){
                    iInterCityViewRidePresenter?.bookingRequest(token, "4", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  vehicleModel?.vehicleRateCardId, "1", "Pending")
                 }else{
-
+                    startTrackPickUP()
                 }
             }
 
         })
 
         paymentDialog?.show()
+    }
+
+    private fun startTrackPickUP() {
+        val intent = Intent(applicationContext, TrackPickUpActivity::class.java)
+        intent.putExtra("SourceAddress", sourceAddress)
+        intent.putExtra("DestinationAddress", destinationAddress)
+        intent.putExtra("SourceLat", sourceLat)
+        intent.putExtra("SourceLong", sourceLong)
+        intent.putExtra("DestinationLat", destinationLat)
+        intent.putExtra("DestinationLong", destinationLong)
+
+        startActivity(intent)
     }
 
     private fun showTollInfoDialog() {

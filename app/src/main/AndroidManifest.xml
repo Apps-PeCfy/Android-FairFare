@@ -40,10 +40,14 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.intercityviewride.IntercityViewRideActivity"
+        <activity android:name=".ui.intercitytrackpickup.TrackPickUpActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.intercitycompareride.IntercityCompareRideActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.intercityviewride.IntercityViewRideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.intercitycompareride.IntercityCompareRideActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.viewridepay.ViewRidePayActivity"
             android:screenOrientation="portrait" />

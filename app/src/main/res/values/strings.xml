@@ -118,5 +118,12 @@
     <string name="str_rules">Rs 50/hr will be applicable on waiting for more than half an hour when the ride is active\nRs 15/km will be charged for extra km.</string>
     <string name="btn_pay_now">Pay Now</string>
 
+    <!--Track PICK UP SCREEN-->
+    <string name="title_track_pick_up">Track Pick Up</string>
+    <string name="lbl_ride_on_way">Your ride is on the way</string>
+    <string name="lbl_enter_message">Enter message</string>
+    <string name="btn_cancel_ride">Cancel Ride</string>
+
+
 </resources>
 

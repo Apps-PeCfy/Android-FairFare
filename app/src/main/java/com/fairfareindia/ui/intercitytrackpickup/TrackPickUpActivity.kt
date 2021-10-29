@@ -1,17 +1,13 @@
-package com.fairfareindia.ui.intercitycompareride
+package com.fairfareindia.ui.intercitytrackpickup
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
-import com.fairfareindia.databinding.ActivityIntercityCompareRideBinding
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
+import com.fairfareindia.databinding.ActivityTrackPickUpBinding
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
-import com.fairfareindia.ui.intercityviewride.IntercityViewRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.utils.APIManager
 import com.fairfareindia.utils.AppUtils
@@ -19,45 +15,33 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.Polyline
-import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.libraries.places.api.Places
-import com.google.gson.Gson
+import com.google.android.gms.maps.model.*
 import org.json.JSONObject
 import java.util.*
 
-class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
-    lateinit var binding: ActivityIntercityCompareRideBinding
+class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback {
+    lateinit var binding: ActivityTrackPickUpBinding
     private var context: Context = this
 
-    private var mAdapter: IntercityCompareRideAdapter? = null
-    private lateinit var info: CompareRideResponsePOJO
-    private var list: ArrayList<CompareRideResponsePOJO.VehiclesItem> = ArrayList()
+    private var sourceAddress: String? = null
+    private var destinationAddress: String? = null
+    private var sourceLat: String? = null
+    private var sourceLong: String? = null
+    private var destinationLat: String? = null
+    private var destinationLong: String? = null
 
-    var sourceAddress: String? = null
-    var destinationAddress: String? = null
-    var sourceLat: String? = null
-    var sourceLong: String? = null
-    var destinationLat: String? = null
-    var destinationLong: String? = null
-
-    var mMap: GoogleMap? = null
+    private var mMap: GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityIntercityCompareRideBinding.inflate(layoutInflater)
+        binding = ActivityTrackPickUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
 
     }
 
     private fun init() {
-        Places.initialize(this, resources.getString(R.string.google_maps_key))
-        Places.createClient(context)
 
-        info = intent.getSerializableExtra("MyPOJOClass") as CompareRideResponsePOJO
         sourceAddress = intent.getStringExtra("SourceAddress")
         destinationAddress = intent.getStringExtra("DestinationAddress")
         sourceLat = intent.getStringExtra("SourceLat")
@@ -65,13 +49,12 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
         destinationLat = intent.getStringExtra("DestinationLat")
         destinationLong = intent.getStringExtra("DestinationLong")
 
-
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
 
+
         setData()
-        setRecyclerView()
         setListeners()
     }
 
@@ -85,62 +68,19 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
                 }else{
                     llHideView.visibility = View.VISIBLE
                 }
-
             }
         }
     }
 
     private fun setData() {
         binding.apply {
-            txtTime.text = AppUtils.changeDateFormat(
-                info.scheduleDatetime,
-                "yyyy-MM-dd HH:mm:ss",
-                "dd MMM yyyy, hh:mm a"
-            )
-            if (info.luggage == "0") {
-                txtLuggage.text = getString(R.string.str_no_bags)
-            } else if (info.luggage == "1") {
-                txtLuggage.text = info.luggage + " " + getString(R.string.str_bag)
-            } else {
-                txtLuggage.text = info.luggage + " " + getString(R.string.str_bags)
-            }
 
             txtPickUpLocation.text = sourceAddress
             txtDropOffLocation.text = destinationAddress
+
+            txtPickUpLocationHide.text = sourceAddress
+            txtDropOffLocationHide.text = destinationAddress
         }
-    }
-
-    private fun setRecyclerView() {
-        if (info.vehicles?.isNotEmpty()!!) {
-            list.addAll(info.vehicles!!)
-
-        }
-        mAdapter = IntercityCompareRideAdapter(
-            context,
-            info.distance,
-            info.travelTime,
-            list,
-            object : IntercityCompareRideAdapter.IntercityCompareRideAdapterInterface {
-                override fun onItemSelected(
-                    position: Int,
-                    model: CompareRideResponsePOJO.VehiclesItem
-                ) {
-                    val intent = Intent(applicationContext, IntercityViewRideActivity::class.java)
-                    intent.putExtra("SourceAddress", sourceAddress)
-                    intent.putExtra("DestinationAddress", destinationAddress)
-                    intent.putExtra("SourceLat", sourceLat)
-                    intent.putExtra("SourceLong", sourceLong)
-                    intent.putExtra("DestinationLat", destinationLat)
-                    intent.putExtra("DestinationLong", destinationLong)
-                    intent.putExtra("vehicle_model", Gson().toJson(model))
-                    intent.putExtra("MyPOJOClass", info)
-
-                    startActivity(intent)
-                }
-
-            })
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.adapter = mAdapter
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -163,7 +103,7 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
                     )
                 ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
             )
-             mMap?.addMarker(
+            mMap?.addMarker(
                 MarkerOptions().position(
                     com.google.android.gms.maps.model.LatLng(
                         destinationLat!!.toDouble(),
@@ -176,7 +116,8 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
     }
 
     private fun getRouteAPI() {
-        val url = "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + sourceLat + "," + sourceLong + "&destination=" + destinationLat + "," + destinationLong + "&key=" + getString(R.string.google_maps_key)
+        val url = "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + sourceLat + "," + sourceLong + "&destination=" + destinationLat + "," + destinationLong + "&key=" + getString(
+            R.string.google_maps_key)
 
         APIManager.getInstance(context).postAPI(
             url,
@@ -203,7 +144,7 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
 
                     routes = parser.parse(jsonObject)
 
-                    var points: ArrayList<com.google.android.gms.maps.model.LatLng?>?
+                    var points: ArrayList<LatLng?>?
                     var lineOptions: PolylineOptions? = null
 
                     // Traversing through all the routes
@@ -228,7 +169,7 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
                         lineOptions.width(8f)
                         //  lineOptions.color(Color.GREEN);
                         lineOptions.color(
-                           context.resources.getColor(R.color.gradientstartcolor)
+                            context.resources.getColor(R.color.gradientstartcolor)
                         )
                     }
 
