@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityIntercityCompareRideBinding
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.intercityviewride.IntercityViewRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
@@ -33,8 +32,8 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
     private var context: Context = this
 
     private var mAdapter: IntercityCompareRideAdapter? = null
-    private lateinit var info: CompareRideResponsePOJO
-    private var list: ArrayList<CompareRideResponsePOJO.VehiclesItem> = ArrayList()
+    private lateinit var info: InterCityCompareRideModel
+    private var list: ArrayList<InterCityCompareRideModel.VehiclesItem> = ArrayList()
 
     var sourceAddress: String? = null
     var destinationAddress: String? = null
@@ -57,7 +56,7 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
         Places.initialize(this, resources.getString(R.string.google_maps_key))
         Places.createClient(context)
 
-        info = intent.getSerializableExtra("MyPOJOClass") as CompareRideResponsePOJO
+        info = intent.getSerializableExtra("MyPOJOClass") as InterCityCompareRideModel
         sourceAddress = intent.getStringExtra("SourceAddress")
         destinationAddress = intent.getStringExtra("DestinationAddress")
         sourceLat = intent.getStringExtra("SourceLat")
@@ -123,7 +122,7 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
             object : IntercityCompareRideAdapter.IntercityCompareRideAdapterInterface {
                 override fun onItemSelected(
                     position: Int,
-                    model: CompareRideResponsePOJO.VehiclesItem
+                    model: InterCityCompareRideModel.VehiclesItem
                 ) {
                     val intent = Intent(applicationContext, IntercityViewRideActivity::class.java)
                     intent.putExtra("SourceAddress", sourceAddress)

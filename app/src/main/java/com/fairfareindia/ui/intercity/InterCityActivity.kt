@@ -16,6 +16,7 @@ import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.home.PickUpDropActivity
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
+import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitycompareride.IntercityCompareRideActivity
 import com.fairfareindia.utils.*
 import org.greenrobot.eventbus.EventBus
@@ -467,7 +468,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
      */
 
 
-    override fun compareRideSuccess(info: CompareRideResponsePOJO?) {
+    override fun compareRideSuccess(info: InterCityCompareRideModel?) {
         val intent = Intent(applicationContext, IntercityCompareRideActivity::class.java)
         intent.putExtra("SourceLat", sourceLat)
         intent.putExtra("SourceLong", sourceLong)

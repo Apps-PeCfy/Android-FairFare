@@ -83,23 +83,7 @@ class SplashScreen : AppCompatActivity() {
 
         isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
         isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-//        isAccepted = ProjectUtilities.checkPermission(applicationContext)
 
-
-//        isAccepted = CommonAppPermission.requestPermissionGranted(this@SplashScreen)
-//
-//
-//
-//        if (isAccepted) {
-//            checkUpdate()
-//
-//
-//        } else {
-//            //reuestPermissions()
-//            CommonAppPermission.requestPermissionGranted(this@SplashScreen)
-//        }
-
-        // displayNeverAskAgainDialog()
         requestBatteryOptimisationDisabled()
 
     }
@@ -133,22 +117,12 @@ class SplashScreen : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onResume() {
-        //   isAccepted = ProjectUtilities.checkPermission(applicationContext)
-
-        // isAccepted =   CommonAppPermission.requestPermissionGranted(this@SplashScreen)
         val versionCode: Int = BuildConfig.VERSION_CODE
         isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
         isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        // if (isAccepted || isGPSEnabled || isNetworkEnabled) {
         if (callOnResune.equals("first")) {
-            // checkUpdate()
             checkAppUpdate()
         }
-
-//        } else {
-//
-//        }
-
         super.onResume()
     }
 
@@ -157,7 +131,6 @@ class SplashScreen : AppCompatActivity() {
         if (requestCode == MY_REQUEST_CODE) {
             if (resultCode != Activity.RESULT_OK) {
                 checkUpdate()
-
             }
         }
     }
@@ -168,8 +141,6 @@ class SplashScreen : AppCompatActivity() {
         h.postDelayed({
 
             try {
-
-
                 if (!isGPSEnabled && !isNetworkEnabled) {
                     val alertDialog =
                         AlertDialog.Builder(this)
@@ -189,9 +160,7 @@ class SplashScreen : AppCompatActivity() {
                 } else {
 
                     if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)) {
-                        // if (CommonAppPermission.requestPermissionGranted(this@SplashScreen)) {
                         isAccepted = true
-//                        if (isLogin == "true" && requestCodeq == REQUEST_PERMISSION && isAccepted) {
                         if (isLogin == "true" && isAccepted) {
 
                             callOnResune = "second"
@@ -237,7 +206,6 @@ class SplashScreen : AppCompatActivity() {
                                 }
                             }
                         } else {
-                            //reuestPermissions()
 
                         }
                     } else {
@@ -337,33 +305,6 @@ class SplashScreen : AppCompatActivity() {
         grantResults: IntArray
     ) {
 
-        if (!isAccepted && isGPSEnabled && isNetworkEnabled) {
-            //displayNeverAskAgainDialog()
-
-//            for (i in permissions.indices) {
-//                val permission = permissions[i]
-//                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-//                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && "android.permission.ACCESS_BACKGROUND_LOCATION".equals(permission, ignoreCase = true)) {
-//                        continue
-//                    }
-//                    val showRationale = shouldShowRequestPermissionRationale(permission)
-//                    if (!showRationale) {
-//
-//                        if (checkPopup.equals("first")) {
-//                            checkPopup = "second"
-//                            displayNeverAskAgainDialog()
-//
-//
-//                        }
-//
-//                    }
-//                }
-//
-//            }
-            // afterAllowedPermissionFunctionality(requestCode)
-        } else {
-            // afterAllowedPermissionFunctionality(requestCode)
-        }
     }
 
     private fun afterAllowedPermissionFunctionality(requestCode: Int) {
@@ -413,7 +354,6 @@ class SplashScreen : AppCompatActivity() {
             intent.data = uri
             startActivity(intent)
 
-            // CommonAppPermission.requestPermissionGranted(this@SplashScreen)
         }
         builder.setNegativeButton("Cancel", null)
         builder.show()

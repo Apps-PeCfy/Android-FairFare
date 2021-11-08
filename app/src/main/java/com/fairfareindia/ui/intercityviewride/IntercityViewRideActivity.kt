@@ -15,9 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityIntercityViewRideBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
-import com.fairfareindia.ui.intercity.IInterCityPresenter
-import com.fairfareindia.ui.intercity.InterCityImplementer
+import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
 import com.fairfareindia.ui.viewride.ViewRideTollsPopUp
 import com.fairfareindia.utils.AppUtils
@@ -37,8 +35,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
     var destinationLat: String? = null
     var destinationLong: String? = null
 
-    private lateinit var info: CompareRideResponsePOJO
-    private  var vehicleModel : CompareRideResponsePOJO.VehiclesItem ? = null
+    private lateinit var info: InterCityCompareRideModel
+    private  var vehicleModel : InterCityCompareRideModel.VehiclesItem ? = null
 
     private var token: String? = null
     private var preferencesManager: PreferencesManager? = null
@@ -64,8 +62,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
 
         iInterCityViewRidePresenter = InterCityViewRideImplementer(this)
 
-        info = intent.getSerializableExtra("MyPOJOClass") as CompareRideResponsePOJO
-        vehicleModel = Gson().fromJson(intent.getStringExtra("vehicle_model"), CompareRideResponsePOJO.VehiclesItem::class.java)
+        info = intent.getSerializableExtra("MyPOJOClass") as InterCityCompareRideModel
+        vehicleModel = Gson().fromJson(intent.getStringExtra("vehicle_model"), InterCityCompareRideModel.VehiclesItem::class.java)
         sourceAddress = intent.getStringExtra("SourceAddress")
         destinationAddress = intent.getStringExtra("DestinationAddress")
         sourceLat = intent.getStringExtra("SourceLat")
@@ -82,28 +80,32 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
             txtPickUpLocation.text = sourceAddress
             txtDropOffLocation.text = destinationAddress
 
-            txtVehicleName.text = vehicleModel?.vehicleName
-            txtPerson.text = vehicleModel?.noOfSeater.toString()
+            txtVehicleName.text = vehicleModel?.name
+            txtPerson.text = vehicleModel?.vehicle?.noOfSeater.toString()
 
 
             txtDate.text = AppUtils.changeDateFormat(info.scheduleDatetime,"yyyy-MM-dd HH:mm:ss", "EEE, MMM dd yyyy, hh:mm a")
             txtDistanceTime.text = info.distance + " KM, " + info.travelTime
 
+            tvLuggageCharges.text = "₹ " + vehicleModel?.chargesPerLuggage
 
-            tvTollCharge.text = "₹ " + vehicleModel?.tollCharges
+            txtBaseFare.text = "₹ " + vehicleModel?.baseFare
 
-            tvLuggageCharges.text = "₹ " + vehicleModel?.luggageCharge
+
+           /* tvTollCharge.text = "₹ " + vehicleModel?.tollCharges
+
+
             tvNightCharges.text = "₹ " + vehicleModel?.nightCharge
 
             tvSurCharges.text = "₹ " + vehicleModel?.surCharge
 
-            txtBaseFare.text = "₹ " + vehicleModel?.subTotal
+
 
             txtAdditionalCharges.text = "₹ " + vehicleModel?.additionalCharges
-            txtTotalPayable.text = "₹ " + vehicleModel?.total
+            txtTotalPayable.text = "₹ " + vehicleModel?.total*/
 
             Glide.with(context)
-                .load(vehicleModel?.vehicleImageUrl)
+                .load(vehicleModel?.vehicle?.image)
                 .apply(
                     RequestOptions()
                         .centerCrop()
@@ -132,7 +134,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
             }
 
             btnBookRide.setOnClickListener {
-                var message = "Kindly pay the amount ₹${vehicleModel?.total} for the booking and confirm."
+                var message = "Kindly pay the amount ₹${vehicleModel?.baseFare} for the booking and confirm."
                 openPaymentDialog(getString(R.string.btn_pay_now), message)
             }
 
@@ -145,7 +147,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
             override fun onButtonClick() {
                 paymentDialog?.dismiss()
                 if (btnName == getString(R.string.btn_pay_now)){
-                   iInterCityViewRidePresenter?.bookingRequest(token, "4", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  vehicleModel?.vehicleRateCardId, "1", "Pending")
+                   iInterCityViewRidePresenter?.bookingRequest(token, "4", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  "1", "1", "Pending")
                 }else{
                     startTrackPickUP()
                 }
@@ -169,7 +171,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
     }
 
     private fun showTollInfoDialog() {
-        if(vehicleModel?.tolls?.size!! >0) {
+      /*  if(vehicleModel?.tolls?.size!! >0) {
             eventInfoDialog = Dialog(context, R.style.dialog_style)
 
             eventInfoDialog?.setCancelable(true)
@@ -186,7 +188,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
             recyclerView.adapter = viewRideTollsPopUp
 
             eventInfoDialog!!.show()
-        }
+        }*/
     }
 
     /**

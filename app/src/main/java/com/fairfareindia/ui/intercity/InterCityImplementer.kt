@@ -2,8 +2,8 @@ package com.fairfareindia.ui.intercity
 
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
+import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,8 +27,8 @@ class InterCityImplementer(private val view: IIntercityView) : IInterCityPresent
         view.showWait()
         val call = ApiClient.client.getIntercityCompareRide("Bearer $token", distance, estTime, permitType ,fromCityID,
             toCityID, fromPlaceID, toPlaceID, luggage, wayFlag,date)
-        call!!.enqueue(object : Callback<CompareRideResponsePOJO?> {
-            override fun onResponse(call: Call<CompareRideResponsePOJO?>, response: Response<CompareRideResponsePOJO?>)
+        call!!.enqueue(object : Callback<InterCityCompareRideModel?> {
+            override fun onResponse(call: Call<InterCityCompareRideModel?>, response: Response<InterCityCompareRideModel?>)
             {
                 view.removeWait()
 
@@ -55,7 +55,7 @@ class InterCityImplementer(private val view: IIntercityView) : IInterCityPresent
             }
 
             override fun onFailure(
-                call: Call<CompareRideResponsePOJO?>,
+                call: Call<InterCityCompareRideModel?>,
                 t: Throwable
             ) {
                 view.removeWait()

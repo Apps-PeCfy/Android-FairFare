@@ -17,13 +17,14 @@ import com.fairfareindia.ui.drawer.myrides.ridedetails.RideDetailsResponsePOJO
 import com.fairfareindia.ui.drawer.privacypolicy.ContentResponsePOJO
 import com.fairfareindia.ui.drawer.ratecard.pojo.RateCardResponsePOJO
 import com.fairfareindia.ui.drawer.setting.pojo.SettingResponsePojo
+import com.fairfareindia.ui.endrides.pojo.ResponseEnd
 import com.fairfareindia.ui.home.pojo.DeleteSaveDataResponsePOJO
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.fairfareindia.ui.home.pojo.SaveLocationResponsePojo
-import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
-import com.fairfareindia.ui.endrides.pojo.ResponseEnd
+import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercityviewride.BookingRequestModel
+import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
 import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.fairfareindia.ui.trackRide.currentFare.CurrentFareeResponse
 import com.fairfareindia.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
@@ -136,21 +137,21 @@ interface NetworkService {
         @Field("duration") duration: String?
     ): Call<CompareRideResponsePOJO?>?
 
-    @FormUrlEncoded
-    @POST("compareRide")
+
+    @GET("compareRide")
     fun getIntercityCompareRide(
         @Header("Authorization") header: String?,
-        @Field("distance") distance: String?,
-        @Field("travel_time") estTime: String?,
-        @Field("permit_type") permitType: String?,
-        @Field("from_city_id") fromCityID: String?,
-        @Field("city_id") toCityID: String?,
-        @Field("origin_place_id") fromPlaceID: String?,
-        @Field("destination_place_id") toPlaceID: String?,
-        @Field("luggage") luggage: String?,
-        @Field("way_flag") airport: String?,
-        @Field("schedule_datetime") schedule_datetime: String?
-    ): Call<CompareRideResponsePOJO?>?
+        @Query("distance") distance: String?,
+        @Query("travel_time") estTime: String?,
+        @Query("permit_type") permitType: String?,
+        @Query("from_city_id") fromCityID: String?,
+        @Query("to_city_id") toCityID: String?,
+        @Query("origin_place_id") fromPlaceID: String?,
+        @Query("destination_place_id") toPlaceID: String?,
+        @Query("luggage") luggage: String?,
+        @Query("way_flag") airport: String?,
+        @Query("schedule_datetime") schedule_datetime: String?
+    ): Call<InterCityCompareRideModel?>?
 
 
 
