@@ -138,19 +138,20 @@ interface NetworkService {
     ): Call<CompareRideResponsePOJO?>?
 
 
-    @GET("compareRide")
+    @FormUrlEncoded
+    @POST("compareRide")
     fun getIntercityCompareRide(
         @Header("Authorization") header: String?,
-        @Query("distance") distance: String?,
-        @Query("travel_time") estTime: String?,
-        @Query("permit_type") permitType: String?,
-        @Query("from_city_id") fromCityID: String?,
-        @Query("to_city_id") toCityID: String?,
-        @Query("origin_place_id") fromPlaceID: String?,
-        @Query("destination_place_id") toPlaceID: String?,
-        @Query("luggage") luggage: String?,
-        @Query("way_flag") airport: String?,
-        @Query("schedule_datetime") schedule_datetime: String?
+        @Field("distance") distance: String?,
+        @Field("travel_time") estTime: String?,
+        @Field("permit_type") permitType: String?,
+        @Field("from_city_id") fromCityID: String?,
+        @Field("to_city_id") toCityID: String?,
+        @Field("origin_place_id") fromPlaceID: String?,
+        @Field("destination_place_id") toPlaceID: String?,
+        @Field("luggage") luggage: String?,
+        @Field("way_flag") airport: String?,
+        @Field("schedule_datetime") schedule_datetime: String?
     ): Call<InterCityCompareRideModel?>?
 
 
