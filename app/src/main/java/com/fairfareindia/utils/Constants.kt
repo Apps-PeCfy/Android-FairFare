@@ -39,4 +39,11 @@ object Constants {
 
 
     var REQUEST_TIMEOUT: Int = 1000 * 60
+
+    //RazorPay Key
+    //Test
+    var RAZOR_PAY_KEY = "rzp_test_W9rG6mEpxnV17V"
+
+    //Live
+    // var RAZOR_PAY_KEY = "rzp_test_W9rG6mEpxnV17V";
 }

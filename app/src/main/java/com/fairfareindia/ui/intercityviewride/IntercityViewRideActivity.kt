@@ -1,15 +1,13 @@
 package com.fairfareindia.ui.intercityviewride
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
@@ -18,13 +16,15 @@ import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
 import com.fairfareindia.ui.viewride.ViewRideTollsPopUp
-import com.fairfareindia.utils.AppUtils
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PreferencesManager
-import com.fairfareindia.utils.ProjectUtilities
+import com.fairfareindia.utils.*
 import com.google.gson.Gson
+import com.razorpay.Checkout
+import com.razorpay.PaymentData
+import com.razorpay.PaymentResultWithDataListener
+import org.json.JSONObject
 
-class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
+class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
+    PaymentResultWithDataListener {
     lateinit var binding: ActivityIntercityViewRideBinding
     private var context: Context = this
 
@@ -147,7 +147,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
             override fun onButtonClick() {
                 paymentDialog?.dismiss()
                 if (btnName == getString(R.string.btn_pay_now)){
-                   iInterCityViewRidePresenter?.bookingRequest(token, "4", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  "1", "1", "Pending")
+                  startPayment()
                 }else{
                     startTrackPickUP()
                 }
@@ -220,5 +220,59 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView {
 
     override fun onFailure(appErrorMessage: String?) {
         Toast.makeText(context, appErrorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    /**
+     * RAZOR PAY INTEGRATION
+     */
+
+    /**
+     * Razor Pay Payment Gateway Integration
+     */
+
+    private fun startPayment() {
+        /*
+          You need to pass current activity in order to let Razorpay create CheckoutActivity
+         */
+        val activity: Activity = this
+        val checkout = Checkout()
+        checkout.setKeyID(Constants.RAZOR_PAY_KEY)
+        try {
+            val options = JSONObject()
+            options.put("name", SessionManager.getInstance(context).getUserModel()?.name)
+            options.put("description", "Demoing Charges")
+            options.put("send_sms_hash", true)
+            options.put("allow_rotation", false)
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
+            options.put("currency", "INR")
+            options.put("amount", (vehicleModel?.baseFare?.times(100)).toString())
+            val preFill = JSONObject()
+            preFill.put("email", "test@razorpay.com")
+            preFill.put("contact", SessionManager.getInstance(context).getUserModel()?.phoneNo)
+            options.put("prefill", preFill)
+            checkout.open(activity, options)
+        } catch (e: Exception) {
+            Toast.makeText(activity, "Error in payment: " + e.message, Toast.LENGTH_SHORT)
+                .show()
+            e.printStackTrace()
+        }
+    }
+
+    override fun onPaymentError(code: Int, response: String?, paymentData: PaymentData?) {
+        try {
+            Toast.makeText(this, "Payment failed: " + code.toString() + " " + response, Toast.LENGTH_SHORT).show()
+        } catch (e: java.lang.Exception) {
+            Toast.makeText(context, "Exception in onPaymentError: $e", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onPaymentSuccess(razorpayPaymentID: String?, paymentData: PaymentData?) {
+        try {
+            iInterCityViewRidePresenter?.bookingRequest(token, "4", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  "1", "1", "Pending")
+            Toast.makeText(this, "Payment Success: " +  paymentData, Toast.LENGTH_SHORT).show()
+        } catch (e: java.lang.Exception) {
+            Toast.makeText(context, "Exception in onPaymentSuccess: $e", Toast.LENGTH_SHORT).show()
+        }
     }
 }

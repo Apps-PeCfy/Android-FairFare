@@ -3,11 +3,13 @@ package com.fairfareindia.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
+import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
 import com.google.gson.Gson
 
 class PreferencesManager private constructor(context: Context) {
     private val mPref: SharedPreferences
     private val cityList_key : String = "ALLOWED_CITY_LIST"
+    private val KEY_USER = "user"
 
     fun setStringValue(KEY_VALUE: String?, value: String?) {
         mPref.edit()
@@ -17,6 +19,18 @@ class PreferencesManager private constructor(context: Context) {
 
     fun getStringValue(KEY_VALUE: String?): String? {
         return mPref.getString(KEY_VALUE, "")
+    }
+
+    fun createLoginSession(userModel:  VerifyOTPResponsePojo.User?) {
+        val gson = Gson()
+        val jsonString = gson.toJson(userModel)
+        mPref.edit().putString(KEY_USER, jsonString).apply()
+    }
+
+    fun getUserModel(): VerifyOTPResponsePojo.User? {
+        val gson = Gson()
+        val jsonString: String? = mPref.getString(KEY_USER, "")
+        return gson.fromJson(jsonString,  VerifyOTPResponsePojo.User::class.java)
     }
 
     fun setIntegerValue(KEY_VALUE: String?, value: Int) {

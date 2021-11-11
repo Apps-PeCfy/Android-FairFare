@@ -9,7 +9,6 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -31,6 +30,7 @@ import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PreferencesManager
 import com.fairfareindia.utils.ProjectUtilities.dismissProgressDialog
 import com.fairfareindia.utils.ProjectUtilities.showProgressDialog
+import com.fairfareindia.utils.SessionManager
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlin.random.Random
@@ -279,6 +279,8 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION, verifyOTPResponsePojo!!.user!!.location)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID, deviceID)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_ISLOGIN, "true")
+        mPreferencesManager?.createLoginSession(verifyOTPResponsePojo.user)
+        SessionManager.getInstance(this@OtpAvtivity).setUserModel(verifyOTPResponsePojo.user!!)
         val intent = Intent(this@OtpAvtivity, HomeActivity::class.java)
       //  edt_otp!!.setText("")
 

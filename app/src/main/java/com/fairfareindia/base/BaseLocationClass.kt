@@ -13,11 +13,13 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import java.text.DateFormat
 import java.util.*
+
 
 open class BaseLocationClass : AppCompatActivity(),
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
@@ -295,12 +297,23 @@ open class BaseLocationClass : AppCompatActivity(),
             return
         }
         if (mGoogleApiClient!!.isConnected) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(
+         /*   LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this
             ).setResultCallback(object :
                 ResultCallback<Status?> {
                 override fun onResult(status: Status) {
                     mRequestingLocationUpdates = true
+                }
+            })*/
+
+            val result: PendingResult<Status> =
+                LocationServices.FusedLocationApi
+                    .requestLocationUpdates(mGoogleApiClient, mLocationRequest, this)
+            result.setResultCallback(ResultCallback<Status> { status ->
+                if (status.isSuccess) {
+                    mRequestingLocationUpdates = true
+                } else {
+
                 }
             })
         } else {
