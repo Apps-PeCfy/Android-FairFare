@@ -13,36 +13,47 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
 
     override fun bookingRequest(
         token: String?,
-        driverId: String?,
-        permitType: String?,
-        originAddress: String?,
-        destinationAddress: String?,
-        originLatitude: String?,
-        originLongitude: String?,
-        destinationLatitude: String?,
-        destinationLongitude: String?,
-        sheduleDate: String?,
-        wayFlag: String?,
-        vehicle_rate_card_id: String?,
+        type: String?,
+        from_city_id: String?,
+        to_city_id: String?,
+        origin_address: String?,
+        destination_address: String?,
+        origin_latitude: String?,
+        origin_longitude: String?,
+        destination_latitude: String?,
+        destination_longitude: String?,
+        shedule_date: String?,
+        way_flag: String?,
         intercity_ratecard_id: String?,
-        status: String?
+        shedule_type: String?,
+        luggage_quantity: String?,
+        luggage_charges: String?,
+        distance: String?,
+        travel_time: String?,
+        travel_time_second: String?
     ) {
         viewRideView.showWait()
         val call = ApiClient.client.bookingRequest(
             "Bearer $token",
-            driverId,
-            permitType,
-            originAddress,
-            destinationAddress,
-            originLatitude,
-            originLongitude,
-            destinationLatitude,
-            destinationLongitude,
-            sheduleDate,
-            wayFlag,
-            vehicle_rate_card_id,
+            type,
+            from_city_id,
+            to_city_id,
+            origin_address,
+            destination_address,
+            origin_latitude,
+            origin_longitude,
+            destination_latitude,
+            destination_longitude,
+            shedule_date,
+            way_flag,
             intercity_ratecard_id,
-            status
+            shedule_type,
+            luggage_quantity,
+            luggage_charges,
+            distance,
+            travel_time,
+            travel_time_second
+
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
             override fun onResponse(
@@ -75,6 +86,58 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
 
             override fun onFailure(
                 call: Call<BookingRequestModel?>,
+                t: Throwable
+            ) {
+                viewRideView.removeWait()
+                viewRideView.onFailure(t.message)
+            }
+        })
+    }
+
+    override fun getViewRideDetails(
+        token: String?,
+        intercity_rate_card_id: String?,
+        total_dist: String?,
+        luggage_quantity: String?
+    ) {
+        viewRideView.showWait()
+        val call = ApiClient.client.getViewRideDetails(
+            "Bearer $token",
+            intercity_rate_card_id,
+            total_dist,
+            luggage_quantity
+        )
+        call!!.enqueue(object : Callback<ViewRideModel?> {
+            override fun onResponse(
+                call: Call<ViewRideModel?>,
+                response: Response<ViewRideModel?>
+            ) {
+                viewRideView.removeWait()
+
+                if (response.code() == 200) {
+                    viewRideView.removeWait()
+
+                    viewRideView.getViewRideDetails(response.body())
+                } else if (response.code() == 400 || response.code() == 422) {
+                    viewRideView.removeWait()
+
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        viewRideView.validationError(pojo)
+                    } catch (exception: IOException) {
+                    }
+                } else {
+                    viewRideView.onFailure(response.message())
+                }
+            }
+
+            override fun onFailure(
+                call: Call<ViewRideModel?>,
                 t: Throwable
             ) {
                 viewRideView.removeWait()

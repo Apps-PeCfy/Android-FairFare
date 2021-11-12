@@ -37,6 +37,9 @@ object Constants {
     var driverImageClick = 3
     var badgeImageClick = 4
 
+    var TYPE_INTERCITY = "Intercity"
+    var TYPE_LOCAL = "Local"
+
 
     var REQUEST_TIMEOUT: Int = 1000 * 60
 

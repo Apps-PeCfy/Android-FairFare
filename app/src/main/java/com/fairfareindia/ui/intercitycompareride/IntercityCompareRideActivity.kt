@@ -41,6 +41,8 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
     var sourceLong: String? = null
     var destinationLat: String? = null
     var destinationLong: String? = null
+    private var estTimeInSeconds: String? = null
+    private var scheduleType: String? = null
 
     var mMap: GoogleMap? = null
 
@@ -63,6 +65,9 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
         sourceLong = intent.getStringExtra("SourceLong")
         destinationLat = intent.getStringExtra("DestinationLat")
         destinationLong = intent.getStringExtra("DestinationLong")
+        estTimeInSeconds = intent.getStringExtra("time_in_seconds")
+        scheduleType = intent.getStringExtra("schedule_type")
+
 
 
         val mapFragment = supportFragmentManager
@@ -132,6 +137,8 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
                     intent.putExtra("DestinationLat", destinationLat)
                     intent.putExtra("DestinationLong", destinationLong)
                     intent.putExtra("vehicle_model", Gson().toJson(model))
+                    intent.putExtra("schedule_type", scheduleType)
+                    intent.putExtra("time_in_seconds", estTimeInSeconds)
                     intent.putExtra("MyPOJOClass", info)
 
                     startActivity(intent)

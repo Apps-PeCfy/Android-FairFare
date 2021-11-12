@@ -34,9 +34,12 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     var sourceLong: String? = null
     var destinationLat: String? = null
     var destinationLong: String? = null
+    private var estTimeInSeconds: String? = null
+    private var scheduleType: String? = null
 
     private lateinit var info: InterCityCompareRideModel
-    private  var vehicleModel : InterCityCompareRideModel.VehiclesItem ? = null
+    private var vehicleModel: InterCityCompareRideModel.VehiclesItem? = null
+    private var model: ViewRideModel? = null
 
     private var token: String? = null
     private var preferencesManager: PreferencesManager? = null
@@ -63,16 +66,27 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
         iInterCityViewRidePresenter = InterCityViewRideImplementer(this)
 
         info = intent.getSerializableExtra("MyPOJOClass") as InterCityCompareRideModel
-        vehicleModel = Gson().fromJson(intent.getStringExtra("vehicle_model"), InterCityCompareRideModel.VehiclesItem::class.java)
+        vehicleModel = Gson().fromJson(
+            intent.getStringExtra("vehicle_model"),
+            InterCityCompareRideModel.VehiclesItem::class.java
+        )
         sourceAddress = intent.getStringExtra("SourceAddress")
         destinationAddress = intent.getStringExtra("DestinationAddress")
         sourceLat = intent.getStringExtra("SourceLat")
         sourceLong = intent.getStringExtra("SourceLong")
         destinationLat = intent.getStringExtra("DestinationLat")
         destinationLong = intent.getStringExtra("DestinationLong")
+        estTimeInSeconds = intent.getStringExtra("time_in_seconds")
+        scheduleType = intent.getStringExtra("schedule_type")
+
+        iInterCityViewRidePresenter?.getViewRideDetails(
+            token,
+            vehicleModel?.id,
+            info.distance,
+            info.luggage
+        )
 
         setListeners()
-        setData()
     }
 
     private fun setData() {
@@ -80,29 +94,43 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             txtPickUpLocation.text = sourceAddress
             txtDropOffLocation.text = destinationAddress
 
-            txtVehicleName.text = vehicleModel?.name
-            txtPerson.text = vehicleModel?.vehicle?.noOfSeater.toString()
+            txtVehicleName.text = model?.ride?.name
+            txtPerson.text = model?.ride?.vehicle?.noOfSeater.toString()
 
 
-            txtDate.text = AppUtils.changeDateFormat(info.scheduleDatetime,"yyyy-MM-dd HH:mm:ss", "EEE, MMM dd yyyy, hh:mm a")
+            txtDate.text = AppUtils.changeDateFormat(
+                info.scheduleDatetime,
+                "yyyy-MM-dd HH:mm:ss",
+                "EEE, MMM dd yyyy, hh:mm a"
+            )
             txtDistanceTime.text = info.distance + " KM, " + info.travelTime
 
-            tvLuggageCharges.text = "₹ " + vehicleModel?.chargesPerLuggage
+            tvLuggageCharges.text = "₹ " + model?.ride?.chargesLuggage
 
-            txtBaseFare.text = "₹ " + vehicleModel?.baseFare
-
-
-           /* tvTollCharge.text = "₹ " + vehicleModel?.tollCharges
+            txtBaseFare.text = "₹ " + model?.ride?.baseFare
+            txtTollCharges.text = "₹ " + model?.ride?.tollCharges
 
 
-            tvNightCharges.text = "₹ " + vehicleModel?.nightCharge
+            if (model?.ride?.actualDistance!! > model?.ride?.baseDistance!!) {
+                var extraDistance =
+                    (model?.ride?.actualDistance!! - model?.ride?.baseDistance!!).toInt()
+                txtChargesForAdditionalKmLabel.text =
+                    getString(R.string.str_charges_for_additional) + " $extraDistance " + model?.ride?.distanceType
+            } else {
+                txtChargesForAdditionalKmLabel.text = getString(R.string.str_charges_for_additional)
 
-            tvSurCharges.text = "₹ " + vehicleModel?.surCharge
+            }
+            txtBaseFareLabel.text =
+                getString(R.string.str_base_fare) + "( ${model?.ride?.baseDistance!!.toInt()} ${model?.ride?.distanceType}) ${info.wayFlag}"
 
 
+            tvChargesForAdditionalKm.text = "₹ " + model?.ride?.additionalDistCharges
 
-            txtAdditionalCharges.text = "₹ " + vehicleModel?.additionalCharges
-            txtTotalPayable.text = "₹ " + vehicleModel?.total*/
+            tvSurCharges.text = "₹ " + model?.ride?.surcharges
+
+            tvConvenienceFees.text = "₹ " + model?.ride?.convenienceFees
+            txtTotalPayable.text = "₹ " + model?.ride?.totalPayableCharges
+            txtAdditionalCharges.text = "₹ " + model?.ride?.totalAdditionalCharges
 
             Glide.with(context)
                 .load(vehicleModel?.vehicle?.image)
@@ -125,16 +153,17 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             }
 
             rlAdditional.setOnClickListener {
-                if (llAdditionalCharges.visibility == View.VISIBLE){
+                if (llAdditionalCharges.visibility == View.VISIBLE) {
                     llAdditionalCharges.visibility = View.GONE
-                }else{
+                } else {
                     llAdditionalCharges.visibility = View.VISIBLE
                 }
 
             }
 
             btnBookRide.setOnClickListener {
-                var message = "Kindly pay the amount ₹${vehicleModel?.baseFare} for the booking and confirm."
+                var message =
+                    "Kindly pay the amount ₹${model?.ride?.totalPayableCharges} for the booking and confirm."
                 openPaymentDialog(getString(R.string.btn_pay_now), message)
             }
 
@@ -143,17 +172,18 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     }
 
     private fun openPaymentDialog(btnName: String, message: String) {
-        paymentDialog = PaymentDialog(context, btnName, message, object : PaymentDialog.PaymentDialogInterface{
-            override fun onButtonClick() {
-                paymentDialog?.dismiss()
-                if (btnName == getString(R.string.btn_pay_now)){
-                  startPayment()
-                }else{
-                    startTrackPickUP()
+        paymentDialog =
+            PaymentDialog(context, btnName, message, object : PaymentDialog.PaymentDialogInterface {
+                override fun onButtonClick() {
+                    paymentDialog?.dismiss()
+                    if (btnName == getString(R.string.btn_pay_now)) {
+                        startPayment()
+                    } else {
+                        startTrackPickUP()
+                    }
                 }
-            }
 
-        })
+            })
 
         paymentDialog?.show()
     }
@@ -171,24 +201,24 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     }
 
     private fun showTollInfoDialog() {
-      /*  if(vehicleModel?.tolls?.size!! >0) {
-            eventInfoDialog = Dialog(context, R.style.dialog_style)
+        /*  if(vehicleModel?.tolls?.size!! >0) {
+              eventInfoDialog = Dialog(context, R.style.dialog_style)
 
-            eventInfoDialog?.setCancelable(true)
-            val inflater1 =
-                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view12: View = inflater1.inflate(R.layout.toll_layout, null)
-            eventInfoDialog?.setContentView(view12)
+              eventInfoDialog?.setCancelable(true)
+              val inflater1 =
+                  this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+              val view12: View = inflater1.inflate(R.layout.toll_layout, null)
+              eventInfoDialog?.setContentView(view12)
 
-            var recyclerView: RecyclerView = view12.findViewById(R.id.rvEventInfo)
+              var recyclerView: RecyclerView = view12.findViewById(R.id.rvEventInfo)
 
-            recyclerView.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            viewRideTollsPopUp = ViewRideTollsPopUp( vehicleModel?.tolls!!)
-            recyclerView.adapter = viewRideTollsPopUp
+              recyclerView.layoutManager =
+                  LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+              viewRideTollsPopUp = ViewRideTollsPopUp( vehicleModel?.tolls!!)
+              recyclerView.adapter = viewRideTollsPopUp
 
-            eventInfoDialog!!.show()
-        }*/
+              eventInfoDialog!!.show()
+          }*/
     }
 
     /**
@@ -196,8 +226,14 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
      */
 
     override fun bookingRequestSuccess(model: BookingRequestModel?) {
-        var  message1 = "Your ride is confirmed on ${binding.txtDate.text}. Driver details will be shared 15 minutes before the ride."
+        var message1 =
+            "Your ride is confirmed on ${binding.txtDate.text}. Driver details will be shared 15 minutes before the ride."
         openPaymentDialog(getString(R.string.btn_ok), message1)
+    }
+
+    override fun getViewRideDetails(model: ViewRideModel?) {
+        this.model = model
+        setData()
     }
 
     override fun validationError(validationResponse: ValidationResponse?) {
@@ -246,7 +282,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
             options.put("currency", "INR")
-            options.put("amount", (vehicleModel?.baseFare?.times(100)).toString())
+            options.put("amount", (model?.ride?.totalPayableCharges?.times(100)).toString())
             val preFill = JSONObject()
             preFill.put("email", "test@razorpay.com")
             preFill.put("contact", SessionManager.getInstance(context).getUserModel()?.phoneNo)
@@ -261,7 +297,11 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
 
     override fun onPaymentError(code: Int, response: String?, paymentData: PaymentData?) {
         try {
-            Toast.makeText(this, "Payment failed: " + code.toString() + " " + response, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Payment failed: " + code.toString() + " " + response,
+                Toast.LENGTH_SHORT
+            ).show()
         } catch (e: java.lang.Exception) {
             Toast.makeText(context, "Exception in onPaymentError: $e", Toast.LENGTH_SHORT).show()
         }
@@ -269,8 +309,28 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
 
     override fun onPaymentSuccess(razorpayPaymentID: String?, paymentData: PaymentData?) {
         try {
-            iInterCityViewRidePresenter?.bookingRequest(token, "4", "Intercity", sourceAddress, destinationAddress, sourceLat, sourceLong, destinationLat, destinationLong, info.scheduleDatetime, "Oneway",  "1", "1", "Pending")
-            Toast.makeText(this, "Payment Success: " +  paymentData, Toast.LENGTH_SHORT).show()
+            iInterCityViewRidePresenter?.bookingRequest(
+                token,
+                Constants.TYPE_INTERCITY,
+                info.fromCityId,
+               info.toCityId,
+                sourceAddress,
+                destinationAddress,
+                sourceLat,
+                sourceLong,
+                destinationLat,
+                destinationLong,
+                info.scheduleDatetime,
+                info.wayFlag,
+                model?.ride?.id,
+                scheduleType,
+                info.luggage,
+                model?.ride?.chargesLuggage.toString(),
+                model?.ride?.actualDistance.toString(),
+                info.travelTime,
+                estTimeInSeconds
+            )
+            Toast.makeText(this, "Payment Success: " + paymentData, Toast.LENGTH_SHORT).show()
         } catch (e: java.lang.Exception) {
             Toast.makeText(context, "Exception in onPaymentSuccess: $e", Toast.LENGTH_SHORT).show()
         }

@@ -230,11 +230,12 @@
                         android:visibility="visible">
 
                         <TextView
+                            android:id="@+id/txt_base_fare_label"
                             android:textColor="@color/colorText"
                             android:textStyle="bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Base Fare" />
+                            android:text="@string/str_base_fare" />
 
                         <TextView
                             android:id="@+id/txt_base_fare"
@@ -348,7 +349,7 @@
                         </RelativeLayout>
 
 
-                        <!-- NIGHT CHARGES -->
+                        <!--CHARGES For Additional KM-->
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -356,26 +357,24 @@
                             android:layout_marginStart="@dimen/_15sdp">
 
                             <TextView
+                                android:id="@+id/txt_charges_for_additional_km_label"
                                 android:textColor="@color/colorGreyText"
-
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingBottom="@dimen/_8sdp"
-                                android:text="Night Charges" />
+                                android:text="@string/str_charges_for_additional" />
 
                             <TextView
                                 android:textColor="@color/colorGreyText"
-
-                                android:id="@+id/tv_NightCharges"
+                                android:id="@+id/tv_charges_for_additional_km"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:gravity="end"
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:paddingBottom="@dimen/_8sdp"
-                                android:text="₹ 30000.00" />
+                                android:paddingBottom="@dimen/_8sdp" />
 
                             <TextView
                                 android:layout_width="1sp"
@@ -452,7 +451,7 @@
                                 <TextView
                                     android:textColor="@color/colorGreyText"
 
-                                    android:id="@+id/tvTollCharges"
+                                    android:id="@+id/txt_toll_charges_label"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
@@ -464,7 +463,7 @@
                                     android:layout_height="@dimen/_16sdp"
                                     android:layout_centerInParent="true"
                                     android:layout_marginStart="@dimen/_3sdp"
-                                    android:layout_toRightOf="@+id/tvTollCharges"
+                                    android:layout_toRightOf="@+id/txt_toll_charges_label"
                                     android:background="@drawable/view_info" />
 
 
@@ -473,17 +472,14 @@
 
                             <TextView
                                 android:textColor="@color/colorGreyText"
-
-                                android:id="@+id/tv_tollCharge"
+                                android:id="@+id/txt_toll_charges"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:gravity="end"
-
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:paddingBottom="@dimen/_8sdp"
-                                android:text="₹ 30000.00" />
+                                android:paddingBottom="@dimen/_8sdp" />
 
                             <TextView
                                 android:layout_width="1sp"
@@ -525,6 +521,48 @@
                                 android:layout_alignParentEnd="true"
                                 android:gravity="end"
 
+                                android:paddingTop="@dimen/_8sdp"
+                                android:paddingEnd="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:text="₹ 30000" />
+
+                            <TextView
+                                android:layout_width="1sp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="@dimen/_70sdp"
+                                android:background="@color/secondaryLightGray" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1sp"
+                            android:background="@color/secondaryLightGray" />
+
+                        <!-- Convenience Fees -->
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_15sdp">
+
+                            <TextView
+                                android:textColor="@color/colorGreyText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:text="Convenience Fees" />
+
+                            <TextView
+                                android:textColor="@color/colorGreyText"
+                                android:id="@+id/tv_Convenience_fees"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:gravity="end"
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingEnd="@dimen/_5sdp"
                                 android:paddingBottom="@dimen/_8sdp"

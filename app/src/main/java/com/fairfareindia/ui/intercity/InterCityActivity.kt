@@ -27,6 +27,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 class InterCityActivity : AppCompatActivity(), IIntercityView {
     lateinit var binding: ActivityInterCityBinding
@@ -46,6 +47,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     var destinationLat: String? = null
     var destinationLong: String? = null
     var estTime: String? = null
+    var estTimeInSeconds: String? = null
     var estDistance: String? = null
     var estDistanceInKM: Double? = null
     var citySelectionDialog: CitySelectionDialog? = null
@@ -140,9 +142,9 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                     if (isValid()) {
                         iInterCityPresenter?.getCompareRideData(
                             token,
-                            estDistanceInKM.toString(),
+                            estDistanceInKM?.roundToInt().toString(),
                             estTime.toString(),
-                            "Intercity",
+                            Constants.TYPE_INTERCITY,
                             fromCityID,
                             toCityID,
                             AppUtils.getPlaceID(context, sourceLat, sourceLong),
@@ -439,6 +441,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                             1000
                         )
                     estTime = model.rows?.elementAt(0)?.elements?.get(0)?.duration?.text
+                    estTimeInSeconds = model.rows?.elementAt(0)?.elements?.get(0)?.duration?.value.toString()
                     binding.txtEstDistance.text = "Est.Distance $estDistance"
                     binding.txtEstTime.text = "Est.Time $estTime"
                 }
@@ -475,7 +478,8 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
         intent.putExtra("DestinationLat", destinationLat)
         intent.putExtra("DestinationLong", destinationLong)
 
-        intent.putExtra("Airport", "NO")
+        intent.putExtra("time_in_seconds", estTimeInSeconds)
+        intent.putExtra("schedule_type", binding.spinnerTime.selectedItem.toString())
         intent.putExtra("SourceAddress", binding.txtPickUpLocation.text.toString())
         intent.putExtra("DestinationAddress", binding.txtDropUpLocation.text.toString())
         intent.putExtra("MyPOJOClass", info)

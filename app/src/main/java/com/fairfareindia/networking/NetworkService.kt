@@ -24,6 +24,7 @@ import com.fairfareindia.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.fairfareindia.ui.home.pojo.SaveLocationResponsePojo
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercityviewride.BookingRequestModel
+import com.fairfareindia.ui.intercityviewride.ViewRideModel
 import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
 import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.fairfareindia.ui.trackRide.currentFare.CurrentFareeResponse
@@ -160,8 +161,9 @@ interface NetworkService {
     @POST("bookingRequest")
     fun bookingRequest(
         @Header("Authorization") header: String?,
-        @Field("driver_id") driver_id: String?,
-        @Field("permit_type") permit_type: String?,
+        @Field("type") type: String?,
+        @Field("from_city_id") from_city_id: String?,
+        @Field("to_city_id") to_city_id: String?,
         @Field("origin_address") origin_address: String?,
         @Field("destination_address") destination_address: String?,
         @Field("origin_latitude") origin_latitude: String?,
@@ -170,10 +172,25 @@ interface NetworkService {
         @Field("destination_longitude") destination_longitude: String?,
         @Field("shedule_date") schedule_date: String?,
         @Field("way_flag") way_flag: String?,
-        @Field("vehicle_rate_card_id") vehicle_rate_card_id: String?,
         @Field("intercity_rate_card_id") intercity_rate_card_id: String?,
-        @Field("status") status: String?
+        @Field("shedule_type") shedule_type: String?,
+        @Field("luggage_quantity") luggage_quantity: String?,
+        @Field("luggage_charges") luggage_charges: String?,
+        @Field("distance") distance: String?,
+        @Field("travel_time") travel_time: String?,
+        @Field("travel_time_second") travel_time_second: String?
     ): Call<BookingRequestModel?>?
+
+
+
+    @FormUrlEncoded
+    @POST("getViewRideDetails")
+    fun getViewRideDetails(
+        @Header("Authorization") header: String?,
+        @Field("intercity_rate_card_id") intercity_rate_card_id: String?,
+        @Field("total_dist") total_dist: String?,
+        @Field("luggage_quantity") luggage_quantity: String?
+    ): Call<ViewRideModel?>?
 
 
     @FormUrlEncoded

@@ -8,6 +8,7 @@ import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
 
 interface IIntercityViewRideView : IBaseView {
     fun bookingRequestSuccess(model: BookingRequestModel?)
+    fun getViewRideDetails(model: ViewRideModel?)
     fun validationError(validationResponse: ValidationResponse?)
 
 }

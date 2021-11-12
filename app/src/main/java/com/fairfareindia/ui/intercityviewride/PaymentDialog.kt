@@ -44,6 +44,11 @@ class PaymentDialog(context: Context?) : Dialog(context!!) {
 
     private fun init() {
         //Method calling
+
+        val param = binding.crdMain.layoutParams as ViewGroup.MarginLayoutParams
+        param.setMargins(20,20,20,20)
+        binding.crdMain.layoutParams = param
+
         setListener()
         setData()
     }
