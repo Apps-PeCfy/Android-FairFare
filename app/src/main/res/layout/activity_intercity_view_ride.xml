@@ -596,20 +596,21 @@
                         android:paddingBottom="@dimen/_8sdp">
 
                         <TextView
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/str_estimated_fare_payable"
+                            android:layout_toStartOf="@id/txt_total_payable"
                             android:textColor="@color/colorText"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txt_total_payable"
-                            android:layout_width="@dimen/_60sdp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:gravity="end"
                             android:paddingEnd="@dimen/_5sdp"
+                            android:layout_marginStart="10dp"
                             android:text="₹ 300"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/text_18sp"

@@ -185,6 +185,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
 
             })
 
+        if (btnName != getString(R.string.btn_pay_now)) {
+            paymentDialog?.setCancelable(false)
+        }
+
         paymentDialog?.show()
     }
 
