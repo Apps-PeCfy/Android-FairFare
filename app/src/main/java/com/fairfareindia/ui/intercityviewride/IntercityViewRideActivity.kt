@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityIntercityViewRideBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
 import com.fairfareindia.ui.viewride.ViewRideTollsPopUp
@@ -49,6 +51,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     var viewRideTollsPopUp: ViewRideTollsPopUp? = null
     var paymentDialog: PaymentDialog? = null
 
+    var sharedpreferences: SharedPreferences? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityIntercityViewRideBinding.inflate(layoutInflater)
@@ -62,6 +66,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
         PreferencesManager.initializeInstance(context)
         preferencesManager = PreferencesManager.instance
         token = preferencesManager?.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+
+        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
         iInterCityViewRidePresenter = InterCityViewRideImplementer(this)
 
@@ -179,7 +185,11 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                     if (btnName == getString(R.string.btn_pay_now)) {
                         startPayment()
                     } else {
-                        startTrackPickUP()
+                        sharedpreferences!!.edit().clear().commit()
+                        val intent = Intent(context, HomeActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                      //  startTrackPickUP()
                     }
                 }
 
@@ -233,6 +243,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
         var message1 =
             "Your ride is confirmed on ${binding.txtDate.text}. Driver details will be shared 15 minutes before the ride."
         openPaymentDialog(getString(R.string.btn_ok), message1)
+        Toast.makeText(context, "Booking ID :- ${model?.data?.id}", Toast.LENGTH_LONG).show()
     }
 
     override fun getViewRideDetails(model: ViewRideModel?) {
@@ -334,7 +345,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 info.travelTime,
                 estTimeInSeconds
             )
-            Toast.makeText(this, "Payment Success: " + paymentData, Toast.LENGTH_SHORT).show()
+        //    Toast.makeText(this, "Payment Success: " + paymentData, Toast.LENGTH_SHORT).show()
         } catch (e: java.lang.Exception) {
             Toast.makeText(context, "Exception in onPaymentSuccess: $e", Toast.LENGTH_SHORT).show()
         }
