@@ -23,6 +23,7 @@ import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.fairfareindia.ui.home.pojo.SaveLocationResponsePojo
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
+import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.fairfareindia.ui.intercityviewride.BookingRequestModel
 import com.fairfareindia.ui.intercityviewride.ViewRideModel
 import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
@@ -135,7 +136,8 @@ interface NetworkService {
         @Field("airport") airport: String?,
         @Field("schedule_datetime") schedule_datetime: String?,
         @Field("current_place_id") current_place_id: String?,
-        @Field("duration") duration: String?
+        @Field("duration") duration: String?,
+        @Field("permit_type") permitType: String?
     ): Call<CompareRideResponsePOJO?>?
 
 
@@ -178,9 +180,10 @@ interface NetworkService {
         @Field("luggage_charges") luggage_charges: String?,
         @Field("distance") distance: String?,
         @Field("travel_time") travel_time: String?,
-        @Field("travel_time_second") travel_time_second: String?
+        @Field("travel_time_second") travel_time_second: String?,
+        @Field("amount") amount: String?,
+        @Field("transaction_id") transaction_id: String?
     ): Call<BookingRequestModel?>?
-
 
 
     @FormUrlEncoded
@@ -460,6 +463,12 @@ interface NetworkService {
         @Header("Authorization") header: String?,
         @Query("ride_id") dispute_id: String?
     ): Call<RideDetailsResponsePOJO?>?
+
+    @POST("detailRide")
+    fun getRideDetails(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") dispute_id: String?
+    ): Call<RideDetailModel?>?
 
 
     @POST("saveContactUs")

@@ -7,10 +7,13 @@ import android.widget.Toast
 import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityTrackPickUpBinding
+import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.utils.APIManager
-import com.fairfareindia.utils.AppUtils
+import com.fairfareindia.utils.Constants
+import com.fairfareindia.utils.PreferencesManager
+import com.fairfareindia.utils.ProjectUtilities
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -19,7 +22,7 @@ import com.google.android.gms.maps.model.*
 import org.json.JSONObject
 import java.util.*
 
-class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback {
+class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercityTrackPickUpView {
     lateinit var binding: ActivityTrackPickUpBinding
     private var context: Context = this
 
@@ -31,6 +34,11 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback {
     private var destinationLong: String? = null
 
     private var mMap: GoogleMap? = null
+
+    private var token: String? = null
+    private var rideID: String? = null
+    private var preferencesManager: PreferencesManager? = null
+    private var iInterCityTrackPickUpPresenter: IInterCityTrackPickUpPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +57,19 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback {
         destinationLat = intent.getStringExtra("DestinationLat")
         destinationLong = intent.getStringExtra("DestinationLong")
 
+        rideID = intent.getStringExtra("ride_id")
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+
+        PreferencesManager.initializeInstance(context)
+        preferencesManager = PreferencesManager.instance
+        token = preferencesManager?.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+
+        iInterCityTrackPickUpPresenter = InterCityTrackPickUpImplementer(this)
+
+        iInterCityTrackPickUpPresenter?.getRideDetails(token, rideID)
 
 
         setData()
@@ -187,5 +205,35 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback {
                 }
 
             })
+    }
+
+    /**
+     * API CALLING
+     */
+
+    override fun getRideDetails(model: RideDetailModel?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun validationError(validationResponse: ValidationResponse?) {
+        Toast.makeText(
+            context,
+            validationResponse!!.errors!![0].message,
+            Toast.LENGTH_LONG
+        ).show()
+
+
+    }
+
+    override fun showWait() {
+        ProjectUtilities.showProgressDialog(context)
+    }
+
+    override fun removeWait() {
+        ProjectUtilities.dismissProgressDialog()
+    }
+
+    override fun onFailure(appErrorMessage: String?) {
+        Toast.makeText(context, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 }

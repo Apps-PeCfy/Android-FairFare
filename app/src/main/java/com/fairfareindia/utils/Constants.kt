@@ -3,12 +3,11 @@ package com.fairfareindia.utils
 object Constants {
 
 
-
     var SHARED_PREFERENCE_LOGIN_TOKEN = "token"
     var SHARED_PREFERENCE_ISLOGIN = "isLogin"
     var SHARED_PREFERENCE_LAT = "Lat"
     var SHARED_PREFERENCE_LONG = "Long"
-    var SHARED_PREFERENCE_PICKUP_AITPORT= "Airport"
+    var SHARED_PREFERENCE_PICKUP_AITPORT = "Airport"
 
 
     var SHARED_PREFERENCE_LOGIN_ID = "id"
@@ -37,8 +36,20 @@ object Constants {
     var driverImageClick = 3
     var badgeImageClick = 4
 
+    // PERMIT TYPE
     var TYPE_INTERCITY = "Intercity"
     var TYPE_LOCAL = "Local"
+
+    // BOOKING STATUS
+    var BOOKING_PENDING = "Pending"
+    var BOOKING_SCHEDULED = "Scheduled"
+    var BOOKING_ACTIVE = "Active-Ride"
+    var BOOKING_COMPLETED = "Completed"
+    var BOOKING_CANCELLED = "Cancelled"
+
+    // INTERCITY WAY FLAG
+    var ONE_WAY_FLAG = "OneWay"
+    var BOTH_WAY_FLAG = "BothWay"
 
 
     var REQUEST_TIMEOUT: Int = 1000 * 60

@@ -343,8 +343,12 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 model?.ride?.chargesLuggage.toString(),
                 model?.ride?.actualDistance.toString(),
                 info.travelTime,
-                estTimeInSeconds
+                estTimeInSeconds,
+                model?.ride?.totalPayableCharges.toString(),
+                razorpayPaymentID
+
             )
+
         //    Toast.makeText(this, "Payment Success: " + paymentData, Toast.LENGTH_SHORT).show()
         } catch (e: java.lang.Exception) {
             Toast.makeText(context, "Exception in onPaymentSuccess: $e", Toast.LENGTH_SHORT).show()

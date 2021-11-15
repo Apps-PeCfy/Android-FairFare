@@ -33,9 +33,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     lateinit var binding: ActivityInterCityBinding
     private var context: Context = this
 
-    private var toCityName: String? = null
     private var toCityID: String? = null
-    private var fromCityName: String? = null
     private var fromCityID: String? = null
     private var luggage: String = "0"
 
@@ -303,9 +301,9 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             }
 
             if (rdOneWay.isChecked) {
-                wayFlag = rdOneWay.text.toString()
+                wayFlag = Constants.ONE_WAY_FLAG
             } else if (rdRoundTrip.isChecked) {
-                wayFlag = rdRoundTrip.text.toString()
+                wayFlag = Constants.BOTH_WAY_FLAG
             }
         }
 

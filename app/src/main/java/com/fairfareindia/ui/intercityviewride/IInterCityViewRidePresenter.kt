@@ -25,7 +25,9 @@ interface IInterCityViewRidePresenter {
         luggage_charges: String?,
         distance: String?,
         travel_time: String?,
-        travel_time_second: String?
+        travel_time_second: String?,
+        amount: String?,
+        transaction_id: String?
     )
 
     fun getViewRideDetails(

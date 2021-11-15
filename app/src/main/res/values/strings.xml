@@ -94,16 +94,16 @@
 
     <string name="session_expired">Session Expired!</string>
     <string name="hint_search">Search</string>
-    <string name="str_luggage">Bag</string>
-    <string name="str_luggage_1">1 Bag</string>
-    <string name="str_luggage_2">2 Bags</string>
-    <string name="str_luggage_3">3 Bags</string>
-    <string name="str_luggage_4">4 Bags</string>
-    <string name="str_luggage_5">5 Bags</string>
+    <string name="str_luggage">Luggage</string>
+    <string name="str_luggage_1">1 Luggage</string>
+    <string name="str_luggage_2">2 Luggage</string>
+    <string name="str_luggage_3">3 Luggage</string>
+    <string name="str_luggage_4">4 Luggage</string>
+    <string name="str_luggage_5">5 Luggage</string>
 
-    <string name="str_no_bags">No bag</string>
-    <string name="str_bag">Bag</string>
-    <string name="str_bags">Bags</string>
+    <string name="str_no_bags">No Luggage</string>
+    <string name="str_bag">Luggage</string>
+    <string name="str_bags">Luggage</string>
 
     <!--Compare Ride Screen-->
     <string name="title_compare_rides">Compare Rides</string>

@@ -25,6 +25,7 @@ import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.myrides.ridedetails.MyRideDetailsActivity
 import com.fairfareindia.ui.home.HomeActivity
+import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
 import com.fairfareindia.ui.ridedetails.RideDetailsActivity
 import com.fairfareindia.ui.ridereview.RideReviewActivity
 import com.fairfareindia.ui.service.GPSTracker
@@ -405,6 +406,12 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
                 getString(R.string.internet_error)
             )
         }
+    }
+
+    override fun intercityItemClick(model: GetRideResponsePOJO.DataItem) {
+        val intent = Intent(activity, TrackPickUpActivity::class.java)
+        intent.putExtra("ride_id", model.id.toString())
+        startActivity(intent)
     }
 
 }

@@ -3,6 +3,7 @@ package com.fairfareindia.ui.compareride
 import com.fairfareindia.networking.ApiClient.client
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
+import com.fairfareindia.utils.Constants
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,8 +30,7 @@ class CompareRideImplementer(private val view: ICompareRideView) : ICompareRideP
             "Bearer $token",
             distance,
             placeid,
-            sPlacesID, dPlaceID, baggs, airport, formatedDate,currentPlaceID,legDuration
-        )
+            sPlacesID, dPlaceID, baggs, airport, formatedDate,currentPlaceID,legDuration,Constants.TYPE_LOCAL)
         call!!.enqueue(object : Callback<CompareRideResponsePOJO?> {
             override fun onResponse(call: Call<CompareRideResponsePOJO?>, response: Response<CompareRideResponsePOJO?>)
             {
