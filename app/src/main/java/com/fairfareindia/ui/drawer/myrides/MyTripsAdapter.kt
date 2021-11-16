@@ -203,7 +203,7 @@ class MyTripsAdapter(
             var model : GetRideResponsePOJO.DataItem = MyRideList[adapterPosition]
 
             if (ProjectUtilities.checkInternetAvailable(context)) {
-                if (model.permit_type == Constants.TYPE_INTERCITY){
+                if (model.permitType == Constants.TYPE_INTERCITY){
 
                     iclickListener?.intercityItemClick(model)
 

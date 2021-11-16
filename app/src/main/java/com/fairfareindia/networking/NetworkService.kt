@@ -464,7 +464,7 @@ interface NetworkService {
         @Query("ride_id") dispute_id: String?
     ): Call<RideDetailsResponsePOJO?>?
 
-    @POST("detailRide")
+    @POST("rideDetails")
     fun getRideDetails(
         @Header("Authorization") header: String?,
         @Query("ride_id") dispute_id: String?

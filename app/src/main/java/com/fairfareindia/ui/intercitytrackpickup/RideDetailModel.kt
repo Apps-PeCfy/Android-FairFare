@@ -25,6 +25,9 @@ class RideDetailModel {
         @SerializedName("permitType")
         var permitType: String? = null
 
+        @SerializedName("rideOtp")
+        var rideOtp: String? = null
+
         @SerializedName("cityName")
         var cityName: String? = null
 
@@ -67,6 +70,25 @@ class RideDetailModel {
         @SerializedName("status")
         var status: String? = null
 
+        @SerializedName("originAddress")
+        var originAddress: String? = null
+
+        @SerializedName("destinationAddress")
+        var destinationAddress: String? = null
+
+        @SerializedName("originLatitude")
+        var originLatitude: String? = null
+
+        @SerializedName("originLongitude")
+        var originLongitude: String? = null
+
+        @SerializedName("destinationLatitude")
+        var destinationLatitude: String? = null
+
+        @SerializedName("destinationLongitude")
+        var destinationLongitude: String? = null
+
+
         @SerializedName("rewards")
         var rewards: String? = null
 
@@ -97,6 +119,7 @@ class RideDetailModel {
 
         @SerializedName("actual")
         var actualTrackRide: Estimated? = null
+
     }
 
 
@@ -148,7 +171,7 @@ class RideDetailModel {
         var overviewPolyline: String? = null
 
         @SerializedName("distance")
-        var distance: String? = null
+        var distance: Double = 0.0
 
         @SerializedName("duration")
         var duration: String? = null
@@ -159,11 +182,11 @@ class RideDetailModel {
         @SerializedName("totalCharges")
         var totalCharges: String? = null
 
-        @SerializedName("base_distance")
-        var baseDistance: String? = null
+        @SerializedName("baseDistance")
+        var baseDistance: Double = 0.0
 
-        @SerializedName("convenience_fees")
-        var convenienceFee: String? = null
+        @SerializedName("convenienceFees")
+        var convenienceFees: String? = null
 
         @SerializedName("additional_distance")
         var additionalDistance: String? = null
@@ -171,11 +194,11 @@ class RideDetailModel {
         @SerializedName("total_duration")
         var total_duration: String? = null
 
-        @SerializedName("basic_fare")
-        var basic_fare: Int? = null
+        @SerializedName("basicFare")
+        var basicFare: Int? = null
 
-        @SerializedName("luggage_charges")
-        var luggage_charges: String? = null
+        @SerializedName("luggageCharges")
+        var luggageCharges: String? = null
 
         @SerializedName("rideTime")
         var rideTime: String? = null

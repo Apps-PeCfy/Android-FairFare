@@ -58,8 +58,8 @@ class GetRideResponsePOJO  {
 		@SerializedName("dateTime")
 		var dateTime: String? = null
 
-		@SerializedName("permit_type")
-		var permit_type: String? = null
+		@SerializedName("permitType")
+		var permitType: String? = null
 
 		@SerializedName("destinationPlaceLat")
 		var destinationPlaceLat: String? = null

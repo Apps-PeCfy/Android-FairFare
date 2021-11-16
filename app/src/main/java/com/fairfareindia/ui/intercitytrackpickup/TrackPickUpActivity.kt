@@ -26,17 +26,12 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     lateinit var binding: ActivityTrackPickUpBinding
     private var context: Context = this
 
-    private var sourceAddress: String? = null
-    private var destinationAddress: String? = null
-    private var sourceLat: String? = null
-    private var sourceLong: String? = null
-    private var destinationLat: String? = null
-    private var destinationLong: String? = null
 
     private var mMap: GoogleMap? = null
 
     private var token: String? = null
     private var rideID: String? = null
+    private var model: RideDetailModel ?= null
     private var preferencesManager: PreferencesManager? = null
     private var iInterCityTrackPickUpPresenter: IInterCityTrackPickUpPresenter? = null
 
@@ -49,13 +44,6 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     }
 
     private fun init() {
-
-        sourceAddress = intent.getStringExtra("SourceAddress")
-        destinationAddress = intent.getStringExtra("DestinationAddress")
-        sourceLat = intent.getStringExtra("SourceLat")
-        sourceLong = intent.getStringExtra("SourceLong")
-        destinationLat = intent.getStringExtra("DestinationLat")
-        destinationLong = intent.getStringExtra("DestinationLong")
 
         rideID = intent.getStringExtra("ride_id")
 
@@ -72,7 +60,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
         iInterCityTrackPickUpPresenter?.getRideDetails(token, rideID)
 
 
-        setData()
+
         setListeners()
     }
 
@@ -87,45 +75,81 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                     llHideView.visibility = View.VISIBLE
                 }
             }
+
+            rlAdditional.setOnClickListener {
+                if (llAdditionalCharges.visibility == View.VISIBLE) {
+                    llAdditionalCharges.visibility = View.GONE
+                } else {
+                    llAdditionalCharges.visibility = View.VISIBLE
+                }
+
+            }
         }
     }
 
     private fun setData() {
         binding.apply {
 
-            txtPickUpLocation.text = sourceAddress
-            txtDropOffLocation.text = destinationAddress
+            txtPickUpLocation.text = model?.data?.originAddress
+            txtDropOffLocation.text = model?.data?.destinationAddress
 
-            txtPickUpLocationHide.text = sourceAddress
-            txtDropOffLocationHide.text = destinationAddress
+            txtPickUpLocationHide.text = model?.data?.originAddress
+            txtDropOffLocationHide.text = model?.data?.destinationAddress
+            txtOtp.text = model?.data?.rideOtp
+
+            tvLuggageCharges.text = "₹ " + model?.data?.estimatedTrackRide?.luggageCharges
+
+            txtBaseFare.text = "₹ " + model?.data?.estimatedTrackRide?.basicFare
+            txtTollCharges.text = "₹ " + model?.data?.estimatedTrackRide?.tollCharges
+
+
+            if (model?.data?.estimatedTrackRide?.distance!! > model?.data?.estimatedTrackRide?.baseDistance!!) {
+                var extraDistance = model?.data?.estimatedTrackRide?.distance!!.toInt() - model?.data?.estimatedTrackRide?.baseDistance!!.toInt()
+                txtChargesForAdditionalKmLabel.text =
+                    getString(R.string.str_charges_for_additional) + " $extraDistance " + "Km"
+            } else {
+                txtChargesForAdditionalKmLabel.text = getString(R.string.str_charges_for_additional)
+
+            }
+            txtBaseFareLabel.text =
+                getString(R.string.str_base_fare) + "( ${model?.data?.estimatedTrackRide?.baseDistance!!.toInt()} Km )"
+
+
+            tvChargesForAdditionalKm.text = "₹ " + model?.data?.estimatedTrackRide?.additionalDistanceCharges
+
+            tvSurCharges.text = "₹ " + model?.data?.estimatedTrackRide?.surCharge
+
+            tvConvenienceFees.text = "₹ " + model?.data?.estimatedTrackRide?.convenienceFees
+           /* txtTotalPayable.text = "₹ " + model?.data?.estimatedTrackRide?.totalPayableCharges
+            txtAdditionalCharges.text = "₹ " +model?.data?.estimatedTrackRide?.totalAdditionalCharges*/
         }
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
 
-        if (!sourceLat.isNullOrEmpty() && !destinationLat.isNullOrEmpty()) {
+        if (! model?.data?.originLatitude.isNullOrEmpty() && !model?.data?.destinationLatitude.isNullOrEmpty()) {
             mMap!!.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                     com.google.android.gms.maps.model.LatLng(
-                        sourceLat?.toDouble()!!,
-                        sourceLong?.toDouble()!!
+                        model?.data?.originLatitude?.toDouble()!!,
+                        model?.data?.originLongitude?.toDouble()!!
                     ), 12.0f
                 )
             )
             mMap?.addMarker(
                 MarkerOptions().position(
                     com.google.android.gms.maps.model.LatLng(
-                        sourceLat!!.toDouble(),
-                        sourceLong!!.toDouble()
+                        model?.data?.originLatitude!!.toDouble(),
+                        model?.data?.originLongitude!!.toDouble()
                     )
                 ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
             )
             mMap?.addMarker(
                 MarkerOptions().position(
                     com.google.android.gms.maps.model.LatLng(
-                        destinationLat!!.toDouble(),
-                        destinationLong!!.toDouble()
+                        model?.data?.destinationLatitude!!.toDouble(),
+                        model?.data?.destinationLongitude!!.toDouble()
                     )
                 ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
             )
@@ -134,7 +158,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     }
 
     private fun getRouteAPI() {
-        val url = "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + sourceLat + "," + sourceLong + "&destination=" + destinationLat + "," + destinationLong + "&key=" + getString(
+        val url = "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + model?.data?.originLatitude + "," + model?.data?.originLongitude + "&destination=" + model?.data?.destinationLatitude + "," + model?.data?.destinationLongitude + "&key=" + getString(
             R.string.google_maps_key)
 
         APIManager.getInstance(context).postAPI(
@@ -212,7 +236,8 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
      */
 
     override fun getRideDetails(model: RideDetailModel?) {
-        TODO("Not yet implemented")
+        this.model = model
+        setData()
     }
 
     override fun validationError(validationResponse: ValidationResponse?) {
