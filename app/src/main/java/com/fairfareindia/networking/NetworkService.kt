@@ -142,7 +142,7 @@ interface NetworkService {
 
 
     @FormUrlEncoded
-    @POST("compareRide")
+    @POST("compareRide1")
     fun getIntercityCompareRide(
         @Header("Authorization") header: String?,
         @Field("distance") distance: String?,
@@ -163,7 +163,7 @@ interface NetworkService {
     @POST("bookingRequest")
     fun bookingRequest(
         @Header("Authorization") header: String?,
-        @Field("type") type: String?,
+        @Field("permit_type") type: String?,
         @Field("from_city_id") from_city_id: String?,
         @Field("to_city_id") to_city_id: String?,
         @Field("origin_address") origin_address: String?,

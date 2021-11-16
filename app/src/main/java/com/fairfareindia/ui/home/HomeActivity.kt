@@ -52,6 +52,7 @@ import com.fairfareindia.ui.drawer.contactus.ContactUs
 import com.fairfareindia.ui.drawer.contactus.pojo.ContactUsResponsePojo
 import com.fairfareindia.ui.drawer.covid19.Covid
 import com.fairfareindia.ui.drawer.faq.FAQ
+import com.fairfareindia.ui.drawer.intercityrides.RidesFragment
 import com.fairfareindia.ui.drawer.myaccount.MyAccountFragment
 import com.fairfareindia.ui.drawer.mycomplaints.MyComplaints
 import com.fairfareindia.ui.drawer.mydisput.MyDisput
@@ -415,7 +416,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         if (action == "schduleRideSuccess") {
             spinnerLang!!.visibility = View.GONE
-            setFragment(MyRides())
+            setFragment(RidesFragment())
         } else if (action == "RegisterDisput") {
             spinnerLang!!.visibility = View.GONE
             setFragment(MyDisput())
@@ -424,7 +425,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             setFragment(MyComplaints())
         } else if (action == "MyRides") {
             spinnerLang!!.visibility = View.GONE
-            setFragment(MyRides())
+            setFragment(RidesFragment())
         }
 
 
@@ -965,7 +966,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     homeMain!!.visibility = View.GONE
                     mDrawerLayout!!.closeDrawer(Gravity.LEFT)
                     mDrawerLayout!!.closeDrawer(Gravity.START)
-                    replaceFragment(MyRides())
+                    replaceFragment(RidesFragment())
                 } else {
                     ProjectUtilities.showToast(
                         this@HomeActivity,

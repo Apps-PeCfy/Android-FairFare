@@ -67,6 +67,7 @@
                     android:textColor="@color/colorText"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:id="@+id/tvEmptyTxt"
+                    android:text="@string/str_no_rides"
                     android:layout_below="@+id/ivImg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

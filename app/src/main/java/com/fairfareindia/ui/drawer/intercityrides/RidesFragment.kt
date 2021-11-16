@@ -1,20 +1,19 @@
 package com.fairfareindia.ui.drawer.intercityrides
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import butterknife.ButterKnife
 import com.fairfareindia.R
 import com.fairfareindia.databinding.FragmentMyRidesBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
@@ -29,11 +28,7 @@ import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
 import com.fairfareindia.ui.ridedetails.RideDetailsActivity
 import com.fairfareindia.ui.ridereview.RideReviewActivity
 import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PaginationScrollListener
-import com.fairfareindia.utils.PreferencesManager
-import com.fairfareindia.utils.ProjectUtilities
-import kotlin.collections.ArrayList
+import com.fairfareindia.utils.*
 
 class RidesFragment : Fragment(), IMyRidesView{
 
@@ -78,6 +73,7 @@ class RidesFragment : Fragment(), IMyRidesView{
     private fun init() {
 
         mContext = context
+        setHasOptionsMenu(true)
         PreferencesManager.initializeInstance(requireActivity())
         preferencesManager = PreferencesManager.instance
         token = preferencesManager?.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
@@ -133,6 +129,7 @@ class RidesFragment : Fragment(), IMyRidesView{
             }
 
             override fun onViewInfoClick(position: Int, model: GetRideResponsePOJO.DataItem) {
+                openInfoDialog(model)
             }
 
         })
@@ -166,6 +163,21 @@ class RidesFragment : Fragment(), IMyRidesView{
         loadNextPage()
     }
 
+    private fun openInfoDialog(model: GetRideResponsePOJO.DataItem) {
+        var eventDialogBind = AddressPopUp()
+
+        eventDialogBind.eventInfoDialog = context?.let { Dialog(it, R.style.dialog_style) }
+        eventDialogBind.eventInfoDialog?.setCancelable(true)
+        val inflater1 = mContext?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view12: View = inflater1.inflate(R.layout.destination_address_popup, null)
+        eventDialogBind.eventInfoDialog?.setContentView(view12)
+        ButterKnife.bind(eventDialogBind, view12)
+
+        eventDialogBind.tvDestinationAddress?.text = model.estimatedTrackRide?.destinationFullAddress
+        eventDialogBind.eventInfoDialog?.show()
+
+    }
+
     /**
      * Pagination
      **/
@@ -182,6 +194,10 @@ class RidesFragment : Fragment(), IMyRidesView{
         iMyRidesPresenter?.getRide("Bearer " + token, currentPage, currentLat, currentLong)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_home_lang, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -233,10 +249,10 @@ class RidesFragment : Fragment(), IMyRidesView{
         }
         if (list.size > 0 || currentPage != PAGE_START) {
             binding.recyclerViewMyRides.visibility = View.VISIBLE
-            binding.rlEmpty.visibility = View.VISIBLE
+            binding.rlEmpty.visibility = View.GONE
         } else {
             binding.recyclerViewMyRides.visibility = View.GONE
-            binding.rlEmpty.visibility = View.GONE
+            binding.rlEmpty.visibility = View.VISIBLE
         }
 
 

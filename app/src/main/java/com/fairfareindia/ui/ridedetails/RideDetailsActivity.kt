@@ -428,7 +428,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
     private fun calculateCurrentFare() {
 
-        if(estCurrentDistance!!.contains("km")){
+        if(estCurrentDistance?.contains("km")!!){
             travelledDistance = (estCurrentDistance?.replace(" km",""))?.toDouble()
 
         }else{
@@ -619,7 +619,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     fun btnTrack() {
 
         if(ProjectUtilities.checkInternetAvailable(this@RideDetailsActivity)) {
-            if (estCurrentDistance!!.equals("0.0")) {
+            if (estCurrentDistance == "0.0") {
 
                 Toast.makeText(
                     this@RideDetailsActivity,
@@ -630,9 +630,8 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
             } else {
 
-                if (edt_meterReading!!.text.toString()
-                        .isEmpty() || edt_meterReading!!.text.toString()
-                        .equals("0")
+                if (edt_meterReading?.text.toString()
+                        .isEmpty() || edt_meterReading?.text.toString() == "0"
                 ) {
 
                     val alertDialog = AlertDialog.Builder(this)
