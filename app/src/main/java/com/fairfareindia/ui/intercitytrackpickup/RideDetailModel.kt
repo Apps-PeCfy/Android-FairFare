@@ -208,6 +208,11 @@ class RideDetailModel {
 
         @SerializedName("tollCharges")
         var tollCharges: String? = null
+
+        @SerializedName("totalAdditionalCharges")
+        var totalAdditionalCharges: String? = null
+
+
     }
 
     inner class User {

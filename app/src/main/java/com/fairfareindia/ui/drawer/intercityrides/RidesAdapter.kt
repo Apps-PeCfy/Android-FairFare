@@ -108,8 +108,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.txtDestinationAddress.text = (model.destinationFullAddress)
 
 
-
-                if (model.status == Constants.BOOKING_COMPLETED || model.status == Constants.BOOKING_CANCELLED) {
+                if (model.status == Constants.BOOKING_COMPLETED || model.status == Constants.BOOKING_CANCELLED || model.permitType == Constants.TYPE_INTERCITY) {
                     holder.btnStartRide.visibility = View.GONE
                 } else {
                     if (model.rideStatus.equals("Yes")) {

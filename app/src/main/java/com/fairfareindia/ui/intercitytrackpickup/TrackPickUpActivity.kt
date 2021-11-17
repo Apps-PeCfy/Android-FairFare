@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityTrackPickUpBinding
@@ -120,8 +122,23 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             tvSurCharges.text = "₹ " + model?.data?.estimatedTrackRide?.surCharge
 
             tvConvenienceFees.text = "₹ " + model?.data?.estimatedTrackRide?.convenienceFees
-           /* txtTotalPayable.text = "₹ " + model?.data?.estimatedTrackRide?.totalPayableCharges
-            txtAdditionalCharges.text = "₹ " +model?.data?.estimatedTrackRide?.totalAdditionalCharges*/
+            txtTotalPayable.text = "₹ " + model?.data?.estimatedTrackRide?.totalCharges
+            txtAdditionalCharges.text = "₹ " +model?.data?.estimatedTrackRide?.totalAdditionalCharges
+
+
+            //Driver and Vehical
+            txtVehicleName.text =  model?.data?.vehicleName
+            txtVehicleNumber.text = model?.data?.vehicleNo
+            txtDriverName.text = model?.data?.driver?.name
+
+            Glide.with(context)
+                .load(model?.data?.vehicleImageUrl)
+                .apply(
+                    RequestOptions()
+                        .centerCrop()
+                        .dontAnimate()
+                        .dontTransform()
+                ).into(imgVehicle)
         }
     }
 

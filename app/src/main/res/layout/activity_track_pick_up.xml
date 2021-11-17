@@ -217,7 +217,7 @@
 
 
                                         <ImageView
-                                            android:id="@+id/img_vehical"
+                                            android:id="@+id/img_vehicle"
                                             android:layout_width="@dimen/_65sdp"
                                             android:layout_height="@dimen/_20sdp"
                                             android:src="@drawable/iv_auto"
