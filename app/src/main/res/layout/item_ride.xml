@@ -198,7 +198,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_toLeftOf="@+id/ivViewInfo"
+                        android:layout_toStartOf="@+id/img_view_info"
                         android:drawableStart="@drawable/triangle"
                         android:drawablePadding="@dimen/_15sdp"
                         android:fontFamily="@font/notosansjp_bold"
