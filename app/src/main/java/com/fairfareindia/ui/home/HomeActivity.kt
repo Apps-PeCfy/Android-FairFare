@@ -662,6 +662,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     setCitySpinner()
 
 
+                }else if (response.code() == 401) {
+                    preferencesManager?.clear()
+                    val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
                 } else if (response.code() == 422) {
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
@@ -1322,6 +1328,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                 finish()
 
                             }
+                        }else if (response.code() == 401) {
+                            preferencesManager?.clear()
+                            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            finish()
                         } else if (response.code() == 422) {
                             val gson = GsonBuilder().create()
                             var pojo: ValidationResponse? = ValidationResponse()
