@@ -10,6 +10,7 @@ import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityTrackPickUpBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.common.CommonMessageDialog
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
@@ -35,6 +36,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     private var token: String? = null
     private var rideID: String? = null
     private var model: RideDetailModel ?= null
+    var commonMessageDialog: CommonMessageDialog? = null
     private var preferencesManager: PreferencesManager? = null
     private var iInterCityTrackPickUpPresenter: IInterCityTrackPickUpPresenter? = null
 
@@ -89,9 +91,25 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             }
 
             btnCancelRide.setOnClickListener {
-                iInterCityTrackPickUpPresenter?.cancelRide(token, rideID, Constants.BOOKING_CANCELLED)
+                openConfirmationDialog()
             }
         }
+    }
+
+    private fun openConfirmationDialog() {
+        commonMessageDialog = CommonMessageDialog(context,getString(R.string.str_cancel_ride_message), getString(R.string.btn_cancel_not), getString(R.string.btn_proceed), object : CommonMessageDialog.CommonMessageDialogInterface{
+            override fun onPositiveButtonClick() {
+                commonMessageDialog?.dismiss()
+            }
+
+            override fun onNegativeButtonClick() {
+                iInterCityTrackPickUpPresenter?.cancelRide(token, rideID, Constants.BOOKING_CANCELLED)
+                commonMessageDialog?.dismiss()
+            }
+
+        })
+        commonMessageDialog?.setCancelable(false)
+        commonMessageDialog?.show()
     }
 
     private fun setData() {

@@ -17,10 +17,7 @@ import butterknife.ButterKnife
 import com.fairfareindia.R
 import com.fairfareindia.databinding.FragmentMyRidesBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
-import com.fairfareindia.ui.drawer.myrides.IMyRidesPresenter
-import com.fairfareindia.ui.drawer.myrides.IMyRidesView
-import com.fairfareindia.ui.drawer.myrides.MyRidesImplementer
-import com.fairfareindia.ui.drawer.myrides.MyTripsAdapter
+import com.fairfareindia.ui.common.CommonMessageDialog
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.myrides.ridedetails.MyRideDetailsActivity
 import com.fairfareindia.ui.home.HomeActivity
@@ -48,13 +45,14 @@ class RidesFragment : Fragment(), IRidesView{
     // indicates the current page which Pagination is fetching.
     private var currentPage = PAGE_START
 
-    var myTripsAdapter: MyTripsAdapter? = null
     var preferencesManager: PreferencesManager? = null
     var sharedpreferences: SharedPreferences? = null
     var token: String? = null
     var currentLat: String? = null
     var currentLong: String? = null
-    
+
+    var commonMessageDialog: CommonMessageDialog? = null
+
     private var list: ArrayList<GetRideResponsePOJO.DataItem> = ArrayList()
 
     private var mAdapter: RidesAdapter ?= null
@@ -115,7 +113,7 @@ class RidesFragment : Fragment(), IRidesView{
             }
 
             override fun onCancelRideClick(position: Int, model: GetRideResponsePOJO.DataItem) {
-                iRidesPresenter?.cancelRide(token, model.id.toString(), Constants.BOOKING_CANCELLED)
+                openConfirmationDialog(model)
             }
 
             override fun onRateRideClick(position: Int, model: GetRideResponsePOJO.DataItem) {
@@ -170,6 +168,24 @@ class RidesFragment : Fragment(), IRidesView{
 
         loadNextPage()
     }
+
+    private fun openConfirmationDialog(model: GetRideResponsePOJO.DataItem) {
+        commonMessageDialog = CommonMessageDialog(context,getString(R.string.str_cancel_ride_message), getString(R.string.btn_cancel_not), getString(R.string.btn_proceed), object : CommonMessageDialog.CommonMessageDialogInterface{
+            override fun onPositiveButtonClick() {
+                commonMessageDialog?.dismiss()
+            }
+
+            override fun onNegativeButtonClick() {
+                iRidesPresenter?.cancelRide(token, model.id.toString(), Constants.BOOKING_CANCELLED)
+                commonMessageDialog?.dismiss()
+            }
+
+        })
+        commonMessageDialog?.setCancelable(false)
+        commonMessageDialog?.show()
+    }
+
+
 
     private fun openInfoDialog(model: GetRideResponsePOJO.DataItem) {
         var eventDialogBind = AddressPopUp()
