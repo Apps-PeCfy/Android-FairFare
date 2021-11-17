@@ -28,6 +28,9 @@ class RideDetailModel {
         @SerializedName("rideOtp")
         var rideOtp: String? = null
 
+        @SerializedName("rules")
+        var rules: String? = null
+
         @SerializedName("cityName")
         var cityName: String? = null
 

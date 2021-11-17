@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -49,6 +49,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface RidesAdapterInterface {
         fun onItemSelected(position: Int, model: GetRideResponsePOJO.DataItem)
         fun onStartRideClick(position: Int, model: GetRideResponsePOJO.DataItem)
+        fun onCancelRideClick(position: Int, model: GetRideResponsePOJO.DataItem)
         fun onRateRideClick(position: Int, model: GetRideResponsePOJO.DataItem)
         fun onViewInfoClick(position: Int, model: GetRideResponsePOJO.DataItem)
     }
@@ -70,26 +71,59 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (getItemViewType(position)) {
             ITEM -> {
                 val holder = viewHolder as MyViewHolder
-                val model: GetRideResponsePOJO.DataItem = mList!![position]
+                val model: GetRideResponsePOJO.DataItem = mList[position]
 
-                holder.txtRateRide.visibility = View.GONE
-                holder.ratingBar.visibility = View.GONE
-                holder.btnStartRide.visibility = View.GONE
-
-                if (model.status == Constants.BOOKING_COMPLETED) {
-                    holder.imgViewInfo.visibility = View.VISIBLE
-                    holder.txtStatus.text = model.status
-                    holder.txtStatus.setTextColor(Color.parseColor("#749E47"))
-                } else {
-                    holder.imgViewInfo.visibility = View.GONE
-                    holder.txtStatus.text = model.status
-                    holder.txtStatus.setTextColor(Color.parseColor("#F15E38"))
-
-                }
-                holder.txtActualFare.text = "₹ " + model.fare.toString()
                 holder.txtVehicleName.text = model.vehicleName + " " + model.vehicleNo
 
                 holder.txtDate.text = AppUtils.changeDateFormat(model.dateTime, "yyyy-MM-dd HH:mm:ss", "dd MMM, hh:mm a")
+
+                holder.txtSourceAddress.text = (model.originFullAddress)
+                holder.txtDestinationAddress.text = (model.destinationFullAddress)
+                holder.txtStatus.text = model.status
+
+
+                if (model.permitType == Constants.TYPE_INTERCITY){
+                    holder.txtActualFare.text = "₹ " + model.estimatedTrackRide?.totalCharges.toString()
+                    holder.btnStartRide.visibility = View.GONE
+                    holder.imgViewInfo.visibility = View.GONE
+                    if (model.status == Constants.BOOKING_SCHEDULED){
+                        holder.llCancelRide.visibility = View.VISIBLE
+                    }else{
+                        holder.llCancelRide.visibility = View.GONE
+                    }
+                }else{
+                    holder.llCancelRide.visibility = View.GONE
+                    holder.txtActualFare.text = "₹ " + model.fare.toString()
+
+                    if (model.status == Constants.BOOKING_COMPLETED) {
+                        holder.imgViewInfo.visibility = View.VISIBLE
+                        holder.txtStatus.setTextColor(Color.parseColor("#749E47"))
+                        if (model.reviewStar.toFloat() >= 1.0f) {
+                            holder.ratingBar.visibility = View.VISIBLE
+                            holder.ratingBar.rating = model.reviewStar.toFloat()
+
+                        } else {
+                            holder.txtRateRide.visibility = View.VISIBLE
+                        }
+                    } else {
+                        holder.imgViewInfo.visibility = View.GONE
+                        holder.txtStatus.setTextColor(Color.parseColor("#F15E38"))
+
+                    }
+
+                    if (model.status == Constants.BOOKING_COMPLETED || model.status == Constants.BOOKING_CANCELLED) {
+                        holder.btnStartRide.visibility = View.GONE
+                    } else {
+                        if (model.rideStatus.equals("Yes")) {
+                            holder.btnStartRide.visibility = View.VISIBLE
+
+                        } else {
+                            holder.btnStartRide.visibility = View.VISIBLE
+                            holder.btnStartRide.isEnabled = false
+                            holder.btnStartRide.setBackgroundResource(R.drawable.btn_rounded_grey)
+                        }
+                    }
+                }
 
 
                 Glide.with(context!!)
@@ -102,36 +136,6 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     ).into(holder.imgVehicle)
 
 
-
-
-                holder.txtSourceAddress.text = (model.originFullAddress)
-                holder.txtDestinationAddress.text = (model.destinationFullAddress)
-
-
-                if (model.status == Constants.BOOKING_COMPLETED || model.status == Constants.BOOKING_CANCELLED || model.permitType == Constants.TYPE_INTERCITY) {
-                    holder.btnStartRide.visibility = View.GONE
-                } else {
-                    if (model.rideStatus.equals("Yes")) {
-                        holder.btnStartRide.visibility = View.VISIBLE
-
-                    } else {
-                        holder.btnStartRide.visibility = View.VISIBLE
-                        holder.btnStartRide.isEnabled = false
-                        holder.btnStartRide.setBackgroundResource(R.drawable.btn_rounded_grey)
-                    }
-                }
-
-                if (model.status == Constants.BOOKING_COMPLETED) {
-
-                    if (model.reviewStar.toFloat() >= 1.0f) {
-                        holder.ratingBar.visibility = View.VISIBLE
-                        holder.ratingBar.rating = model.reviewStar.toFloat()
-
-                    } else {
-                        holder.txtRateRide.visibility = View.VISIBLE
-                    }
-
-                }
 
                 holder.itemView.setOnClickListener {
                     mListener?.onItemSelected(position, model)
@@ -149,6 +153,10 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     mListener?.onViewInfoClick(position, model)
                 }
 
+                holder.llCancelRide.setOnClickListener {
+                    mListener?.onCancelRideClick(position, model)
+                }
+
 
 
             }
@@ -163,7 +171,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         inflater: LayoutInflater
     ): RecyclerView.ViewHolder {
         val viewHolder: RecyclerView.ViewHolder
-        val v1 = inflater.inflate(R.layout.templete_my_ride, parent, false)
+        val v1 = inflater.inflate(R.layout.item_ride, parent, false)
         viewHolder = MyViewHolder(v1)
         return viewHolder
     }
@@ -171,23 +179,23 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private class LoadingVH(itemView: View?) : RecyclerView.ViewHolder(itemView!!)
 
     override fun getItemCount(): Int {
-        return mList!!.size
+        return mList.size
     }
 
     class MyViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val txtStatus: TextView = itemView.findViewById(R.id.tv_status)
-        val txtRateRide: TextView = itemView.findViewById(R.id.tvRateRide)
-        val txtActualFare: TextView = itemView.findViewById(R.id.tv_actualFare)
-        val txtDate: TextView = itemView.findViewById(R.id.tv_dateandTime)
-        val txtVehicleName: TextView = itemView.findViewById(R.id.tv_vahicalName)
-        val btnStartRide: Button = itemView.findViewById(R.id.btnStartRide)
-        val imgVehicle: ImageView = itemView.findViewById(R.id.iv_vehical)
-        val imgViewInfo: ImageView = itemView.findViewById(R.id.ivViewInfo)
+        val txtStatus: TextView = itemView.findViewById(R.id.txt_status)
+        val txtRateRide: TextView = itemView.findViewById(R.id.txt_rate_ride)
+        val txtActualFare: TextView = itemView.findViewById(R.id.txt_total_charges)
+        val txtDate: TextView = itemView.findViewById(R.id.txt_date)
+        val txtVehicleName: TextView = itemView.findViewById(R.id.txt_vehicle_name)
+        val btnStartRide: Button = itemView.findViewById(R.id.btn_start_ride)
+        val imgVehicle: ImageView = itemView.findViewById(R.id.img_vehicle)
+        val imgViewInfo: ImageView = itemView.findViewById(R.id.img_view_info)
         val ratingBar: SimpleRatingBar = itemView.findViewById(R.id.ratingBar)
-        val txtSourceAddress: TextView = itemView.findViewById(R.id.tv_myCurrentLocation)
-        val txtDestinationAddress : TextView = itemView.findViewById(R.id.destnationAddress)
-        val rlRideDetails : RelativeLayout = itemView.findViewById(R.id.rlRideDetails)
+        val txtSourceAddress: TextView = itemView.findViewById(R.id.txt_source_address)
+        val txtDestinationAddress : TextView = itemView.findViewById(R.id.txt_destination_address)
+        val llCancelRide : LinearLayout = itemView.findViewById(R.id.ll_cancel_ride)
 
     }
 

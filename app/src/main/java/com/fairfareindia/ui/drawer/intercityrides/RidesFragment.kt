@@ -30,9 +30,9 @@ import com.fairfareindia.ui.ridereview.RideReviewActivity
 import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.fairfareindia.utils.*
 
-class RidesFragment : Fragment(), IMyRidesView{
+class RidesFragment : Fragment(), IRidesView{
 
-    private var iMyRidesPresenter: IMyRidesPresenter? = null
+    private var iRidesPresenter: IRidesPresenter? = null
     lateinit var binding: FragmentMyRidesBinding
     private var mContext: Context ?= null
 
@@ -79,8 +79,8 @@ class RidesFragment : Fragment(), IMyRidesView{
         token = preferencesManager?.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
         sharedpreferences = mContext?.getSharedPreferences("mypref", Context.MODE_PRIVATE)
-        
-        iMyRidesPresenter = MyRidesImplementer(this)
+
+        iRidesPresenter = RidesImplementer(this)
 
         val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar_home)
         toolbar.title = "My Rides"
@@ -112,6 +112,10 @@ class RidesFragment : Fragment(), IMyRidesView{
 
             override fun onStartRideClick(position: Int, model: GetRideResponsePOJO.DataItem) {
                 startRide(model)
+            }
+
+            override fun onCancelRideClick(position: Int, model: GetRideResponsePOJO.DataItem) {
+                iRidesPresenter?.cancelRide(token, model.id.toString(), Constants.BOOKING_CANCELLED)
             }
 
             override fun onRateRideClick(position: Int, model: GetRideResponsePOJO.DataItem) {
@@ -160,6 +164,10 @@ class RidesFragment : Fragment(), IMyRidesView{
             }
         })
 
+        binding.swipeRefresh.setOnRefreshListener {
+            resetAPI()
+        }
+
         loadNextPage()
     }
 
@@ -187,11 +195,11 @@ class RidesFragment : Fragment(), IMyRidesView{
         mAdapter!!.clear()
         currentPage = PAGE_START
         isLastPage = false
-        iMyRidesPresenter?.getRide("Bearer " + token, currentPage, currentLat, currentLong)
+        iRidesPresenter?.getRide("Bearer " + token, currentPage, currentLat, currentLong)
     }
 
     private fun loadNextPage() {
-        iMyRidesPresenter?.getRide("Bearer " + token, currentPage, currentLat, currentLong)
+        iRidesPresenter?.getRide("Bearer " + token, currentPage, currentLat, currentLong)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -229,7 +237,7 @@ class RidesFragment : Fragment(), IMyRidesView{
     }
 
     override fun getRidesSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {
-
+        binding.swipeRefresh.isRefreshing = false
 
         if (currentPage == PAGE_START) {
             mAdapter!!.clear()
@@ -264,15 +272,22 @@ class RidesFragment : Fragment(), IMyRidesView{
 
     }
 
+    override fun getCancelRideSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {
+        binding.swipeRefresh.isRefreshing = false
+        resetAPI()
+    }
+
     override fun showWait() {
         ProjectUtilities.showProgressDialog(activity)
     }
 
     override fun removeWait() {
+        binding.swipeRefresh.isRefreshing = false
         ProjectUtilities.dismissProgressDialog()
     }
 
     override fun onFailure(appErrorMessage: String?) {
+        binding.swipeRefresh.isRefreshing = false
         Toast.makeText(activity, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 

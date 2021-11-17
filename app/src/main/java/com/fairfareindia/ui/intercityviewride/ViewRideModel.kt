@@ -75,6 +75,9 @@ class ViewRideModel {
         @SerializedName("totalPayableCharges")
         var totalPayableCharges: Double = 0.0
 
+        @SerializedName("rules")
+        var rules: String? = null
+
     }
 
     inner class VehicleDetail : Serializable {

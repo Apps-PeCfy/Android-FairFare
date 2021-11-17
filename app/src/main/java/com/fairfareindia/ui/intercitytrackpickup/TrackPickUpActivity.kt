@@ -10,6 +10,7 @@ import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityTrackPickUpBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.utils.APIManager
@@ -86,6 +87,10 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                 }
 
             }
+
+            btnCancelRide.setOnClickListener {
+                iInterCityTrackPickUpPresenter?.cancelRide(token, rideID, Constants.BOOKING_CANCELLED)
+            }
         }
     }
 
@@ -124,6 +129,23 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             tvConvenienceFees.text = "₹ " + model?.data?.estimatedTrackRide?.convenienceFees
             txtTotalPayable.text = "₹ " + model?.data?.estimatedTrackRide?.totalCharges
             txtAdditionalCharges.text = "₹ " +model?.data?.estimatedTrackRide?.totalAdditionalCharges
+
+            if (model?.data?.status == Constants.BOOKING_SCHEDULED){
+                btnCancelRide.visibility = View.VISIBLE
+                txtStatusMessage.text = getString(R.string.lbl_ride_on_way)
+            }else{
+                txtStatusMessage.text = getString(R.string.lbl_ride_cancelled)
+                btnCancelRide.visibility = View.GONE
+            }
+
+            if(model?.data?.rules.isNullOrEmpty()){
+                txtRulesLabel.visibility = View.GONE
+                txtRules.visibility = View.GONE
+            }else{
+                txtRules.text = model?.data?.rules
+                txtRulesLabel.visibility = View.VISIBLE
+                txtRules.visibility = View.VISIBLE
+            }
 
 
             //Driver and Vehical
@@ -255,6 +277,10 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     override fun getRideDetails(model: RideDetailModel?) {
         this.model = model
         setData()
+    }
+
+    override fun getCancelRideSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {
+        iInterCityTrackPickUpPresenter?.getRideDetails(token, rideID)
     }
 
     override fun validationError(validationResponse: ValidationResponse?) {

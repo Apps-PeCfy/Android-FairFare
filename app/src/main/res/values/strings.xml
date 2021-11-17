@@ -121,11 +121,14 @@
     <!--Track PICK UP SCREEN-->
     <string name="title_track_pick_up">Track Pick Up</string>
     <string name="lbl_ride_on_way">Your ride is on the way</string>
+    <string name="lbl_ride_cancelled">Your ride is cancelled.</string>
     <string name="lbl_enter_message">Enter message</string>
     <string name="btn_cancel_ride">Cancel Ride</string>
     <string name="str_charges_for_additional">Charges for Additional</string>
     <string name="str_base_fare">Base Fare</string>
     <string name="str_no_rides">You have not taken any Rides yet.</string>
+    <string name="str_start_ride">Start Ride</string>
+    <string name="str_cancel_ride">Cancel Ride</string>
 
 
 </resources>

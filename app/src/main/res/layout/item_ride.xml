@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_5sdp"
+    app:cardUseCompatPadding="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_night_mode"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/img_vehicle"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitCenter" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_toEndOf="@+id/img_vehicle"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textColor="@color/colorGreyText"
+                        android:id="@+id/txt_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:textSize="@dimen/text_14sp"
+                        android:text="Mon, Sept 3, 23:35 AM" />
+
+                    <TextView
+                        android:textColor="@color/colorGreyText"
+                        android:id="@+id/txt_vehicle_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:textSize="@dimen/text_12sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_total_charges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/gradientstartcolor"
+                        android:textSize="@dimen/text_16sp" />
+
+
+                    <TextView
+                        android:id="@+id/txt_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:textAllCaps="true"
+                        android:textColor="@color/completedcolor"
+                        android:textSize="@dimen/text_12sp" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/txt_rate_ride"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_75sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/shape_roundedbtn"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_1sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_2sdp"
+                android:text="Rate this Ride"
+                android:textColor="@color/White"
+                android:visibility="gone" />
+
+
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_75sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:visibility="gone"
+                app:srb_borderColor="@color/gradientstartcolor"
+                app:srb_drawBorderEnabled="true"
+                app:srb_fillColor="@color/gradientstartcolor"
+                app:srb_isIndicator="true"
+                app:srb_pressedFillColor="@color/gradientstartcolor"
+                app:srb_starSize="18dp" />
+
+
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="10dp"
+            android:background="@color/secondaryLightGray" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/txt_source_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:drawableStart="@drawable/red_circle"
+                    android:drawablePadding="@dimen/_15sdp"
+                    android:fontFamily="@font/notosansjp_bold"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:textSize="@dimen/text_14sp"
+                    android:text="Pick-up Location"
+                    android:textColor="@color/gradientstartcolor" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_below="@+id/txt_source_address"
+                    android:layout_marginStart="@dimen/_40sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@color/secondaryLightGray" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_destination_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view1"
+                    android:layout_marginEnd="@dimen/_10sdp">
+
+
+                    <TextView
+                        android:id="@+id/txt_destination_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toLeftOf="@+id/ivViewInfo"
+                        android:drawableStart="@drawable/triangle"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:text="Drop-off Location "
+                        android:textSize="@dimen/text_14sp"
+                        android:textColor="@color/colorGreyText" />
+
+
+                    <ImageView
+                        android:id="@+id/img_view_info"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@drawable/view_info" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/rl_destination_address"
+                    android:layout_below="@+id/txt_source_address"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginTop="-17dp"
+                    android:layout_marginBottom="-17dp"
+                    android:background="@color/secondaryLightGray" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/ll_cancel_ride"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="10dp"
+                android:background="@color/secondaryLightGray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:layout_marginTop="10dp"
+                android:text="@string/str_cancel_ride"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_bold"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/btn_start_ride"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/shape_roundedbtn"
+            android:text="@string/str_start_ride"
+            android:textSize="@dimen/text_14sp"
+            android:visibility="gone"
+            android:textColor="@color/White" />
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

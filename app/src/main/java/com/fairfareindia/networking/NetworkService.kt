@@ -360,6 +360,14 @@ interface NetworkService {
         @Query("longitude") longitude: String?
     ): Call<GetRideResponsePOJO?>?
 
+    @POST("cancelRide")
+    fun cancelRide(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") rideID: String?,
+        @Query("status") status: String?
+    ): Call<GetRideResponsePOJO?>?
+
+
     @GET("getDisputeReasons")
     fun getDisputeReasons(@Header("Authorization") header: String?): Call<DisputesReasonResponsePOJO?>?
 

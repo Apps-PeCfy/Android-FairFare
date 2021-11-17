@@ -138,6 +138,16 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             txtTotalPayable.text = "₹ " + model?.ride?.totalPayableCharges
             txtAdditionalCharges.text = "₹ " + model?.ride?.totalAdditionalCharges
 
+            if(model?.ride?.rules.isNullOrEmpty()){
+                txtRulesLabel.visibility = View.GONE
+                txtRules.visibility = View.GONE
+            }else{
+                txtRules.text = model?.ride?.rules
+                txtRulesLabel.visibility = View.VISIBLE
+                txtRules.visibility = View.VISIBLE
+            }
+
+
             Glide.with(context)
                 .load(vehicleModel?.vehicle?.image)
                 .apply(

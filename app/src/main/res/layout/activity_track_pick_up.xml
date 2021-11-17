@@ -173,6 +173,7 @@
                     </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/txt_status_message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -230,6 +231,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="@dimen/_2sdp"
                                             android:gravity="center_horizontal"
+                                            android:textSize="@dimen/text_12sp"
                                             android:text="Auto" />
 
 
@@ -250,9 +252,9 @@
                                             android:textColor="@color/colorText"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
                                             android:fontFamily="@font/notosansjp_regular"
-                                            android:textSize="@dimen/text_14sp"
-                                            android:text="TMH-12-MZ-3314" />
+                                            android:textSize="@dimen/text_14sp" />
 
 
                                         <RelativeLayout
@@ -845,6 +847,7 @@
 
 
                                     <TextView
+                                        android:id="@+id/txt_rules_label"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/colorText"
@@ -853,6 +856,7 @@
                                         android:layout_marginTop="@dimen/_8sdp"/>
 
                                     <TextView
+                                        android:id="@+id/txt_rules"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/str_rules"

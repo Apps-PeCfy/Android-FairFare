@@ -25,13 +25,16 @@ class SmsReceiver : BroadcastReceiver() {
                     val message =
                         extras[SmsRetriever.EXTRA_SMS_MESSAGE] as String?
                     val pattern = Pattern.compile("\\d{6}")
-                    val matcher = pattern.matcher(message)
-                    println("SMS verification code::SMSBroadcastReceiver:1:  $message")
-                    if (matcher.find()) {
-                        if (otpReceiver != null) {
-                            otpReceiver!!.onOTPReceived(matcher.group(0))
+                    if (!message.isNullOrEmpty()){
+                        val matcher = pattern.matcher(message)
+                        println("SMS verification code::SMSBroadcastReceiver:1:  $message")
+                        if (matcher.find()) {
+                            if (otpReceiver != null) {
+                                otpReceiver!!.onOTPReceived(matcher.group(0))
+                            }
                         }
                     }
+
                 }
                 CommonStatusCodes.TIMEOUT -> if (otpReceiver != null) {
                     otpReceiver!!.onOTPTimeOut()

@@ -1,4 +1,4 @@
-package com.fairfareindia.ui.intercitytrackpickup
+package com.fairfareindia.ui.drawer.intercityrides
 
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
@@ -9,31 +9,29 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 
-class InterCityTrackPickUpImplementer(private val trackPickUpView: IIntercityTrackPickUpView) :
-    IInterCityTrackPickUpPresenter {
+class RidesImplementer(private val view: IRidesView) : IRidesPresenter {
+
+    override fun getRide(token: String?,cnt:Int?,currentLat: String?,currentLong: String?) {
 
 
-    
-    override fun getRideDetails(token: String?, ride_id: String?) {
-        trackPickUpView.showWait()
-        val call = ApiClient.client.getRideDetails(
-            "Bearer $token",
-            ride_id
-        )
-        call!!.enqueue(object : Callback<RideDetailModel?> {
+        view.showWait()
+        val call = ApiClient.client.getMyRides(
+             token,cnt,currentLat,currentLong)
+        call!!.enqueue(object : Callback<GetRideResponsePOJO?> {
             override fun onResponse(
-                call: Call<RideDetailModel?>,
-                response: Response<RideDetailModel?>
+                call: Call<GetRideResponsePOJO?>,
+                response: Response<GetRideResponsePOJO?>
             ) {
-                trackPickUpView.removeWait()
+
+                view.removeWait()
 
                 if (response.code() == 200) {
-                    trackPickUpView.removeWait()
-
-                    trackPickUpView.getRideDetails(response.body())
-                } else if (response.code() == 400 || response.code() == 422) {
-                    trackPickUpView.removeWait()
-
+                    if (response.body() != null) {
+                        view.removeWait()
+                        view.getRidesSuccess(response.body())
+                    }
+                } else if (response.code() == 422) {
+                    view.removeWait()
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
                     try {
@@ -41,26 +39,27 @@ class InterCityTrackPickUpImplementer(private val trackPickUpView: IIntercityTra
                             response.errorBody()!!.string(),
                             ValidationResponse::class.java
                         )
-                        trackPickUpView.validationError(pojo)
+                        view.validationError(pojo)
                     } catch (exception: IOException) {
                     }
-                } else {
-                    trackPickUpView.onFailure(response.message())
+
+                }else{
+                    view.onFailure(response.message())
                 }
             }
 
             override fun onFailure(
-                call: Call<RideDetailModel?>,
+                call: Call<GetRideResponsePOJO?>,
                 t: Throwable
             ) {
-                trackPickUpView.removeWait()
-                trackPickUpView.onFailure(t.message)
+                view.removeWait()
+                view.onFailure(t.message)
             }
         })
     }
 
     override fun cancelRide(token: String?, rideID: String?, status: String?) {
-        trackPickUpView.showWait()
+        view.showWait()
         val call = ApiClient.client.cancelRide("Bearer $token", rideID, status)
         call!!.enqueue(object : Callback<GetRideResponsePOJO?> {
             override fun onResponse(
@@ -68,15 +67,15 @@ class InterCityTrackPickUpImplementer(private val trackPickUpView: IIntercityTra
                 response: Response<GetRideResponsePOJO?>
             ) {
 
-                trackPickUpView.removeWait()
+                view.removeWait()
 
                 if (response.code() == 200) {
                     if (response.body() != null) {
-                        trackPickUpView.removeWait()
-                        trackPickUpView.getCancelRideSuccess(response.body())
+                        view.removeWait()
+                        view.getCancelRideSuccess(response.body())
                     }
                 } else if (response.code() == 422) {
-                    trackPickUpView.removeWait()
+                    view.removeWait()
                     val gson = GsonBuilder().create()
                     var pojo: ValidationResponse? = ValidationResponse()
                     try {
@@ -84,12 +83,12 @@ class InterCityTrackPickUpImplementer(private val trackPickUpView: IIntercityTra
                             response.errorBody()!!.string(),
                             ValidationResponse::class.java
                         )
-                        trackPickUpView.validationError(pojo)
+                        view.validationError(pojo)
                     } catch (exception: IOException) {
                     }
 
                 }else{
-                    trackPickUpView.onFailure(response.message())
+                    view.onFailure(response.message())
                 }
             }
 
@@ -97,10 +96,11 @@ class InterCityTrackPickUpImplementer(private val trackPickUpView: IIntercityTra
                 call: Call<GetRideResponsePOJO?>,
                 t: Throwable
             ) {
-                trackPickUpView.removeWait()
-                trackPickUpView.onFailure(t.message)
+                view.removeWait()
+                view.onFailure(t.message)
             }
         })
     }
+
 
 }
