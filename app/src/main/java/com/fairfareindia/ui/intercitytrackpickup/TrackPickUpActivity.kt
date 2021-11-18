@@ -36,6 +36,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     private var token: String? = null
     private var rideID: String? = null
     private var model: RideDetailModel ?= null
+    private var driverLocationModel: DriverLocationModel ?= null
     var commonMessageDialog: CommonMessageDialog? = null
     private var preferencesManager: PreferencesManager? = null
     private var iInterCityTrackPickUpPresenter: IInterCityTrackPickUpPresenter? = null
@@ -63,6 +64,8 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
         iInterCityTrackPickUpPresenter = InterCityTrackPickUpImplementer(this)
 
         iInterCityTrackPickUpPresenter?.getRideDetails(token, rideID)
+
+        iInterCityTrackPickUpPresenter?.getDriverLocation(token, rideID)
 
 
 
@@ -295,6 +298,10 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     override fun getRideDetails(model: RideDetailModel?) {
         this.model = model
         setData()
+    }
+
+    override fun getDriverLocation(model: DriverLocationModel?) {
+        driverLocationModel = model
     }
 
     override fun getCancelRideSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {

@@ -36,8 +36,8 @@ class AppUtils {
         fun changeDateFormat(sourceDate: String?, oldFormat: String?, newFormat: String?): String? {
             var outputText: String = ""
             if (sourceDate != null && oldFormat != null && newFormat != null){
-                val formatter = SimpleDateFormat(oldFormat)
-                val outputFormat = SimpleDateFormat(newFormat)
+                val formatter = SimpleDateFormat(oldFormat, Locale.US)
+                val outputFormat = SimpleDateFormat(newFormat, Locale.US)
                 try {
                     val date = formatter.parse(sourceDate)
                     outputText = outputFormat.format(date)

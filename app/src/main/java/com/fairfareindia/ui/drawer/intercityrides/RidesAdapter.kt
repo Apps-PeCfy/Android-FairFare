@@ -75,11 +75,17 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                 holder.txtVehicleName.text = model.vehicleName + " " + model.vehicleNo
 
-                holder.txtDate.text = AppUtils.changeDateFormat(model.dateTime, "yyyy-MM-dd HH:mm:ss", "dd MMM, hh:mm a")
+                holder.txtDate.text = AppUtils.changeDateFormat(model.dateTime, "yyyy-MM-dd HH:mm:ss", "dd MMM, h:mm a")
 
                 holder.txtSourceAddress.text = (model.originFullAddress)
                 holder.txtDestinationAddress.text = (model.destinationFullAddress)
                 holder.txtStatus.text = model.status
+                if (model.status == Constants.BOOKING_COMPLETED) {
+                    holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorGreen)!!)
+                }else{
+                    holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorPrimary)!!)
+                }
+
 
 
                 if (model.permitType == Constants.TYPE_INTERCITY){
@@ -97,7 +103,6 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                     if (model.status == Constants.BOOKING_COMPLETED) {
                         holder.imgViewInfo.visibility = View.VISIBLE
-                        holder.txtStatus.setTextColor(Color.parseColor("#749E47"))
                         if (model.reviewStar.toFloat() >= 1.0f) {
                             holder.ratingBar.visibility = View.VISIBLE
                             holder.ratingBar.rating = model.reviewStar.toFloat()
@@ -107,11 +112,9 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         }
                     } else {
                         holder.imgViewInfo.visibility = View.GONE
-                        holder.txtStatus.setTextColor(Color.parseColor("#F15E38"))
-
                     }
 
-                    if (model.status == Constants.BOOKING_COMPLETED || model.status == Constants.BOOKING_CANCELLED) {
+                    if (model.status != Constants.BOOKING_SCHEDULED) {
                         holder.btnStartRide.visibility = View.GONE
                     } else {
                         if (model.rideStatus.equals("Yes")) {

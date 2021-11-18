@@ -59,6 +59,51 @@ class InterCityTrackPickUpImplementer(private val trackPickUpView: IIntercityTra
         })
     }
 
+    override fun getDriverLocation(token: String?, ride_id: String?) {
+
+        val call = ApiClient.client.getDriverLocation(
+            "Bearer $token",
+            ride_id
+        )
+        call!!.enqueue(object : Callback<DriverLocationModel?> {
+            override fun onResponse(
+                call: Call<DriverLocationModel?>,
+                response: Response<DriverLocationModel?>
+            ) {
+                trackPickUpView.removeWait()
+
+                if (response.code() == 200) {
+                    trackPickUpView.removeWait()
+
+                    trackPickUpView.getDriverLocation(response.body())
+                } else if (response.code() == 400 || response.code() == 422) {
+                    trackPickUpView.removeWait()
+
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        trackPickUpView.validationError(pojo)
+                    } catch (exception: IOException) {
+                    }
+                } else {
+                    trackPickUpView.onFailure(response.message())
+                }
+            }
+
+            override fun onFailure(
+                call: Call<DriverLocationModel?>,
+                t: Throwable
+            ) {
+                trackPickUpView.removeWait()
+                trackPickUpView.onFailure(t.message)
+            }
+        })
+    }
+
     override fun cancelRide(token: String?, rideID: String?, status: String?) {
         trackPickUpView.showWait()
         val call = ApiClient.client.cancelRide("Bearer $token", rideID, status)

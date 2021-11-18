@@ -23,6 +23,7 @@ import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.GetSaveLocationResponsePOJO
 import com.fairfareindia.ui.home.pojo.SaveLocationResponsePojo
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
+import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.fairfareindia.ui.intercityviewride.BookingRequestModel
 import com.fairfareindia.ui.intercityviewride.ViewRideModel
@@ -477,6 +478,12 @@ interface NetworkService {
         @Header("Authorization") header: String?,
         @Query("ride_id") dispute_id: String?
     ): Call<RideDetailModel?>?
+
+    @GET("getDriverLocation")
+    fun getDriverLocation(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") ride_id: String?
+    ): Call<DriverLocationModel?>?
 
 
     @POST("saveContactUs")
