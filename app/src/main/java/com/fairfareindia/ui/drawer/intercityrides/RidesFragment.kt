@@ -18,10 +18,12 @@ import com.fairfareindia.R
 import com.fairfareindia.databinding.FragmentMyRidesBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.common.CommonMessageDialog
+import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.myrides.ridedetails.MyRideDetailsActivity
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
+import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
 import com.fairfareindia.ui.ridedetails.RideDetailsActivity
 import com.fairfareindia.ui.ridereview.RideReviewActivity
 import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
@@ -91,9 +93,20 @@ class RidesFragment : Fragment(), IRidesView{
         mAdapter = RidesAdapter(mContext, list, object : RidesAdapter.RidesAdapterInterface {
             override fun onItemSelected(position: Int, model: GetRideResponsePOJO.DataItem) {
                 if (model.permitType == Constants.TYPE_INTERCITY){
-                    val intent = Intent(activity, TrackPickUpActivity::class.java)
-                    intent.putExtra("ride_id", model.id.toString())
-                    startActivity(intent)
+                    if (model.status == Constants.BOOKING_SCHEDULED){
+                        val intent = Intent(activity, TrackPickUpActivity::class.java)
+                        intent.putExtra("ride_id", model.id.toString())
+                        startActivity(intent)
+                    }else if (model.status == Constants.BOOKING_ACTIVE){
+                        val intent = Intent(activity, InterCityTrackRideActivity::class.java)
+                        intent.putExtra("ride_id", model.id.toString())
+                        startActivity(intent)
+                    }else if (model.status == Constants.BOOKING_COMPLETED){
+                        val intent = Intent(activity, IntercityRideDetailsActivity::class.java)
+                        intent.putExtra("ride_id", model.id.toString())
+                        startActivity(intent)
+                    }
+
                 }else{
                     if (ProjectUtilities.checkInternetAvailable(activity)) {
                         val intent = Intent(activity, MyRideDetailsActivity::class.java)

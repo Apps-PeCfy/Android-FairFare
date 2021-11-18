@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.intercitytrackride.InterCityTrackRideActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@drawable/app_gradient"
+            android:gravity="center_vertical"
+            app:title="Track Ride"
+            app:titleTextColor="@color/White"
+            android:paddingEnd="@dimen/_10sdp"
+            android:theme="@style/BaseTheme"
+            app:buttonGravity="center_vertical"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar">
+
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/ll_show_data"
+                android:layout_marginBottom="-20dp"
+                tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
+
+
+            <TextView
+                android:id="@+id/txt_track_board"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/ll_show_data"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:textSize="@dimen/text_14sp"
+                android:background="@drawable/shape_roundedbtn"
+                android:fontFamily="@font/notosansjp_bold"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="10dp"
+                android:text="@string/str_track_board"
+                android:textColor="@color/White" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_show_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/top_corner"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <RelativeLayout
+                    android:id="@+id/rl_hide_show"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_3sdp"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/roundedcorner" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_hide_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp">
+
+                        <ImageView
+
+                            android:id="@+id/img_vehicle"
+                            android:layout_width="@dimen/_65sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_centerVertical="true"
+                            android:scaleType="fitCenter" />
+
+
+                        <TextView
+                            android:id="@+id/txt_vehicle_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:text="Auto"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/text_16sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                    <androidx.cardview.widget.CardView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_10sdp"
+                        android:elevation="8dp"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="0.0px"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
+                        android:layout_margin="10dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/rounded_corner_night_mode"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_pick_up_location"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:drawableStart="@drawable/red_circle"
+                                android:drawablePadding="@dimen/_15sdp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/hint_pick_up_location"
+                                android:textColor="@color/gradientstartcolor" />
+
+                            <View
+                                android:id="@+id/view"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_below="@+id/txt_pick_up_location"
+                                android:layout_marginStart="@dimen/_30sdp"
+                                android:layout_marginEnd="@dimen/_15sdp"
+                                android:background="@color/secondaryLightGray" />
+
+
+                            <TextView
+                                android:id="@+id/txt_drop_up_location"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/view"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:drawableStart="@drawable/triangle"
+                                android:drawablePadding="@dimen/_15sdp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/hint_drop_off_location"
+                                android:textColor="@color/colorGreyText" />
+
+
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:layout_above="@+id/txt_drop_up_location"
+                                android:layout_below="@+id/txt_pick_up_location"
+                                android:layout_marginStart="@dimen/_14sdp"
+                                android:layout_marginTop="-17dp"
+                                android:layout_marginBottom="-17dp"
+                                android:background="@color/secondaryLightGray" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_estimation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:id="@+id/txt_est_distance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_est_distance"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textColor="@color/colorGreyText" />
+
+                        <TextView
+                            android:id="@+id/txt_est_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/str_est_time"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textColor="@color/colorGreyText" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_track_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/top_corner"
+                android:paddingHorizontal="15dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/img_refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:layout_toStartOf="@+id/img_close"
+                        android:src="@drawable/refresh_black_small" />
+
+                    <ImageView
+                        android:id="@+id/img_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_track_board_close" />
+                </RelativeLayout>
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_distance_time"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/text_14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_distance_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="(Est.Distance:7.5 KM) / (Est.Time:7 Mins)"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/text_14sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txt_current_speed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:inputType="numberDecimal"
+                        android:textSize="@dimen/text_12sp"
+                        android:fontFamily="@font/notosansjp_regular"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_current_speed"
+                        android:textSize="@dimen/text_12sp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:visibility="visible" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:textColor="@color/colorGreyText"
+                        android:id="@+id/txt_travelled_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:inputType="numberDecimal"
+                        android:textSize="@dimen/text_12sp"
+                        android:fontFamily="@font/notosansjp_regular"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/txt_travelled_distance"
+                        android:text="@string/lbl_actual_distance_remaining_distance"
+                        android:textColor="@color/colorGreyText"
+                        android:textSize="@dimen/text_12sp"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:visibility="visible" />
+
+
+                </RelativeLayout>
+
+
+                <ProgressBar
+                    android:id="@+id/progress_distance"
+                    style="@style/progrssbarTheme"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rlTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/_15sdp">
+
+                    <TextView
+                        android:id="@+id/txt_travel_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorGreyText"
+                        android:textSize="@dimen/text_12sp"
+                        android:fontFamily="@font/notosansjp_regular" />
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toStartOf="@id/txt_travel_time"
+                        android:text="@string/lbl_actual_time_remaining_time"
+                        android:textColor="@color/colorGreyText"
+                        android:textSize="@dimen/text_12sp"
+                        android:fontFamily="@font/notosansjp_regular" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_wait_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:text="@string/str_wait_time"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_wait_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:textColor="@color/colorGreyText" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/secondaryLightGray" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_current_fare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:text="@string/str_current_fare"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/txt_current_fare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/secondaryLightGray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Places Nearby within 1 km "
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/rl_places"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_atm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_atm"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+
+                        <TextView
+                            android:id="@+id/txt_atm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textColor="@color/colorGreyText" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_museum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_museum"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+
+                        <TextView
+                            android:id="@+id/txt_museum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textColor="@color/colorGreyText" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_hotel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_hotel"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+
+                        <TextView
+                            android:id="@+id/txt_hotel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textColor="@color/colorGreyText" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_hospital"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_hospital"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+
+                        <TextView
+                            android:id="@+id/txt_hospital"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textColor="@color/colorGreyText" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+</layout>

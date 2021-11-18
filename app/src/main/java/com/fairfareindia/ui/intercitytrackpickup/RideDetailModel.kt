@@ -120,7 +120,7 @@ class RideDetailModel {
         @SerializedName("estimatedTrackRide")
         var estimatedTrackRide: Estimated? = null
 
-        @SerializedName("actual")
+        @SerializedName("actualTrackRide")
         var actualTrackRide: Estimated? = null
 
     }
@@ -191,11 +191,11 @@ class RideDetailModel {
         @SerializedName("convenienceFees")
         var convenienceFees: String? = null
 
-        @SerializedName("additional_distance")
+        @SerializedName("additionalDistance")
         var additionalDistance: String? = null
 
-        @SerializedName("total_duration")
-        var total_duration: String? = null
+        @SerializedName("totalDuration")
+        var totalDuration: String? = null
 
         @SerializedName("basicFare")
         var basicFare: Int? = null
@@ -206,6 +206,12 @@ class RideDetailModel {
         @SerializedName("rideTime")
         var rideTime: String? = null
 
+        @SerializedName("totalTime")
+        var totalTime: String? = null
+
+        @SerializedName("totalTimeMinute")
+        var totalTimeMinute: String? = null
+
         @SerializedName("additionalDistanceCharges")
         var additionalDistanceCharges: String? = null
 
@@ -214,7 +220,6 @@ class RideDetailModel {
 
         @SerializedName("totalAdditionalCharges")
         var totalAdditionalCharges: String? = null
-
 
     }
 

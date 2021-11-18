@@ -31,5 +31,7 @@
     <color name="squareCardBackgroundColor">#FFFFFF</color>
     <color name="squarecardstrokeColor">#FFFFFF</color>
 
+    <color name="colorGreen">#749E47</color>
+
 
 </resources>

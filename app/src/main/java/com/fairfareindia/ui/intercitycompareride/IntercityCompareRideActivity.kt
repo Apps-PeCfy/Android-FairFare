@@ -10,6 +10,7 @@ import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityIntercityCompareRideBinding
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
+import com.fairfareindia.ui.intercitytrackride.IIntercityTrackRideView
 import com.fairfareindia.ui.intercityviewride.IntercityViewRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.utils.APIManager
@@ -27,7 +28,7 @@ import com.google.gson.Gson
 import org.json.JSONObject
 import java.util.*
 
-class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
+class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback {
     lateinit var binding: ActivityIntercityCompareRideBinding
     private var context: Context = this
 
@@ -111,6 +112,8 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback  {
 
             txtPickUpLocation.text = sourceAddress
             txtDropOffLocation.text = destinationAddress
+
+            txtJourneyType.text = info.wayFlag
         }
     }
 

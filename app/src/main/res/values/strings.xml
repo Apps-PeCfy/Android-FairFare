@@ -132,6 +132,25 @@
     <string name="str_cancel_ride_message">On Cancel ride Rs. 100/- will be deducted and the rest will be refunded in 7-10 working days</string>
     <string name="btn_proceed">Proceed</string>
     <string name="btn_cancel_not">Don\'t Cancel</string>
+    <string name="str_estimated">Estimated</string>
+    <string name="str_actual">Actual</string>
+    <string name="str_ride_time">Ride Time</string>
+    <string name="str_wait_time">Wait Time</string>
+    <string name="str_base_distance">Base Distance</string>
+    <string name="str_additional_distance_charges">Additional Distance Charges</string>
+    <string name="str_wait_charges">Wait Charges</string>
+    <string name="str_luggage_charges">Luggage Charges</string>
+    <string name="str_toll_charges">Toll Charges</string>
+    <string name="str_surcharges">Surcharges</string>
+    <string name="str_convenience_fees">Convenience Fees</string>
+    <string name="str_total_fare">Total Fare</string>
+    <string name="lbl_ride_ratings">Ride Ratings</string>
+    <string name="str_track_board">Track Board</string>
+    <string name="lbl_distance_time">Distance/Time</string>
+    <string name="lbl_current_speed">Current Speed</string>
+    <string name="lbl_actual_distance_remaining_distance">Actual distance/Remaining distance</string>
+    <string name="lbl_actual_time_remaining_time">Actual time/ Remaining Time</string>
+    <string name="str_current_fare">Current Fare</string>
 
 
 </resources>

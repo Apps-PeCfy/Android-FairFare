@@ -13,7 +13,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/toolbar_height"
             android:background="@drawable/app_gradient"
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/_10sdp"
@@ -360,7 +360,7 @@
 
                             <LinearLayout
                                 android:id="@+id/ll_hide_view"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
