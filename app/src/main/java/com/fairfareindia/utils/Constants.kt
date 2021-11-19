@@ -36,6 +36,8 @@ object Constants {
     var driverImageClick = 3
     var badgeImageClick = 4
 
+    var SHOULD_RELOAD :Boolean = false
+
     // PERMIT TYPE
     var TYPE_INTERCITY = "Intercity"
     var TYPE_LOCAL = "Local"

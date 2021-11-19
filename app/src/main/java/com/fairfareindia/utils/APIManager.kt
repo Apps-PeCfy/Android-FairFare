@@ -26,6 +26,7 @@ open class APIManager private constructor() {
 
 
     fun postAPI(url: String?, params: JSONObject?, classType: Class<*>?, context: Context?, listener: APIManagerInterface?) {
+        var token = params?.get("token")
         Log.e("LASTAPI", url!!)
         if (ConnectionManager.Connection(context!!)) {
             if (requestQueue == null) {
@@ -62,6 +63,7 @@ open class APIManager private constructor() {
                 override fun getHeaders(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()
                     params["Content-Type"] = "application/json; charset=utf-8"
+                    params["Authorization"] = "Bearer $token"
                     return params
                 }
             }
@@ -80,6 +82,7 @@ open class APIManager private constructor() {
 
     fun getAPI(url: String?, params: JSONObject?, classType: Class<*>?, context: Context?, listener: APIManagerInterface?) {
         Log.e("LASTAPI", url!!)
+        var token = params?.get("token")
         if (ConnectionManager.Connection(context!!)) {
             if (requestQueue == null) {
                 requestQueue = Volley.newRequestQueue(context)
@@ -116,7 +119,7 @@ open class APIManager private constructor() {
                 override fun getHeaders(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()
                     params["Content-Type"] = "application/json; charset=utf-8"
-
+                    params["Authorization"] = "Bearer $token"
                     return params
                 }
             }

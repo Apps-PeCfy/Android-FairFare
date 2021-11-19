@@ -341,8 +341,13 @@ class RidesFragment : Fragment(), IRidesView{
     }
 
 
-
-
+    override fun onResume() {
+        super.onResume()
+        if (Constants.SHOULD_RELOAD){
+            Constants.SHOULD_RELOAD = false
+            resetAPI()
+        }
+    }
 
 
 }

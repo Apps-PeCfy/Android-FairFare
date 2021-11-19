@@ -159,16 +159,14 @@
                     <RelativeLayout
                         android:id="@+id/rl_hide_show"
                         android:layout_gravity="center_horizontal"
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_30sdp">
+                        android:layout_width="60dp"
+                        android:layout_height="40dp">
 
                         <TextView
                             android:layout_centerInParent="true"
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_3sdp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_12sdp"
-                            android:layout_marginBottom="@dimen/_15sdp"
+                            android:layout_centerVertical="true"
                             android:background="@drawable/roundedcorner" />
                     </RelativeLayout>
 
@@ -181,7 +179,6 @@
                         android:textColor="@color/colorText"
                         android:fontFamily="@font/notosansjp_regular"
                         android:textSize="@dimen/text_16sp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp" />
 
                     <ScrollView
@@ -198,98 +195,108 @@
                                 android:layout_height="wrap_content"
                                 android:visibility="visible"
                                 app:cardBackgroundColor="@color/colorBackground"
-                                app:cardCornerRadius="@dimen/_10sdp"
-                                app:cardElevation="@dimen/_8sdp"
-                                app:cardUseCompatPadding="true">
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="5dp"
+                                android:layout_margin="10dp">
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/rounded_corner_night_mode"
                                     android:padding="10dp"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/img_vehicle"
+                                        android:layout_width="@dimen/_65sdp"
+                                        android:layout_height="@dimen/_30sdp"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/iv_auto" />
 
                                     <LinearLayout
-                                        android:id="@+id/ll_vehicle"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
+                                        android:layout_marginStart="15dp"
+                                        android:layout_toEndOf="@+id/img_vehicle"
+                                        android:gravity="center_vertical"
                                         android:orientation="vertical">
 
-
-                                        <ImageView
-                                            android:id="@+id/img_vehicle"
-                                            android:layout_width="@dimen/_65sdp"
-                                            android:layout_height="@dimen/_20sdp"
-                                            android:src="@drawable/iv_auto"
-                                            android:scaleType="fitCenter" />
-
-                                        <TextView
-                                            android:id="@+id/txt_vehicle_name"
-                                            android:textColor="@color/colorText"
-                                            android:layout_width="@dimen/_65sdp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="@dimen/_2sdp"
-                                            android:gravity="center_horizontal"
-                                            android:textSize="@dimen/text_12sp"
-                                            android:text="Auto" />
-
-
-                                    </LinearLayout>
-
-
-                                    <LinearLayout
-                                        android:id="@+id/ll_driver_detail"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_toEndOf="@id/ll_vehicle"
-                                        android:layout_marginStart="20dp"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/txt_vehicle_number"
-                                            android:textColor="@color/colorText"
+                                        <LinearLayout
+                                            android:id="@+id/ll_vehicle"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="5dp"
-                                            android:fontFamily="@font/notosansjp_regular"
-                                            android:textSize="@dimen/text_14sp" />
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:id="@+id/txt_vehicle_name"
+                                                android:textColor="@color/colorText"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_horizontal"
+                                                android:textSize="@dimen/text_14sp"
+                                                android:text="Auto" />
+
+                                            <TextView
+                                                android:id="@+id/txt_vehicle_number"
+                                                android:textColor="@color/colorText"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="10dp"
+                                                android:text="MH 12 4114"
+                                                android:fontFamily="@font/notosansjp_regular"
+                                                android:textSize="@dimen/text_14sp" />
+
+                                        </LinearLayout>
 
 
-                                        <RelativeLayout
+                                        <LinearLayout
+                                            android:id="@+id/ll_driver_detail"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
                                             android:layout_marginTop="5dp">
 
-                                            <TextView
-                                                android:id="@+id/txt_driver_name"
+
+
+
+                                            <RelativeLayout
                                                 android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:drawableStart="@drawable/iv_person"
-                                                android:drawablePadding="@dimen/_3sdp"
-                                                android:fontFamily="@font/notosansjp_regular"
-                                                android:textSize="@dimen/text_14sp"
-                                                android:textColor="@color/colorText"
-                                                android:text="Vivek Patil" />
+                                                android:layout_height="wrap_content">
+
+                                                <TextView
+                                                    android:id="@+id/txt_driver_name"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:drawableStart="@drawable/iv_person"
+                                                    android:drawablePadding="@dimen/_3sdp"
+                                                    android:fontFamily="@font/notosansjp_regular"
+                                                    android:textSize="@dimen/text_14sp"
+                                                    android:textColor="@color/colorText"
+                                                    android:text="Vivek Patil" />
 
 
-                                            <TextView
-                                                android:id="@+id/txt_rating"
-                                                android:textColor="@color/colorText"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:drawableStart="@drawable/ic_fav_checked"
-                                                android:drawablePadding="@dimen/_3sdp"
-                                                android:layout_marginStart="10dp"
-                                                android:text="5.0"
-                                                android:layout_toEndOf="@+id/txt_driver_name" />
+                                                <TextView
+                                                    android:id="@+id/txt_rating"
+                                                    android:textColor="@color/colorText"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:drawableStart="@mipmap/ic_rating_star"
+                                                    android:drawablePadding="@dimen/_3sdp"
+                                                    android:layout_marginStart="10dp"
+                                                    android:textSize="14sp"
+                                                    android:fontFamily="@font/notosansjp_regular"
+                                                    android:text="5.0"
+                                                    android:layout_toEndOf="@+id/txt_driver_name" />
 
 
-                                        </RelativeLayout>
+                                            </RelativeLayout>
 
 
+                                        </LinearLayout>
                                     </LinearLayout>
+
+
 
 
                                 </RelativeLayout>
@@ -305,36 +312,39 @@
                                 android:layout_marginEnd="10dp">
 
                                 <androidx.cardview.widget.CardView
+                                    android:id="@+id/crd_call"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="40dp"
                                     android:visibility="visible"
                                     app:cardBackgroundColor="@color/colorBackground"
-                                    app:cardCornerRadius="@dimen/_10sdp"
-                                    app:cardElevation="@dimen/_8sdp"
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="5dp"
+                                    android:layout_gravity="center"
                                     android:layout_margin="5dp">
                                     <ImageView
                                         android:background="@drawable/rounded_corner_night_mode"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:src="@drawable/iv_photo"
-                                        android:padding="12dp"/>
+                                        android:paddingTop="8dp"
+                                        android:paddingHorizontal="10dp"
+                                        android:src="@mipmap/ic_call" />
 
                                 </androidx.cardview.widget.CardView>
 
                                 <androidx.cardview.widget.CardView
+                                    android:id="@+id/crd_send"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:visibility="visible"
+                                    android:layout_height="40dp"
                                     app:cardBackgroundColor="@color/colorBackground"
-                                    app:cardCornerRadius="@dimen/_10sdp"
-                                    app:cardElevation="@dimen/_8sdp"
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="5dp"
                                     android:layout_margin="5dp">
 
                                     <RelativeLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:background="@drawable/rounded_corner_night_mode"
-                                        android:padding="12dp">
+                                        android:padding="10dp">
 
                                         <TextView
                                             android:id="@+id/txt_enter_message"
@@ -348,7 +358,8 @@
                                         <ImageView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:src="@drawable/iv_photo"
+                                            android:paddingTop="5dp"
+                                            android:src="@mipmap/ic_send"
                                             android:layout_alignParentEnd="true" />
 
                                     </RelativeLayout>

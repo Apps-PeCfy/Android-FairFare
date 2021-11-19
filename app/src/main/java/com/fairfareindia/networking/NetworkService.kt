@@ -479,7 +479,7 @@ interface NetworkService {
         @Query("ride_id") dispute_id: String?
     ): Call<RideDetailModel?>?
 
-    @GET("getDriverLocation")
+    @POST("getDriverLocation")
     fun getDriverLocation(
         @Header("Authorization") header: String?,
         @Query("ride_id") ride_id: String?

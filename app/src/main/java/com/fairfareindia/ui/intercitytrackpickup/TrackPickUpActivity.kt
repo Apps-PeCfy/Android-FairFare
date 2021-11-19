@@ -1,11 +1,20 @@
 package com.fairfareindia.ui.intercitytrackpickup
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
+import android.location.Location
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.fairfareindia.BuildConfig
 import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityTrackPickUpBinding
@@ -40,6 +49,21 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     var commonMessageDialog: CommonMessageDialog? = null
     private var preferencesManager: PreferencesManager? = null
     private var iInterCityTrackPickUpPresenter: IInterCityTrackPickUpPresenter? = null
+
+    var sourceLat: String? = null
+    var sourceLong: String? = null
+    var destinationLat: String? = null
+    var destinationLong: String? = null
+
+    var driverLat: String? = null
+    var driverLong: String? = null
+
+    private var sourceMarker: Marker ?= null
+    private var myMarker: Marker ?= null
+    private var prevLatLng: LatLng? = null
+    private var isRouteDrawn: Boolean = false
+
+    val handler : Handler ?= Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +120,14 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             btnCancelRide.setOnClickListener {
                 openConfirmationDialog()
             }
+
+            crdCall.setOnClickListener {
+                if (!model?.data?.driver?.phoneNo.isNullOrEmpty()){
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + model?.data?.driver?.phoneNo))
+                    startActivity(intent)
+                }
+
+            }
         }
     }
 
@@ -129,6 +161,16 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
             txtBaseFare.text = "₹ " + model?.data?.estimatedTrackRide?.basicFare
             txtTollCharges.text = "₹ " + model?.data?.estimatedTrackRide?.tollCharges
+
+            sourceLat =  model?.data?.originLatitude
+            sourceLong =  model?.data?.originLongitude
+
+            destinationLat = model?.data?.destinationLatitude
+            destinationLong = model?.data?.destinationLongitude
+
+            if (!sourceLat.isNullOrEmpty() && sourceMarker == null && mMap != null){
+                drawSourceMarker()
+            }
 
 
             if (model?.data?.estimatedTrackRide?.distance!! > model?.data?.estimatedTrackRide?.baseDistance!!) {
@@ -185,41 +227,213 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
         }
     }
 
+    /**
+     * Google Direction Related
+     */
+
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
-
-        if (! model?.data?.originLatitude.isNullOrEmpty() && !model?.data?.destinationLatitude.isNullOrEmpty()) {
-            mMap!!.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    com.google.android.gms.maps.model.LatLng(
-                        model?.data?.originLatitude?.toDouble()!!,
-                        model?.data?.originLongitude?.toDouble()!!
-                    ), 12.0f
-                )
-            )
-            mMap?.addMarker(
-                MarkerOptions().position(
-                    com.google.android.gms.maps.model.LatLng(
-                        model?.data?.originLatitude!!.toDouble(),
-                        model?.data?.originLongitude!!.toDouble()
-                    )
-                ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
-            )
-            mMap?.addMarker(
-                MarkerOptions().position(
-                    com.google.android.gms.maps.model.LatLng(
-                        model?.data?.destinationLatitude!!.toDouble(),
-                        model?.data?.destinationLongitude!!.toDouble()
-                    )
-                ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
-            )
-            getRouteAPI()
+        if (!sourceLat.isNullOrEmpty() && sourceMarker == null){
+            drawSourceMarker()
         }
     }
 
+    private fun addCurrentLocationMarker(driverLocationModel: DriverLocationModel?) {
+
+        var location = Location("")
+        location.latitude = driverLocationModel?.data?.latitude!!
+        location.longitude = driverLocationModel.data?.longitude!!
+
+        val newPosition: LatLng = LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel.data?.longitude!!)
+        if (myMarker != null) {
+            if (prevLatLng != null) {
+                animateMarkerNew(prevLatLng!!, newPosition, myMarker)
+            }
+            myMarker?.remove()
+        }
+
+        myMarker = mMap?.addMarker(
+            MarkerOptions()
+                .position(newPosition)
+                .icon(getMarkerIcon(model?.data?.vehicleName))
+                .anchor(0.5f, 0.5f)
+                .draggable(true)
+                .flat(true)
+                .rotation(location.bearing)
+        )
+
+
+        prevLatLng = newPosition
+
+        mMap?.animateCamera(
+            CameraUpdateFactory.newCameraPosition(
+                CameraPosition.Builder()
+                    .target(newPosition)
+                    //  .bearing(getCompassBearing(startLocation, destLocation))
+                    .zoom(getZoomLevel())
+                    .build()
+            )
+        )
+
+    }
+
+    private fun getZoomLevel(): Float {
+       if (mMap?.cameraPosition?.zoom!! < 10) {
+            return 18.0f
+        }
+        return mMap?.cameraPosition?.zoom!!
+    }
+
+    private fun getMarkerIcon(vehicleName: String?): BitmapDescriptor? {
+        if (vehicleName.equals("Taxi", ignoreCase = true) || vehicleName.equals(
+                "Local Taxi",
+                ignoreCase = true
+            )
+        ) {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_taxi)
+        } else if (vehicleName.equals("Auto", ignoreCase = true) || vehicleName.equals(
+                "Local Auto",
+                ignoreCase = true
+            )
+        ) {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_auto)
+        }
+        return BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker_cab)
+    }
+
+    private fun drawSourceMarker() {
+        sourceMarker = mMap?.addMarker(
+            MarkerOptions().position(
+                com.google.android.gms.maps.model.LatLng(
+                    sourceLat!!.toDouble(),
+                    sourceLong!!.toDouble()
+                )
+            ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
+        )
+    }
+
+    private fun animateMarkerNew(
+        startPosition: LatLng,
+        destination: LatLng,
+        marker: Marker?
+    ) {
+        if (marker != null) {
+            val endPosition =
+                LatLng(
+                    destination.latitude,
+                    destination.longitude
+                )
+            val startRotation = marker.rotation
+            val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
+            val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
+            if (mMap!!.cameraPosition.zoom <= 18.0){
+                valueAnimator.duration = 1000 // duration 2 second
+            }else{
+                valueAnimator.duration = 500 // duration 2 second
+            }
+
+            valueAnimator.interpolator = LinearInterpolator()
+            valueAnimator.addUpdateListener { animation ->
+                try {
+                    val v = animation.animatedFraction
+                    val newPosition: LatLng =
+                        latLngInterpolator.interpolate(v, startPosition, endPosition)!!
+                    myMarker!!.setPosition(newPosition)
+                    mMap!!.animateCamera(
+                        CameraUpdateFactory.newCameraPosition(
+                            CameraPosition.Builder()
+                                .target(newPosition)
+                                .bearing(getCompassBearing(startPosition, endPosition))
+                                .zoom(getZoomLevel())
+                                .build()
+                        )
+                    )
+
+                    myMarker?.rotation = getBearing(startPosition, LatLng(destination.latitude, destination.longitude))
+                } catch (ex: java.lang.Exception) {
+                    //I don't care atm..
+                }
+            }
+            valueAnimator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+
+                    /*  if (myMarker != null) {
+                     myMarker.remove();
+                     }*/
+                }
+            })
+            valueAnimator.start()
+        }
+    }
+
+    private fun getCompassBearing(startlocation: LatLng, destlocation: LatLng): Float {
+
+
+        var destLocation = Location("")
+        destLocation.latitude = destlocation.latitude
+        destLocation.longitude = destlocation.longitude
+
+        var startLocation = Location("")
+        startLocation.latitude = startlocation.latitude
+        startLocation.longitude = startlocation.longitude
+
+        var bearTo: Float = startLocation.bearingTo(destLocation)
+
+        if (bearTo < 0) {
+            bearTo += 360;
+
+        }
+
+
+        return bearTo
+    }
+
+    private interface LatLngInterpolatorNew {
+        fun interpolate(
+            fraction: Float,
+            a: LatLng?,
+            b: LatLng?
+        ): LatLng?
+
+        class LinearFixed : LatLngInterpolatorNew {
+            override fun interpolate(fraction: Float, a: LatLng?, b: LatLng?): LatLng? {
+                val lat = (b!!.latitude - a!!.latitude) * fraction + a.latitude
+                var lngDelta = b.longitude - a.longitude
+                // Take the shortest path across the 180th meridian.
+                if (Math.abs(lngDelta) > 180) {
+                    lngDelta -= Math.signum(lngDelta) * 360
+                }
+                val lng = lngDelta * fraction + a.longitude
+                return LatLng(lat, lng)
+            }
+        }
+    }
+
+    private fun getBearing(
+        begin: LatLng,
+        end: LatLng
+    ): Float {
+        val lat = Math.abs(begin.latitude - end.latitude)
+        val lng = Math.abs(begin.longitude - end.longitude)
+        if (begin.latitude < end.latitude && begin.longitude < end.longitude) return Math.toDegrees(
+            Math.atan(lng / lat)
+        )
+            .toFloat() else if (begin.latitude >= end.latitude && begin.longitude < end.longitude) return (90 - Math.toDegrees(
+            Math.atan(lng / lat)
+        ) + 90).toFloat() else if (begin.latitude >= end.latitude && begin.longitude >= end.longitude) return (Math.toDegrees(
+            Math.atan(lng / lat)
+        ) + 180).toFloat() else if (begin.latitude < end.latitude && begin.longitude >= end.longitude) return (90 - Math.toDegrees(
+            Math.atan(lng / lat)
+        ) + 270).toFloat()
+        return (-1).toFloat()
+
+    }
+
+
+
     private fun getRouteAPI() {
-        val url = "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + model?.data?.originLatitude + "," + model?.data?.originLongitude + "&destination=" + model?.data?.destinationLatitude + "," + model?.data?.destinationLongitude + "&key=" + getString(
-            R.string.google_maps_key)
+        val url = "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + driverLat + "," + driverLong + "&destination=" + sourceLat + "," + sourceLong + "&key=" + getString(R.string.google_maps_key)
 
         APIManager.getInstance(context).postAPI(
             url,
@@ -246,7 +460,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
                     routes = parser.parse(jsonObject)
 
-                    var points: ArrayList<LatLng?>?
+                    var points: ArrayList<com.google.android.gms.maps.model.LatLng?>?
                     var lineOptions: PolylineOptions? = null
 
                     // Traversing through all the routes
@@ -271,7 +485,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                         lineOptions.width(8f)
                         //  lineOptions.color(Color.GREEN);
                         lineOptions.color(
-                            context.resources.getColor(R.color.gradientstartcolor)
+                           context.resources.getColor(R.color.gradientstartcolor)
                         )
                     }
 
@@ -279,10 +493,12 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                     if (lineOptions != null) {
                         mPolyline?.remove()
                         mPolyline = mMap?.addPolyline(lineOptions)
+                        isRouteDrawn = true
                     } else{
                         Toast.makeText(context, "No route is found", Toast.LENGTH_LONG)
                             .show()
                     }
+
                 }
 
                 override fun onError(error: String?) {
@@ -291,9 +507,41 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             })
     }
 
+    private fun setHandler() {
+        handler?.postDelayed(object : Runnable {
+            override fun run() {
+                getDriverLocationAPI()
+                handler?.postDelayed(this, 5000)
+            }
+        }, 5000)
+
+    }
+
     /**
      * API CALLING
      */
+
+    private fun getDriverLocationAPI(){
+        var url = BuildConfig.API_URL + "getDriverLocation"
+        var params : JSONObject = JSONObject()
+        params.put("ride_id", rideID)
+        params.put("token", token)
+        APIManager.getInstance(context).postAPI(url, params, DriverLocationModel::class.java, context, object :APIManager.APIManagerInterface{
+            override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
+                driverLocationModel = resultObj as DriverLocationModel?
+                if (!isRouteDrawn){
+                    getRouteAPI()
+                }
+
+                addCurrentLocationMarker(driverLocationModel)
+            }
+
+            override fun onError(error: String?) {
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
 
     override fun getRideDetails(model: RideDetailModel?) {
         this.model = model
@@ -302,10 +550,22 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
     override fun getDriverLocation(model: DriverLocationModel?) {
         driverLocationModel = model
+        addCurrentLocationMarker(driverLocationModel)
+        driverLat = driverLocationModel?.data?.latitude.toString()
+        driverLong = driverLocationModel?.data?.longitude.toString()
+
+
+        if (!isRouteDrawn){
+            getRouteAPI()
+        }
+
+        setHandler()
+
     }
 
     override fun getCancelRideSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {
         iInterCityTrackPickUpPresenter?.getRideDetails(token, rideID)
+        Constants.SHOULD_RELOAD = true
     }
 
     override fun validationError(validationResponse: ValidationResponse?) {
@@ -328,5 +588,20 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
     override fun onFailure(appErrorMessage: String?) {
         Toast.makeText(context, appErrorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        handler?.removeCallbacksAndMessages(null)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        handler?.removeCallbacksAndMessages(null)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler?.removeCallbacksAndMessages(null);
     }
 }
