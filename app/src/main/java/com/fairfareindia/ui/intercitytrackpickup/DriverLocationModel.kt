@@ -20,5 +20,11 @@ class DriverLocationModel {
         @SerializedName("longitude")
         var longitude: Double = 0.0
 
+        @SerializedName("bearing")
+        var bearing: Float = 0F
+
+        @SerializedName("bearing_accuracy_degrees")
+        var bearing_accuracy_degrees: Float = 0F
+
     }
 }

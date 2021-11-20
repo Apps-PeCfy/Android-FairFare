@@ -12,6 +12,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
             android:background="@drawable/app_gradient"
             android:gravity="center_vertical"
             app:title="Track Ride"
@@ -19,7 +20,16 @@
             android:paddingEnd="@dimen/_10sdp"
             android:theme="@style/BaseTheme"
             app:buttonGravity="center_vertical"
+            app:navigationIcon="?attr/homeAsUpIndicator"
             />
+
+        <ImageView
+            android:id="@+id/img_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/action_home"
+            android:padding="12dp"
+            android:layout_alignParentEnd="true"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

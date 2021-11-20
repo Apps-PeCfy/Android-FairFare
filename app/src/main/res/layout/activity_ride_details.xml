@@ -11,12 +11,13 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_rideDetails"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_height="@dimen/toolbar_height"
         android:background="@drawable/app_gradient"
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/_10sdp"
         android:theme="@style/BaseTheme"
         app:buttonGravity="center_vertical"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
 

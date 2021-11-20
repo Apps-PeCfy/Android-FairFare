@@ -21,6 +21,7 @@
             android:theme="@style/BaseTheme"
             app:titleTextColor="@color/White"
             app:buttonGravity="center_vertical"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
             app:navigationIcon="?attr/homeAsUpIndicator" />
 
 
@@ -52,7 +53,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/crd_otp"
-                    android:layout_width="140dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/crd_location"
                     app:cardCornerRadius="30dp"
@@ -65,7 +66,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:paddingVertical="10dp"
+                        android:paddingHorizontal="15dp"
                         android:text="Start OTP - 9791"
                         android:textColor="@color/White"
                         android:fontFamily="@font/notosansjp_regular"

@@ -155,7 +155,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
             txtPickUpLocationHide.text = model?.data?.originAddress
             txtDropOffLocationHide.text = model?.data?.destinationAddress
-            txtOtp.text = model?.data?.rideOtp
+            txtOtp.text = "Start OTP - " + model?.data?.rideOtp
 
             tvLuggageCharges.text = "₹ " + model?.data?.estimatedTrackRide?.luggageCharges
 
@@ -252,15 +252,26 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             myMarker?.remove()
         }
 
-        myMarker = mMap?.addMarker(
-            MarkerOptions()
-                .position(newPosition)
-                .icon(getMarkerIcon(model?.data?.vehicleName))
-                .anchor(0.5f, 0.5f)
-                .draggable(true)
-                .flat(true)
-                .rotation(location.bearing)
-        )
+        if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
+            myMarker = mMap?.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(model?.data?.vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+                    .rotation(driverLocationModel.data?.bearing!!)
+            )
+        }else{
+            myMarker = mMap?.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(model?.data?.vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+            )
+        }
 
 
         prevLatLng = newPosition
@@ -310,6 +321,22 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                 )
             ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
         )
+
+        val customInfoWindow = CustomInfoWindowGoogleMap(this)
+        sourceMarker?.title = "16"
+        sourceMarker?.snippet = "min"
+        mMap?.setInfoWindowAdapter(customInfoWindow)
+        sourceMarker?.showInfoWindow()
+    }
+
+    private fun updateTimeToPickUP(duration: JSONObject) {
+        val customInfoWindow = CustomInfoWindowGoogleMap(this)
+        var timeInSeconds = duration.getString("value")
+
+        sourceMarker?.title = (timeInSeconds.toDouble()/60).toInt().toString()
+        sourceMarker?.snippet = "Min"
+        mMap?.setInfoWindowAdapter(customInfoWindow)
+        sourceMarker?.showInfoWindow()
     }
 
     private fun animateMarkerNew(
@@ -458,6 +485,8 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                     val duration = steps.getJSONObject("duration")
                     val actualSteps = steps.getJSONArray("steps")
 
+                    updateTimeToPickUP(duration)
+
                     routes = parser.parse(jsonObject)
 
                     var points: ArrayList<com.google.android.gms.maps.model.LatLng?>?
@@ -511,9 +540,9 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
         handler?.postDelayed(object : Runnable {
             override fun run() {
                 getDriverLocationAPI()
-                handler?.postDelayed(this, 5000)
+                handler.postDelayed(this, Constants.LOCATION_HANDLER_TIME)
             }
-        }, 5000)
+        }, Constants.LOCATION_HANDLER_TIME)
 
     }
 

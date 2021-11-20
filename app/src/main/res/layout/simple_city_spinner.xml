@@ -8,7 +8,7 @@
     android:gravity="center_vertical"
     android:includeFontPadding="false"
     android:background="@color/gradientstartcolor"
-    android:textSize="@dimen/_13sdp"
+    android:textSize="@dimen/text_16sp"
     android:textColor="@color/White"
     android:maxLines="1"
     />

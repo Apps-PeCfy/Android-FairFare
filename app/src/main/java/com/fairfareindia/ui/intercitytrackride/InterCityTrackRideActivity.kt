@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -17,10 +19,13 @@ import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityInterCityTrackRideBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
+import com.fairfareindia.ui.intercitytrackpickup.CustomInfoWindowGoogleMap
 import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
+import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.fairfareindia.utils.APIManager
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PreferencesManager
@@ -75,6 +80,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
     private fun init() {
         rideID = intent.getStringExtra("ride_id")
 
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
@@ -109,12 +115,25 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                 llShowData.visibility = View.VISIBLE
             }
 
+            imgRefresh.setOnClickListener {
+                iInterCityTrackRidePresenter?.getRideDetails(token, rideID)
+                iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+            }
+
             rlHideShow.setOnClickListener {
                 if (llHideView.visibility == View.GONE){
                     llHideView.visibility = View.VISIBLE
                 }else{
                     llHideView.visibility = View.GONE
                 }
+            }
+
+            imgHome.setOnClickListener {
+                var sharedpreferences : SharedPreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+                sharedpreferences.edit().clear().apply()
+                val intent = Intent(context, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
             }
 
 
@@ -130,6 +149,9 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
 
             txtEstDistance.text = "Est.Distance ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} Km"
             txtEstTime.text = "Est.Time ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
+
+            txtWaitTime.text = rideDetailModel?.data?.total_wait_time.toString() + "Min"
+            txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
 
             sourceLat =  rideDetailModel?.data?.originLatitude
             sourceLong =  rideDetailModel?.data?.originLongitude
@@ -165,36 +187,41 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
 
     private fun addCurrentLocationMarker(driverLocationModel: DriverLocationModel?) {
 
-        var location = Location("")
-        location.latitude = driverLocationModel?.data?.latitude!!
-        location.longitude = driverLocationModel.data?.longitude!!
-
         val newPosition: LatLng = LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel.data?.longitude!!)
-        if (myMarker != null) {
-            if (prevLatLng != null) {
-                animateMarkerNew(prevLatLng!!, newPosition, myMarker)
-            }
-            myMarker?.remove()
+        if (myMarker != null && prevLatLng != null) {
+            animateMarkerNew(prevLatLng!!, newPosition, myMarker)
         }
 
-        myMarker = mMap?.addMarker(
-            MarkerOptions()
-                .position(newPosition)
-                .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
-                .anchor(0.5f, 0.5f)
-                .draggable(true)
-                .flat(true)
-                .rotation(location.bearing)
-        )
 
 
+        if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
+            myMarker?.remove()
+            myMarker = mMap?.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+                    .rotation(driverLocationModel.data?.bearing!!)
+            )
+        }else{
+            myMarker?.remove()
+            myMarker = mMap?.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+            )
+        }
         prevLatLng = newPosition
 
         mMap?.animateCamera(
             CameraUpdateFactory.newCameraPosition(
                 CameraPosition.Builder()
                     .target(newPosition)
-                    //  .bearing(getCompassBearing(startLocation, destLocation))
                     .zoom(getZoomLevel())
                     .build()
             )
@@ -227,14 +254,22 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
     }
 
     private fun drawSourceDestinationMarker() {
-        mMap?.addMarker(
+       mMap?.addMarker(
             MarkerOptions().position(
                 com.google.android.gms.maps.model.LatLng(
                     sourceLat!!.toDouble(),
                     sourceLong!!.toDouble()
                 )
+
+
             ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
         )
+
+
+
+
+
+
 
         mMap?.addMarker(
             MarkerOptions().position(
@@ -245,6 +280,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
             ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
         )
     }
+
 
     private fun animateMarkerNew(
         startPosition: LatLng,
@@ -272,8 +308,8 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                     val v = animation.animatedFraction
                     val newPosition: LatLng =
                         latLngInterpolator.interpolate(v, startPosition, endPosition)!!
-                    myMarker!!.setPosition(newPosition)
-                    mMap!!.animateCamera(
+                    myMarker?.position = newPosition
+                    mMap?.animateCamera(
                         CameraUpdateFactory.newCameraPosition(
                             CameraPosition.Builder()
                                 .target(newPosition)
@@ -445,9 +481,9 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
         handler?.postDelayed(object : Runnable {
             override fun run() {
                 getDriverLocationAPI()
-                handler?.postDelayed(this, 5000)
+                handler.postDelayed(this, Constants.LOCATION_HANDLER_TIME)
             }
-        }, 5000)
+        }, Constants.LOCATION_HANDLER_TIME)
 
     }
 
@@ -471,6 +507,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
 
                 if (!isRouteDrawn){
                     getRouteAPI()
+                    iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
                 }
 
             }
@@ -489,6 +526,93 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
         setHandler()
     }
 
+    override fun getNearByPlaces(model: NearByResponse?) {
+        for (i in model?.results?.indices!!) {
+
+            if (model.results[i]?.types?.get(0)?.contains("atm")!!) {
+                binding.txtAtm.text = model.results[i]!!.name
+                Glide.with(context)
+                    .load(model.results[i]?.icon)
+                    .apply(
+                        RequestOptions()
+                            .centerCrop()
+                            .dontAnimate()
+                            .dontTransform()
+                    ).into(binding.imgAtm)
+
+
+                if (binding.txtAtm.text.isNotEmpty()) {
+                    binding.llAtm.visibility = View.VISIBLE
+                } else {
+                    binding.llAtm.visibility = View.GONE
+                }
+
+
+            }
+
+            if (model.results[i]?.types?.get(0).equals("point_of_interest")
+            ) {
+                binding.txtMuseum.text = model.results[i]?.name
+                Glide.with(context)
+                    .load(model.results[i]?.icon)
+                    .apply(
+                        RequestOptions()
+                            .centerCrop()
+                            .dontAnimate()
+                            .dontTransform()
+                    ).into(binding.imgMuseum)
+                if (binding.txtMuseum.text.isNotEmpty()) {
+                    binding.llMuseum.visibility = View.VISIBLE
+                } else {
+                    binding.llMuseum.visibility = View.GONE
+                }
+
+
+            }
+
+            if (model.results[i]?.types?.get(0)?.contains("health")!!) {
+                binding.txtHospital.text = model.results[i]?.name
+                Glide.with(context)
+                    .load(model.results[i]?.icon)
+                    .apply(
+                        RequestOptions()
+                            .centerCrop()
+                            .dontAnimate()
+                            .dontTransform()
+                    ).into(binding.imgHospital)
+
+                if (binding.txtHospital.text.isNotEmpty()) {
+                    binding.llHospital.visibility = View.VISIBLE
+                } else {
+                    binding.llHospital.visibility = View.GONE
+                }
+
+
+            }
+
+            if (model.results[i]?.types?.get(0)?.contains("bank")!!) {
+                binding.txtHotel.text = model?.results!!.get(i)!!.name
+                Glide.with(context)
+                    .load(model?.results!!.get(i)!!.icon)
+                    .apply(
+                        RequestOptions()
+                            .centerCrop()
+                            .dontAnimate()
+                            .dontTransform()
+                    ).into(binding.imgHotel)
+
+                if (binding.txtHotel.text.isNotEmpty()) {
+                    binding.llHotel.visibility = View.VISIBLE
+                } else {
+                    binding.llHotel.visibility = View.GONE
+                }
+
+
+            }
+
+
+        }
+    }
 
 
     override fun validationError(validationResponse: ValidationResponse?) {

@@ -19,6 +19,7 @@
             app:titleTextColor="@color/White"
             android:theme="@style/BaseTheme"
             app:buttonGravity="center_vertical"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
             app:navigationIcon="?attr/homeAsUpIndicator" />
 
 
@@ -1069,8 +1070,7 @@
                         android:id="@+id/txt_rewards_point"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_margin="15dp"
                         android:fontFamily="@font/notosansjp_bold"
                         android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/text_16sp"
@@ -1081,7 +1081,7 @@
                         android:id="@+id/ll_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_margin="10dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 

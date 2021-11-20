@@ -9,10 +9,11 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_rideReview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_height="@dimen/toolbar_height"
         android:background="@drawable/app_gradient"
         android:gravity="center_vertical"
         android:theme="@style/BaseTheme"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
         app:buttonGravity="center_vertical"
         />
 

@@ -13,6 +13,12 @@ class RideDetailModel {
         @SerializedName("id")
         var id = 0
 
+        @SerializedName("total_wait_time")
+        var total_wait_time : Int = 0
+
+        @SerializedName("totalfare")
+        var totalfare : Double = 0.0
+
         @SerializedName("user")
         var user: User? = null
 
@@ -333,6 +339,12 @@ class RideDetailModel {
 
         @SerializedName("longitude")
         var longitude: String? = null
+
+        @SerializedName("bearing")
+        var bearing: Float = 0F
+
+        @SerializedName("bearing_accuracy_degrees")
+        var bearing_accuracy_degrees: Float = 0F
 
         @SerializedName("latitude")
         var latitude: String? = null

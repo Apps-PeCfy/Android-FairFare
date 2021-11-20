@@ -14,9 +14,10 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_height="@dimen/toolbar_height"
             android:theme="@style/BaseTheme"
             app:buttonGravity="center_vertical"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
             app:navigationIcon="?attr/homeAsUpIndicator">
 
             <TextView
@@ -28,7 +29,7 @@
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
                 android:textColor="@color/White"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/text_16sp" />
 
 
         </androidx.appcompat.widget.Toolbar>

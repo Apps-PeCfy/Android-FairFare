@@ -14,9 +14,10 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_height="@dimen/toolbar_height"
             android:background="@drawable/app_gradient"
             app:buttonGravity="center_vertical"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
             app:navigationIcon="?attr/homeAsUpIndicator">
 
 

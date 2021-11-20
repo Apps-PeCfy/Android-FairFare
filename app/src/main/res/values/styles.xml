@@ -12,7 +12,9 @@
 
     </style>
 
-
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/text_18sp</item>
+    </style>
 
     <style name="progrssbarTheme" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="colorPrimary">@color/colorPrimary</item>
