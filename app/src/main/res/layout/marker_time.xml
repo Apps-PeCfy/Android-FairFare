@@ -20,7 +20,6 @@
             android:id="@+id/txt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14"
             android:textColor="@color/White"
             android:textSize="@dimen/text_14sp"
             android:fontFamily="@font/notosansjp_bold"/>
@@ -29,7 +28,6 @@
             android:id="@+id/txt_time_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Min"
             android:textColor="@color/White"
             android:textSize="@dimen/text_14sp"
             android:fontFamily="@font/notosansjp_regular"/>

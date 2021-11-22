@@ -2274,13 +2274,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 } else {
-                    cityID = cityPojoList[position].id.toString()
-                    city_Name = cityPojoList[position].name
-                    preferencesManager?.setStringValue(
-                        Constants.SHARED_PREFERENCE_CITY_ID,
-                        cityID
-                    )
-
+                    if(position < cityPojoList.size){
+                        cityID = cityPojoList[position].id.toString()
+                        city_Name = cityPojoList[position].name
+                        preferencesManager?.setStringValue(
+                            Constants.SHARED_PREFERENCE_CITY_ID,
+                            cityID
+                        )
+                    }
                 }
             }
         } else {

@@ -245,14 +245,12 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
         location.longitude = driverLocationModel.data?.longitude!!
 
         val newPosition: LatLng = LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel.data?.longitude!!)
-        if (myMarker != null) {
-            if (prevLatLng != null) {
-                animateMarkerNew(prevLatLng!!, newPosition, myMarker)
-            }
-            myMarker?.remove()
+        if (prevLatLng != null) {
+            animateMarkerNew(prevLatLng!!, newPosition, myMarker)
         }
 
         if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
+            myMarker?.remove()
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
@@ -263,6 +261,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                     .rotation(driverLocationModel.data?.bearing!!)
             )
         }else{
+            myMarker?.remove()
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
@@ -594,7 +593,9 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
     override fun getCancelRideSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {
         iInterCityTrackPickUpPresenter?.getRideDetails(token, rideID)
+        handler?.removeCallbacksAndMessages(null)
         Constants.SHOULD_RELOAD = true
+        finish()
     }
 
     override fun validationError(validationResponse: ValidationResponse?) {
@@ -626,7 +627,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
     override fun onStop() {
         super.onStop()
-        handler?.removeCallbacksAndMessages(null)
+      //  handler?.removeCallbacksAndMessages(null)
     }
 
     override fun onDestroy() {
