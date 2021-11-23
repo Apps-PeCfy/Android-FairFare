@@ -202,33 +202,7 @@
                     </androidx.cardview.widget.CardView>
 
 
-                    <RelativeLayout
-                        android:id="@+id/rl_estimation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginBottom="20dp">
 
-                        <TextView
-                            android:id="@+id/txt_est_distance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/str_est_distance"
-                            android:textSize="@dimen/text_14sp"
-                            android:fontFamily="@font/notosansjp_regular"
-                            android:textColor="@color/colorGreyText" />
-
-                        <TextView
-                            android:id="@+id/txt_est_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:text="@string/str_est_time"
-                            android:textSize="@dimen/text_14sp"
-                            android:fontFamily="@font/notosansjp_regular"
-                            android:textColor="@color/colorGreyText" />
-
-                    </RelativeLayout>
 
 
                 </LinearLayout>

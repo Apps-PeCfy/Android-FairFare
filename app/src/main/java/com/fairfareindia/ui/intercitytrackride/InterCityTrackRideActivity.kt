@@ -146,9 +146,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
             txtPickUpLocation.text = rideDetailModel?.data?.originAddress
             txtDropUpLocation.text = rideDetailModel?.data?.destinationAddress
 
-
-            txtEstDistance.text = "Est.Distance ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} Km"
-            txtEstTime.text = "Est.Time ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
+            txtDistanceTime.text = "Est.Distance - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / Est.Time - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
 
             txtWaitTime.text = rideDetailModel?.data?.total_wait_time.toString() + "Min"
             txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
