@@ -1190,7 +1190,7 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/text_16sp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
 
                     <LinearLayout
@@ -1249,7 +1249,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginHorizontal="15dp"
                             android:padding="8dp"
                             android:visibility="gone">
 

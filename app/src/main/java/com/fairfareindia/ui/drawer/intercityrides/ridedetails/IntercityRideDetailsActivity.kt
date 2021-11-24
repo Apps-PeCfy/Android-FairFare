@@ -173,7 +173,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             }
 
             if (model?.data?.totalunPaid != null && model?.data?.totalunPaid!! > 0){
-                txtBalanceAmount.text = "" + model?.data?.totalunPaid
+                txtBalanceAmount.text = "₹ " + model?.data?.totalunPaid
                 if (model?.data?.balancePaymentStatus == Constants.PAYMENT_PAID){
                     txtBalanceAmountLabel.text = getString(R.string.txt_balance_fare_paid)
                     btnPayNow.visibility = View.GONE
@@ -186,6 +186,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                     txtBalanceAmount.setTextColor(getColor(R.color.colorGreen))
                 }else{
                     txtBalanceAmountLabel.text = getString(R.string.txt_balance_fare_paid)
+                    rlBalanceAmount.visibility = View.VISIBLE
                     btnPayNow.visibility = View.VISIBLE
                     btnRateRide.visibility = View.GONE
                     btnRegisterDispute.visibility = View.GONE
