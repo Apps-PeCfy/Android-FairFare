@@ -26,5 +26,10 @@ class DriverLocationModel {
         @SerializedName("bearing_accuracy_degrees")
         var bearing_accuracy_degrees: Float = 0F
 
+        @SerializedName("status")
+        var status: String ?= null
+
+
+
     }
 }

@@ -479,6 +479,18 @@ interface NetworkService {
         @Query("ride_id") dispute_id: String?
     ): Call<RideDetailModel?>?
 
+    @POST("storePayment")
+    fun updatePaymentStatus(
+        @Header("Authorization") header: String?,
+        @Query("ride_id") ride_id: String?,
+        @Query("method") method: String?,
+        @Query("amount") amount: String?,
+        @Query("payment_status") payment_status: String?,
+        @Query("gateway_type") gateway_type: String?,
+        @Query("transaction_id") transaction_id: String?
+    ): Call<RideDetailModel?>?
+
+
     @POST("getDriverLocation")
     fun getDriverLocation(
         @Header("Authorization") header: String?,

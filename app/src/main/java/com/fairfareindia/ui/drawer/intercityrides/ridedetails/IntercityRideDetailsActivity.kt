@@ -1,6 +1,8 @@
 package com.fairfareindia.ui.drawer.intercityrides.ridedetails
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,13 +12,17 @@ import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityIntercityRideDetailsBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.disputs.RegisterDisputActivity
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
-import com.fairfareindia.utils.AppUtils
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PreferencesManager
-import com.fairfareindia.utils.ProjectUtilities
+import com.fairfareindia.ui.ridereview.RideReviewActivity
+import com.fairfareindia.utils.*
+import com.razorpay.Checkout
+import com.razorpay.PaymentData
+import com.razorpay.PaymentResultWithDataListener
+import org.json.JSONObject
 
-class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView {
+class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
+    PaymentResultWithDataListener {
     lateinit var binding: ActivityIntercityRideDetailsBinding
     private var context: Context = this
     private var token: String? = null
@@ -24,6 +30,8 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView {
     private var model: RideDetailModel ?= null
     private var preferencesManager: PreferencesManager? = null
     private var iRidesDetailPresenter: IRidesDetailPresenter? = null
+    private var isFromEndRide : Boolean = false
+    private var waitingInfoDialog : WaitingInfoDialog ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +44,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView {
     private fun init() {
 
         rideID = intent.getStringExtra("ride_id")
+        isFromEndRide = intent.getBooleanExtra("isFromEndRide", false)
 
         PreferencesManager.initializeInstance(context)
         preferencesManager = PreferencesManager.instance
@@ -51,7 +60,50 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView {
     private fun setListeners() {
         binding.apply {
             toolbar.setNavigationOnClickListener { onBackPressed() }
+
+            btnPayNow.setOnClickListener {
+                startPayment()
+            }
+
+            imgWaitInfo.setOnClickListener {
+                if(model?.data?.waitings?.isNotEmpty()!!){
+                    openWaitInfoDialog()
+                }
+            }
+
+            btnRateRide.setOnClickListener {
+                if(ProjectUtilities.checkInternetAvailable(context)) {
+                    val intent = Intent(context, RideReviewActivity::class.java)
+                    intent.putExtra("RIDEID", rideID)
+                    startActivity(intent)
+                }else{
+                    ProjectUtilities.showToast(context,getString(R.string.internet_error))
+                }
+            }
+
+            btnRegisterDispute.setOnClickListener {
+                if(ProjectUtilities.checkInternetAvailable(context)) {
+
+                    val intent = Intent(context, RegisterDisputActivity::class.java)
+                    intent.putExtra("vahicalNo", model?.data?.vehicleNo)
+                    intent.putExtra("driverName", model?.data?.driverName)
+                    intent.putExtra("bagCount", model?.data?.luggageQuantity)
+                    intent.putExtra("Datetime", model?.data?.dateTime)
+                    intent.putExtra("vahicalName", model?.data?.vehicleName)
+                    intent.putExtra("vahicalImg", model?.data?.vehicleImageUrl)
+                    intent.putExtra("RIDEID", rideID)
+                    startActivity(intent)
+                }else{
+                    ProjectUtilities.showToast(context,getString(R.string.internet_error))
+                }
+            }
         }
+    }
+
+    private fun openWaitInfoDialog() {
+        waitingInfoDialog = WaitingInfoDialog(context, model?.data?.waitings!!)
+        waitingInfoDialog?.show()
+        waitingInfoDialog?.setCancelable(false)
     }
 
     private fun setData() {
@@ -119,6 +171,42 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView {
             }else{
                 txtRewardsPoint.visibility = View.GONE
             }
+
+            if (model?.data?.totalunPaid != null && model?.data?.totalunPaid!! > 0){
+                txtBalanceAmount.text = "" + model?.data?.totalunPaid
+                if (model?.data?.balancePaymentStatus == Constants.PAYMENT_PAID){
+                    txtBalanceAmountLabel.text = getString(R.string.txt_balance_fare_paid)
+                    btnPayNow.visibility = View.GONE
+                    if (isFromEndRide){
+                        btnRateRide.visibility = View.VISIBLE
+                        btnRegisterDispute.visibility = View.VISIBLE
+                        rlBalanceAmount.visibility = View.VISIBLE
+                    }
+                    txtBalanceAmountLabel.setTextColor(getColor(R.color.colorGreen))
+                    txtBalanceAmount.setTextColor(getColor(R.color.colorGreen))
+                }else{
+                    txtBalanceAmountLabel.text = getString(R.string.txt_balance_fare_paid)
+                    btnPayNow.visibility = View.VISIBLE
+                    btnRateRide.visibility = View.GONE
+                    btnRegisterDispute.visibility = View.GONE
+                    txtBalanceAmountLabel.setTextColor(getColor(R.color.colorRed))
+                    txtBalanceAmount.setTextColor(getColor(R.color.colorRed))
+                }
+
+            }else{
+                btnPayNow.visibility = View.GONE
+                btnRateRide.visibility = View.GONE
+                btnRegisterDispute.visibility = View.GONE
+                rlBalanceAmount.visibility = View.GONE
+            }
+
+            if (isFromEndRide){
+                txtPickUpLocation.text = model?.data?.originAddress
+                txtDropUpLocation.text = model?.data?.destinationAddress
+                llEndRideTop.visibility = View.VISIBLE
+            }else{
+                llEndRideTop.visibility = View.GONE
+            }
         }
     }
 
@@ -129,6 +217,10 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView {
     override fun getRideDetailSuccess(model: RideDetailModel?) {
        this.model = model
         setData()
+    }
+
+    override fun updatePaymentStatusSuccess(model: RideDetailModel?) {
+       iRidesDetailPresenter?.getRideDetail(token, rideID)
     }
 
 
@@ -152,5 +244,63 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView {
 
     override fun onFailure(appErrorMessage: String?) {
         Toast.makeText(context, appErrorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    /**
+     * RAZOR PAY INTEGRATION
+     */
+
+    /**
+     * Razor Pay Payment Gateway Integration
+     */
+
+    private fun startPayment() {
+        /*
+          You need to pass current activity in order to let Razorpay create CheckoutActivity
+         */
+        val activity: Activity = this
+        val checkout = Checkout()
+        checkout.setKeyID(Constants.RAZOR_PAY_KEY)
+        try {
+            val options = JSONObject()
+            options.put("name", SessionManager.getInstance(context).getUserModel()?.name)
+            options.put("description", "Demoing Charges")
+            options.put("send_sms_hash", true)
+            options.put("allow_rotation", false)
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
+            options.put("currency", "INR")
+            options.put("amount", (model?.data?.totalunPaid?.times(100)).toString())
+            val preFill = JSONObject()
+            preFill.put("email", "test@razorpay.com")
+            preFill.put("contact", SessionManager.getInstance(context).getUserModel()?.phoneNo)
+            options.put("prefill", preFill)
+            checkout.open(activity, options)
+        } catch (e: Exception) {
+            Toast.makeText(activity, "Error in payment: " + e.message, Toast.LENGTH_SHORT)
+                .show()
+            e.printStackTrace()
+        }
+    }
+
+    override fun onPaymentError(code: Int, response: String?, paymentData: PaymentData?) {
+        try {
+            Toast.makeText(
+                this,
+                "Payment failed: " + code.toString() + " " + response,
+                Toast.LENGTH_SHORT
+            ).show()
+        } catch (e: java.lang.Exception) {
+            Toast.makeText(context, "Exception in onPaymentError: $e", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onPaymentSuccess(razorpayPaymentID: String?, paymentData: PaymentData?) {
+        try {
+            iRidesDetailPresenter?.updatePaymentStatus(token, rideID, "Online", model?.data?.totalunPaid.toString(), Constants.PAYMENT_PAID, "Razorpay", razorpayPaymentID)
+            //    Toast.makeText(this, "Payment Success: " + paymentData, Toast.LENGTH_SHORT).show()
+        } catch (e: java.lang.Exception) {
+            Toast.makeText(context, "Exception in onPaymentSuccess: $e", Toast.LENGTH_SHORT).show()
+        }
     }
 }

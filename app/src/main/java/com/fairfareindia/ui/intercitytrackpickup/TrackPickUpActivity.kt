@@ -22,7 +22,9 @@ import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.common.CommonMessageDialog
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
+import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
+import com.fairfareindia.ui.ridedetails.RideDetailsActivity
 import com.fairfareindia.utils.APIManager
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PreferencesManager
@@ -561,6 +563,13 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                     getRouteAPI()
                 }
 
+                if (driverLocationModel?.data?.status == Constants.BOOKING_ACTIVE){
+                    handler?.removeCallbacksAndMessages(null)
+                    startActivity(Intent(context, InterCityTrackRideActivity::class.java)
+                        .putExtra("ride_id", rideID))
+                    finish()
+                }
+
                 addCurrentLocationMarker(driverLocationModel)
             }
 
@@ -632,6 +641,6 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
     override fun onDestroy() {
         super.onDestroy()
-        handler?.removeCallbacksAndMessages(null);
+        handler?.removeCallbacksAndMessages(null)
     }
 }

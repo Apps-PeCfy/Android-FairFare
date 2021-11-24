@@ -32,6 +32,7 @@
     <string name="drawer_my_account">My Account</string>
     <string name="drawer_mylocation">My Locations</string>
     <string name="drawer_myrides">My Rides</string>
+    <string name="drawer_wallet">Wallet</string>
     <string name="drawer_mydisput">My Disputes</string>
     <string name="drawer_mycomplents">My Complaints</string>
     <string name="drawer_ratecard">Rate Card</string>
@@ -151,6 +152,14 @@
     <string name="lbl_actual_distance_remaining_distance">Actual distance/Remaining distance</string>
     <string name="lbl_actual_time_remaining_time">Actual time/ Remaining Time</string>
     <string name="str_current_fare">Current Fare</string>
+    <string name="txt_end_rise_message">Your Current Ride is Completed</string>
+    <string name="str_ride_details">Ride Details</string>
+    <string name="btn_settle_and_close">Settle and Close</string>
+    <string name="btn_register_dispute">Register Dispute</string>
+    <string name="btn_rate_the_ride">Rate The Ride</string>
+    <string name="txt_balance_fare_paid">Balance Fare Paid</string>
+    <string name="txt_balance_fare_not_paid">Balance Fare to be Paid</string>
+    <string name="str_location">Location</string>
 
 
 </resources>

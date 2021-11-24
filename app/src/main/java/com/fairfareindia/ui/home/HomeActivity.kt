@@ -62,6 +62,7 @@ import com.fairfareindia.ui.drawer.privacypolicy.ContentPage
 import com.fairfareindia.ui.drawer.privacypolicy.TermsOfUse
 import com.fairfareindia.ui.drawer.ratecard.RateCard
 import com.fairfareindia.ui.drawer.setting.Setting
+import com.fairfareindia.ui.drawer.wallet.WalletFragment
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.intercity.InterCityActivity
@@ -871,6 +872,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
+                11,
+                getString(R.string.drawer_wallet),
+                R.drawable.ic_nav_ratecard
+            )
+        )
+
+        drawerPojoArrayList!!.add(
+            DrawerPojo(
                 3,
                 getString(R.string.drawer_mydisput),
                 R.drawable.ic_nav_mydisput
@@ -981,8 +990,24 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 }
             }
 
-
             2 -> {
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+
+                    spinnerLang?.visibility = View.GONE
+                    homeMain?.visibility = View.GONE
+                    mDrawerLayout?.closeDrawer(Gravity.LEFT)
+                    mDrawerLayout?.closeDrawer(Gravity.START)
+                    replaceFragment(WalletFragment())
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+                }
+            }
+
+
+            3 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1000,7 +1025,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            3 -> {
+            4 -> {
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
                     spinnerLang!!.visibility = View.GONE
@@ -1019,7 +1044,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            4 -> {
+            5 -> {
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
                     spinnerLang!!.visibility = View.GONE
@@ -1036,7 +1061,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            5 -> {
+            6 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1056,7 +1081,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            6 -> {
+            7 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1104,7 +1129,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            7 -> {
+            8 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1124,7 +1149,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            8 -> {
+            9 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1144,7 +1169,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            9 -> {
+            10 -> {
 
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
@@ -1164,7 +1189,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
             }
-
 
             else -> {
             }

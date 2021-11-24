@@ -55,5 +55,57 @@ class RidesDetailImplementer(private val view: IRideDetailView) : IRidesDetailPr
         })
     }
 
+    override fun updatePaymentStatus(
+        token: String?,
+        rideID: String?,
+        method: String?,
+        amount: String?,
+        payment_status: String?,
+        gateway_type: String?,
+        transaction_id: String?
+    ) {
+        view.showWait()
+        val call = ApiClient.client.updatePaymentStatus("Bearer $token", rideID, method, amount, payment_status, gateway_type, transaction_id)
+        call!!.enqueue(object : Callback<RideDetailModel?> {
+            override fun onResponse(
+                call: Call<RideDetailModel?>,
+                response: Response<RideDetailModel?>
+            ) {
+
+                view.removeWait()
+
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        view.removeWait()
+                        view.updatePaymentStatusSuccess(response.body())
+                    }
+                } else if (response.code() == 422) {
+                    view.removeWait()
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        view.validationError(pojo)
+                    } catch (exception: IOException) {
+                    }
+
+                }else{
+                    view.onFailure(response.message())
+                }
+            }
+
+            override fun onFailure(
+                call: Call<RideDetailModel?>,
+                t: Throwable
+            ) {
+                view.removeWait()
+                view.onFailure(t.message)
+            }
+        })
+    }
+
 
 }

@@ -50,6 +50,12 @@ object Constants {
     var BOOKING_CANCELLED = "Cancelled"
 
     // INTERCITY WAY FLAG
+    var PAYMENT_PAID = "Paid"
+    var PAYMENT_UNPAID = "Unpaid"
+
+
+
+    // INTERCITY WAY FLAG
     var ONE_WAY_FLAG = "OneWay"
     var BOTH_WAY_FLAG = "BothWay"
 

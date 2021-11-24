@@ -101,6 +101,20 @@ class RideDetailModel {
         @SerializedName("rewards")
         var rewards: String? = null
 
+        @SerializedName("totalunPaid")
+        var totalunPaid: Double = 0.0
+
+        @SerializedName("balancePaymentStatus")
+        var balancePaymentStatus: String ?= null
+
+
+        @SerializedName("totalPaid")
+        var totalPaid: Double = 0.0
+
+        @SerializedName("booking_id")
+        var booking_id: String ?= null
+
+
         @SerializedName("canToll")
         var canToll: String? = null
 
@@ -128,6 +142,37 @@ class RideDetailModel {
 
         @SerializedName("actualTrackRide")
         var actualTrackRide: Estimated? = null
+
+        @SerializedName("waitings")
+        var waitings: ArrayList<WaitTimeModel> = ArrayList()
+
+    }
+
+    inner class WaitTimeModel {
+
+        @SerializedName("id")
+        var id = 0
+
+        @SerializedName("lat")
+        var lat: String? = null
+
+        @SerializedName("long")
+        var long: String? = null
+
+        @SerializedName("fullAddress")
+        var fullAddress: String? = null
+
+        @SerializedName("waitAt")
+        var waitAt: String? = null
+
+        @SerializedName("startTime")
+        var startTime: String? = null
+
+        @SerializedName("endTime")
+        var endTime: String? = null
+
+        @SerializedName("waitingTime")
+        var waitingTime: String? = null
 
     }
 

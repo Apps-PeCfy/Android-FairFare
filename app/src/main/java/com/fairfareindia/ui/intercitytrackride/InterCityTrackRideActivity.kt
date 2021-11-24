@@ -19,9 +19,9 @@ import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityInterCityTrackRideBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
-import com.fairfareindia.ui.intercitytrackpickup.CustomInfoWindowGoogleMap
 import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
@@ -36,8 +36,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import org.json.JSONObject
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityTrackRideView {
     lateinit var binding: ActivityInterCityTrackRideBinding
@@ -501,6 +500,14 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                 driverLat = driverLocationModel?.data?.latitude.toString()
                 driverLong = driverLocationModel?.data?.longitude.toString()
 
+                if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED){
+                    handler?.removeCallbacksAndMessages(null)
+                    startActivity(Intent(context, IntercityRideDetailsActivity::class.java)
+                        .putExtra("ride_id", rideID)
+                        .putExtra("isFromEndRide", true))
+                    finish()
+                }
+
                 addCurrentLocationMarker(driverLocationModel)
 
                 if (!isRouteDrawn){
@@ -633,5 +640,15 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
 
     override fun onFailure(appErrorMessage: String?) {
         Toast.makeText(context, appErrorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        handler?.removeCallbacksAndMessages(null)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler?.removeCallbacksAndMessages(null)
     }
 }

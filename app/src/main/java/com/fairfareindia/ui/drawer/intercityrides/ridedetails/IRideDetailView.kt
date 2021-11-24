@@ -9,5 +9,6 @@ interface IRideDetailView : IBaseView {
     fun validationError(validationResponse: ValidationResponse?)
 
     fun getRideDetailSuccess(model: RideDetailModel?)
+    fun updatePaymentStatusSuccess(model: RideDetailModel?)
 
 }
