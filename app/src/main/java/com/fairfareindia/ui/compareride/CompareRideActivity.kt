@@ -278,8 +278,8 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         tv_myCurrentLocation!!.text = SourceAddress
         tv_myDropUpLocation!!.text = destinationAddress
 
-        if (baggs.equals("Luggage")) {
-            tv_baggs!!.text = "No " + baggs
+        if (baggs.equals(getString(R.string.str_luggage))) {
+            tv_baggs!!.text = getString(R.string.str_no) + " "+ baggs
 
         } else {
             tv_baggs!!.text = baggs
@@ -287,7 +287,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         }
         sourcePlaceID = results[0]!!.placeId
         DestinationPlaceID = results1[0]!!.placeId
-        mToolbar!!.title = "Compare Rides"
+        mToolbar!!.title = getString(R.string.title_compare_ride)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener {
@@ -304,7 +304,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
         replacedistance = distance!!.replace(" km", "")
 
-        if ((baggs == "1 Luggage") || (baggs == "Luggage")) {
+        if ((baggs == "1 Luggage") || (baggs == getString(R.string.str_luggage))) {
             replacebags = baggs!!.replace(" Luggage", "")
 
         } else {
@@ -737,7 +737,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     mPolyline!!.remove()
                 }
                 mPolyline = mMap!!.addPolyline(lineOptions)
-            } else Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+            } else Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                 .show()
         }
     }

@@ -137,14 +137,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Effective Date"
+                android:text="@string/str_effective_date"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
             <TextView
-                android:text="The fare charges mentioned are effective from 1st March 2021."
+                android:text="@string/str_msg_rate_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -346,14 +346,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Toll Charges"
+                android:text="@string/str_toll_charges"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
             <TextView
-                android:text="Toll will be chargeable at actual."
+                android:text="@string/msg_total_charges"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"

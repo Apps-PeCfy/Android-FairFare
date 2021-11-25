@@ -96,7 +96,7 @@
                     android:textColor="@color/colorGreyText"
                     android:textColorHint="@color/colorGreyText"
                     android:gravity="top"
-                    android:hint="Enter your review"
+                    android:hint="@string/hint_enter_your_review"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:textSize="@dimen/_10sdp" />
@@ -121,7 +121,7 @@
             android:fontFamily="@font/notosansjp_regular"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="Submit"
+            android:text="@string/btn_submit"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
 

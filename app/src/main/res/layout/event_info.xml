@@ -48,7 +48,7 @@
                     android:paddingTop="@dimen/_25sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_4sdp"
-                    android:text="Location"
+                    android:text="@string/str_location"
                     android:textColor="@color/Black"
                     android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:gravity="center"
-                    android:text="Wait Time"
+                    android:text="@string/str_wait_time"
                     android:textColor="@color/Black"
                     android:textStyle="bold" />
 

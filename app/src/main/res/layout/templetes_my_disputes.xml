@@ -138,7 +138,7 @@
                                 android:fontFamily="@font/notosansjp_bold"
                                 android:gravity="center"
                                 android:includeFontPadding="false"
-                                android:text="Actual Meter Fare"
+                                android:text="@string/lbl_actual_meter_fare"
                                 android:textColor="@color/gradientstartcolor" />
 
                             <TextView
@@ -184,7 +184,7 @@
                             android:fontFamily="@font/notosansjp_bold"
                             android:gravity="center_vertical"
                             android:includeFontPadding="false"
-                            android:text="Pick-up Location"
+                            android:text="@string/str_pick_up_location"
                             android:textColor="@color/gradientstartcolor" />
 
                         <View
@@ -220,7 +220,7 @@
                                 android:includeFontPadding="false"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
-                                android:text="Drop-off Location " />
+                                android:text="@string/str_drop_off_location" />
 
 
 
@@ -293,7 +293,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
-                    android:text="File Complaint"
+                    android:text="@string/btn_file_complaint"
                     android:textColor="@color/colorText" />
 
                 <View
@@ -310,7 +310,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
-                    android:text="Delete Dispute"
+                    android:text="@string/str_delete_dispute"
                     android:textColor="@color/colorText" />
 
             </LinearLayout>

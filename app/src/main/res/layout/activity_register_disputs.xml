@@ -233,7 +233,7 @@
                 android:gravity="top"
                 android:textColor="@color/colorGreyText"
                 android:textColorHint="@color/colorGreyText"
-                android:hint="Dispute reason"
+                android:hint="@string/lbl_dispute_reason"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
@@ -248,7 +248,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/roundedcorner"
                 android:gravity="top"
-                android:hint="Additional comments"
+                android:hint="@string/lbl_additional_comments"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:textColor="@color/colorGreyText"
@@ -263,7 +263,7 @@
                 android:layout_below="@+id/editReview"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:enabled="false"
-                android:hint="Start Trip Meter"
+                android:hint="@string/hint_start_trip_meter"
                 android:inputType="number"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textColor="@color/colorGreyText"
@@ -280,7 +280,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edt_meterReading"
-                android:hint="End Trip Meter"
+                android:hint="@string/hint_end_trip_meter"
                 android:inputType="number"
                 android:paddingEnd="@dimen/_10sdp" />
 
@@ -293,7 +293,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edtEndMeterReading"
-                android:hint="Actual Meter Fare"
+                android:hint="@string/hint_actual_meter_fare"
                 android:inputType="numberDecimal"
                 android:paddingEnd="@dimen/_10sdp"
 
@@ -310,7 +310,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Photos"
+                    android:text="@string/str_photos"
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/_15sdp"
                     android:textStyle="bold" />
@@ -324,7 +324,7 @@
                     android:drawableStart="@drawable/iv_uploadphoto"
                     android:drawablePadding="@dimen/_5sdp"
                     android:padding="@dimen/_5sdp"
-                    android:text="UPLOAD PHOTO"
+                    android:text="@string/str_upload_photo"
                     android:textColor="@color/gradientstartcolor"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />

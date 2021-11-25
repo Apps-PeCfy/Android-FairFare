@@ -1,4 +1,5 @@
 <resources>
+
     <!--Non Changeble Strings-->
 
     <string name="str_english">English</string>
@@ -91,7 +92,8 @@
     <string name="str_logout">Sign Out</string>
     <string name="str_app_language">Choose app language</string>
 
-    <string name="title_home">Get Fair Fare</string>
+    <string name="title_home">योग्य भाडे मिळवा</string>
+
 
     <string name="str_no_route_found">No route is found</string>
 

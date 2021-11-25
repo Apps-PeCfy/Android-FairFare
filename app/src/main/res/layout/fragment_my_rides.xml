@@ -25,7 +25,7 @@
             android:drawableEnd="@drawable/ic_sort_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Filter By Status: "/>
+            android:text="@string/str_filter_by_status"/>
 
 
     </RelativeLayout>

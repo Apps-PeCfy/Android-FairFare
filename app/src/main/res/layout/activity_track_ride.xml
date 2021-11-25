@@ -55,7 +55,7 @@
                 android:background="@drawable/shape_roundedbtn"
                 android:fontFamily="@font/notosansjp_bold"
                 android:padding="@dimen/_5sdp"
-                android:text="Track Board"
+                android:text="@string/str_track_board"
                 android:textColor="@color/White" />
 
 
@@ -113,7 +113,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:text="Auto"
                             android:textAllCaps="true"
                             android:textColor="@color/colorText"
                             android:textSize="@dimen/_12sdp"
@@ -153,7 +152,7 @@
                                 android:includeFontPadding="false"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
-                                android:text="Pick-up Location"
+                                android:text="@string/str_pick_up_location"
                                 android:textColor="@color/gradientstartcolor" />
 
                             <View
@@ -180,7 +179,7 @@
                                 android:includeFontPadding="false"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
-                                android:text="Drop-off Location "
+                                android:text="@string/str_drop_off_location"
                                 android:textColor="@color/colorGreyText" />
 
 
@@ -209,7 +208,7 @@
                             android:id="@+id/tvEstDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Est.Distance"
+                            android:text="@string/str_est_distance"
                             android:textColor="@color/colorGreyText" />
 
                         <TextView
@@ -217,7 +216,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="Est.Time"
+                            android:text="@string/str_est_time"
                             android:textColor="@color/colorGreyText" />
 
                     </RelativeLayout>
@@ -236,7 +235,7 @@
                         android:includeFontPadding="false"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="End Ride"
+                        android:text="@string/btn_end_ride"
                         android:textAllCaps="false"
                         android:textColor="@color/White"
                         android:textSize="@dimen/_15sdp" />

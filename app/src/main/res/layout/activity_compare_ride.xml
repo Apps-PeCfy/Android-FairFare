@@ -13,32 +13,11 @@
         android:background="@drawable/app_gradient"
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/_10sdp"
-
         android:theme="@style/BaseTheme"
         app:buttonGravity="center_vertical"
         app:navigationIcon="?attr/homeAsUpIndicator"
 
         />
-
-    <!--  <androidx.appcompat.widget.Toolbar
-          android:id="@+id/toolbar_home"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_60sdp"
-          app:buttonGravity="center_vertical"
-          app:navigationIcon="?attr/homeAsUpIndicator">
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/notosansjp_bold"
-              android:includeFontPadding="false"
-              android:text="Compare Rides"
-              android:textColor="@color/White"
-              android:textSize="@dimen/_15sdp" />
-
-      </androidx.appcompat.widget.Toolbar>-->
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -94,7 +73,7 @@
                         android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:text="Pick-up Location"
+                        android:text="@string/str_pick_up_location"
                         android:textColor="@color/gradientstartcolor" />
 
                     <View
@@ -111,7 +90,6 @@
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
                         android:textColor="@color/colorGreyText"
-
                         android:id="@+id/tv_myDropUpLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -123,7 +101,7 @@
                         android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:text="Drop-off Location " />
+                        android:text="@string/str_drop_off_location" />
 
 
                     <View
@@ -194,7 +172,7 @@
                                 android:paddingTop="@dimen/_5sdp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Schedule Date &amp; Time" />
+                                android:text="@string/str_schedule_date_and_time" />
 
 
                             <TextView
@@ -226,7 +204,7 @@
                                 android:paddingTop="@dimen/_5sdp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No. of Bags" />
+                                android:text="@string/str_no_of_bags" />
 
 
                             <TextView
@@ -265,7 +243,7 @@
                             android:paddingStart="@dimen/_5sdp"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Available Rides"
+                            android:text="@string/available_rides"
                             android:textSize="@dimen/_12sdp" />
 
 
@@ -282,7 +260,7 @@
 
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Sort"
+                            android:text="@string/str_sort"
                             android:textSize="@dimen/_12sdp" />
 
                         <androidx.recyclerview.widget.RecyclerView

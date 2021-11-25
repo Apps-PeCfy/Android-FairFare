@@ -78,7 +78,7 @@
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
-                            android:hint="Enter Phone Number"
+                            android:hint="@string/hint_enter_phone_number"
                             android:includeFontPadding="false"
                             android:maxLines="1"
                             android:textColor="@color/colorGreyText"
@@ -106,7 +106,7 @@
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
-                            android:hint="Enter Email Id"
+                            android:hint="@string/hint_enter_email_id"
                             android:includeFontPadding="false"
                             android:maxLines="1"
                             android:textColor="@color/colorGreyText"
@@ -189,7 +189,7 @@
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
-                            android:hint="Enter Birthdate"
+                            android:hint="@string/hint_enter_birth_date"
                             android:includeFontPadding="false"
                             android:maxLines="1"
                             android:textColor="@color/colorGreyText"
@@ -217,7 +217,7 @@
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
-                            android:hint="Enter Profession"
+                            android:hint="@string/hint_enter_profession"
                             android:includeFontPadding="false"
                             android:inputType="textCapWords"
                             android:maxLines="1"
@@ -248,7 +248,7 @@
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
-                            android:hint="Enter Home City"
+                            android:hint="@string/hint_enter_home_city"
                             android:includeFontPadding="false"
                             android:inputType="textCapWords"
                             android:textColor="@color/colorGreyText"
@@ -267,7 +267,7 @@
 
 
         </ScrollView>
-        >
+
 
 
         <TextView
@@ -291,7 +291,7 @@
             android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/shape_roundedbtn"
             android:fontFamily="@font/notosansjp_bold"
-            android:text="Save"
+            android:text="@string/btn_save"
             android:textColor="@color/White" />
 
 

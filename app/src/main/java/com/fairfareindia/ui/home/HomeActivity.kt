@@ -1,7 +1,7 @@
 package com.fairfareindia.ui.home
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.ProgressDialog
@@ -15,7 +15,6 @@ import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
-import android.location.LocationManager
 import android.os.*
 import android.text.format.DateFormat
 import android.util.Log
@@ -66,6 +65,7 @@ import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.utils.*
 import com.fairfareindia.utils.ProjectUtilities.showProgressDialog
+import com.google.android.gms.location.LocationSettingsStates
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -101,7 +101,6 @@ import java.util.*
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     OnTimeSetListener, OnItemSelectedListener, AdapterView.OnItemClickListener, ICompareRideView,
     LocationListener {
-    protected var locationManager: LocationManager? = null
 
     protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
 
@@ -129,7 +128,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     var timeSpinner = arrayOf<String?>("Now", "Later")
 
-    // var cityspinner = Array<String?>
     var cityspinner = ArrayList<String>()
     var luggageSpinner = arrayOf<String?>(
         "Luggage", "1 Luggage", "2 Luggage", "3 Luggage", "4 Luggage", "5 Luggage"
@@ -272,7 +270,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var spnrbag = 0
     var cityID = ""
     var spnrtime = 0
-    var flgstreetaddress = true
 
     private var drawerPojoArrayList: ArrayList<DrawerPojo>? = null
     private var drawerAdapter: DrawerAdapter? = null
@@ -315,7 +312,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        init()
+    }
 
+    private fun init(){
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
 
@@ -328,14 +328,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         spinnerLang!!.visibility = View.VISIBLE
 
-        if (Constants.IS_OLD_PICK_UP_CODE) {
-            locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-            locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-        } else {
-            // ILOMADEV :- New method for location update
-            initLocationUpdates()
-        }
+        initLocationUpdates()
 
 
         //  appSignatureHelper = AppSignatureHelper(this)
@@ -357,12 +350,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         iCompareRidePresenter = CompareRideImplementer(this)
 
 
-
-
-
-
         initView()
-        // Initialize drawer list
         setListData()
 
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
@@ -442,8 +430,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         }
 
         EventBus.getDefault().register(this)
-
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -844,15 +830,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             )
         )
 
-
-        /* drawerPojoArrayList!!.add(
-             DrawerPojo(
-                 2,
-                 getString(R.string.drawer_mylocation),
-                 R.drawable.ic_nav_mylocation
-             )
-         )
- */
         drawerPojoArrayList!!.add(
             DrawerPojo(
                 2,
@@ -884,6 +861,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 R.drawable.ic_nav_ratecard
             )
         )
+
+        drawerPojoArrayList!!.add(
+            DrawerPojo(
+                12,
+                getString(R.string.drawer_language),
+                R.drawable.ic_nav_mylocation
+            )
+        )
+
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
@@ -1027,8 +1013,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 }
             }
 
-
             5 -> {
+                showLanguageDialog()
+            }
+
+
+            6 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1048,7 +1038,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            6 -> {
+            7 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1096,7 +1086,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            7 -> {
+            8 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1116,7 +1106,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            8 -> {
+            9 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1136,7 +1126,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            9 -> {
+            10 -> {
 
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
@@ -1161,6 +1151,39 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             else -> {
             }
         }
+    }
+
+    private fun showLanguageDialog() {
+        val items = arrayOf<CharSequence>(
+            getString(R.string.str_english),
+            getString(R.string.str_hindi),
+            getString(R.string.str_marathi)
+        )
+        val builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.str_app_language))
+        builder.setItems(items) { dialog, item ->
+            if (items[item] == getString(R.string.str_english)) {
+                preferencesManager?.setLanguage(getString(R.string.str_eng_code))
+                SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_eng_code))
+                restartApp()
+            } else if (items[item] == getString(R.string.str_hindi)) {
+                preferencesManager?.setLanguage(getString(R.string.str_hindi_code))
+                SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_hindi_code))
+                restartApp()
+            }else if (items[item] == getString(R.string.str_marathi)) {
+                preferencesManager?.setLanguage(getString(R.string.str_marathi_code))
+                SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_marathi_code))
+                restartApp()
+            }
+        }
+        builder.show()
+    }
+
+    private fun restartApp() {
+        val i = Intent(this, HomeActivity::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
     }
 
 
@@ -1205,7 +1228,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     private fun initView() {
-        toolbar!!.title = "Get Fair Fare"
+        toolbar?.title = getString(R.string.title_home)
         toolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(toolbar)
         lvDrawer!!.onItemClickListener = this
@@ -1666,13 +1689,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
     override fun onMapReady(googleMap: GoogleMap) {
-        //googleMap.clear()
         mMap = googleMap
         mapAndLocationReady()
-        // mMap!!.getUiSettings().setAllGesturesEnabled(false)
-        //  mMap!!.getUiSettings().setScrollGesturesEnabled(false)
-
-
     }
 
 
@@ -1764,31 +1782,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         if (formaredDateLater != null) {
 
-            val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-            var date1: Date? = null
-            var date2: Date? = null
-            val today = Date()
-            var formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-            var dateq: Date? = null
-            try {
-                dateq = formatter.parse(formaredDateLater)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            formatter = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-
-            try {
-                date1 = simpleDateFormat.parse(simpleDateFormat.format(today))
-                date2 = simpleDateFormat.parse(formatter.format(dateq))
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-
-            var different: Long? = null
-            different = date2!!.time - date1!!.time
-
-
-
             if (estDistanceInMeter > 499) {
 
 
@@ -1797,8 +1790,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else {
                     airportYesOrNO = "NO"
                 }
-//                PortAir =
-//                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
+
                 replacedistance = estDistance!!.replace(" km", "")
 
 
@@ -1916,8 +1908,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else {
                     airportYesOrNO = "NO"
                 }
-//                PortAir =
-//                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
                 replacedistance = estDistance!!.replace(" km", "")
 
                 if ((spinnerLuggagetxt == "1 Luggage")) {
@@ -2152,17 +2142,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 estDistance =
                     DecimalFormat("####.#").format((estDistance!!.toDouble() / 1000)) + " km"
 
-
-                /* if((distance.getString("text")).contains("mi")){
-                     estDistance = distance.getString("text")
-                     estDistance = estDistance!!.replace(" mi", "")
-                     var estD =  estDistance!!.toDouble()
-                     estD = estD * (1.60934)
-                 }else{
-                     estDistance = distance.getString("text")
-                 }
- */
-                // Starts parsing data
                 routes = parser.parse(jObject)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -2233,7 +2212,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             spnrbag = position
             spinnerLuggagetxt = spinner_Luggage!!.selectedItem.toString()
         } else if (parent!!.id == R.id.spinnerLang) {
-            city_Name = cityPojoList!!.get(position).name
+            if (position < cityPojoList.size){
+                city_Name = cityPojoList[position].name
+            }
+
             if (city_Name.equals("Choose City")) {
 
             } else {
@@ -2257,12 +2239,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 } else {
-                    cityID = cityPojoList!!.get(position).id.toString()
-                    city_Name = cityPojoList!!.get(position).name
-                    preferencesManager!!.setStringValue(
-                        Constants.SHARED_PREFERENCE_CITY_ID,
-                        cityID
-                    )
+                    if (position < cityPojoList.size){
+                        cityID = cityPojoList!!.get(position).id.toString()
+                        city_Name = cityPojoList!!.get(position).name
+                        preferencesManager!!.setStringValue(
+                            Constants.SHARED_PREFERENCE_CITY_ID,
+                            cityID
+                        )
+                    }
+
 
                 }
             }
@@ -2402,16 +2387,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     }
 
-    private fun updateCameraBearing(mMap: GoogleMap?, bering: Float) {
-        if (mMap == null) return
-        val camPos = CameraPosition
-            .builder(
-                mMap.getCameraPosition() // current Camera
-            )
-            .bearing(bering)
-            .build()
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(camPos))
-    }
+
 
     private fun getLocationReady() {
 
@@ -2546,6 +2522,23 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             ).show()
         }
         Handler().postDelayed({ doubleBackPressed = false }, 3000)
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val states: LocationSettingsStates = LocationSettingsStates.fromIntent(data)
+        when (requestCode) {
+            1000 ->
+                if (resultCode == Activity.RESULT_OK){
+                    initLocationUpdates()
+                }else if (resultCode == Activity.RESULT_CANCELED){
+                    finish()
+                }
+        }
     }
 
 

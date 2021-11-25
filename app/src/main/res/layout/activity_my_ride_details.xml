@@ -259,7 +259,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Estimated"
+                                    android:text="@string/str_estimated"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -278,7 +278,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Actual"
+                                    android:text="@string/str_actual"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -305,7 +305,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Distance"
+                                    android:text="@string/str_distance"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -367,7 +367,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Ride Time"
+                                    android:text="@string/str_ride_time"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -436,7 +436,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerInParent="true"
-                                        android:text="Wait Time"
+                                        android:text="@string/str_wait_time"
                                         android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
@@ -513,7 +513,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Basic Fare"
+                                    android:text="@string/str_basic_fare"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -578,7 +578,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Wait Charges"
+                                    android:text="@string/str_wait_charges"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -642,7 +642,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Night Charges"
+                                    android:text="@string/str_night_charges"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -707,7 +707,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Luggage"
+                                    android:text="@string/str_luggage"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -778,7 +778,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:text="Toll Charges"
+                                        android:text="@string/str_toll_charges"
                                         android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
@@ -856,7 +856,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Surcharge"
+                                    android:text="@string/str_surcharge"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -920,7 +920,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Total Fare"
+                                    android:text="@string/str_total_fare"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -994,7 +994,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:text="Ride Ratings"
+                                android:text="@string/str_ride_ratings"
                                 android:textColor="@color/colorText"
                                 android:textSize="@dimen/text_18sp"
                                 android:textStyle="bold" />
@@ -1036,7 +1036,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="@font/notosansjp_regular"
-                            android:text="Photos"
+                            android:text="@string/str_photos"
                             android:textColor="@color/colorText"
                             android:textSize="@dimen/text_18sp"
                             android:textStyle="bold"
@@ -1054,7 +1054,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:text="Vehicle Number"
+                                android:text="@string/str_vehicle_number"
                                 android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_16sp"
                                 android:textStyle="bold"
@@ -1072,7 +1072,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:text="Start Trip Meter"
+                                android:text="@string/str_start_trip_meter"
                                 android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_16sp"
                                 android:textStyle="bold"
@@ -1090,7 +1090,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:text="Driver"
+                                android:text="@string/str_driver"
                                 android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_16sp"
                                 android:textStyle="bold"
@@ -1108,7 +1108,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:text="Badge Number"
+                                android:text="@string/str_badge_number"
                                 android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_16sp"
                                 android:textStyle="bold"

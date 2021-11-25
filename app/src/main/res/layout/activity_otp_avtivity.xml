@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="@dimen/_14sdp"
-            android:text="OTP Verification"
+            android:text="@string/title_otp_verification"
             android:fontFamily="@font/notosansjp_bold"
             android:includeFontPadding="false" />
 
@@ -41,7 +41,7 @@
         android:layout_marginTop="@dimen/_46sdp"
         android:layout_gravity="center_horizontal"
         android:lineSpacingExtra="2sp"
-        android:text="A code has been sent to"
+        android:text="@string/str_a_code_has_been_sent_to"
         android:textAppearance="@style/top_line" />
 
     <TextView
@@ -84,7 +84,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You will get OTP by SMS in"
+            android:text="@string/str_you_will_get_otp_by_sms_in"
             android:textColor="@color/colorText" />
 
         <TextView
@@ -130,7 +130,7 @@
         android:background="@drawable/shape_roundedbtn"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="Finish"
+        android:text="@string/btn_finish"
         android:textAllCaps="false"
         android:textColor="@color/White"
         android:textSize="@dimen/_15sdp" />

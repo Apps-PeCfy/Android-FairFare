@@ -38,7 +38,7 @@
         android:onClick="skip"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
-        android:text="Skip"
+        android:text="@string/str_skip"
         android:textColor="@android:color/darker_gray"
         android:textSize="20dp" />
 
@@ -58,7 +58,7 @@
         android:layout_marginBottom="@dimen/_20sdp"
         android:gravity="center"
         android:onClick="getStarted"
-        android:text="Get Started"
+        android:text="@string/str_get_started"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_14sdp"
         android:visibility="gone" />

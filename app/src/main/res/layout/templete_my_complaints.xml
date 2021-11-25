@@ -149,7 +149,7 @@
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
                     android:textColor="@color/gradientstartcolor"
-                    android:text="Under Review" />
+                    android:text="@string/str_under_review" />
 
             </LinearLayout>
 
@@ -190,7 +190,7 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:text="Pick-up Location"
+                        android:text="@string/str_pick_up_location"
                         android:textColor="@color/gradientstartcolor" />
 
                     <View
@@ -225,7 +225,7 @@
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Drop-off Location " />
+                            android:text="@string/str_drop_off_location" />
 
 
 

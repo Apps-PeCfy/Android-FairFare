@@ -16,7 +16,8 @@ public class CommonAppPermission {
     };
 
 
-    static String[] PERMISSION_CAMERA = {Manifest.permission.CAMERA};
+    static String[] PERMISSION_CAMERA = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE};
 
 
     static String[] PERMISSIONS_BACKGROUND_LOCATION = {Manifest.permission.ACCESS_BACKGROUND_LOCATION};
@@ -184,6 +185,48 @@ public class CommonAppPermission {
 //            }
         }
         return true;
+    }
+
+    public static boolean requestLocationPermission(Context context){
+        String[] LOCATION_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (!hasLocationPermission(context)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions((Activity) context, LOCATION_PERMISSIONS, PERMISSION_ALL);
+
+                return false;
+            }
+            else if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                ActivityCompat.requestPermissions((Activity) context, LOCATION_PERMISSIONS, PERMISSION_ALL);
+
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+    public static boolean requestCameraPermission(Context context){
+        if (!hasCameraPermission(context) && !hasExternalStoragePermission(context)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.CAMERA)) {
+
+                ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, PERMISSION_ALL);
+                return false;
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, PERMISSION_ALL);
+
+                return false;
+            }else if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, PERMISSION_ALL);
+
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
 }

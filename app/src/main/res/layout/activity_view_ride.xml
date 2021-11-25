@@ -77,7 +77,7 @@
                         android:includeFontPadding="false"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="Pick-up Location"
+                        android:text="@string/str_pick_up_location"
                         android:textColor="@color/gradientstartcolor" />
 
                     <View
@@ -104,7 +104,7 @@
                         android:includeFontPadding="false"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="Drop-off Location "
+                        android:text="@string/str_drop_off_location"
                         android:textColor="@color/colorGreyText" />
 
 
@@ -172,7 +172,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingStart="@dimen/_15sdp"
-                                android:text="Auto"
                                 android:textSize="@dimen/_12sdp"
                                 android:textStyle="bold" />
 
@@ -248,8 +247,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_5sdp"
-                                        android:paddingBottom="@dimen/_5sdp"
-                                        android:text="Thu, Sept 3, at 23:35" />
+                                        android:paddingBottom="@dimen/_5sdp" />
 
 
                                     <RelativeLayout
@@ -260,25 +258,21 @@
 
                                         <TextView
                                             android:textColor="@color/colorGreyText"
-
                                             android:id="@+id/tv_Person"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:drawableStart="@drawable/iv_person"
                                             android:drawablePadding="@dimen/_3sdp"
-                                            android:text="4"
                                             android:visibility="visible" />
 
 
                                         <TextView
                                             android:textColor="@color/colorGreyText"
-
                                             android:id="@+id/tv_time"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="@dimen/_10sdp"
-                                            android:layout_toRightOf="@+id/tv_Person"
-                                            android:text="8 KM(15 Min)" />
+                                            android:layout_toRightOf="@+id/tv_Person" />
 
 
                                     </RelativeLayout>
@@ -307,7 +301,7 @@
                                 android:textStyle="bold"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Estimated Fare" />
+                                android:text="@string/str_estimated_fare" />
 
                             <TextView
                                 android:textColor="@color/colorGreyText"
@@ -349,7 +343,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="@dimen/_15sdp"
-                                    android:text="Additional Charges" />
+                                    android:text="@string/str_additional_charges" />
 
                                 <TextView
                                     android:layout_width="@dimen/_11sdp"
@@ -403,7 +397,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Wait Time Charges" />
+                                    android:text="@string/str_wait_time_charges" />
 
                                 <TextView
                                     android:id="@+id/tv_Wait_time_charge"
@@ -441,7 +435,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Night Charges" />
+                                    android:text="@string/str_night_charges" />
 
                                 <TextView
                                     android:textColor="@color/colorGreyText"
@@ -485,7 +479,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Luggage Charges" />
+                                    android:text="@string/str_luggage_charges" />
 
                                 <TextView
                                     android:id="@+id/tv_Luggage_Charges"
@@ -536,7 +530,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:text="Toll Charges" />
+                                        android:text="@string/str_toll_charges" />
 
                                     <ImageView
                                         android:id="@+id/ivViewTollInfo"
@@ -594,7 +588,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Surcharges" />
+                                    android:text="@string/str_surcharge" />
 
                                 <TextView
                                     android:textColor="@color/colorGreyText"
@@ -644,7 +638,7 @@
 
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Discounts and Offers" />
+                                android:text="@string/str_discounts_and_offers" />
 
                             <TextView
                                 android:layout_width="@dimen/_60sdp"
@@ -686,7 +680,7 @@
 
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Total Fare"
+                                android:text="@string/str_total_fare"
                                 android:textColor="@color/colorText"
                                 android:textStyle="bold" />
 
@@ -722,7 +716,7 @@
                                 android:id="@+id/tv_note"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Note:"
+                                android:text="@string/str_note"
                                 android:textColor="@color/Black"
                                 android:textStyle="bold" />
 
@@ -768,7 +762,7 @@
                     android:includeFontPadding="false"
                     android:paddingTop="@dimen/_7sdp"
                     android:paddingBottom="@dimen/_7sdp"
-                    android:text="Start Ride"
+                    android:text="@string/btn_start_ride"
                     android:textAllCaps="false"
                     android:textColor="@color/White"
                     android:textSize="@dimen/_15sdp" />

@@ -180,7 +180,7 @@
                         android:layout_below="@+id/log_in"
                         android:backgroundTint="@color/gradientstartcolor"
                         android:fontFamily="@font/notosansjp_regular"
-                        android:hint="Phone Number"
+                        android:hint="@string/str_phone_number"
                         android:includeFontPadding="false"
                         android:inputType="number"
                         android:nextFocusDown="@id/btnLogin"
@@ -197,7 +197,6 @@
                         android:layout_marginEnd="@dimen/_18sdp"
                         android:backgroundTint="@color/gradientstartcolor"
                         android:fontFamily="@font/notosansjp_regular"
-                        android:text="Plese"
                         android:textColor="@color/Red"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="gone" />
@@ -261,7 +260,7 @@
                     android:includeFontPadding="false"
                     android:paddingLeft="@dimen/_4sdp"
                     android:paddingRight="@dimen/_4sdp"
-                    android:text="and"
+                    android:text="@string/str_and"
                     android:textColor="@color/colorGreyText"
                     android:textSize="@dimen/_12sdp"
                     android:visibility="visible" />
@@ -324,7 +323,7 @@
                     android:fontFamily="@font/notosansjp_regular"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Or continue with"
+                    android:text="@string/str_or_continue_with"
                     android:textColor="@color/colorGreyText"
                     android:textSize="@dimen/_12sdp" />
 
@@ -393,7 +392,7 @@
                     android:includeFontPadding="false"
                     android:paddingLeft="@dimen/_4sdp"
                     android:paddingRight="@dimen/_4sdp"
-                    android:text="Don't have an account? "
+                    android:text="@string/str_don_t_have_an_account"
                     android:textColor="@color/colorGreyText"
                     android:textSize="@dimen/_12sdp"
                     android:visibility="visible" />

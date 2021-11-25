@@ -111,7 +111,7 @@
                             android:drawablePadding="@dimen/_10sdp"
                             android:focusableInTouchMode="true"
                             android:fontFamily="@font/notosansjp_regular"
-                            android:hint="Search Location"
+                            android:hint="@string/str_search_location"
                             android:includeFontPadding="false"
                             android:padding="@dimen/_5sdp"
                             android:textSize="@dimen/_12sdp" />
@@ -130,7 +130,7 @@
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:drawableStart="@drawable/ic_locateonmap"
                         android:gravity="center_vertical"
-                        android:text="Locate on Map"
+                        android:text="@string/str_locate_on_map"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
 
@@ -146,7 +146,7 @@
 
                         android:drawableStart="@drawable/iv_search"
                         android:gravity="center_vertical"
-                        android:text="Current Location"
+                        android:text="@string/str_current_location"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
 
@@ -182,7 +182,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
                                     android:padding="@dimen/_5sdp"
-                                    android:text="Recent" />
+                                    android:text="@string/str_recent" />
 
                                 <TextView
                                     android:id="@+id/tv_view_search"
@@ -207,7 +207,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
                                     android:padding="@dimen/_5sdp"
-                                    android:text="Saved" />
+                                    android:text="@string/str_saved" />
 
                                 <TextView
                                     android:id="@+id/tv_view_saved"
@@ -235,7 +235,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
                                     android:padding="@dimen/_5sdp"
-                                    android:text="Recent" />
+                                    android:text="@string/str_recent" />
 
                                 <TextView
                                     android:id="@+id/tv_view_recent"
@@ -337,7 +337,7 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:text="Continue"
+                        android:text="@string/btn_continue"
                         android:textAllCaps="false"
                         android:textColor="@color/White" />
 

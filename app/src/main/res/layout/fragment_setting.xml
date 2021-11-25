@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Language"
+                android:text="@string/str_language"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
@@ -41,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default Language for the App" />
+                android:text="@string/lbl_for_language" />
 
 
         </LinearLayout>
@@ -83,7 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="City"
+                android:text="@string/str_city"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
@@ -95,7 +95,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default City" />
+                android:text="@string/lbl_for_city" />
 
 
         </LinearLayout>
@@ -137,7 +137,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Currency"
+                android:text="@string/str_currency"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
@@ -151,7 +151,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default Currency" />
+                android:text="@string/lbl_for_currency" />
 
 
         </LinearLayout>
@@ -192,7 +192,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Measurement Unit"
+                android:text="@string/str_measurement_unit"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
@@ -206,7 +206,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default Measurement Unit" />
+                android:text="@string/lbl_for_measurement_unit" />
 
 
         </LinearLayout>
@@ -245,7 +245,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time Format"
+                android:text="@string/str_time_format"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
@@ -259,7 +259,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default Time Format" />
+                android:text="@string/lbl_for_time_format" />
 
 
         </LinearLayout>
@@ -293,7 +293,7 @@
         android:fontFamily="@font/notosansjp_regular"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="Save"
+        android:text="@string/btn_save"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
 

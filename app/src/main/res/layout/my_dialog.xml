@@ -13,7 +13,7 @@
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:textStyle="bold"
-        android:text="Your Pickup location has changed. Your ride will be calibrated on the new route"
+        android:text="@string/msg_change_location"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textSize="@dimen/_15sdp" />
@@ -55,7 +55,7 @@
         android:layout_marginTop="10dp"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
-        android:text="New Calculated Distance :"
+        android:text="@string/str_new_calculated_distance"
         android:textColor="@color/Black"
         android:textSize="@dimen/_12sdp" />
 
@@ -67,7 +67,7 @@
         android:layout_marginTop="10dp"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
-        android:text="New Calculated Duration :"
+        android:text="@string/str_new_calculated_duration"
         android:textColor="@color/Black"
         android:textSize="@dimen/_12sdp"
 
@@ -80,7 +80,7 @@
         android:layout_marginTop="10dp"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
-        android:text="New Calculated Fare :"
+        android:text="@string/str_new_calculated_fare"
         android:textColor="@color/Black"
         android:textSize="@dimen/_12sdp" />
 
@@ -97,7 +97,7 @@
             android:id="@+id/btnProceed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Proceed" />
+            android:text="@string/btn_proceed" />
 
 
         <Button
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="Cancel" />
+            android:text="@string/btn_cancel" />
 
     </RelativeLayout>
 

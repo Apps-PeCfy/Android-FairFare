@@ -40,17 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!-- <fragment
-                 android:id="@+id/map"
-                 android:name="com.google.android.gms.maps.SupportMapFragment"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:layout_above="@+id/llshowData"
-                 android:layout_marginBottom="-30dp"
-                 tools:context=".ui.location.MyLocationActivity" />
- -->
-
             <LinearLayout
 
                 android:id="@+id/llshowData"
@@ -111,7 +100,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:text="Dispute reasons:"
+                                android:text="@string/str_dispute_reasons"
                                 android:textColor="@color/colorText"
                                 android:textStyle="bold" />
 
@@ -133,7 +122,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Additional comments:"
+                                    android:text="@string/str_additional_comments"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -213,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Ride Details"
+                            android:text="@string/str_ride_details"
                             android:textColor="@color/colorText"
                             android:textStyle="bold"
                             android:visibility="gone" />
@@ -246,7 +235,7 @@
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="2"
-                                    android:text="Pick-up Location"
+                                    android:text="@string/str_pick_up_location"
                                     android:textColor="@color/gradientstartcolor" />
 
                                 <View
@@ -272,7 +261,7 @@
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="2"
-                                    android:text="Drop-off Location " />
+                                    android:text="@string/str_drop_off_location" />
 
 
                                 <View
@@ -494,7 +483,7 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Estimated"
+                                    android:text="@string/str_estimated"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -513,7 +502,7 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Actual"
+                                    android:text="@string/str_actual"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -541,7 +530,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Distance"
+                                    android:text="@string/str_distance"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -604,7 +593,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Ride Time"
+                                    android:text="@string/str_ride_time"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -673,7 +662,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerInParent="true"
-                                        android:text="Wait Time"
+                                        android:text="@string/str_wait_time"
                                         android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
@@ -750,7 +739,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Basic Fare"
+                                    android:text="@string/str_basic_fare"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -814,7 +803,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Wait Charges"
+                                    android:text="@string/str_wait_charges"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -878,7 +867,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Night Charges"
+                                    android:text="@string/str_night_charges"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -943,7 +932,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Luggage"
+                                    android:text="@string/str_luggage"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -1012,7 +1001,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:text="Toll Charges"
+                                        android:text="@string/str_toll_charges"
                                         android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
@@ -1089,7 +1078,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Surcharge"
+                                    android:text="@string/str_surcharge"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -1153,7 +1142,7 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Total Fare"
+                                    android:text="@string/str_total_fare"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -1216,7 +1205,7 @@
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="File Complaint"
+                            android:text="@string/btn_file_complaint"
                             android:textAllCaps="false"
                             android:textColor="@color/White"
                             android:textSize="@dimen/_15sdp" />
@@ -1234,7 +1223,7 @@
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Cancel"
+                            android:text="@string/str_cancel"
                             android:textAllCaps="false"
                             android:textColor="@color/White"
                             android:textSize="@dimen/_15sdp"

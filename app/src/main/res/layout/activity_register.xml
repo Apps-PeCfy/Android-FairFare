@@ -102,7 +102,7 @@
                             android:backgroundTint="@color/gradientstartcolor"
                             android:fontFamily="@font/notosansjp_regular"
                             android:includeFontPadding="false"
-                            android:hint="Phone Number"
+                            android:hint="@string/str_phone_number"
                             android:textColor="@color/colorGreyText"
                             android:textColorHint="@color/colorGreyText"
 
@@ -118,7 +118,6 @@
                             android:layout_below="@+id/edt_email"
                             android:layout_marginTop="-8dp"
                             android:layout_marginEnd="@dimen/_18sdp"
-                            android:text="Plese"
                             android:backgroundTint="@color/gradientstartcolor"
                             android:fontFamily="@font/notosansjp_regular"
 
@@ -145,7 +144,7 @@
                     android:drawableStart="@drawable/ic_mail"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/notosansjp_regular"
-                    android:hint="Email Id (Optional)"
+                    android:hint="@string/hint_email_id_optional"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorGreyText"
                     android:textColorHint="@color/colorGreyText"
@@ -182,7 +181,7 @@
                     android:drawableStart="@drawable/ic_username"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/notosansjp_regular"
-                    android:hint="Full Name"
+                    android:hint="@string/str_full_name"
                     android:includeFontPadding="false"
                     android:inputType="textCapWords"
                     android:nextFocusDown="@id/radioButtonmale"
@@ -230,7 +229,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
-                        android:text="Male" />
+                        android:text="@string/str_male" />
 
                     <RadioButton
                         android:buttonTint="@color/colorGreyText"
@@ -241,7 +240,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
-                        android:text="Female" />
+                        android:text="@string/str_female" />
 
                     <RadioButton
                         android:buttonTint="@color/colorGreyText"
@@ -252,7 +251,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
-                        android:text="Other" />
+                        android:text="@string/str_other" />
 
 
                     <LinearLayout
@@ -314,7 +313,7 @@
                         android:includeFontPadding="false"
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingRight="@dimen/_4sdp"
-                        android:text="and"
+                        android:text="@string/str_and"
                         android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
@@ -370,7 +369,7 @@
                         android:includeFontPadding="false"
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingRight="@dimen/_4sdp"
-                        android:text="Already have an account? "
+                        android:text="@string/str_already_have_an_account"
                         android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />

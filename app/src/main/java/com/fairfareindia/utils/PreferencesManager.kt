@@ -8,6 +8,7 @@ import com.google.gson.Gson
 class PreferencesManager private constructor(context: Context) {
     private val mPref: SharedPreferences
     private val cityList_key : String = "ALLOWED_CITY_LIST"
+    private val KEY_LANGUAGE : String = "language"
 
     fun setStringValue(KEY_VALUE: String?, value: String?) {
         mPref.edit()
@@ -23,6 +24,16 @@ class PreferencesManager private constructor(context: Context) {
         mPref.edit()
             .putInt(KEY_VALUE, value)
             .apply()
+    }
+
+    fun setLanguage(language: String?) {
+        mPref.edit()
+            .putString(KEY_LANGUAGE, language)
+            .apply()
+    }
+
+    fun getLanguage(): String? {
+        return mPref.getString(KEY_LANGUAGE, "en-gb")
     }
 
     fun getIntegerValue(KEY_VALUE: String?): Int {

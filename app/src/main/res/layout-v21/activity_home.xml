@@ -156,7 +156,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/notosansjp_bold"
                                 android:includeFontPadding="false"
-                                android:text="Ride Scheduled On"
+                                android:text="@string/str_ride_scheduled_on"
                                 android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/_15sdp"
 
@@ -171,7 +171,6 @@
                                 android:drawablePadding="@dimen/_12sdp"
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:includeFontPadding="false"
-                                android:text="2 sep,11:52 PM"
                                 android:textColor="@color/gradientstartcolor"
                                 android:textSize="@dimen/_12sdp"
 
@@ -222,7 +221,7 @@
                                     android:includeFontPadding="false"
                                     android:paddingTop="@dimen/_10sdp"
                                     android:paddingBottom="@dimen/_10sdp"
-                                    android:text="Pick-up Location"
+                                    android:text="@string/str_pick_up_location"
                                     android:textColor="@color/gradientstartcolor" />
 
                                 <View
@@ -248,7 +247,7 @@
                                     android:includeFontPadding="false"
                                     android:paddingTop="@dimen/_10sdp"
                                     android:paddingBottom="@dimen/_10sdp"
-                                    android:text="Drop-off Location"
+                                    android:text="@string/str_drop_off_location"
                                     android:textColor="@color/colorGreyText" />
 
 
@@ -278,7 +277,7 @@
                                 android:id="@+id/tvEstDistance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Est.Distance"
+                                android:text="@string/str_est_distance"
                                 android:textColor="@color/colorGreyText" />
 
                             <TextView
@@ -286,7 +285,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:text="Est.Time"
+                                android:text="@string/str_est_time"
                                 android:textColor="@color/colorGreyText" />
 
                         </RelativeLayout>
@@ -301,7 +300,7 @@
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:text="Compare Rides"
+                            android:text="@string/btn_compare_rides"
                             android:textAllCaps="false"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/_14sdp"
@@ -470,7 +469,7 @@
             android:gravity="center_vertical"
             android:padding="@dimen/_5sdp"
             android:paddingStart="@dimen/_30sdp"
-            android:text="Sign Out"
+            android:text="@string/str_logout"
             android:textAllCaps="false"
             android:textColor="@color/gradientstartcolor"
             android:textSize="@dimen/_14sdp"

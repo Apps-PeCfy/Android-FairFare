@@ -36,7 +36,7 @@ public class PhotoSelector {
     private Context context;
     private boolean isFromGallery = false;
 
-    static String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    static String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
     public static final int PERMISSION_ALL = 1;
     public static int REQUEST_CAMERA = 90, SELECT_FILE = 91;
 

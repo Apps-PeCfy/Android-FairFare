@@ -147,7 +147,7 @@
                     android:paddingTop="@dimen/_1sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_2sdp"
-                    android:text="Rate this Ride"
+                    android:text="@string/btn_rate_this_ride"
                     android:textColor="@color/White"
                     android:visibility="visible" />
 
@@ -206,7 +206,7 @@
                         android:includeFontPadding="false"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="Pick-up Location"
+                        android:text="@string/str_pick_up_location"
                         android:textColor="@color/gradientstartcolor" />
 
                     <View
@@ -239,7 +239,7 @@
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Drop-off Location "
+                            android:text="@string/str_drop_off_location"
                             android:textColor="@color/colorGreyText" />
 
 
@@ -278,7 +278,7 @@
                 android:layout_marginStart="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_30sdp"
                 android:background="@drawable/shape_roundedbtn"
-                android:text="Start Ride"
+                android:text="@string/btn_start_ride"
                 android:textColor="@color/White" />
 
 

@@ -1,4 +1,5 @@
 <resources>
+
     <!--Non Changeble Strings-->
 
     <string name="str_english">English</string>
@@ -7,6 +8,8 @@
     <string name="str_eng_code">en-gb</string>
     <string name="str_hindi_code">hi</string>
     <string name="str_marathi_code">mr</string>
+
+
 
 
     <string name="app_name">FairFareIndia</string>
@@ -91,7 +94,7 @@
     <string name="str_logout">Sign Out</string>
     <string name="str_app_language">Choose app language</string>
 
-    <string name="title_home">Get Fair Fare</string>
+    <string name="title_home">उचित किराया प्राप्त करें</string>
 
     <string name="str_no_route_found">No route is found</string>
 
