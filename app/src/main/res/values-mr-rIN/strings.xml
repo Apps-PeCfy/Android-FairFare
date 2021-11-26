@@ -52,6 +52,7 @@
     <string name="drawer_term_of_use">Terms Of Use</string>
     <string name="drawer_setting">Settings</string>
     <string name="drawer_language">Language</string>
+    <string name="drawer_available_reward_point">"Available Reward Points "</string>
 
 
     <string name="register_disputes">If you are not satisfied with the overall ride experience and/or fare being charged, you can quickly register the dispute here for subsequent detailed complaint filing later.</string>
@@ -236,6 +237,7 @@
     <string name="str_delete_dispute">Delete Dispute</string>
     <string name="btn_rate_this_ride">Rate this Ride</string>
     <string name="str_under_review">Under Review</string>
+    <string name="str_schedule_ride">Schedule Ride</string>
 
 </resources>
 

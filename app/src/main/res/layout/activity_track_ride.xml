@@ -437,7 +437,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingEnd="@dimen/_15sdp"
-                        android:text="Wait Time"
+                        android:text="@string/str_wait_time"
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />

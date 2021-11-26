@@ -271,14 +271,15 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         //   tv_Wait_time_charge!!.text = "₹ " + 0.00
 
         if (spntext.equals("Now")) {
-            btnLogin!!.text = "Start Ride"
+            btnLogin!!.text = getString(R.string.btn_start_ride)//"Start Ride"
         } else {
-            btnLogin!!.text = "Schedule Ride"
+            btnLogin!!.text =   getString(R.string.str_schedule_ride)
         }
 
 
 
-        if(btnLogin!!.text.equals("Start Ride")) {
+//        if(btnLogin!!.text.equals("Start Ride")) {
+        if(btnLogin!!.text.equals(getString(R.string.btn_start_ride))) {
             if (canStartRide.equals("Yes")) {
                 btnLogin!!.isEnabled = true
             } else {

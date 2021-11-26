@@ -13,18 +13,18 @@
 
 
     <string name="app_name">FairFareIndia</string>
-    <string name="logIn">Sign In</string>
+    <string name="logIn">साइन इन</string>
     <string name="continuetxt">By continuing, you agree to Fair Fare</string>
     <string name="privacypolicy">Privacy Policy</string>
     <string name="termsofuse">Terms of Use</string>
-    <string name="signup">Sign Up</string>
+    <string name="signup">साइन अप</string>
 
     <string name="str_alert_exit_app">Press once again to exit</string>
     <string name="register">Accept &amp; Continue</string>
     <string name="internet_error">No internet connection</string>
     <string name="btn_ok">OK</string>
-    <string name="warning">Warning</string>
-    <string name="enter_otp">Enter OTP</string>
+    <string name="warning">वार्निंग</string>
+    <string name="enter_otp">एंटर ओटीपि</string>
 
     <string name="fb_login_protocol_scheme">fb344567333332692</string>
     <string name="facebook_app_id">344567333332692</string>
@@ -41,19 +41,22 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-    <string name="drawer_covid">Covid-19</string>
-    <string name="drawer_my_account">My Account</string>
-    <string name="drawer_mylocation">My Locations</string>
-    <string name="drawer_myrides">My Rides</string>
-    <string name="drawer_mydisput">My Disputes</string>
-    <string name="drawer_mycomplents">My Complaints</string>
-    <string name="drawer_ratecard">Rate Card</string>
-    <string name="drawer_faq">FAQs</string>
-    <string name="drawer_contactus">Contact Us</string>
-    <string name="drawer_privacypolicy">Privacy Policy</string>
-    <string name="drawer_term_of_use">Terms Of Use</string>
-    <string name="drawer_setting">Settings</string>
-    <string name="drawer_language">Language</string>
+    <string name="drawer_covid">कोविद-19</string>
+    <string name="drawer_my_account">माय अकाउंट</string>
+    <string name="drawer_mylocation">माय लोकेशंस</string>
+    <string name="drawer_myrides">माय राइड्स</string>
+    <string name="drawer_mydisput">माय डिस्प्यूट्स</string>
+    <string name="drawer_mycomplents">माय कम्प्लेंट्स</string>
+    <string name="drawer_ratecard">रेट कार्ड</string>
+    <string name="drawer_faq">फएक्यू </string>
+    <string name="drawer_contactus">कांटेक्ट अस</string>
+    <string name="drawer_privacypolicy">प्राइवेसी पालिसी</string>
+    <string name="drawer_term_of_use">टर्म्स ऑफ़ यूज़</string>
+    <string name="drawer_setting">सेटिंग्स</string>
+    <string name="drawer_language">भाषा</string>
+    <string name="drawer_available_reward_point">"Available Reward Points "</string>
+
+
 
 
     <string name="register_disputes">If you are not satisfied with the overall ride experience and/or fare being charged, you can quickly register the dispute here for subsequent detailed complaint filing later.</string>
@@ -91,10 +94,10 @@
     <string name="str_reward_points">Sign Up and Get 200 Reward Points</string>
 
 
-    <string name="str_logout">Sign Out</string>
+    <string name="str_logout">साइन आउट</string>
     <string name="str_app_language">Choose app language</string>
 
-    <string name="title_home">उचित किराया प्राप्त करें</string>
+    <string name="title_home">फेयर फेयर</string>
 
     <string name="str_no_route_found">No route is found</string>
 
@@ -109,7 +112,6 @@
     <string name="str_sort">Sort</string>
     <string name="str_luggage">Luggage</string>
     <string name="str_no">No</string>
-
 
     <!--Complaint Detail-->
     <string name="str_complaint_details">Complaint Details</string>
@@ -237,6 +239,7 @@
     <string name="str_delete_dispute">Delete Dispute</string>
     <string name="btn_rate_this_ride">Rate this Ride</string>
     <string name="str_under_review">Under Review</string>
+    <string name="str_schedule_ride">Schedule Ride</string>
 
 </resources>
 
