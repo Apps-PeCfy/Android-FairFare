@@ -87,7 +87,7 @@ class RideReviewActivity : AppCompatActivity() {
 
 
 
-        mToolbar!!.title = "Ride Review"
+        mToolbar!!.title = getString(R.string.title_ride_review)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         if(ridefromDrawer.equals("DrawerMyRides")){
             mToolbar!!.setNavigationIcon(R.drawable.back_arrow)
@@ -181,7 +181,7 @@ class RideReviewActivity : AppCompatActivity() {
 
             val progressDialog = ProgressDialog(this@RideReviewActivity)
             progressDialog.setCancelable(false) // set cancelable to false
-            progressDialog.setMessage("Please Wait") // set message
+            progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
             progressDialog.show() // show progress dialog
 
             ApiClient.client.setRideReview(

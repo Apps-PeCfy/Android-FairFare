@@ -58,7 +58,7 @@ class ContentPage : Fragment() {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
 
@@ -138,7 +138,7 @@ class ContentPage : Fragment() {
         spinnerLang.visibility = View.GONE
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "Privacy Policy"
+        toolbar.title = getString(R.string.drawer_privacypolicy)
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
     }

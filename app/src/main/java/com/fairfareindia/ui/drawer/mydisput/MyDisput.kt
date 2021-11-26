@@ -110,7 +110,7 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
 
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "My Disputes"
+        toolbar.title = getString(R.string.title_my_disputes)
 
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
@@ -150,7 +150,7 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
 
             rlEmpty!!.visibility = View.VISIBLE
             ivImg!!.setBackgroundResource(R.drawable.empty_disput)
-            tvEmptyTxt!!.text = "You have not registered any Disputes yet."
+            tvEmptyTxt!!.text = getString(R.string.msg_no_disputes)
         }
 
 
@@ -190,15 +190,15 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
         if (ProjectUtilities.checkInternetAvailable(activity)) {
 
             val alertDialog = AlertDialog.Builder(activity!!, R.style.alertDialog)
-            alertDialog.setTitle("FairFareIndia")
-            alertDialog.setMessage("Are you sure you want to file Complaint?")
+            alertDialog.setTitle(getString(R.string.str_fair_fare_india))
+            alertDialog.setMessage(getString(R.string.msg_dialog_file_complaint))
             alertDialog.setCancelable(false)
-            alertDialog.setPositiveButton("YES") { dialog, which ->
+            alertDialog.setPositiveButton(getString(R.string.str_yes)) { dialog, which ->
 
                 iMyDisputPresenter!!.fileComplaint(token, id.toString())
 
             }
-            alertDialog.setNegativeButton("N0") { dialog, which -> dialog.cancel() }
+            alertDialog.setNegativeButton(getString(R.string.str_no)) { dialog, which -> dialog.cancel() }
             alertDialog.show()
         }else{
 
@@ -216,16 +216,16 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
         if (ProjectUtilities.checkInternetAvailable(activity)) {
 
             val alertDialog = AlertDialog.Builder(activity!!, R.style.alertDialog)
-            alertDialog.setTitle("FairFareIndia")
+            alertDialog.setTitle(getString(R.string.str_fair_fare_india))
 
-            alertDialog.setMessage("Are you sure you want to delete Dispute?")
+            alertDialog.setMessage(getString(R.string.dialog_msg_delete_dipute))
             alertDialog.setCancelable(false)
-            alertDialog.setPositiveButton("Yes") { dialog, which ->
+            alertDialog.setPositiveButton(getString(R.string.str_yes)) { dialog, which ->
 
                 iMyDisputPresenter!!.deleteDisput(token, id.toString())
 
             }
-            alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+            alertDialog.setNegativeButton(getString(R.string.str_no)) { dialog, which -> dialog.cancel() }
             alertDialog.show()
 
         }else{

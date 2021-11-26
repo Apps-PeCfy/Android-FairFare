@@ -24,7 +24,6 @@
 
             android:layout_marginRight="@dimen/_5sdp"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:text="Lorem Ipsum is simply "
             android:textColor="@color/gradientstartcolor"
             android:textSize="@dimen/_12sdp" />
 
@@ -41,7 +40,6 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_5sdp"
             android:layout_marginLeft="@dimen/_15sdp"
-            android:text="Answae "
             android:textColor="@color/colorText"
             android:textSize="@dimen/_11sdp"
             android:visibility="gone" />

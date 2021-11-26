@@ -71,7 +71,7 @@ class MyComplaintsAdapter(
         holder.tv_myCurrentLocation!!.text = complaintList[position].originFullAddress
         holder.destnationAddress!!.text = complaintList[position].destinationFullAddress
         holder.tv_status!!.text = complaintList[position].status
-        holder.tvDisputNo!!.text = "ID: "+complaintList[position].disputeNo
+        holder.tvDisputNo!!.text = context?.getString(R.string.str_id)+ ": "+complaintList[position].disputeNo
 
         val formatview = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
@@ -79,7 +79,7 @@ class MyComplaintsAdapter(
         val formaredDateCreated = formatR.format(formatview.parse((complaintList[position].createdDateTime).toString()))
 
         val str = formaredDateCreated.replace("am", "AM").replace("pm", "PM")
-        holder.tvFilledDate!!.text = "Filed Date: "+str
+        holder.tvFilledDate!!.text = context?.getString(R.string.str_filed_date)+": "+str
 
     }
 

@@ -152,7 +152,7 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
 
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "My Rides"
+        toolbar.title = getString(R.string.title_my_rides)
 
 
         val gps = GPSTracker(activity!!)
@@ -327,7 +327,7 @@ class MyRides : Fragment(), IMyRidesView, MyTripsAdapter.IClickListener {
             rl_sort!!.visibility = View.GONE
             rlEmpty!!.visibility = View.VISIBLE
             ivImg!!.setBackgroundResource(R.drawable.empty_ride)
-            tvEmptyTxt!!.text = "You have not taken any Rides yet."
+            tvEmptyTxt!!.text = getString(R.string.msg_no_rides)
 
         }
 

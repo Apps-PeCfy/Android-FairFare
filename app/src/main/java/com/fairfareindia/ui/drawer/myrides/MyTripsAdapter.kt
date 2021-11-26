@@ -204,7 +204,7 @@ class MyTripsAdapter(
                     if ((MyRideList[adapterPosition].status.equals("Completed"))
                         || (MyRideList[adapterPosition].status.equals("Cancelled"))
                     ) {
-                        Toast.makeText(context, "Your Ride is Completed", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, context?.getString(R.string.str_ride_completed), Toast.LENGTH_LONG).show()
                     } else {
                         iclickListener!!.startRide(
                             MyRideList[adapterPosition].id,
@@ -228,7 +228,7 @@ class MyTripsAdapter(
                     } else if ((MyRideList[adapterPosition].status.equals("Scheduled"))) {
                         Toast.makeText(
                             context,
-                            "Your ride is not completed yet.",
+                            context?.getString(R.string.msg_ride_not_completed),
                             Toast.LENGTH_LONG
                         ).show()
 
@@ -258,7 +258,7 @@ class MyTripsAdapter(
             }else{
                 ProjectUtilities.showToast(
                     context,
-                    "No internet connection"
+                    context?.getString(R.string.err_internet_connection)!!
                 )
             }
         }

@@ -281,7 +281,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_close"
-                    android:text="Distance/Time"
+                    android:text="@string/str_distance_time"
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -318,7 +318,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Current Speed"
+                        android:text="@string/str_current_speed"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
 
@@ -355,7 +355,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Actual distance/Remaining distance"
+                        android:text="@string/str_actual_distance_remaining_distance"
                         android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
@@ -414,7 +414,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Actual time/ Remaining Time"
+                        android:text="@string/str_actual_time_remaining_time"
                         android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="visible" />
@@ -475,7 +475,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/_15sdp"
                         android:paddingEnd="@dimen/_15sdp"
-                        android:text="Current Fare"
+                        android:text="@string/str_current_fare"
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
@@ -511,7 +511,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view2"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Places Nearby within 1 km "
+                    android:text="@string/str_places_near_by"
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />

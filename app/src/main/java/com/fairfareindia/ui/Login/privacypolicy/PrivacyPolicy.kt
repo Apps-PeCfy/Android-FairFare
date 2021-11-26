@@ -140,7 +140,7 @@ class PrivacyPolicy : Fragment() {
         spinnerLang.visibility = View.GONE
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_login)
-        toolbar.title = "Privacy Policy"
+        toolbar.title = getString(R.string.drawer_privacypolicy)
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
     }

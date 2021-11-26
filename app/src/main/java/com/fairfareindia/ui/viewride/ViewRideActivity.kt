@@ -304,7 +304,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
             "₹ " + compareRideList[listPosition].additionalCharges
 
 
-        mToolbar!!.title = "View Ride"
+        mToolbar!!.title = getString(R.string.title_view_ride)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }

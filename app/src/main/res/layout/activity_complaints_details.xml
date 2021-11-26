@@ -110,7 +110,6 @@
                                 android:id="@+id/tvDisputReason"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Driver arrogance"
                                 android:textColor="@color/colorText" />
 
 
@@ -172,7 +171,6 @@
                                 android:id="@+id/tv_startMeterReading"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="str metr reading=10"
                                 android:textColor="@color/colorText" />
 
                             <TextView
@@ -180,8 +178,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-
-                                android:text="end metr reading=20"
                                 android:textColor="@color/colorText" />
 
 
@@ -190,7 +186,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-                                android:text="actual meter fare=150"
                                 android:textColor="@color/colorText" />
 
 
@@ -245,7 +240,7 @@
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="2"
-                                    android:text="Pick-up Location"
+                                    android:text="@string/str_pick_up_location"
                                     android:textColor="@color/gradientstartcolor" />
 
                                 <View
@@ -271,7 +266,7 @@
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="2"
-                                    android:text="Drop-off Location " />
+                                    android:text="@string/str_drop_off_location" />
 
 
                                 <View

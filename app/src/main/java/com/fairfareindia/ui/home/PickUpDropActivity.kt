@@ -529,7 +529,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                         ivFavLocateOnMap!!.setBackgroundResource(R.drawable.ic_fav_checked)
                         Toast.makeText(
                             this@PickUpDropActivity,
-                            "Location saved successfully !!",
+                            getString(R.string.msg_location_saved),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
@@ -932,7 +932,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
                     if (response.code() == 200) {
                         Toast.makeText(
                             this@PickUpDropActivity,
-                            "Location deleted successfully !!",
+                            getString(R.string.msg_location_delete),
                             Toast.LENGTH_SHORT
                         ).show()
 

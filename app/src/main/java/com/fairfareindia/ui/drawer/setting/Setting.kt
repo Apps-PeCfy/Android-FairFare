@@ -117,7 +117,7 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getUserSetting("Bearer $token")!!.enqueue(object :

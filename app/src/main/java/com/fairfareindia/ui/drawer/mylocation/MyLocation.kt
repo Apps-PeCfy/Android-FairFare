@@ -119,7 +119,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getSavedLocation("Bearer $token")!!.enqueue(object :
@@ -140,7 +140,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
                     } else {
                         rlEmpty!!.visibility = View.VISIBLE
                         ivImg!!.setBackgroundResource(R.drawable.empty_location)
-                        tvEmptyTxt!!.text = "You have not Saved any Locations yet!"
+                        tvEmptyTxt!!.text = getString(R.string.msg_no_saved_location)
 
                     }
 
@@ -201,7 +201,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
 

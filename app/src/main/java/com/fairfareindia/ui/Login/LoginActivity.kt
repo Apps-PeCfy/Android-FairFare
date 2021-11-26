@@ -204,7 +204,7 @@ class LoginActivity : AppCompatActivity(),
             doubleBackPressed = true
             Toast.makeText(
                 this,
-                "Press once again to exit",
+                getString(R.string.msg_back_pressed),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -411,7 +411,7 @@ class LoginActivity : AppCompatActivity(),
 
 
         if (strNumberValidation == "false") {
-            tvPhoneNumberError!!.text = "Please enter a valid phone no."
+            tvPhoneNumberError!!.text = getString(R.string.err_valid_phone_number)
             tvPhoneNumberError!!.visibility = View.VISIBLE
             //   Toast.makeText(this, "Plese enter valid phone no.", Toast.LENGTH_LONG).show();
         } else {

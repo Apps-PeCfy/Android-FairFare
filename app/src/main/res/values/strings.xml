@@ -51,7 +51,7 @@
     <string name="drawer_term_of_use">Terms Of Use</string>
     <string name="drawer_setting">Settings</string>
     <string name="drawer_language">Language</string>
-    <string name="drawer_available_reward_point">"Available Reward Points "</string>
+    <string name="drawer_available_reward_point">Available Reward Points</string>
 
 
     <string name="register_disputes">If you are not satisfied with the overall ride experience and/or fare being charged, you can quickly register the dispute here for subsequent detailed complaint filing later.</string>
@@ -106,7 +106,6 @@
     <string name="available_rides">Available Rides</string>
     <string name="str_sort">Sort</string>
     <string name="str_luggage">Luggage</string>
-    <string name="str_no">No</string>
 
 
     <!--Complaint Detail-->
@@ -181,7 +180,6 @@
     <string name="btn_submit">Submit</string>
     <string name="str_track_board">Track Board</string>
     <string name="btn_end_ride">End Ride</string>
-    <string name="str_estimated_fare">Estimated Fare</string>
     <string name="str_additional_charges">Additional Charges</string>
     <string name="str_wait_time_charges">Wait Time Charges</string>
     <string name="str_luggage_charges">Luggage Charges</string>
@@ -236,6 +234,84 @@
     <string name="btn_rate_this_ride">Rate this Ride</string>
     <string name="str_under_review">Under Review</string>
     <string name="str_schedule_ride">Schedule Ride</string>
+    <string name="str_reward_points_earned_for_this_ride">\"Reward points earned for this ride \"</string>
+    <string name="err_valid_phone_number">Please enter a valid phone no.</string>
+    <string name="err_phone_and_gender">Please enter Phone number and Gender.</string>
+    <string name="err_valid_email">Please enter a valid email.</string>
+    <string name="err_full_name">Please enter Full Name</string>
+    <string name="err_internet_connection">No internet connection</string>
+    <string name="title_register_dispute">Register Dispute</string>
+    <string name="str_please_wait">Please Wait</string>
+    <string name="str_fair_fare_india">FairFareIndia</string>
+    <string name="msg_delete_img">Are you sure you remove this image?</string>
+    <string name="str_yes">Yes</string>
+    <string name="str_no">No</string>
+    <string name="err_enter_message">Please enter message</string>
+    <string name="str_no_complaints">You have not filed any Complaints yet.</string>
+    <string name="str_id">ID</string>
+    <string name="str_filed_date">Filed Date</string>
+    <string name="title_complaint_details">Complaint Details</string>
+    <string name="str_complaint_id">Complaint ID</string>
+    <string name="str_no_luggage">No Luggage</string>
+    <string name="str_total_fare_charged">Total Fare Charged</string>
+    <string name="title_my_disputes">My Disputes</string>
+    <string name="msg_no_disputes">You have not registered any Disputes yet.</string>
+    <string name="msg_dialog_file_complaint">Are you sure you want to file Complaint?</string>
+    <string name="dialog_msg_delete_dipute">Are you sure you want to delete Dispute?</string>
+    <string name="title_dispute_details">Dispute Details</string>
+    <string name="str_dispute_id">Dispute ID</string>
+    <string name="msg_no_saved_location">You have not Saved any Locations yet!</string>
+    <string name="title_my_rides">My Rides</string>
+    <string name="msg_no_rides">You have not taken any Rides yet.</string>
+    <string name="msg_ride_not_completed">Your ride is not completed yet.</string>
+    <string name="str_ride_completed">Your Ride is Completed</string>
+    <string name="title_ride_details">Ride Details</string>
+    <string name="title_fair_fare_review">Fair Fare Review</string>
+    <string name="title_end_ride">End Ride</string>
+    <string name="str_reward_points_earned">Reward points earned for this ride</string>
+    <string name="msg_not_served_city">\"Sorry, we don’t serve locations within \"</string>
+    <string name="msg_not_serve_location_two"><![CDATA[\" & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.\"]]></string>
+    <string name="str_available_reward_points">Available Reward Points</string>
+    <string name="msg_dialog_email_id_required">Email id is required. Please edit it in My Accounts.</string>
+    <string name="err_schedule_min_time">Scheduled time should be greater than 15 minutes from current time.</string>
+    <string name="err_pick_drop_location_same">Pick-UP and Drop-Off Location should not be same.</string>
+    <string name="msg_fetching_current_location">Please wait we are fetching your current location</string>
+    <string name="msg_back_pressed">Press once again to exit</string>
+    <string name="msg_location_saved">Location saved successfully !!</string>
+    <string name="msg_location_delete">Location deleted successfully !!</string>
+    <string name="err_enter_otp">Please enter OTP</string>
+    <string name="str_estimated_distance">Estimated Distance</string>
+    <string name="str_estimated_fare">Estimated Fare</string>
+    <string name="str_drop_up_location">Drop Up Location</string>
+    <string name="lbl_pick_up_location">Pick Up Location</string>
+    <string name="msg_dialog_start_meter_reading">Make sure you record the Start Meter reading before starting the ride.</string>
+    <string name="title_ride_review">Ride Review</string>
+    <string name="dialog_gps_message">GPS is not enabled. Do you want to go to settings menu?</string>
+    <string name="dialog_gps_title">GPS is settings</string>
+    <string name="str_settings">Settings</string>
+    <string name="dialog_msg_end_ride_before_dest">You have not reached the destination yet. Are you sure you want to end the ride?</string>
+    <string name="dialog_msg_end_ride">Are you sure you want to end this Ride?</string>
+    <string name="title_view_ride">View Ride</string>
+    <string name="str_not_applicable">Not Applicable.</string>
+    <string name="msg_extra_luggage_charges">per luggage item other than a briefcase or hand bag.</string>
+    <string name="str_per_booking">per booking.</string>
+    <string name="str_per_minute">per minute.</string>
+    <string name="str_extra_night_charges_two">of Basic Fare for journey between 0.00 AM to 5.00 AM.</string>
+    <string name="str_extra_night_charges_one">Additional charge of</string>
+    <string name="str_extra_fare_one">Minimum fare of ₹</string>
+    <string name="str_extra_fare_two">for the first 1.5 KM\nSubsequently, fare will be chargeable at ₹</string>
+    <string name="str_extra_fare_three">per KM.</string>
+    <string name="str_rate_card_fare_one">\"Fare will be chargeable for a minimum distance of \"</string>
+    <string name="str_rate_card_fare_two">KM at ₹</string>
+    <string name="str_rate_card_fare_three">per KM.</string>
+    <string name="str_rate_card_fare_four">Subsequently, fare will be chargeable in the distance slabs of</string>
+    <string name="str_rate_card_fare_five">per KM. Additionally, incentives are offered to the drivers for providing Pre-Paid Services from the international terminal.</string>
+    <string name="str_places_near_by">Places Nearby within 1 km</string>
+    <string name="str_distance_time">Distance/Time</string>
+    <string name="str_current_speed">Current Speed</string>
+    <string name="str_actual_distance_remaining_distance">Actual distance/Remaining distance</string>
+    <string name="str_actual_time_remaining_time">Actual time/ Remaining Time</string>
+    <string name="str_current_fare">Current Fare</string>
 
 </resources>
 

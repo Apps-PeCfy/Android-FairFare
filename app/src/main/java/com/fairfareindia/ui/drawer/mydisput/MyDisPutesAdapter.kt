@@ -41,7 +41,7 @@ class MyDisPutesAdapter(var context: FragmentActivity?, private val MyDisputsLis
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         holder.tv_status!!.text = "₹ "+MyDisputsListList[position].actualMeterCharges
-        holder.tvDisputNo!!.text = "ID: "+MyDisputsListList[position].disputeNo
+        holder.tvDisputNo!!.text = context?.getString(R.string.str_id) +": "+MyDisputsListList[position].disputeNo
         Glide.with(context!!)
             .load(MyDisputsListList[position].vehicleImageUrl)
             .apply(

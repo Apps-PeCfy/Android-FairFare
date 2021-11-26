@@ -257,7 +257,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
         ID = intent.getStringExtra("Id")
 
-        mToolbar!!.title = "Ride Details"
+        mToolbar!!.title = getString(R.string.title_ride_details)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
@@ -441,7 +441,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
         val progressDialog = ProgressDialog(this@MyRideDetailsActivity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getDetailRide("Bearer $token", ID)!!.enqueue(object :
@@ -498,7 +498,7 @@ class MyRideDetailsActivity : AppCompatActivity() {
 
                     if(response.body()!!.data!!.rewards != null){
                         tvActualRewardPoints?.visibility = View.VISIBLE
-                        tvActualRewardPoints?.text = "Reward points earned for this ride " +response.body()!!.data!!!!.rewards
+                        tvActualRewardPoints?.text = getString(R.string.str_reward_points_earned_for_this_ride) + " " +response.body()!!.data!!!!.rewards
                     }else{
                         tvActualRewardPoints?.visibility = View.GONE
                     }
@@ -527,15 +527,15 @@ class MyRideDetailsActivity : AppCompatActivity() {
                     tv_Datetime!!.text = strformaredDate
 
                     if (response.body()!!.data!!.luggageQuantity.equals("0")) {
-                        tv_bagCount!!.text = "No Luggage"
+                        tv_bagCount!!.text = getString(R.string.str_no_luggage)
                     } else {
 
                         if (response.body()!!.data!!.luggageQuantity.equals("1")) {
                             tv_bagCount!!.text =
-                                response.body()!!.data!!.luggageQuantity + " Luggage"
+                                response.body()!!.data!!.luggageQuantity + " " + getString(R.string.str_luggage)
                         } else {
                             tv_bagCount!!.text =
-                                response.body()!!.data!!.luggageQuantity + " Luggage"
+                                response.body()!!.data!!.luggageQuantity + " "+ getString(R.string.str_luggage)
 
                         }
                     }

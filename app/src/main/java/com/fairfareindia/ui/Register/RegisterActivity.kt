@@ -193,7 +193,7 @@ class RegisterActivity : AppCompatActivity(),
             ccp!!.setCountryForNameCode(countryCodeISO!!)
         }
         if (LoginType == "GGL") {
-            sign_up!!.text = "Please enter Phone number and Gender."
+            sign_up!!.text = getString(R.string.err_phone_and_gender)
         }
     }
 
@@ -351,19 +351,19 @@ class RegisterActivity : AppCompatActivity(),
             }
 
             if (numbervalidation == "false") {
-                tvPhoneNumberError!!.text = "Please enter a valid phone no."
+                tvPhoneNumberError!!.text = getString(R.string.err_valid_phone_number)
                 tvPhoneNumberError!!.visibility = View.VISIBLE
             } else if (edt_email!!.text.toString()
                     .isNotEmpty() && (!emailRegex.matcher(edt_email!!.text.toString()).matches())
             ) {
 
 
-                tvEmailError!!.text = "Please enter a valid email."
+                tvEmailError!!.text = getString(R.string.err_valid_email)
                 tvEmailError!!.visibility = View.VISIBLE
 
 
             } else if (TextUtils.isEmpty(edt_name!!.text.toString())) {
-                tvNameError!!.text = "Please enter Full Name"
+                tvNameError!!.text = getString(R.string.err_full_name)
                 tvNameError!!.visibility = View.VISIBLE
             } else {
 

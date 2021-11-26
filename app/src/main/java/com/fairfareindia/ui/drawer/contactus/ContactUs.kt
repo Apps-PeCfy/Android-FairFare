@@ -111,14 +111,14 @@ class ContactUs : Fragment() {
         if (ProjectUtilities.checkInternetAvailable(activity)) {
 
             if ((editReview!!.text.toString()).length < 1) {
-                Toast.makeText(activity, "Please enter message", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, getString(R.string.err_enter_message), Toast.LENGTH_LONG).show()
 
             } else {
 
 
                 val progressDialog = ProgressDialog(activity)
                 progressDialog.setCancelable(false) // set cancelable to false
-                progressDialog.setMessage("Please Wait") // set message
+                progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
                 progressDialog.show() // show progress dialog
 
 

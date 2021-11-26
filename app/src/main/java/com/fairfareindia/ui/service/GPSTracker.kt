@@ -14,6 +14,7 @@ import android.provider.Settings
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import com.fairfareindia.R
 
 class GPSTracker @RequiresApi(api = Build.VERSION_CODES.M) constructor(private val mContext: Context) :
     Service(), LocationListener {
@@ -128,17 +129,17 @@ class GPSTracker @RequiresApi(api = Build.VERSION_CODES.M) constructor(private v
     fun showSettingsAlert() {
         val alertDialog = AlertDialog.Builder(mContext)
         // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings")
+        alertDialog.setTitle(getString(R.string.dialog_gps_title))
         // Setting Dialog Message
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?")
+        alertDialog.setMessage(getString(R.string.dialog_gps_message))
         // On pressing Settings button
-        alertDialog.setPositiveButton("Settings") { dialog, which ->
+        alertDialog.setPositiveButton(getString(R.string.str_settings)) { dialog, which ->
             val intent =
                 Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
             mContext.startActivity(intent)
         }
         // on pressing cancel button
-        alertDialog.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        alertDialog.setNegativeButton(getString(R.string.btn_cancel)) { dialog, which -> dialog.cancel() }
         // Showing Alert Message
         alertDialog.show()
     }

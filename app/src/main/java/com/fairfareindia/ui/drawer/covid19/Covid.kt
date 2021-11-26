@@ -82,7 +82,7 @@ class Covid : Fragment() {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
 
