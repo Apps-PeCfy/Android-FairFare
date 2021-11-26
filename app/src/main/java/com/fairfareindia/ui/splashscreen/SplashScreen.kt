@@ -81,7 +81,7 @@ class SplashScreen : AppCompatActivity() {
             SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_marathi_code))
         }
 
-        requestBatteryOptimisationDisabled()
+       // requestBatteryOptimisationDisabled()
 
 
 
@@ -268,14 +268,24 @@ class SplashScreen : AppCompatActivity() {
                 }
             } else {
                 //   checkUpdate()
-                setHandler()
+            //    setHandler()
+                if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)) {
+                    moveNextScreen()
+                }else{
+                    startActivity(Intent(this, PermissionActivity::class.java))
+                }
 
             }
         }
 
         appUpdateInfoTask.addOnFailureListener {
             // checkUpdate()
-            setHandler()
+           // setHandler()
+            if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)) {
+                moveNextScreen()
+            }else{
+                startActivity(Intent(this, PermissionActivity::class.java))
+            }
 
         }
     }
@@ -289,51 +299,47 @@ class SplashScreen : AppCompatActivity() {
 
 
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     private fun moveNextScreen() {
-        if (CommonAppPermission.requestLocationPermission(this)){
-            handler.removeCallbacksAndMessages(null)
-            if (isLogin == "true") {
+        if (isLogin == "true") {
 
-                callOnResune = "second"
+            callOnResune = "second"
+            if (appFirst!!.isEmpty()) {
+
+                val editor = appSharedpreferences!!.edit()
+                editor.putString("AppOpen", "appOpenFirst")
+                editor.commit()
+                val intent = Intent(applicationContext, IntroActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                val intent = Intent(applicationContext, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        }else {
+
+
+            callOnResune = "second"
+
+            Log.d("onRequestPermissi", "2")
+            if (callOnlyOne.equals("OnlyOne")) {
+
                 if (appFirst!!.isEmpty()) {
 
                     val editor = appSharedpreferences!!.edit()
                     editor.putString("AppOpen", "appOpenFirst")
                     editor.commit()
+                    callOnlyOne = "SecondTime"
                     val intent = Intent(applicationContext, IntroActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    val intent = Intent(applicationContext, HomeActivity::class.java)
+                    callOnlyOne = "SecondTime"
+                    val intent = Intent(applicationContext, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
-                }
 
-            }else {
-
-
-                callOnResune = "second"
-
-                Log.d("onRequestPermissi", "2")
-                if (callOnlyOne.equals("OnlyOne")) {
-
-                    if (appFirst!!.isEmpty()) {
-
-                        val editor = appSharedpreferences!!.edit()
-                        editor.putString("AppOpen", "appOpenFirst")
-                        editor.commit()
-                        callOnlyOne = "SecondTime"
-                        val intent = Intent(applicationContext, IntroActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        callOnlyOne = "SecondTime"
-                        val intent = Intent(applicationContext, LoginActivity::class.java)
-                        startActivity(intent)
-                        finish()
-
-                    }
                 }
             }
         }

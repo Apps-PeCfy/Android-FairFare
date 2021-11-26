@@ -9,6 +9,7 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -73,6 +74,11 @@ object ProjectUtilities {
         pDialog!!.setMessage("It may take few minutes,your transaction is being processed...")
         pDialog!!.setCancelable(false)
         pDialog!!.show()
+    }
+
+    fun isGPSEnabled(context: Context?): Boolean {
+        val locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     //This method dismiss progress dialog

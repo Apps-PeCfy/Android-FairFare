@@ -63,6 +63,7 @@ import com.fairfareindia.ui.drawer.setting.Setting
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
+import com.fairfareindia.ui.splashscreen.PermissionActivity
 import com.fairfareindia.utils.*
 import com.fairfareindia.utils.ProjectUtilities.showProgressDialog
 import com.google.android.gms.location.LocationSettingsStates
@@ -2535,8 +2536,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             1000 ->
                 if (resultCode == Activity.RESULT_OK){
                     initLocationUpdates()
+                    mapAndLocationReady()
                 }else if (resultCode == Activity.RESULT_CANCELED){
-                    finish()
+                   startActivity(Intent(this, PermissionActivity::class.java))
                 }
         }
     }
