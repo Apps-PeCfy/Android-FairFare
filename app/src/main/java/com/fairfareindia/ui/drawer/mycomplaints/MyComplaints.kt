@@ -176,7 +176,7 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
         spinnerLang.visibility = View.GONE
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "My Complaints"
+        toolbar.title = getString(R.string.drawer_mycomplents)
 
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
