@@ -126,9 +126,18 @@ public class CommonAppPermission {
     }
     public static boolean hasLocationPermission(Context context){
 
-        return hasPermissionSingle(context,Manifest.permission.ACCESS_FINE_LOCATION)
-                && hasPermissionSingle(context,Manifest.permission.ACCESS_COARSE_LOCATION)
-                && hasPermissionSingle(context,Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return hasPermissionSingle(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                    && hasPermissionSingle(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    && hasPermissionSingle(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+        }
+        else{
+            return hasPermissionSingle(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                    && hasPermissionSingle(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    ;
+
+        }
     }
 
     public static boolean hasAllPermissionGranted(Context context){

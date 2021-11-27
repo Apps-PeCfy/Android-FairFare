@@ -20,9 +20,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-        //    buildConfigField 'String', 'API_URL', '"https://dev.fairfareindia.com/api/"'
-        //buildConfigField 'String', 'API_URL', '"https://stage.fairfareindia.com/api/"'
-        buildConfigField 'String', 'API_URL', '"https://test.fairfareindia.com/api/"'
+//            buildConfigField 'String', 'API_URL', '"https://dev.fairfareindia.com/api/"'
+        buildConfigField 'String', 'API_URL', '"https://stage.fairfareindia.com/api/"'
+//        buildConfigField 'String', 'API_URL', '"https://test.fairfareindia.com/api/"'
     }
     buildTypes {
         release {

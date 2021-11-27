@@ -518,12 +518,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     private fun mapAndLocationReady() {
 
-        if (ProjectUtilities.checkPermission(this@HomeActivity)) {
+//        if (ProjectUtilities.checkPermission(this@HomeActivity)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && CommonAppPermission.hasAllPermissionGranted(this)) {
             if (callOnLocation.equals("first") && mMap != null && currentLatitude != null && currentLatitude != 0.0) {
                 getLocationReady()
             }
-        } else {
-            ProjectUtilities.showToast(this@HomeActivity, getString(R.string.internet_error))
+        }
+        else {
+          // ProjectUtilities.showToast(this@HomeActivity, getString(R.string.internet_error))
+            startActivity(Intent(this, PermissionActivity::class.java))
         }
     }
 

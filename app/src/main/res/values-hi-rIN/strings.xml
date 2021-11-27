@@ -13,22 +13,22 @@
 
 
     <string name="app_name">FairFareIndia</string>
-    <string name="logIn">साइन इन करें</string>
+    <string name="logIn">साइन-इन करें</string>
     <string name="continuetxt">अगर आप फेयरफेयर से सहमत हैं तो जारी रखें</string>
     <string name="privacypolicy">गोपनीयता नीति</string>
     <string name="termsofuse">उपयोग की शर्तें</string>
-    <string name="signup">साइन अप करें</string>
+    <string name="signup">साइन-अप करें</string>
 
     <string name="str_alert_exit_app">बाहर निकलने के लिए एक बार फिर दबाएं</string>
-    <string name="register">स्वीकार करे &amp; जारी रखना</string>
+    <string name="register">स्वीकार करे और जारी रखे</string>
     <string name="internet_error">कोई इंटरनेट कनेक्शन नहीं</string>
     <string name="btn_ok">ठीक है</string>
     <string name="warning">वार्निंग</string>
-    <string name="enter_otp">ओटीपी दर्ज करें</string>
+    <string name="enter_otp">OTP दर्ज करें</string>
 
     <string name="fb_login_protocol_scheme">fb344567333332692</string>
     <string name="facebook_app_id">344567333332692</string>
-    <string name="underlinesignup"><u>साइन अप करें</u></string>
+    <string name="underlinesignup"><u>साइन-अप करें</u></string>
     <string name="title_activity_home">Map</string>
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -97,7 +97,7 @@
     <string name="str_logout">साइन आउट करें</string>
     <string name="str_app_language">ऐप की भाषा चुनें</string>
 
-    <string name="title_home">फेयर फेयर</string>
+    <string name="title_home">फेयरफेयर</string>
 
     <string name="str_no_route_found">कोई रास्ता नहीं मिला</string>
 
@@ -153,12 +153,12 @@
     <string name="title_otp_verification">OTP सत्यापन</string>
     <string name="str_a_code_has_been_sent_to">एक कोड भेजा गया है</string>
     <string name="str_you_will_get_otp_by_sms_in">आपको एसएमएस द्वारा एक ओटीपी प्राप्त होगा</string>
-    <string name="btn_finish">सत्यापित करो</string>
+    <string name="btn_finish">सत्यापित करें</string>
     <string name="str_search_location">स्थान ढूंढे</string>
     <string name="str_locate_on_map">मैप पर खोजें</string>
     <string name="str_current_location">वर्तमान स्थान</string>
     <string name="str_recent">हालिया</string>
-    <string name="str_saved">Saved</string>
+    <string name="str_saved">बचाया</string>
     <string name="btn_continue">जारी रखें</string>
     <string name="str_search">सर्च</string>
     <string name="hint_email_id_optional">ईमेल (ऑप्शनल)</string>
@@ -170,7 +170,7 @@
     <string name="lbl_dispute_reason">विवाद का कारण</string>
     <string name="lbl_additional_comments">अतिरिक्त टिप्पणियां</string>
     <string name="hint_start_trip_meter">ट्रिप मीटर शुरू करें</string>
-    <string name="hint_end_trip_meter">एंड ट्रिप मीटर</string>
+    <string name="hint_end_trip_meter">ट्रिप मीटर एंड करें</string>
     <string name="hint_actual_meter_fare">वास्तविक मीटर किराया</string>
     <string name="str_upload_photo">फोटो अपलोड करें</string>
     <string name="str_vehicle_details">वाहन की जानकारी</string>
@@ -179,7 +179,7 @@
     <string name="str_driver_details">ड्राइवर की जानकारी </string>
     <string name="hint_enter_driver_name_optional">ड्राइवर का नाम दर्ज करें (वैकल्पिक)</string>
     <string name="hint_enter_driver_badge_number_optional">ड्राइवर का बैज नंबर दर्ज करें (वैकल्पिक)</string>
-    <string name="btn_track_ride">राइड ट्रैक करें</string>
+    <string name="btn_track_ride">सवारी ट्रैक करें</string>
     <string name="hint_enter_your_review">अपनी समीक्षा दर्ज करें</string>
     <string name="btn_submit">सबमिट</string>
     <string name="str_track_board">ट्रैक बोर्ड</string>
@@ -188,7 +188,7 @@
     <string name="str_wait_time_charges">प्रतीक्षा समय शुल्क</string>
     <string name="str_luggage_charges">लगेज चार्ज </string>
     <string name="str_discounts_and_offers">छूट और ऑफ़र</string>
-    <string name="btn_start_ride">राइड शुरू करें</string>
+    <string name="btn_start_ride">सवारी शुरू करें</string>
     <string name="str_original_drop_off_location">मूल ड्रॉप-ऑफ स्थान</string>
     <string name="str_location">स्थान</string>
     <string name="msg_contact_us">यदि आपके कोई प्रश्न हैं या स्पष्टीकरण की आवश्यकता है या सुझाव हैं, तो कृपया हमें लिखें। हम जल्द से जल्द आपसे संपर्क करेंगे.</string>
@@ -201,7 +201,7 @@
     <string name="btn_save">सेव</string>
     <string name="str_filter_by_status">स्टेटस के अनुसार फ़िल्टर करें:</string>
     <string name="str_effective_date">प्रभावी तिथि</string>
-    <string name="str_msg_rate_card">उल्लिखित किराया शुल्क 1 मार्च 2021 से प्रभावित हैं।</string>
+    <string name="str_msg_rate_card">उल्लिखित किराया शुल्क 22 नवंबर 2021 से प्रभावित हैं।</string>
     <string name="msg_total_charges">वास्तविक पर टोल वसूल किया जाएगा।</string>
 
 
@@ -235,9 +235,9 @@
     <string name="str_charges">शुल्क</string>
     <string name="lbl_actual_meter_fare">वास्तविक मीटर किराया</string>
     <string name="str_delete_dispute">विवाद हटाएं</string>
-    <string name="btn_rate_this_ride">इस राइड को रेट करें</string>
+    <string name="btn_rate_this_ride">इस सवारी को रेट करें</string>
     <string name="str_under_review">समीक्षा के अंतर्गत</string>
-    <string name="str_schedule_ride">शेड्यूल राइड</string>
+    <string name="str_schedule_ride">सवारी को शेड्यूल करें</string>
 
     <string name="str_reward_points_earned_for_this_ride">"इस राइड के लिए अर्जित किए गए रिवॉर्ड पॉइंट"</string>
     <string name="err_valid_phone_number">कृपया फोन नंबर दर्ज करें।</string>
@@ -266,7 +266,7 @@
     <string name="title_dispute_details">विवाद विवरण</string>
     <string name="str_dispute_id">विवाद ID</string>
     <string name="msg_no_saved_location">आपने अभी तक कोई स्थान सहेजा नहीं है!</string>
-    <string name="title_my_rides">मेरी सवारी </string>
+    <string name="title_my_rides">मेरी सवारी</string>
     <string name="msg_no_rides">आपने अभी तक कोई सवारी नहीं ली है।</string>
     <string name="msg_ride_not_completed">आपकी सवारी अभी पूरी नहीं हुई है।</string>
     <string name="str_ride_completed">आपकी सवारी पूरी हो गई है|</string>
@@ -296,7 +296,7 @@
     <string name="str_settings">सेटिंग्स </string>
     <string name="dialog_msg_end_ride_before_dest">आप अभी तक गंतव्य तक नहीं पहुंचे हैं. क्या आप वाकई सवारी खत्म करना चाहते हैं?</string>
     <string name="dialog_msg_end_ride">क्या आप इस राइड को समाप्त करना चाहते हैं?</string>
-    <string name="title_view_ride">राइड देखें</string>
+    <string name="title_view_ride"> सवारी देखें</string>
     <string name="str_not_applicable">लागू नहीं</string>
     <string name="msg_extra_luggage_charges">ब्रीफकेस या हैंड बैग के अलावा प्रति सामान आइटम.</string>
     <string name="str_per_booking">प्रति बुकिंग।</string>

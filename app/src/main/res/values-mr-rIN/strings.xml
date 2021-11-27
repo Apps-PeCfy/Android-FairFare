@@ -13,22 +13,22 @@
 
 
     <string name="app_name">FairFareIndia</string>
-    <string name="logIn">साइन इन करा </string>
+    <string name="logIn">साइन-इन करा </string>
     <string name="continuetxt">तुम्ही फेअरफेअरशी सहमत असल्यास सुरू ठेवा</string>
     <string name="privacypolicy">गोपनीयता नीति</string>
     <string name="termsofuse">वापरण्याच्या अटी</string>
-    <string name="signup">साइन अप करा </string>
+    <string name="signup">साइन-अप करा </string>
 
     <string name="str_alert_exit_app">बाहेर पडण्यासाठी पुन्हा एकदा दाबा</string>
-    <string name="register">स्वीकारा &amp; सुरू करा </string>
+    <string name="register">स्वीकारा आणि सुरू करा </string>
     <string name="internet_error">इंटरनेट कनेक्शन नाही</string>
     <string name="btn_ok">ठीक आहे</string>
     <string name="warning">वार्निंग</string>
-    <string name="enter_otp">ओटीपी दर्ज करा </string>
+    <string name="enter_otp">OTP दर्ज करा </string>
 
     <string name="fb_login_protocol_scheme">fb344567333332692</string>
     <string name="facebook_app_id">344567333332692</string>
-    <string name="underlinesignup"><u>साइन अप करा </u></string>
+    <string name="underlinesignup"><u>साइन-अप करा </u></string>
     <string name="title_activity_home">Map</string>
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -43,8 +43,8 @@
 
     <string name="drawer_covid">कोविड-19</string>
     <string name="drawer_my_account">माझे खाते</string>
-    <string name="drawer_mylocation">माझे स्थान</string>
-    <string name="drawer_myrides"> माझी सवारी</string>
+    <string name="drawer_mylocation"> माझी स्थाने</string>
+    <string name="drawer_myrides"> माझ्या राइड्स</string>
     <string name="drawer_mydisput">माझे विवाद</string>
     <string name="drawer_mycomplents">माझ्या तक्रारी</string>
     <string name="drawer_ratecard">रेट कार्ड</string>
@@ -55,8 +55,6 @@
     <string name="drawer_setting">सेटिंग्स</string>
     <string name="drawer_language">भाषा</string>
     <string name="drawer_available_reward_point">उपलब्ध इनाम अंक</string>
-
-
 
 
     <string name="register_disputes">तुम्ही एकूण प्रवास अनुभव आणि/किंवा भाड्याने समाधानी नसल्यास, नंतर तपशीलवार तक्रार दाखल करण्यासाठी तुम्ही त्वरित येथे विवाद दाखल करू शकता.</string>
@@ -75,14 +73,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_dispute">विवाद जतन करा</string>
     <string name="resendotp">दुसरा कोड पुन्हा पाठवा</string>
-    <string name="gender_text">फेअरफेअर हे अॅप वापरणाऱ्या प्रवाशांच्या गरजा आणि सुरक्षितता आवश्यकता समजून घेण्यासाठी लिंग कॅप्चर करते.</string>
+    <string name="gender_text">फेअरफेअर हे ऐप वापरणाऱ्या प्रवाशांच्या गरजा आणि सुरक्षितता आवश्यकता समजून घेण्यासाठी लिंग कॅप्चर करते.</string>
 
 
     <!--pick image section-->
     <string name="add_photo">फोटो जोडा!</string>
     <string name="take_photo">फोटो घ्या</string>
     <string name="choose_from_gallery">गॅलरीमधून निवडा</string>
-    <string name="btn_cancel">रद्द करा </string>
+    <string name="btn_cancel">रद्द करा</string>
 
 
     <string name="time_hours_minutes_seconds_formatter" translatable="false">%02d:%02d:%02d</string>
@@ -91,10 +89,10 @@
 
 
     <string name="str_valid_for_new_users_only">फक्त नवीन वापरकर्त्यांसाठी वैध</string>
-    <string name="str_reward_points">साइन अप करा आणि 200 रिवॉर्ड पॉइंट मिळवा</string>
+    <string name="str_reward_points">साइन-अप करा आणि 200 रिवॉर्ड पॉइंट मिळवा</string>
 
 
-    <string name="str_logout">साइन आउट करा </string>
+    <string name="str_logout">साइन-आउट करा</string>
     <string name="str_app_language">ऐपची भाषा निवडा</string>
 
     <string name="title_home">फेयरफेयर</string>
@@ -105,7 +103,7 @@
 
     <string name="title_compare_ride">राइड्सची तुलना करा</string>
     <string name="str_drop_off_location">ड्राप-ऑफ स्थान </string>
-    <string name="str_pick_up_location">पिक-उप स्थान </string>
+    <string name="str_pick_up_location">पिकअप स्थान </string>
     <string name="str_schedule_date_and_time"><![CDATA[नियोजित तारीख आणि वेळ]]></string>
     <string name="str_no_of_bags">बैग संख्या</string>
     <string name="available_rides">उपलब्ध सवारी</string>
@@ -116,36 +114,36 @@
     <string name="str_complaint_details">तक्रारीचे तपशील</string>
     <string name="str_dispute_reasons">विवादाचे कारण:</string>
     <string name="str_additional_comments">अतिरिक्त टिप्पण्या:</string>
-    <string name="str_estimated"> अंदाज </string>
+    <string name="str_estimated">अंदाज</string>
     <string name="str_actual">वास्तविक</string>
-    <string name="str_distance"> अंतर </string>
-    <string name="str_ride_time"> राइड टाइम</string>
-    <string name="str_wait_time">वेट टाइम</string>
-    <string name="str_basic_fare"> मूळ भाडे </string>
-    <string name="str_wait_charges">प्रतीक्षा फी </string>
+    <string name="str_distance">अंतर</string>
+    <string name="str_ride_time">राइड टाइम</string>
+    <string name="str_wait_time">प्रतीक्षा वेळ</string>
+    <string name="str_basic_fare">मूळ भाडे</string>
+    <string name="str_wait_charges">प्रतीक्षा फी</string>
     <string name="str_night_charges">रात्रीची फी</string>
-    <string name="str_toll_charges">टोल फी </string>
+    <string name="str_toll_charges">टोल फी</string>
     <string name="str_surcharge">सरचार्ज</string>
     <string name="str_total_fare">एकूण भाडे</string>
     <string name="str_ride_details">राइड तपशील</string>
-    <string name="btn_file_complaint"> तक्रार दर्ज करा </string>
-    <string name="str_cancel">रद्द करा </string>
+    <string name="btn_file_complaint">तक्रार दर्ज करा</string>
+    <string name="str_cancel">रद्द करा</string>
     <string name="str_your_current_ride_is_completed">तुमची सध्याची राइड पूर्ण झाली आहे</string>
     <string name="str_note">नोट::</string>
     <string name="btn_settle_and_close">व्यवस्थापित करा आणि बंद करा</string>
     <string name="btn_register_dispute">विवाद नोंदवा</string>
-    <string name="str_ride_scheduled_on">नियोजित राइड </string>
-    <string name="str_est_distance"> अंदाजे दूरी</string>
+    <string name="str_ride_scheduled_on">नियोजित राइड</string>
+    <string name="str_est_distance">अंदाजे दूरी</string>
     <string name="str_est_time">अंदाजे वेळ</string>
     <string name="btn_compare_rides">राइड्सची तुलना करा</string>
     <string name="str_skip">स्किप</string>
     <string name="str_get_started">सुरू करा</string>
     <string name="str_phone_number">फ़ोन नंबर</string>
-    <string name="str_and"> आणि </string>
+    <string name="str_and">आणि</string>
     <string name="str_or_continue_with">किंवा सुरू ठेवा</string>
     <string name="str_don_t_have_an_account">खाते नाही?</string>
-    <string name="str_ride_ratings"> राइड रेटिंग </string>
-    <string name="str_photos"> फोटो </string>
+    <string name="str_ride_ratings">राइड रेटिंग</string>
+    <string name="str_photos">फोटो</string>
     <string name="str_vehicle_number">गाडी नंबर</string>
     <string name="str_start_trip_meter">ट्रिप मीटर सुरू करा</string>
     <string name="str_driver">ड्राइवर</string>
@@ -164,7 +162,7 @@
     <string name="hint_email_id_optional">ईमेल (ऑप्शनल)</string>
     <string name="str_full_name">पूर्ण नाव</string>
     <string name="str_male">पुरुष</string>
-    <string name="str_female">स्त्री </string>
+    <string name="str_female">स्त्री</string>
     <string name="str_other">अन्य</string>
     <string name="str_already_have_an_account">आधीपासूनच खाते आहे?</string>
     <string name="lbl_dispute_reason">विवादाचे कारण</string>
@@ -176,10 +174,10 @@
     <string name="str_vehicle_details">वाहन माहिती</string>
     <string name="hint_enter_vehicle_number">वाहन संख्या दर्ज करा (पर्यायी)</string>
     <string name="hint_start_trip_meter_optional">ट्रिप मीटर सुरू करा (पर्यायी)</string>
-    <string name="str_driver_details">चालक माहिती </string>
+    <string name="str_driver_details">चालक माहिती</string>
     <string name="hint_enter_driver_name_optional">ड्रायव्हरचे नाव एंटर करा (पर्यायी)</string>
     <string name="hint_enter_driver_badge_number_optional">ड्रायव्हरचा बॅज नंबर एंटर करा (पर्यायी)</string>
-    <string name="btn_track_ride">राइड ट्रैक करा </string>
+    <string name="btn_track_ride">राइड ट्रैक करा</string>
     <string name="hint_enter_your_review">आपले पुनरावलोकन प्रविष्ट करा</string>
     <string name="btn_submit">सबमिट</string>
     <string name="str_track_board">ट्रैक बोर्ड</string>
@@ -230,7 +228,7 @@
     <string name="msg_change_location">तुमचे पिकअप स्थान बदलले आहे. तुमची राइड नवीन मार्गावर कॅलिब्रेट केली जाईल</string>
     <string name="str_new_calculated_distance">नवीन गणना केलेले अंतर:</string>
     <string name="str_new_calculated_duration">नवीन गणना केलेला कालावधी:</string>
-    <string name="str_new_calculated_fare"> नवीन गणना केलेले भाडे:</string>
+    <string name="str_new_calculated_fare">नवीन गणना केलेले भाडे:</string>
     <string name="btn_proceed">पुढे जा</string>
     <string name="str_charges">शुल्क</string>
     <string name="lbl_actual_meter_fare">वास्तविक मीटर भाडे</string>
@@ -256,8 +254,8 @@
     <string name="str_id">ID</string>
     <string name="str_filed_date">दायर तिथि</string>
     <string name="title_complaint_details"> तक्रार तपशील </string>
-    <string name="str_complaint_id"> तक्रार ID</string>
-    <string name="str_no_luggage">कोणतीही सामान नाही </string>
+    <string name="str_complaint_id">तक्रार ID</string>
+    <string name="str_no_luggage">कोणतीही सामान नाही</string>
     <string name="str_total_fare_charged">एकूण भाडे आकार</string>
     <string name="title_my_disputes">माझे विवाद</string>
     <string name="msg_no_disputes">तुम्ही अद्याप कोणतेही विवाद दाखल केलेले नाहीत.</string>
@@ -288,15 +286,15 @@
     <string name="str_estimated_distance">अंदाजे अंतर</string>
     <string name="str_estimated_fare">अंदाजे भाडे</string>
     <string name="str_drop_up_location">ड्रॉप ऑफ स्थान</string>
-    <string name="lbl_pick_up_location">पिक अप लोकेशन</string>
+    <string name="lbl_pick_up_location">पिकअप लोकेशन</string>
     <string name="msg_dialog_start_meter_reading">राइड सुरू करण्यापूर्वी तुम्ही स्टार्ट मीटर रीडिंग रेकॉर्ड केल्याची खात्री करा. </string>
-    <string name="title_ride_review">Ride Review</string>
+    <string name="title_ride_review">राइड पुनरावलोकन</string>
     <string name="dialog_gps_message">GPS सक्षम नाही. तुम्हाला सेटिंग्ज मेनूवर जायचे आहे का?</string>
     <string name="dialog_gps_title">GPS is settings</string>
-    <string name="str_settings">सेटिंग्स </string>
+    <string name="str_settings">सेटिंग्स</string>
     <string name="dialog_msg_end_ride_before_dest">तुम्ही अजून गंतव्यस्थानी पोहोचलेले नाही. तुम्‍हाला खात्री आहे की तुम्‍हाला राइड संपवायची आहे?</string>
     <string name="dialog_msg_end_ride">तुम्हाला ही राइड संपवायची आहे का?</string>
-    <string name="title_view_ride">सवारी पहा</string>
+    <string name="title_view_ride">राइड पहा</string>
     <string name="str_not_applicable">लागू नाही</string>
     <string name="msg_extra_luggage_charges">ब्रीफकेस किंवा हँड बॅग व्यतिरिक्त प्रत्येक सामानाच्या वस्तू.</string>
     <string name="str_per_booking">प्रति बुकिंग।</string>
