@@ -196,9 +196,11 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
             }else{
                 btnPayNow.visibility = View.GONE
-                btnRateRide.visibility = View.GONE
-                btnRegisterDispute.visibility = View.GONE
-                rlBalanceAmount.visibility = View.GONE
+                if (isFromEndRide){
+                    btnRateRide.visibility = View.VISIBLE
+                    btnRegisterDispute.visibility = View.VISIBLE
+                    txtRewardsPoint.visibility = View.GONE
+                }
             }
 
             if (isFromEndRide){
