@@ -426,7 +426,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
              "(Est.Distance:" + info.ride!!.estimatedTrackRide!!.distance + " km) / " +
                      "(Est.Time:" + info.ride!!.estimatedTrackRide!!.duration + ")"*/
 
-        mToolbar!!.title = "Track Ride"
+        mToolbar!!.title = getString(R.string.btn_track_ride)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
