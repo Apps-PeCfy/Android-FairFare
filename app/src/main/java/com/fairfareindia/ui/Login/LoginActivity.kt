@@ -191,9 +191,9 @@ class LoginActivity : AppCompatActivity(),
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         //  ccp.registerPhoneNumberTextView(edit_text);
-        if (!mPreferencesManager?.isLanguageChanged()!!){
+       /* if (!mPreferencesManager?.isLanguageChanged()!!){
             showLanguageDialog()
-        }
+        }*/
 
         setListeners()
     }

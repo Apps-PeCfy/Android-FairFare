@@ -153,7 +153,7 @@
     <string name="title_otp_verification">OTP पडताळणी</string>
     <string name="str_a_code_has_been_sent_to">एक कोड पाठवला आहे</string>
     <string name="str_you_will_get_otp_by_sms_in">तुम्हाला एसएमएसद्वारे एक ओटीपी मिळेल</string>
-    <string name="btn_finish">समाप्त</string>
+    <string name="btn_finish">सत्यापित करा</string>
     <string name="str_search_location">स्थान शोधा</string>
     <string name="str_locate_on_map">नकाशावर शोधा</string>
     <string name="str_current_location">वर्तमान स्थान</string>
