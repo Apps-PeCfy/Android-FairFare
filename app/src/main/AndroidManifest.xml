@@ -40,8 +40,10 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.splashscreen.PermissionActivity"></activity>
-        <activity android:name=".ui.introduction.IntroActivity" />
+        <activity android:name=".ui.splashscreen.PermissionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.introduction.IntroActivity"
+            android:screenOrientation="portrait"/>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -55,11 +57,15 @@
         <activity android:name=".ui.drawer.mydisput.disputDetail.DisputDetailActivity" />
         <activity android:name=".ui.ridedetails.RideDetailsActivity" />
         <activity android:name=".ui.disputs.RegisterDisputActivity" />
-        <activity android:name=".ui.endrides.EndRidesActivity" />
-        <activity android:name=".ui.trackRide.TrackRideActivity" />
+        <activity android:name=".ui.endrides.EndRidesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.trackRide.TrackRideActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.viewride.ViewRideActivity" />
-        <activity android:name=".ui.compareride.CompareRideActivity" />
-        <activity android:name=".ui.home.HomeActivity" />
+        <activity android:name=".ui.compareride.CompareRideActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.home.HomeActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.home.GooglePlace" />
         <activity
             android:name=".ui.home.PickUpDropActivity"
@@ -78,7 +84,8 @@
 
         <activity
             android:name=".ui.Login.LoginActivity"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.otp.OtpAvtivity"
             android:screenOrientation="portrait"

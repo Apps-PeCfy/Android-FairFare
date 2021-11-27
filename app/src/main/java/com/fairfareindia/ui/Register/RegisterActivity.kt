@@ -9,6 +9,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -64,6 +65,9 @@ class RegisterActivity : AppCompatActivity(),
     var CountryCode: String? = null
     var countryCodeCCP = "91"
     var countryCodeISO: String? = "IN"
+
+    var doubleBackPressed: Boolean? = false
+
 
     @JvmField
     @BindView(R.id.edit_text_register)
@@ -441,5 +445,19 @@ class RegisterActivity : AppCompatActivity(),
     }
 
     override fun onLocationChanged(p0: Location) {
+    }
+
+    override fun onBackPressed() {
+        if (doubleBackPressed!!) {
+            finishAffinity()
+        } else {
+            doubleBackPressed = true
+            Toast.makeText(
+                this,
+                getString(R.string.msg_back_pressed),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        Handler().postDelayed({ doubleBackPressed = false }, 3000)
     }
 }

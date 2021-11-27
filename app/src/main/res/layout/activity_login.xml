@@ -64,13 +64,12 @@
 
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/rectangle_1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.2"
             android:background="@drawable/app_gradient"
-            android:gravity="center_vertical"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
@@ -79,14 +78,20 @@
                 android:id="@+id/vector"
                 android:layout_width="@dimen/_144sdp"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/logo"
-                tools:ignore="ObsoleteLayoutParam" />
+                android:layout_centerInParent="true"
+                android:background="@drawable/logo" />
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/img_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_language"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="10dp"/>
+
+        </RelativeLayout>
 
 
         <RelativeLayout

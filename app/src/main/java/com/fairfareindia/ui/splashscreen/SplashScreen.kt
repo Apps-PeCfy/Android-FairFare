@@ -22,10 +22,7 @@ import com.fairfareindia.R
 import com.fairfareindia.ui.Login.LoginActivity
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.introduction.IntroActivity
-import com.fairfareindia.utils.CommonAppPermission
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PreferencesManager
-import com.fairfareindia.utils.SetLocalLanguage
+import com.fairfareindia.utils.*
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -269,10 +266,11 @@ class SplashScreen : AppCompatActivity() {
             } else {
                 //   checkUpdate()
             //    setHandler()
-                if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)) {
+                if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen) && ProjectUtilities.isGPSEnabled(this)) {
                     moveNextScreen()
                 }else{
-                    startActivity(Intent(this, PermissionActivity::class.java))
+                    startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+                    finish()
                 }
 
             }
@@ -281,10 +279,11 @@ class SplashScreen : AppCompatActivity() {
         appUpdateInfoTask.addOnFailureListener {
             // checkUpdate()
            // setHandler()
-            if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)) {
+            if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen) && ProjectUtilities.isGPSEnabled(this)) {
                 moveNextScreen()
             }else{
-                startActivity(Intent(this, PermissionActivity::class.java))
+                startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+                finish()
             }
 
         }

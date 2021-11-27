@@ -34,10 +34,7 @@ import com.fairfareindia.ui.Register.RegisterActivity
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.otp.OtpAvtivity
 import com.fairfareindia.ui.privacypolicy.PrivacyPolicyActivity
-import com.fairfareindia.utils.AppSignatureHelper
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PreferencesManager
-import com.fairfareindia.utils.ProjectUtilities
+import com.fairfareindia.utils.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -93,6 +90,12 @@ class LoginActivity : AppCompatActivity(),
     var btnLogin: Button? = null
 
     @JvmField
+    @BindView(R.id.img_language)
+    var imgLanguage: ImageView? = null
+
+
+
+    @JvmField
     @BindView(R.id.tvPhoneNumberError)
     var tvPhoneNumberError: TextView? = null
 
@@ -138,17 +141,21 @@ class LoginActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        init()
+    }
+
+    private fun init() {
         ButterKnife.bind(this)
         deviceID = String.format("%08d", Random.nextInt(100000000))
 
-      //  appSignatureHelper = AppSignatureHelper(this)
-       // appSignatureHelper!!.appSignatures
+        //  appSignatureHelper = AppSignatureHelper(this)
+        // appSignatureHelper!!.appSignatures
 
 
 
 
         // FacebookSdk.sdkInitialize(getApplicationContext());
-         hashkey()
+        hashkey()
 
 
         device_token = FirebaseMessaging.getInstance().token.toString()
@@ -175,15 +182,60 @@ class LoginActivity : AppCompatActivity(),
         ccp!!.setOnCountryChangeListener(this)
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-               // .requestIdToken("254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
+                // .requestIdToken("254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
                 .requestIdToken("637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com")
                 .requestServerAuthCode("637140199197-qoruvu97s5pp16apnqv9tf7gopd277r8.apps.googleusercontent.com")
-             //   .requestServerAuthCode("254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
+                //   .requestServerAuthCode("254736596560-cnkg23q193qpnffh7u0mpcdbdmofua28.apps.googleusercontent.com")
                 .requestId()
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         //  ccp.registerPhoneNumberTextView(edit_text);
+        if (!mPreferencesManager?.isLanguageChanged()!!){
+            showLanguageDialog()
+        }
+
+        setListeners()
+    }
+
+    private fun setListeners() {
+        imgLanguage?.setOnClickListener {
+            showLanguageDialog()
+        }
+    }
+
+    private fun showLanguageDialog() {
+        val items = arrayOf<CharSequence>(
+            getString(R.string.str_english),
+            getString(R.string.str_hindi),
+            getString(R.string.str_marathi)
+        )
+        val builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.str_app_language))
+        builder.setItems(items) { dialog, item ->
+            if (items[item] == getString(R.string.str_english)) {
+                mPreferencesManager?.setLanguage(getString(R.string.str_eng_code))
+                SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_eng_code))
+                restartApp()
+            } else if (items[item] == getString(R.string.str_hindi)) {
+                mPreferencesManager?.setLanguage(getString(R.string.str_hindi_code))
+                SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_hindi_code))
+                restartApp()
+            }else if (items[item] == getString(R.string.str_marathi)) {
+                mPreferencesManager?.setLanguage(getString(R.string.str_marathi_code))
+                SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_marathi_code))
+                restartApp()
+            }
+        }
+        builder.show()
+    }
+
+    private fun restartApp() {
+        mPreferencesManager?.setLanguageChanged(true)
+        val i = Intent(this, LoginActivity::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
     }
 
     private fun setStatusBarGradiant(activity: LoginActivity) {

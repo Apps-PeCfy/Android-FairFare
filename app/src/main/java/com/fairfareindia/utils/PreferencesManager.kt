@@ -9,6 +9,7 @@ class PreferencesManager private constructor(context: Context) {
     private val mPref: SharedPreferences
     private val cityList_key : String = "ALLOWED_CITY_LIST"
     private val KEY_LANGUAGE : String = "language"
+    private val KEY_LANGUAGE_CHANGE : String = "language_change"
 
     fun setStringValue(KEY_VALUE: String?, value: String?) {
         mPref.edit()
@@ -40,12 +41,12 @@ class PreferencesManager private constructor(context: Context) {
         return mPref.getInt(KEY_VALUE, 0)
     }
 
-    fun setBooleanValue(KEY_VALUE: String?, value: Boolean) {
-        mPref.edit().putBoolean(KEY_VALUE, value).apply()
+    fun setLanguageChanged(value: Boolean) {
+        mPref.edit().putBoolean(KEY_LANGUAGE_CHANGE, value).apply()
     }
 
-    fun getBooleanValue(KEY_VALUE: String?, defaultValue: Boolean): Boolean {
-        return mPref.getBoolean(KEY_VALUE, defaultValue)
+    fun isLanguageChanged(): Boolean {
+        return mPref.getBoolean(KEY_LANGUAGE_CHANGE, false)
     }
 
     fun remove(key: String?) {
