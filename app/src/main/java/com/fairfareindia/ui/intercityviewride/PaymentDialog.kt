@@ -14,16 +14,18 @@ import com.fairfareindia.databinding.DialogPaymentBinding
 
 class PaymentDialog(context: Context?) : Dialog(context!!) {
     lateinit var binding: DialogPaymentBinding
-    var message: String? = null
-    var btnName: String? = null
+    private var message: String? = null
+    private var title: String? = null
+    private var btnName: String? = null
     private var listener: PaymentDialogInterface? = null
 
     open interface PaymentDialogInterface {
         fun onButtonClick()
     }
 
-    constructor(context: Context?, btnName: String?,  message: String?, listener: PaymentDialogInterface?) : this(context) {
+    constructor(context: Context?, btnName: String?,  message: String?, title: String?, listener: PaymentDialogInterface?) : this(context) {
         this.btnName = btnName
+        this.title = title
         this.message = message
         this.listener = listener
     }
@@ -67,10 +69,11 @@ class PaymentDialog(context: Context?) : Dialog(context!!) {
     private fun setData() {
         binding.apply {
             if (btnName == context.resources.getString(R.string.btn_pay_now)){
-                txtPaymentSuccess.visibility = View.GONE
+                txtTitle.visibility = View.GONE
             }else{
-                txtPaymentSuccess.visibility = View.VISIBLE
+                txtTitle.visibility = View.VISIBLE
             }
+            txtTitle.text = title
             btnOk.text = btnName
             txtMessage.text = message
         }

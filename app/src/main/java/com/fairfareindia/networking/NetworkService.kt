@@ -8,6 +8,7 @@ import com.fairfareindia.ui.disputs.pojo.DisputesReasonResponsePOJO
 import com.fairfareindia.ui.disputs.pojo.SaveDisputResponsePOJO
 import com.fairfareindia.ui.drawer.contactus.pojo.ContactUsResponsePojo
 import com.fairfareindia.ui.drawer.faq.pojo.FAQResponsePOJO
+import com.fairfareindia.ui.drawer.intercitydispute.DisputeDetailModel
 import com.fairfareindia.ui.drawer.myaccount.pojo.UpdateProfileResponsePOJO
 import com.fairfareindia.ui.drawer.mydisput.disputDetail.pojo.DisputDetailResponsePOJO
 import com.fairfareindia.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
@@ -183,7 +184,10 @@ interface NetworkService {
         @Field("travel_time") travel_time: String?,
         @Field("travel_time_second") travel_time_second: String?,
         @Field("amount") amount: String?,
-        @Field("transaction_id") transaction_id: String?
+        @Field("transaction_id") transaction_id: String?,
+        @Field("method") method: String?,
+        @Field("payment_status") payment_status: String?,
+        @Field("gateway_type") gateway_type: String?
     ): Call<BookingRequestModel?>?
 
 
@@ -478,6 +482,12 @@ interface NetworkService {
         @Header("Authorization") header: String?,
         @Query("ride_id") dispute_id: String?
     ): Call<RideDetailModel?>?
+
+    @GET("detailDispute")
+    fun getInterCityDisputeDetail(
+        @Header("Authorization") header: String?,
+        @Query("dispute_id") dispute_id: String?
+    ): Call<DisputeDetailModel?>?
 
     @POST("storePayment")
     fun updatePaymentStatus(

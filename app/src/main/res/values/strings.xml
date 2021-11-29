@@ -77,7 +77,7 @@
     <string name="str_valid_for_new_users_only">Valid for New Users Only</string>
     <string name="str_reward_points">Sign Up and Get 200 Reward Points</string>
     <string name="title_intercity">Intercity</string>
-    <string name="title_intercity_rides">Intercity Rides</string>
+    <string name="title_intercity_rides">Intercity Ride</string>
     <string name="btn_compare_rides">Compare Rides</string>
     <string name="str_one_way">One Way</string>
     <string name="str_round_trip">Round Trip</string>
@@ -160,6 +160,14 @@
     <string name="txt_balance_fare_paid">Balance Fare Paid</string>
     <string name="txt_balance_fare_not_paid">Balance Fare to be Paid</string>
     <string name="str_location">Location</string>
+    <string name="str_payment_method">Payment Method</string>
+    <string name="str_pay_offline">Cash</string>
+    <string name="str_pay_online">Online</string>
+    <string name="btn_book_ride">Book Ride</string>
+    <string name="err_select_payment_method">Please select payment method.</string>
+    <string name="msg_payment_dialog_one">Kindly pay the amount ₹</string>
+    <string name="msg_payment_dialog_two">" for the booking and confirm."</string>
+    <string name="btn_file_complaint">File Complaint</string>
 
 
 </resources>

@@ -32,7 +32,10 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         travel_time: String?,
         travel_time_second: String?,
         amount: String?,
-        transaction_id: String?
+        transaction_id: String?,
+        method: String?,
+        payment_status: String?,
+        gateway_tye: String?
     ) {
         viewRideView.showWait()
         val call = ApiClient.client.bookingRequest(
@@ -56,7 +59,10 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             travel_time,
             travel_time_second,
             amount,
-            transaction_id
+            transaction_id,
+            method,
+            payment_status,
+            gateway_tye
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
             override fun onResponse(

@@ -1,8 +1,5 @@
 package com.fairfareindia.ui.intercityviewride
 
-import retrofit2.http.Field
-import retrofit2.http.Header
-
 
 interface IInterCityViewRidePresenter {
 
@@ -27,8 +24,17 @@ interface IInterCityViewRidePresenter {
         travel_time: String?,
         travel_time_second: String?,
         amount: String?,
-        transaction_id: String?
+        transaction_id: String?,
+        method: String?,
+        payment_status: String?,
+        gateway_type: String?
     )
+
+
+
+
+
+
 
     fun getViewRideDetails(
         token: String?,

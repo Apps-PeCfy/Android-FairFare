@@ -105,6 +105,9 @@ class GetDisputResponsePOJO {
         @SerializedName("type")
         var type: String? = null
 
+        @SerializedName("permitType")
+        var permitType: String? = null
+
         @SerializedName("disputeNo")
         var disputeNo: String? = null
 

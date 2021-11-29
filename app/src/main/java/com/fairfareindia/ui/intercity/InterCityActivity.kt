@@ -4,8 +4,11 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +26,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
+import java.io.IOException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -62,6 +66,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     private var timeSpinner: Array<String>? = null
     private var luggageSpinner: Array<String>? = null
     var wayFlag: String? = null
+    private var myLocationManager: MyLocationManager? = MyLocationManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +98,33 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
     }
 
+    private fun initLocationUpdates() {
+        myLocationManager?.getMyCurrentLocationChange(object :
+            MyLocationManager.LocationManagerTrackInterface {
+            override fun onMyLocationChange(
+                currentLocation: MutableList<Location>?,
+                lastLocation: Location?
+            ) {
+                if (lastLocation != null) {
+                    currentLatitude = lastLocation.latitude
+                    currentLongitude = lastLocation.longitude
+                    binding.txtPickUpLocation.text = getAddressFromLocation()
+                    sourceLat = currentLatitude.toString()
+                    sourceLong = currentLongitude.toString()
+                }
+            }
+
+        })
+    }
+
     private fun setInitialDate() {
+        if (currentLatitude == null && currentLatitude == 0.0){
+            initLocationUpdates()
+        }else{
+            binding.txtPickUpLocation.text = getAddressFromLocation()
+            sourceLat = currentLatitude.toString()
+            sourceLong = currentLongitude.toString()
+        }
         calendar = Calendar.getInstance()
         if (binding.spinnerTime.selectedItem.toString()
                 .equals(getString(R.string.str_now), ignoreCase = true)
@@ -297,6 +328,9 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             } else if (destinationLat.isNullOrEmpty()) {
                 Toast.makeText(context, "Please select drop off location", Toast.LENGTH_SHORT)
                     .show()
+                return false
+            }else if(fromCityID == toCityID){
+                Toast.makeText(context, "The From and To City can’t be same for Intercity travel.", Toast.LENGTH_SHORT).show()
                 return false
             }
 
@@ -529,5 +563,46 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
         } catch (ex: Exception) {
 
         }
+    }
+
+    private fun getAddressFromLocation(): String? {
+        var address: String = ""
+        val geocoder = Geocoder(context, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1)
+
+            if (addresses != null && addresses!!.size > 0) {
+                val obj = addresses[0]
+                address = obj.getAddressLine(0)
+                var countryName = obj?.countryName
+                if (obj?.countryName != null && obj.countryName.equals(
+                        "United States",
+                        ignoreCase = true
+                    )
+                ) {
+                    obj.countryName = "USA"
+                }
+                if (!countryName.equals("")) {
+                    address =
+                        address.replace(", $countryName", "").replace("- $countryName", "")
+                }
+
+                if (obj != null && obj.postalCode != null && !obj.postalCode.equals("")) {
+                    address = address.replace(" " + obj.postalCode, "")
+                }
+
+                //   city = obj.subAdminArea
+            } else {
+                address = ""
+            }
+        } catch (e: IOException) {
+            Toast.makeText(
+                this,
+                e.toString(),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        return address
     }
 }

@@ -154,7 +154,7 @@ class MyDisPutesAdapter(var context: FragmentActivity?, private val MyDisputsLis
 
 
             }else {
-                iDisputClick!!.detailDisputClick(MyDisputsListList[adapterPosition].id)
+                iDisputClick!!.detailDisputClick(MyDisputsListList[adapterPosition])
             }
 
         }
@@ -168,7 +168,7 @@ class MyDisPutesAdapter(var context: FragmentActivity?, private val MyDisputsLis
     interface IDisputClickListener {
         fun fileComplaintClick(id: Int)
         fun deleteDisputClick(id: Int)
-        fun detailDisputClick(id: Int)
+        fun detailDisputClick(model: GetDisputResponsePOJO.DataItem)
     }
 
 }

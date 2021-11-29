@@ -178,18 +178,54 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             }
 
             btnBookRide.setOnClickListener {
-                var message =
-                    "Kindly pay the amount ₹${model?.ride?.totalPayableCharges} for the booking and confirm."
-                openPaymentDialog(getString(R.string.btn_pay_now), message)
+                if (!rdBtnOnline.isChecked && !rdBtnOffline.isChecked){
+                    Toast.makeText(context, getString(R.string.err_select_payment_method), Toast.LENGTH_SHORT).show()
+                }else if (rdBtnOnline.isChecked){
+                    var message =
+                        getString(R.string.msg_payment_dialog_one) + model?.ride?.totalPayableCharges + getString(R.string.msg_payment_dialog_two)
+                    openPaymentDialog(getString(R.string.btn_pay_now), message, "")
+                }else if (rdBtnOffline.isChecked){
+                    callBookRideAPI()
+                }
+
             }
 
 
         }
     }
 
-    private fun openPaymentDialog(btnName: String, message: String) {
+    private fun callBookRideAPI() {
+        iInterCityViewRidePresenter?.bookingRequest(
+            token,
+            Constants.TYPE_INTERCITY,
+            info.fromCityId,
+            info.toCityId,
+            sourceAddress,
+            destinationAddress,
+            sourceLat,
+            sourceLong,
+            destinationLat,
+            destinationLong,
+            info.scheduleDatetime,
+            info.wayFlag,
+            model?.ride?.id,
+            scheduleType,
+            info.luggage,
+            model?.ride?.chargesLuggage.toString(),
+            model?.ride?.actualDistance.toString(),
+            info.travelTime,
+            estTimeInSeconds,
+            model?.ride?.totalPayableCharges.toString(),
+            "",
+            "Cash",
+            Constants.PAYMENT_UNPAID,
+            "Offline"
+        )
+    }
+
+    private fun openPaymentDialog(btnName: String, message: String, title: String) {
         paymentDialog =
-            PaymentDialog(context, btnName, message, object : PaymentDialog.PaymentDialogInterface {
+            PaymentDialog(context, btnName, message, title, object : PaymentDialog.PaymentDialogInterface {
                 override fun onButtonClick() {
                     paymentDialog?.dismiss()
                     if (btnName == getString(R.string.btn_pay_now)) {
@@ -250,10 +286,16 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
      */
 
     override fun bookingRequestSuccess(model: BookingRequestModel?) {
+        var title = ""
+        if (binding.rdBtnOffline.isChecked){
+            title = "Booked Successfully"
+        }else{
+            title = "Your payment is successful"
+        }
         var message1 =
-            "Your ride is confirmed on ${binding.txtDate.text}. Driver details will be shared 15 minutes before the ride."
-        openPaymentDialog(getString(R.string.btn_ok), message1)
-        Toast.makeText(context, "Booking ID :- ${model?.data?.id}", Toast.LENGTH_LONG).show()
+            "Your booking request submitted successfully for ${binding.txtDate.text}. Driver details will be shared 15 minutes before the ride."
+        openPaymentDialog(getString(R.string.btn_ok), message1, title)
+      //  Toast.makeText(context, "Booking ID :- ${model?.data?.id}", Toast.LENGTH_LONG).show()
     }
 
     override fun getViewRideDetails(model: ViewRideModel?) {
@@ -355,7 +397,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 info.travelTime,
                 estTimeInSeconds,
                 model?.ride?.totalPayableCharges.toString(),
-                razorpayPaymentID
+                razorpayPaymentID,
+                "Online",
+                Constants.PAYMENT_PAID,
+                "Razorpay"
 
             )
 
