@@ -17,7 +17,9 @@ import butterknife.ButterKnife
 import com.fairfareindia.R
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.drawer.intercitydispute.InterCityDisputeDetailsActivity
 import com.fairfareindia.ui.drawer.mycomplaints.complaintDetails.ComplaintsDetailsActivity
+import com.fairfareindia.ui.drawer.mydisput.disputDetail.DisputDetailActivity
 import com.fairfareindia.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.utils.Constants
@@ -186,13 +188,21 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
         super.onResume()
     }
 
-    override fun detailDisputClick(id: Int) {
+    override fun detailDisputClick(model: GetDisputResponsePOJO.DataItem) {
 
         if (ProjectUtilities.checkInternetAvailable(activity)) {
 
-            val intent = Intent(activity, ComplaintsDetailsActivity::class.java)
-            intent.putExtra("Id", id.toString())
-            startActivity(intent)
+            if (model.permitType == Constants.TYPE_INTERCITY){
+                val intent = Intent(activity, InterCityDisputeDetailsActivity::class.java)
+                intent.putExtra("dispute_id", model.id.toString())
+                startActivity(intent)
+            }else{
+                val intent = Intent(activity, ComplaintsDetailsActivity::class.java)
+                intent.putExtra("Id", model.id.toString())
+                startActivity(intent)
+            }
+
+
         }else{
 
             ProjectUtilities.showToast(

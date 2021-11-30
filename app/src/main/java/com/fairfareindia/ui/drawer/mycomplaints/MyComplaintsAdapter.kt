@@ -137,7 +137,7 @@ class MyComplaintsAdapter(
 
         override fun onClick(v: View?) {
             if (v!!.id == R.id.rlHome) {
-                iDisputClick!!.detailDisputClick(complaintList[adapterPosition].id)
+                iDisputClick!!.detailDisputClick(complaintList[adapterPosition])
             }else{
                 var eventDialogBind = AddressPopUp()
 
@@ -168,7 +168,7 @@ class MyComplaintsAdapter(
     }
 
     interface IMyComplaintClickListener {
-        fun detailDisputClick(id: Int)
+        fun detailDisputClick(model: GetDisputResponsePOJO.DataItem)
     }
 
 }

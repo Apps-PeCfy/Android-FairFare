@@ -251,7 +251,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             animateMarkerNew(prevLatLng!!, newPosition, myMarker)
         }
 
-        if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
+        /*if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
             myMarker?.remove()
             myMarker = mMap?.addMarker(
                 MarkerOptions()
@@ -264,6 +264,17 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             )
         }else{
             myMarker?.remove()
+            myMarker = mMap?.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(model?.data?.vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+            )
+        }*/
+
+        if (myMarker == null){
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
@@ -386,9 +397,14 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
 
-                    /*  if (myMarker != null) {
-                     myMarker.remove();
-                     }*/
+                    myMarker?.remove()
+                    myMarker = mMap?.addMarker(
+                        MarkerOptions()
+                            .position(destination)
+                            .icon(getMarkerIcon(model?.data?.vehicleName))
+                            .anchor(0.5f, 0.5f)
+                            .draggable(true)
+                            .flat(true))
                 }
             })
             valueAnimator.start()

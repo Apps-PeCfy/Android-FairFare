@@ -64,6 +64,8 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
     private var prevLatLng: LatLng? = null
     private var isRouteDrawn: Boolean = false
     private var driverLocationModel: DriverLocationModel ?= null
+    private var mPolyline: Polyline? = null
+
 
     val handler : Handler?= Handler()
 
@@ -191,7 +193,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
 
 
 
-        if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
+       /* if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
             myMarker?.remove()
             myMarker = mMap?.addMarker(
                 MarkerOptions()
@@ -204,6 +206,16 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
             )
         }else{
             myMarker?.remove()
+            myMarker = mMap?.addMarker(
+                MarkerOptions()
+                    .position(newPosition)
+                    .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                    .anchor(0.5f, 0.5f)
+                    .draggable(true)
+                    .flat(true)
+            )
+        }*/
+        if (myMarker == null){
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
@@ -325,9 +337,14 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
 
-                    /*  if (myMarker != null) {
-                     myMarker.remove();
-                     }*/
+                    myMarker?.remove()
+                    myMarker = mMap?.addMarker(
+                        MarkerOptions()
+                            .position(destination)
+                            .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                            .anchor(0.5f, 0.5f)
+                            .draggable(true)
+                            .flat(true))
                 }
             })
             valueAnimator.start()
@@ -409,9 +426,6 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
             context,
             object : APIManager.APIManagerInterface {
                 override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
-
-
-                    var mPolyline: Polyline? = null
 
 
                     var routes: List<List<HashMap<String, String>>>? = null
@@ -513,6 +527,8 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                 if (!isRouteDrawn){
                     getRouteAPI()
                     iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                }else{
+                    getRouteAPI()
                 }
 
             }

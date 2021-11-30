@@ -168,6 +168,10 @@
     <string name="msg_payment_dialog_one">Kindly pay the amount ₹</string>
     <string name="msg_payment_dialog_two">" for the booking and confirm."</string>
     <string name="btn_file_complaint">File Complaint</string>
+    <string name="title_complaint_detail">Complaint Details</string>
+    <string name="title_dispute_detail">Dispute details</string>
+    <string name="str_complaint_id">Complaint ID</string>
+    <string name="str_dispute_id">Dispute ID</string>
 
 
 </resources>

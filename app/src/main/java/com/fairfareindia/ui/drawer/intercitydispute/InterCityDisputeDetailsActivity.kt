@@ -56,6 +56,16 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
     private fun setData() {
         binding.apply {
 
+            if (model?.dispute?.type == "Complaint"){
+                btnFileComplaint.visibility = View.GONE
+                toolbarDisputeDetails.title = getString(R.string.title_complaint_detail)
+                txtDisputeId.text =  getString(R.string.str_complaint_id) +" : " + model?.dispute?.disputeNo
+            }else{
+                btnFileComplaint.visibility = View.VISIBLE
+                toolbarDisputeDetails.title = getString(R.string.title_dispute_detail)
+                txtDisputeId.text = getString(R.string.str_dispute_id)+ " : " + model?.dispute?.disputeNo
+            }
+
             var dReason: String? = ""
             for (i in model?.dispute?.reasons?.indices!!) {
                 if (dReason?.isEmpty()!!) {
@@ -71,7 +81,7 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
 
             txtDisputeReason.text = dReason
 
-            txtDisputeId.text = "Dispute ID:" + model?.dispute?.disputeNo
+
 
             txtActualFare.text = "Total Fare Charged: ₹ " + model?.dispute?.actualMeterCharges
             txtStartMeterReading.text = "Start Trip Meter: " + model?.dispute?.startMeterReading
@@ -129,6 +139,8 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
                 txtLuggage.text = model?.dispute?.ride?.luggageQuantity + " " + getString(R.string.str_bags)
             }
 
+
+
             Glide.with(context)
                 .load(model?.dispute?.ride?.vehicleImageUrl)
                 .apply(
@@ -145,6 +157,10 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
         binding.apply {
             btnFileComplaint.setOnClickListener {
                 showConfirmationDialog()
+            }
+
+            toolbarDisputeDetails.setOnClickListener {
+                onBackPressed()
             }
         }
     }
