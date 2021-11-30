@@ -38,7 +38,8 @@ import com.google.android.gms.maps.model.*
 import org.json.JSONObject
 import java.util.*
 
-class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityTrackRideView {
+class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
+    IIntercityTrackRideView {
     lateinit var binding: ActivityInterCityTrackRideBinding
     private var context: Context = this
 
@@ -49,7 +50,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
     private var token: String? = null
     private var preferencesManager: PreferencesManager? = null
 
-    private var rideDetailModel: RideDetailModel ?= null
+    private var rideDetailModel: RideDetailModel? = null
     private var iInterCityTrackRidePresenter: IInterCityTrackRidePresenter? = null
 
     var sourceLat: String? = null
@@ -60,14 +61,14 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
     var driverLat: String? = null
     var driverLong: String? = null
 
-    private var myMarker: Marker ?= null
+    private var myMarker: Marker? = null
     private var prevLatLng: LatLng? = null
     private var isRouteDrawn: Boolean = false
-    private var driverLocationModel: DriverLocationModel ?= null
+    private var driverLocationModel: DriverLocationModel? = null
     private var mPolyline: Polyline? = null
 
 
-    val handler : Handler?= Handler()
+    val handler: Handler? = Handler()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,15 +123,16 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
             }
 
             rlHideShow.setOnClickListener {
-                if (llHideView.visibility == View.GONE){
+                if (llHideView.visibility == View.GONE) {
                     llHideView.visibility = View.VISIBLE
-                }else{
+                } else {
                     llHideView.visibility = View.GONE
                 }
             }
 
             imgHome.setOnClickListener {
-                var sharedpreferences : SharedPreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+                var sharedpreferences: SharedPreferences =
+                    getSharedPreferences("mypref", Context.MODE_PRIVATE)
                 sharedpreferences.edit().clear().apply()
                 val intent = Intent(context, HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -147,23 +149,24 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
             txtPickUpLocation.text = rideDetailModel?.data?.originAddress
             txtDropUpLocation.text = rideDetailModel?.data?.destinationAddress
 
-            txtDistanceTime.text = "Est.Distance - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / Est.Time - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
+            txtDistanceTime.text =
+                "Est.Distance - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / Est.Time - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
 
             txtWaitTime.text = rideDetailModel?.data?.total_wait_time.toString() + "Min"
             txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
 
-            sourceLat =  rideDetailModel?.data?.originLatitude
-            sourceLong =  rideDetailModel?.data?.originLongitude
+            sourceLat = rideDetailModel?.data?.originLatitude
+            sourceLong = rideDetailModel?.data?.originLongitude
 
             destinationLat = rideDetailModel?.data?.destinationLatitude
             destinationLong = rideDetailModel?.data?.destinationLongitude
 
-            if (!sourceLat.isNullOrEmpty() && !destinationLat.isNullOrEmpty()){
+            if (!sourceLat.isNullOrEmpty() && !destinationLat.isNullOrEmpty()) {
                 drawSourceDestinationMarker()
             }
 
             //Driver and Vehical
-            txtVehicleName.text =  rideDetailModel?.data?.vehicleName
+            txtVehicleName.text = rideDetailModel?.data?.vehicleName
 
             Glide.with(context)
                 .load(rideDetailModel?.data?.vehicleImageUrl)
@@ -179,22 +182,16 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
 
     override fun onMapReady(p0: GoogleMap?) {
         mMap = p0
-        if (!sourceLat.isNullOrEmpty() && !destinationLat.isNullOrEmpty()){
+        if (!sourceLat.isNullOrEmpty() && !destinationLat.isNullOrEmpty()) {
             drawSourceDestinationMarker()
         }
     }
 
     private fun addCurrentLocationMarker(driverLocationModel: DriverLocationModel?) {
 
-        val newPosition: LatLng = LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel.data?.longitude!!)
-        if (myMarker != null && prevLatLng != null) {
-            animateMarkerNew(prevLatLng!!, newPosition, myMarker)
-        }
-
-
-
-       /* if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
-            myMarker?.remove()
+        val newPosition: LatLng =
+            LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel.data?.longitude!!)
+        if (myMarker == null) {
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
@@ -204,27 +201,35 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                     .flat(true)
                     .rotation(driverLocationModel.data?.bearing!!)
             )
-        }else{
-            myMarker?.remove()
-            myMarker = mMap?.addMarker(
-                MarkerOptions()
-                    .position(newPosition)
-                    .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
-                    .anchor(0.5f, 0.5f)
-                    .draggable(true)
-                    .flat(true)
-            )
-        }*/
-        if (myMarker == null){
-            myMarker = mMap?.addMarker(
-                MarkerOptions()
-                    .position(newPosition)
-                    .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
-                    .anchor(0.5f, 0.5f)
-                    .draggable(true)
-                    .flat(true)
-            )
         }
+        if (myMarker != null && prevLatLng != null) {
+            animateMarkerNew(prevLatLng!!, newPosition, myMarker)
+        }
+
+
+        /* if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
+             myMarker?.remove()
+             myMarker = mMap?.addMarker(
+                 MarkerOptions()
+                     .position(newPosition)
+                     .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                     .anchor(0.5f, 0.5f)
+                     .draggable(true)
+                     .flat(true)
+                     .rotation(driverLocationModel.data?.bearing!!)
+             )
+         }else{
+             myMarker?.remove()
+             myMarker = mMap?.addMarker(
+                 MarkerOptions()
+                     .position(newPosition)
+                     .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                     .anchor(0.5f, 0.5f)
+                     .draggable(true)
+                     .flat(true)
+             )
+         }*/
+
         prevLatLng = newPosition
 
         mMap?.animateCamera(
@@ -263,7 +268,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
     }
 
     private fun drawSourceDestinationMarker() {
-       mMap?.addMarker(
+        mMap?.addMarker(
             MarkerOptions().position(
                 com.google.android.gms.maps.model.LatLng(
                     sourceLat!!.toDouble(),
@@ -305,9 +310,9 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
             val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            if (mMap!!.cameraPosition.zoom <= 18.0){
+            if (mMap!!.cameraPosition.zoom <= 18.0) {
                 valueAnimator.duration = 1000 // duration 2 second
-            }else{
+            } else {
                 valueAnimator.duration = 500 // duration 2 second
             }
 
@@ -328,7 +333,10 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                         )
                     )
 
-                    myMarker?.rotation = getBearing(startPosition, LatLng(destination.latitude, destination.longitude))
+                    myMarker?.rotation = getBearing(
+                        startPosition,
+                        LatLng(destination.latitude, destination.longitude)
+                    )
                 } catch (ex: java.lang.Exception) {
                     //I don't care atm..
                 }
@@ -344,7 +352,9 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                             .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
                             .anchor(0.5f, 0.5f)
                             .draggable(true)
-                            .flat(true))
+                            .flat(true)
+                            .rotation(driverLocationModel?.data?.bearing!!)
+                    )
                 }
             })
             valueAnimator.start()
@@ -415,9 +425,11 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
     }
 
 
-
     private fun getRouteAPI() {
-        val url = "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + driverLat + "," + driverLong + "&destination=" + destinationLat + "," + destinationLong + "&key=" + getString(R.string.google_maps_key)
+        val url =
+            "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + driverLat + "," + driverLong + "&destination=" + destinationLat + "," + destinationLong + "&key=" + getString(
+                R.string.google_maps_key
+            )
 
         APIManager.getInstance(context).postAPI(
             url,
@@ -475,7 +487,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
                         mPolyline?.remove()
                         mPolyline = mMap?.addPolyline(lineOptions)
                         isRouteDrawn = true
-                    } else{
+                    } else {
                         Toast.makeText(context, "No route is found", Toast.LENGTH_LONG)
                             .show()
                     }
@@ -502,42 +514,45 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback, IInt
      * API CALLING
      */
 
-    private fun getDriverLocationAPI(){
+    private fun getDriverLocationAPI() {
         var url = BuildConfig.API_URL + "getDriverLocation"
-        var params : JSONObject = JSONObject()
+        var params: JSONObject = JSONObject()
         params.put("ride_id", rideID)
         params.put("token", token)
-        APIManager.getInstance(context).postAPI(url, params, DriverLocationModel::class.java, context, object :
-            APIManager.APIManagerInterface{
-            override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
-                driverLocationModel = resultObj as DriverLocationModel?
-                driverLat = driverLocationModel?.data?.latitude.toString()
-                driverLong = driverLocationModel?.data?.longitude.toString()
+        APIManager.getInstance(context)
+            .postAPI(url, params, DriverLocationModel::class.java, context, object :
+                APIManager.APIManagerInterface {
+                override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
+                    driverLocationModel = resultObj as DriverLocationModel?
+                    driverLat = driverLocationModel?.data?.latitude.toString()
+                    driverLong = driverLocationModel?.data?.longitude.toString()
 
-                if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED){
-                    handler?.removeCallbacksAndMessages(null)
-                    startActivity(Intent(context, IntercityRideDetailsActivity::class.java)
-                        .putExtra("ride_id", rideID)
-                        .putExtra("isFromEndRide", true))
-                    finish()
+                    if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED) {
+                        handler?.removeCallbacksAndMessages(null)
+                        startActivity(
+                            Intent(context, IntercityRideDetailsActivity::class.java)
+                                .putExtra("ride_id", rideID)
+                                .putExtra("isFromEndRide", true)
+                        )
+                        finish()
+                    }
+
+                    addCurrentLocationMarker(driverLocationModel)
+
+                    if (!isRouteDrawn) {
+                        getRouteAPI()
+                        iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                    } else {
+                        getRouteAPI()
+                    }
+
                 }
 
-                addCurrentLocationMarker(driverLocationModel)
-
-                if (!isRouteDrawn){
-                    getRouteAPI()
-                    iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
-                }else{
-                    getRouteAPI()
+                override fun onError(error: String?) {
+                    Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
                 }
 
-            }
-
-            override fun onError(error: String?) {
-                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-            }
-
-        })
+            })
     }
 
 

@@ -20,11 +20,11 @@ import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityTrackPickUpBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.common.CommonMessageDialog
+import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
-import com.fairfareindia.ui.ridedetails.RideDetailsActivity
 import com.fairfareindia.utils.APIManager
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PreferencesManager
@@ -37,7 +37,7 @@ import com.google.android.gms.maps.model.*
 import org.json.JSONObject
 import java.util.*
 
-class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercityTrackPickUpView {
+class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityTrackPickUpView {
     lateinit var binding: ActivityTrackPickUpBinding
     private var context: Context = this
 
@@ -46,8 +46,8 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
     private var token: String? = null
     private var rideID: String? = null
-    private var model: RideDetailModel ?= null
-    private var driverLocationModel: DriverLocationModel ?= null
+    private var model: RideDetailModel? = null
+    private var driverLocationModel: DriverLocationModel? = null
     var commonMessageDialog: CommonMessageDialog? = null
     private var preferencesManager: PreferencesManager? = null
     private var iInterCityTrackPickUpPresenter: IInterCityTrackPickUpPresenter? = null
@@ -60,12 +60,12 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     var driverLat: String? = null
     var driverLong: String? = null
 
-    private var sourceMarker: Marker ?= null
-    private var myMarker: Marker ?= null
+    private var sourceMarker: Marker? = null
+    private var myMarker: Marker? = null
     private var prevLatLng: LatLng? = null
     private var isRouteDrawn: Boolean = false
 
-    val handler : Handler ?= Handler()
+    val handler: Handler? = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,9 +103,9 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             toolbarHome.setNavigationOnClickListener { onBackPressed() }
 
             rlHideShow.setOnClickListener {
-                if (llHideView.visibility == View.VISIBLE){
+                if (llHideView.visibility == View.VISIBLE) {
                     llHideView.visibility = View.GONE
-                }else{
+                } else {
                     llHideView.visibility = View.VISIBLE
                 }
             }
@@ -124,8 +124,9 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             }
 
             crdCall.setOnClickListener {
-                if (!model?.data?.driver?.phoneNo.isNullOrEmpty()){
-                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + model?.data?.driver?.phoneNo))
+                if (!model?.data?.driver?.phoneNo.isNullOrEmpty()) {
+                    val intent =
+                        Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + model?.data?.driver?.phoneNo))
                     startActivity(intent)
                 }
 
@@ -134,17 +135,26 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     }
 
     private fun openConfirmationDialog() {
-        commonMessageDialog = CommonMessageDialog(context,getString(R.string.str_cancel_ride_message), getString(R.string.btn_cancel_not), getString(R.string.btn_proceed), object : CommonMessageDialog.CommonMessageDialogInterface{
-            override fun onPositiveButtonClick() {
-                commonMessageDialog?.dismiss()
-            }
+        commonMessageDialog = CommonMessageDialog(
+            context,
+            getString(R.string.str_cancel_ride_message),
+            getString(R.string.btn_cancel_not),
+            getString(R.string.btn_proceed),
+            object : CommonMessageDialog.CommonMessageDialogInterface {
+                override fun onPositiveButtonClick() {
+                    commonMessageDialog?.dismiss()
+                }
 
-            override fun onNegativeButtonClick() {
-                iInterCityTrackPickUpPresenter?.cancelRide(token, rideID, Constants.BOOKING_CANCELLED)
-                commonMessageDialog?.dismiss()
-            }
+                override fun onNegativeButtonClick() {
+                    iInterCityTrackPickUpPresenter?.cancelRide(
+                        token,
+                        rideID,
+                        Constants.BOOKING_CANCELLED
+                    )
+                    commonMessageDialog?.dismiss()
+                }
 
-        })
+            })
         commonMessageDialog?.setCancelable(false)
         commonMessageDialog?.show()
     }
@@ -164,19 +174,20 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             txtBaseFare.text = "₹ " + model?.data?.estimatedTrackRide?.basicFare
             txtTollCharges.text = "₹ " + model?.data?.estimatedTrackRide?.tollCharges
 
-            sourceLat =  model?.data?.originLatitude
-            sourceLong =  model?.data?.originLongitude
+            sourceLat = model?.data?.originLatitude
+            sourceLong = model?.data?.originLongitude
 
             destinationLat = model?.data?.destinationLatitude
             destinationLong = model?.data?.destinationLongitude
 
-            if (!sourceLat.isNullOrEmpty() && sourceMarker == null && mMap != null){
+            if (!sourceLat.isNullOrEmpty() && sourceMarker == null && mMap != null) {
                 drawSourceMarker()
             }
 
 
             if (model?.data?.estimatedTrackRide?.distance!! > model?.data?.estimatedTrackRide?.baseDistance!!) {
-                var extraDistance = model?.data?.estimatedTrackRide?.distance!!.toInt() - model?.data?.estimatedTrackRide?.baseDistance!!.toInt()
+                var extraDistance =
+                    model?.data?.estimatedTrackRide?.distance!!.toInt() - model?.data?.estimatedTrackRide?.baseDistance!!.toInt()
                 txtChargesForAdditionalKmLabel.text =
                     getString(R.string.str_charges_for_additional) + " $extraDistance " + "Km"
             } else {
@@ -187,26 +198,28 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                 getString(R.string.str_base_fare) + "( ${model?.data?.estimatedTrackRide?.baseDistance!!.toInt()} Km )"
 
 
-            tvChargesForAdditionalKm.text = "₹ " + model?.data?.estimatedTrackRide?.additionalDistanceCharges
+            tvChargesForAdditionalKm.text =
+                "₹ " + model?.data?.estimatedTrackRide?.additionalDistanceCharges
 
             tvSurCharges.text = "₹ " + model?.data?.estimatedTrackRide?.surCharge
 
             tvConvenienceFees.text = "₹ " + model?.data?.estimatedTrackRide?.convenienceFees
             txtTotalPayable.text = "₹ " + model?.data?.estimatedTrackRide?.totalCharges
-            txtAdditionalCharges.text = "₹ " +model?.data?.estimatedTrackRide?.totalAdditionalCharges
+            txtAdditionalCharges.text =
+                "₹ " + model?.data?.estimatedTrackRide?.totalAdditionalCharges
 
-            if (model?.data?.status == Constants.BOOKING_SCHEDULED){
+            if (model?.data?.status == Constants.BOOKING_SCHEDULED) {
                 btnCancelRide.visibility = View.VISIBLE
                 txtStatusMessage.text = getString(R.string.lbl_ride_on_way)
-            }else{
+            } else {
                 txtStatusMessage.text = getString(R.string.lbl_ride_cancelled)
                 btnCancelRide.visibility = View.GONE
             }
 
-            if(model?.data?.rules.isNullOrEmpty()){
+            if (model?.data?.rules.isNullOrEmpty()) {
                 txtRulesLabel.visibility = View.GONE
                 txtRules.visibility = View.GONE
-            }else{
+            } else {
                 txtRules.text = model?.data?.rules
                 txtRulesLabel.visibility = View.VISIBLE
                 txtRules.visibility = View.VISIBLE
@@ -214,7 +227,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
 
             //Driver and Vehical
-            txtVehicleName.text =  model?.data?.vehicleName
+            txtVehicleName.text = model?.data?.vehicleName
             txtVehicleNumber.text = model?.data?.vehicleNo
             txtDriverName.text = model?.data?.driver?.name
 
@@ -235,7 +248,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
-        if (!sourceLat.isNullOrEmpty() && sourceMarker == null){
+        if (!sourceLat.isNullOrEmpty() && sourceMarker == null) {
             drawSourceMarker()
         }
     }
@@ -246,7 +259,8 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
         location.latitude = driverLocationModel?.data?.latitude!!
         location.longitude = driverLocationModel.data?.longitude!!
 
-        val newPosition: LatLng = LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel.data?.longitude!!)
+        val newPosition: LatLng =
+            LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel.data?.longitude!!)
         if (prevLatLng != null) {
             animateMarkerNew(prevLatLng!!, newPosition, myMarker)
         }
@@ -274,7 +288,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             )
         }*/
 
-        if (myMarker == null){
+        if (myMarker == null) {
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
@@ -282,6 +296,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                     .anchor(0.5f, 0.5f)
                     .draggable(true)
                     .flat(true)
+                    .rotation(driverLocationModel.data?.bearing!!)
             )
         }
 
@@ -301,7 +316,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     }
 
     private fun getZoomLevel(): Float {
-       if (mMap?.cameraPosition?.zoom!! < 10) {
+        if (mMap?.cameraPosition?.zoom!! < 10) {
             return 18.0f
         }
         return mMap?.cameraPosition?.zoom!!
@@ -345,7 +360,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
         val customInfoWindow = CustomInfoWindowGoogleMap(this)
         var timeInSeconds = duration.getString("value")
 
-        sourceMarker?.title = (timeInSeconds.toDouble()/60).toInt().toString()
+        sourceMarker?.title = (timeInSeconds.toDouble() / 60).toInt().toString()
         sourceMarker?.snippet = "Min"
         mMap?.setInfoWindowAdapter(customInfoWindow)
         sourceMarker?.showInfoWindow()
@@ -365,9 +380,9 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
             val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            if (mMap!!.cameraPosition.zoom <= 18.0){
+            if (mMap!!.cameraPosition.zoom <= 18.0) {
                 valueAnimator.duration = 1000 // duration 2 second
-            }else{
+            } else {
                 valueAnimator.duration = 500 // duration 2 second
             }
 
@@ -388,7 +403,10 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                         )
                     )
 
-                    myMarker?.rotation = getBearing(startPosition, LatLng(destination.latitude, destination.longitude))
+                    myMarker?.rotation = getBearing(
+                        startPosition,
+                        LatLng(destination.latitude, destination.longitude)
+                    )
                 } catch (ex: java.lang.Exception) {
                     //I don't care atm..
                 }
@@ -404,7 +422,9 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                             .icon(getMarkerIcon(model?.data?.vehicleName))
                             .anchor(0.5f, 0.5f)
                             .draggable(true)
-                            .flat(true))
+                            .flat(true)
+                            .rotation(driverLocationModel?.data?.bearing!!)
+                    )
                 }
             })
             valueAnimator.start()
@@ -475,9 +495,11 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
     }
 
 
-
     private fun getRouteAPI() {
-        val url = "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + driverLat + "," + driverLong + "&destination=" + sourceLat + "," + sourceLong + "&key=" + getString(R.string.google_maps_key)
+        val url =
+            "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + driverLat + "," + driverLong + "&destination=" + sourceLat + "," + sourceLong + "&key=" + getString(
+                R.string.google_maps_key
+            )
 
         APIManager.getInstance(context).postAPI(
             url,
@@ -531,7 +553,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                         lineOptions.width(8f)
                         //  lineOptions.color(Color.GREEN);
                         lineOptions.color(
-                           context.resources.getColor(R.color.gradientstartcolor)
+                            context.resources.getColor(R.color.gradientstartcolor)
                         )
                     }
 
@@ -540,7 +562,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
                         mPolyline?.remove()
                         mPolyline = mMap?.addPolyline(lineOptions)
                         isRouteDrawn = true
-                    } else{
+                    } else {
                         Toast.makeText(context, "No route is found", Toast.LENGTH_LONG)
                             .show()
                     }
@@ -567,33 +589,48 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
      * API CALLING
      */
 
-    private fun getDriverLocationAPI(){
+    private fun getDriverLocationAPI() {
         var url = BuildConfig.API_URL + "getDriverLocation"
-        var params : JSONObject = JSONObject()
+        var params: JSONObject = JSONObject()
         params.put("ride_id", rideID)
         params.put("token", token)
-        APIManager.getInstance(context).postAPI(url, params, DriverLocationModel::class.java, context, object :APIManager.APIManagerInterface{
-            override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
-                driverLocationModel = resultObj as DriverLocationModel?
-                if (!isRouteDrawn){
-                    getRouteAPI()
+        APIManager.getInstance(context).postAPI(
+            url,
+            params,
+            DriverLocationModel::class.java,
+            context,
+            object : APIManager.APIManagerInterface {
+                override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
+                    driverLocationModel = resultObj as DriverLocationModel?
+                    if (!isRouteDrawn) {
+                        getRouteAPI()
+                    }
+
+                    if (driverLocationModel?.data?.status == Constants.BOOKING_ACTIVE) {
+                        handler?.removeCallbacksAndMessages(null)
+                        startActivity(
+                            Intent(context, InterCityTrackRideActivity::class.java)
+                                .putExtra("ride_id", rideID)
+                        )
+                        finish()
+                    }else  if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED) {
+                        handler?.removeCallbacksAndMessages(null)
+                        startActivity(
+                            Intent(context, IntercityRideDetailsActivity::class.java)
+                                .putExtra("ride_id", rideID)
+                                .putExtra("isFromEndRide", true)
+                        )
+                        finish()
+                    }
+
+                    addCurrentLocationMarker(driverLocationModel)
                 }
 
-                if (driverLocationModel?.data?.status == Constants.BOOKING_ACTIVE){
-                    handler?.removeCallbacksAndMessages(null)
-                    startActivity(Intent(context, InterCityTrackRideActivity::class.java)
-                        .putExtra("ride_id", rideID))
-                    finish()
+                override fun onError(error: String?) {
+                    Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
                 }
 
-                addCurrentLocationMarker(driverLocationModel)
-            }
-
-            override fun onError(error: String?) {
-                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-            }
-
-        })
+            })
     }
 
     override fun getRideDetails(model: RideDetailModel?) {
@@ -608,7 +645,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
         driverLong = driverLocationModel?.data?.longitude.toString()
 
 
-        if (!isRouteDrawn){
+        if (!isRouteDrawn) {
             getRouteAPI()
         }
 
@@ -652,7 +689,7 @@ class TrackPickUpActivity :  BaseLocationClass(), OnMapReadyCallback, IIntercity
 
     override fun onStop() {
         super.onStop()
-      //  handler?.removeCallbacksAndMessages(null)
+        //  handler?.removeCallbacksAndMessages(null)
     }
 
     override fun onDestroy() {
