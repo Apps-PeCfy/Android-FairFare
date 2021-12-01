@@ -1941,7 +1941,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     replacebags,
                     airportYesOrNO,
                     formaredDate,
-                    CurrentPlaceID!!, legDuration
+                    CurrentPlaceID!!,
+                    legDuration,
+                    SourceLat,
+                    SourceLong,
+                    DestinationLat,
+                    DestinationLong
                 )
 
 
@@ -2055,7 +2060,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     replacebags,
                     airportYesOrNO,
                     formaredDate,
-                    CurrentPlaceID!!, legDuration
+                    CurrentPlaceID!!,
+                    legDuration,
+                    SourceLat,
+                    SourceLong,
+                    DestinationLat,
+                    DestinationLong
                 )
 
 

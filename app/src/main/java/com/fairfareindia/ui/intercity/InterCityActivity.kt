@@ -184,7 +184,11 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                                 txtRideScheduled.text.toString(),
                                 "dd MMM yyyy hh:mm a",
                                 "yyyy-MM-dd HH:mm:ss"
-                            )
+                            ),
+                            sourceLat,
+                            sourceLong,
+                            destinationLat,
+                            destinationLong
                         )
                     }
                 } else {

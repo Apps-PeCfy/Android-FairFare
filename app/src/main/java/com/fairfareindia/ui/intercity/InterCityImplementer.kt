@@ -22,21 +22,42 @@ class InterCityImplementer(private val view: IIntercityView) : IInterCityPresent
         toPlaceID: String?,
         luggage: String?,
         wayFlag: String?,
-        date: String?)
-    {
+        date: String?,
+        originLatitude: String?,
+        originLongitude: String?,
+        destinationLatitude: String?,
+        destinationLongitude: String?
+    ) {
         view.showWait()
-        val call = ApiClient.client.getIntercityCompareRide("Bearer $token", distance, estTime, permitType ,fromCityID,
-            toCityID, fromPlaceID, toPlaceID, luggage, wayFlag,date)
+        val call = ApiClient.client.getIntercityCompareRide(
+            "Bearer $token",
+            distance,
+            estTime,
+            permitType,
+            fromCityID,
+            toCityID,
+            fromPlaceID,
+            toPlaceID,
+            luggage,
+            wayFlag,
+            date,
+            originLatitude,
+            originLongitude,
+            destinationLatitude,
+            destinationLongitude
+        )
         call!!.enqueue(object : Callback<InterCityCompareRideModel?> {
-            override fun onResponse(call: Call<InterCityCompareRideModel?>, response: Response<InterCityCompareRideModel?>)
-            {
+            override fun onResponse(
+                call: Call<InterCityCompareRideModel?>,
+                response: Response<InterCityCompareRideModel?>
+            ) {
                 view.removeWait()
 
                 if (response.code() == 200) {
                     view.removeWait()
 
                     view.compareRideSuccess(response.body())
-                }else if (response.code() == 400 || response.code() ==422) {
+                } else if (response.code() == 400 || response.code() == 422) {
                     view.removeWait()
 
                     val gson = GsonBuilder().create()
@@ -49,7 +70,7 @@ class InterCityImplementer(private val view: IIntercityView) : IInterCityPresent
                         view.validationError(pojo)
                     } catch (exception: IOException) {
                     }
-                }else{
+                } else {
                     view.onFailure(response.message())
                 }
             }

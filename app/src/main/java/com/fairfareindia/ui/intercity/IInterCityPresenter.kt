@@ -13,7 +13,13 @@ interface IInterCityPresenter {
         toPlaceID: String?,
         luggage: String?,
         wayFlag: String?,
-        date: String?)
+        date: String?,
+        originLatitude: String?,
+        originLongitude: String?,
+        destinationLatitude: String?,
+        destinationLongitude: String?
+    )
+
 
     fun getCity(
         token: String?,

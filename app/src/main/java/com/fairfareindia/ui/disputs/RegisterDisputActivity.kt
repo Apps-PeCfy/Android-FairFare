@@ -72,6 +72,7 @@ class RegisterDisputActivity : AppCompatActivity() {
         arrayOf(MediaStore.MediaColumns.DATA)
 
     var reasonId = ArrayList<Int>()
+    private var permitType :String ?= null
 
     /**
      * iLoma Team :- Mohasin 8 Jan
@@ -173,33 +174,7 @@ class RegisterDisputActivity : AppCompatActivity() {
         mSpinner = findViewById(R.id.spinnerReason)
 
 
-        tv_Datetime!!.text = intent.getStringExtra("Datetime")
-        tv_bagCount!!.text = intent.getStringExtra("bagCount")
-        tv_driverName!!.text = intent.getStringExtra("driverName")
 
-        if(intent.getStringExtra("driverName")!!.isEmpty()){
-            ivUserIcon?.visibility= View.GONE
-
-        }
-        tv_vahicalNO!!.text = intent.getStringExtra("vahicalNo")
-        tv_carName!!.text = intent.getStringExtra("vahicalName")
-        if(intent.getStringExtra("MeterReading").equals("0")){
-            edt_meterReading!!.setEnabled(true)
-        }else{
-            edt_meterReading!!.setText(intent.getStringExtra("MeterReading"))
-
-        }
-
-
-
-        Glide.with(this@RegisterDisputActivity)
-            .load(intent.getStringExtra("vahicalImg"))
-            .apply(
-                RequestOptions()
-                    .centerCrop()
-                    .dontAnimate()
-                    .dontTransform()
-            ).into(iv_vehical!!)
 
         if (isStoragePermissionGranted()) {
             init()
@@ -219,6 +194,57 @@ class RegisterDisputActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
+
+        setData()
+        getDisputeReasonAPI()
+
+
+
+
+    }
+
+    private fun setData() {
+        tv_Datetime!!.text = intent.getStringExtra("Datetime")
+        tv_bagCount!!.text = intent.getStringExtra("bagCount")
+        tv_driverName!!.text = intent.getStringExtra("driverName")
+        permitType = intent.getStringExtra("permit_type")
+
+        if(intent.getStringExtra("driverName")!!.isEmpty()){
+            ivUserIcon?.visibility= View.GONE
+
+        }
+        tv_vahicalNO!!.text = intent.getStringExtra("vahicalNo")
+        tv_carName!!.text = intent.getStringExtra("vahicalName")
+        if(intent.getStringExtra("MeterReading").equals("0")){
+            edt_meterReading!!.setEnabled(true)
+        }else{
+            edt_meterReading!!.setText(intent.getStringExtra("MeterReading"))
+
+        }
+
+        if (permitType == Constants.TYPE_INTERCITY){
+            edt_meterReading?.visibility = View.GONE
+            edtEndMeterReading?.visibility = View.GONE
+            edtTotalFareCharged?.visibility = View.GONE
+        }else{
+            edt_meterReading?.visibility = View.VISIBLE
+            edtEndMeterReading?.visibility = View.VISIBLE
+            edtTotalFareCharged?.visibility = View.VISIBLE
+        }
+
+
+
+        Glide.with(this@RegisterDisputActivity)
+            .load(intent.getStringExtra("vahicalImg"))
+            .apply(
+                RequestOptions()
+                    .centerCrop()
+                    .dontAnimate()
+                    .dontTransform()
+            ).into(iv_vehical!!)
+    }
+
+    private fun getDisputeReasonAPI() {
         val progressDialog = ProgressDialog(this@RegisterDisputActivity)
         progressDialog.setCancelable(false) // set cancelable to false
         progressDialog.setMessage("Please Wait") // set message
@@ -270,10 +296,7 @@ class RegisterDisputActivity : AppCompatActivity() {
                     Log.d("response", t.stackTrace.toString())
                 }
             })
-
-
     }
-
 
 
     private fun setSelectedImageList() {

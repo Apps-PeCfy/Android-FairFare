@@ -535,7 +535,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
         tv_driverName?.text = endRideResponsePOJO.ride?.vehicleDetail?.driverName
 
 
-        if (endRideResponsePOJO.ride?.vehicleDetail?.driverName?.isEmpty()!!) {
+        if (endRideResponsePOJO.ride?.vehicleDetail == null || endRideResponsePOJO.ride?.vehicleDetail?.driverName!!.isNullOrEmpty()) {
             ivUserIcon?.visibility = View.GONE
         }
         tvEstWaitTime?.text = endRideResponsePOJO.ride?.estimatedTrackRide?.waitingTime

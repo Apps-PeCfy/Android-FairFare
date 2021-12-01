@@ -82,6 +82,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_10sdp"
                                     android:text="Dispute reasons :"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textStyle="bold"
                                     android:textColor="@color/colorText" />
 
@@ -89,6 +91,8 @@
                                     android:id="@+id/txt_dispute_reason"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText" />
 
 
@@ -104,6 +108,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Additional comments:"
+                                        android:textSize="@dimen/text_14sp"
+                                        android:fontFamily="@font/notosansjp_regular"
                                         android:textColor="@color/colorText" />
 
                                     <TextView
@@ -114,7 +120,8 @@
                                         android:gravity="top"
                                         android:paddingBottom="@dimen/_5sdp"
                                         android:textColor="@color/colorText"
-                                        android:textSize="@dimen/_10sdp"
+                                        android:textSize="@dimen/text_14sp"
+                                        android:fontFamily="@font/notosansjp_regular"
                                         android:visibility="visible" />
 
 
@@ -141,7 +148,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/rounded_corner_disput"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
 
                                 <TextView

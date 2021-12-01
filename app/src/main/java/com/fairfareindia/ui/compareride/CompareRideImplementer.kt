@@ -22,18 +22,35 @@ class CompareRideImplementer(private val view: ICompareRideView) : ICompareRideP
         airport: String?,
         formatedDate: String?,
         currentPlaceID: String?,
-        legDuration: String?
-    )
-    {
+        legDuration: String?,
+        originLatitude: String?,
+        originLongitude: String?,
+        destinationLatitude: String?,
+        destinationLongitude: String?
+    ) {
         view.showWait()
         val call = client.getCompareRide(
             "Bearer $token",
             distance,
             placeid,
-            sPlacesID, dPlaceID, baggs, airport, formatedDate,currentPlaceID,legDuration,Constants.TYPE_LOCAL)
+            sPlacesID,
+            dPlaceID,
+            baggs,
+            airport,
+            formatedDate,
+            currentPlaceID,
+            legDuration,
+            Constants.TYPE_LOCAL,
+            originLatitude,
+            originLongitude,
+            destinationLatitude,
+            destinationLongitude
+        )
         call!!.enqueue(object : Callback<CompareRideResponsePOJO?> {
-            override fun onResponse(call: Call<CompareRideResponsePOJO?>, response: Response<CompareRideResponsePOJO?>)
-            {
+            override fun onResponse(
+                call: Call<CompareRideResponsePOJO?>,
+                response: Response<CompareRideResponsePOJO?>
+            ) {
                 view.removeWait()
 
                 if (response.code() == 200) {
@@ -41,7 +58,7 @@ class CompareRideImplementer(private val view: ICompareRideView) : ICompareRideP
 
                     compareRideResponsePOJO = response.body()
                     view.onSuccess(response.body())
-                }else if (response.code() == 400 || response.code() ==422) {
+                } else if (response.code() == 400 || response.code() == 422) {
                     view.removeWait()
 
                     val gson = GsonBuilder().create()
@@ -54,7 +71,7 @@ class CompareRideImplementer(private val view: ICompareRideView) : ICompareRideP
                         view.validationError(pojo)
                     } catch (exception: IOException) {
                     }
-                }else{
+                } else {
                     view.onFailure(response.message())
                 }
             }

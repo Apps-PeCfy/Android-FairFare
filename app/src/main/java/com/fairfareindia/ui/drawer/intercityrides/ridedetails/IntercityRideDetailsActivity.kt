@@ -92,6 +92,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                     intent.putExtra("vahicalName", model?.data?.vehicleName)
                     intent.putExtra("vahicalImg", model?.data?.vehicleImageUrl)
                     intent.putExtra("RIDEID", rideID)
+                    intent.putExtra("permit_type", model?.data?.permitType)
                     startActivity(intent)
                 }else{
                     ProjectUtilities.showToast(context,getString(R.string.internet_error))

@@ -127,7 +127,7 @@ interface NetworkService {
     ): Call<DeleteSaveDataResponsePOJO?>?
 
     @FormUrlEncoded
-    @POST("compareRide")
+    @POST("compareRideLocal")
     fun getCompareRide(
         @Header("Authorization") header: String?,
         @Field("distance") distance: String?,
@@ -139,12 +139,16 @@ interface NetworkService {
         @Field("schedule_datetime") schedule_datetime: String?,
         @Field("current_place_id") current_place_id: String?,
         @Field("duration") duration: String?,
-        @Field("permit_type") permitType: String?
+        @Field("permit_type") permitType: String?,
+        @Field("origin_latitude") origin_latitude: String?,
+        @Field("origin_longitude") origin_longitude: String?,
+        @Field("destination_latitude") destination_latitude: String?,
+        @Field("destination_longitude") destination_longitude: String?
     ): Call<CompareRideResponsePOJO?>?
 
 
     @FormUrlEncoded
-    @POST("compareRide1")
+    @POST("compareRideIntercity")
     fun getIntercityCompareRide(
         @Header("Authorization") header: String?,
         @Field("distance") distance: String?,
@@ -156,7 +160,11 @@ interface NetworkService {
         @Field("destination_place_id") toPlaceID: String?,
         @Field("luggage") luggage: String?,
         @Field("way_flag") airport: String?,
-        @Field("schedule_datetime") schedule_datetime: String?
+        @Field("schedule_datetime") schedule_datetime: String?,
+        @Field("origin_latitude") origin_latitude: String?,
+        @Field("origin_longitude") origin_longitude: String?,
+        @Field("destination_latitude") destination_latitude: String?,
+        @Field("destination_longitude") destination_longitude: String?
     ): Call<InterCityCompareRideModel?>?
 
 

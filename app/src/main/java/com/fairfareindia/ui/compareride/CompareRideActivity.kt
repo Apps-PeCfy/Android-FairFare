@@ -220,7 +220,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
 
 
-        if (info!!.vehicles!!.size > 0) {
+        if (info.vehicles?.isNotEmpty()!!) {
 
 
             compareRideList.addAll(info.vehicles!!)
@@ -285,8 +285,12 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
             tv_baggs!!.text = baggs
 
         }
+        if (results.isNotEmpty())
         sourcePlaceID = results[0]!!.placeId
+
+        if (results1.isNotEmpty())
         DestinationPlaceID = results1[0]!!.placeId
+
         mToolbar!!.title = "Compare Rides"
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
@@ -314,18 +318,6 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
         iCompareRidePresenter = CompareRideImplementer(this)
 
-
-/*        iCompareRidePresenter!!.getCompareRideData(
-            token,
-            replacedistance,
-            CITY_ID,
-            sourcePlaceID,
-            DestinationPlaceID,
-            replacebags,
-            airportYesOrNO,
-            formatedCurrentDate,
-            currentPlaceId!!
-        )*/
 
         setListeners()
 
