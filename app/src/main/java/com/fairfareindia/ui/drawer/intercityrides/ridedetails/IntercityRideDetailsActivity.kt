@@ -114,7 +114,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             txtEstDistance.text = model?.data?.estimatedTrackRide?.baseDistance.toString()
             txtEstAddDistance.text = model?.data?.estimatedTrackRide?.additionalDistance.toString()
             txtEstRideTime.text = model?.data?.estimatedTrackRide?.totalTime
-            txtEstWaitTime.text =  model?.data?.estimatedTrackRide?.waitingTime
+            txtEstWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.estimatedTrackRide?.waitingTime!!)
             txtEstWaitCharges.text = "₹ " + model?.data?.estimatedTrackRide?.waitingCharges
             txtEstBaseFare.text = "₹ " + model?.data?.estimatedTrackRide?.basicFare
             txtEstTollCharges.text = "₹ " + model?.data?.estimatedTrackRide?.tollCharges
@@ -129,7 +129,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             txtActualDistance.text = model?.data?.actualTrackRide?.baseDistance.toString()
             txtActualAddDistance.text = model?.data?.actualTrackRide?.additionalDistance.toString()
             txtActualRideTime.text = model?.data?.actualTrackRide?.totalTime
-            txtActualWaitTime.text =  model?.data?.actualTrackRide?.waitingTime
+            txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
             txtActualWaitCharges.text = "₹ " + model?.data?.actualTrackRide?.waitingCharges
             txtActualBaseFare.text = "₹ " + model?.data?.actualTrackRide?.basicFare
             txtActualTollCharges.text = "₹ " + model?.data?.actualTrackRide?.tollCharges

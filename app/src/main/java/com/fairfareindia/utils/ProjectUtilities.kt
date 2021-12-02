@@ -47,6 +47,25 @@ object ProjectUtilities {
         return isInternetPresent
     }
 
+    fun timeInMinutesConvertingToString(mContext: Context?, timeInMinute : String): String {
+        var returnTime = timeInMinute
+
+        if (timeInMinute.toInt() < 60){
+            returnTime = "$timeInMinute mins"
+        }else{
+            var hours = timeInMinute.toInt() / 60
+            var minutes = timeInMinute.toInt() % 60
+            returnTime = if (hours > 1){
+                "$hours hours $minutes mins"
+            }else{
+                "$hours hour $minutes mins"
+            }
+
+        }
+
+        return returnTime
+    }
+
     //This method hide keyboard
     fun hideKeyboard(mActivity: Activity) {
         try {
