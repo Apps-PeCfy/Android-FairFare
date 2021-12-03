@@ -89,7 +89,13 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             token,
             vehicleModel?.id,
             info.distance,
-            info.luggage
+            info.luggage,
+            info.originPlaceId,
+            info.destinationPlaceId,
+            sourceLat,
+            sourceLong,
+            destinationLat,
+            destinationLong
         )
 
         setListeners()

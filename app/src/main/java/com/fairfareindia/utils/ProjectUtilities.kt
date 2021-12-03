@@ -9,6 +9,7 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -45,6 +46,11 @@ object ProjectUtilities {
         cd = ConnectionDetector(mContext!!)
         isInternetPresent = cd!!.isConnectingToInternet
         return isInternetPresent
+    }
+
+    fun isGPSEnabled(mContext: Context?): Boolean {
+        val locationManager = mContext?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     fun timeInMinutesConvertingToString(mContext: Context?, timeInMinute : String): String {

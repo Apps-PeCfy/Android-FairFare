@@ -168,7 +168,6 @@ interface NetworkService {
     ): Call<InterCityCompareRideModel?>?
 
 
-
     @FormUrlEncoded
     @POST("bookingRequest")
     fun bookingRequest(
@@ -204,8 +203,14 @@ interface NetworkService {
     fun getViewRideDetails(
         @Header("Authorization") header: String?,
         @Field("intercity_rate_card_id") intercity_rate_card_id: String?,
-        @Field("total_dist") total_dist: String?,
-        @Field("luggage_quantity") luggage_quantity: String?
+        @Field("distance") distance: String?,
+        @Field("luggage") luggage: String?,
+        @Field("origin_place_id") origin_place_id: String?,
+        @Field("destination_place_id") destination_place_id: String?,
+        @Field("origin_latitude") origin_latitude: String?,
+        @Field("origin_longitude") origin_longitude: String?,
+        @Field("destination_latitude") destination_latitude: String?,
+        @Field("destination_longitude") destination_longitude: String?
     ): Call<ViewRideModel?>?
 
 
@@ -237,8 +242,6 @@ interface NetworkService {
     @FormUrlEncoded
     @POST("startRide")
     fun startRide(
-
-
 
 
         @Header("Authorization") header: String?,
@@ -338,7 +341,6 @@ interface NetworkService {
     ): Call<ResponseEnd?>?
 
 
-
     @Headers("Content-Type: application/json")
     @POST("startRide")
     fun startRidear(
@@ -347,14 +349,12 @@ interface NetworkService {
     ): Call<ScheduleRideResponsePOJO?>?
 
 
-  @Headers("Content-Type: application/json")
+    @Headers("Content-Type: application/json")
     @POST("scheduleRide")
     fun schduleRidejObj(
         @Header("Authorization") header: String?,
         @Body body: String?
     ): Call<ScheduleRideResponsePOJO?>?
-
-
 
 
     @Headers("Content-Type: application/json")
@@ -575,9 +575,9 @@ interface NetworkService {
     ): Call<ContactUsResponsePojo?>?
 
 
-  /*  @GET("getAllowCities")
-    fun getAllowCities(@HeaderMap header: HashMap<String, String>): Call<GetAllowCityResponse?>?
-*/
+    /*  @GET("getAllowCities")
+      fun getAllowCities(@HeaderMap header: HashMap<String, String>): Call<GetAllowCityResponse?>?
+  */
 
     @GET("getAllowCities")
     fun getAllowCities(

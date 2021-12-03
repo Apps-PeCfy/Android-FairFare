@@ -1,6 +1,5 @@
 package com.fairfareindia.ui.splashscreen
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -19,16 +18,11 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import com.fairfareindia.BuildConfig
 import com.fairfareindia.R
 import com.fairfareindia.ui.Login.LoginActivity
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.introduction.IntroActivity
-import com.fairfareindia.utils.CommonAppPermission
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PreferencesManager
-import com.google.android.gms.location.FusedLocationProviderClient
+import com.fairfareindia.utils.*
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -41,25 +35,19 @@ class SplashScreen : AppCompatActivity() {
     var sharedpreferences: SharedPreferences? = null
     var appSharedpreferences: SharedPreferences? = null
     var locationManager: LocationManager? = null
-    var isGPSEnabled = false
-    var isNetworkEnabled = false
     var isAlertWithPermissionInstructionVisible = false
     var totalPermissionAskedCounter = 0
     private val MY_REQUEST_CODE = 201
 
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-
     var callOnResune: String? = "first"
-    var checkPopup: String? = "first"
     var callOnlyOne: String? = "OnlyOne"
     var appFirst: String? = ""
 
 
     var isAccepted = false
 
-    var requestCodeq: Int? = 0
+    private var handler : Handler = Handler()
 
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -76,15 +64,23 @@ class SplashScreen : AppCompatActivity() {
         appFirst = appSharedpreferences!!.getString("AppOpen", "")
 
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
-        sharedpreferences!!.edit().clear().commit()
+        sharedpreferences?.edit()?.clear()?.apply()
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT, "LOCALITY")
         isLogin = mPreferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_ISLOGIN)
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-        requestBatteryOptimisationDisabled()
+       /* if (mPreferencesManager?.getLanguage() == getString(R.string.str_eng_code)) {
+            SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_eng_code))
+        }else if (mPreferencesManager?.getLanguage() == getString(R.string.str_hindi_code)) {
+            SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_hindi_code))
+        } else if (mPreferencesManager?.getLanguage() == getString(R.string.str_marathi_code)) {
+            SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_marathi_code))
+        }*/
+
+       // requestBatteryOptimisationDisabled()
+
+
 
     }
 
@@ -117,9 +113,6 @@ class SplashScreen : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onResume() {
-        val versionCode: Int = BuildConfig.VERSION_CODE
-        isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         if (callOnResune.equals("first")) {
             checkAppUpdate()
         }
@@ -130,7 +123,8 @@ class SplashScreen : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MY_REQUEST_CODE) {
             if (resultCode != Activity.RESULT_OK) {
-                checkUpdate()
+                //  checkUpdate()
+
             }
         }
     }
@@ -141,125 +135,102 @@ class SplashScreen : AppCompatActivity() {
         h.postDelayed({
 
             try {
-                if (!isGPSEnabled && !isNetworkEnabled) {
-                    val alertDialog =
-                        AlertDialog.Builder(this)
-                    alertDialog.setTitle("GPS is settings")
-                    alertDialog.setCancelable(false)
-                    alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?")
-                    alertDialog.setPositiveButton("Settings") { dialog, which ->
-                        val intent =
-                            Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                        this.startActivity(intent)
-                    }
-                    alertDialog.setNegativeButton("Cancel") { dialog, which ->
-                        dialog.dismiss()
-                    }
-                    alertDialog.show()
+                if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)) {
+                    isAccepted = true
+                    if (isLogin == "true" && isAccepted) {
 
-                } else {
+                        callOnResune = "second"
+                        if (appFirst!!.isEmpty()) {
 
-                    if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen)) {
-                        isAccepted = true
-                        if (isLogin == "true" && isAccepted) {
+                            val editor = appSharedpreferences!!.edit()
+                            editor.putString("AppOpen", "appOpenFirst")
+                            editor.commit()
+                            val intent = Intent(applicationContext, IntroActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            val intent = Intent(applicationContext, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
 
-                            callOnResune = "second"
+                    } else if (isAccepted) {
+
+
+                        callOnResune = "second"
+
+                        Log.d("onRequestPermissi", "2")
+                        if (callOnlyOne.equals("OnlyOne")) {
+
                             if (appFirst!!.isEmpty()) {
 
                                 val editor = appSharedpreferences!!.edit()
                                 editor.putString("AppOpen", "appOpenFirst")
                                 editor.commit()
+                                callOnlyOne = "SecondTime"
                                 val intent = Intent(applicationContext, IntroActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             } else {
-                                val intent = Intent(applicationContext, HomeActivity::class.java)
+                                callOnlyOne = "SecondTime"
+                                val intent = Intent(applicationContext, LoginActivity::class.java)
                                 startActivity(intent)
                                 finish()
+
                             }
-
-                        } else if (isAccepted) {
-
-
-                            callOnResune = "second"
-
-                            Log.d("onRequestPermissi", "2")
-                            if (callOnlyOne.equals("OnlyOne")) {
-
-                                if (appFirst!!.isEmpty()) {
-
-                                    val editor = appSharedpreferences!!.edit()
-                                    editor.putString("AppOpen", "appOpenFirst")
-                                    editor.commit()
-                                    callOnlyOne = "SecondTime"
-                                    val intent =
-                                        Intent(applicationContext, IntroActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                } else {
-                                    callOnlyOne = "SecondTime"
-                                    val intent =
-                                        Intent(applicationContext, LoginActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-
-                                }
-                            }
-                        } else {
-
                         }
-                    } else {
-
-                        if (!isAlertWithPermissionInstructionVisible) {
-
-                            var alertMessage =
-                                "Please provide following permissions to smooth working of the application"
-
-                            if (!CommonAppPermission.hasCameraPermission(this)) {
-                                alertMessage += "\n\nCamera: Please provide camera permission"
-                            }
-                            if (!CommonAppPermission.hasExternalStoragePermission(this)) {
-                                alertMessage += "\n\nMedia: Please provide Media permission"
-                            }
-                            if (!CommonAppPermission.hasLocationPermission(this)) {
-                                //make the message as per android 10 and above and below
-
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                    alertMessage += "\n\nLocation: Please provide \"Allow all the time\" location permission for accurate pick-up and drop-off locations, availability of autos/taxis in the area and tracking the ride until trip ends."
-                                } else {
-                                    alertMessage += "\n\nLocation: Please provide location permission"
-                                }
-                            }
-
-                            val alertDialog =
-                                AlertDialog.Builder(this)
-                            alertDialog.setTitle("Permissions")
-                            alertDialog.setCancelable(false)
-                            alertDialog.setMessage(alertMessage)
-                            alertDialog.setPositiveButton("Okay") { dialog, which ->
-
-                                dialog.dismiss()
-
-                                if (totalPermissionAskedCounter < 2) {
-                                    CommonAppPermission.requestPermissionGranted(this@SplashScreen)
-                                    totalPermissionAskedCounter++;
-                                } else {
-                                    val intent = Intent()
-                                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                                    val uri = Uri.fromParts("package", packageName, null)
-                                    intent.data = uri
-                                    startActivity(intent)
-                                }
-                                isAlertWithPermissionInstructionVisible = false
-                            }
-
-                            alertDialog.show()
-
-                            isAlertWithPermissionInstructionVisible = true
-                        }
-
                     }
+                } else {
+
+                    if (!isAlertWithPermissionInstructionVisible) {
+
+                        var alertMessage =
+                            "Please provide following permissions to smooth working of the application"
+
+                        if (!CommonAppPermission.hasCameraPermission(this)) {
+                            alertMessage += "\n\nCamera: Please provide camera permission"
+                        }
+                        if (!CommonAppPermission.hasExternalStoragePermission(this)) {
+                            alertMessage += "\n\nMedia: Please provide Media permission"
+                        }
+                        if (!CommonAppPermission.hasLocationPermission(this)) {
+                            //make the message as per android 10 and above and below
+
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                alertMessage += "\n\nLocation: Please provide \"Allow all the time\" location permission for accurate pick-up and drop-off locations, availability of autos/taxis in the area and tracking the ride until trip ends."
+                            } else {
+                                alertMessage += "\n\nLocation: Please provide location permission"
+                            }
+                        }
+
+                        val alertDialog =
+                            AlertDialog.Builder(this)
+                        alertDialog.setTitle("Permissions")
+                        alertDialog.setCancelable(false)
+                        alertDialog.setMessage(alertMessage)
+                        alertDialog.setPositiveButton("Okay") { dialog, which ->
+
+                            dialog.dismiss()
+
+                            if (totalPermissionAskedCounter < 2) {
+                                CommonAppPermission.requestPermissionGranted(this@SplashScreen)
+                                totalPermissionAskedCounter++;
+                            } else {
+                                val intent = Intent()
+                                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                val uri = Uri.fromParts("package", packageName, null)
+                                intent.data = uri
+                                startActivity(intent)
+                            }
+                            isAlertWithPermissionInstructionVisible = false
+                        }
+
+                        alertDialog.show()
+
+                        isAlertWithPermissionInstructionVisible = true
+                    }
+
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -270,100 +241,9 @@ class SplashScreen : AppCompatActivity() {
 
     }
 
-    private fun reuestPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
-            ActivityCompat.requestPermissions(
-                this@SplashScreen, arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                REQUEST_PERMISSION
-            )
-        } else {
-            ActivityCompat.requestPermissions(
-                this@SplashScreen, arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                REQUEST_PERMISSION
-            )
-        }
-    }
-
-    @SuppressLint("MissingSuperCall")
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-
-    }
-
-    private fun afterAllowedPermissionFunctionality(requestCode: Int) {
-        requestCodeq = requestCode
-        if (requestCode == REQUEST_PERMISSION) {
-            if (isLogin == "true" && isGPSEnabled && isNetworkEnabled && isAccepted) {
-                callOnResune = "second"
-
-                val intent = Intent(applicationContext, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
-
-            } else if (isGPSEnabled && isNetworkEnabled && isAccepted) {
-                callOnResune = "second"
-
-                Log.d("onRequestPermissi", "1")
-
-                val intent = Intent(applicationContext, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-
-            } else {
-                if (callOnResune.equals("first")) {
-                    //checkUpdate()
-                    checkAppUpdate()
-                }
-            }
-        }
-    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun displayNeverAskAgainDialog() {
-
-        val builder =
-            AlertDialog.Builder(this)
-        builder.setMessage(
-            "Please provide location always allow permission to proceed".trimIndent()
-        )
-        builder.setCancelable(false)
-        builder.setPositiveButton(
-            "Permit Manually"
-        ) { dialog, which ->
-            dialog.dismiss()
-            val intent = Intent()
-            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-            val uri = Uri.fromParts("package", packageName, null)
-            intent.data = uri
-            startActivity(intent)
-
-        }
-        builder.setNegativeButton("Cancel", null)
-        builder.show()
-    }
-
-    companion object {
-        private const val REQUEST_PERMISSION = 100
-    }
-
-    fun checkAppUpdate() {
+    private fun checkAppUpdate() {
 // Creates instance of the manager.
         val appUpdateManager = AppUpdateManagerFactory.create(this@SplashScreen)
         //    gotoScreen();
@@ -382,15 +262,85 @@ class SplashScreen : AppCompatActivity() {
                         MY_REQUEST_CODE
                     )
                 } catch (e: IntentSender.SendIntentException) {
-                    checkUpdate()
                 }
             } else {
-                checkUpdate()
+                //   checkUpdate()
+            //    setHandler()
+                if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen) && ProjectUtilities.isGPSEnabled(this)) {
+                    moveNextScreen()
+                }else{
+                    startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+                    finish()
+                }
+
             }
         }
 
         appUpdateInfoTask.addOnFailureListener {
-            checkUpdate()
+            // checkUpdate()
+           // setHandler()
+            if (CommonAppPermission.hasAllPermissionGranted(this@SplashScreen) && ProjectUtilities.isGPSEnabled(this)) {
+                moveNextScreen()
+            }else{
+                startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+                finish()
+            }
+
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun setHandler() {
+        handler.postDelayed({
+            moveNextScreen()
+        }, 1000 * 1.toLong())
+    }
+
+
+
+    private fun moveNextScreen() {
+        if (isLogin == "true") {
+
+            callOnResune = "second"
+            if (appFirst!!.isEmpty()) {
+
+                val editor = appSharedpreferences!!.edit()
+                editor.putString("AppOpen", "appOpenFirst")
+                editor.commit()
+                val intent = Intent(applicationContext, IntroActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                val intent = Intent(applicationContext, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        }else {
+
+
+            callOnResune = "second"
+
+            Log.d("onRequestPermissi", "2")
+            if (callOnlyOne.equals("OnlyOne")) {
+
+                if (appFirst!!.isEmpty()) {
+
+                    val editor = appSharedpreferences!!.edit()
+                    editor.putString("AppOpen", "appOpenFirst")
+                    editor.commit()
+                    callOnlyOne = "SecondTime"
+                    val intent = Intent(applicationContext, IntroActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    callOnlyOne = "SecondTime"
+                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
+                }
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ package com.fairfareindia.ui.home
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.ProgressDialog
@@ -67,8 +68,10 @@ import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.intercity.InterCityActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
+import com.fairfareindia.ui.splashscreen.PermissionActivity
 import com.fairfareindia.utils.*
 import com.fairfareindia.utils.ProjectUtilities.showProgressDialog
+import com.google.android.gms.location.LocationSettingsStates
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -534,12 +537,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     private fun mapAndLocationReady() {
 
-        if (ProjectUtilities.checkPermission(this@HomeActivity)) {
+        if (CommonAppPermission.hasLocationPermission(this) && ProjectUtilities.isGPSEnabled(this)) {
             if (callOnLocation.equals("first") && mMap != null && currentLatitude != null && currentLatitude != 0.0) {
                 getLocationReady()
             }
         } else {
-            ProjectUtilities.showToast(this@HomeActivity, getString(R.string.internet_error))
+            startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+            finish()
         }
     }
 
@@ -2596,6 +2600,24 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             ).show()
         }
         Handler().postDelayed({ doubleBackPressed = false }, 3000)
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val states: LocationSettingsStates = LocationSettingsStates.fromIntent(data)
+        when (requestCode) {
+            1000 ->
+                if (resultCode == Activity.RESULT_OK){
+                    initLocationUpdates()
+                    mapAndLocationReady()
+                }else if (resultCode == Activity.RESULT_CANCELED){
+                    startActivity(Intent(this, PermissionActivity::class.java))
+                }
+        }
     }
 
 

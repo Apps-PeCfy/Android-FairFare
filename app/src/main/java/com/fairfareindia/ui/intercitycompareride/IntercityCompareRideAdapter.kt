@@ -54,7 +54,7 @@ class IntercityCompareRideAdapter() :
         holder.txtCarName.text = model.name
         holder.txtVehicleType.text = model.vehicle?.name
         holder.txtTime.text = estTime
-        holder.txtTotal.text = "₹ " + model.baseFare
+        holder.txtTotal.text = "₹ " + model.totalPayableCharges
 
 
 

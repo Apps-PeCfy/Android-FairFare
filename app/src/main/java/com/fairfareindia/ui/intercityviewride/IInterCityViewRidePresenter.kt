@@ -39,8 +39,14 @@ interface IInterCityViewRidePresenter {
     fun getViewRideDetails(
         token: String?,
         intercity_rate_card_id: String?,
-        total_dist: String?,
-        luggage_quantity: String?
+        distance: String?,
+        luggage: String?,
+        origin_place_id: String?,
+        destination_place_id: String?,
+        origin_latitude: String?,
+        origin_longitude: String?,
+        destination_latitude: String?,
+        destination_longitude: String?
     )
 
 

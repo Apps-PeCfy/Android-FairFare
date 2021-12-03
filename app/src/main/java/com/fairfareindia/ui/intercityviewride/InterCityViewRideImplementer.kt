@@ -106,15 +106,27 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
     override fun getViewRideDetails(
         token: String?,
         intercity_rate_card_id: String?,
-        total_dist: String?,
-        luggage_quantity: String?
+        distance: String?,
+        luggage: String?,
+        origin_place_id: String?,
+        destination_place_id: String?,
+        origin_latitude: String?,
+        origin_longitude: String?,
+        destination_latitude: String?,
+        destination_longitude: String?
     ) {
         viewRideView.showWait()
         val call = ApiClient.client.getViewRideDetails(
             "Bearer $token",
             intercity_rate_card_id,
-            total_dist,
-            luggage_quantity
+            distance,
+            luggage,
+            origin_place_id,
+            destination_place_id,
+            origin_latitude,
+            origin_longitude,
+            destination_latitude,
+            destination_longitude
         )
         call!!.enqueue(object : Callback<ViewRideModel?> {
             override fun onResponse(

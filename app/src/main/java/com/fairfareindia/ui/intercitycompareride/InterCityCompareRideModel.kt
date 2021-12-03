@@ -23,6 +23,12 @@ class InterCityCompareRideModel : Serializable {
     @SerializedName("luggage")
     var luggage: String? = null
 
+    @SerializedName("originPlaceId")
+    var originPlaceId: String? = null
+
+    @SerializedName("destinationPlaceId")
+    var destinationPlaceId: String? = null
+
     @SerializedName("canStartRide")
     var canStartRide: String? = null
 
@@ -75,6 +81,9 @@ class InterCityCompareRideModel : Serializable {
         @SerializedName("distanceType")
         var distanceType: String? = null
 
+        @SerializedName("actualDistance")
+        var actualDistance: String? = null
+
         @SerializedName("baseDistance")
         var baseDistance: String? = null
 
@@ -87,7 +96,90 @@ class InterCityCompareRideModel : Serializable {
         @SerializedName("surcharges")
         var surcharges: Double? = 0.0
 
+        @SerializedName("tollCharges")
+        var tollCharges: Double? = 0.0
+
+        @SerializedName("chargesLuggage")
+        var chargesLuggage: Double? = 0.0
+
+        @SerializedName("totalAdditionalCharges")
+        var totalAdditionalCharges: Double? = 0.0
+
+        @SerializedName("totalPayableCharges")
+        var totalPayableCharges: Double? = 0.0
+
+        @SerializedName("tolls")
+        var tolls: ArrayList<Tolls> ? = ArrayList()
+
+        @SerializedName("rules")
+        var rules: String? = null
+
     }
+
+    inner class Tolls : Serializable {
+        @SerializedName("id")
+        var id: String? = null
+
+        @SerializedName("lat")
+        var lat: String? = null
+
+        @SerializedName("lng")
+        var lng: String? = null
+
+        @SerializedName("name")
+        var name: String? = null
+
+        @SerializedName("road")
+        var road: String? = null
+
+        @SerializedName("state")
+        var state: String? = null
+
+        @SerializedName("country")
+        var country: String? = null
+
+        @SerializedName("type")
+        var type: String? = null
+
+        @SerializedName("currency")
+        var currency: String? = null
+
+        @SerializedName("tagPrimary")
+        var tagPrimary: Array<String>? = null
+
+        @SerializedName("oneWay")
+        var oneWay: String? = null
+
+        @SerializedName("tagOneWay")
+        var tagOneWay: String? = null
+
+        @SerializedName("monthly")
+        var monthly: String? = null
+
+        @SerializedName("tagReturn")
+        var tagReturn: String? = null
+
+        @SerializedName("tagMonthly")
+        var tagMonthly: String? = null
+
+        @SerializedName("height")
+        var height: String? = null
+
+        @SerializedName("nhai")
+        var nhai: Boolean? = null
+
+        @SerializedName("latitude")
+        var latitude: String? = null
+
+        @SerializedName("longitude")
+        var longitude: String? = null
+
+        @SerializedName("charges")
+        var charges: String? = null
+    }
+
+
+
 
     inner class VehicleDetail : Serializable {
 
