@@ -93,7 +93,7 @@ class RidesFragment : Fragment(), IRidesView{
         mAdapter = RidesAdapter(mContext, list, object : RidesAdapter.RidesAdapterInterface {
             override fun onItemSelected(position: Int, model: GetRideResponsePOJO.DataItem) {
                 if (model.permitType == Constants.TYPE_INTERCITY){
-                    if (model.status == Constants.BOOKING_SCHEDULED){
+                    if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED){
                         val intent = Intent(activity, TrackPickUpActivity::class.java)
                         intent.putExtra("ride_id", model.id.toString())
                         startActivity(intent)

@@ -64,6 +64,18 @@ class AppUtils {
             return outputText
         }
 
+        @JvmStatic
+        fun getDate(date: String?, format: String?): Date? {
+            try {
+                if (!date.isNullOrEmpty() && !format.isNullOrEmpty()) {
+                    return SimpleDateFormat(format, Locale.US).parse(date)
+                }
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return null
+        }
+
         fun getPlaceID(context: Context, latitude: String?, longitude: String?): String {
             var placeID :String = ""
             val context = GeoApiContext.Builder()

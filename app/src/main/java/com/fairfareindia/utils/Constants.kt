@@ -48,6 +48,9 @@ object Constants {
     var BOOKING_ACTIVE = "Active-Ride"
     var BOOKING_COMPLETED = "Completed"
     var BOOKING_CANCELLED = "Cancelled"
+    var BOOKING_ARRIVING = "Arriving"
+    var BOOKING_ARRIVED = "Arrived"
+
 
     // INTERCITY WAY FLAG
     var PAYMENT_PAID = "Paid"

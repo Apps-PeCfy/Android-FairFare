@@ -26,10 +26,7 @@ import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.NearByResponse
-import com.fairfareindia.utils.APIManager
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PreferencesManager
-import com.fairfareindia.utils.ProjectUtilities
+import com.fairfareindia.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -154,6 +151,20 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
             txtWaitTime.text = rideDetailModel?.data?.total_wait_time.toString() + "Min"
             txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
+
+            txtTravelledDistance.text = rideDetailModel?.data?.totalDistTravelled + "KM"
+
+
+            var rideDateTime = AppUtils.getDate(rideDetailModel?.data?.start_date, "yyyy-MM-dd HH:mm:ss")
+            if(rideDateTime != null){
+                var calculateActTime = Date().time - rideDateTime.time
+                var actTotalTimeInMin = ((calculateActTime / 1000)  / 60).toInt()
+                txtTravelTime.text = ProjectUtilities.timeInMinutesConvertingToString(context, actTotalTimeInMin.toString())
+            }
+
+
+
+
 
             sourceLat = rideDetailModel?.data?.originLatitude
             sourceLong = rideDetailModel?.data?.originLongitude
@@ -606,7 +617,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
             }
 
-            if (model.results[i]?.types?.get(0)?.contains("health")!!) {
+            if (model.results[i]?.types?.get(0)?.contains("health")!! || model.results[i]?.types?.get(0)?.contains("doctor")!! || model.results[i]?.types?.get(0)?.contains("hospital")!!) {
                 binding.txtHospital.text = model.results[i]?.name
                 Glide.with(context)
                     .load(model.results[i]?.icon)

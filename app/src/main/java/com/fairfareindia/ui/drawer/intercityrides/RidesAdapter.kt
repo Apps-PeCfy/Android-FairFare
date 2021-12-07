@@ -92,7 +92,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     holder.txtActualFare.text = "₹ " + model.estimatedTrackRide?.totalCharges.toString()
                     holder.btnStartRide.visibility = View.GONE
                     holder.imgViewInfo.visibility = View.GONE
-                    if (model.status == Constants.BOOKING_SCHEDULED){
+                    if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_PENDING || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED){
                         holder.llCancelRide.visibility = View.VISIBLE
                     }else{
                         holder.llCancelRide.visibility = View.GONE

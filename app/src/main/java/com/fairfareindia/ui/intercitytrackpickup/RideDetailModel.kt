@@ -128,6 +128,12 @@ class RideDetailModel {
         @SerializedName("badgeNo")
         var badgeNo: String? = null
 
+        @SerializedName("totalDistTravelled")
+        var totalDistTravelled: String? = null
+
+        @SerializedName("start_date")
+        var start_date: String? = null
+
         @SerializedName("rideStatus")
         var rideStatus: String? = null
 

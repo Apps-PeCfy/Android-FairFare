@@ -208,13 +208,6 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             txtAdditionalCharges.text =
                 "₹ " + model?.data?.estimatedTrackRide?.totalAdditionalCharges
 
-            if (model?.data?.status == Constants.BOOKING_SCHEDULED) {
-                btnCancelRide.visibility = View.VISIBLE
-                txtStatusMessage.text = getString(R.string.lbl_ride_on_way)
-            } else {
-                txtStatusMessage.text = getString(R.string.lbl_ride_cancelled)
-                btnCancelRide.visibility = View.GONE
-            }
 
             if (model?.data?.rules.isNullOrEmpty()) {
                 txtRulesLabel.visibility = View.GONE
@@ -239,7 +232,50 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                         .dontAnimate()
                         .dontTransform()
                 ).into(imgVehicle)
+
+            setStatusMessageText()
         }
+    }
+
+    private fun setStatusMessageText() {
+        binding.apply {
+            if(driverLocationModel?.data?.status == Constants.BOOKING_SCHEDULED){
+                btnCancelRide.visibility = View.VISIBLE
+                binding.txtStatusMessage.text = getString(R.string.msg_track_scheduled)
+            }else if(driverLocationModel?.data?.status == Constants.BOOKING_ARRIVING){
+                btnCancelRide.visibility = View.VISIBLE
+                binding.txtStatusMessage.text = getString(R.string.msg_track_arriving)
+                if (!isRouteDrawn) {
+                    getRouteAPI()
+                }
+                addCurrentLocationMarker(driverLocationModel)
+            }else if (driverLocationModel?.data?.status == Constants.BOOKING_ARRIVED) {
+                btnCancelRide.visibility = View.VISIBLE
+                binding.txtStatusMessage.text = getString(R.string.msg_track_arrived)
+                if (!isRouteDrawn) {
+                    getRouteAPI()
+                }
+                addCurrentLocationMarker(driverLocationModel)
+            }else if (driverLocationModel?.data?.status == Constants.BOOKING_ACTIVE){
+                btnCancelRide.visibility = View.GONE
+                handler?.removeCallbacksAndMessages(null)
+                startActivity(
+                    Intent(context, InterCityTrackRideActivity::class.java)
+                        .putExtra("ride_id", rideID)
+                )
+                finish()
+            }else if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED){
+                btnCancelRide.visibility = View.GONE
+                handler?.removeCallbacksAndMessages(null)
+                startActivity(
+                    Intent(context, IntercityRideDetailsActivity::class.java)
+                        .putExtra("ride_id", rideID)
+                        .putExtra("isFromEndRide", true)
+                )
+                finish()
+            }
+        }
+
     }
 
     /**
@@ -602,28 +638,9 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             object : APIManager.APIManagerInterface {
                 override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
                     driverLocationModel = resultObj as DriverLocationModel?
-                    if (!isRouteDrawn) {
-                        getRouteAPI()
-                    }
-
-                    if (driverLocationModel?.data?.status == Constants.BOOKING_ACTIVE) {
-                        handler?.removeCallbacksAndMessages(null)
-                        startActivity(
-                            Intent(context, InterCityTrackRideActivity::class.java)
-                                .putExtra("ride_id", rideID)
-                        )
-                        finish()
-                    }else  if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED) {
-                        handler?.removeCallbacksAndMessages(null)
-                        startActivity(
-                            Intent(context, IntercityRideDetailsActivity::class.java)
-                                .putExtra("ride_id", rideID)
-                                .putExtra("isFromEndRide", true)
-                        )
-                        finish()
-                    }
-
-                    addCurrentLocationMarker(driverLocationModel)
+                    driverLat = driverLocationModel?.data?.latitude.toString()
+                    driverLong = driverLocationModel?.data?.longitude.toString()
+                    setStatusMessageText()
                 }
 
                 override fun onError(error: String?) {
@@ -640,17 +657,10 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
 
     override fun getDriverLocation(model: DriverLocationModel?) {
         driverLocationModel = model
-        addCurrentLocationMarker(driverLocationModel)
         driverLat = driverLocationModel?.data?.latitude.toString()
         driverLong = driverLocationModel?.data?.longitude.toString()
-
-
-        if (!isRouteDrawn) {
-            getRouteAPI()
-        }
-
+        setStatusMessageText()
         setHandler()
-
     }
 
     override fun getCancelRideSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {

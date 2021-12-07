@@ -750,13 +750,11 @@
 
                                             <TextView
                                                 android:textColor="@color/colorGreyText"
-
                                                 android:id="@+id/tv_SurCharges"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_alignParentEnd="true"
                                                 android:gravity="end"
-
                                                 android:paddingTop="@dimen/_8sdp"
                                                 android:paddingEnd="@dimen/_5sdp"
                                                 android:paddingBottom="@dimen/_8sdp"
