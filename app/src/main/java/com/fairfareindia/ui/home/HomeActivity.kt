@@ -2615,8 +2615,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     initLocationUpdates()
                     mapAndLocationReady()
                 }else if (resultCode == Activity.RESULT_CANCELED){
-                    startActivity(Intent(this, PermissionActivity::class.java))
+                    startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+                    finish()
                 }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!CommonAppPermission.hasLocationPermission(this) || !ProjectUtilities.isGPSEnabled(this)) {
+            startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+            finish()
         }
     }
 

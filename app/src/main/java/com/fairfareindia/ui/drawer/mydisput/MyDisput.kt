@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.fairfareindia.R
@@ -58,6 +59,9 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
     @BindView(R.id.rl_sort)
     var rl_sort: RelativeLayout? = null
 
+    @JvmField
+    @BindView(R.id.swipe_refresh)
+    var swipe_refresh: SwipeRefreshLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -115,6 +119,14 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
 
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
+        setListeners()
+
+    }
+
+    private fun setListeners() {
+        swipe_refresh?.setOnRefreshListener {
+            iMyDisputPresenter?.getMyDisput(token)
+        }
     }
 
     override fun onResume() {
@@ -131,6 +143,7 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
 
     override fun getDisputSuccess(getDisputResponsePOJO: GetDisputResponsePOJO?) {
 
+        swipe_refresh?.isRefreshing = false
         myDisputsList = getDisputResponsePOJO!!.data!!
 
         if (myDisputsList.size > 0) {
@@ -178,10 +191,12 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
     }
 
     override fun removeWait() {
+        swipe_refresh?.isRefreshing = false
         ProjectUtilities.dismissProgressDialog()
     }
 
     override fun onFailure(appErrorMessage: String?) {
+        swipe_refresh?.isRefreshing = false
         Toast.makeText(activity, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 
