@@ -64,13 +64,12 @@
 
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/rectangle_1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.2"
             android:background="@drawable/app_gradient"
-            android:gravity="center_vertical"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
@@ -79,14 +78,12 @@
                 android:id="@+id/vector"
                 android:layout_width="@dimen/_144sdp"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/logo"
-                tools:ignore="ObsoleteLayoutParam" />
+                android:layout_centerInParent="true"
+                android:background="@drawable/logo" />
 
-        </LinearLayout>
+
+
+        </RelativeLayout>
 
 
         <RelativeLayout
@@ -106,15 +103,34 @@
                 android:layout_marginLeft="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_20sdp">
 
-                <TextView
-                    android:textColor="@color/colorText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosansjp_bold"
-                    android:gravity="center_horizontal|top"
-                    android:includeFontPadding="false"
-                    android:text="@string/logIn"
-                    android:textAppearance="@style/log_in" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/colorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/img_language"
+                        android:fontFamily="@font/notosansjp_bold"
+                        android:includeFontPadding="false"
+                        android:text="@string/logIn"
+                        android:layout_centerVertical="true"
+                        android:textAppearance="@style/log_in" />
+
+                    <ImageView
+                        android:id="@+id/img_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_language"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"/>
+                </RelativeLayout>
+
+
 
                 <TextView
                     android:textColor="@color/colorText"
@@ -180,7 +196,7 @@
                         android:layout_below="@+id/log_in"
                         android:backgroundTint="@color/gradientstartcolor"
                         android:fontFamily="@font/notosansjp_regular"
-                        android:hint="Phone Number"
+                        android:hint="@string/str_phone_number"
                         android:includeFontPadding="false"
                         android:inputType="number"
                         android:nextFocusDown="@id/btnLogin"
@@ -197,7 +213,6 @@
                         android:layout_marginEnd="@dimen/_18sdp"
                         android:backgroundTint="@color/gradientstartcolor"
                         android:fontFamily="@font/notosansjp_regular"
-                        android:text="Plese"
                         android:textColor="@color/Red"
                         android:textSize="@dimen/_9sdp"
                         android:visibility="gone" />
@@ -261,7 +276,7 @@
                     android:includeFontPadding="false"
                     android:paddingLeft="@dimen/_4sdp"
                     android:paddingRight="@dimen/_4sdp"
-                    android:text="and"
+                    android:text="@string/str_and"
                     android:textColor="@color/colorGreyText"
                     android:textSize="@dimen/_12sdp"
                     android:visibility="visible" />
@@ -324,7 +339,7 @@
                     android:fontFamily="@font/notosansjp_regular"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Or continue with"
+                    android:text="@string/str_or_continue_with"
                     android:textColor="@color/colorGreyText"
                     android:textSize="@dimen/_12sdp" />
 
@@ -393,7 +408,7 @@
                     android:includeFontPadding="false"
                     android:paddingLeft="@dimen/_4sdp"
                     android:paddingRight="@dimen/_4sdp"
-                    android:text="Don't have an account? "
+                    android:text="@string/str_don_t_have_an_account"
                     android:textColor="@color/colorGreyText"
                     android:textSize="@dimen/_12sdp"
                     android:visibility="visible" />

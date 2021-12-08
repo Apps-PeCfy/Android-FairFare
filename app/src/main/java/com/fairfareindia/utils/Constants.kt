@@ -64,7 +64,7 @@ object Constants {
 
 
     var REQUEST_TIMEOUT: Int = 1000 * 60
-    var LOCATION_HANDLER_TIME: Long = 1000 * 10
+    var LOCATION_HANDLER_TIME: Long = 1000 * 20
 
     //RazorPay Key
     //Test

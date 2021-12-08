@@ -245,16 +245,18 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             }else if(driverLocationModel?.data?.status == Constants.BOOKING_ARRIVING){
                 btnCancelRide.visibility = View.VISIBLE
                 binding.txtStatusMessage.text = getString(R.string.msg_track_arriving)
-                if (!isRouteDrawn) {
+               /* if (!isRouteDrawn) {
                     getRouteAPI()
-                }
+                }*/
+                getRouteAPI()
                 addCurrentLocationMarker(driverLocationModel)
             }else if (driverLocationModel?.data?.status == Constants.BOOKING_ARRIVED) {
                 btnCancelRide.visibility = View.VISIBLE
                 binding.txtStatusMessage.text = getString(R.string.msg_track_arrived)
-                if (!isRouteDrawn) {
+                /*if (!isRouteDrawn) {
                     getRouteAPI()
-                }
+                }*/
+                getRouteAPI()
                 addCurrentLocationMarker(driverLocationModel)
             }else if (driverLocationModel?.data?.status == Constants.BOOKING_ACTIVE){
                 btnCancelRide.visibility = View.GONE

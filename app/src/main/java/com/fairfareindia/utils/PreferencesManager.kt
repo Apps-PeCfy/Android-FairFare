@@ -10,6 +10,8 @@ class PreferencesManager private constructor(context: Context) {
     private val mPref: SharedPreferences
     private val cityList_key : String = "ALLOWED_CITY_LIST"
     private val KEY_USER = "user"
+    private val KEY_LANGUAGE : String = "language"
+    private val KEY_LANGUAGE_CHANGE : String = "language_change"
 
     fun setStringValue(KEY_VALUE: String?, value: String?) {
         mPref.edit()
@@ -31,6 +33,24 @@ class PreferencesManager private constructor(context: Context) {
         val gson = Gson()
         val jsonString: String? = mPref.getString(KEY_USER, "")
         return gson.fromJson(jsonString,  VerifyOTPResponsePojo.User::class.java)
+    }
+
+    fun setLanguage(language: String?) {
+        mPref.edit()
+            .putString(KEY_LANGUAGE, language)
+            .apply()
+    }
+
+    fun getLanguage(): String? {
+        return mPref.getString(KEY_LANGUAGE, "en-gb")
+    }
+
+    fun setLanguageChanged(value: Boolean) {
+        mPref.edit().putBoolean(KEY_LANGUAGE_CHANGE, value).apply()
+    }
+
+    fun isLanguageChanged(): Boolean {
+        return mPref.getBoolean(KEY_LANGUAGE_CHANGE, false)
     }
 
     fun setIntegerValue(KEY_VALUE: String?, value: Int) {
