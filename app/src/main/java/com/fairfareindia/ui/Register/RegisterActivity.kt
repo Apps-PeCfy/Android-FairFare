@@ -342,10 +342,8 @@ class RegisterActivity : AppCompatActivity(),
             } catch (e: NumberParseException) {
                 e.printStackTrace()
             }
-            numbervalidation = if (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile) {
+            numbervalidation = if (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile || PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE == isMobile) {
                 "true"
-            } else if (PhoneNumberUtil.PhoneNumberType.FIXED_LINE == isMobile) {
-                "false"
             } else {
                 "false"
             }

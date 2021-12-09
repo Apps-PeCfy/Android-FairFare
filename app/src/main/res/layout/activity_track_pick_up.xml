@@ -903,6 +903,45 @@
                 </LinearLayout>
             </RelativeLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_remaining_tme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                android:layout_margin="10dp"
+                android:layout_alignParentEnd="true"
+                app:cardBackgroundColor="@color/colorGreen"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:id="@+id/txt_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_bold"/>
+
+                    <TextView
+                        android:id="@+id/txt_time_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_regular"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
         </RelativeLayout>
     </RelativeLayout>

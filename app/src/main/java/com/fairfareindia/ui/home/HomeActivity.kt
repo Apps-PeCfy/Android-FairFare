@@ -39,6 +39,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.fairfareindia.BuildConfig
 import com.fairfareindia.R
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.LoginActivity
@@ -64,9 +65,11 @@ import com.fairfareindia.ui.drawer.privacypolicy.TermsOfUse
 import com.fairfareindia.ui.drawer.ratecard.RateCard
 import com.fairfareindia.ui.drawer.setting.Setting
 import com.fairfareindia.ui.drawer.wallet.WalletFragment
+import com.fairfareindia.ui.home.pojo.GeneralSettingModel
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.intercity.InterCityActivity
+import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.ui.splashscreen.PermissionActivity
 import com.fairfareindia.utils.*
@@ -2623,10 +2626,32 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onResume() {
         super.onResume()
+        generalSettingAPI()
         if (!CommonAppPermission.hasLocationPermission(this) || !ProjectUtilities.isGPSEnabled(this)) {
             startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
             finish()
         }
+    }
+
+    private fun generalSettingAPI() {
+        var url = BuildConfig.API_URL + "settings"
+        var params: JSONObject = JSONObject()
+        params.put("token", token)
+        APIManager.getInstance(this).getAPI(
+            url,
+            params,
+            GeneralSettingModel::class.java,
+            this,
+            object : APIManager.APIManagerInterface {
+                override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
+                    var model : GeneralSettingModel = resultObj as GeneralSettingModel
+                }
+
+                override fun onError(error: String?) {
+                    Toast.makeText(this@HomeActivity, error, Toast.LENGTH_SHORT).show()
+                }
+
+            })
     }
 
 

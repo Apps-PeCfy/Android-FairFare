@@ -30,7 +30,7 @@
     <string name="title_compare_ride">Compare Rides</string>
     <string name="str_drop_off_location">Drop-off Location</string>
     <string name="str_pick_up_location">Pick-up Location</string>
-    <string name="str_schedule_date_and_time"><![CDATA[Schedule Date & Time]]></string>
+    <string name="str_schedule_date_and_time">Schedule Date &amp; Time</string>
     <string name="str_no_of_bags">No. of Bags</string>
     <string name="available_rides">Available Rides</string>
     <string name="str_sort">Sort</string>

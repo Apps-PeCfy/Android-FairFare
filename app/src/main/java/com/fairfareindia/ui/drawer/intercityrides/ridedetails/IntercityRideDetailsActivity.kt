@@ -32,6 +32,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
     private var iRidesDetailPresenter: IRidesDetailPresenter? = null
     private var isFromEndRide : Boolean = false
     private var waitingInfoDialog : WaitingInfoDialog ?= null
+    private var tollInfoDialog : TollInfoDialog ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +72,12 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 }
             }
 
+            imgTollInfo.setOnClickListener {
+                if(model?.data?.estimatedTrackRide?.tolls?.isNotEmpty()!!){
+                    openTollInfoDialog()
+                }
+            }
+
             btnRateRide.setOnClickListener {
                 if(ProjectUtilities.checkInternetAvailable(context)) {
                     val intent = Intent(context, RideReviewActivity::class.java)
@@ -99,6 +106,12 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 }
             }
         }
+    }
+
+    private fun openTollInfoDialog() {
+        tollInfoDialog = TollInfoDialog(context, model?.data?.estimatedTrackRide?.tolls!!)
+        tollInfoDialog?.show()
+        tollInfoDialog?.setCancelable(false)
     }
 
     private fun openWaitInfoDialog() {

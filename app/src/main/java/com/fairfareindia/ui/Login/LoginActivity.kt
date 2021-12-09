@@ -453,11 +453,9 @@ class LoginActivity : AppCompatActivity(),
             } catch (e: NumberParseException) {
                 e.printStackTrace()
             }
-            if (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile) {
+            if (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile || PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE == isMobile) {
                 strNumberValidation = "true"
-            } else if (PhoneNumberUtil.PhoneNumberType.FIXED_LINE == isMobile) {
-                strNumberValidation = "false"
-            } else {
+            }else {
                 strNumberValidation = "false"
             }
 
@@ -465,7 +463,6 @@ class LoginActivity : AppCompatActivity(),
             if (strNumberValidation == "false") {
                 tvPhoneNumberError!!.text = getString(R.string.err_valid_phone_number)
                 tvPhoneNumberError!!.visibility = View.VISIBLE
-                //   Toast.makeText(this, "Plese enter valid phone no.", Toast.LENGTH_LONG).show();
             } else {
 
                 iLoginPresenter!!.login(

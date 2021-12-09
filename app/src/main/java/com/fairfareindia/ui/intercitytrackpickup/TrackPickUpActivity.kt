@@ -64,6 +64,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
     private var myMarker: Marker? = null
     private var prevLatLng: LatLng? = null
     private var isRouteDrawn: Boolean = false
+    private var mPolyline: Polyline? = null
 
     val handler: Handler? = Handler()
 
@@ -386,22 +387,17 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                 )
             ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
         )
-
-        val customInfoWindow = CustomInfoWindowGoogleMap(this)
-        sourceMarker?.title = "16"
-        sourceMarker?.snippet = "min"
-        mMap?.setInfoWindowAdapter(customInfoWindow)
-        sourceMarker?.showInfoWindow()
     }
 
     private fun updateTimeToPickUP(duration: JSONObject) {
-        val customInfoWindow = CustomInfoWindowGoogleMap(this)
         var timeInSeconds = duration.getString("value")
 
-        sourceMarker?.title = (timeInSeconds.toDouble() / 60).toInt().toString()
-        sourceMarker?.snippet = "Min"
-        mMap?.setInfoWindowAdapter(customInfoWindow)
-        sourceMarker?.showInfoWindow()
+        binding.crdRemainingTme.visibility = View.VISIBLE
+        var timeInMinutes = (timeInSeconds.toDouble() / 60).toInt()
+
+        binding.txtTime.text = ProjectUtilities.timeInMinutesConvertingToString(context, timeInMinutes.toString())
+        binding.txtTimeUnit.visibility = View.GONE
+
     }
 
     private fun animateMarkerNew(
@@ -546,10 +542,6 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             context,
             object : APIManager.APIManagerInterface {
                 override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
-
-
-                    var mPolyline: Polyline? = null
-
 
                     var routes: List<List<HashMap<String, String>>>? = null
 

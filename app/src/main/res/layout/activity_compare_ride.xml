@@ -94,7 +94,8 @@
                         android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:text="Pick-up Location"
+                        android:textSize="@dimen/text_14sp"
+                        android:text="@string/str_pick_up_location"
                         android:textColor="@color/gradientstartcolor" />
 
                     <View
@@ -121,9 +122,10 @@
                         android:drawableStart="@drawable/triangle"
                         android:drawablePadding="@dimen/_15sdp"
                         android:fontFamily="@font/notosansjp_regular"
+                        android:textSize="@dimen/text_14sp"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:text="Drop-off Location " />
+                        android:text="@string/str_drop_off_location" />
 
 
                     <View
@@ -194,7 +196,8 @@
                                 android:paddingTop="@dimen/_5sdp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Schedule Date &amp; Time" />
+                                android:textSize="@dimen/text_14sp"
+                                android:text="@string/str_schedule_date_and_time" />
 
 
                             <TextView
@@ -207,9 +210,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:gravity="start"
-                                android:text="02 Nov, 08:44 pm"
                                 android:textColor="@color/colorText"
-                                android:textSize="15dp" />
+                                android:textSize="@dimen/text_14sp" />
 
 
                         </LinearLayout>
@@ -226,6 +228,7 @@
                                 android:paddingTop="@dimen/_5sdp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_14sp"
                                 android:text="No. of Bags" />
 
 
@@ -240,7 +243,7 @@
                                 android:gravity="start"
                                 android:text="2"
                                 android:textColor="@color/colorText"
-                                android:textSize="15dp" />
+                                android:textSize="@dimen/text_14sp" />
 
 
                         </LinearLayout>
@@ -265,8 +268,8 @@
                             android:paddingStart="@dimen/_5sdp"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Available Rides"
-                            android:textSize="@dimen/_12sdp" />
+                            android:text="@string/available_rides"
+                            android:textSize="@dimen/text_14sp" />
 
 
                         <TextView
@@ -282,8 +285,8 @@
 
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Sort"
-                            android:textSize="@dimen/_12sdp" />
+                            android:text="@string/str_sort"
+                            android:textSize="@dimen/text_14sp" />
 
                         <androidx.recyclerview.widget.RecyclerView
 

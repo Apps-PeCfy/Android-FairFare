@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,7 +54,6 @@
                 android:orientation="vertical">
 
 
-
                 <ScrollView
                     android:id="@+id/homeView"
                     android:layout_width="match_parent"
@@ -64,9 +64,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/_10sdp"
+                        android:orientation="vertical"
                         android:paddingTop="@dimen/_20sdp"
-                        android:orientation="vertical">
+                        android:paddingBottom="@dimen/_10sdp">
 
 
                         <RelativeLayout
@@ -77,28 +77,28 @@
                             android:layout_marginEnd="@dimen/_15sdp">
 
                             <TextView
-                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:text="Complaint Details"
+                                android:text="@string/title_complaint_details"
                                 android:textColor="@color/colorText"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/text_14sp"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/tvDisputNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:text="#MUM1223344TR34"
                                 android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp"
                                 android:textStyle="bold" />
 
 
                         </RelativeLayout>
 
                         <LinearLayout
-                            android:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
@@ -107,37 +107,40 @@
                             android:background="@drawable/rounded_corner_disput"
                             android:orientation="vertical"
                             android:paddingStart="@dimen/_15sdp"
-                            android:paddingBottom="@dimen/_5sdp">
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:visibility="visible">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:text="Dispute reasons:"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorText" />
+                                android:text="@string/str_dispute_reasons"
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tvDisputReason"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Driver arrogance"
-                                android:textColor="@color/colorText" />
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp" />
 
 
                             <LinearLayout
                                 android:id="@+id/llComments"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Additional comments:"
-                                    android:textColor="@color/colorText" />
+                                    android:text="@string/str_additional_comments"
+                                    android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/editReview"
@@ -147,7 +150,7 @@
                                     android:gravity="top"
                                     android:paddingBottom="@dimen/_5sdp"
                                     android:textColor="@color/colorText"
-                                    android:textSize="@dimen/_10sdp"
+                                    android:textSize="@dimen/text_14sp"
                                     android:visibility="visible" />
 
 
@@ -155,45 +158,43 @@
 
 
                             <androidx.recyclerview.widget.RecyclerView
-                               android:visibility="gone"
                                 android:id="@+id/selected_recycler_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp" />
-
+                                android:layout_marginTop="10dp"
+                                android:visibility="gone" />
 
 
                         </LinearLayout>
 
 
                         <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_15sdp"
-                            android:paddingStart="@dimen/_15sdp"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:background="@drawable/rounded_corner_disput"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp">
 
 
                             <TextView
                                 android:id="@+id/tv_startMeterReading"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="str metr reading=10"
-                                android:textColor="@color/colorText" />
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp" />
 
                             <TextView
                                 android:id="@+id/tv_endMeterReading"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-
-                                android:text="end metr reading=20"
-                                android:textColor="@color/colorText" />
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp" />
 
 
                             <TextView
@@ -201,13 +202,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-                                android:text="actual meter fare=150"
-                                android:textColor="@color/colorText" />
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp" />
 
 
                         </LinearLayout>
-
-
 
 
                         <View
@@ -223,8 +222,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Ride Details"
+                            android:text="@string/str_ride_details"
                             android:textColor="@color/colorText"
+                            android:textSize="@dimen/text_14sp"
                             android:textStyle="bold"
                             android:visibility="gone" />
 
@@ -256,8 +256,9 @@
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="2"
-                                    android:text="Pick-up Location"
-                                    android:textColor="@color/gradientstartcolor" />
+                                    android:text="@string/str_pick_up_location"
+                                    android:textColor="@color/gradientstartcolor"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <View
                                     android:id="@+id/view"
@@ -282,7 +283,8 @@
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="2"
-                                    android:text="Drop-off Location " />
+                                    android:text="@string/str_drop_off_location"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                                 <View
@@ -339,7 +341,6 @@
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:weightSum="2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
@@ -347,90 +348,89 @@
                                     android:layout_marginStart="@dimen/_15sdp"
                                     android:layout_toEndOf="@+id/llCar"
                                     android:gravity="center_vertical"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
 
 
                                     <LinearLayout
-                                        android:layout_weight="1"
                                         android:layout_width="wrap_content"
-                                        android:orientation="vertical"
-                                        android:layout_height="match_parent">
-
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
 
 
                                         <TextView
-                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_carName"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:gravity="center_horizontal"
                                             android:layout_marginBottom="@dimen/_2sdp"
+                                            android:fontFamily="@font/notosansjp_regular"
+                                            android:gravity="center_horizontal"
                                             android:text=""
+                                            android:textColor="@color/colorGreyText"
+                                            android:textSize="@dimen/text_14sp"
                                             android:textStyle="bold" />
 
 
                                         <TextView
-                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_vahicalNO"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="" />
-
+                                            android:fontFamily="@font/notosansjp_regular"
+                                            android:text=""
+                                            android:textColor="@color/colorGreyText"
+                                            android:textSize="@dimen/text_14sp" />
 
 
                                     </LinearLayout>
 
 
                                     <LinearLayout
-                                        android:paddingStart="@dimen/_15sdp"
-                                        android:layout_weight="1"
                                         android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
                                         android:orientation="vertical"
-                                        android:layout_height="match_parent">
-
+                                        android:paddingStart="@dimen/_15sdp">
 
 
                                         <TextView
-                                            android:textColor="@color/colorGreyText"
                                             android:id="@+id/tv_bagCount"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentEnd="true"
                                             android:layout_gravity="start"
-                                            android:layout_marginBottom="@dimen/_2sdp"
-
                                             android:layout_marginEnd="@dimen/_10sdp"
+                                            android:layout_marginBottom="@dimen/_2sdp"
                                             android:drawableStart="@drawable/iv_bags"
                                             android:drawablePadding="@dimen/_6sdp"
+                                            android:fontFamily="@font/notosansjp_regular"
                                             android:gravity="end"
-                                            android:text="" />
-
+                                            android:text=""
+                                            android:textColor="@color/colorGreyText"
+                                            android:textSize="@dimen/text_14sp" />
 
 
                                         <TextView
-                                            android:textColor="@color/colorGreyText"
-                                            android:layout_marginTop="@dimen/_2sdp"
-                                            android:layout_below="@+id/tv_bagCount"
                                             android:id="@+id/tv_Datetime"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
+                                            android:layout_below="@+id/tv_bagCount"
                                             android:layout_alignParentEnd="true"
+                                            android:layout_marginTop="@dimen/_2sdp"
                                             android:layout_marginEnd="@dimen/_10sdp"
                                             android:drawableStart="@drawable/ic_clock"
                                             android:drawablePadding="@dimen/_6sdp"
+                                            android:fontFamily="@font/notosansjp_regular"
                                             android:gravity="end"
-                                            android:text="" />
-
+                                            android:text=""
+                                            android:textColor="@color/colorGreyText"
+                                            android:textSize="@dimen/text_14sp" />
 
 
                                     </LinearLayout>
 
 
-
                                 </LinearLayout>
-
-
-
 
 
                             </RelativeLayout>
@@ -453,15 +453,16 @@
 
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
                                     android:id="@+id/tv_driverName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_70sdp"
                                     android:layout_toRightOf="@+id/tv_Person"
                                     android:drawablePadding="@dimen/_5sdp"
-                                    android:text="" />
-
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </RelativeLayout>
@@ -509,12 +510,14 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="end"
-                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Estimated"
+                                    android:text="@string/str_estimated"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -526,14 +529,15 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Actual"
+                                    android:text="@string/str_actual"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
 
@@ -555,13 +559,14 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Distance"
+                                    android:text="@string/str_distance"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -575,12 +580,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -593,12 +599,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Rs.1000 " />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -619,11 +626,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Ride Time"
+                                    android:text="@string/str_ride_time"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -637,12 +646,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -655,12 +665,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Rs.1000 " />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -679,12 +690,11 @@
                                 android:weightSum="3">
 
                                 <RelativeLayout
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:layout_weight="1"
                                     android:layout_width="0dp"
-                                    android:layout_height="match_parent">
-
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
 
 
                                     <TextView
@@ -692,18 +702,20 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerInParent="true"
-                                        android:text="Wait Time"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:text="@string/str_wait_time"
                                         android:textColor="@color/colorText"
+                                        android:textSize="@dimen/text_14sp"
                                         android:textStyle="bold" />
 
                                     <ImageView
                                         android:id="@+id/ivViewInfo"
-                                        android:layout_toRightOf="@+id/tvWaitTime"
                                         android:layout_width="@dimen/_16sdp"
-                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_height="@dimen/_16sdp"
                                         android:layout_centerInParent="true"
-                                        android:background="@drawable/view_info"
-                                        android:layout_height="@dimen/_16sdp"/>
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_toRightOf="@+id/tvWaitTime"
+                                        android:background="@drawable/view_info" />
 
 
                                 </RelativeLayout>
@@ -719,12 +731,14 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-" />
+                                    android:text="-"
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -737,12 +751,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="12 Min " />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -765,11 +780,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Basic Fare"
+                                    android:text="@string/str_basic_fare"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -783,12 +800,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -801,12 +819,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 1000 " />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -827,13 +846,14 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Wait Charges"
+                                    android:text="@string/str_wait_charges"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -847,12 +867,14 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -866,12 +888,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text=" " />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -893,11 +916,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Night Charges"
+                                    android:text="@string/str_night_charges"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -911,12 +936,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -929,12 +955,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -958,11 +985,13 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Luggage"
+                                    android:text="@string/str_luggage"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -976,12 +1005,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -994,12 +1024,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 1000 " />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -1012,17 +1043,17 @@
                             <!-- TOLL -->
 
                             <LinearLayout
-                                android:visibility="visible"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
+                                android:visibility="visible"
                                 android:weightSum="3">
 
                                 <RelativeLayout
                                     android:layout_width="0dp"
-                                    android:gravity="center"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1">
+                                    android:layout_weight="1"
+                                    android:gravity="center">
 
 
                                     <TextView
@@ -1030,16 +1061,18 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:text="Toll Charges"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:text="@string/str_toll_charges"
                                         android:textColor="@color/colorText"
+                                        android:textSize="@dimen/text_14sp"
                                         android:textStyle="bold" />
 
                                     <ImageView
-                                        android:layout_marginStart="@dimen/_3sdp"
                                         android:id="@+id/ivViewTollInfo"
                                         android:layout_width="@dimen/_16sdp"
                                         android:layout_height="@dimen/_16sdp"
                                         android:layout_centerInParent="true"
+                                        android:layout_marginStart="@dimen/_3sdp"
                                         android:layout_toRightOf="@+id/tvTollCharges"
                                         android:background="@drawable/view_info" />
 
@@ -1058,12 +1091,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -1076,12 +1110,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="-" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -1105,11 +1140,13 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Surcharge"
+                                    android:text="@string/str_surcharge"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -1122,12 +1159,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -1139,12 +1177,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:textColor="@color/colorGreyText"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00 " />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </LinearLayout>
@@ -1166,11 +1205,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Total Fare"
+                                    android:text="@string/str_total_fare"
                                     android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -1184,12 +1225,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="120 Min"
                                     android:textColor="@color/gradientstartcolor"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -1203,12 +1245,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                   android:gravity="end"
-                                    android:paddingEnd="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
+                                    android:paddingEnd="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 1000 "
                                     android:textColor="@color/gradientstartcolor"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
 
