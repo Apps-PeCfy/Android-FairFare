@@ -1,11 +1,13 @@
 package com.fairfareindia.utils
 
 import android.content.Context
+import com.fairfareindia.ui.home.pojo.GeneralSettingModel
 import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
 
 open class SessionManager(context: Context) {
     private var mContext : Context = context
     private var userModel:  VerifyOTPResponsePojo.User ?= null
+    private var generalSettingModel:  GeneralSettingModel ?= null
 
 
     open fun getUserModel():  VerifyOTPResponsePojo.User? {
@@ -16,8 +18,20 @@ open class SessionManager(context: Context) {
         return userModel
     }
 
-    open fun setUserModel(userModel:  VerifyOTPResponsePojo.User) {
+    open fun setUserModel(generalSettingModel:  VerifyOTPResponsePojo.User) {
         this.userModel = userModel
+    }
+
+    open fun getGeneralSettingModel():  GeneralSettingModel? {
+        if (userModel == null) {
+            PreferencesManager.initializeInstance(context = mContext)
+            generalSettingModel = PreferencesManager.instance?.getGeneralSettingModel()
+        }
+        return generalSettingModel
+    }
+
+    open fun setGeneralSettingModel(generalSettingModel:  GeneralSettingModel) {
+        this.generalSettingModel = generalSettingModel
     }
 
 

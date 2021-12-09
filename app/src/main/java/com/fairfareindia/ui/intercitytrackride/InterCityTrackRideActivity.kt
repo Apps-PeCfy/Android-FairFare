@@ -512,12 +512,16 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     }
 
     private fun setHandler() {
+        var trackDuration = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.KEY_TRACK_DURATION)
+        if (trackDuration.isNullOrEmpty()){
+            trackDuration = Constants.LOCATION_HANDLER_TIME.toString()
+        }
         handler?.postDelayed(object : Runnable {
             override fun run() {
                 getDriverLocationAPI()
-                handler.postDelayed(this, Constants.LOCATION_HANDLER_TIME)
+                handler.postDelayed(this, trackDuration.toLong())
             }
-        }, Constants.LOCATION_HANDLER_TIME)
+        }, trackDuration.toLong())
 
     }
 
@@ -526,7 +530,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
      */
 
     private fun getDriverLocationAPI() {
-        var url = BuildConfig.API_URL + "getDriverLocation"
+        var url = BuildConfig.API_URL +  Constants.API_GET_DRIVER_LOCATION
         var params: JSONObject = JSONObject()
         params.put("ride_id", rideID)
         params.put("token", token)

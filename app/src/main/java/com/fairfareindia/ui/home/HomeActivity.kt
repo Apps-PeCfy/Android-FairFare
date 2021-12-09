@@ -2634,7 +2634,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     private fun generalSettingAPI() {
-        var url = BuildConfig.API_URL + "settings"
+        var url = BuildConfig.API_URL + Constants.API_GENERAL_SETTINGS
+
         var params: JSONObject = JSONObject()
         params.put("token", token)
         APIManager.getInstance(this).getAPI(
@@ -2645,6 +2646,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             object : APIManager.APIManagerInterface {
                 override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
                     var model : GeneralSettingModel = resultObj as GeneralSettingModel
+                    preferencesManager?.setGeneralSettingModel(model)
+                    SessionManager.getInstance(this@HomeActivity).setGeneralSettingModel(model)
                 }
 
                 override fun onError(error: String?) {

@@ -3,6 +3,7 @@ package com.fairfareindia.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import com.fairfareindia.R
+import com.fairfareindia.ui.home.pojo.GeneralSettingModel
 import com.google.maps.GeoApiContext
 import com.google.maps.GeocodingApi
 import com.google.maps.errors.ApiException
@@ -101,6 +102,23 @@ class AppUtils {
             }
 
             return placeID
+        }
+
+        fun getValueOfKeyFromGeneralSettings(context: Context, key: String?): String? {
+            var keyValue : String ?= null
+
+            var model : GeneralSettingModel ?= SessionManager.getInstance(context).getGeneralSettingModel()
+
+            if (model != null && !model.data.isNullOrEmpty()){
+                for (settingModel in model.data!!){
+                    if (settingModel.key == key){
+                        keyValue = settingModel.value
+                        return keyValue
+                    }
+                }
+            }
+
+           return keyValue
         }
     }
 

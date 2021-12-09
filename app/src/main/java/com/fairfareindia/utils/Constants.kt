@@ -2,6 +2,9 @@ package com.fairfareindia.utils
 
 object Constants {
 
+    // API FOR VOLLEY
+    var API_GENERAL_SETTINGS = "settings"
+    var API_GET_DRIVER_LOCATION = "getDriverLocation"
 
     var SHARED_PREFERENCE_LOGIN_TOKEN = "token"
     var SHARED_PREFERENCE_ISLOGIN = "isLogin"
@@ -65,6 +68,12 @@ object Constants {
 
     var REQUEST_TIMEOUT: Int = 1000 * 60
     var LOCATION_HANDLER_TIME: Long = 1000 * 20
+
+    //General Settings Key
+    var KEY_PICK_UP_DURATION = "pickup_duration"
+    var KEY_TRACK_DURATION = "track_duration"
+    var KEY_SCHEDULE_TIME_IN_MINUTES = "schedule_time_minute"
+
 
     //RazorPay Key
     //Test

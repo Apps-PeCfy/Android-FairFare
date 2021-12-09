@@ -244,9 +244,12 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                     id: Long
                 ) {
                     if (timeSpinner?.get(position)?.equals(getString(R.string.str_now))!!) {
+                        var minScheduleTime = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.KEY_SCHEDULE_TIME_IN_MINUTES)
+                        if (minScheduleTime.isNullOrEmpty()){
+                            minScheduleTime = "50"
+                        }
                         txtRideBook.text = getString(R.string.str_book_ride_on)
-                        txtRideBook.text =
-                            "Ride will be serviced 45 minutes after the payment is done"
+                        txtRideBook.text = "Ride will be serviced "+ minScheduleTime + " minutes after the payment is done"
                         txtRideScheduled.visibility = View.GONE
 
                     } else {
@@ -490,13 +493,17 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
 
     private fun minTimeToShedule(): String {
+        var minScheduleTime = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.KEY_SCHEDULE_TIME_IN_MINUTES)
+        if (minScheduleTime.isNullOrEmpty()){
+            minScheduleTime = "50"
+        }
         val ONE_MINUTE_IN_MILLIS: Long = 60000 //millisecs
         val date = Calendar.getInstance()
         val t = date.timeInMillis
-        val afterRequiredMins = Date(t + 45 * ONE_MINUTE_IN_MILLIS)
+        val afterRequiredMins = Date(t + minScheduleTime.toInt() * ONE_MINUTE_IN_MILLIS)
 
         val minDateTime = SimpleDateFormat("dd MM yyyy HH:mm:ss").format(afterRequiredMins)
-        return minDateTime;
+        return minDateTime
 
     }
 

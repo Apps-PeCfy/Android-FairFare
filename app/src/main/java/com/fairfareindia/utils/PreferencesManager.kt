@@ -2,6 +2,7 @@ package com.fairfareindia.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.fairfareindia.ui.home.pojo.GeneralSettingModel
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
 import com.google.gson.Gson
@@ -10,6 +11,7 @@ class PreferencesManager private constructor(context: Context) {
     private val mPref: SharedPreferences
     private val cityList_key : String = "ALLOWED_CITY_LIST"
     private val KEY_USER = "user"
+    private val KEY_GENERAL_SETTING = "general_settings"
     private val KEY_LANGUAGE : String = "language"
     private val KEY_LANGUAGE_CHANGE : String = "language_change"
 
@@ -33,6 +35,18 @@ class PreferencesManager private constructor(context: Context) {
         val gson = Gson()
         val jsonString: String? = mPref.getString(KEY_USER, "")
         return gson.fromJson(jsonString,  VerifyOTPResponsePojo.User::class.java)
+    }
+
+    fun setGeneralSettingModel(model:  GeneralSettingModel?) {
+        val gson = Gson()
+        val jsonString = gson.toJson(model)
+        mPref.edit().putString(KEY_GENERAL_SETTING, jsonString).apply()
+    }
+
+    fun getGeneralSettingModel(): GeneralSettingModel? {
+        val gson = Gson()
+        val jsonString: String? = mPref.getString(KEY_GENERAL_SETTING, "")
+        return gson.fromJson(jsonString,  GeneralSettingModel::class.java)
     }
 
     fun setLanguage(language: String?) {

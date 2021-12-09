@@ -25,10 +25,7 @@ import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
-import com.fairfareindia.utils.APIManager
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PreferencesManager
-import com.fairfareindia.utils.ProjectUtilities
+import com.fairfareindia.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -606,12 +603,16 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
     }
 
     private fun setHandler() {
+        var pickUpUpdateDuration = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.KEY_PICK_UP_DURATION)
+        if (pickUpUpdateDuration.isNullOrEmpty()){
+            pickUpUpdateDuration = Constants.LOCATION_HANDLER_TIME.toString()
+        }
         handler?.postDelayed(object : Runnable {
             override fun run() {
                 getDriverLocationAPI()
-                handler.postDelayed(this, Constants.LOCATION_HANDLER_TIME)
+                handler.postDelayed(this, pickUpUpdateDuration.toLong())
             }
-        }, Constants.LOCATION_HANDLER_TIME)
+        }, pickUpUpdateDuration.toLong())
 
     }
 
@@ -620,7 +621,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
      */
 
     private fun getDriverLocationAPI() {
-        var url = BuildConfig.API_URL + "getDriverLocation"
+        var url = BuildConfig.API_URL + Constants.API_GET_DRIVER_LOCATION
         var params: JSONObject = JSONObject()
         params.put("ride_id", rideID)
         params.put("token", token)
