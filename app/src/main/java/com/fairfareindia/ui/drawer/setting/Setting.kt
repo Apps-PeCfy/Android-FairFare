@@ -19,9 +19,7 @@ import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.drawer.contactus.pojo.ContactUsResponsePojo
 import com.fairfareindia.ui.drawer.setting.pojo.SettingResponsePojo
 import com.fairfareindia.ui.home.HomeActivity
-import com.fairfareindia.utils.Constants
-import com.fairfareindia.utils.PreferencesManager
-import com.fairfareindia.utils.ProjectUtilities
+import com.fairfareindia.utils.*
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,7 +32,6 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
     var preferencesManager: PreferencesManager? = null
     var spncity = 0
     var spinnerCity: List<String?>? = null
-    var langSpinner: List<String?>? = null
     var currencySpinner: List<String?>? = null
     var unitSpinner: List<String?>? = null
     var timeFormatSpinner: List<String?>? = null
@@ -67,7 +64,8 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
     var sharedpreferences: SharedPreferences? = null
 
 
-    // var langSpinner = arrayOf<String?>("English")
+    private var langSpinner : Array<String> ? = null
+    private var isFirstTimeOpen = false
     var citySpinner = arrayOf<String?>("Mumbai", "Pune")
     // var currencySpinner = arrayOf<String?>("INR")
     //  var unitSpinner = arrayOf<String?>("Kilometers(KM)")
@@ -170,24 +168,14 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun initspinner(body: SettingResponsePojo?) {
         spinnerCity = ArrayList()
-        langSpinner = ArrayList()
         currencySpinner = ArrayList()
         unitSpinner = ArrayList()
         timeFormatSpinner = ArrayList()
         (spinnerCity as ArrayList<String?>).add(body!!.userSetting!!.city)
-        (langSpinner as ArrayList<String?>).add(body!!.userSetting!!.language)
         (currencySpinner as ArrayList<String?>).add(body!!.userSetting!!.currency)
         (unitSpinner as ArrayList<String?>).add(body!!.userSetting!!.measurementUnit)
         (timeFormatSpinner as ArrayList<String?>).add(body!!.userSetting!!.timeFormat)
 
-
-        val spinnerLuggage: ArrayAdapter<*> = ArrayAdapter<Any?>(
-            activity!!.applicationContext, R.layout.simple_setting_spinner,
-            langSpinner!!
-        )
-        spinnerLuggage.setDropDownViewResource(R.layout.simple_setting_spinner)
-        spinner_lang?.adapter = spinnerLuggage
-        spinner_lang?.setSelection(0)
 
         val spinnercity: ArrayAdapter<*> = ArrayAdapter<Any?>(
             activity!!.applicationContext,
@@ -249,6 +237,69 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
         preferencesManager = PreferencesManager.instance
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
+        setListeners()
+        setSpinners()
+    }
+
+    private fun setSpinners() {
+        langSpinner = arrayOf<String>(getString(R.string.str_english), getString(R.string.str_hindi), getString(R.string.str_marathi))
+
+        val spinnerLanguageAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
+            activity!!.applicationContext, R.layout.simple_setting_spinner,
+            langSpinner!!
+        )
+        spinnerLanguageAdapter.setDropDownViewResource(R.layout.simple_setting_spinner)
+        spinner_lang?.adapter = spinnerLanguageAdapter
+
+        if (preferencesManager?.getLanguage() == getString(R.string.str_eng_code)){
+            spinner_lang?.setSelection(0)
+        }else if (preferencesManager?.getLanguage() == getString(R.string.str_hindi_code)){
+            spinner_lang?.setSelection(1)
+        }else if (preferencesManager?.getLanguage() == getString(R.string.str_marathi_code)){
+            spinner_lang?.setSelection(2)
+        }
+
+    }
+
+    private fun setListeners() {
+        spinner_lang?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                if (isFirstTimeOpen){
+                    if (langSpinner?.get(position)  == getString(R.string.str_english)) {
+                        preferencesManager?.setLanguage(getString(R.string.str_eng_code))
+                        SetLocalLanguage.setLocaleLanguage(requireContext(), getString(R.string.str_eng_code))
+                        restartApp()
+                    } else if (langSpinner?.get(position) == getString(R.string.str_hindi)) {
+                        preferencesManager?.setLanguage(getString(R.string.str_hindi_code))
+                        SetLocalLanguage.setLocaleLanguage(requireContext(), getString(R.string.str_hindi_code))
+                        restartApp()
+                    }else if (langSpinner?.get(position) == getString(R.string.str_marathi)) {
+                        preferencesManager?.setLanguage(getString(R.string.str_marathi_code))
+                        SetLocalLanguage.setLocaleLanguage(requireContext(), getString(R.string.str_marathi_code))
+                        restartApp()
+                    }
+                }else{
+                    isFirstTimeOpen = true
+                }
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+    }
+
+    private fun restartApp() {
+        val i = Intent(requireContext(), HomeActivity::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
     }
 
     @OnClick(R.id.btnSave)
@@ -335,9 +386,11 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (parent!!.id == R.id.spinner_city) {
+        if (parent?.id == R.id.spinner_city) {
             spncity = position
         }
 
     }
+
+
 }

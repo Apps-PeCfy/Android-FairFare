@@ -70,13 +70,13 @@ class SplashScreen : AppCompatActivity() {
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
 
-       /* if (mPreferencesManager?.getLanguage() == getString(R.string.str_eng_code)) {
+        if (mPreferencesManager?.getLanguage() == getString(R.string.str_eng_code)) {
             SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_eng_code))
         }else if (mPreferencesManager?.getLanguage() == getString(R.string.str_hindi_code)) {
             SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_hindi_code))
         } else if (mPreferencesManager?.getLanguage() == getString(R.string.str_marathi_code)) {
             SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_marathi_code))
-        }*/
+        }
 
        // requestBatteryOptimisationDisabled()
 
