@@ -22,8 +22,8 @@
             android:layout_below="@+id/lledt"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_toRightOf="@+id/iv_place"
-            android:text="Marol Naka,Andheri East,Mumbai"
-            android:textSize="@dimen/_12sdp"
+            android:fontFamily="@font/notosansjp_regular"
+            android:textSize="@dimen/text_14sp"
             android:textStyle="bold" />
 
 
@@ -44,8 +44,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:focusable="true"
-                android:text="Home"
-                android:textSize="@dimen/_12sdp" />
+                android:fontFamily="@font/notosansjp_regular"
+                android:textSize="@dimen/text_14sp" />
 
             <RelativeLayout
 

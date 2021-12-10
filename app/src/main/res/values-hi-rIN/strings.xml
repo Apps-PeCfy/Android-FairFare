@@ -393,6 +393,7 @@
     <string name="title_complaint_detail">Complaint Details</string>
     <string name="title_dispute_detail">Dispute details</string>
     <string name="str_additional_distance">Additional Distance</string>
+    <string name="str_no_wallet_data">No Amount available in your wallet</string>
 
 
 </resources>

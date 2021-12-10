@@ -12,15 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_faqs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tv_sort" />
-
-
-
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 

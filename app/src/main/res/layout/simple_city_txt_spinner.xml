@@ -4,10 +4,10 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/_30sdp"
     android:paddingStart="@dimen/_5sdp"
-    android:fontFamily="@font/notosansjp_regular"
     android:gravity="center_vertical"
     android:includeFontPadding="false"
-    android:textSize="@dimen/_13sdp"
+    android:fontFamily="@font/notosansjp_regular"
+    android:textSize="@dimen/text_16sp"
     android:textColor="@color/White"
     android:maxLines="1"
     />

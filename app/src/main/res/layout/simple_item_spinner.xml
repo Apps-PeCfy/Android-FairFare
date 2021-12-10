@@ -5,9 +5,9 @@
     android:layout_height="@dimen/_35sdp"
     android:paddingStart="@dimen/_5sdp"
     android:layout_marginEnd="@dimen/_10sdp"
-    android:fontFamily="@font/notosansjp_regular"
     android:gravity="center_vertical"
     android:includeFontPadding="false"
     android:textColor="@color/colorText"
     android:maxLines="1"
-    android:textSize="@dimen/_10sdp" />
+    android:fontFamily="@font/notosansjp_regular"
+    android:textSize="@dimen/text_14sp" />

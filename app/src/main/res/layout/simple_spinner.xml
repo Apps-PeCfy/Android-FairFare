@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/tvUserNumber"
-android:fontFamily="@font/notosansjp_regular"
-style="?android:attr/spinnerItemStyle"
-android:singleLine="true"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:ellipsize="marquee"
-android:textColor="@color/colorText"
-android:textAlignment="inherit"/>
+    android:id="@+id/tvUserNumber"
+    style="?android:attr/spinnerItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="marquee"
+    android:fontFamily="@font/notosansjp_regular"
+    android:singleLine="true"
+    android:textAlignment="inherit"
+    android:textColor="@color/colorText"
+    android:textSize="@dimen/text_14sp" />

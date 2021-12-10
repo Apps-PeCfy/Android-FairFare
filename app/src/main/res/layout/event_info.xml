@@ -21,12 +21,10 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/llman"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_180sdp"
-        >
+        android:layout_height="@dimen/_180sdp">
 
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="@dimen/_180sdp"
             android:layout_marginStart="@dimen/_15sdp"
@@ -48,7 +46,9 @@
                     android:paddingTop="@dimen/_25sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_4sdp"
-                    android:text="Location"
+                    android:text="@string/str_location"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:textColor="@color/Black"
                     android:textStyle="bold" />
 
@@ -59,7 +59,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:gravity="center"
-                    android:text="Wait Time"
+                    android:text="@string/str_wait_time"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:textColor="@color/Black"
                     android:textStyle="bold" />
 

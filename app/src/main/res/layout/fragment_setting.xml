@@ -12,7 +12,6 @@
 
     <LinearLayout
         android:background="@color/colorBackground"
-
         android:id="@+id/llLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,20 +27,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Language"
+                android:text="@string/str_language"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
 
             <TextView
                 android:textColor="@color/colorGreyText"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default Language for the App" />
+                android:text="@string/lbl_for_language" />
 
 
         </LinearLayout>
@@ -57,7 +58,8 @@
             android:gravity="bottom|end"
             android:paddingEnd="@dimen/_25sdp"
             android:spinnerMode="dropdown"
-            android:textSize="10dp" />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular" />
 
 
     </LinearLayout>
@@ -83,26 +85,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="City"
+                android:text="@string/str_city"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
 
             <TextView
-                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default City" />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
+                android:text="@string/lbl_for_city" />
 
 
         </LinearLayout>
 
 
         <Spinner
-
             android:layout_width="0dp"
             android:id="@+id/spinner_city"
             android:layout_height="match_parent"
@@ -112,7 +115,8 @@
             android:gravity="bottom|end"
             android:paddingEnd="@dimen/_25sdp"
             android:spinnerMode="dropdown"
-            android:textSize="10dp" />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular" />
 
 
     </LinearLayout>
@@ -137,21 +141,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Currency"
+                android:text="@string/str_currency"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
 
             <TextView
                 android:textColor="@color/colorGreyText"
-
-                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default Currency" />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
+                android:text="@string/lbl_for_currency" />
 
 
         </LinearLayout>
@@ -160,7 +165,6 @@
         <Spinner
             android:layout_width="0dp"
             android:id="@+id/spinner_currency"
-
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_weight="0.9"
@@ -168,7 +172,8 @@
             android:gravity="bottom|end"
             android:paddingEnd="@dimen/_25sdp"
             android:spinnerMode="dropdown"
-            android:textSize="10dp" />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular" />
 
 
     </LinearLayout>
@@ -192,21 +197,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Measurement Unit"
+                android:text="@string/str_measurement_unit"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
 
             <TextView
                 android:textColor="@color/colorGreyText"
-
-                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default Measurement Unit" />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
+                android:text="@string/lbl_for_measurement_unit" />
 
 
         </LinearLayout>
@@ -222,7 +228,8 @@
             android:gravity="bottom|end"
             android:paddingEnd="@dimen/_25sdp"
             android:spinnerMode="dropdown"
-            android:textSize="10dp" />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
 
     </LinearLayout>
@@ -245,21 +252,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time Format"
+                android:text="@string/str_time_format"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
 
             <TextView
                 android:textColor="@color/colorGreyText"
-
-                android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_1sdp"
-                android:text="Select Default Time Format" />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
+                android:text="@string/lbl_for_time_format" />
 
 
         </LinearLayout>
@@ -267,16 +275,15 @@
 
         <Spinner
             android:id="@+id/spinner_timeformat"
-
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/shapespinnersetting"
             android:gravity="bottom|end"
             android:paddingEnd="@dimen/_25sdp"
-
             android:spinnerMode="dropdown"
-            android:textSize="10dp" />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular" />
 
 
     </LinearLayout>
@@ -290,14 +297,13 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/_15sdp"
         android:background="@drawable/shape_roundedbtn"
-        android:fontFamily="@font/notosansjp_regular"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="Save"
+        android:text="@string/btn_save"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-
-        android:textSize="@dimen/_14sdp" />
+        android:textSize="@dimen/text_16sp"
+        android:fontFamily="@font/notosansjp_regular" />
 
 
 </RelativeLayout>

@@ -10,10 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Auto"
+        android:text="@string/str_auto"
         android:textAlignment="center"
         android:textColor="@color/Black"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/text_14sp"
+        android:fontFamily="@font/notosansjp_regular"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -29,7 +30,9 @@
             android:layout_marginEnd="@dimen/_3sdp"
             android:background="@drawable/spinner_rate_card"
             android:layout_weight="1"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
 
         <Spinner
@@ -39,7 +42,9 @@
             android:background="@drawable/spinner_rate_card"
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_weight="1"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
 
     </LinearLayout>
@@ -54,10 +59,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fare"
+            android:text="@string/str_fare"
             android:textAlignment="center"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textStyle="bold" />
 
         <TextView
@@ -65,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="Rs. 25/- for first fall of  2 Kms (upon downing the meter) and thereafter Rs. 8/- per Km for every additional Km."
+            android:text="@string/msg_fare"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
             android:textSize="@dimen/_12sdp"
@@ -79,7 +85,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tv_myCurrentLocation"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/secondaryLightGray" />
 
@@ -92,10 +97,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Night Charges"
+            android:text="@string/str_night_charges"
             android:textAlignment="center"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textStyle="bold" />
 
         <TextView
@@ -103,30 +109,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="25% of the fair"
+            android:text="@string/msg_night_charges"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
-
-            />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
-            android:text="(00:00 AM to 5:00 AM)"
+            android:text="@string/str_night_time"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
-
-            />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tv_myCurrentLocation"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/secondaryLightGray" />
     <LinearLayout
@@ -138,10 +141,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Waiting Charges"
+            android:text="@string/str_waiting_charges"
             android:textAlignment="center"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textStyle="bold" />
 
         <TextView
@@ -149,12 +153,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="Rs. 30/- per hour or part thereof (subject to a min of 15 mins stay)"
+            android:text="@string/msg_waiting_charges"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
-
-            />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
 
     </LinearLayout>
@@ -163,7 +166,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tv_myCurrentLocation"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/secondaryLightGray" />
 
@@ -178,10 +180,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TOLL CHARGES"
+            android:text="@string/str_toll_charges"
             android:textAlignment="center"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textStyle="bold" />
 
         <TextView
@@ -189,12 +192,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="Rs. 0/- toll charges for single entry"
+            android:text="@string/msg_toll_charges"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
-
-            />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
 
     </LinearLayout>
@@ -209,10 +211,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Surcharges"
+            android:text="@string/str_surcharges"
             android:textAlignment="center"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textStyle="bold" />
 
         <TextView
@@ -220,12 +223,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="Rs. 30/- per hour or part thereof (subject to a min of 15 mins stay)"
+            android:text="@string/msg_surcharges"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
-
-            />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
 
     </LinearLayout>
@@ -234,7 +236,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tv_myCurrentLocation"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/secondaryLightGray" />
 
@@ -248,10 +249,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Luggage"
+            android:text="@string/str_luggage"
             android:textAlignment="center"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textStyle="bold" />
 
         <TextView
@@ -259,12 +261,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="Rs. 7.50/- shall be charged as extra luggage charges whereas the driver/operator shall not charge and money for a shopping bag or a small suitcase"
+            android:text="@string/msg_luggage"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
-            android:textSize="@dimen/_12sdp"
-
-            />
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
 
     </LinearLayout>

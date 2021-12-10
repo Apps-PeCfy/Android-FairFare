@@ -16,14 +16,14 @@
 
             <TextView
                 android:textColor="@color/colorGreyText"
-
                 android:fontFamily="@font/notosansjp_bold"
                 android:id="@+id/tv_filter"
                 android:layout_alignParentEnd="true"
                 android:drawableEnd="@drawable/ic_sort_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Filter By Status: "/>
+                android:textSize="@dimen/text_14sp"
+                android:text="@string/str_filter_by_status"/>
 
 
         </RelativeLayout>
@@ -43,8 +43,7 @@
                     android:visibility="visible"
                     android:id="@+id/recycler_view_myRides"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="match_parent" />
 
 
 

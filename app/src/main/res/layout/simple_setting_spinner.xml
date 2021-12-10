@@ -6,7 +6,7 @@
     android:fontFamily="@font/notosansjp_bold"
     android:gravity="center_vertical"
     android:includeFontPadding="false"
-    android:textSize="@dimen/_11sdp"
+    android:textSize="@dimen/text_14sp"
     android:textStyle="bold"
     android:textColor="@color/gradientstartcolor"
     android:maxLines="1"

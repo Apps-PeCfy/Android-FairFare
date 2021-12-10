@@ -52,6 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:text="@string/review"
                 android:textColor="@color/Black" />
 
@@ -83,9 +85,10 @@
                     android:layout_below="@+id/ratingBar"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center"
-                    android:text="Your Review"
+                    android:text="@string/str_your_review"
                     android:textColor="@color/Black"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:textStyle="bold" />
 
                 <EditText
@@ -98,10 +101,11 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:background="@drawable/roundedcorner"
                     android:gravity="top"
-                    android:hint="Enter your review"
+                    android:hint="@string/hint_enter_your_review"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_5sdp"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"/>
 
 
             </RelativeLayout>
@@ -116,14 +120,13 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@drawable/shape_roundedbtn"
-                android:fontFamily="@font/notosansjp_regular"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="Submit"
+                android:text="@string/btn_submit"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/text_16sp"
+                android:fontFamily="@font/notosansjp_regular"/>
 
 
         </LinearLayout>

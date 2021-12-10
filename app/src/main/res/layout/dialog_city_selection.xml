@@ -49,10 +49,10 @@
                 android:hint="@string/hint_search"
                 android:paddingStart="10dp"
                 android:layout_marginEnd="20dp"
-                android:textSize="@dimen/text_14sp"
                 android:textColor="@color/colorText"
                 android:textColorHint="@color/colorText"
                 android:background="@android:color/transparent"
+                android:textSize="@dimen/text_14sp"
                 android:fontFamily="@font/notosansjp_regular"/>
 
         </RelativeLayout>

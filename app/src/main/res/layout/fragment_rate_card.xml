@@ -7,9 +7,7 @@
     android:background="@color/colorBackground"
     android:orientation="vertical"
     android:paddingStart="@dimen/_15sdp"
-    android:paddingEnd="@dimen/_15sdp"
-
-    >
+    android:paddingEnd="@dimen/_15sdp">
 
     <ScrollView
         android:scrollbars="none"
@@ -27,7 +25,6 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-
             android:id="@+id/recycler_view_rateCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,12 +58,12 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:textAlignment="center"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textStyle="bold" />
 
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_5sdp"
@@ -74,20 +71,19 @@
             android:weightSum="2">
 
             <Spinner
-
                 android:id="@+id/spinner_city"
-
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_3sdp"
                 android:layout_weight="1"
                 android:background="@drawable/spinner_rate_card"
                 android:spinnerMode="dropdown"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:visibility="gone" />
 
 
             <Spinner
-
                 android:id="@+id/spinner_type_rate_card"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_30sdp"
@@ -95,11 +91,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/spinner_rate_card"
                 android:spinnerMode="dropdown"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:visibility="gone" />
 
 
             <TextView
-
                 android:id="@+id/tvEmptySpinner"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_29sdp"
@@ -109,7 +106,8 @@
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_5sdp"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"/>
 
 
         </LinearLayout>
@@ -137,22 +135,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Effective Date"
+                android:text="@string/str_effective_date"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <TextView
-                android:text="The fare charges mentioned are effective from 1st March 2021."
+                android:text="@string/str_msg_rate_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
-
-                />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular" />
 
 
         </LinearLayout>
@@ -177,7 +175,8 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <TextView
@@ -187,8 +186,8 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
-
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 />
 
 
@@ -206,7 +205,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_below="@+id/tv_myCurrentLocation"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/secondaryLightGray" />
 
@@ -225,7 +223,8 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <TextView
@@ -235,16 +234,14 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
-
-                />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular" />
 
 
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_below="@+id/tv_myCurrentLocation"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/secondaryLightGray" />
 
@@ -263,7 +260,8 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <TextView
@@ -273,9 +271,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
-
-                />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"/>
 
             <TextView
                 android:id="@+id/tvNightChargeTime"
@@ -286,15 +283,13 @@
                 android:visibility="gone"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
-
-                />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"/>
 
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_below="@+id/tv_myCurrentLocation"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/secondaryLightGray" />
 
@@ -312,7 +307,8 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <TextView
@@ -322,16 +318,14 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
-
-                />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"/>
 
 
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_below="@+id/tv_myCurrentLocation"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/secondaryLightGray" />
 
@@ -346,29 +340,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Toll Charges"
+                android:text="@string/str_toll_charges"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <TextView
-                android:text="Toll will be chargeable at actual."
+                android:text="@string/msg_toll_charges"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
-
-                />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular" />
 
 
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_below="@+id/tv_myCurrentLocation"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/secondaryLightGray" />
 
@@ -388,7 +381,8 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <TextView
@@ -398,9 +392,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_12sdp"
-
-                />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"/>
 
 
         </LinearLayout>
@@ -408,7 +401,6 @@
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible" />

@@ -8,4 +8,5 @@
     android:padding="@dimen/_5sdp"
     android:singleLine="true"
     android:textAlignment="inherit"
-    android:textSize="@dimen/_12sdp" />
+    android:fontFamily="@font/notosansjp_regular"
+    android:textSize="@dimen/text_14sp" />

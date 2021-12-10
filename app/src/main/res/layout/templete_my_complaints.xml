@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/White"
@@ -50,13 +49,13 @@
 
                     <TextView
                         android:textColor="@color/colorGreyText"
-
                         android:id="@+id/tv_dateandTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
                         android:maxLines="1"
+                        android:textSize="@dimen/text_14sp"
                         android:text="Mon, Sept 3, 23:35 AM" />
 
                     <TextView
@@ -66,9 +65,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
-                        android:layout_toRightOf="@+id/tv_Person"
-                        android:text="OLA MINI,MH12 3456A"
-                        android:textSize="@dimen/_9sdp" />
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:textSize="@dimen/text_12sp" />
 
 
                 </LinearLayout>
@@ -103,14 +101,13 @@
 
                     <TextView
                         android:textColor="@color/colorGreyText"
-
                         android:id="@+id/tvDisputNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
-                        android:text="ID:#MUM7656RT56"
+                        android:textSize="@dimen/text_14sp"
                         />
 
 
@@ -119,15 +116,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/_9sdp"
-                        android:text="Filed Date : 17 Dec, 04:27 pm"
-
-                        android:textColor="@color/colorGreyText"
-
                         android:fontFamily="@font/notosansjp_regular"
-
-
-                        />
+                        android:textSize="@dimen/text_12sp"
+                        android:textColor="@color/colorGreyText" />
 
 
                 </LinearLayout>
@@ -148,8 +139,9 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/text_14sp"
                     android:textColor="@color/gradientstartcolor"
-                    android:text="Under Review" />
+                    android:text="@string/str_under_review" />
 
             </LinearLayout>
 
@@ -179,7 +171,6 @@
                     <TextView
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-
                         android:id="@+id/tv_myCurrentLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -190,7 +181,8 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:text="Pick-up Location"
+                        android:textSize="@dimen/text_14sp"
+                        android:text="@string/str_pick_up_location"
                         android:textColor="@color/gradientstartcolor" />
 
                     <View
@@ -225,7 +217,8 @@
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Drop-off Location " />
+                            android:textSize="@dimen/text_14sp"
+                            android:text="@string/str_drop_off_location" />
 
 
 
@@ -240,7 +233,7 @@
                             android:layout_height="@dimen/_16sdp"
                             android:layout_centerInParent="true"
                             android:layout_marginStart="@dimen/_5sdp"
-                            android:background="@drawable/view_info" />
+                            android:src="@drawable/view_info" />
 
 
                     </RelativeLayout>

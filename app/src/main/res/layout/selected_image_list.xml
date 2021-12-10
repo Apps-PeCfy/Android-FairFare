@@ -14,8 +14,7 @@
         android:layout_width="@dimen/_140sdp"
         android:layout_height="@dimen/_100sdp"
         android:layout_marginEnd="@dimen/_3sdp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
 
     <ImageView
@@ -23,8 +22,7 @@
         android:layout_alignEnd="@+id/iv1"
         android:background="@drawable/ic_closephoto"
         android:layout_width="@dimen/_15sdp"
-        android:layout_height="@dimen/_15sdp">
-    </ImageView>
+        android:layout_height="@dimen/_15sdp"/>
 
     </RelativeLayout>
 

@@ -4,13 +4,11 @@
     android:layout_height="match_parent"
        android:orientation="vertical">
 
-
-    <RelativeLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/slice4"
-        android:layout_marginBottom="@dimen/_50sdp"
+        android:src="@drawable/slice4"
+        android:layout_marginBottom="@dimen/_50sdp"/>
 
-        />
 
 </LinearLayout>

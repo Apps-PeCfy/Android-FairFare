@@ -64,6 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/notosansjp_regular"
                         android:textSize="@dimen/text_12sp" />
 
 
@@ -116,7 +117,9 @@
                 android:paddingTop="@dimen/_1sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_2sdp"
-                android:text="Rate this Ride"
+                android:text="@string/btn_rate_this_ride"
+                android:fontFamily="@font/notosansjp_regular"
+                android:textSize="@dimen/text_14sp"
                 android:textColor="@color/White"
                 android:visibility="gone" />
 
@@ -173,7 +176,7 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:textSize="@dimen/text_14sp"
-                    android:text="Pick-up Location"
+                    android:text="@string/str_pick_up_location"
                     android:textColor="@color/gradientstartcolor" />
 
                 <View
@@ -206,7 +209,7 @@
                         android:includeFontPadding="false"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="Drop-off Location "
+                        android:text="@string/str_drop_off_location"
                         android:textSize="@dimen/text_14sp"
                         android:textColor="@color/colorGreyText" />
 
@@ -272,6 +275,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/shape_roundedbtn"
             android:text="@string/str_start_ride"
+            android:fontFamily="@font/notosansjp_regular"
             android:textSize="@dimen/text_14sp"
             android:visibility="gone"
             android:textColor="@color/White" />

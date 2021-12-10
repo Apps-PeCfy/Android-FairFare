@@ -55,13 +55,13 @@
 
                         <TextView
                             android:textColor="@color/colorGreyText"
-
                             android:id="@+id/tv_dateandTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/notosansjp_bold"
                             android:includeFontPadding="false"
                             android:maxLines="1"
+                            android:textSize="@dimen/text_14sp"
                             android:text="Mon, Sept 3, 23:35 AM" />
 
                         <TextView
@@ -71,9 +71,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
-                            android:layout_toRightOf="@+id/tv_Person"
                             android:text="OLA MINI,MH12 3456A"
-                            android:textSize="@dimen/_9sdp" />
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_12sp" />
 
 
                     </LinearLayout>
@@ -85,7 +85,6 @@
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_below="@+id/rlVehicalDetails"
                     android:background="@color/secondaryLightGray" />
 
 
@@ -94,7 +93,6 @@
                     android:id="@+id/addressDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/view"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -116,6 +114,7 @@
                             android:includeFontPadding="false"
                             android:padding="@dimen/_10sdp"
                             android:text="ID:#MUM7656RT56"
+                            android:textSize="@dimen/text_14sp"
                             android:textColor="@color/colorText"
                             />
 
@@ -138,16 +137,17 @@
                                 android:fontFamily="@font/notosansjp_bold"
                                 android:gravity="center"
                                 android:includeFontPadding="false"
-                                android:text="Actual Meter Fare"
+                                android:textSize="@dimen/text_14sp"
+                                android:text="@string/lbl_actual_meter_fare"
                                 android:textColor="@color/gradientstartcolor" />
 
                             <TextView
-
                                 android:id="@+id/tv_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/notosansjp_bold"
                                 android:gravity="center"
+                                android:textSize="@dimen/text_14sp"
                                 android:includeFontPadding="false"
                                 android:textColor="@color/gradientstartcolor" />
 
@@ -173,7 +173,6 @@
                         <TextView
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-
                             android:id="@+id/tv_myCurrentLocation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -184,7 +183,8 @@
                             android:fontFamily="@font/notosansjp_bold"
                             android:gravity="center_vertical"
                             android:includeFontPadding="false"
-                            android:text="Pick-up Location"
+                            android:textSize="@dimen/text_14sp"
+                            android:text="@string/str_pick_up_location"
                             android:textColor="@color/gradientstartcolor" />
 
                         <View
@@ -207,7 +207,6 @@
 
                             <TextView
                                 android:textColor="@color/colorGreyText"
-
                                 android:id="@+id/destnationAddress"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -220,7 +219,8 @@
                                 android:includeFontPadding="false"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
-                                android:text="Drop-off Location " />
+                                android:textSize="@dimen/text_14sp"
+                                android:text="@string/str_drop_off_location" />
 
 
 
@@ -261,16 +261,7 @@
             </LinearLayout>
 
 
-
-
-
-
-
-
-
-
             <View
-
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_2sdp"
@@ -293,7 +284,8 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
-                    android:text="File Complaint"
+                    android:textSize="@dimen/text_14sp"
+                    android:text="@string/btn_file_complaint"
                     android:textColor="@color/colorText" />
 
                 <View
@@ -310,7 +302,8 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_10sdp"
-                    android:text="Delete Dispute"
+                    android:textSize="@dimen/text_14sp"
+                    android:text="@string/str_delete_dispute"
                     android:textColor="@color/colorText" />
 
             </LinearLayout>

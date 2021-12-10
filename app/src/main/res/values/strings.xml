@@ -391,6 +391,8 @@
     <string name="str_dispute_id">Dispute ID</string>
     <string name="str_additional_distance">Additional Distance</string>
     <string name="str_allow_permission">Allow Permission</string>
+    <string name="str_your_payment_is_successful">Your payment is successful</string>
+    <string name="str_no_wallet_data">No Amount available in your wallet</string>
 
 
 </resources>

@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:baselineAligned="false"
     android:background="#80000000"
+    android:baselineAligned="false"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -18,69 +18,53 @@
 
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/_15sdp"
             android:id="@+id/llman"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_100sdp"
-            >
+            android:layout_marginTop="@dimen/_15sdp">
 
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:gravity="center_vertical"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:background="@drawable/pop_up_background"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    >
+                    android:layout_gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_2sdp"
+                        android:fontFamily="@font/notosansjp_regular"
+                        android:paddingStart="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_4sdp"
                         android:text="@string/gender_text"
                         android:textColor="@color/Black"
+                        android:textSize="@dimen/text_14sp"
                         android:textStyle="bold" />
-
-
-
 
                 </LinearLayout>
 
-
-
-
-
-
             </LinearLayout>
-
-
 
         </RelativeLayout>
 
         <ImageView
-            android:layout_marginTop="@dimen/_5sdp"
             android:id="@+id/ivPopUpClose"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:src="@drawable/iv_popup_close"
-
-
-            />
-
-
+            android:src="@drawable/iv_popup_close" />
 
         <RelativeLayout
             android:layout_width="wrap_content"

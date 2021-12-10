@@ -26,8 +26,7 @@
                 android:layout_width="@dimen/_65sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_centerVertical="true"
-                android:scaleType="fitCenter"
-                />
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:textColor="@color/colorGreyText"
@@ -35,6 +34,8 @@
                 android:id="@+id/tv_carName"
                 android:gravity="center_horizontal"
                 android:text=""
+                android:fontFamily="@font/notosansjp_regular"
+                android:textSize="@dimen/text_14sp"
                 android:layout_width="@dimen/_65sdp"
                 android:layout_height="wrap_content"/>
 
@@ -61,7 +62,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="start"
-                />
+                android:fontFamily="@font/notosansjp_regular"
+                android:textSize="@dimen/text_14sp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -72,23 +74,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="5">
+                android:weightSum="5"
+                android:layout_marginTop="2dp">
 
                 <TextView
                     android:textColor="@color/colorGreyText"
-
                     android:id="@+id/place_area"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
                     android:gravity="start"
-                    android:text="6 Km" />
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_14sp" />
 
 
                 <TextView
                     android:textColor="@color/colorGreyText"
-
                     android:visibility="visible"
                     android:id="@+id/tv_preson"
                     android:layout_width="0dp"
@@ -96,13 +98,13 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_weight="1.1"
-                    android:text="1"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_14sp"
                     android:drawableStart="@drawable/iv_person"
                     android:gravity="end" />
 
                 <TextView
                     android:textColor="@color/colorGreyText"
-
                     android:visibility="gone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -110,7 +112,8 @@
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:gravity="start"
-                    android:text="4" />
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_14sp" />
 
             </LinearLayout>
 
@@ -133,14 +136,16 @@
                 android:id="@+id/tv_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₹ 250" />
+                android:fontFamily="@font/notosansjp_regular"
+                android:textSize="@dimen/text_14sp" />
 
             <TextView
                 android:textColor="@color/colorGreyText"
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15 Mins" />
+                android:fontFamily="@font/notosansjp_regular"
+                android:textSize="@dimen/text_14sp" />
 
 
         </LinearLayout>

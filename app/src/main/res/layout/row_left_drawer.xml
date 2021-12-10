@@ -19,8 +19,7 @@
             android:id="@+id/ivIcon"
             android:layout_width="@dimen/_13sdp"
             android:layout_height="@dimen/_13sdp"
-            android:layout_gravity="center_vertical"
-            />
+            android:layout_gravity="center_vertical" />
 
         <TextView
             android:fontFamily="@font/notosansjp_bold"

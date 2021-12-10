@@ -13,17 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
-
         <LinearLayout
             android:background="@color/colorBackground"
-
             android:id="@+id/llshowData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:visibility="gone"
@@ -43,12 +38,13 @@
             </RelativeLayout>
 
             <TextView
-                android:textSize="@dimen/_13sdp"
                 android:layout_marginTop="@dimen/_40sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="If you have any questions or need clarifications or have suggestions, please do write to us. We will get back to you at the earliest possible."
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
+                android:text="@string/msg_contact_us"
                 android:textColor="@color/colorText" />
 
 
@@ -65,8 +61,9 @@
                     android:textColor="@color/colorGreyText"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingStart="@dimen/_10sdp"
-                    android:hint="Your message"
-                    android:textSize="@dimen/_10sdp" />
+                    android:hint="@string/hint_your_message"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular" />
 
 
 
@@ -86,14 +83,13 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="@dimen/_15sdp"
             android:background="@drawable/shape_roundedbtn"
-            android:fontFamily="@font/notosansjp_regular"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="Submit"
+            android:text="@string/btn_submit"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/text_16sp"
+            android:fontFamily="@font/notosansjp_regular" />
 
 
 
