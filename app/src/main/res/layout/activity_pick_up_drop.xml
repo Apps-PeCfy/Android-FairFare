@@ -21,7 +21,6 @@
             app:navigationIcon="?attr/homeAsUpIndicator">
 
             <TextView
-
                 android:id="@+id/custom_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -111,11 +110,11 @@
                             android:drawableStart="@drawable/ic_search"
                             android:drawablePadding="@dimen/_10sdp"
                             android:focusableInTouchMode="true"
-                            android:fontFamily="@font/notosansjp_regular"
-                            android:hint="Search Location"
+                            android:hint="@string/str_search_location"
                             android:includeFontPadding="false"
                             android:padding="@dimen/_5sdp"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular" />
 
 
                     </androidx.cardview.widget.CardView>
@@ -131,8 +130,9 @@
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:drawableStart="@drawable/ic_locateonmap"
                         android:gravity="center_vertical"
-                        android:text="Locate on Map"
-                        android:textSize="@dimen/_12sdp"
+                        android:text="@string/str_locate_on_map"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_regular"
                         android:textStyle="bold" />
 
                     <TextView
@@ -144,11 +144,11 @@
                         android:drawablePadding="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-
                         android:drawableStart="@drawable/iv_search"
                         android:gravity="center_vertical"
-                        android:text="Current Location"
-                        android:textSize="@dimen/_12sdp"
+                        android:text="@string/str_current_location"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_regular"
                         android:textStyle="bold" />
 
 
@@ -183,7 +183,9 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
                                     android:padding="@dimen/_5sdp"
-                                    android:text="Recent" />
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:text="@string/str_recent" />
 
                                 <TextView
                                     android:id="@+id/tv_view_search"
@@ -208,7 +210,9 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
                                     android:padding="@dimen/_5sdp"
-                                    android:text="Saved" />
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:text="@string/str_saved" />
 
                                 <TextView
                                     android:id="@+id/tv_view_saved"
@@ -236,7 +240,9 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
                                     android:padding="@dimen/_5sdp"
-                                    android:text="Recent" />
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:text="@string/str_recent" />
 
                                 <TextView
                                     android:id="@+id/tv_view_recent"
@@ -305,9 +311,8 @@
                                 android:drawableStart="@drawable/red_circle"
                                 android:fontFamily="@font/notosansjp_bold"
                                 android:padding="@dimen/_10sdp"
-                                android:text="santa cuze "
                                 android:textColor="@color/gradientstartcolor"
-                                android:textSize="@dimen/_12sdp"
+                                android:textSize="@dimen/text_14sp"
                                 android:textStyle="bold" />
 
 
@@ -338,7 +343,8 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:text="Continue"
+                        android:text="@string/btn_continue"
+                        android:textSize="@dimen/text_16sp"
                         android:textAllCaps="false"
                         android:textColor="@color/White" />
 

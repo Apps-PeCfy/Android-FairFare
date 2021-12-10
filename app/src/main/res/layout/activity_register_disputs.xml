@@ -38,7 +38,6 @@
 
             <RelativeLayout
                 android:id="@+id/rlvahical"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -102,6 +101,8 @@
                                 android:layout_marginBottom="@dimen/_2sdp"
                                 android:gravity="center_horizontal"
                                 android:text=""
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textColor="@color/colorGreyText"
                                 android:textStyle="bold" />
 
@@ -111,6 +112,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textColor="@color/colorGreyText" />
 
 
@@ -137,6 +140,8 @@
                                 android:drawablePadding="@dimen/_6sdp"
                                 android:gravity="end"
                                 android:text=""
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textColor="@color/colorGreyText" />
 
 
@@ -152,6 +157,8 @@
                                 android:drawablePadding="@dimen/_6sdp"
                                 android:gravity="end"
                                 android:text=""
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textColor="@color/colorGreyText" />
 
 
@@ -188,6 +195,8 @@
                         android:layout_marginStart="@dimen/_70sdp"
                         android:layout_toRightOf="@+id/tv_Person"
                         android:drawablePadding="@dimen/_5sdp"
+                        android:textSize="@dimen/text_14sp"
+                        android:fontFamily="@font/notosansjp_regular"
                         android:text="" />
 
 
@@ -206,7 +215,8 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/register_disputes"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <com.fairfareindia.ui.disputs.MultipleSelectionSpinner
@@ -234,11 +244,12 @@
                 android:gravity="top"
                 android:textColor="@color/colorGreyText"
                 android:textColorHint="@color/colorGreyText"
-                android:hint="Dispute reason"
+                android:hint="@string/lbl_dispute_reason"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:textSize="@dimen/_10sdp" />
+                android:paddingBottom="@dimen/_5sdp" />
 
 
             <EditText
@@ -249,12 +260,13 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/roundedcorner"
                 android:gravity="top"
-                android:hint="Additional comments"
+                android:hint="@string/lbl_additional_comments"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:textColor="@color/colorGreyText"
                 android:textColorHint="@color/colorGreyText"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular" />
 
 
             <EditText
@@ -264,7 +276,9 @@
                 android:layout_below="@+id/editReview"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:enabled="false"
-                android:hint="Start Trip Meter"
+                android:hint="@string/hint_start_trip_meter"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:inputType="number"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textColor="@color/colorGreyText"
@@ -281,7 +295,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edt_meterReading"
-                android:hint="End Trip Meter"
+                android:hint="@string/hint_end_trip_meter"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:inputType="number"
                 android:paddingEnd="@dimen/_10sdp" />
 
@@ -294,7 +310,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edtEndMeterReading"
-                android:hint="Actual Meter Fare"
+                android:hint="@string/hint_actual_meter_fare"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:inputType="numberDecimal"
                 android:paddingEnd="@dimen/_10sdp"
 
@@ -311,9 +329,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Photos"
+                    android:text="@string/str_photos"
                     android:textColor="@color/colorText"
-                    android:textSize="@dimen/_15sdp"
+                    android:textSize="@dimen/text_16sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:textStyle="bold" />
 
 
@@ -325,9 +344,10 @@
                     android:drawableStart="@drawable/iv_uploadphoto"
                     android:drawablePadding="@dimen/_5sdp"
                     android:padding="@dimen/_5sdp"
-                    android:text="UPLOAD PHOTO"
+                    android:text="@string/str_upload_photo"
                     android:textColor="@color/gradientstartcolor"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:textStyle="bold" />
 
 
@@ -365,13 +385,13 @@
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/shape_roundedbtn"
-        android:fontFamily="@font/notosansjp_regular"
         android:gravity="center"
         android:includeFontPadding="false"
         android:text="@string/save_dispute"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/_14sdp" />
+        android:textSize="@dimen/text_16sp"
+        android:fontFamily="@font/notosansjp_regular" />
 
 
 </RelativeLayout>

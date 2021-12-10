@@ -23,13 +23,13 @@
 
         <ImageView
             android:id="@+id/vector"
-            android:layout_width="@dimen/_144sdp"
-            android:layout_height="@dimen/_90sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginLeft="@dimen/_88sdp"
-            android:background="@drawable/logo"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
             tools:ignore="ObsoleteLayoutParam" />
 
     </LinearLayout>
@@ -39,9 +39,7 @@
         android:layout_height="0dp"
         android:layout_weight="2.8">
 
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/top_corner"
@@ -49,7 +47,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="50dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -65,6 +64,7 @@
                     android:gravity="center_horizontal|top"
                     android:includeFontPadding="false"
                     android:text="@string/signup"
+                    android:textSize="@dimen/text_16sp"
                     android:textAppearance="@style/log_in" />
 
 
@@ -87,7 +87,8 @@
                         app:ccp_defaultNameCode="IN"
                         app:ccp_hideNameCode="true"
                         app:ccp_textColor="@color/Red"
-                        app:ccp_textSize="@dimen/_14sdp" />
+                        app:ccp_textFont="notosansjp_regular.ttf"
+                        app:ccp_textSize="@dimen/text_14sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -98,14 +99,13 @@
                             android:id="@+id/edit_text_register"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/log_in"
                             android:backgroundTint="@color/gradientstartcolor"
                             android:fontFamily="@font/notosansjp_regular"
                             android:includeFontPadding="false"
-                            android:hint="Phone Number"
+                            android:hint="@string/str_phone_number"
+                            android:textSize="@dimen/text_14sp"
                             android:textColor="@color/colorGreyText"
                             android:textColorHint="@color/colorGreyText"
-
                             android:inputType="phone"
                             android:nextFocusDown="@id/btnLogin"
                             android:paddingTop="@dimen/_8sdp"
@@ -118,12 +118,10 @@
                             android:layout_below="@+id/edt_email"
                             android:layout_marginTop="-8dp"
                             android:layout_marginEnd="@dimen/_18sdp"
-                            android:text="Plese"
                             android:backgroundTint="@color/gradientstartcolor"
                             android:fontFamily="@font/notosansjp_regular"
-
                             android:textColor="@color/Red"
-                            android:textSize="@dimen/_9sdp"
+                            android:textSize="@dimen/text_12sp"
                             android:visibility="gone" />
 
 
@@ -145,11 +143,11 @@
                     android:drawableStart="@drawable/ic_mail"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/notosansjp_regular"
-                    android:hint="Email Id (Optional)"
+                    android:hint="@string/hint_email_id_optional"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorGreyText"
                     android:textColorHint="@color/colorGreyText"
-
+                    android:textSize="@dimen/text_14sp"
                     android:inputType="textEmailAddress"
                     android:nextFocusDown="@id/edt_name"
                     android:paddingTop="@dimen/_8sdp" />
@@ -162,12 +160,10 @@
                     android:layout_marginStart="@dimen/_18sdp"
                     android:backgroundTint="@color/gradientstartcolor"
                     android:fontFamily="@font/notosansjp_regular"
-
                     android:layout_marginTop="-8dp"
                     android:layout_marginEnd="@dimen/_18sdp"
-                    android:text="Plese"
                     android:textColor="@color/Red"
-                    android:textSize="@dimen/_9sdp"
+                    android:textSize="@dimen/text_12sp"
                     android:visibility="gone" />
 
 
@@ -182,13 +178,13 @@
                     android:drawableStart="@drawable/ic_username"
                     android:drawablePadding="@dimen/_8sdp"
                     android:fontFamily="@font/notosansjp_regular"
-                    android:hint="Full Name"
+                    android:hint="@string/str_full_name"
+                    android:textSize="@dimen/text_14sp"
                     android:includeFontPadding="false"
                     android:inputType="textCapWords"
                     android:nextFocusDown="@id/radioButtonmale"
                     android:textColor="@color/colorGreyText"
                     android:textColorHint="@color/colorGreyText"
-
                     android:paddingTop="@dimen/_8sdp"
                     />
 
@@ -196,7 +192,6 @@
                 <TextView
                     android:backgroundTint="@color/gradientstartcolor"
                     android:fontFamily="@font/notosansjp_regular"
-
                     android:id="@+id/tvNameError"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -206,7 +201,7 @@
                     android:layout_marginEnd="@dimen/_18sdp"
                     android:text="Plese"
                     android:textColor="@color/Red"
-                    android:textSize="@dimen/_9sdp"
+                    android:textSize="@dimen/text_12sp"
                     android:visibility="gone" />
 
 
@@ -230,7 +225,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
-                        android:text="Male" />
+                        android:text="@string/str_male"
+                        android:textSize="@dimen/text_14sp"/>
 
                     <RadioButton
                         android:buttonTint="@color/colorGreyText"
@@ -241,7 +237,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
-                        android:text="Female" />
+                        android:text="@string/str_female"
+                        android:textSize="@dimen/text_14sp"/>
 
                     <RadioButton
                         android:buttonTint="@color/colorGreyText"
@@ -252,7 +249,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
-                        android:text="Other" />
+                        android:text="@string/str_other"
+                        android:textSize="@dimen/text_14sp"/>
 
 
                     <LinearLayout
@@ -287,7 +285,7 @@
                     android:includeFontPadding="false"
                     android:text="@string/continuetxt"
                     android:textColor="@color/colorGreyText"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/text_14sp" />
 
                 <LinearLayout
                     android:id="@+id/ll_privacy"
@@ -305,7 +303,7 @@
                         android:includeFontPadding="false"
                         android:text="@string/privacypolicy"
                         android:textColor="@color/gradientstartcolor"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/text_16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -314,9 +312,9 @@
                         android:includeFontPadding="false"
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingRight="@dimen/_4sdp"
-                        android:text="and"
+                        android:text="@string/str_and"
                         android:textColor="@color/colorGreyText"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/text_14sp"
                         android:visibility="visible" />
 
                     <TextView
@@ -327,7 +325,7 @@
                         android:includeFontPadding="false"
                         android:textColor="@color/gradientstartcolor"
                         android:text="@string/termsofuse"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/text_16sp" />
 
 
                 </LinearLayout>
@@ -348,7 +346,7 @@
                     android:text="@string/register"
                     android:textAllCaps="false"
                     android:textColor="@color/White"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/text_16sp" />
 
 
                 <RelativeLayout
@@ -372,7 +370,7 @@
                         android:paddingRight="@dimen/_4sdp"
                         android:text="Already have an account? "
                         android:textColor="@color/colorGreyText"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/text_14sp"
                         android:visibility="visible" />
 
                     <TextView
@@ -385,7 +383,7 @@
                         android:includeFontPadding="false"
                         android:text="@string/logIn"
                         android:textColor="@color/gradientstartcolor"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/text_14sp" />
 
 
 

@@ -92,7 +92,9 @@
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:text="#MUM1223344TR34"
                                 android:textColor="@color/colorText"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"/>
 
 
                         </RelativeLayout>
@@ -112,15 +114,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:text="Dispute reasons:"
+                                android:text="@string/str_dispute_reasons"
                                 android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:text="asa asas"
                                 android:id="@+id/tvDisputReasn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textColor="@color/colorText" />
 
                             <LinearLayout
@@ -134,7 +139,9 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Additional comments:"
+                                    android:text="@string/str_additional_comments"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -146,7 +153,8 @@
                                     android:gravity="top"
                                     android:paddingBottom="@dimen/_3sdp"
                                     android:textColor="@color/colorText"
-                                    android:textSize="@dimen/_10sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:visibility="visible" />
 
                             </LinearLayout>
@@ -179,14 +187,17 @@
                                 android:id="@+id/tv_startMeterReading"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/colorText" />
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"/>
 
                             <TextView
                                 android:id="@+id/tv_endMeterReading"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textColor="@color/colorText" />
 
 
@@ -194,6 +205,8 @@
                                 android:id="@+id/tv_actualfare"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_14sp"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:textColor="@color/colorText" />
 
@@ -214,7 +227,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Ride Details"
+                            android:text="@string/str_ride_details"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
                             android:textColor="@color/colorText"
                             android:textStyle="bold"
                             android:visibility="gone" />
@@ -243,11 +258,11 @@
                                     android:layout_marginEnd="@dimen/_10sdp"
                                     android:drawableStart="@drawable/red_circle"
                                     android:drawablePadding="@dimen/_15sdp"
-                                    android:fontFamily="@font/notosansjp_regular"
-                                    android:gravity="center_vertical"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"                                    android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="2"
-                                    android:text="Pick-up Location"
+                                    android:text="@string/str_pick_up_location"
                                     android:textColor="@color/gradientstartcolor" />
 
                                 <View
@@ -269,11 +284,12 @@
                                     android:layout_marginEnd="@dimen/_10sdp"
                                     android:drawableStart="@drawable/triangle"
                                     android:drawablePadding="@dimen/_15sdp"
+                                    android:textSize="@dimen/text_14sp"
                                     android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="2"
-                                    android:text="Drop-off Location " />
+                                    android:text="@string/str_drop_off_location" />
 
 
                                 <View
@@ -355,6 +371,8 @@
                                             android:layout_marginBottom="@dimen/_2sdp"
                                             android:gravity="center_horizontal"
                                             android:text=""
+                                            android:textSize="@dimen/text_14sp"
+                                            android:fontFamily="@font/notosansjp_regular"
                                             android:textStyle="bold"
                                             android:textColor="@color/colorGreyText"
                                             />
@@ -365,6 +383,8 @@
                                             android:id="@+id/tv_vahicalNO"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:textSize="@dimen/text_14sp"
+                                            android:fontFamily="@font/notosansjp_regular"
                                             android:text="" />
 
 
@@ -387,7 +407,8 @@
                                             android:layout_alignParentEnd="true"
                                             android:layout_gravity="start"
                                             android:layout_marginEnd="@dimen/_10sdp"
-
+                                            android:textSize="@dimen/text_14sp"
+                                            android:fontFamily="@font/notosansjp_regular"
                                             android:layout_marginBottom="@dimen/_2sdp"
                                             android:drawableStart="@drawable/iv_bags"
                                             android:drawablePadding="@dimen/_6sdp"
@@ -407,6 +428,8 @@
                                             android:drawableStart="@drawable/ic_clock"
                                             android:drawablePadding="@dimen/_6sdp"
                                             android:gravity="end"
+                                            android:textSize="@dimen/text_14sp"
+                                            android:fontFamily="@font/notosansjp_regular"
                                             android:text="" />
 
 
@@ -443,6 +466,8 @@
                                     android:layout_marginStart="@dimen/_70sdp"
                                     android:layout_toRightOf="@+id/tv_Person"
                                     android:drawablePadding="@dimen/_5sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
 
@@ -495,7 +520,9 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Estimated"
+                                    android:text="@string/str_estimated"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -508,13 +535,14 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Actual"
+                                    android:text="@string/str_actual"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -537,12 +565,13 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Distance"
+                                    android:text="@string/str_distance"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -562,6 +591,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
                                 <TextView
@@ -580,6 +611,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
 
@@ -605,7 +638,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Ride Time"
+                                    android:text="@string/str_ride_time"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -625,6 +660,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
                                 <TextView
@@ -643,6 +680,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
 
@@ -674,7 +713,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerInParent="true"
-                                        android:text="Wait Time"
+                                        android:text="@string/str_wait_time"
+                                        android:textSize="@dimen/text_14sp"
+                                        android:fontFamily="@font/notosansjp_regular"
                                         android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
@@ -707,6 +748,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
                                 <TextView
@@ -725,6 +768,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="-" />
 
 
@@ -751,7 +796,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Basic Fare"
+                                    android:text="@string/str_basic_fare"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -771,6 +818,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
                                 <TextView
@@ -789,6 +838,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text=" " />
 
 
@@ -810,12 +861,13 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Wait Charges"
+                                    android:text="@string/str_wait_charges"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -835,6 +887,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
                                 <TextView
@@ -853,6 +907,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text=" " />
 
 
@@ -879,7 +935,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Night Charges"
+                                    android:text="@string/str_night_charges"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -899,6 +957,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
                                 <TextView
@@ -917,6 +977,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
 
@@ -944,7 +1006,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Luggage"
+                                    android:text="@string/str_luggage"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -964,6 +1028,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
                                 <TextView
@@ -982,6 +1048,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
 
@@ -1013,7 +1081,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:text="Toll Charges"
+                                        android:text="@string/str_toll_charges"
+                                        android:textSize="@dimen/text_14sp"
+                                        android:fontFamily="@font/notosansjp_regular"
                                         android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
@@ -1046,6 +1116,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="-" />
 
                                 <TextView
@@ -1064,6 +1136,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="-" />
 
 
@@ -1085,12 +1159,13 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Surcharge"
+                                    android:text="@string/str_surcharges"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -1110,6 +1185,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
                                 <TextView
@@ -1128,6 +1205,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:text="" />
 
 
@@ -1154,7 +1233,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Total Fare"
+                                    android:text="@string/str_total_fare"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -1174,6 +1255,8 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=""
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/gradientstartcolor"
                                     android:textStyle="bold" />
 
@@ -1193,6 +1276,8 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=""
+                                    android:textSize="@dimen/text_14sp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:textColor="@color/gradientstartcolor"
                                     android:textStyle="bold" />
 
@@ -1211,16 +1296,15 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_18sdp"
                             android:layout_marginBottom="@dimen/_15sdp"
-
                             android:background="@drawable/shape_roundedbtn"
-                            android:fontFamily="@font/notosansjp_regular"
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
                             android:text="File Complaint"
                             android:textAllCaps="false"
                             android:textColor="@color/White"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/text_16sp"
+                            android:fontFamily="@font/notosansjp_regular" />
 
 
                         <Button
@@ -1231,14 +1315,14 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_18sdp"
                             android:background="@drawable/shape_disput_button"
-                            android:fontFamily="@font/notosansjp_regular"
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
                             android:text="Cancel"
                             android:textAllCaps="false"
                             android:textColor="@color/White"
-                            android:textSize="@dimen/_15sdp"
+                            android:textSize="@dimen/text_16sp"
+                            android:fontFamily="@font/notosansjp_regular"
                             android:visibility="gone" />
 
 

@@ -10,30 +10,30 @@
         android:id="@+id/toolbar_viewRide"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
         android:background="@drawable/app_gradient"
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/_10sdp"
         android:theme="@style/BaseTheme"
         app:buttonGravity="center_vertical"
         app:navigationIcon="?attr/homeAsUpIndicator"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
 
         />
 
 
     <RelativeLayout
-        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_viewRide"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="0dp"
+        android:background="@color/colorBackground">
 
 
         <RelativeLayout
-            android:background="@color/colorBackground"
             android:id="@+id/rl_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorBackground"
             android:orientation="vertical">
 
 
@@ -48,7 +48,6 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/locationCardView"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/llshowData"
@@ -59,7 +58,6 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-
                     android:layout_height="match_parent"
                     android:background="@drawable/rounded_corner_night_mode"
                     android:gravity="center_vertical">
@@ -67,7 +65,6 @@
                     <TextView
                         android:id="@+id/tv_myCurrentLocation"
                         android:layout_width="match_parent"
-
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -78,8 +75,9 @@
                         android:includeFontPadding="false"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="Pick-up Location"
-                        android:textColor="@color/gradientstartcolor" />
+                        android:text="@string/str_pick_up_location"
+                        android:textColor="@color/gradientstartcolor"
+                        android:textSize="@dimen/text_14sp" />
 
                     <View
                         android:id="@+id/view"
@@ -105,8 +103,9 @@
                         android:includeFontPadding="false"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="Drop-off Location "
-                        android:textColor="@color/colorGreyText" />
+                        android:text="@string/str_drop_off_location"
+                        android:textColor="@color/colorGreyText"
+                        android:textSize="@dimen/text_14sp" />
 
 
                     <View
@@ -157,9 +156,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-
-                        >
+                        android:orientation="vertical">
 
 
                         <RelativeLayout
@@ -168,23 +165,20 @@
 
 
                             <TextView
-                                android:textColor="@color/colorText"
                                 android:id="@+id/tv_carType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:paddingStart="@dimen/_15sdp"
-                                android:text="Auto"
-                                android:textSize="@dimen/_12sdp"
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp"
                                 android:textStyle="bold" />
-
-
 
 
                         </RelativeLayout>
 
 
                         <androidx.cardview.widget.CardView
-
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_90sdp"
                             android:visibility="visible"
@@ -194,11 +188,10 @@
                             app:cardUseCompatPadding="true">
 
                             <RelativeLayout
-                                android:background="@drawable/rounded_corner_night_mode"
-
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical">
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/rounded_corner_night_mode">
 
                                 <LinearLayout
                                     android:id="@+id/llCar"
@@ -212,7 +205,6 @@
 
 
                                     <ImageView
-
                                         android:id="@+id/iv_vehical"
                                         android:layout_width="@dimen/_65sdp"
                                         android:layout_height="@dimen/_20sdp"
@@ -220,13 +212,15 @@
                                         android:scaleType="fitCenter" />
 
                                     <TextView
-                                        android:textColor="@color/colorGreyText"
                                         android:id="@+id/tv_carName"
                                         android:layout_width="@dimen/_65sdp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_2sdp"
+                                        android:fontFamily="@font/notosansjp_regular"
                                         android:gravity="center_horizontal"
-                                        android:text="" />
+                                        android:text=""
+                                        android:textColor="@color/colorGreyText"
+                                        android:textSize="@dimen/text_14sp" />
 
 
                                 </LinearLayout>
@@ -243,14 +237,14 @@
                                     android:orientation="vertical">
 
                                     <TextView
-                                        android:textColor="@color/colorGreyText"
-
                                         android:id="@+id/tv_dateandTime"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:fontFamily="@font/notosansjp_regular"
                                         android:paddingTop="@dimen/_5sdp"
                                         android:paddingBottom="@dimen/_5sdp"
-                                        android:text="Thu, Sept 3, at 23:35" />
+                                        android:textColor="@color/colorGreyText"
+                                        android:textSize="@dimen/text_14sp" />
 
 
                                     <RelativeLayout
@@ -260,26 +254,26 @@
                                         android:paddingBottom="@dimen/_5sdp">
 
                                         <TextView
-                                            android:textColor="@color/colorGreyText"
-
                                             android:id="@+id/tv_Person"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:drawableStart="@drawable/iv_person"
                                             android:drawablePadding="@dimen/_3sdp"
-                                            android:text="4"
+                                            android:fontFamily="@font/notosansjp_regular"
+                                            android:textColor="@color/colorGreyText"
+                                            android:textSize="@dimen/text_14sp"
                                             android:visibility="visible" />
 
 
                                         <TextView
-                                            android:textColor="@color/colorGreyText"
-
                                             android:id="@+id/tv_time"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="@dimen/_10sdp"
                                             android:layout_toRightOf="@+id/tv_Person"
-                                            android:text="8 KM(15 Min)" />
+                                            android:fontFamily="@font/notosansjp_regular"
+                                            android:textColor="@color/colorGreyText"
+                                            android:textSize="@dimen/text_14sp" />
 
 
                                     </RelativeLayout>
@@ -304,22 +298,24 @@
                             android:visibility="visible">
 
                             <TextView
-                                android:textColor="@color/colorText"
-                                android:textStyle="bold"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Estimated Fare" />
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:text="@string/str_estimated_fare"
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
-
                                 android:id="@+id/tv_estcharge"
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="end"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:text="₹ 300" />
+                                android:textColor="@color/colorGreyText"
+                                android:textSize="@dimen/text_14sp" />
                         </RelativeLayout>
 
                         <View
@@ -344,13 +340,15 @@
 
 
                                 <TextView
-                                    android:textColor="@color/colorText"
-                                    android:textStyle="bold"
                                     android:id="@+id/tv_additionalCharges"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="@dimen/_15sdp"
-                                    android:text="Additional Charges" />
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:text="@string/str_additional_charges"
+                                    android:textColor="@color/colorText"
+                                    android:textSize="@dimen/text_14sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:layout_width="@dimen/_11sdp"
@@ -358,21 +356,24 @@
                                     android:layout_marginStart="@dimen/_7sdp"
                                     android:layout_marginTop="@dimen/_5sdp"
                                     android:layout_toEndOf="@+id/tv_additionalCharges"
-                                    android:background="@drawable/ic_downarrow" />
+                                    android:background="@drawable/ic_downarrow"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                             </RelativeLayout>
 
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
                                 android:id="@+id/tv_additional_charges"
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="end"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:text="₹ 30" />
+                                android:textColor="@color/colorGreyText"
+                                android:textSize="@dimen/text_14sp" />
 
 
                         </RelativeLayout>
@@ -398,26 +399,27 @@
                                 android:visibility="gone">
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
-
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Wait Time Charges" />
+                                    android:text="@string/str_wait_time_charges"
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:id="@+id/tv_Wait_time_charge"
-                                    android:textColor="@color/colorGreyText"
-
                                     android:layout_width="@dimen/_50sdp"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 0.00" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -436,27 +438,27 @@
                                 android:layout_marginStart="@dimen/_15sdp">
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
-
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Night Charges" />
+                                    android:text="@string/str_night_charges"
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
-
                                     android:id="@+id/tv_NightCharges"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="end"
-
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 30000.00" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -481,24 +483,27 @@
                                 android:layout_marginStart="@dimen/_15sdp">
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Luggage Charges" />
+                                    android:text="@string/str_luggage_charges"
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:id="@+id/tv_Luggage_Charges"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="end"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 30000.00"
-                                    android:textColor="@color/colorGreyText" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -531,13 +536,14 @@
 
 
                                     <TextView
-                                        android:textColor="@color/colorGreyText"
-
                                         android:id="@+id/tvTollCharges"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:text="Toll Charges" />
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:text="@string/str_toll_charges"
+                                        android:textColor="@color/colorGreyText"
+                                        android:textSize="@dimen/text_14sp" />
 
                                     <ImageView
                                         android:id="@+id/ivViewTollInfo"
@@ -553,18 +559,18 @@
 
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
-
                                     android:id="@+id/tv_tollCharge"
+
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="end"
-
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 30000.00" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -589,27 +595,28 @@
                                 android:layout_marginStart="@dimen/_15sdp">
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
-
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Surcharges" />
+                                    android:text="@string/str_surcharges"
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
-                                    android:textColor="@color/colorGreyText"
-
                                     android:id="@+id/tv_SurCharges"
+
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="end"
-
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingEnd="@dimen/_5sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="₹ 30000" />
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -641,21 +648,23 @@
                             android:visibility="gone">
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
-
                                 android:layout_width="match_parent"
+
                                 android:layout_height="wrap_content"
-                                android:text="Discounts and Offers" />
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:text="@string/str_discounts_and_offers"
+                                android:textColor="@color/colorGreyText"
+                                android:textSize="@dimen/text_14sp" />
 
                             <TextView
                                 android:layout_width="@dimen/_60sdp"
-                                android:textColor="@color/colorGreyText"
-
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="end"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:text="₹ 0.00" />
+                                android:textColor="@color/colorGreyText"
+                                android:textSize="@dimen/text_14sp" />
 
                             <TextView
                                 android:id="@+id/tv_discount"
@@ -687,8 +696,10 @@
 
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Total Fare"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:text="@string/str_total_fare"
                                 android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -696,10 +707,11 @@
                                 android:layout_width="@dimen/_60sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="end"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:text="₹ 300"
                                 android:textColor="@color/gradientstartcolor"
+                                android:textSize="@dimen/text_14sp"
                                 android:textStyle="bold" />
                         </RelativeLayout>
 
@@ -723,8 +735,10 @@
                                 android:id="@+id/tv_note"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Note:"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:text="@string/str_note"
                                 android:textColor="@color/Black"
+                                android:textSize="@dimen/text_14sp"
                                 android:textStyle="bold" />
 
 
@@ -740,7 +754,6 @@
                         </RelativeLayout>
 
 
-
                     </LinearLayout>
 
                 </ScrollView>
@@ -749,11 +762,11 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:background="@color/colorBackground"
                 android:id="@+id/rlBtnLogin"
-                android:layout_above="@+id/addvertise"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/addvertise"
+                android:background="@color/colorBackground">
 
                 <Button
 
@@ -769,16 +782,13 @@
                     android:includeFontPadding="false"
                     android:paddingTop="@dimen/_7sdp"
                     android:paddingBottom="@dimen/_7sdp"
-                    android:text="Start Ride"
+                    android:text="@string/btn_start_ride"
                     android:textAllCaps="false"
                     android:textColor="@color/White"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/text_16sp" />
 
 
             </RelativeLayout>
-
-
-
 
 
             <Button

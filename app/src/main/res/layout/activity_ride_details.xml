@@ -59,9 +59,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:text="Vehicle Details"
+                android:text="@string/str_vehicle_details"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/text_18sp"
+                android:textSize="@dimen/text_16sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -78,9 +79,10 @@
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/img_vehicle_uploads"
                     android:focusableInTouchMode="true"
-                    android:hint="Enter Vehicle Number (Optional)"
+                    android:hint="@string/hint_enter_vehicle_number"
                     android:paddingEnd="@dimen/_10sdp"
                     android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:paddingBottom="@dimen/_15sdp"
                     />
 
@@ -107,9 +109,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/img_meter_uploads"
-                    android:hint="Start Trip Meter (Optional)"
+                    android:hint="@string/hint_start_trip_meter_optional"
                     android:inputType="number"
                     android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_15sdp" />
 
@@ -135,9 +138,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edt_meterReading"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Driver Details"
+                android:text="@string/str_driver_details"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/text_18sp"
+                android:textSize="@dimen/text_16sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -153,10 +157,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/img_driver_uploads"
-                    android:hint="Enter Driver Name (Optional)"
+                    android:hint="@string/hint_enter_driver_name_optional"
                     android:inputType="textCapWords"
                     android:paddingEnd="@dimen/_10sdp"
                     android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:paddingBottom="@dimen/_15sdp" />
 
                 <ImageView
@@ -183,9 +188,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/img_badge_uploads"
-                    android:hint="Enter Driver’s Badge Number (Optional)"
+                    android:hint="@string/hint_enter_driver_badge_number_optional"
                     android:paddingEnd="@dimen/_10sdp"
                     android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:paddingBottom="@dimen/_15sdp" />
 
                 <ImageView
@@ -212,10 +218,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Photos"
+                    android:text="@string/str_photos"
                     android:textColor="@color/colorText"
-                    android:textSize="@dimen/text_18sp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/text_16sp"
+                    android:fontFamily="@font/notosansjp_regular"                    android:textStyle="bold" />
 
 
                 <TextView
@@ -225,10 +231,10 @@
                     android:layout_alignParentEnd="true"
                     android:drawableStart="@drawable/iv_uploadphoto"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="UPLOAD PHOTO"
+                    android:text="@string/str_upload_photo"
                     android:textColor="@color/gradientstartcolor"
-                    android:textSize="@dimen/text_18sp"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"                    android:textStyle="bold"
                     android:visibility="gone"/>
 
 
@@ -249,10 +255,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Vehicle Number"
+                    android:text="@string/str_vehicle_number"
                     android:visibility="gone"
                     android:textColor="@color/Grey"
-                    android:textSize="@dimen/text_16sp"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -266,10 +273,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Start Trip Meter"
+                    android:text="@string/str_start_trip_meter"
                     android:visibility="gone"
                     android:textColor="@color/Grey"
-                    android:textSize="@dimen/text_16sp"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -283,10 +291,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Driver"
+                    android:text="@string/str_driver"
                     android:visibility="gone"
                     android:textColor="@color/Grey"
-                    android:textSize="@dimen/text_16sp"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -300,9 +309,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Badge Number"
+                    android:text="@string/str_badge_number"
                     android:textColor="@color/Grey"
-                    android:textSize="@dimen/text_16sp"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:visibility="gone"
                     android:textStyle="bold" />
 
@@ -334,10 +344,10 @@
         android:fontFamily="@font/notosansjp_regular"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="Track Ride"
+        android:text="@string/btn_track_ride"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/text_18sp" />
+        android:textSize="@dimen/text_16sp" />
 
 
 

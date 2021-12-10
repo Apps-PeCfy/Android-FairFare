@@ -273,7 +273,7 @@
     <string name="title_fair_fare_review">फेयरफेयर रिव्यू</string>
     <string name="title_end_ride">सवारी समाप्त</string>
     <string name="str_reward_points_earned">इस राइड के लिए अर्जित किए गए रिवॉर्ड पॉइंट</string>
-    <string name="msg_not_served_city">\"क्षमा करें, हम स्थानों की सेवा नहीं करते \"</string>
+    <string name="msg_not_served_city">क्षमा करें, हम स्थानों की सेवा नहीं करते </string>
     <string name="msg_not_serve_location_two">जैसे ही हम अपनी सेवाएं शुरू करेंगे हम आपको सूचित करेंगे। कृपया ड्रॉप डाउन से अन्य शहर चुनें जहां हमारी सेवाएं सक्रिय हैं।</string>
     <string name="str_available_reward_points">उपलब्ध इनाम अंक</string>
     <string name="msg_dialog_email_id_required">ईमेल आईडी आवश्यक है। कृपया इसे "मेरे खाते" में एडिट करें।</string>
@@ -392,7 +392,7 @@
     <string name="msg_payment_dialog_two">" for the booking and confirm."</string>
     <string name="title_complaint_detail">Complaint Details</string>
     <string name="title_dispute_detail">Dispute details</string>
-
+    <string name="str_additional_distance">Additional Distance</string>
 
 
 </resources>

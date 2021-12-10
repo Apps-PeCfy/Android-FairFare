@@ -78,10 +78,11 @@
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:drawableStart="@drawable/red_circle"
                             android:drawablePadding="@dimen/_15sdp"
-                            android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center_vertical"
                             android:includeFontPadding="false"
-                            android:text="Pick-up Location"
+                            android:text="@string/str_pick_up_location"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_14sp"
                             android:textColor="@color/gradientstartcolor" />
 
                         <View
@@ -107,9 +108,10 @@
                             android:drawableStart="@drawable/triangle"
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_14sp"
                             android:gravity="center_vertical"
                             android:includeFontPadding="false"
-                            android:text="Drop-off Location " />
+                            android:text="@string/str_drop_off_location" />
 
 
                         <View
@@ -192,6 +194,7 @@
                                 android:layout_marginEnd="10dp"
                                 android:text="02 Nov, 08:44 pm"
                                 android:textColor="@color/colorText"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textSize="@dimen/text_14sp" />
 
 
@@ -204,6 +207,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_alignParentEnd="true"
                                 android:textColor="@color/colorText"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textSize="@dimen/text_14sp" />
 
 
@@ -221,13 +225,13 @@
                                 android:textColor="@color/colorGreyText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/notosansjp_bold"
                                 android:includeFontPadding="false"
                                 android:paddingStart="@dimen/_5sdp"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
                                 android:text="@string/txt_available_rides"
-                                android:textSize="@dimen/_12sdp" />
+                                android:fontFamily="@font/notosansjp_bold"
+                                android:textSize="@dimen/text_14sp" />
 
 
                             <TextView
@@ -243,7 +247,7 @@
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
                                 android:text="@string/lbl_sort"
-                                android:textSize="@dimen/_12sdp" />
+                                android:textSize="@dimen/text_14sp" />
 
                             <androidx.recyclerview.widget.RecyclerView
 
@@ -269,7 +273,8 @@
                     android:background="@color/White"
                     android:gravity="center"
                     android:textAllCaps="false"
-                    android:textSize="@dimen/_14sdp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_14sp"
                     android:visibility="visible" />
 
 

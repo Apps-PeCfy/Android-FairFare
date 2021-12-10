@@ -12,9 +12,9 @@
 
 
     <ImageView
-        android:background="@drawable/logo"
+        android:src="@drawable/logo"
         android:layout_centerInParent="true"
-        android:layout_width="@dimen/_169sdp"
-        android:layout_height="@dimen/_112sdp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

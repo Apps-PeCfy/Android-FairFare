@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
@@ -11,7 +12,8 @@
         android:includeFontPadding="false"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        android:layout_height="@dimen/toolbar_height"
         >
 
 
@@ -21,8 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="@dimen/_14sdp"
-            android:text="OTP Verification"
+            android:textSize="@dimen/text_18sp"
+            android:text="@string/title_otp_verification"
             android:fontFamily="@font/notosansjp_bold"
             android:includeFontPadding="false" />
 
@@ -41,7 +43,8 @@
         android:layout_marginTop="@dimen/_46sdp"
         android:layout_gravity="center_horizontal"
         android:lineSpacingExtra="2sp"
-        android:text="A code has been sent to"
+        android:textSize="@dimen/text_14sp"
+        android:text="@string/str_a_code_has_been_sent_to"
         android:textAppearance="@style/top_line" />
 
     <TextView
@@ -56,6 +59,7 @@
         android:layout_gravity="center_horizontal"
         android:lineSpacingExtra="2sp"
         android:textStyle="bold"
+        android:textSize="@dimen/text_14sp"
         android:textAppearance="@style/top_line" />
 
 
@@ -66,11 +70,14 @@
         android:id="@+id/edt_otp"
         android:layout_marginTop="@dimen/_60sdp"
         android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_54sdp"
         android:gravity="center_horizontal|center_vertical"
         android:layout_gravity="center_horizontal|center_vertical"
         android:hint="@string/enter_otp"
+        android:textSize="@dimen/text_16sp"
+        android:fontFamily="@font/notosansjp_regular"
         android:inputType="number"
-        android:layout_height="@dimen/_54sdp"/>
+        />
 
 
 
@@ -84,7 +91,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You will get OTP by SMS in"
+            android:text="@string/str_you_will_get_otp_by_sms_in"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textColor="@color/colorText" />
 
         <TextView
@@ -93,6 +102,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:30"
+            android:textSize="@dimen/text_14sp"
+            android:fontFamily="@font/notosansjp_regular"
             android:textColor="@color/gradientstartcolor" />
 
 
@@ -102,7 +113,6 @@
 
     <TextView
         android:visibility="gone"
-        android:fontFamily="@font/notosansjp_regular"
         android:includeFontPadding="false"
         android:textColor="@color/gradientstartcolor"
         android:id="@+id/txt_resend_otp"
@@ -114,12 +124,13 @@
         android:layout_gravity="center_horizontal"
         android:lineSpacingExtra="2sp"
         android:text="@string/resendotp"
+        android:textSize="@dimen/text_14sp"
+        android:fontFamily="@font/notosansjp_regular"
         android:textAppearance="@style/top_line" />
 
 
 
     <Button
-        android:fontFamily="@font/notosansjp_regular"
         android:includeFontPadding="false"
         android:id="@+id/btnFinish"
         android:layout_width="match_parent"
@@ -130,10 +141,11 @@
         android:background="@drawable/shape_roundedbtn"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="Finish"
+        android:text="@string/btn_finish"
         android:textAllCaps="false"
         android:textColor="@color/White"
-        android:textSize="@dimen/_15sdp" />
+        android:textSize="@dimen/text_16sp"
+        android:fontFamily="@font/notosansjp_regular"/>
 
 
 

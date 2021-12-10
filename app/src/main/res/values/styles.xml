@@ -94,5 +94,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="Spinner">
+        <item name="android:textSize">@dimen/text_16sp</item>
+    </style>
+
 
 </resources>

@@ -58,9 +58,6 @@
             android:name=".ui.intercitycompareride.IntercityCompareRideActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.viewridepay.ViewRidePayActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.intercity.InterCityActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.introduction.IntroActivity" />

@@ -331,7 +331,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         // generateSSHKey(this)
         progressDialogstart = ProgressDialog(this@HomeActivity)
         progressDialogstart!!.setCancelable(false) // set cancelable to false
-        progressDialogstart!!.setMessage("Please Wait") // set message
+        progressDialogstart!!.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialogstart!!.show() // show progress dialog
 
 
@@ -750,7 +750,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 val toastDurationInMilliSeconds = 10000
                 mToastToShow = Toast.makeText(
                     this@HomeActivity,
-                    "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
+                    getString(R.string.msg_not_served_city) + " " + city + " "+ getString(R.string.msg_not_serve_location_two),
                     Toast.LENGTH_LONG
                 )
                 val toastCountDown: CountDownTimer
@@ -791,7 +791,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 val toastDurationInMilliSeconds = 10000
                 mToastToShow = Toast.makeText(
                     this@HomeActivity,
-                    "Sorry, we don’t serve locations within " + city + " & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.",
+                    getString(R.string.msg_not_served_city) + " "+  city + " " +getString(R.string.msg_not_serve_location_two),
                     Toast.LENGTH_LONG
                 )
                 val toastCountDown: CountDownTimer
@@ -828,7 +828,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     private fun setListData() {
 
         tvEmailAddress!!.text =
-            "Available Reward Points " + preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
+            getString(R.string.drawer_available_reward_point)  + " "+ preferencesManager?.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
 
         tvUserName!!.text =
             preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
@@ -1106,13 +1106,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                         val alertDialog =
                             AlertDialog.Builder(this@HomeActivity, R.style.alertDialog)
-                        alertDialog.setTitle("FairFareIndia")
-                        alertDialog.setMessage("Email id is required. Please edit it in My Accounts.")
+                        alertDialog.setTitle(getString(R.string.str_fair_fare_india))
+                        alertDialog.setMessage(getString(R.string.msg_dialog_email_id_required))
                         alertDialog.setCancelable(false)
-                        alertDialog.setPositiveButton("NO") { dialog, which ->
+                        alertDialog.setPositiveButton(getString(R.string.str_no)) { dialog, which ->
                             dialog.cancel()
                         }
-                        alertDialog.setNegativeButton("YES") { dialog, which ->
+                        alertDialog.setNegativeButton(getString(R.string.str_yes)) { dialog, which ->
                             spinnerLang!!.visibility = View.GONE
                             homeMain!!.visibility = View.GONE
                             mDrawerLayout!!.closeDrawer(Gravity.LEFT)
@@ -1272,7 +1272,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 tvEmailAddress!!.text =
-                    "Available Reward Points " + preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
+                    getString(R.string.drawer_available_reward_point) + " " + preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
 
                 tvUserName!!.text =
                     preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
@@ -1335,7 +1335,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             val progressDialogLogout = ProgressDialog(this@HomeActivity)
             progressDialogLogout.setCancelable(false) // set cancelable to false
-            progressDialogLogout.setMessage("Please Wait") // set message
+            progressDialogLogout.setMessage(getString(R.string.str_please_wait)) // set message
             progressDialogLogout.show() // show progress dialog
 
             ApiClient.client.signOut("Bearer $token", deviceID, "Android")!!
@@ -1481,7 +1481,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             Toast.makeText(
                 this,
-                "Scheduled time should be greater than 15 minutes from current time.",
+                getString(R.string.err_schedule_min_time),
                 Toast.LENGTH_LONG
             ).show()
 
@@ -1777,7 +1777,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 Toast.makeText(
                     this,
-                    "Scheduled time should be greater than 15 minutes from current time.",
+                    getString(R.string.err_schedule_min_time),
                     Toast.LENGTH_LONG
                 ).show()
 
@@ -1960,7 +1960,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             } else {
                 Toast.makeText(
                     this,
-                    "Pick-UP and Drop-Off Location should not be same.",
+                    getString(R.string.err_pick_drop_location_same),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -2079,7 +2079,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             } else {
                 Toast.makeText(
                     this,
-                    "Pick-UP and Drop-Off Location should not be same.",
+                    getString(R.string.err_pick_drop_location_same),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -2255,8 +2255,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                             LatLng(lat, lng)
                         points.add(position)
                     }
-                    tvEstDistance!!.text = "Est.Distance $estDistance"
-                    tvEstTime!!.text = "Est.Time $estTime"
+                    tvEstDistance!!.text = getString(R.string.str_est_distance) + " $estDistance"
+                    tvEstTime!!.text = getString(R.string.str_est_time) + " $estTime"
                     if (!estDistance!!.isEmpty()) {
                         btnCompareRide!!.visibility = View.VISIBLE
                     }
@@ -2598,7 +2598,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             doubleBackPressed = true
             Toast.makeText(
                 this,
-                "Press once again to exit",
+                getString(R.string.msg_back_pressed),
                 Toast.LENGTH_SHORT
             ).show()
         }

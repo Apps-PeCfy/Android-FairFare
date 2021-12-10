@@ -8,9 +8,11 @@
     android:layout_height="match_parent">
     <EditText
         android:id="@+id/place_search"
-        android:hint="Search"
+        android:hint="@string/str_search"
         android:inputType="textPostalAddress"
         android:padding="15dp"
+        android:textSize="@dimen/text_14sp"
+        android:fontFamily="@font/notosansjp_regular"
         android:layout_marginBottom="15dp"
         android:drawableLeft="@drawable/places_ic_search"
         android:layout_width="match_parent"

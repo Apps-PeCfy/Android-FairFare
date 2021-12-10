@@ -13,7 +13,7 @@
 
         android:id="@+id/action_home"
         android:icon="@drawable/action_home"
-        android:title="Search"
+        android:title="@string/str_search"
         app:showAsAction="ifRoom" />
 
 

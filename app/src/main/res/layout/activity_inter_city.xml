@@ -35,7 +35,8 @@
                 android:orientation="vertical"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:paddingBottom="50dp">
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -48,9 +49,9 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorText"
                         android:fontFamily="@font/notosansjp_regular"
+                        android:textSize="@dimen/text_14sp"
+                        android:textColor="@color/colorText"
                         android:text="@string/str_one_way"
                         android:checked="true"/>
 
@@ -59,9 +60,9 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorText"
                         android:fontFamily="@font/notosansjp_regular"
+                        android:textSize="@dimen/text_14sp"
+                        android:textColor="@color/colorText"
                         android:text="@string/str_round_trip"/>
 
                 </RadioGroup>
@@ -70,8 +71,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/notosansjp_bold"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_14sp"
                     android:text="@string/str_from"
                     android:textColor="@color/colorText"
                     android:layout_marginTop="@dimen/_10sdp"/>
@@ -82,14 +83,14 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorText"
                     android:textColorHint="@color/colorText"
-                    android:textSize="14sp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_14sp"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:background="@android:color/transparent"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:drawableEnd="@drawable/ic_downarrow"
                     android:drawablePadding="10dp"
-                    android:fontFamily="@font/notosansjp_regular"
                     android:hint="@string/hint_select_city"/>
 
                 <View
@@ -101,8 +102,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/notosansjp_bold"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_14sp"
                     android:text="@string/str_to"
                     android:textColor="@color/colorText"
                     android:layout_marginTop="@dimen/_10sdp"/>
@@ -114,11 +115,11 @@
                     android:textColor="@color/colorText"
                     android:textColorHint="@color/colorText"
                     android:background="@android:color/transparent"
-                    android:textSize="14sp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_14sp"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:fontFamily="@font/notosansjp_regular"
                     android:drawableEnd="@drawable/ic_downarrow"
                     android:drawablePadding="10dp"
                     android:hint="@string/hint_select_city"/>
@@ -239,6 +240,8 @@
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
                             android:text="@string/hint_pick_up_location"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_14sp"
                             android:textColor="@color/gradientstartcolor" />
 
                         <View
@@ -265,6 +268,8 @@
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
                             android:text="@string/hint_drop_off_location"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_14sp"
                             android:textColor="@color/colorGreyText" />
 
 
@@ -313,13 +318,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/shape_roundedbtn"
-                    android:fontFamily="@font/notosansjp_regular"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/btn_compare_rides"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/_14sdp" />
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textSize="@dimen/text_16sp" />
 
             </LinearLayout>
 

@@ -21,7 +21,6 @@
     <RelativeLayout
         android:paddingStart="@dimen/_15sdp"
         android:paddingEnd="@dimen/_15sdp"
-
         android:id="@+id/rl_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,8 +33,7 @@
             android:id="@+id/llshowData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/tvhideShow"
@@ -51,6 +49,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
                     android:background="@drawable/roundedcorner" />
             </RelativeLayout>
 
@@ -58,6 +58,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="@dimen/text_14sp"
+                android:fontFamily="@font/notosansjp_regular"
                 android:text="@string/review"
                 android:textColor="@color/colorText" />
 
@@ -97,10 +99,11 @@
                     android:textColor="@color/colorGreyText"
                     android:textColorHint="@color/colorGreyText"
                     android:gravity="top"
-                    android:hint="Enter your review"
+                    android:textSize="@dimen/text_14sp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:hint="@string/hint_enter_your_review"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:textSize="@dimen/_10sdp" />
+                    android:paddingTop="@dimen/_5sdp" />
 
 
             </RelativeLayout>
@@ -119,14 +122,13 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_15sdp"
             android:background="@drawable/shape_roundedbtn"
-            android:fontFamily="@font/notosansjp_regular"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="Submit"
+            android:text="@string/btn_submit"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/text_16sp"
+            android:fontFamily="@font/notosansjp_regular"/>
 
 
 

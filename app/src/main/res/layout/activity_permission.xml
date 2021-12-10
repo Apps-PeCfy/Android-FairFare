@@ -47,10 +47,10 @@
             android:layout_margin="20dp"
             android:background="@drawable/shape_roundedbtn"
             android:fontFamily="@font/notosansjp_regular"
-            android:text="Allow Permission"
+            android:text="@string/str_allow_permission"
             android:layout_alignParentBottom="true"
             android:textAllCaps="false"
             android:textColor="@color/White"
-            android:textSize="@dimen/text_18sp" />
+            android:textSize="@dimen/text_16sp" />
     </RelativeLayout>
 </layout>

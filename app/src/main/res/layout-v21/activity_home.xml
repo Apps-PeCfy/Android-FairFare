@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_gradient">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/secondaryLightGray">
@@ -16,23 +18,33 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:background="@drawable/app_gradient"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
             app:buttonGravity="center_vertical"
-            app:navigationIcon="?attr/homeAsUpIndicator">
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_alignParentEnd="true">
 
             <Spinner
                 android:id="@+id/spinnerLang"
-                android:layout_width="@dimen/_120sdp"
+                style="@style/Spinner"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/White"
                 android:dropDownWidth="120dp"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/notosansjp_regular"
                 android:gravity="end"
-                android:visibility="gone" />
+                android:textSize="@dimen/text_16sp" />
+
+        </RelativeLayout>
 
 
-        </androidx.appcompat.widget.Toolbar>
+
 
 
         <RelativeLayout
@@ -66,6 +78,7 @@
                     android:id="@+id/btn_intercity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_above="@id/homeView"
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/shape_roundedbtn"
                     android:fontFamily="@font/notosansjp_regular"
@@ -74,7 +87,6 @@
                     android:text="@string/title_intercity"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:layout_above="@id/homeView"
                     android:textSize="@dimen/text_14sp" />
 
                 <LinearLayout
@@ -123,30 +135,30 @@
                             android:padding="@dimen/_10sdp">
 
                             <Spinner
-
                                 android:id="@+id/spinner_time"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:background="@drawable/shapespinner"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="bottom"
                                 android:paddingStart="@dimen/_30sdp"
                                 android:spinnerMode="dropdown"
-                                android:textSize="10dp" />
+                                android:textSize="@dimen/text_14sp" />
 
                             <Spinner
-
                                 android:id="@+id/spinner_Luggage"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:background="@drawable/spinnerbags"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="bottom"
                                 android:paddingStart="@dimen/_30sdp"
                                 android:spinnerMode="dropdown"
-                                android:textSize="10dp" />
+                                android:textSize="@dimen/text_14sp" />
 
 
                         </LinearLayout>
@@ -170,11 +182,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/notosansjp_bold"
                                 android:includeFontPadding="false"
-                                android:text="Ride Scheduled On"
+                                android:text="@string/str_ride_scheduled_on"
                                 android:textColor="@color/colorGreyText"
-                                android:textSize="@dimen/_15sdp"
-
-                                />
+                                android:textSize="@dimen/text_14sp" />
 
                             <TextView
                                 android:id="@+id/tv_RideScheduled"
@@ -185,38 +195,24 @@
                                 android:drawablePadding="@dimen/_12sdp"
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:includeFontPadding="false"
-                                android:text="2 sep,11:52 PM"
                                 android:textColor="@color/gradientstartcolor"
-                                android:textSize="@dimen/_12sdp"
-
-
-                                />
+                                android:textSize="@dimen/text_14sp" />
                         </RelativeLayout>
 
 
                         <androidx.cardview.widget.CardView
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:cardCornerRadius="@dimen/_10sdp"
-                            app:cardElevation="@dimen/_10sdp"
-                            app:cardUseCompatPadding="true"
-
-
-
-
-                            android:elevation="8dp"
+                            android:layout_margin="4dp"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
                             android:divider="@android:color/transparent"
                             android:dividerHeight="0.0px"
-                            android:clipToPadding="false"
-                            android:clipChildren="false"
-                            android:layout_margin="4dp"
+                            android:elevation="8dp"
+                            app:cardCornerRadius="@dimen/_10sdp"
+                            app:cardElevation="@dimen/_10sdp"
                             app:cardPreventCornerOverlap="false"
-                            
-                            
-                            
-                            
-                            >
+                            app:cardUseCompatPadding="true">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -232,12 +228,14 @@
                                     android:layout_marginEnd="@dimen/_10sdp"
                                     android:drawableStart="@drawable/red_circle"
                                     android:drawablePadding="@dimen/_15sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:paddingTop="@dimen/_10sdp"
                                     android:paddingBottom="@dimen/_10sdp"
-                                    android:text="Pick-up Location"
-                                    android:textColor="@color/gradientstartcolor" />
+                                    android:text="@string/str_pick_up_location"
+                                    android:textColor="@color/gradientstartcolor"
+                                    android:textSize="@dimen/text_14sp" />
 
                                 <View
                                     android:id="@+id/view"
@@ -258,12 +256,14 @@
                                     android:layout_marginEnd="@dimen/_10sdp"
                                     android:drawableStart="@drawable/triangle"
                                     android:drawablePadding="@dimen/_15sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:paddingTop="@dimen/_10sdp"
                                     android:paddingBottom="@dimen/_10sdp"
-                                    android:text="Drop-off Location"
-                                    android:textColor="@color/colorGreyText" />
+                                    android:text="@string/str_drop_off_location"
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
 
 
                                 <View
@@ -292,16 +292,20 @@
                                 android:id="@+id/tvEstDistance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Est.Distance"
-                                android:textColor="@color/colorGreyText" />
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:text="@string/str_est_distance"
+                                android:textColor="@color/colorGreyText"
+                                android:textSize="@dimen/text_12sp" />
 
                             <TextView
                                 android:id="@+id/tvEstTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:text="Est.Time"
-                                android:textColor="@color/colorGreyText" />
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:text="@string/str_est_time"
+                                android:textColor="@color/colorGreyText"
+                                android:textSize="@dimen/text_12sp" />
 
                         </RelativeLayout>
 
@@ -315,10 +319,10 @@
                             android:fontFamily="@font/notosansjp_regular"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:text="Compare Rides"
+                            android:text="@string/btn_compare_rides"
                             android:textAllCaps="false"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/_14sdp"
+                            android:textSize="@dimen/text_16sp"
                             android:visibility="gone" />
 
                     </LinearLayout>
@@ -337,11 +341,11 @@
                 android:layout_height="@dimen/_1sdp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/White"
-
+                android:fontFamily="@font/notosansjp_regular"
                 android:gravity="center"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/text_16sp"
                 android:visibility="visible" />
 
 
@@ -367,7 +371,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorBackground"
@@ -407,7 +410,7 @@
                     android:fontFamily="@font/notosansjp_bold"
                     android:gravity="center"
                     android:textColor="@color/colorBackground"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/text_14sp" />
 
                 <TextView
                     android:id="@+id/tvEmailAddress"
@@ -417,7 +420,7 @@
                     android:fontFamily="@font/notosansjp_bold"
                     android:gravity="center"
                     android:textColor="@color/colorBackground"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/text_14sp"
                     android:visibility="visible" />
 
                 <LinearLayout
@@ -431,10 +434,10 @@
                         android:id="@+id/tvProfession"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center"
-                        android:text="Mastar"
                         android:textColor="@color/colorText"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/text_12sp"
                         android:visibility="gone" />
 
 
@@ -442,10 +445,10 @@
                         android:id="@+id/tvUserLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center"
-                        android:text="Mumbai"
                         android:textColor="@color/colorText"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/text_12sp"
                         android:visibility="gone" />
 
 
@@ -473,7 +476,6 @@
 
         <TextView
             android:id="@+id/btnLogout"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
@@ -481,13 +483,14 @@
             android:background="@color/colorBackground"
             android:drawableStart="@drawable/logout"
             android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/notosansjp_regular"
             android:gravity="center_vertical"
             android:padding="@dimen/_5sdp"
             android:paddingStart="@dimen/_30sdp"
-            android:text="Sign Out"
+            android:text="@string/str_logout"
             android:textAllCaps="false"
             android:textColor="@color/gradientstartcolor"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/text_16sp"
             android:textStyle="bold"
             android:visibility="visible" />
     </LinearLayout>

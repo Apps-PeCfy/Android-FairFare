@@ -192,8 +192,8 @@
     <string name="title_fair_fare_review">Fair Fare Review</string>
     <string name="title_end_ride">End Ride</string>
     <string name="str_reward_points_earned">Reward points earned for this ride</string>
-    <string name="msg_not_served_city">\"Sorry, we don’t serve locations within \"</string>
-    <string name="msg_not_serve_location_two"><![CDATA[\" & its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.\"]]></string>
+    <string name="msg_not_served_city">Sorry, we don’t serve locations within </string>
+    <string name="msg_not_serve_location_two"> &amp; its Subarban areas yet. We will notify you as soon as we launch our services. Kindly choose other city from the drop down where our services are active.</string>
     <string name="str_available_reward_points">Available Reward Points</string>
     <string name="msg_dialog_email_id_required">Email id is required. Please edit it in My Accounts.</string>
     <string name="err_schedule_min_time">Scheduled time should be greater than 15 minutes from current time.</string>
@@ -389,6 +389,8 @@
     <string name="title_dispute_detail">Dispute details</string>
     <string name="str_complaint_id">Complaint ID</string>
     <string name="str_dispute_id">Dispute ID</string>
+    <string name="str_additional_distance">Additional Distance</string>
+    <string name="str_allow_permission">Allow Permission</string>
 
 
 </resources>

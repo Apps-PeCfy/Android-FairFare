@@ -100,7 +100,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Your Current Ride is Completed" />
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_14sp"
+                            android:text="@string/str_your_current_ride_is_completed" />
 
                         <View
                             android:layout_width="match_parent"
@@ -114,13 +116,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Ride Details"
+                            android:text="@string/str_ride_details"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_14sp"
                             android:textColor="@color/colorText"
                             android:textStyle="bold" />
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/locationCardView"
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_above="@+id/llshowData"
@@ -139,7 +142,6 @@
                                 <TextView
                                     android:paddingTop="@dimen/_10sdp"
                                     android:paddingBottom="@dimen/_10sdp"
-
                                     android:id="@+id/tv_myCurrentLocation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -147,10 +149,11 @@
                                     android:layout_marginEnd="@dimen/_10sdp"
                                     android:drawableStart="@drawable/red_circle"
                                     android:drawablePadding="@dimen/_15sdp"
-                                    android:fontFamily="@font/notosansjp_regular"
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
-                                    android:text="Pick-up Location"
+                                    android:text="@string/str_pick_up_location"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/gradientstartcolor" />
 
                                 <View
@@ -184,9 +187,10 @@
                                         android:drawableStart="@drawable/triangle"
                                         android:drawablePadding="@dimen/_15sdp"
                                         android:fontFamily="@font/notosansjp_regular"
+                                        android:textSize="@dimen/text_14sp"
                                         android:gravity="center_vertical"
                                         android:includeFontPadding="false"
-                                        android:text="Drop-off Location " />
+                                        android:text="@string/str_drop_off_location" />
 
 
                                     <ImageView
@@ -301,6 +305,8 @@
                                             android:layout_marginBottom="@dimen/_2sdp"
                                             android:gravity="center_horizontal"
                                             android:text=""
+                                            android:fontFamily="@font/notosansjp_regular"
+                                            android:textSize="@dimen/text_14sp"
                                             android:textStyle="bold" />
 
 
@@ -309,6 +315,8 @@
                                             android:id="@+id/tv_vahicalNO"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:fontFamily="@font/notosansjp_regular"
+                                            android:textSize="@dimen/text_14sp"
                                             android:text="" />
 
 
@@ -335,6 +343,8 @@
                                             android:drawableStart="@drawable/iv_bags"
                                             android:drawablePadding="@dimen/_6sdp"
                                             android:gravity="end"
+                                            android:fontFamily="@font/notosansjp_regular"
+                                            android:textSize="@dimen/text_14sp"
                                             android:text="" />
 
 
@@ -350,6 +360,8 @@
                                             android:drawableStart="@drawable/ic_clock"
                                             android:drawablePadding="@dimen/_6sdp"
                                             android:gravity="end"
+                                            android:fontFamily="@font/notosansjp_regular"
+                                            android:textSize="@dimen/text_14sp"
                                             android:text="" />
 
 
@@ -386,6 +398,8 @@
                                     android:layout_marginStart="@dimen/_70sdp"
                                     android:layout_toRightOf="@+id/tv_Person"
                                     android:drawablePadding="@dimen/_5sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="" />
 
 
@@ -421,6 +435,8 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:textColor="@color/colorText"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -438,7 +454,9 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Estimated"
+                                    android:text="@string/str_estimated"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -451,13 +469,14 @@
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Actual"
+                                    android:text="@string/str_actual"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -483,7 +502,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Distance"
+                                    android:text="@string/str_distance"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -503,7 +524,9 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="" />
+                                    android:text=""
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"/>
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -520,7 +543,9 @@
                                     android:gravity="end"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp" />
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"/>
 
 
                             </LinearLayout>
@@ -544,7 +569,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Ride Time"
+                                    android:text="@string/str_ride_time"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -564,6 +591,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="" />
 
                                 <TextView
@@ -581,7 +610,9 @@
                                     android:gravity="end"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp" />
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"/>
 
 
                             </LinearLayout>
@@ -613,7 +644,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerInParent="true"
-                                        android:text="Wait Time"
+                                        android:text="@string/str_wait_time"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:textSize="@dimen/text_14sp"
                                         android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
@@ -646,6 +679,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="" />
 
                                 <TextView
@@ -664,6 +699,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text=" " />
 
 
@@ -688,7 +725,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Basic Fare"
+                                    android:text="@string/str_basic_fare"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -708,6 +747,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="" />
 
                                 <TextView
@@ -725,7 +766,9 @@
                                     android:gravity="end"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp" />
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"/>
 
 
                             </LinearLayout>
@@ -750,7 +793,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Wait Charges"
+                                    android:text="@string/str_wait_charges"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -770,6 +815,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="" />
 
                                 <TextView
@@ -788,6 +835,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text=" " />
 
 
@@ -812,7 +861,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Night Charges"
+                                    android:text="@string/str_night_charges"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -832,6 +883,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="" />
 
                                 <TextView
@@ -850,6 +903,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="" />
 
 
@@ -875,8 +930,10 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Luggage"
+                                    android:text="@string/str_luggage"
                                     android:textColor="@color/colorText"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -895,6 +952,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="" />
 
                                 <TextView
@@ -910,6 +969,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="end"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp" />
@@ -942,7 +1003,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:text="Toll Charges"
+                                        android:text="@string/str_toll_charges"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:textSize="@dimen/text_14sp"
                                         android:textColor="@color/colorText"
                                         android:textStyle="bold" />
 
@@ -975,6 +1038,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="-" />
 
 
@@ -994,6 +1059,8 @@
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:text="-" />
 
 
@@ -1018,7 +1085,9 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Surcharge"
+                                    android:text="@string/str_surcharge"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/colorText"
                                     android:textStyle="bold" />
 
@@ -1037,7 +1106,9 @@
                                     android:gravity="end"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp" />
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"/>
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -1054,7 +1125,9 @@
                                     android:gravity="end"
                                     android:paddingEnd="@dimen/_8sdp"
                                     android:paddingTop="@dimen/_8sdp"
-                                    android:paddingBottom="@dimen/_8sdp" />
+                                    android:paddingBottom="@dimen/_8sdp"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"/>
 
 
                             </LinearLayout>
@@ -1079,9 +1152,11 @@
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
-                                    android:text="Total Fare"
+                                    android:text="@string/str_total_fare"
                                     android:textColor="@color/colorText"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"/>
 
                                 <TextView
                                     android:layout_width="1sp"
@@ -1099,6 +1174,8 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=""
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/gradientstartcolor"
                                     android:textStyle="bold" />
 
@@ -1118,6 +1195,8 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:paddingBottom="@dimen/_8sdp"
                                     android:text=""
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:textSize="@dimen/text_14sp"
                                     android:textColor="@color/gradientstartcolor"
                                     android:textStyle="bold" />
 
@@ -1151,7 +1230,9 @@
                                 android:id="@+id/tv_note"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Note:"
+                                android:text="@string/str_note"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textSize="@dimen/text_14sp"
                                 android:textColor="@color/colorText"
                                 android:textStyle="bold" />
 
@@ -1163,7 +1244,8 @@
                                 android:layout_toEndOf="@+id/tv_note"
                                 android:text=""
                                 android:textColor="@color/colorText"
-                                android:textSize="@dimen/_8sdp" />
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textSize="@dimen/text_14sp" />
 
                         </RelativeLayout>
 
@@ -1175,14 +1257,14 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_18sdp"
                             android:background="@drawable/shape_roundedbtn"
-                            android:fontFamily="@font/notosansjp_regular"
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Settle and Close"
+                            android:text="@string/btn_settle_and_close"
                             android:textAllCaps="false"
                             android:textColor="@color/White"
-                            android:textSize="@dimen/_15sdp" />
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_16sp" />
 
 
                         <Button
@@ -1194,14 +1276,14 @@
                             android:layout_marginEnd="@dimen/_18sdp"
                             android:layout_marginBottom="@dimen/_15sdp"
                             android:background="@drawable/shape_disput_button"
-                            android:fontFamily="@font/notosansjp_regular"
                             android:includeFontPadding="false"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Register Dispute"
+                            android:text="@string/btn_register_dispute"
                             android:textAllCaps="false"
                             android:textColor="@color/White"
-                            android:textSize="@dimen/_15sdp" />
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_16sp"/>
 
 
                     </LinearLayout>

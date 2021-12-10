@@ -453,7 +453,7 @@
                                     android:gravity="center"
                                     android:paddingHorizontal="2dp"
                                     android:paddingVertical="8dp"
-                                    android:text="Additional Distance"
+                                    android:text="@string/str_additional_distance"
                                     android:textColor="@color/colorText"
                                     android:textSize="@dimen/text_14sp"
                                     android:textStyle="bold" />

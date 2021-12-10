@@ -15,9 +15,7 @@
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/_10sdp"
         android:theme="@style/BaseTheme"
-        app:buttonGravity="center_vertical"
-
-        />
+        app:buttonGravity="center_vertical" />
 
 
     <RelativeLayout
@@ -56,7 +54,8 @@
                 android:background="@drawable/shape_roundedbtn"
                 android:fontFamily="@font/notosansjp_bold"
                 android:padding="@dimen/_5sdp"
-                android:text="Track Board"
+                android:textSize="@dimen/text_14sp"
+                android:text="@string/str_track_board"
                 android:textColor="@color/White" />
 
 
@@ -114,10 +113,10 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:text="Auto"
                             android:textAllCaps="true"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_14sp"
                             android:textColor="@color/colorText"
-                            android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
 
@@ -143,18 +142,18 @@
 
                                 android:id="@+id/tv_myCurrentLocation"
                                 android:layout_width="match_parent"
-
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:drawableStart="@drawable/red_circle"
                                 android:drawablePadding="@dimen/_15sdp"
-                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
-                                android:text="Pick-up Location"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textSize="@dimen/text_14sp"
+                                android:text="@string/str_pick_up_location"
                                 android:textColor="@color/gradientstartcolor" />
 
                             <View
@@ -176,12 +175,13 @@
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:drawableStart="@drawable/triangle"
                                 android:drawablePadding="@dimen/_15sdp"
-                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
-                                android:text="Drop-off Location "
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textSize="@dimen/text_14sp"
+                                android:text="@string/str_drop_off_location"
                                 android:textColor="@color/colorGreyText" />
 
 
@@ -210,7 +210,9 @@
                             android:id="@+id/tvEstDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Est.Distance"
+                            android:text="@string/str_est_distance"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_12sp"
                             android:textColor="@color/colorGreyText" />
 
                         <TextView
@@ -218,7 +220,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="Est.Time"
+                            android:text="@string/str_est_time"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:textSize="@dimen/text_12sp"
                             android:textColor="@color/colorGreyText" />
 
                     </RelativeLayout>
@@ -234,13 +238,13 @@
                         android:layout_marginBottom="@dimen/_15sdp"
                         android:background="@drawable/shape_roundedbtn"
                         android:fontFamily="@font/notosansjp_regular"
+                        android:textSize="@dimen/text_16sp"
                         android:includeFontPadding="false"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="End Ride"
+                        android:text="@string/btn_end_ride"
                         android:textAllCaps="false"
-                        android:textColor="@color/White"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textColor="@color/White" />
 
                 </LinearLayout>
 

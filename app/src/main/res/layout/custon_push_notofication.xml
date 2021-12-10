@@ -2,44 +2,45 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp" >
+    android:padding="10dp">
+
     <ImageView
-        android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher"
         android:id="@+id/image"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="10dp" />
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/ic_launcher" />
+
     <TextView
-        android:textSize="13dp"
-        android:textColor="#000"
-        android:text="Testing"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/image"
-        />
+        android:fontFamily="@font/notosansjp_regular"
+        android:text="Testing"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/text_14sp" />
 
     <TextView
-        android:textSize="10dp"
-        android:textColor="#000"
-        android:text="Testing"
-        android:layout_marginEnd="@dimen/_10sdp"
         android:id="@+id/tvDateandtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        />
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/notosansjp_regular"
+        android:text="Testing"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/text_14sp" />
 
     <TextView
-        android:textSize="13dp"
-        android:textColor="#000"
-        android:text="Testing is awecome"
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/image"
         android:layout_below="@id/title"
-        />
+        android:layout_toRightOf="@id/image"
+        android:text="Testing is awecome"
+        android:textColor="#000"
+        android:textSize="13dp" />
 </RelativeLayout>
