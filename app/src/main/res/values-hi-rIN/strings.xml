@@ -56,8 +56,6 @@
     <string name="drawer_available_reward_point">उपलब्ध इनाम अंक</string>
 
 
-
-
     <string name="register_disputes">यदि आप यात्रा के पूरे अनुभव और/या किराए पर लिए जाने से संतुष्ट नहीं हैं, तो आप बाद में विस्तृत शिकायत दर्ज करने के लिए तुरंत यहां विवाद दर्ज कर सकते हैं।</string>
     <string name="review">आपकी प्रतिक्रिया हमारे लिए अत्यंत महत्वपूर्ण है। आपको बेहतर सेवा देने के लिए कृपया अपनी बहुमूल्य प्रतिक्रिया दें। आपका बहुत धन्यवाद!</string>
 
@@ -387,6 +385,8 @@
     <string name="str_pay_offline">Cash</string>
     <string name="str_pay_online">Online</string>
     <string name="btn_book_ride">Book Ride</string>
+    <string name="str_allow_permission">Allow Permission</string>
+    <string name="str_your_payment_is_successful">Your payment is successful</string>
     <string name="err_select_payment_method">Please select payment method.</string>
     <string name="msg_payment_dialog_one">Kindly pay the amount ₹</string>
     <string name="msg_payment_dialog_two">" for the booking and confirm."</string>

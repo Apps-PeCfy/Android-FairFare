@@ -390,6 +390,8 @@
     <string name="title_complaint_detail">Complaint Details</string>
     <string name="title_dispute_detail">Dispute details</string>
     <string name="str_additional_distance">Additional Distance</string>
+    <string name="str_allow_permission">Allow Permission</string>
+    <string name="str_your_payment_is_successful">Your payment is successful</string>
     <string name="str_no_wallet_data">No Amount available in your wallet</string>
     <string name="err_internal_server_error">Internal server error</string>
     <string name="title_select_from_city">Select From City</string>

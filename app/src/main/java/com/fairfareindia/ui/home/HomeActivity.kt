@@ -70,6 +70,7 @@ import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.intercity.InterCityActivity
 import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
+import com.fairfareindia.ui.localcompareride.LocalCompareRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.ui.splashscreen.PermissionActivity
 import com.fairfareindia.utils.*
@@ -2366,35 +2367,50 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     override fun onSuccess(info: CompareRideResponsePOJO?) {
-        // Toast.makeText(this, "onSuccess", Toast.LENGTH_LONG).show()
 
-        val distance = tvEstDistance!!.text.toString()
-        val estTine = tvEstTime!!.text.toString()
-        val intent = Intent(applicationContext, CompareRideActivity::class.java)
-        intent.putExtra("SourceLat", SourceLat)
-        intent.putExtra("SourceLong", SourceLong)
-        intent.putExtra("DestinationLat", DestinationLat)
-        intent.putExtra("DestinationLong", DestinationLong)
-        intent.putExtra("Distance", estDistance)
-        intent.putExtra("CITY_ID", cityID)
-        intent.putExtra("CITY_NAME", city_Name)
-        intent.putExtra("EstTime", estTime)
-        intent.putExtra("Liggage", spinnerLuggagetxt)
-        intent.putExtra("TimeSpinner", spinnertxt)
-        // intent.putExtra("Airport", extras!!.getString("keyAirport"))
+        if (Constants.IS_OLD_LOCAL){
+            val intent = Intent(applicationContext, CompareRideActivity::class.java)
+            intent.putExtra("SourceLat", SourceLat)
+            intent.putExtra("SourceLong", SourceLong)
+            intent.putExtra("DestinationLat", DestinationLat)
+            intent.putExtra("DestinationLong", DestinationLong)
+            intent.putExtra("Distance", estDistance)
+            intent.putExtra("CITY_ID", cityID)
+            intent.putExtra("CITY_NAME", city_Name)
+            intent.putExtra("EstTime", estTime)
+            intent.putExtra("Liggage", spinnerLuggagetxt)
+            intent.putExtra("TimeSpinner", spinnertxt)
+            intent.putExtra("Airport", keyAirport)
+            intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
+            intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
+            intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
+            intent.putExtra("currentFormatedDate", formaredDate)
+            intent.putExtra("currentPlaceId", CurrentPlaceID)
+            intent.putExtra("MyPOJOClass", info)
+            startActivity(intent)
+        }else{
+            val intent = Intent(applicationContext, LocalCompareRideActivity::class.java)
+            intent.putExtra("SourceLat", SourceLat)
+            intent.putExtra("SourceLong", SourceLong)
+            intent.putExtra("DestinationLat", DestinationLat)
+            intent.putExtra("DestinationLong", DestinationLong)
+            intent.putExtra("Distance", estDistance)
+            intent.putExtra("CITY_ID", cityID)
+            intent.putExtra("CITY_NAME", city_Name)
+            intent.putExtra("EstTime", estTime)
+            intent.putExtra("Luggage", spinnerLuggagetxt)
+            intent.putExtra("TimeSpinner", spinnertxt)
+            intent.putExtra("Airport", keyAirport)
+            intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
+            intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
+            intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
+            intent.putExtra("currentFormattedDate", formaredDate)
+            intent.putExtra("currentPlaceId", CurrentPlaceID)
+            intent.putExtra("MyPOJOClass", info)
+            startActivity(intent)
+        }
 
-        // ILOMADEV
 
-        intent.putExtra("Airport", keyAirport)
-        intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
-        intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
-        intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
-        intent.putExtra("currentFormatedDate", formaredDate)
-        intent.putExtra("currentPlaceId", CurrentPlaceID)
-        intent.putExtra("MyPOJOClass", info)
-
-
-        startActivity(intent)
     }
 
     override fun validationError(validationResponse: ValidationResponse?) {

@@ -40,8 +40,12 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.splashscreen.PermissionActivity"></activity>
-        <activity android:name=".ui.drawer.intercitydispute.InterCityDisputeDetailsActivity" />
+        <activity android:name=".ui.localcompareride.LocalCompareRideActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.splashscreen.PermissionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.drawer.intercitydispute.InterCityDisputeDetailsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.intercitytrackride.InterCityTrackRideActivity"
             android:screenOrientation="portrait" />

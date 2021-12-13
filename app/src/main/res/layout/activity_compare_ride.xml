@@ -13,7 +13,7 @@
         android:background="@drawable/app_gradient"
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/_10sdp"
-
+        app:titleTextAppearance="@style/Toolbar.TitleText"
         android:theme="@style/BaseTheme"
         app:buttonGravity="center_vertical"
         app:navigationIcon="?attr/homeAsUpIndicator"

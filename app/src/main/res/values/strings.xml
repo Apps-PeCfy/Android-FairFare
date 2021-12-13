@@ -10,7 +10,6 @@
     <string name="str_marathi_code">mr</string>
 
 
-
     <string name="app_name">FairFareIndia</string>
     <string name="logIn">Sign In</string>
     <string name="continuetxt">By continuing, you agree to Fair Fare</string>
@@ -233,8 +232,6 @@
     <string name="str_current_speed">Current Speed</string>
     <string name="str_actual_distance_remaining_distance">Actual distance/Remaining distance</string>
     <string name="str_actual_time_remaining_time">Actual time/ Remaining Time</string>
-
-
 
 
     <string name="str_alert_exit_app">Press once again to exit</string>
