@@ -112,7 +112,7 @@ class CompareRideAdapter(var context: Context, private val compareRideList: Arra
                 )
             }
             }else{
-                ProjectUtilities.showToast(context,"No internet connection")
+                ProjectUtilities.showToast(context, context.getString(R.string.internet_error))
             }
 
         }

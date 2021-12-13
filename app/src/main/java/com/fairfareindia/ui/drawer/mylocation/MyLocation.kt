@@ -119,7 +119,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getSavedLocation("Bearer $token")!!.enqueue(object :
@@ -140,7 +140,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
                     } else {
                         rlEmpty!!.visibility = View.VISIBLE
                         ivImg!!.setBackgroundResource(R.drawable.empty_location)
-                        tvEmptyTxt!!.text = "You have not Saved any Locations yet!"
+                        tvEmptyTxt!!.text = getString(R.string.msg_no_saved_location)
 
                     }
 
@@ -162,7 +162,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
                 } else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -187,7 +187,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
         spinnerLang.visibility = View.GONE
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "My Locations"
+        toolbar.title = getString(R.string.drawer_mylocation)
 
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
@@ -201,7 +201,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
 
@@ -243,7 +243,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
                                            myLocationAdapter!!.notifyDataSetChanged()
                                            rlEmpty!!.visibility=View.VISIBLE
                                            ivImg!!.setBackgroundResource(R.drawable.empty_location)
-                                           tvEmptyTxt!!.text="You have not Saved any Locations yet!"
+                                           tvEmptyTxt!!.text= getString(R.string.msg_no_saved_location)
                                        }
 
 
@@ -253,7 +253,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
                                    } else {
                                        Toast.makeText(
                                            activity,
-                                           "Internal server error",
+                                           getString(R.string.err_internal_server_error),
                                            Toast.LENGTH_LONG
                                        ).show()
                                    }
@@ -269,7 +269,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
                     } else {
                         Toast.makeText(
                             activity,
-                            "Internal server error",
+                            getString(R.string.err_internal_server_error),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -317,7 +317,7 @@ class MyLocation : Fragment(), MyLocationAdapter.IClickListener {
                 }else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }

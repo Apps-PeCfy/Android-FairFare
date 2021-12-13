@@ -426,7 +426,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
              "(Est.Distance:" + info.ride!!.estimatedTrackRide!!.distance + " km) / " +
                      "(Est.Time:" + info.ride!!.estimatedTrackRide!!.duration + ")"*/
 
-        mToolbar!!.title = "Track Ride"
+        mToolbar!!.title = getString(R.string.btn_track_ride)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
@@ -1014,10 +1014,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
         if (actualRemainingDistanceInMeter >= 500) {
 
             val alertDialog = AlertDialog.Builder(this)
-            alertDialog.setTitle("FairFareIndia")
-            alertDialog.setMessage("You have not reached the destination yet. Are you sure you want to end the ride?")
+            alertDialog.setTitle(getString(R.string.str_fair_fare_india))
+            alertDialog.setMessage(getString(R.string.dialog_msg_end_ride_before_dest))
             alertDialog.setCancelable(false)
-            alertDialog.setPositiveButton("Yes") { dialog, which ->
+            alertDialog.setPositiveButton(getString(R.string.str_yes)) { dialog, which ->
 
                 if (Constants.IS_OLD_PICK_UP_CODE) {
                     handler.removeCallbacksAndMessages(null)
@@ -1101,7 +1101,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
             }
-            alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+            alertDialog.setNegativeButton(getString(R.string.str_no)) { dialog, which -> dialog.cancel() }
             alertDialog.show()
 
 
@@ -1109,10 +1109,10 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
             val alertDialog = AlertDialog.Builder(this)
-            alertDialog.setTitle("FairFareIndia")
-            alertDialog.setMessage("Are you sure you want to end this Ride?")
+            alertDialog.setTitle(getString(R.string.str_fair_fare_india))
+            alertDialog.setMessage(getString(R.string.dialog_msg_end_ride))
             alertDialog.setCancelable(false)
-            alertDialog.setPositiveButton("Yes") { dialog, which ->
+            alertDialog.setPositiveButton(getString(R.string.str_yes)) { dialog, which ->
 
                 if (Constants.IS_OLD_PICK_UP_CODE) {
                     handler.removeCallbacksAndMessages(null)
@@ -1195,7 +1195,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
 
             }
-            alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+            alertDialog.setNegativeButton(getString(R.string.str_no)) { dialog, which -> dialog.cancel() }
             alertDialog.show()
 
         }
@@ -1766,8 +1766,8 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                     val estCurrentDist =
                         DecimalFormat("####.#").format((estCurrentDistance!!.toDouble() / 1000)) + " km"
-                    tvEstDistance!!.text = "Est.Distance " + estCurrentDist
-                    tvEstTime!!.text = "Est.Time " + estCurrentDuration
+                    tvEstDistance!!.text = getString(R.string.str_est_distance) + " " + estCurrentDist
+                    tvEstTime!!.text = getString(R.string.str_est_time) + " " + estCurrentDuration
                     //   progressBarDistance!!.max = (estCurrDIst)!!.toFloat().toInt()
                     progressBarDistance!!.max = estCurrDIst
 
@@ -1780,7 +1780,7 @@ class TrackRideActivity : BaseLocationClass(), OnMapReadyCallback, LocationListe
 
                     }
                     tv_distance!!.text =
-                        "(Est.Distance:" + estCurrentDist + ") / " + "(Est.Time:" + estCurrentDuration + ")"
+                        "(" +  getString(R.string.str_est_distance)  + ": "+ estCurrentDist + ") / " + "(" +  getString(R.string.str_est_time) +": " + estCurrentDuration + ")"
                 }
             }
 

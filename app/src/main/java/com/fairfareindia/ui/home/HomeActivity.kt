@@ -693,7 +693,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else {
                     Toast.makeText(
                         this@HomeActivity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -1244,7 +1244,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     private fun initView() {
-        toolbar!!.title = "Get Fair Fare"
+        toolbar!!.title = getString(R.string.title_home)
         toolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(toolbar)
         lvDrawer!!.onItemClickListener = this
@@ -1386,7 +1386,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         } else {
                             Toast.makeText(
                                 this@HomeActivity,
-                                "Internal Server Error",
+                                getString(R.string.err_internal_server_error),
                                 Toast.LENGTH_LONG
                             ).show()
 
@@ -2275,11 +2275,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
                     mPolyline = mMap!!.addPolyline(lineOptions)
                 } else {
-                    Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+                    Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                         .show()
                 }
             } else {
-                Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+                Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                     .show()
             }
 
@@ -2449,7 +2449,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             } else {
                 Toast.makeText(
                     this,
-                    "Please wait we are featching your current location",
+                    getString(R.string.msg_fetching_current_location),
                     Toast.LENGTH_LONG
                 ).show()
             }

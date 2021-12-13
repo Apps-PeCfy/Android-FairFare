@@ -249,7 +249,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                             minScheduleTime = "50"
                         }
                         txtRideBook.text = getString(R.string.str_book_ride_on)
-                        txtRideBook.text = "Ride will be serviced "+ minScheduleTime + " minutes after the payment is done"
+                        txtRideBook.text = getString(R.string.str_ride_will_be_serviced)+  " " + minScheduleTime +  " " + getString(R.string.str_min_after_payment)
                         txtRideScheduled.visibility = View.GONE
 
                     } else {
@@ -271,20 +271,20 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                 if (fromCityList.isNullOrEmpty()) {
                     iInterCityPresenter?.getFromInterCities(token)
                 } else {
-                    openCitySelectionDialog("Select From City", fromCityList)
+                    openCitySelectionDialog(getString(R.string.title_select_from_city), fromCityList)
                 }
 
             }
 
             edtToCity.setOnClickListener {
                 if (fromCityID.isNullOrEmpty()) {
-                    Toast.makeText(context, "Please select From City first.", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, getString(R.string.err_select_from_city), Toast.LENGTH_SHORT)
                         .show()
                 } else {
                     if (toCityList.isNullOrEmpty()) {
                         iInterCityPresenter?.getToInterCities(token, fromCityID)
                     } else {
-                        openCitySelectionDialog("Select To City", toCityList)
+                        openCitySelectionDialog(getString(R.string.title_select_to_city), toCityList)
                     }
                 }
             }
@@ -303,7 +303,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             object : CitySelectionDialog.SelectionDialogInterface {
                 override fun onItemSelected(model: GetAllowCityResponse.CitiesItem?) {
                     citySelectionDialog?.dismiss()
-                    if (title == "Select From City") {
+                    if (title == getString(R.string.title_select_from_city)) {
                         binding.edtFromCity.setText(model?.name)
                         fromCityID = model?.id.toString()
                         iInterCityPresenter?.getToInterCities(token, fromCityID)
@@ -321,23 +321,23 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
     private fun isValid(): Boolean {
         binding.apply {
             if (!rdOneWay.isChecked && !rdRoundTrip.isChecked) {
-                Toast.makeText(context, "Please select journey type", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.err_select_journey_type), Toast.LENGTH_SHORT).show()
                 return false
             } else if (fromCityID.isNullOrEmpty()) {
-                Toast.makeText(context, "Please select from city", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.err_please_select_from_city), Toast.LENGTH_SHORT).show()
                 return false
             } else if (toCityID.isNullOrEmpty()) {
-                Toast.makeText(context, "Please select to city", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.err_select_to_city), Toast.LENGTH_SHORT).show()
                 return false
             } else if (sourceLat.isNullOrEmpty()) {
-                Toast.makeText(context, "Please select pick up location", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.err_select_pick_up_location), Toast.LENGTH_SHORT).show()
                 return false
             } else if (destinationLat.isNullOrEmpty()) {
-                Toast.makeText(context, "Please select drop off location", Toast.LENGTH_SHORT)
+                Toast.makeText(context, getString(R.string.err_select_drop_off_location), Toast.LENGTH_SHORT)
                     .show()
                 return false
             }else if(fromCityID == toCityID){
-                Toast.makeText(context, "The From and To City can’t be same for Intercity travel.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.err_same_to_from_intercity), Toast.LENGTH_SHORT).show()
                 return false
             }
 
@@ -409,7 +409,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                     } else {
                         Toast.makeText(
                             context,
-                            "Please select valid date and time",
+                            getString(R.string.err_valid_date_time),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -481,8 +481,8 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                         )
                     estTime = model.rows?.elementAt(0)?.elements?.get(0)?.duration?.text
                     estTimeInSeconds = model.rows?.elementAt(0)?.elements?.get(0)?.duration?.value.toString()
-                    binding.txtEstDistance.text = "Est.Distance $estDistance"
-                    binding.txtEstTime.text = "Est.Time $estTime"
+                    binding.txtEstDistance.text =  getString(R.string.str_est_distance) + " $estDistance"
+                    binding.txtEstTime.text =  getString(R.string.str_est_time) + " $estTime"
                 }
 
                 override fun onError(error: String?) {

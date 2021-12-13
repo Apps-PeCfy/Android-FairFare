@@ -82,7 +82,7 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getComplaint("Bearer $token", "Complaint")!!.enqueue(object :
@@ -104,7 +104,7 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
                     }else{
                         rlEmpty!!.visibility=View.VISIBLE
                         ivImg!!.setBackgroundResource(R.drawable.empty_complaint)
-                        tvEmptyTxt!!.text="You have not filed any Complaints yet."
+                        tvEmptyTxt!!.text= getString(R.string.str_no_complaints)
 
                     }
 
@@ -126,7 +126,7 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
                 }else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -178,7 +178,7 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
         spinnerLang.visibility = View.GONE
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "My Complaints"
+        toolbar.title = getString(R.string.drawer_mycomplents)
 
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 

@@ -181,7 +181,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
             if(model?.data?.rewards != null && model?.data?.rewards != "0"){
                 txtRewardsPoint.visibility = View.VISIBLE
-                txtRewardsPoint.text = "Reward points earned for this ride " + model?.data?.rewards
+                txtRewardsPoint.text = getString(R.string.str_reward_points_earned_for_this_ride) + " " + model?.data?.rewards
             }else{
                 txtRewardsPoint.visibility = View.GONE
             }

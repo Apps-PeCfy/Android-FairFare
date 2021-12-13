@@ -165,7 +165,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
 
             txtPickUpLocationHide.text = model?.data?.originAddress
             txtDropOffLocationHide.text = model?.data?.destinationAddress
-            txtOtp.text = "Start OTP - " + model?.data?.rideOtp
+            txtOtp.text = getString(R.string.str_start_otp) + " - " + model?.data?.rideOtp
 
             tvLuggageCharges.text = "₹ " + model?.data?.estimatedTrackRide?.luggageCharges
 
@@ -590,7 +590,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                         mPolyline = mMap?.addPolyline(lineOptions)
                         isRouteDrawn = true
                     } else {
-                        Toast.makeText(context, "No route is found", Toast.LENGTH_LONG)
+                        Toast.makeText(context,  getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                             .show()
                     }
 

@@ -66,7 +66,7 @@ class PrivacyPolicyActivity : AppCompatActivity() {
 
         val progressDialog = ProgressDialog(this@PrivacyPolicyActivity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
 

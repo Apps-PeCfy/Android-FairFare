@@ -270,7 +270,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         getDisputDetail()
 
 
-        mToolbar!!.title = "Dispute Details"
+        mToolbar!!.title = getString(R.string.title_dispute_details)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
@@ -283,14 +283,14 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         val alertDialog = AlertDialog.Builder(this@DisputDetailActivity, R.style.alertDialog)
-        alertDialog.setTitle("FairFareIndia")
+        alertDialog.setTitle(getString(R.string.str_fair_fare_india))
 
-        alertDialog.setMessage("Are you sure you want to file Complaint?")
+        alertDialog.setMessage(getString(R.string.msg_dialog_file_complaint))
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("YES") { dialog, which ->
+        alertDialog.setPositiveButton(getString(R.string.str_yes)) { dialog, which ->
             val progressDialog = ProgressDialog(this@DisputDetailActivity)
             progressDialog.setCancelable(false) // set cancelable to false
-            progressDialog.setMessage("Please Wait") // set message
+            progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
             progressDialog.show() // show progress dialog
 
             ApiClient.client.saveComplaint("Bearer $token", ID)!!.enqueue(object :
@@ -326,7 +326,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                     } else {
                         Toast.makeText(
                             this@DisputDetailActivity,
-                            "Internal server error",
+                            getString(R.string.err_internal_server_error),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -342,7 +342,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
             })
 
         }
-        alertDialog.setNegativeButton("N0") { dialog, which -> dialog.cancel() }
+        alertDialog.setNegativeButton(getString(R.string.str_no)) { dialog, which -> dialog.cancel() }
         alertDialog.show()
 
 
@@ -427,7 +427,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val progressDialog = ProgressDialog(this@DisputDetailActivity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getDisputeDetail("Bearer $token", ID)!!.enqueue(object :
@@ -483,7 +483,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     tvDisputReasn!!.text = dReason
 
-                    tvDisputNo!!.text = "Dispute ID:" + response.body()!!.dispute!!.disputeNo
+                    tvDisputNo!!.text = getString(R.string.str_dispute_id) + " : " + response.body()!!.dispute!!.disputeNo
                     tv_vahicalNO!!.text = response.body()!!.dispute!!.vehicleNo
                     tv_driverName!!.text = response.body()!!.dispute!!.driverName
 
@@ -491,25 +491,22 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                        ivUserIcon!!.visibility=View.GONE
                     }
                     if (response.body()!!.dispute!!.ride!!.luggageQuantity.equals("0")) {
-                        tv_bagCount!!.text = "No Luggage"
+                        tv_bagCount!!.text = getString(R.string.str_no_luggage)
                     } else {
 
                         if (response.body()!!.dispute!!.ride!!.luggageQuantity.equals("1")) {
                             tv_bagCount!!.text =
-                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Luggage"
+                                response.body()!!.dispute!!.ride!!.luggageQuantity + " " + getString(R.string.str_luggage)
                         } else {
                             tv_bagCount!!.text =
-                                response.body()!!.dispute!!.ride!!.luggageQuantity + " Luggage"
+                                response.body()!!.dispute!!.ride!!.luggageQuantity + " " + getString(R.string.str_luggage)
 
                         }
                     }
                     tv_carName!!.text = response.body()!!.dispute!!.vehicleName
-                    tv_actualfare!!.text =
-                        "Total Fare Charged: ₹ " + response.body()!!.dispute!!.actualMeterCharges
-                    tv_startMeterReading!!.text =
-                        "Start Trip Meter: " + response.body()!!.dispute!!.startMeterReading
-                    tv_endMeterReading!!.text =
-                        "End Trip Meter: " + response.body()!!.dispute!!.endMeterReading
+                    tv_actualfare!!.text = getString(R.string.str_total_fare_charged) + " : ₹ " + response.body()!!.dispute!!.actualMeterCharges
+                    tv_startMeterReading!!.text = getString(R.string.str_start_trip_meter) + " : " + response.body()!!.dispute!!.startMeterReading
+                    tv_endMeterReading!!.text = getString(R.string.hint_end_trip_meter) + " : " + response.body()!!.dispute!!.endMeterReading
 
                     if (response.body()!!.dispute!!.comment!!.isNotEmpty()) {
                         editReview!!.visibility = View.VISIBLE
@@ -694,7 +691,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 } else {
                     Toast.makeText(
                         this@DisputDetailActivity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -926,7 +923,7 @@ class DisputDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
                 mPolyline = mMap!!.addPolyline(lineOptions)
             } else {
-                Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+                Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                     .show()
             }
 

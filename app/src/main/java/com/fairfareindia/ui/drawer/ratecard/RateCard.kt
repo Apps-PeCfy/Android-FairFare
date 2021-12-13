@@ -200,7 +200,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
         spinnerLang.visibility = View.GONE
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "Rate Card"
+        toolbar.title = getString(R.string.drawer_ratecard)
 
 
 
@@ -223,7 +223,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
 
@@ -293,7 +293,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 } else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -356,10 +356,10 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                                     "0"
                                 )
                             ) {
-                                tvSurCHarges!!.text = "Not Applicable."
+                                tvSurCHarges!!.text = getString(R.string.str_not_applicable)
                             } else {
                                 tvSurCHarges!!.text =
-                                    "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge + " per booking."
+                                    "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).surcharge + " " + getString(R.string.str_per_booking)
 
                             }
 
@@ -369,14 +369,14 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
                             tvLuggage!!.text =
                                 "₹ " + getRateCardList[0]!!.rateCards!!.get(0).rateCards!!.get(0).chargesPerLuggage +
-                                        " per luggage item other than a briefcase or hand bag."
+                                        " " + getString(R.string.msg_extra_luggage_charges)
 
-                            tvNightChargeTime!!.text = "(00:00 AM to 5:00 AM)"
-                            nCharge!!.text = "Night Charges"
-                            wCharge!!.text = "Waiting Charges"
-                            sCharge!!.text = "Surcharges"
-                            cLuggage!!.text = "Luggage Charges"
-                            sFare!!.text = " Basic Fare"
+                            tvNightChargeTime!!.text = getString(R.string.str_night_time)
+                            nCharge!!.text = getString(R.string.str_night_charges)
+                            wCharge!!.text = getString(R.string.str_waiting_charges)
+                            sCharge!!.text = getString(R.string.str_surcharges)
+                            cLuggage!!.text = getString(R.string.str_luggage_charges)
+                            sFare!!.text = getString(R.string.str_basic_fare)
 
 
                         }
@@ -610,7 +610,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 } else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -742,30 +742,28 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 tvCarName!!.text = getRateCardList[selectedPosition].rateCards!!.get(position).name
 
 
-                tvFare!!.text =
-                    "Minimum fare of ₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(
+                tvFare!!.text = getString(R.string.str_extra_fare_one) + " " + getRateCardList[selectedPosition]!!.rateCards!!.get(
                         position
                     ).rateCards!!.get(
                         position
                     ).minBaseFare +
-                            " for the first 1.5 KM\n" +
-                            "Subsequently, fare will be chargeable at ₹ " +
+                            " " + getString(R.string.str_extra_fare_two) + " " +
                             getRateCardList[selectedPosition].rateCards!!.get(position).rateCards!!.get(
                                 position
                             ).fareAfterMinbdist +
-                            " per KM."
+                            " " + getString(R.string.str_extra_fare_three)
 
 
 
-                tvNightCharges!!.text = "Additional charge of " +
+                tvNightCharges!!.text = getString(R.string.str_extra_night_charges_two) + " "+
                         getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                             position
-                        ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
+                        ).nightChargesInPercentage + " " + getString(R.string.str_extra_night_charges_two)
 
                 tvWaitingCharges!!.text =
                     "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                         position
-                    ).waitingCharges + " per minute."
+                    ).waitingCharges + " " + getString(R.string.str_per_minute)
 
 
 
@@ -777,13 +775,13 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                         "0"
                     )
                 ) {
-                    tvSurCHarges!!.text = "Not Applicable."
+                    tvSurCHarges!!.text = getString(R.string.str_not_applicable)
 
                 } else {
                     tvSurCHarges!!.text =
                         "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                             0
-                        ).surcharge + " per booking."
+                        ).surcharge +  " " + getString(R.string.str_per_booking)
 
                 }
 
@@ -793,7 +791,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                     "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(position).rateCards!!.get(
                         0
                     ).chargesPerLuggage +
-                            " per luggage item other than a briefcase or hand bag."
+                            " " + getString(R.string.msg_extra_luggage_charges)
 
 
             }
@@ -816,41 +814,39 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             rateCardIncentive?.visibility = View.GONE
 
 
-            tvFare!!.text =
-                "Minimum fare of ₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+            tvFare!!.text = getString(R.string.str_extra_fare_one) + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).minBaseFare +
-                        " for the first 1.5 KM\n" +
-                        "Subsequently, fare will be chargeable at ₹ " +
+                    " " + getString(R.string.str_extra_fare_two) + " " +
                         getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                             position
                         ).fareAfterMinbdist +
-                        " per KM."
+                    " " + getString(R.string.str_extra_fare_three)
 
 
-            tvNightCharges!!.text ="Additional charge of "+
+            tvNightCharges!!.text = getString(R.string.str_extra_night_charges_two)+ " " +
                 getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
+                ).nightChargesInPercentage + " " + getString(R.string.str_extra_night_charges_two)
 
             tvWaitingCharges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).waitingCharges + " per minute."
+                ).waitingCharges + " " + getString(R.string.str_per_minute)
 
 
             if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).surcharge).equals("0")
             ) {
-                tvSurCHarges!!.text = "Not Applicable."
+                tvSurCHarges!!.text = getString(R.string.str_not_applicable)
 
             } else {
                 tvSurCHarges!!.text =
                     "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                         position
                     ).surcharge +
-                            " per booking."
+                            " " + getString(R.string.str_per_booking)
 
             }
 
@@ -858,7 +854,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).chargesPerLuggage +
-                        " per luggage item other than a briefcase or hand bag."
+                        " " + getString(R.string.msg_extra_luggage_charges)
 
 
         } else {
@@ -879,48 +875,48 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             }
 
 
-            tvFare!!.text ="Fare will be chargeable for a minimum distance of "+
+            tvFare!!.text = getString(R.string.str_rate_card_fare_one) + " "+
                     getRateCardList[selectedPosition].rateCards!!.get(
                         itemSelectedPosition
                     ).rateCards!!.get(
                         position
-                    ).minBaseDistance +" KM at ₹ "+
+                    ).minBaseDistance +" "+ getString(R.string.str_rate_card_fare_two) + " "
 
              getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).minBaseFare + " per KM. " +
-                    "Subsequently, fare will be chargeable in the distance slabs of " +
+                ).minBaseFare + " " + getString(R.string.str_rate_card_fare_three) +
+                     getString(R.string.str_rate_card_fare_four) +
                     getRateCardList[selectedPosition].rateCards!!.get(
                     itemSelectedPosition
                 ).rateCards!!.get(
                     position
-                ).distanceSlab + " KM at ₹ "+getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
+                ).distanceSlab + " " + getString(R.string.str_rate_card_fare_two) + " "+getRateCardList[selectedPosition].rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                 position
-            ).fareAfterMinbdist+" per KM. Additionally, incentives are offered to the drivers for providing Pre-Paid Services from the international terminal."
+            ).fareAfterMinbdist+ " " + getString(R.string.str_rate_card_fare_five)
 
 
 
 
-            tvNightCharges!!.text ="Additional charge of "+
+            tvNightCharges!!.text = getString(R.string.str_extra_night_charges_one) + " "
                 getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
-                ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
+                ).nightChargesInPercentage +  " " + getString(R.string.str_extra_night_charges_two)
 
-            tvWaitingCharges!!.text ="Not Applicable."
+            tvWaitingCharges!!.text = getString(R.string.str_not_applicable)
 
 
             if ((getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).surcharge).equals("0")
             ) {
-                tvSurCHarges!!.text = "Not Applicable."
+                tvSurCHarges!!.text = getString(R.string.str_not_applicable)
 
             } else {
                 tvSurCHarges!!.text =
                     "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                         position
                     ).surcharge +
-                            " per booking."
+                            " " + getString(R.string.str_per_booking)
 
             }
 
@@ -928,7 +924,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(itemSelectedPosition).rateCards!!.get(
                     position
                 ).chargesPerLuggage +
-                        " per luggage item other than a briefcase or hand bag."
+                        " " + getString(R.string.msg_extra_luggage_charges)
 
         }
 
@@ -1010,28 +1006,27 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
         tvCarName!!.text = getRateCardList[selectedPosition].rateCards!!.get(0).name
 
 
-        tvFare!!.text =
-            "Minimum fare of ₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
+        tvFare!!.text = getString(R.string.str_extra_fare_one)
+            " " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
-            ).minBaseFare +
-                    " for the first 1.5 KM\n" +
-                    "Subsequently, fare will be chargeable at ₹ " +
+            ).minBaseFare + getString(R.string.str_extra_fare_two) +
+                    "  " +
                     getRateCardList[selectedPosition].rateCards!!.get(0).rateCards!!.get(
                         0
                     ).fareAfterMinbdist +
-                    " per KM."
+                    " "  + getString(R.string.str_extra_fare_three)
 
 
 
-        tvNightCharges!!.text ="Additional charge of "+
+        tvNightCharges!!.text = getString(R.string.str_extra_night_charges_one) + " "+
             getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
-            ).nightChargesInPercentage + " of Basic Fare for journey between 0.00 AM to 5.00 AM."
+            ).nightChargesInPercentage + " " + getString(R.string.str_extra_night_charges_two)
 
         tvWaitingCharges!!.text =
             "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
-            ).waitingCharges + " per minute."
+            ).waitingCharges + " " + getString(R.string.str_per_minute)
 
 
 
@@ -1043,13 +1038,13 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                 "0"
             )
         ) {
-            tvSurCHarges!!.text = "Not Applicable."
+            tvSurCHarges!!.text = getString(R.string.str_not_applicable)
 
         } else {
             tvSurCHarges!!.text =
                 "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                     0
-                ).surcharge + " per booking."
+                ).surcharge + " " + getString(R.string.str_per_booking)
 
         }
 
@@ -1058,8 +1053,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
         tvLuggage!!.text =
             "₹ " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
-            ).chargesPerLuggage +
-                    " per luggage item other than a briefcase or hand bag."
+            ).chargesPerLuggage + " "+ getString(R.string.msg_extra_luggage_charges)
 
     }
 

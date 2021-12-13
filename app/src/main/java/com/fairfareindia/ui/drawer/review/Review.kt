@@ -28,6 +28,6 @@ class Review : Fragment() {
 
     private fun initView() {
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "Fair Fare Review"
+        toolbar.title = getString(R.string.title_fair_fare_review)
     }
 }

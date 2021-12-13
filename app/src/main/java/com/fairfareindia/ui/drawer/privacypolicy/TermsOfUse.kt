@@ -58,7 +58,7 @@ class TermsOfUse : Fragment() {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
 
@@ -139,7 +139,7 @@ class TermsOfUse : Fragment() {
 
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "Terms Of Use"
+        toolbar.title = getString(R.string.drawer_term_of_use)
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
     }

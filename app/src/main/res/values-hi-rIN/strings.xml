@@ -394,6 +394,32 @@
     <string name="title_dispute_detail">Dispute details</string>
     <string name="str_additional_distance">Additional Distance</string>
     <string name="str_no_wallet_data">No Amount available in your wallet</string>
+    <string name="err_internal_server_error">Internal server error</string>
+    <string name="title_select_from_city">Select From City</string>
+    <string name="title_select_to_city">Select To City</string>
+    <string name="err_select_from_city">Please select From City first.</string>
+    <string name="str_ride_will_be_serviced">Ride will be serviced</string>
+    <string name="str_min_after_payment">minutes after the payment is done.</string>
+    <string name="err_select_journey_type">Please select journey type</string>
+    <string name="err_please_select_from_city">Please select from city</string>
+    <string name="err_select_to_city">Please select to city</string>
+    <string name="err_select_pick_up_location">Please select pick up location</string>
+    <string name="err_select_drop_off_location">Please select drop off location</string>
+    <string name="err_same_to_from_intercity">The From and To City can’t be same for Intercity travel.</string>
+    <string name="err_valid_date_time">Please select valid date and time</string>
+    <string name="str_start_otp">Start OTP</string>
+    <string name="title_booked_successfully">Booked Successfully</string>
+    <string name="title_your_payment_successfull">Your payment is successfull</string>
+    <string name="dialog_booking_request_msg_one">Your booking request submitted successfully for</string>
+    <string name="dialog_booking_request_msg_two">Driver details will be shared 15 minutes before the ride.</string>
+    <string name="title_welcome_to_fair_fare">Welcome to Fair Fare</string>
+    <string name="msg_permission_one">Have a hassle-free booking experience by giving us the following permissions.</string>
+    <string name="str_turn_on_gps">TURN ON GPS</string>
+    <string name="str_gps_turned_off">GPS turned off</string>
+    <string name="msg_allow_gps_on">Allow Fair Fare to turn on your phone GPS for accurate pick up and drop</string>
+    <string name="msg_location_permission">Location: Please provide location permission</string>
+    <string name="msg_all_time_location_permission">Location: Please provide "Allow all the time" location permission for accurate pick-up and drop-off locations, availability of autos/taxis in the area and tracking the ride until trip ends.</string>
+
 
 
 </resources>

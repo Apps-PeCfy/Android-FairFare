@@ -83,7 +83,7 @@ class RidesFragment : Fragment(), IRidesView{
         iRidesPresenter = RidesImplementer(this)
 
         val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar_home)
-        toolbar.title = "My Rides"
+        toolbar.title = getString(R.string.title_my_rides)
         
 
         setRecyclerView()

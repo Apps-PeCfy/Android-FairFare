@@ -146,8 +146,8 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             txtPickUpLocation.text = rideDetailModel?.data?.originAddress
             txtDropUpLocation.text = rideDetailModel?.data?.destinationAddress
 
-            txtDistanceTime.text =
-                "Est.Distance - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / Est.Time - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
+            txtDistanceTime.text =  getString(R.string.str_est_distance) +
+                " - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / " +  getString(R.string.str_est_time)   +" - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
 
             txtWaitTime.text = rideDetailModel?.data?.total_wait_time.toString() + "Min"
             txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
@@ -499,7 +499,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         mPolyline = mMap?.addPolyline(lineOptions)
                         isRouteDrawn = true
                     } else {
-                        Toast.makeText(context, "No route is found", Toast.LENGTH_LONG)
+                        Toast.makeText(context,  getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                             .show()
                     }
 

@@ -59,7 +59,7 @@ class PrivacyPolicy : Fragment() {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
 
@@ -140,7 +140,7 @@ class PrivacyPolicy : Fragment() {
         spinnerLang.visibility = View.GONE
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_login)
-        toolbar.title = "Privacy Policy"
+        toolbar.title = getString(R.string.privacypolicy)
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
     }

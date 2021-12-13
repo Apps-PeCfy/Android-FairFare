@@ -83,9 +83,9 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
 
 
 
-            txtActualFare.text = "Total Fare Charged: ₹ " + model?.dispute?.actualMeterCharges
-            txtStartMeterReading.text = "Start Trip Meter: " + model?.dispute?.startMeterReading
-            txtEndMeterReading.text = "End Trip Meter: " + model?.dispute?.endMeterReading
+            txtActualFare.text = getString(R.string.str_total_fare_charged)  + " : ₹ " + model?.dispute?.actualMeterCharges
+            txtStartMeterReading.text = getString(R.string.str_start_trip_meter) + " : " + model?.dispute?.startMeterReading
+            txtEndMeterReading.text = getString(R.string.hint_end_trip_meter) + " : " + model?.dispute?.endMeterReading
 
             if (model?.dispute?.comment?.isNotEmpty()!!) {
                 txtComments.visibility = View.VISIBLE
@@ -167,15 +167,15 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
 
     private fun showConfirmationDialog() {
         val alertDialog = AlertDialog.Builder(context, R.style.alertDialog)
-        alertDialog.setTitle("FairFareIndia")
+        alertDialog.setTitle(getString(R.string.str_fair_fare_india))
 
-        alertDialog.setMessage("Are you sure you want to file Complaint?")
+        alertDialog.setMessage(getString(R.string.msg_dialog_file_complaint))
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("YES") { dialog, which ->
+        alertDialog.setPositiveButton(getString(R.string.str_yes)) { dialog, which ->
             dialog.dismiss()
             iDisputeDetailPresenter?.fileComplaint(token, disputeID)
         }
-        alertDialog.setNegativeButton("N0") { dialog, which -> dialog.dismiss() }
+        alertDialog.setNegativeButton(getString(R.string.str_no)) { dialog, which -> dialog.dismiss() }
         alertDialog.show()
     }
 

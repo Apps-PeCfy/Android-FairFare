@@ -294,12 +294,12 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     override fun bookingRequestSuccess(model: BookingRequestModel?) {
         var title = ""
         if (binding.rdBtnOffline.isChecked){
-            title = "Booked Successfully"
+            title = getString(R.string.title_booked_successfully)
         }else{
-            title = "Your payment is successful"
+            title = getString(R.string.title_your_payment_successfull)
         }
         var message1 =
-            "Your booking request submitted successfully for ${binding.txtDate.text}. Driver details will be shared 15 minutes before the ride."
+            getString(R.string.dialog_booking_request_msg_one) +  " ${binding.txtDate.text}. " + getString(R.string.dialog_booking_request_msg_two)
         openPaymentDialog(getString(R.string.btn_ok), message1, title)
       //  Toast.makeText(context, "Booking ID :- ${model?.data?.id}", Toast.LENGTH_LONG).show()
     }

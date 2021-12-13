@@ -243,7 +243,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     @OnClick(R.id.btnFinish)
     fun btnLogin() {
         if (TextUtils.isEmpty(edt_otp!!.text.toString()) || edt_otp!!.textSize < 6) {
-            Toast.makeText(this, "Please enter OTP", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.err_enter_otp), Toast.LENGTH_LONG).show()
         } else {
             successOtpFlow()
         }

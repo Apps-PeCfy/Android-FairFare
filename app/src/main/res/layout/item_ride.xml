@@ -55,8 +55,7 @@
                         android:fontFamily="@font/notosansjp_bold"
                         android:includeFontPadding="false"
                         android:maxLines="1"
-                        android:textSize="@dimen/text_14sp"
-                        android:text="Mon, Sept 3, 23:35 AM" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <TextView
                         android:textColor="@color/colorGreyText"

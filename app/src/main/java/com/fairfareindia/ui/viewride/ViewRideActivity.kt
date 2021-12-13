@@ -271,15 +271,15 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
         //   tv_Wait_time_charge!!.text = "₹ " + 0.00
 
         if (spntext.equals("Now")) {
-            btnLogin!!.text = "Start Ride"
+            btnLogin!!.text =  getString(R.string.btn_start_ride)
         } else {
-            btnLogin!!.text = "Schedule Ride"
+            btnLogin!!.text =  getString(R.string.str_schedule_ride)
         }
 
 
 
-        if(btnLogin!!.text.equals("Start Ride")) {
-            if (canStartRide.equals("Yes")) {
+        if(btnLogin!!.text.equals(getString(R.string.btn_start_ride))) {
+            if (canStartRide.equals(getString(R.string.str_yes))) {
                 btnLogin!!.isEnabled = true
             } else {
                 btnLogin!!.isEnabled = false
@@ -303,7 +303,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
             "₹ " + compareRideList[listPosition].additionalCharges
 
 
-        mToolbar!!.title = "View Ride"
+        mToolbar!!.title = getString(R.string.title_view_ride)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
@@ -728,7 +728,7 @@ class ViewRideActivity : AppCompatActivity(), OnMapReadyCallback, IViesRideView,
                     mPolyline!!.remove()
                 }
                 mPolyline = mMap!!.addPolyline(lineOptions)
-            } else Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+            } else Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                 .show()
         }
     }

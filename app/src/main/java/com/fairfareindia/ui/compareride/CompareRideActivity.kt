@@ -279,7 +279,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         tv_myDropUpLocation!!.text = destinationAddress
 
         if (baggs.equals("Luggage")) {
-            tv_baggs!!.text = "No " + baggs
+            tv_baggs?.text = getString(R.string.str_no_luggage)
 
         } else {
             tv_baggs!!.text = baggs
@@ -291,10 +291,10 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
         if (results1.isNotEmpty())
         DestinationPlaceID = results1[0]!!.placeId
 
-        mToolbar!!.title = "Compare Rides"
-        mToolbar!!.setTitleTextColor(Color.WHITE)
+        mToolbar?.title = getString(R.string.title_compare_rides)
+        mToolbar?.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
-        mToolbar!!.setNavigationOnClickListener {
+        mToolbar?.setNavigationOnClickListener {
             onBackPressed()
         }
 
@@ -729,7 +729,7 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     mPolyline!!.remove()
                 }
                 mPolyline = mMap!!.addPolyline(lineOptions)
-            } else Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+            } else Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                 .show()
         }
     }

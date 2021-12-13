@@ -329,7 +329,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
             tollsJSONArrayFromTollGuru
         )
 
-        mToolbar?.title = "End Ride"
+        mToolbar?.title = getString(R.string.title_end_ride)
         mToolbar?.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar?.setNavigationOnClickListener { onBackPressed() }
@@ -563,7 +563,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
 
         if(endRideResponsePOJO.rewards != null){
             tvActualRewardPoints?.visibility = View.VISIBLE
-            tvActualRewardPoints?.text = "Reward points earned for this ride " +endRideResponsePOJO!!.rewards
+            tvActualRewardPoints?.text =  getString(R.string.str_reward_points_earned_for_this_ride) + " " +endRideResponsePOJO!!.rewards
         }else{
             tvActualRewardPoints?.visibility = View.GONE
         }
@@ -582,11 +582,11 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
             ).into(iv_vehical!!)
 
         if (endRideResponsePOJO!!.ride?.luggageQuantity.equals("0")) {
-            tv_bagCount?.text = "No Luggage"
+            tv_bagCount?.text = getString(R.string.str_no_luggage)
 
         } else {
             tv_bagCount?.text =
-                endRideResponsePOJO!!.ride?.luggageQuantity.toString() + " Luggage"
+                endRideResponsePOJO!!.ride?.luggageQuantity.toString() + " " + getString(R.string.str_luggage)
 
         }
         tv_actualDistance!!.text = endRideResponsePOJO!!.ride?.actualTrackRide?.distance + " KM"
@@ -881,7 +881,7 @@ class EndRidesActivity : BaseLocationClass(), OnMapReadyCallback, IEndRideView {
                 }
                 mPolyline = mMap!!.addPolyline(lineOptions)
             } else {
-                Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+                Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                     .show()
             }
 

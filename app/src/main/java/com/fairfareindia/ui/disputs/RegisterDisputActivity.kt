@@ -189,10 +189,10 @@ class RegisterDisputActivity : AppCompatActivity() {
 
         photoSelector = PhotoSelector(this)
 
-        mToolbar!!.title = "Register Dispute"
-        mToolbar!!.setTitleTextColor(Color.WHITE)
+        mToolbar?.title = getString(R.string.title_register_dispute)
+        mToolbar?.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
-        mToolbar!!.setNavigationOnClickListener { onBackPressed() }
+        mToolbar?.setNavigationOnClickListener { onBackPressed() }
 
 
         setData()
@@ -247,7 +247,7 @@ class RegisterDisputActivity : AppCompatActivity() {
     private fun getDisputeReasonAPI() {
         val progressDialog = ProgressDialog(this@RegisterDisputActivity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getDisputeReasons("Bearer $token")!!
@@ -282,7 +282,7 @@ class RegisterDisputActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(
                             this@RegisterDisputActivity,
-                            "Internal server error",
+                            getString(R.string.err_internal_server_error),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -349,15 +349,15 @@ class RegisterDisputActivity : AppCompatActivity() {
 
     private fun showConfirmationDialog(position: Int) {
         val alertDialog = AlertDialog.Builder(context)
-        alertDialog.setTitle("FairFareIndia")
-        alertDialog.setMessage("Are you sure you remove this image?")
+        alertDialog.setTitle(getString(R.string.str_fair_fare_india))
+        alertDialog.setMessage(getString(R.string.msg_delete_img))
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Yes") { dialog, which ->
+        alertDialog.setPositiveButton(getString(R.string.str_yes)) { dialog, which ->
             imageList!!.removeAt(position)
             selectedImageList!!.removeAt(position)
             selectedImageAdapter!!.notifyDataSetChanged()
         }
-        alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+        alertDialog.setNegativeButton(getString(R.string.str_no)) { dialog, which -> dialog.cancel() }
         alertDialog.show()
     }
 
@@ -474,7 +474,7 @@ class RegisterDisputActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this@RegisterDisputActivity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -542,7 +542,7 @@ class RegisterDisputActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this@RegisterDisputActivity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }

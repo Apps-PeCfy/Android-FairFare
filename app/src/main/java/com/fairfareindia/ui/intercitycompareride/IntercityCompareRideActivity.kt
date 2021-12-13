@@ -246,7 +246,7 @@ class IntercityCompareRideActivity :  BaseLocationClass(), OnMapReadyCallback {
                         mPolyline?.remove()
                         mPolyline = mMap?.addPolyline(lineOptions)
                     } else{
-                        Toast.makeText(context, "No route is found", Toast.LENGTH_LONG)
+                        Toast.makeText(context,  getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                             .show()
                     }
                 }

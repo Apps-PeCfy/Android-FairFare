@@ -61,7 +61,7 @@ class FAQ : Fragment() {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getFaqs("Bearer $token")!!.enqueue(object :
@@ -99,7 +99,7 @@ class FAQ : Fragment() {
                 }else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -146,7 +146,7 @@ class FAQ : Fragment() {
 
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "FAQs"
+        toolbar.title = getString(R.string.drawer_faq)
 
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 

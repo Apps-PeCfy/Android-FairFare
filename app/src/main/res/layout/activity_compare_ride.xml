@@ -229,7 +229,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_14sp"
-                                android:text="No. of Bags" />
+                                android:text="@string/str_no_of_bags" />
 
 
                             <TextView

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityPermissionBinding
 import com.fairfareindia.ui.Login.LoginActivity
 import com.fairfareindia.ui.home.HomeActivity
@@ -55,10 +56,10 @@ class PermissionActivity : AppCompatActivity() {
     private fun setData() {
         var alertMessage = ""
         if (!CommonAppPermission.hasAllPermissionGranted(context)) {
-            binding.txtPermissionTitle.text = "Welcome to Fair Fare"
+            binding.txtPermissionTitle.text = getString(R.string.title_welcome_to_fair_fare)
 
              alertMessage =
-                "Have a hassle-free booking experience by giving us the following permissions."
+                getString(R.string.msg_permission_one)
 
            /* if (!CommonAppPermission.hasCameraPermission(this)) {
                 alertMessage += "\n\nCamera: Please provide camera permission"
@@ -71,17 +72,17 @@ class PermissionActivity : AppCompatActivity() {
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    alertMessage += "\n\nLocation: Please provide \"Allow all the time\" location permission for accurate pick-up and drop-off locations, availability of autos/taxis in the area and tracking the ride until trip ends."
+                    alertMessage += "\n\n " + getString(R.string.msg_all_time_location_permission)
                 } else {
-                    alertMessage += "\n\nLocation: Please provide location permission"
+                    alertMessage += "\n\n" + getString(R.string.msg_location_permission)
                 }
             }
 
         }else{
             if(!ProjectUtilities.isGPSEnabled(context)){
-                binding.txtPermissionTitle.text = "GPS turned off"
-                alertMessage = "Allow Fair Fare to turn on your phone GPS for accurate pick up and drop"
-                binding.btnAllow.text = "TURN ON GPS"
+                binding.txtPermissionTitle.text = getString(R.string.str_gps_turned_off)
+                alertMessage = getString(R.string.msg_allow_gps_on)
+                binding.btnAllow.text = getString(R.string.str_turn_on_gps)
             }else{
                 moveNextScreen()
             }

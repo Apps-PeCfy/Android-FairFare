@@ -554,7 +554,7 @@ class LoginActivity : AppCompatActivity(),
     private fun CallAPI() {
         val progressDialoggmail = ProgressDialog(this@LoginActivity)
         progressDialoggmail.setCancelable(false) // set cancelable to false
-        progressDialoggmail.setMessage("Please Wait") // set message
+        progressDialoggmail.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialoggmail.show() // show progress dialog
         client.sociallogin(
             "Android", "GGL", gmailPersonName,
@@ -669,7 +669,7 @@ class LoginActivity : AppCompatActivity(),
                     } catch (exception: IOException) {
                     }
                 } else {
-                    Toast.makeText(this@LoginActivity, "Internal server error", Toast.LENGTH_LONG)
+                    Toast.makeText(this@LoginActivity, getString(R.string.err_internal_server_error), Toast.LENGTH_LONG)
                         .show()
                 }
             }
@@ -793,7 +793,7 @@ class LoginActivity : AppCompatActivity(),
                     } catch (exception: IOException) {
                     }
                 } else {
-                    Toast.makeText(this@LoginActivity, "Internal server error", Toast.LENGTH_LONG)
+                    Toast.makeText(this@LoginActivity, getString(R.string.err_internal_server_error), Toast.LENGTH_LONG)
                         .show()
                 }
             }

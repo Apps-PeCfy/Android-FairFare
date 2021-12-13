@@ -115,7 +115,7 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
 
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.getUserSetting("Bearer $token")!!.enqueue(object :
@@ -148,7 +148,7 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
                 } else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -230,7 +230,7 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
 
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "Settings"
+        toolbar.title = getString(R.string.drawer_setting)
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
         PreferencesManager.initializeInstance(activity!!.applicationContext)
@@ -356,7 +356,7 @@ class Setting : Fragment(), AdapterView.OnItemSelectedListener {
                     } else {
                         Toast.makeText(
                             activity,
-                            "Internal server error",
+                            getString(R.string.err_internal_server_error),
                             Toast.LENGTH_LONG
                         ).show()
                     }

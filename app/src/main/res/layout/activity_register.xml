@@ -368,7 +368,7 @@
                         android:includeFontPadding="false"
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingRight="@dimen/_4sdp"
-                        android:text="Already have an account? "
+                        android:text="@string/str_already_have_an_account"
                         android:textColor="@color/colorGreyText"
                         android:textSize="@dimen/text_14sp"
                         android:visibility="visible" />

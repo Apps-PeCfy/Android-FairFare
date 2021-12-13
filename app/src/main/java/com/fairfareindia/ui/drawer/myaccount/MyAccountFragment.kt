@@ -237,7 +237,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         spinnerLang.visibility = View.GONE
 
         val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = "My Account"
+        toolbar.title = getString(R.string.drawer_my_account)
 
         sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
@@ -342,7 +342,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
 
         }else{
-            ProjectUtilities.showToast(context,"No internet connection")
+            ProjectUtilities.showToast(context,getString(R.string.err_internet_connection))
         }
 
 
@@ -351,7 +351,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     private fun callAPIWithOutEmail(formaredDate: String) {
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.updateProfileWithOutEmail(
@@ -475,7 +475,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 } else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -496,7 +496,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     private fun callAPIWithEmail(formaredDate: String) {
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
-        progressDialog.setMessage("Please Wait") // set message
+        progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
         progressDialog.show() // show progress dialog
 
         ApiClient.client.updateProfile(
@@ -612,7 +612,7 @@ class MyAccountFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 } else {
                     Toast.makeText(
                         activity,
-                        "Internal server error",
+                        getString(R.string.err_internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }

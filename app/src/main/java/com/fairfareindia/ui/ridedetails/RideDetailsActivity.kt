@@ -195,7 +195,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
         pDialog = ProgressDialog(this@RideDetailsActivity)
-        pDialog!!.setMessage("Please wait...")
+        pDialog!!.setMessage(getString(R.string.str_please_wait))
         pDialog!!.setCancelable(false)
         pDialog!!.show()
 
@@ -252,7 +252,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
 
-        mToolbar!!.title = "Ride details"
+        mToolbar!!.title = getString(R.string.title_ride_details)
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
@@ -476,10 +476,10 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         val tvCalculatedNewFare: TextView = customLayout!!.findViewById(R.id.tvCalculatedNewFare)
         val tvDropUpLocation: TextView = customLayout!!.findViewById(R.id.tvDropUpLocation)
         val tvPickUpLocation: TextView = customLayout!!.findViewById(R.id.tvPickUpLocation)
-        tvCalculatedDistance.text = "Estimated Distance : " + estCurrentDistance.toString()
-        tvCalculatedDuration.text = "New Calculated Duration : " + estCurrentDuration
-        tvCalculatedNewFare.text = "Estimated Fare : " + "Rs " + estCurrentFare
-        tvDropUpLocation.text = "Drop Up Location : " + dAddress
+        tvCalculatedDistance.text = getString(R.string.str_estimated_distance) + " : " + estCurrentDistance.toString()
+        tvCalculatedDuration.text = getString(R.string.str_new_calculated_duration) + " : " + estCurrentDuration
+        tvCalculatedNewFare.text = getString(R.string.str_estimated_fare) + " : " + "Rs " + estCurrentFare
+        tvDropUpLocation.text = getString(R.string.str_drop_up_location) + " : " + dAddress
 
         val geocoder = Geocoder(this@RideDetailsActivity, Locale.getDefault())
         var currentAddress: String? = null
@@ -506,9 +506,9 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
 
-        tvPickUpLocation.text = "Pick Up Location : " + currentAddress
+        tvPickUpLocation.text = getString(R.string.lbl_pick_up_location) + " : " + currentAddress
 
-        alertDialog.setPositiveButton("Proceed") { dialog, which ->
+        alertDialog.setPositiveButton(getString(R.string.btn_proceed)) { dialog, which ->
             val editText: TextView = customLayout!!.findViewById(R.id.test)
 
 
@@ -582,7 +582,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         }
 
 
-        alertDialog.setNegativeButton("Cancel") { dialog, which ->
+        alertDialog.setNegativeButton(getString(R.string.btn_cancel)) { dialog, which ->
             val editText: TextView = customLayout!!.findViewById(R.id.test)
 
             sharedpreferences!!.edit().clear().commit()
@@ -623,7 +623,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
                 Toast.makeText(
                     this@RideDetailsActivity,
-                    "Pick-UP and Drop-Off Location should not be same.",
+                    getString(R.string.err_pick_drop_location_same),
                     Toast.LENGTH_LONG
                 ).show()
 
@@ -635,15 +635,15 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 ) {
 
                     val alertDialog = AlertDialog.Builder(this)
-                    alertDialog.setTitle("FairFareIndia")
-                    alertDialog.setMessage("Make sure you record the Start Meter reading before starting the ride.")
+                    alertDialog.setTitle(getString(R.string.str_fair_fare_india))
+                    alertDialog.setMessage(getString(R.string.msg_dialog_start_meter_reading))
                     alertDialog.setCancelable(false)
-                    alertDialog.setPositiveButton("SKIP") { dialog, which ->
+                    alertDialog.setPositiveButton(getString(R.string.str_skip)) { dialog, which ->
 
                         callTrackButton()
 
                     }
-                    alertDialog.setNegativeButton("OK") { dialog, which -> dialog.cancel() }
+                    alertDialog.setNegativeButton(getString(R.string.btn_ok)) { dialog, which -> dialog.cancel() }
                     alertDialog.show()
                 } else {
                     callTrackButton()
@@ -873,10 +873,10 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
     }
     private fun showConfirmationDialog(position: Int) {
         val alertDialog = AlertDialog.Builder(context)
-        alertDialog.setTitle("FairFareIndia")
-        alertDialog.setMessage("Are you sure you remove this image?")
+        alertDialog.setTitle(getString(R.string.str_fair_fare_india))
+        alertDialog.setMessage(getString(R.string.msg_delete_img))
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Yes") { dialog, which ->
+        alertDialog.setPositiveButton(getString(R.string.str_yes)) { dialog, which ->
             if (imageClickFinder == Constants.vehicleImageClick){
                 vehicleImageList!!.removeAt(position)
                 vehicleImageAdapter?.updateAdapter(vehicleImageList!!)
@@ -892,7 +892,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
             }
             setImageData()
         }
-        alertDialog.setNegativeButton("No") { dialog, which -> dialog.cancel() }
+        alertDialog.setNegativeButton(getString(R.string.str_no)) { dialog, which -> dialog.cancel() }
         alertDialog.show()
     }
 
@@ -1162,7 +1162,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
         val alertDialog = AlertDialog.Builder(context)
         alertDialog.setMessage(scheduleRideResponsePOJO!!.message)
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("OK") { dialog, which ->
+        alertDialog.setPositiveButton(getString(R.string.btn_ok)) { dialog, which ->
 
             if (actualDistanceInMeter >= 500) {
 
@@ -1214,7 +1214,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
 
 
         }
-        alertDialog.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        alertDialog.setNegativeButton(getString(R.string.btn_cancel)) { dialog, which -> dialog.cancel() }
         alertDialog.show()
 
 
@@ -1512,7 +1512,7 @@ class RideDetailsActivity : BaseLocationClass(), IRideDetaisView, LocationListen
                 }
                 mPolyline = mMap!!.addPolyline(lineOptions)
             } else {
-                Toast.makeText(applicationContext, "No route is found", Toast.LENGTH_LONG)
+                Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
                     .show()
             }
 
