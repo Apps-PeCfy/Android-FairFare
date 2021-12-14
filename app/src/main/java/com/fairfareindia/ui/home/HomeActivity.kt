@@ -69,6 +69,7 @@ import com.fairfareindia.ui.home.pojo.GeneralSettingModel
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.intercity.InterCityActivity
+import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.localcompareride.LocalCompareRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
@@ -1216,14 +1217,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     private fun getcurrentDate() {
         val today = Date()
         val format = SimpleDateFormat("dd MMM, hh:mm a")
-        val formatviewRide = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val formatviewRide = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
 
 
         dateToStr = format.format(today)!!.replace("am", "AM").replace("pm", "PM")
 
 
-        setDate = dateToStr
+        setDate = formatviewRide.format(today).toString()
 
         formaredDate = formatviewRide.format(today).toString()
 
@@ -1809,7 +1810,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         } else {
             formaredDate = setDate
         }
-
         //ILOMADEV :- Take value before comparing
 
         PortAir =
@@ -1939,23 +1939,45 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
 
 
+                if(Constants.IS_OLD_LOCAL){
+                    iCompareRidePresenter!!.getCompareRideData(
+                        token,
+                        replacedistance,
+                        cityID,
+                        sourcePlaceID,
+                        DestinationPlaceID,
+                        replacebags,
+                        airportYesOrNO,
+                        formaredDate,
+                        CurrentPlaceID!!,
+                        legDuration,
+                        SourceLat,
+                        SourceLong,
+                        DestinationLat,
+                        DestinationLong
+                    )
+                }else{
 
-                iCompareRidePresenter!!.getCompareRideData(
-                    token,
-                    replacedistance,
-                    cityID,
-                    sourcePlaceID,
-                    DestinationPlaceID,
-                    replacebags,
-                    airportYesOrNO,
-                    formaredDate,
-                    CurrentPlaceID!!,
-                    legDuration,
-                    SourceLat,
-                    SourceLong,
-                    DestinationLat,
-                    DestinationLong
-                )
+                    iCompareRidePresenter?.getCompareRideLocalNew(
+                        token,
+                        replacedistance,
+                        legDuration,
+                        Constants.TYPE_LOCAL,
+                        cityID,
+                        sourcePlaceID,
+                        DestinationPlaceID,
+                        replacebags,
+                        Constants.ONE_WAY_FLAG,
+                        formaredDate,
+                        SourceLat,
+                        SourceLong,
+                        DestinationLat,
+                        DestinationLong
+                    )
+
+                }
+
+
 
 
             } else {
@@ -2058,23 +2080,43 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
 
 
+                if(Constants.IS_OLD_LOCAL){
+                    iCompareRidePresenter!!.getCompareRideData(
+                        token,
+                        replacedistance,
+                        cityID,
+                        sourcePlaceID,
+                        DestinationPlaceID,
+                        replacebags,
+                        airportYesOrNO,
+                        formaredDate,
+                        CurrentPlaceID!!,
+                        estTime,
+                        SourceLat,
+                        SourceLong,
+                        DestinationLat,
+                        DestinationLong
+                    )
+                }else{
+                    iCompareRidePresenter?.getCompareRideLocalNew(
+                        token,
+                        replacedistance,
+                        estTime,
+                        Constants.TYPE_LOCAL,
+                        cityID,
+                        sourcePlaceID,
+                        DestinationPlaceID,
+                        replacebags,
+                        Constants.ONE_WAY_FLAG,
+                        formaredDate,
+                        SourceLat,
+                        SourceLong,
+                        DestinationLat,
+                        DestinationLong
+                    )
+                }
 
-                iCompareRidePresenter!!.getCompareRideData(
-                    token,
-                    replacedistance,
-                    cityID,
-                    sourcePlaceID,
-                    DestinationPlaceID,
-                    replacebags,
-                    airportYesOrNO,
-                    formaredDate,
-                    CurrentPlaceID!!,
-                    legDuration,
-                    SourceLat,
-                    SourceLong,
-                    DestinationLat,
-                    DestinationLong
-                )
+
 
 
             } else {
@@ -2368,48 +2410,50 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onSuccess(info: CompareRideResponsePOJO?) {
 
-        if (Constants.IS_OLD_LOCAL){
-            val intent = Intent(applicationContext, CompareRideActivity::class.java)
-            intent.putExtra("SourceLat", SourceLat)
-            intent.putExtra("SourceLong", SourceLong)
-            intent.putExtra("DestinationLat", DestinationLat)
-            intent.putExtra("DestinationLong", DestinationLong)
-            intent.putExtra("Distance", estDistance)
-            intent.putExtra("CITY_ID", cityID)
-            intent.putExtra("CITY_NAME", city_Name)
-            intent.putExtra("EstTime", estTime)
-            intent.putExtra("Liggage", spinnerLuggagetxt)
-            intent.putExtra("TimeSpinner", spinnertxt)
-            intent.putExtra("Airport", keyAirport)
-            intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
-            intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
-            intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
-            intent.putExtra("currentFormatedDate", formaredDate)
-            intent.putExtra("currentPlaceId", CurrentPlaceID)
-            intent.putExtra("MyPOJOClass", info)
-            startActivity(intent)
-        }else{
-            val intent = Intent(applicationContext, LocalCompareRideActivity::class.java)
-            intent.putExtra("SourceLat", SourceLat)
-            intent.putExtra("SourceLong", SourceLong)
-            intent.putExtra("DestinationLat", DestinationLat)
-            intent.putExtra("DestinationLong", DestinationLong)
-            intent.putExtra("Distance", estDistance)
-            intent.putExtra("CITY_ID", cityID)
-            intent.putExtra("CITY_NAME", city_Name)
-            intent.putExtra("EstTime", estTime)
-            intent.putExtra("Luggage", spinnerLuggagetxt)
-            intent.putExtra("TimeSpinner", spinnertxt)
-            intent.putExtra("Airport", keyAirport)
-            intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
-            intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
-            intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
-            intent.putExtra("currentFormattedDate", formaredDate)
-            intent.putExtra("currentPlaceId", CurrentPlaceID)
-            intent.putExtra("MyPOJOClass", info)
-            startActivity(intent)
-        }
+        val intent = Intent(applicationContext, CompareRideActivity::class.java)
+        intent.putExtra("SourceLat", SourceLat)
+        intent.putExtra("SourceLong", SourceLong)
+        intent.putExtra("DestinationLat", DestinationLat)
+        intent.putExtra("DestinationLong", DestinationLong)
+        intent.putExtra("Distance", estDistance)
+        intent.putExtra("CITY_ID", cityID)
+        intent.putExtra("CITY_NAME", city_Name)
+        intent.putExtra("EstTime", estTime)
+        intent.putExtra("Liggage", spinnerLuggagetxt)
+        intent.putExtra("TimeSpinner", spinnertxt)
+        intent.putExtra("Airport", keyAirport)
+        intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
+        intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
+        intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
+        intent.putExtra("currentFormatedDate", formaredDate)
+        intent.putExtra("currentPlaceId", CurrentPlaceID)
+        intent.putExtra("MyPOJOClass", info)
+        startActivity(intent)
 
+    }
+
+    override fun onNewCompareRideLocalSuccess(info: InterCityCompareRideModel?) {
+        val intent = Intent(applicationContext, LocalCompareRideActivity::class.java)
+        intent.putExtra("SourceLat", SourceLat)
+        intent.putExtra("SourceLong", SourceLong)
+        intent.putExtra("DestinationLat", DestinationLat)
+        intent.putExtra("DestinationLong", DestinationLong)
+        intent.putExtra("Distance", estDistance)
+        intent.putExtra("CITY_ID", cityID)
+        intent.putExtra("CITY_NAME", city_Name)
+        intent.putExtra("EstTime", estTime)
+        intent.putExtra("Luggage", spinnerLuggagetxt)
+        intent.putExtra("TimeSpinner", spinnertxt)
+        intent.putExtra("Airport", keyAirport)
+        intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
+        intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
+        intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
+        intent.putExtra("currentFormattedDate", formaredDate)
+        intent.putExtra("currentPlaceId", CurrentPlaceID)
+        intent.putExtra("time_in_seconds", legDuration)
+        intent.putExtra("schedule_type", spinner_time?.selectedItem.toString())
+        intent.putExtra("MyPOJOClass", info)
+        startActivity(intent)
 
     }
 

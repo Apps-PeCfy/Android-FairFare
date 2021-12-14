@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fairfareindia.R
 import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.databinding.ActivityLocalCompareRideBinding
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
+import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercityviewride.IntercityViewRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.utils.APIManager
@@ -29,9 +29,9 @@ class LocalCompareRideActivity : BaseLocationClass(), OnMapReadyCallback {
     lateinit var binding: ActivityLocalCompareRideBinding
     private var context: Context = this
 
-    private lateinit var info: CompareRideResponsePOJO
+    private lateinit var info: InterCityCompareRideModel
     private var mAdapter: LocalCompareRideAdapter ?= null
-    private var list: ArrayList<CompareRideResponsePOJO.VehiclesItem> = ArrayList()
+    private var list: ArrayList<InterCityCompareRideModel.VehiclesItem> = ArrayList()
 
     var sourceAddress: String? = null
     var destinationAddress: String? = null
@@ -57,7 +57,7 @@ class LocalCompareRideActivity : BaseLocationClass(), OnMapReadyCallback {
         Places.initialize(this, resources.getString(R.string.google_maps_key))
         Places.createClient(context)
 
-        info = intent.getSerializableExtra("MyPOJOClass") as CompareRideResponsePOJO
+        info = intent.getSerializableExtra("MyPOJOClass") as InterCityCompareRideModel
         sourceAddress = intent.getStringExtra("SourceAddress")
         destinationAddress = intent.getStringExtra("DestinationAddress")
         sourceLat = intent.getStringExtra("SourceLat")
@@ -127,9 +127,9 @@ class LocalCompareRideActivity : BaseLocationClass(), OnMapReadyCallback {
             object : LocalCompareRideAdapter.LocalCompareRideAdapterInterface {
                 override fun onItemSelected(
                     position: Int,
-                    model: CompareRideResponsePOJO.VehiclesItem
+                    model: InterCityCompareRideModel.VehiclesItem
                 ) {
-                  /*  val intent = Intent(applicationContext, IntercityViewRideActivity::class.java)
+                    val intent = Intent(applicationContext, IntercityViewRideActivity::class.java)
                     intent.putExtra("SourceAddress", sourceAddress)
                     intent.putExtra("DestinationAddress", destinationAddress)
                     intent.putExtra("SourceLat", sourceLat)
@@ -141,7 +141,7 @@ class LocalCompareRideActivity : BaseLocationClass(), OnMapReadyCallback {
                     intent.putExtra("time_in_seconds", estTimeInSeconds)
                     intent.putExtra("MyPOJOClass", info)
 
-                    startActivity(intent)*/
+                    startActivity(intent)
                 }
 
             })

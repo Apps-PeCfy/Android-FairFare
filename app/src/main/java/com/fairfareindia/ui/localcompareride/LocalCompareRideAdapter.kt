@@ -10,24 +10,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
+import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 
 class LocalCompareRideAdapter() :
     RecyclerView.Adapter<LocalCompareRideAdapter.MyViewHolder>() {
     private var context: Context? = null
-    var mList: ArrayList<CompareRideResponsePOJO.VehiclesItem> = ArrayList()
+    var mList: ArrayList<InterCityCompareRideModel.VehiclesItem> = ArrayList()
     var distance: String? = null
     var estTime: String? = null
     var mListener: LocalCompareRideAdapterInterface? = null
 
-    fun updateAdapter(mList: ArrayList<CompareRideResponsePOJO.VehiclesItem>) {
+    fun updateAdapter(mList: ArrayList<InterCityCompareRideModel.VehiclesItem>) {
         this.mList = mList
         notifyDataSetChanged()
     }
 
     constructor(
         context: Context?, distance: String?, estTime: String?,
-        mList: ArrayList<CompareRideResponsePOJO.VehiclesItem>,
+        mList: ArrayList<InterCityCompareRideModel.VehiclesItem>,
         mListener: LocalCompareRideAdapterInterface?
     ) : this() {
         this.context = context
@@ -38,7 +38,7 @@ class LocalCompareRideAdapter() :
     }
 
     interface LocalCompareRideAdapterInterface {
-        fun onItemSelected(position: Int, model: CompareRideResponsePOJO.VehiclesItem)
+        fun onItemSelected(position: Int, model: InterCityCompareRideModel.VehiclesItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -48,19 +48,19 @@ class LocalCompareRideAdapter() :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val model: CompareRideResponsePOJO.VehiclesItem = mList[position]
+        val model: InterCityCompareRideModel.VehiclesItem = mList[position]
 
-        holder.txtPerson.text = model.noOfSeater.toString()
+        holder.txtPerson.text = model?.vehicle?.noOfSeater.toString()
         holder.txtDistance.text = distance + " Km"
-        holder.txtCarName.text = model.vehicleName
-        holder.txtVehicleType.text = model.label
+        holder.txtCarName.text = model?.name
+        holder.txtVehicleType.text = model?.vehicle?.name
         holder.txtTime.text = estTime
-        holder.txtTotal.text = "₹ " + model.total
+        holder.txtTotal.text = "₹ " + model.totalPayableCharges
 
 
 
         Glide.with(context!!)
-            .load(model.vehicleImageUrl)
+            .load(model?.vehicle?.image)
             .apply(
                 RequestOptions()
                     .centerCrop()

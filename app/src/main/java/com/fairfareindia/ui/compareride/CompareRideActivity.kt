@@ -26,6 +26,7 @@ import com.fairfareindia.base.BaseLocationClass
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.home.HomeActivity
+import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.ui.viewride.ViewRideActivity
 import com.fairfareindia.utils.Constants
@@ -530,6 +531,10 @@ class CompareRideActivity : BaseLocationClass(), OnMapReadyCallback,
     override fun removeWait() {}
     override fun onFailure(appErrorMessage: String?) {}
     override fun onSuccess(info: CompareRideResponsePOJO?) {
+
+    }
+
+    override fun onNewCompareRideLocalSuccess(info: InterCityCompareRideModel?) {
 
     }
 

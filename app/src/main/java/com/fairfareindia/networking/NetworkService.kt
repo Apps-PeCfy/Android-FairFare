@@ -146,6 +146,25 @@ interface NetworkService {
         @Field("destination_longitude") destination_longitude: String?
     ): Call<CompareRideResponsePOJO?>?
 
+    @FormUrlEncoded
+    @POST("compareRideLocalV1")
+    fun getNewLocalCompareRide(
+        @Header("Authorization") header: String?,
+        @Field("distance") distance: String?,
+        @Field("travel_time") estTime: String?,
+        @Field("permit_type") permitType: String?,
+        @Field("city_id") city_id: String?,
+        @Field("origin_place_id") fromPlaceID: String?,
+        @Field("destination_place_id") toPlaceID: String?,
+        @Field("luggage") luggage: String?,
+        @Field("way_flag") airport: String?,
+        @Field("schedule_datetime") schedule_datetime: String?,
+        @Field("origin_latitude") origin_latitude: String?,
+        @Field("origin_longitude") origin_longitude: String?,
+        @Field("destination_latitude") destination_latitude: String?,
+        @Field("destination_longitude") destination_longitude: String?
+    ): Call<InterCityCompareRideModel?>?
+
 
     @FormUrlEncoded
     @POST("compareRideIntercity")
