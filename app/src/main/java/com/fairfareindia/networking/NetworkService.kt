@@ -218,10 +218,11 @@ interface NetworkService {
 
 
     @FormUrlEncoded
-    @POST("getViewRideDetails")
-    fun getViewRideDetails(
+    @POST("v1/getViewIntercityRideDetails")
+    fun getViewIntercityRideDetails(
         @Header("Authorization") header: String?,
-        @Field("intercity_rate_card_id") intercity_rate_card_id: String?,
+        @Header("permit_type") permit_type: String?,
+        @Field("rate_card_id") rate_card_id: String?,
         @Field("distance") distance: String?,
         @Field("luggage") luggage: String?,
         @Field("origin_place_id") origin_place_id: String?,
@@ -231,6 +232,23 @@ interface NetworkService {
         @Field("destination_latitude") destination_latitude: String?,
         @Field("destination_longitude") destination_longitude: String?
     ): Call<ViewRideModel?>?
+
+    @FormUrlEncoded
+    @POST("v1/getViewLocalRideDetails")
+    fun getViewLocalRideDetails(
+        @Header("Authorization") header: String?,
+        @Header("permit_type") permit_type: String?,
+        @Field("rate_card_id") rate_card_id: String?,
+        @Field("distance") distance: String?,
+        @Field("luggage") luggage: String?,
+        @Field("origin_place_id") origin_place_id: String?,
+        @Field("destination_place_id") destination_place_id: String?,
+        @Field("origin_latitude") origin_latitude: String?,
+        @Field("origin_longitude") origin_longitude: String?,
+        @Field("destination_latitude") destination_latitude: String?,
+        @Field("destination_longitude") destination_longitude: String?
+    ): Call<ViewRideModel?>?
+
 
 
     @FormUrlEncoded

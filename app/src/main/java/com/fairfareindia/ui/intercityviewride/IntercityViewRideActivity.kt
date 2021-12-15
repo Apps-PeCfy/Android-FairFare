@@ -87,6 +87,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
 
         iInterCityViewRidePresenter?.getViewRideDetails(
             token,
+            info.permitType,
             vehicleModel?.id,
             info.distance,
             info.luggage,

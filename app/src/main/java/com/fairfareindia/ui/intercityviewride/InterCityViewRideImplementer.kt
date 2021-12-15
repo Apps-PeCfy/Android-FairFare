@@ -2,6 +2,7 @@ package com.fairfareindia.ui.intercityviewride
 
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.utils.Constants
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -105,7 +106,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
 
     override fun getViewRideDetails(
         token: String?,
-        intercity_rate_card_id: String?,
+        permit_type: String?,
+        rate_card_id: String?,
         distance: String?,
         luggage: String?,
         origin_place_id: String?,
@@ -116,19 +118,40 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         destination_longitude: String?
     ) {
         viewRideView.showWait()
-        val call = ApiClient.client.getViewRideDetails(
-            "Bearer $token",
-            intercity_rate_card_id,
-            distance,
-            luggage,
-            origin_place_id,
-            destination_place_id,
-            origin_latitude,
-            origin_longitude,
-            destination_latitude,
-            destination_longitude
-        )
-        call!!.enqueue(object : Callback<ViewRideModel?> {
+
+        var call: Call<ViewRideModel?>? = null
+
+        if (permit_type == Constants.TYPE_INTERCITY) {
+            call = ApiClient.client.getViewIntercityRideDetails(
+                "Bearer $token",
+                permit_type,
+                rate_card_id,
+                distance,
+                luggage,
+                origin_place_id,
+                destination_place_id,
+                origin_latitude,
+                origin_longitude,
+                destination_latitude,
+                destination_longitude
+            )
+        }else{
+            call =  ApiClient.client.getViewLocalRideDetails(
+                "Bearer $token",
+                permit_type,
+                rate_card_id,
+                distance,
+                luggage,
+                origin_place_id,
+                destination_place_id,
+                origin_latitude,
+                origin_longitude,
+                destination_latitude,
+                destination_longitude
+            )
+        }
+
+        call?.enqueue(object : Callback<ViewRideModel?> {
             override fun onResponse(
                 call: Call<ViewRideModel?>,
                 response: Response<ViewRideModel?>
