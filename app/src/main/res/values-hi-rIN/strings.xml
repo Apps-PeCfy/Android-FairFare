@@ -238,7 +238,7 @@
     <string name="str_under_review">समीक्षा के अंतर्गत</string>
     <string name="str_schedule_ride">सवारी को शेड्यूल करें</string>
 
-    <string name="str_reward_points_earned_for_this_ride">"इस राइड के लिए अर्जित किए गए रिवॉर्ड पॉइंट"</string>
+    <string name="str_reward_points_earned_for_this_ride">इस राइड के लिए अर्जित किए गए रिवॉर्ड पॉइंट</string>
     <string name="err_valid_phone_number">कृपया फोन नंबर दर्ज करें।</string>
     <string name="err_phone_and_gender">कृपया फोन नंबर और लिंग दर्ज करें।</string>
     <string name="err_valid_email">कृपया ईमेल दर्ज करें।</string>

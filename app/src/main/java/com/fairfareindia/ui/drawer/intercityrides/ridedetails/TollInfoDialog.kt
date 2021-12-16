@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fairfareindia.R
 import com.fairfareindia.databinding.DialogWaitingInfoBinding
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 
@@ -44,6 +45,8 @@ class TollInfoDialog (context: Context?) : Dialog(context!!) {
         val param = binding.rlMain.layoutParams as ViewGroup.MarginLayoutParams
         param.setMargins(10,10,10,10)
         binding.rlMain.layoutParams = param
+
+        binding.txtRightCornerLabel.text = context.resources.getString(R.string.str_charges)
         //Method calling
         setListener()
         setRecyclerView()

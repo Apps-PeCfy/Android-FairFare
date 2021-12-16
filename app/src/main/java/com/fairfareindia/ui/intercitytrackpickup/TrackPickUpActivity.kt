@@ -21,6 +21,7 @@ import com.fairfareindia.databinding.ActivityTrackPickUpBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.common.CommonMessageDialog
 import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
+import com.fairfareindia.ui.drawer.intercityrides.ridedetails.TollInfoDialog
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
@@ -62,6 +63,9 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
     private var prevLatLng: LatLng? = null
     private var isRouteDrawn: Boolean = false
     private var mPolyline: Polyline? = null
+
+    private var tollInfoDialog : TollInfoDialog ?= null
+
 
     val handler: Handler? = Handler()
 
@@ -129,8 +133,21 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                 }
 
             }
+
+            ivViewTollInfo.setOnClickListener {
+                if(model?.data?.estimatedTrackRide?.tolls?.isNotEmpty()!!){
+                    openTollInfoDialog()
+                }
+            }
         }
     }
+
+    private fun  openTollInfoDialog() {
+        tollInfoDialog = TollInfoDialog(context, model?.data?.estimatedTrackRide?.tolls!!)
+        tollInfoDialog?.show()
+        tollInfoDialog?.setCancelable(false)
+    }
+
 
     private fun openConfirmationDialog() {
         commonMessageDialog = CommonMessageDialog(
@@ -648,6 +665,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
     override fun getRideDetails(model: RideDetailModel?) {
         this.model = model
         setData()
+        setHandler()
     }
 
     override fun getDriverLocation(model: DriverLocationModel?) {
@@ -655,7 +673,6 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
         driverLat = driverLocationModel?.data?.latitude.toString()
         driverLong = driverLocationModel?.data?.longitude.toString()
         setStatusMessageText()
-        setHandler()
     }
 
     override fun getCancelRideSuccess(getRideResponsePOJO: GetRideResponsePOJO?) {

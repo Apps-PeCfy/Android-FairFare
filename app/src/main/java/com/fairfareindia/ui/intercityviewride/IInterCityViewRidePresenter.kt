@@ -1,5 +1,8 @@
 package com.fairfareindia.ui.intercityviewride
 
+import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
+import org.json.JSONArray
+
 
 interface IInterCityViewRidePresenter {
 
@@ -27,7 +30,8 @@ interface IInterCityViewRidePresenter {
         transaction_id: String?,
         method: String?,
         payment_status: String?,
-        gateway_type: String?
+        gateway_type: String?,
+        tolls: ArrayList<RideDetailModel.Tolls>
     )
 
 

@@ -194,7 +194,8 @@ interface NetworkService {
         @Field("transaction_id") transaction_id: String?,
         @Field("method") method: String?,
         @Field("payment_status") payment_status: String?,
-        @Field("gateway_type") gateway_type: String?
+        @Field("gateway_type") gateway_type: String?,
+        @Field("tolls") jsonArray: JSONArray?
     ): Call<BookingRequestModel?>?
 
 

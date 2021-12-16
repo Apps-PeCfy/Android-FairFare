@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityIntercityViewRideBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.drawer.intercityrides.ridedetails.TollInfoDialog
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
@@ -23,6 +24,7 @@ import com.google.gson.Gson
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
+import org.json.JSONArray
 import org.json.JSONObject
 
 class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
@@ -48,10 +50,11 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     private var iInterCityViewRidePresenter: IInterCityViewRidePresenter? = null
 
     var eventInfoDialog: Dialog? = null
-    var viewRideTollsPopUp: ViewRideTollsPopUp? = null
     var paymentDialog: PaymentDialog? = null
 
     var sharedpreferences: SharedPreferences? = null
+
+    private var tollInfoDialog : TollInfoDialog ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,7 +174,9 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
             ivViewTollInfo.setOnClickListener {
-                showTollInfoDialog()
+                if(model?.ride?.tolls?.isNotEmpty()!!){
+                    openTollInfoDialog()
+                }
             }
 
             rlAdditional.setOnClickListener {
@@ -225,7 +230,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             "",
             "Cash",
             Constants.PAYMENT_UNPAID,
-            "Offline"
+            "Offline",
+            model?.ride?.tolls!!
         )
     }
 
@@ -266,25 +272,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
         startActivity(intent)
     }
 
-    private fun showTollInfoDialog() {
-        /*  if(vehicleModel?.tolls?.size!! >0) {
-              eventInfoDialog = Dialog(context, R.style.dialog_style)
-
-              eventInfoDialog?.setCancelable(true)
-              val inflater1 =
-                  this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-              val view12: View = inflater1.inflate(R.layout.toll_layout, null)
-              eventInfoDialog?.setContentView(view12)
-
-              var recyclerView: RecyclerView = view12.findViewById(R.id.rvEventInfo)
-
-              recyclerView.layoutManager =
-                  LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-              viewRideTollsPopUp = ViewRideTollsPopUp( vehicleModel?.tolls!!)
-              recyclerView.adapter = viewRideTollsPopUp
-
-              eventInfoDialog!!.show()
-          }*/
+    private fun  openTollInfoDialog() {
+        tollInfoDialog = TollInfoDialog(context, model?.ride?.tolls!!)
+        tollInfoDialog?.show()
+        tollInfoDialog?.setCancelable(false)
     }
 
     /**
@@ -386,7 +377,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 token,
                 Constants.TYPE_INTERCITY,
                 info.fromCityId,
-               info.toCityId,
+                info.toCityId,
                 sourceAddress,
                 destinationAddress,
                 sourceLat,
@@ -406,7 +397,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 razorpayPaymentID,
                 "Online",
                 Constants.PAYMENT_PAID,
-                "Razorpay"
+                "Razorpay",
+                model?.ride?.tolls!!
 
             )
 

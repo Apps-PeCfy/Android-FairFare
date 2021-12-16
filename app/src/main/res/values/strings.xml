@@ -159,7 +159,7 @@
     <string name="btn_rate_this_ride">Rate this Ride</string>
     <string name="str_under_review">Under Review</string>
     <string name="str_schedule_ride">Schedule Ride</string>
-    <string name="str_reward_points_earned_for_this_ride">\"Reward points earned for this ride \"</string>
+    <string name="str_reward_points_earned_for_this_ride">Reward points earned for this ride </string>
     <string name="err_valid_phone_number">Please enter a valid phone no.</string>
     <string name="err_phone_and_gender">Please enter Phone number and Gender.</string>
     <string name="err_valid_email">Please enter a valid email.</string>

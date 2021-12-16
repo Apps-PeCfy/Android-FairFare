@@ -236,7 +236,7 @@
     <string name="str_under_review">निरीक्षणाखाली</string>
     <string name="str_schedule_ride">शेड्यूल राइड</string>
 
-    <string name="str_reward_points_earned_for_this_ride">"या राइडसाठी मिळवलेले रिवॉर्ड पॉइंट"</string>
+    <string name="str_reward_points_earned_for_this_ride">या राइडसाठी मिळवलेले रिवॉर्ड पॉइंट</string>
     <string name="err_valid_phone_number">कृपया फोन नंबर प्रविष्ट करा.</string>
     <string name="err_phone_and_gender">कृपया फोन नंबर आणि लिंग प्रविष्ट करा.</string>
     <string name="err_valid_email">कृपया ईमेल प्रविष्ट करा.</string>
