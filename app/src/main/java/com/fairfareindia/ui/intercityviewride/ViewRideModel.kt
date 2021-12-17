@@ -24,6 +24,9 @@ class ViewRideModel {
         @SerializedName("toCity")
         var toCity: String? = null
 
+        @SerializedName("city_id")
+        var city_id: String? = null
+
         @SerializedName("name")
         var name: String? = null
 

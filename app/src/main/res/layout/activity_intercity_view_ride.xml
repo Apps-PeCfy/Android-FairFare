@@ -667,46 +667,57 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorText"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_14sp"
-                    android:text="@string/str_payment_method"
-                    android:fontFamily="@font/notosansjp_regular"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="8dp"/>
-
-                <RadioGroup
+                <LinearLayout
+                    android:id="@+id/ll_payment_method"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginHorizontal="10dp">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <RadioButton
-                        android:id="@+id/rd_btn_offline"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/str_pay_offline"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textColor="@color/colorText"
+                        android:textStyle="bold"
                         android:textSize="@dimen/text_14sp"
+                        android:text="@string/str_payment_method"
                         android:fontFamily="@font/notosansjp_regular"
-                        android:layout_height="wrap_content"/>
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="8dp"/>
 
-                    <RadioButton
-                        android:id="@+id/rd_btn_online"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/str_pay_online"
-                        android:textColor="@color/colorText"
-                        android:textSize="@dimen/text_14sp"
-                        android:fontFamily="@font/notosansjp_regular"
-                        android:layout_height="wrap_content"/>
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginHorizontal="10dp">
 
-                </RadioGroup>
+                        <RadioButton
+                            android:id="@+id/rd_btn_offline"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/str_pay_offline"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:layout_height="wrap_content"/>
+
+                        <RadioButton
+                            android:id="@+id/rd_btn_online"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/str_pay_online"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/text_14sp"
+                            android:fontFamily="@font/notosansjp_regular"
+                            android:layout_height="wrap_content"/>
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 

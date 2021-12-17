@@ -164,6 +164,12 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                         .dontTransform()
                 )
                 .into(imgVehical)
+
+            if (info.permitType == Constants.TYPE_LOCAL){
+                llPaymentMethod.visibility = View.GONE
+            }else{
+                llPaymentMethod.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -185,20 +191,54 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             }
 
             btnBookRide.setOnClickListener {
-                if (!rdBtnOnline.isChecked && !rdBtnOffline.isChecked){
-                    Toast.makeText(context, getString(R.string.err_select_payment_method), Toast.LENGTH_SHORT).show()
-                }else if (rdBtnOnline.isChecked){
-                    var message =
-                        getString(R.string.msg_payment_dialog_one) + model?.ride?.totalPayableCharges + getString(R.string.msg_payment_dialog_two)
-                    openPaymentDialog(getString(R.string.btn_pay_now), message, "")
-                }else if (rdBtnOffline.isChecked){
-                    callBookRideAPI()
+                if (info.permitType == Constants.TYPE_INTERCITY){
+                    if (!rdBtnOnline.isChecked && !rdBtnOffline.isChecked){
+                        Toast.makeText(context, getString(R.string.err_select_payment_method), Toast.LENGTH_SHORT).show()
+                    }else if (rdBtnOnline.isChecked){
+                        var message =
+                            getString(R.string.msg_payment_dialog_one) + model?.ride?.totalPayableCharges + getString(R.string.msg_payment_dialog_two)
+                        openPaymentDialog(getString(R.string.btn_pay_now), message, "")
+                    }else if (rdBtnOffline.isChecked){
+                        callBookRideAPI()
+                    }
+
+                }else{
+                    callLocalBookRideAPI()
                 }
 
             }
 
 
         }
+    }
+
+    private fun callLocalBookRideAPI() {
+        iInterCityViewRidePresenter?.bookingRequest(
+            token,
+            Constants.TYPE_LOCAL,
+            model?.ride?.city_id,
+            "",
+            sourceAddress,
+            destinationAddress,
+            sourceLat,
+            sourceLong,
+            destinationLat,
+            destinationLong,
+            info.scheduleDatetime,
+            info.wayFlag,
+            model?.ride?.id,
+            scheduleType,
+            info.luggage,
+            model?.ride?.chargesLuggage.toString(),
+            model?.ride?.actualDistance.toString(),
+            info.travelTime,
+            estTimeInSeconds,
+            model?.ride?.totalPayableCharges.toString(),
+            "",
+            "Cash",
+            Constants.PAYMENT_UNPAID,
+            "Offline"
+        )
     }
 
     private fun callBookRideAPI() {
@@ -303,6 +343,13 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             getString(R.string.dialog_booking_request_msg_one) +  " ${binding.txtDate.text}. " + getString(R.string.dialog_booking_request_msg_two)
         openPaymentDialog(getString(R.string.btn_ok), message1, title)
       //  Toast.makeText(context, "Booking ID :- ${model?.data?.id}", Toast.LENGTH_LONG).show()
+    }
+
+    override fun localBookingRequestSuccess(model: BookingRequestModel?) {
+        var title = getString(R.string.title_booked_successfully)
+        var message1 =
+            getString(R.string.dialog_booking_request_msg_one) +  " ${binding.txtDate.text}. " + getString(R.string.dialog_booking_request_msg_two)
+        openPaymentDialog(getString(R.string.btn_ok), message1, title)
     }
 
     override fun getViewRideDetails(model: ViewRideModel?) {

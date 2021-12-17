@@ -216,6 +216,35 @@ interface NetworkService {
         @Field("gateway_type") gateway_type: String?
     ): Call<BookingRequestModel?>?
 
+    @FormUrlEncoded
+    @POST("localBookingRequest")
+    fun localBookingRequest(
+        @Header("Authorization") header: String?,
+        @Field("permit_type") type: String?,
+        @Field("from_city_id") from_city_id: String?,
+        @Field("to_city_id") to_city_id: String?,
+        @Field("origin_address") origin_address: String?,
+        @Field("destination_address") destination_address: String?,
+        @Field("origin_latitude") origin_latitude: String?,
+        @Field("origin_longitude") origin_longitude: String?,
+        @Field("destination_latitude") destination_latitude: String?,
+        @Field("destination_longitude") destination_longitude: String?,
+        @Field("schedule_date") schedule_date: String?,
+        @Field("way_flag") way_flag: String?,
+        @Field("vehicle_rate_card_id") vehicle_rate_card_id: String?,
+        @Field("schedule_type") shedule_type: String?,
+        @Field("luggage_quantity") luggage_quantity: String?,
+        @Field("luggage_charges") luggage_charges: String?,
+        @Field("distance") distance: String?,
+        @Field("travel_time") travel_time: String?,
+        @Field("travel_time_second") travel_time_second: String?,
+        @Field("amount") amount: String?,
+        @Field("transaction_id") transaction_id: String?,
+        @Field("method") method: String?,
+        @Field("payment_status") payment_status: String?,
+        @Field("gateway_type") gateway_type: String?
+    ): Call<BookingRequestModel?>?
+
 
     @FormUrlEncoded
     @POST("v1/getViewIntercityRideDetails")
