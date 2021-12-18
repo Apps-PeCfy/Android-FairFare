@@ -98,7 +98,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             sourceLat,
             sourceLong,
             destinationLat,
-            destinationLong
+            destinationLong,
+            info.wayFlag
         )
 
         setListeners()
@@ -231,6 +232,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             "Cash",
             Constants.PAYMENT_UNPAID,
             "Offline",
+            model?.ride?.firstRideTotal,
+            model?.ride?.secondRideTotal,
+            model?.ride?.secondRidePercentageToPay,
+            model?.ride?.amountToCollect,
             model?.ride?.tolls!!
         )
     }
@@ -398,6 +403,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 "Online",
                 Constants.PAYMENT_PAID,
                 "Razorpay",
+                model?.ride?.firstRideTotal,
+                model?.ride?.secondRideTotal,
+                model?.ride?.secondRidePercentageToPay,
+                model?.ride?.amountToCollect,
                 model?.ride?.tolls!!
 
             )

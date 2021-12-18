@@ -195,6 +195,10 @@ interface NetworkService {
         @Field("method") method: String?,
         @Field("payment_status") payment_status: String?,
         @Field("gateway_type") gateway_type: String?,
+        @Field("firstRideTotal") firstRideTotal: String?,
+        @Field("secondRideTotal") secondRideTotal: String?,
+        @Field("secondRidePercentageToPay") secondRidePercentageToPay: String?,
+        @Field("amountToCollect") amountToCollect: String?,
         @Field("tolls") jsonArray: JSONArray?
     ): Call<BookingRequestModel?>?
 
@@ -211,9 +215,9 @@ interface NetworkService {
         @Field("origin_latitude") origin_latitude: String?,
         @Field("origin_longitude") origin_longitude: String?,
         @Field("destination_latitude") destination_latitude: String?,
-        @Field("destination_longitude") destination_longitude: String?
+        @Field("destination_longitude") destination_longitude: String?,
+        @Field("way_flag") way_flag: String?
     ): Call<ViewRideModel?>?
-
 
     @FormUrlEncoded
     @POST("scheduleRide")

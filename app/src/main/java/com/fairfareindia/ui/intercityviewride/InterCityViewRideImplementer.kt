@@ -1,7 +1,5 @@
 package com.fairfareindia.ui.intercityviewride
 
-import android.util.Log
-import android.widget.Toast
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
@@ -12,7 +10,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Field
 import java.io.IOException
 
 class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideView) :
@@ -43,6 +40,10 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         method: String?,
         payment_status: String?,
         gateway_type: String?,
+        firstRideTotal: String?,
+        secondRideTotal: String?,
+        secondRidePercentageToPay: String?,
+        amountToCollect: String?,
         tolls: ArrayList<RideDetailModel.Tolls>
     ) {
 
@@ -98,6 +99,10 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             method,
             payment_status,
             gateway_type,
+            firstRideTotal,
+            secondRideTotal,
+            secondRidePercentageToPay,
+            amountToCollect,
             jsonArray
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
@@ -149,7 +154,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         origin_latitude: String?,
         origin_longitude: String?,
         destination_latitude: String?,
-        destination_longitude: String?
+        destination_longitude: String?,
+        way_flag: String?
     ) {
         viewRideView.showWait()
         val call = ApiClient.client.getViewRideDetails(
@@ -162,7 +168,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             origin_latitude,
             origin_longitude,
             destination_latitude,
-            destination_longitude
+            destination_longitude,
+            way_flag
         )
         call!!.enqueue(object : Callback<ViewRideModel?> {
             override fun onResponse(

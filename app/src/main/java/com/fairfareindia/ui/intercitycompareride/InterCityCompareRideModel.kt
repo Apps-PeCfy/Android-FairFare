@@ -114,6 +114,18 @@ class InterCityCompareRideModel : Serializable {
         @SerializedName("rules")
         var rules: String? = null
 
+        @SerializedName("firstRideTotal")
+        var firstRideTotal: String? = null
+
+        @SerializedName("secondRideTotal")
+        var secondRideTotal: String? = null
+
+        @SerializedName("secondRidePercentageToPay")
+        var secondRidePercentageToPay: String? = null
+
+        @SerializedName("amountToCollect")
+        var amountToCollect: String? = null
+
     }
 
     inner class Tolls : Serializable {
