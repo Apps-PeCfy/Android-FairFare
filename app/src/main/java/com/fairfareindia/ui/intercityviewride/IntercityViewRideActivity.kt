@@ -213,7 +213,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     }
 
     private fun callLocalBookRideAPI() {
-        iInterCityViewRidePresenter?.bookingRequest(
+        iInterCityViewRidePresenter?.localBookingRequest(
             token,
             Constants.TYPE_LOCAL,
             model?.ride?.city_id,

@@ -79,6 +79,9 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                 holder.txtSourceAddress.text = (model.originFullAddress)
                 holder.txtDestinationAddress.text = (model.destinationFullAddress)
+
+                holder.txtActualFare.text = "₹ " + model.estimatedTrackRide?.totalCharges.toString()
+
                 holder.txtStatus.text = model.status
                 if (model.status == Constants.BOOKING_COMPLETED) {
                     holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorGreen)!!)
@@ -89,7 +92,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
                 if (model.permitType == Constants.TYPE_INTERCITY){
-                    holder.txtActualFare.text = "₹ " + model.estimatedTrackRide?.totalCharges.toString()
+
                     holder.btnStartRide.visibility = View.GONE
                     holder.imgViewInfo.visibility = View.GONE
                     if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_PENDING || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED){
@@ -99,8 +102,6 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     }
                 }else{
                     holder.llCancelRide.visibility = View.GONE
-                    holder.txtActualFare.text = "₹ " + model.fare.toString()
-
                     if (model.status == Constants.BOOKING_COMPLETED) {
                         holder.imgViewInfo.visibility = View.VISIBLE
                         if (model.reviewStar.toFloat() >= 1.0f) {
