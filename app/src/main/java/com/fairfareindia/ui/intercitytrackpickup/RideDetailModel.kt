@@ -143,6 +143,17 @@ class RideDetailModel {
         @SerializedName("reviewStar")
         var reviewStar: String? = null
 
+        @SerializedName("firstRideTotal")
+        var firstRideTotal: String? = null
+
+        @SerializedName("secondRideTotal")
+        var secondRideTotal: String? = null
+
+        @SerializedName("secondRidePercentageToPay")
+        var secondRidePercentageToPay: String? = null
+
+        @SerializedName("amountToCollect")
+        var amountToCollect: String? = null
 
         @SerializedName("estimatedTrackRide")
         var estimatedTrackRide: Estimated? = null

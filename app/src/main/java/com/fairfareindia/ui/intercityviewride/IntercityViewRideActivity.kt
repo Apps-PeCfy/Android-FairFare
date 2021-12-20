@@ -55,6 +55,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     var sharedpreferences: SharedPreferences? = null
 
     private var tollInfoDialog : TollInfoDialog ?= null
+    private var amountToPay : Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,6 +158,16 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 txtRules.visibility = View.VISIBLE
             }
 
+            if (info.wayFlag == Constants.BOTH_WAY_FLAG && info.permitType == Constants.TYPE_INTERCITY && Constants.IS_EXTRA_PAYMENT_FOR_INTERCITY_TWO_WAY){
+                txtTwoWayMessage.visibility = View.VISIBLE
+                amountToPay = model?.ride?.amountToCollect?.toDouble()!!
+                txtTwoWayMessage.text = "Please pay 1st ride total amount ₹ ${model?.ride?.firstRideTotal} & ${model?.ride?.secondRidePercentageToPay}% of 2nd ride. Total ₹ ${model?.ride?.amountToCollect}"
+            }else{
+                amountToPay = model?.ride?.totalPayableCharges!!
+                txtTwoWayMessage.visibility = View.GONE
+            }
+
+
 
             Glide.with(context)
                 .load(vehicleModel?.vehicle?.image)
@@ -194,7 +205,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                     Toast.makeText(context, getString(R.string.err_select_payment_method), Toast.LENGTH_SHORT).show()
                 }else if (rdBtnOnline.isChecked){
                     var message =
-                        getString(R.string.msg_payment_dialog_one) + model?.ride?.totalPayableCharges + getString(R.string.msg_payment_dialog_two)
+                        getString(R.string.msg_payment_dialog_one) + amountToPay + getString(R.string.msg_payment_dialog_two)
                     openPaymentDialog(getString(R.string.btn_pay_now), message, "")
                 }else if (rdBtnOffline.isChecked){
                     callBookRideAPI()
@@ -351,7 +362,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
             options.put("currency", "INR")
-            options.put("amount", (model?.ride?.totalPayableCharges?.times(100)).toString())
+            options.put("amount", (amountToPay.times(100)).toString())
             val preFill = JSONObject()
             preFill.put("email", "test@razorpay.com")
             preFill.put("contact", SessionManager.getInstance(context).getUserModel()?.phoneNo)
@@ -398,7 +409,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 model?.ride?.actualDistance.toString(),
                 info.travelTime,
                 estTimeInSeconds,
-                model?.ride?.totalPayableCharges.toString(),
+                amountToPay.toString(),
                 razorpayPaymentID,
                 "Online",
                 Constants.PAYMENT_PAID,

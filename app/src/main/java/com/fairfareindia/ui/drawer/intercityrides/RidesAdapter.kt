@@ -97,6 +97,8 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     }else{
                         holder.llCancelRide.visibility = View.GONE
                     }
+                    holder.txtPermitType.visibility = View.VISIBLE
+                    holder.txtPermitType.text =  model.permitType + " (${model.intercityFromCity?.name} - ${model.intercitytoCity?.name})"
                 }else{
                     holder.llCancelRide.visibility = View.GONE
                     holder.txtActualFare.text = "₹ " + model.fare.toString()
@@ -187,6 +189,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class MyViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
+        val txtPermitType: TextView = itemView.findViewById(R.id.txt_permit_type)
         val txtStatus: TextView = itemView.findViewById(R.id.txt_status)
         val txtRateRide: TextView = itemView.findViewById(R.id.txt_rate_ride)
         val txtActualFare: TextView = itemView.findViewById(R.id.txt_total_charges)

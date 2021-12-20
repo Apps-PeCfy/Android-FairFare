@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
@@ -668,16 +667,28 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/txt_two_way_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorText"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_14sp"
-                    android:text="@string/str_payment_method"
-                    android:fontFamily="@font/notosansjp_regular"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:textColor="@color/colorRed"
+                    android:textSize="@dimen/text_14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/notosansjp_regular"
+                    android:text="@string/str_payment_method"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/text_14sp"
+                    android:textStyle="bold" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
