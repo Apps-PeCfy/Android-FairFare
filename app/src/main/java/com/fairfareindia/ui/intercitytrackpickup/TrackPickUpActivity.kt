@@ -401,6 +401,19 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                 )
             ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
         )
+
+        mMap?.animateCamera(
+            CameraUpdateFactory.newCameraPosition(
+                CameraPosition.Builder()
+                    .target(LatLng(
+                        sourceLat!!.toDouble(),
+                        sourceLong!!.toDouble()
+                    ))
+                    .zoom(getZoomLevel())
+                    .build()
+            )
+        )
+
     }
 
     private fun updateTimeToPickUP(duration: JSONObject) {

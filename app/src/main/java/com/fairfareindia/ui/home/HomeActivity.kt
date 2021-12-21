@@ -59,6 +59,7 @@ import com.fairfareindia.ui.drawer.myaccount.MyAccountFragment
 import com.fairfareindia.ui.drawer.mycomplaints.MyComplaints
 import com.fairfareindia.ui.drawer.mydisput.MyDisput
 import com.fairfareindia.ui.drawer.myrides.MyRides
+import com.fairfareindia.ui.drawer.notifications.NotificationsFragment
 import com.fairfareindia.ui.drawer.pojo.DrawerPojo
 import com.fairfareindia.ui.drawer.privacypolicy.ContentPage
 import com.fairfareindia.ui.drawer.privacypolicy.TermsOfUse
@@ -879,14 +880,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                11,
-                getString(R.string.drawer_wallet),
-                R.drawable.ic_nav_ratecard
-            )
-        )
-
-        drawerPojoArrayList!!.add(
-            DrawerPojo(
                 3,
                 getString(R.string.drawer_mydisput),
                 R.drawable.ic_nav_mydisput
@@ -898,6 +891,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 4,
                 getString(R.string.drawer_mycomplents),
                 R.drawable.ic_nav_mycomplaint
+            )
+        )
+
+        drawerPojoArrayList!!.add(
+            DrawerPojo(
+                11,
+                getString(R.string.drawer_notifications),
+                R.drawable.ic_nav_ratecard
             )
         )
 
@@ -997,24 +998,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 }
             }
 
+
             2 -> {
-                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
-
-                    spinnerLang?.visibility = View.GONE
-                    homeMain?.visibility = View.GONE
-                    mDrawerLayout?.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout?.closeDrawer(Gravity.START)
-                    replaceFragment(WalletFragment())
-                } else {
-                    ProjectUtilities.showToast(
-                        this@HomeActivity,
-                        getString(R.string.internet_error)
-                    )
-                }
-            }
-
-
-            3 -> {
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
@@ -1032,7 +1017,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
 
 
-            4 -> {
+            3 -> {
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
                     spinnerLang!!.visibility = View.GONE
@@ -1042,6 +1027,22 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                     replaceFragment(MyComplaints())
 
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+                }
+            }
+
+            4 -> {
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+
+                    spinnerLang?.visibility = View.GONE
+                    homeMain?.visibility = View.GONE
+                    mDrawerLayout?.closeDrawer(Gravity.LEFT)
+                    mDrawerLayout?.closeDrawer(Gravity.START)
+                    replaceFragment(NotificationsFragment())
                 } else {
                     ProjectUtilities.showToast(
                         this@HomeActivity,

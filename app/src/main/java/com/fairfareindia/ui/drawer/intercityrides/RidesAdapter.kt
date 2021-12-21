@@ -79,7 +79,13 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                 holder.txtSourceAddress.text = (model.originFullAddress)
                 holder.txtDestinationAddress.text = (model.destinationFullAddress)
-                holder.txtStatus.text = model.status
+
+                if (model.status == Constants.BOOKING_PENDING){
+                    holder.txtStatus.text = context?.resources?.getString(R.string.status_booked)
+                }else{
+                    holder.txtStatus.text = model.status
+                }
+
                 if (model.status == Constants.BOOKING_COMPLETED) {
                     holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorGreen)!!)
                 }else{

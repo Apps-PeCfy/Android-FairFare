@@ -10,7 +10,6 @@
     <string name="str_marathi_code">mr</string>
 
 
-
     <string name="app_name">FairFareIndia</string>
     <string name="logIn">Sign In</string>
     <string name="continuetxt">By continuing, you agree to Fair Fare</string>
@@ -235,8 +234,6 @@
     <string name="str_actual_time_remaining_time">Actual time/ Remaining Time</string>
 
 
-
-
     <string name="str_alert_exit_app">Press once again to exit</string>
     <string name="register">Accept &amp; Continue</string>
     <string name="internet_error">No internet connection</string>
@@ -264,6 +261,7 @@
     <string name="drawer_mylocation">My Locations</string>
     <string name="drawer_myrides">My Rides</string>
     <string name="drawer_wallet">Wallet</string>
+    <string name="drawer_notifications">My Notifications</string>
     <string name="drawer_mydisput">My Disputes</string>
     <string name="drawer_mycomplents">My Complaints</string>
     <string name="drawer_ratecard">Rate Card</string>
@@ -393,6 +391,7 @@
     <string name="str_allow_permission">Allow Permission</string>
     <string name="str_your_payment_is_successful">Your payment is successful</string>
     <string name="str_no_wallet_data">No Amount available in your wallet</string>
+    <string name="str_no_notifications">No Notifications</string>
     <string name="err_internal_server_error">Internal server error</string>
     <string name="title_select_from_city">Select From City</string>
     <string name="title_select_to_city">Select To City</string>
@@ -408,6 +407,7 @@
     <string name="err_valid_date_time">Please select valid date and time</string>
     <string name="str_start_otp">Start OTP</string>
     <string name="title_booked_successfully">Booked Successfully</string>
+    <string name="status_booked">Booked</string>
     <string name="title_your_payment_successfull">Your payment is successfull</string>
     <string name="dialog_booking_request_msg_one">Your booking request submitted successfully for</string>
     <string name="dialog_booking_request_msg_two">Driver details will be shared 15 minutes before the ride.</string>
