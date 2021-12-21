@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fairfareindia.databinding.DialogWaitingInfoBinding
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
+import kotlin.math.roundToInt
 
 class WaitingInfoDialog (context: Context?) : Dialog(context!!) {
     lateinit var binding: DialogWaitingInfoBinding
@@ -30,9 +31,11 @@ class WaitingInfoDialog (context: Context?) : Dialog(context!!) {
         super.onCreate(savedInstanceState)
         binding = DialogWaitingInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        var height :Int = (context.resources.displayMetrics.heightPixels * 0.7).roundToInt()
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            height
         )
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         window?.setGravity(Gravity.CENTER)
