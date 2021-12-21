@@ -92,32 +92,18 @@ class RidesFragment : Fragment(), IRidesView{
     private fun setRecyclerView() {
         mAdapter = RidesAdapter(mContext, list, object : RidesAdapter.RidesAdapterInterface {
             override fun onItemSelected(position: Int, model: GetRideResponsePOJO.DataItem) {
-                if (model.permitType == Constants.TYPE_INTERCITY){
-                    if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED){
-                        val intent = Intent(activity, TrackPickUpActivity::class.java)
-                        intent.putExtra("ride_id", model.id.toString())
-                        startActivity(intent)
-                    }else if (model.status == Constants.BOOKING_ACTIVE){
-                        val intent = Intent(activity, InterCityTrackRideActivity::class.java)
-                        intent.putExtra("ride_id", model.id.toString())
-                        startActivity(intent)
-                    }else if (model.status == Constants.BOOKING_COMPLETED){
-                        val intent = Intent(activity, IntercityRideDetailsActivity::class.java)
-                        intent.putExtra("ride_id", model.id.toString())
-                        startActivity(intent)
-                    }
-
-                }else{
-                    if (ProjectUtilities.checkInternetAvailable(activity)) {
-                        val intent = Intent(activity, MyRideDetailsActivity::class.java)
-                        intent.putExtra("Id", model.id.toString())
-                        startActivity(intent)
-                    }else{
-                        ProjectUtilities.showToast(
-                            activity,
-                            getString(R.string.internet_error)
-                        )
-                    }
+                if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED){
+                    val intent = Intent(activity, TrackPickUpActivity::class.java)
+                    intent.putExtra("ride_id", model.id.toString())
+                    startActivity(intent)
+                }else if (model.status == Constants.BOOKING_ACTIVE){
+                    val intent = Intent(activity, InterCityTrackRideActivity::class.java)
+                    intent.putExtra("ride_id", model.id.toString())
+                    startActivity(intent)
+                }else if (model.status == Constants.BOOKING_COMPLETED){
+                    val intent = Intent(activity, IntercityRideDetailsActivity::class.java)
+                    intent.putExtra("ride_id", model.id.toString())
+                    startActivity(intent)
                 }
             }
 
