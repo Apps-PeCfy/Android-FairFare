@@ -135,7 +135,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             }
 
             ivViewTollInfo.setOnClickListener {
-                if(model?.data?.estimatedTrackRide?.tolls?.isNotEmpty()!!){
+                if (model?.data?.estimatedTrackRide?.tolls != null && model?.data?.estimatedTrackRide?.tolls?.size!! > 0) {
                     openTollInfoDialog()
                 }
             }

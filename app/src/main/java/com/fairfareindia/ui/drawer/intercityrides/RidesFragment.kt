@@ -108,7 +108,6 @@ class RidesFragment : Fragment(), IRidesView{
             }
 
             override fun onStartRideClick(position: Int, model: GetRideResponsePOJO.DataItem) {
-                startRide(model)
             }
 
             override fun onCancelRideClick(position: Int, model: GetRideResponsePOJO.DataItem) {
@@ -306,25 +305,7 @@ class RidesFragment : Fragment(), IRidesView{
         Toast.makeText(activity, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 
-    private fun startRide(model: GetRideResponsePOJO.DataItem) {
 
-        val intent = Intent(activity, RideDetailsActivity::class.java)
-        intent.putExtra("MyRides_vehicle_rate_card_id", model.vehicleRateCardId.toString())
-        intent.putExtra("MyRides_airport_ratr_card_id", model.airportRateCardId)
-        intent.putExtra("MyRides_RideID", model.id.toString())
-        intent.putExtra("MyRidessLat", model.originPlaceLat)
-        intent.putExtra("MyRidessLong", model.originPlaceLong)
-        intent.putExtra("MyRidesdLat", model.destinationPlaceLat)
-        intent.putExtra("MyRidesdLong", model.destinationPlaceLong)
-        intent.putExtra("MyRidesoriginalAddress", model.originFullAddress)
-        intent.putExtra("MyRidesdestinationAddress", model.destinationFullAddress)
-        intent.putExtra("MyRide", "MyRide")
-        intent.putExtra("compareRideList", model.estimatedTrackRide!!.tolls as java.util.ArrayList<GetRideResponsePOJO.TollsItem>?)
-
-        startActivity(intent)
-
-
-    }
 
 
     override fun onResume() {
