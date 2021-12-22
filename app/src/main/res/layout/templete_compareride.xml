@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_60sdp"
+    android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/colorBackground"
     app:cardElevation="@dimen/_3sdp"
+    app:cardCornerRadius="8dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:background="@drawable/night_mode_square"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <LinearLayout
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:id="@+id/llCar"
-            android:layout_marginStart="@dimen/_10sdp"
             android:layout_width="@dimen/_65sdp"
             android:layout_height="match_parent">
 
@@ -44,46 +46,43 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_toStartOf="@+id/llRsandMin"
-            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_toStartOf="@+id/ll_amount"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:id="@+id/place_item"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_toEndOf="@+id/llCar"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:orientation="vertical">
 
             <TextView
                 android:textColor="@color/colorGreyText"
                 android:id="@+id/tv_vehialType"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="start"
                 android:fontFamily="@font/notosansjp_regular"
                 android:textSize="@dimen/text_14sp"/>
 
             <View
+                android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:background="@color/secondaryLightGray" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="5"
                 android:layout_marginTop="2dp">
 
                 <TextView
                     android:textColor="@color/colorGreyText"
                     android:id="@+id/place_area"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/tv_preson"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="3"
                     android:gravity="start"
                     android:fontFamily="@font/notosansjp_regular"
                     android:textSize="@dimen/text_14sp" />
@@ -93,40 +92,28 @@
                     android:textColor="@color/colorGreyText"
                     android:visibility="visible"
                     android:id="@+id/tv_preson"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_weight="1.1"
                     android:fontFamily="@font/notosansjp_regular"
                     android:textSize="@dimen/text_14sp"
+                    android:drawablePadding="8dp"
                     android:drawableStart="@drawable/iv_person"
-                    android:gravity="end" />
+                    android:layout_alignParentEnd="true" />
 
-                <TextView
-                    android:textColor="@color/colorGreyText"
-                    android:visibility="gone"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:fontFamily="@font/notosansjp_regular"
-                    android:textSize="@dimen/text_14sp" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llRsandMin"
+            android:id="@+id/ll_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_5sdp"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
