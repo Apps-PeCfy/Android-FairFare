@@ -38,6 +38,7 @@
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/notosansjp_regular"
                 android:gravity="end"
+                android:visibility="gone"
                 android:textSize="@dimen/text_16sp" />
 
         </RelativeLayout>
