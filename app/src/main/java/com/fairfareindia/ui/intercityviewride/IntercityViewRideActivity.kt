@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityIntercityViewRideBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.drawer.intercityrides.ridedetails.TollInfoDialog
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
@@ -23,6 +24,7 @@ import com.google.gson.Gson
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
+import org.json.JSONArray
 import org.json.JSONObject
 
 class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
@@ -48,10 +50,12 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
     private var iInterCityViewRidePresenter: IInterCityViewRidePresenter? = null
 
     var eventInfoDialog: Dialog? = null
-    var viewRideTollsPopUp: ViewRideTollsPopUp? = null
     var paymentDialog: PaymentDialog? = null
 
     var sharedpreferences: SharedPreferences? = null
+
+    private var tollInfoDialog : TollInfoDialog ?= null
+    private var amountToPay : Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +100,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             sourceLat,
             sourceLong,
             destinationLat,
-            destinationLong
+            destinationLong,
+            info.wayFlag
         )
 
         setListeners()
@@ -154,6 +159,16 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 txtRules.visibility = View.VISIBLE
             }
 
+            if (info.wayFlag == Constants.BOTH_WAY_FLAG && info.permitType == Constants.TYPE_INTERCITY && Constants.IS_EXTRA_PAYMENT_FOR_INTERCITY_TWO_WAY){
+                txtTwoWayMessage.visibility = View.VISIBLE
+                amountToPay = model?.ride?.amountToCollect?.toDouble()!!
+                txtTwoWayMessage.text = "Please pay 1st ride total amount ₹ ${model?.ride?.firstRideTotal} & ${model?.ride?.secondRidePercentageToPay}% of 2nd ride. Total ₹ ${model?.ride?.amountToCollect}"
+            }else{
+                amountToPay = model?.ride?.totalPayableCharges!!
+                txtTwoWayMessage.visibility = View.GONE
+            }
+
+
 
             Glide.with(context)
                 .load(vehicleModel?.vehicle?.image)
@@ -178,7 +193,9 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
             ivViewTollInfo.setOnClickListener {
-                showTollInfoDialog()
+                if (model?.ride?.tolls != null && model?.ride?.tolls?.size!! > 0) {
+                    openTollInfoDialog()
+                }
             }
 
             rlAdditional.setOnClickListener {
@@ -191,14 +208,18 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             }
 
             btnBookRide.setOnClickListener {
-                if (info.permitType == Constants.TYPE_INTERCITY){
-                    if (!rdBtnOnline.isChecked && !rdBtnOffline.isChecked){
-                        Toast.makeText(context, getString(R.string.err_select_payment_method), Toast.LENGTH_SHORT).show()
-                    }else if (rdBtnOnline.isChecked){
+                if (info.permitType == Constants.TYPE_INTERCITY) {
+                    if (!rdBtnOnline.isChecked && !rdBtnOffline.isChecked) {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.err_select_payment_method),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (rdBtnOnline.isChecked) {
                         var message =
-                            getString(R.string.msg_payment_dialog_one) + model?.ride?.totalPayableCharges + getString(R.string.msg_payment_dialog_two)
+                            getString(R.string.msg_payment_dialog_one) + amountToPay + getString(R.string.msg_payment_dialog_two)
                         openPaymentDialog(getString(R.string.btn_pay_now), message, "")
-                    }else if (rdBtnOffline.isChecked){
+                    } else if (rdBtnOffline.isChecked) {
                         callBookRideAPI()
                     }
 
@@ -206,9 +227,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                     callLocalBookRideAPI()
                 }
 
+
             }
-
-
         }
     }
 
@@ -266,7 +286,12 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             "",
             "Cash",
             Constants.PAYMENT_UNPAID,
-            "Offline"
+            "Offline",
+            model?.ride?.firstRideTotal,
+            model?.ride?.secondRideTotal,
+            model?.ride?.secondRidePercentageToPay,
+            model?.ride?.amountToCollect,
+            model?.ride?.tolls!!
         )
     }
 
@@ -307,25 +332,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
         startActivity(intent)
     }
 
-    private fun showTollInfoDialog() {
-        /*  if(vehicleModel?.tolls?.size!! >0) {
-              eventInfoDialog = Dialog(context, R.style.dialog_style)
-
-              eventInfoDialog?.setCancelable(true)
-              val inflater1 =
-                  this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-              val view12: View = inflater1.inflate(R.layout.toll_layout, null)
-              eventInfoDialog?.setContentView(view12)
-
-              var recyclerView: RecyclerView = view12.findViewById(R.id.rvEventInfo)
-
-              recyclerView.layoutManager =
-                  LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-              viewRideTollsPopUp = ViewRideTollsPopUp( vehicleModel?.tolls!!)
-              recyclerView.adapter = viewRideTollsPopUp
-
-              eventInfoDialog!!.show()
-          }*/
+    private fun  openTollInfoDialog() {
+        tollInfoDialog = TollInfoDialog(context, model?.ride?.tolls!!)
+        tollInfoDialog?.show()
+        tollInfoDialog?.setCancelable(false)
     }
 
     /**
@@ -403,7 +413,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
             options.put("currency", "INR")
-            options.put("amount", (model?.ride?.totalPayableCharges?.times(100)).toString())
+            options.put("amount", (amountToPay.times(100)).toString())
             val preFill = JSONObject()
             preFill.put("email", "test@razorpay.com")
             preFill.put("contact", SessionManager.getInstance(context).getUserModel()?.phoneNo)
@@ -434,7 +444,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 token,
                 Constants.TYPE_INTERCITY,
                 info.fromCityId,
-               info.toCityId,
+                info.toCityId,
                 sourceAddress,
                 destinationAddress,
                 sourceLat,
@@ -450,11 +460,16 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 model?.ride?.actualDistance.toString(),
                 info.travelTime,
                 estTimeInSeconds,
-                model?.ride?.totalPayableCharges.toString(),
+                amountToPay.toString(),
                 razorpayPaymentID,
                 "Online",
                 Constants.PAYMENT_PAID,
-                "Razorpay"
+                "Razorpay",
+                model?.ride?.firstRideTotal,
+                model?.ride?.secondRideTotal,
+                model?.ride?.secondRidePercentageToPay,
+                model?.ride?.amountToCollect,
+                model?.ride?.tolls!!
 
             )
 

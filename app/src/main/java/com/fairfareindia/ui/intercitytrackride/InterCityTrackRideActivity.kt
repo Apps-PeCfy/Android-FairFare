@@ -149,7 +149,8 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             txtDistanceTime.text =  getString(R.string.str_est_distance) +
                 " - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / " +  getString(R.string.str_est_time)   +" - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
 
-            txtWaitTime.text = rideDetailModel?.data?.total_wait_time.toString() + "Min"
+            txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(context, rideDetailModel?.data?.total_wait_time.toString())
+
             txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
 
             txtTravelledDistance.text = rideDetailModel?.data?.totalDistTravelled + "KM"

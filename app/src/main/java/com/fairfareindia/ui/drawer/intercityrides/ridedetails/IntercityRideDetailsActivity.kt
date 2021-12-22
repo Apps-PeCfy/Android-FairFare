@@ -66,6 +66,10 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 startPayment()
             }
 
+            imgRefresh.setOnClickListener {
+                iRidesDetailPresenter?.getRideDetail(token, rideID)
+            }
+
             imgWaitInfo.setOnClickListener {
                 if(model?.data?.waitings?.isNotEmpty()!!){
                     openWaitInfoDialog()

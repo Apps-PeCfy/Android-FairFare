@@ -3,7 +3,11 @@ package com.fairfareindia.ui.intercityviewride
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.utils.Constants
+import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.google.gson.GsonBuilder
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,8 +40,40 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         transaction_id: String?,
         method: String?,
         payment_status: String?,
-        gateway_tye: String?
+        gateway_type: String?,
+        firstRideTotal: String?,
+        secondRideTotal: String?,
+        secondRidePercentageToPay: String?,
+        amountToCollect: String?,
+        tolls: ArrayList<RideDetailModel.Tolls>
     ) {
+
+        var jsonArray = JSONArray()
+
+        try {
+
+
+            for (i in tolls!!.indices) {
+                val jsonObjectMain = JSONObject()
+                jsonObjectMain.put("latitude", tolls[i].latitude)
+                jsonObjectMain.put("longitude", tolls[i].longitude)
+                jsonObjectMain.put("name", tolls[i].name)
+                jsonObjectMain.put("road", tolls[i].road)
+                jsonObjectMain.put("state", tolls[i].state)
+                jsonObjectMain.put("country", tolls[i].country)
+                jsonObjectMain.put("type", tolls[i].type)
+                jsonObjectMain.put("currency", tolls[i].currency)
+                jsonObjectMain.put("charges", tolls[i].charges)
+                jsonArray.put(jsonObjectMain)
+            }
+
+
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+
         viewRideView.showWait()
         val call = ApiClient.client.bookingRequest(
             "Bearer $token",
@@ -63,7 +99,12 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             transaction_id,
             method,
             payment_status,
-            gateway_tye
+            gateway_type,
+            firstRideTotal,
+            secondRideTotal,
+            secondRidePercentageToPay,
+            amountToCollect,
+            jsonArray
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
             override fun onResponse(
@@ -207,7 +248,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         origin_latitude: String?,
         origin_longitude: String?,
         destination_latitude: String?,
-        destination_longitude: String?
+        destination_longitude: String?,
+        way_flag: String?
     ) {
         viewRideView.showWait()
 
@@ -239,7 +281,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
                 origin_latitude,
                 origin_longitude,
                 destination_latitude,
-                destination_longitude
+                destination_longitude,
+                way_flag
             )
         }
 

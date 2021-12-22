@@ -43,6 +43,7 @@ object Constants {
     var badgeImageClick = 4
 
     var SHOULD_RELOAD :Boolean = false
+    var IS_EXTRA_PAYMENT_FOR_INTERCITY_TWO_WAY :Boolean = false
 
     // PERMIT TYPE
     var TYPE_INTERCITY = "Intercity"

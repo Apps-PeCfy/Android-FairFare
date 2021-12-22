@@ -158,7 +158,7 @@
     <string name="btn_rate_this_ride">Rate this Ride</string>
     <string name="str_under_review">Under Review</string>
     <string name="str_schedule_ride">Schedule Ride</string>
-    <string name="str_reward_points_earned_for_this_ride">\"Reward points earned for this ride \"</string>
+    <string name="str_reward_points_earned_for_this_ride">Reward points earned for this ride </string>
     <string name="err_valid_phone_number">Please enter a valid phone no.</string>
     <string name="err_phone_and_gender">Please enter Phone number and Gender.</string>
     <string name="err_valid_email">Please enter a valid email.</string>
@@ -261,6 +261,7 @@
     <string name="drawer_mylocation">My Locations</string>
     <string name="drawer_myrides">My Rides</string>
     <string name="drawer_wallet">Wallet</string>
+    <string name="drawer_notifications">My Notifications</string>
     <string name="drawer_mydisput">My Disputes</string>
     <string name="drawer_mycomplents">My Complaints</string>
     <string name="drawer_ratecard">Rate Card</string>
@@ -390,6 +391,7 @@
     <string name="str_allow_permission">Allow Permission</string>
     <string name="str_your_payment_is_successful">Your payment is successful</string>
     <string name="str_no_wallet_data">No Amount available in your wallet</string>
+    <string name="str_no_notifications">No Notifications</string>
     <string name="err_internal_server_error">Internal server error</string>
     <string name="title_select_from_city">Select From City</string>
     <string name="title_select_to_city">Select To City</string>
@@ -405,6 +407,7 @@
     <string name="err_valid_date_time">Please select valid date and time</string>
     <string name="str_start_otp">Start OTP</string>
     <string name="title_booked_successfully">Booked Successfully</string>
+    <string name="status_booked">Booked</string>
     <string name="title_your_payment_successfull">Your payment is successfull</string>
     <string name="dialog_booking_request_msg_one">Your booking request submitted successfully for</string>
     <string name="dialog_booking_request_msg_two">Driver details will be shared 15 minutes before the ride.</string>

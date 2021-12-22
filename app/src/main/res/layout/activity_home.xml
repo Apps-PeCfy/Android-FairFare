@@ -80,6 +80,7 @@
                     android:fontFamily="@font/notosansjp_regular"
                     android:gravity="center"
                     android:padding="5dp"
+                    android:layout_alignParentEnd="true"
                     android:text="@string/title_intercity"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"

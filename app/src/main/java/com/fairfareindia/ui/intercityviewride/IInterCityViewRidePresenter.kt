@@ -1,5 +1,9 @@
 package com.fairfareindia.ui.intercityviewride
 
+import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
+import com.google.gson.annotations.SerializedName
+import org.json.JSONArray
+
 
 interface IInterCityViewRidePresenter {
 
@@ -27,7 +31,12 @@ interface IInterCityViewRidePresenter {
         transaction_id: String?,
         method: String?,
         payment_status: String?,
-        gateway_type: String?
+        gateway_type: String?,
+        firstRideTotal: String?,
+        secondRideTotal: String?,
+        secondRidePercentageToPay: String?,
+        amountToCollect: String?,
+        tolls: ArrayList<RideDetailModel.Tolls>
     )
 
 
@@ -60,7 +69,6 @@ interface IInterCityViewRidePresenter {
 
 
 
-
     fun getViewRideDetails(
         token: String?,
         permit_type: String?,
@@ -72,7 +80,8 @@ interface IInterCityViewRidePresenter {
         origin_latitude: String?,
         origin_longitude: String?,
         destination_latitude: String?,
-        destination_longitude: String?
+        destination_longitude: String?,
+        way_flag: String?
     )
 
 

@@ -83,6 +83,13 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.txtActualFare.text = "₹ " + model.estimatedTrackRide?.totalCharges.toString()
 
                 holder.txtStatus.text = model.status
+
+                if (model.status == Constants.BOOKING_PENDING){
+                    holder.txtStatus.text = context?.resources?.getString(R.string.status_booked)
+                }else{
+                    holder.txtStatus.text = model.status
+                }
+
                 if (model.status == Constants.BOOKING_COMPLETED) {
                     holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorGreen)!!)
                 }else{
@@ -90,42 +97,27 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
 
 
-
-                if (model.permitType == Constants.TYPE_INTERCITY){
-
-                    holder.btnStartRide.visibility = View.GONE
-                    holder.imgViewInfo.visibility = View.GONE
-                    if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_PENDING || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED){
-                        holder.llCancelRide.visibility = View.VISIBLE
-                    }else{
-                        holder.llCancelRide.visibility = View.GONE
-                    }
+                if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_PENDING || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED){
+                    holder.llCancelRide.visibility = View.VISIBLE
                 }else{
                     holder.llCancelRide.visibility = View.GONE
+                }
+
+                if (model.permitType == Constants.TYPE_INTERCITY){
+                    holder.imgViewInfo.visibility = View.GONE
+                    holder.txtPermitType.visibility = View.VISIBLE
+                    holder.txtPermitType.text =  model.permitType + " (${model.intercityFromCity?.name} - ${model.intercitytoCity?.name})"
+                }else{
                     if (model.status == Constants.BOOKING_COMPLETED) {
                         holder.imgViewInfo.visibility = View.VISIBLE
                         if (model.reviewStar.toFloat() >= 1.0f) {
                             holder.ratingBar.visibility = View.VISIBLE
                             holder.ratingBar.rating = model.reviewStar.toFloat()
-
                         } else {
                             holder.txtRateRide.visibility = View.VISIBLE
                         }
                     } else {
                         holder.imgViewInfo.visibility = View.GONE
-                    }
-
-                    if (model.status != Constants.BOOKING_SCHEDULED) {
-                        holder.btnStartRide.visibility = View.GONE
-                    } else {
-                        if (model.rideStatus.equals("Yes")) {
-                            holder.btnStartRide.visibility = View.VISIBLE
-
-                        } else {
-                            holder.btnStartRide.visibility = View.VISIBLE
-                            holder.btnStartRide.isEnabled = false
-                            holder.btnStartRide.setBackgroundResource(R.drawable.btn_rounded_grey)
-                        }
                     }
                 }
 
@@ -188,6 +180,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class MyViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
+        val txtPermitType: TextView = itemView.findViewById(R.id.txt_permit_type)
         val txtStatus: TextView = itemView.findViewById(R.id.txt_status)
         val txtRateRide: TextView = itemView.findViewById(R.id.txt_rate_ride)
         val txtActualFare: TextView = itemView.findViewById(R.id.txt_total_charges)

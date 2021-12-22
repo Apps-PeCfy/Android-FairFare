@@ -135,6 +135,12 @@ class GetRideResponsePOJO  {
 		@SerializedName("rideStatus")
 		var rideStatus: String? = null
 
+		@SerializedName("intercityFromCity")
+		var intercityFromCity: City? = null
+
+		@SerializedName("intercitytoCity")
+		var intercitytoCity: City? = null
+
 
 		@SerializedName("estimatedTrackRide")
 		var estimatedTrackRide: EstimatedTrackRide? =
@@ -299,6 +305,28 @@ class GetRideResponsePOJO  {
 		var charges = 0
 
 
+
+	}
+
+	inner class City : Serializable {
+
+		@SerializedName("id")
+		var id: String? = null
+
+		@SerializedName("name")
+		var name: String? = null
+
+		@SerializedName("state_id")
+		var state_id: String? = null
+
+		@SerializedName("night_from_hours")
+		var night_from_hours: String? = null
+
+		@SerializedName("night_to_hours")
+		var night_to_hours: String? = null
+
+		@SerializedName("updated_at")
+		var updated_at: String? = null
 
 	}
 

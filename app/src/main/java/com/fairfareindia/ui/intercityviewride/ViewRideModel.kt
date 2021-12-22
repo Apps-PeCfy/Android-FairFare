@@ -1,5 +1,6 @@
 package com.fairfareindia.ui.intercityviewride
 
+import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -82,10 +83,22 @@ class ViewRideModel {
         var totalPayableCharges: Double = 0.0
 
         @SerializedName("tolls")
-        var tolls: ArrayList<Tolls> ? = ArrayList()
+        var tolls: ArrayList<RideDetailModel.Tolls> ? = ArrayList()
 
         @SerializedName("rules")
         var rules: String? = null
+
+        @SerializedName("firstRideTotal")
+        var firstRideTotal: String? = null
+
+        @SerializedName("secondRideTotal")
+        var secondRideTotal: String? = null
+
+        @SerializedName("secondRidePercentageToPay")
+        var secondRidePercentageToPay: String? = null
+
+        @SerializedName("amountToCollect")
+        var amountToCollect: String? = null
 
     }
 
@@ -134,67 +147,7 @@ class ViewRideModel {
 
     }
 
-    inner class Tolls : Serializable {
-        @SerializedName("id")
-        var id: String? = null
 
-        @SerializedName("lat")
-        var lat: String? = null
-
-        @SerializedName("lng")
-        var lng: String? = null
-
-        @SerializedName("name")
-        var name: String? = null
-
-        @SerializedName("road")
-        var road: String? = null
-
-        @SerializedName("state")
-        var state: String? = null
-
-        @SerializedName("country")
-        var country: String? = null
-
-        @SerializedName("type")
-        var type: String? = null
-
-        @SerializedName("currency")
-        var currency: String? = null
-
-        @SerializedName("tagPrimary")
-        var tagPrimary: Array<String>? = null
-
-        @SerializedName("oneWay")
-        var oneWay: String? = null
-
-        @SerializedName("tagOneWay")
-        var tagOneWay: String? = null
-
-        @SerializedName("monthly")
-        var monthly: String? = null
-
-        @SerializedName("tagReturn")
-        var tagReturn: String? = null
-
-        @SerializedName("tagMonthly")
-        var tagMonthly: String? = null
-
-        @SerializedName("height")
-        var height: String? = null
-
-        @SerializedName("nhai")
-        var nhai: Boolean? = null
-
-        @SerializedName("latitude")
-        var latitude: String? = null
-
-        @SerializedName("longitude")
-        var longitude: String? = null
-
-        @SerializedName("charges")
-        var charges: String? = null
-    }
 
 
 }
