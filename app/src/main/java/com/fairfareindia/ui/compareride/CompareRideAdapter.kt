@@ -44,7 +44,7 @@ class CompareRideAdapter(var context: Context, private val compareRideList: Arra
             holder.tv_carName!!.text = compareRideList[position]!!.vehicleName
             holder.tv_vehialType!!.text = compareRideList[position]!!.label
             holder.tv_time!!.text = estTime
-            holder.total!!.text = "₹ " +compareRideList[position]!!.total
+            holder.total!!.text = ProjectUtilities.getAmountInFormat(compareRideList[position]?.total?.toDouble())
 
 
 

@@ -127,6 +127,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:tint="@color/colorPrimary"
                         android:padding="10dp"/>
                 </RelativeLayout>
 

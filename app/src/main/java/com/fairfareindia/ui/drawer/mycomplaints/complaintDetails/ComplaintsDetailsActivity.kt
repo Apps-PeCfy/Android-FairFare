@@ -33,6 +33,7 @@ import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.ui.ridedetails.GridSpacingItemDecoration
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PreferencesManager
+import com.fairfareindia.utils.ProjectUtilities
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -435,7 +436,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                     tv_carName!!.text = response.body()!!.dispute!!.vehicleName
 
 
-                    tv_actualfare!!.text = getString(R.string.str_total_fare_charged) + " : ₹ " + response.body()!!.dispute!!.actualMeterCharges
+                    tv_actualfare!!.text = getString(R.string.str_total_fare_charged) + " : " + ProjectUtilities.getAmountInFormat(response.body()!!.dispute!!.actualMeterCharges?.toDouble())
                     tv_startMeterReading!!.text = getString(R.string.str_start_trip_meter) + " : " + response.body()!!.dispute!!.startMeterReading
                     tv_endMeterReading!!.text = getString(R.string.hint_end_trip_meter) + " : " + response.body()!!.dispute!!.endMeterReading
 
@@ -535,20 +536,20 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                         tv_actualFare!!.text =
-                            "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.subTotalCharges
+                            ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.subTotalCharges?.toDouble())
                         tv_actualLuggage!!.text =
-                            "₹ " + response!!.body()!!.dispute!!.ride!!.luggageCharges
+                            ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.luggageCharges?.toDouble())
                         tv_actualTotalFare!!.text =
-                            "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.totalCharges
+                            ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.totalCharges?.toDouble())
 
                         tvActualNightChages!!.text =
-                            "₹ " + response.body()!!.dispute!!.ride!!.nightCharges
+                            ProjectUtilities.getAmountInFormat(response.body()!!.dispute!!.ride!!.nightCharges?.toDouble())
 
                         if(response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.tollCharges!!.equals("-")){
 
                         }else{
                             tvActualTollCharges!!.text =
-                                "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.tollCharges
+                                ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.tollCharges?.toDouble())
 
                         }
 
@@ -557,7 +558,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                         tvActualWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingTime
                         tvActualWaitCharge!!.text =
-                            "₹ " + response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingCharges
+                            ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.actualTrackRide!!.waitingCharges?.toDouble())
                     }
 
 
@@ -568,7 +569,7 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                         }else{
                             tvEstTollCharges!!.text =
-                                "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.tollCharges
+                                ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.tollCharges?.toDouble())
 
                         }
 
@@ -579,18 +580,18 @@ class ComplaintsDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                         tv_estTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.duration
                         tv_estFare!!.text =
-                            "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.subTotalCharges
+                            ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.subTotalCharges?.toDouble())
                         tv_estLuggage!!.text =
-                            "₹ " + response!!.body()!!.dispute!!.ride!!.luggageCharges
+                            ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.luggageCharges?.toDouble())
                         tv_estTotalFare!!.text =
-                            "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.totalCharges
+                            ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.totalCharges?.toDouble())
 
                         tvNightChages!!.text =
-                            "₹ " + response.body()!!.dispute!!.ride!!.nightCharges
+                            ProjectUtilities.getAmountInFormat(response.body()!!.dispute!!.ride!!.nightCharges?.toDouble())
 
 
                         tvEstWaitCharge!!.text =
-                            "₹ " + response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges
+                            ProjectUtilities.getAmountInFormat(response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingCharges?.toDouble())
                         tvEstWaitTime!!.text =
                             response!!.body()!!.dispute!!.ride!!.estimatedTrackRide!!.waitingTime
 

@@ -16,6 +16,7 @@ import com.fairfareindia.R
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.utils.AppUtils
 import com.fairfareindia.utils.Constants
+import com.fairfareindia.utils.ProjectUtilities
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 
 
@@ -80,7 +81,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.txtSourceAddress.text = (model.originFullAddress)
                 holder.txtDestinationAddress.text = (model.destinationFullAddress)
 
-                holder.txtActualFare.text = "₹ " + model.estimatedTrackRide?.totalCharges.toString()
+                holder.txtActualFare.text = ProjectUtilities.getAmountInFormat(model.estimatedTrackRide?.totalCharges?.toDouble())
 
                 holder.txtStatus.text = model.status
 

@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
+import com.fairfareindia.utils.ProjectUtilities
 
 class LocalCompareRideAdapter() :
     RecyclerView.Adapter<LocalCompareRideAdapter.MyViewHolder>() {
@@ -55,7 +56,7 @@ class LocalCompareRideAdapter() :
         holder.txtCarName.text = model?.name
         holder.txtVehicleType.text = model?.vehicle?.name
         holder.txtTime.text = estTime
-        holder.txtTotal.text = "₹ " + model.totalPayableCharges
+        holder.txtTotal.text = ProjectUtilities.getAmountInFormat(model.totalPayableCharges)
 
 
 

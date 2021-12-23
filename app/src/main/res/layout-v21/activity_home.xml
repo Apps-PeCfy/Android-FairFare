@@ -145,7 +145,7 @@
                                 android:background="@drawable/shapespinner"
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="bottom"
-                                android:paddingStart="@dimen/_30sdp"
+                                android:paddingStart="@dimen/_25sdp"
                                 android:spinnerMode="dropdown"
                                 android:textSize="@dimen/text_14sp" />
 
@@ -158,9 +158,10 @@
                                 android:background="@drawable/spinnerbags"
                                 android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="bottom"
-                                android:paddingStart="@dimen/_30sdp"
+                                android:paddingStart="@dimen/_25sdp"
                                 android:spinnerMode="dropdown"
                                 android:textSize="@dimen/text_14sp" />
+
 
 
                         </LinearLayout>

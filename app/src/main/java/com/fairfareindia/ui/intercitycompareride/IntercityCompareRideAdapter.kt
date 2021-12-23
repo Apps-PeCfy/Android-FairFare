@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
+import com.fairfareindia.utils.ProjectUtilities
 
 class IntercityCompareRideAdapter() :
     RecyclerView.Adapter<IntercityCompareRideAdapter.MyViewHolder>() {
@@ -54,7 +55,7 @@ class IntercityCompareRideAdapter() :
         holder.txtCarName.text = model.name
         holder.txtVehicleType.text = model.vehicle?.name
         holder.txtTime.text = estTime
-        holder.txtTotal.text = "₹ " + model.totalPayableCharges
+        holder.txtTotal.text = ProjectUtilities.getAmountInFormat(model.totalPayableCharges)
 
 
 

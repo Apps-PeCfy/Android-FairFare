@@ -123,10 +123,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             )
             txtDistanceTime.text = info.distance + " KM, " + info.travelTime
 
-            tvLuggageCharges.text = "₹ " + model?.ride?.chargesLuggage
+            tvLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.chargesLuggage)
 
-            txtBaseFare.text = "₹ " + model?.ride?.baseFare
-            txtTollCharges.text = "₹ " + model?.ride?.tollCharges
+            txtBaseFare.text = ProjectUtilities.getAmountInFormat(model?.ride?.baseFare)
+            txtTollCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.tollCharges)
 
 
             if (model?.ride?.actualDistance!! > model?.ride?.baseDistance!!) {
@@ -142,13 +142,13 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 getString(R.string.str_base_fare) + "( ${model?.ride?.baseDistance!!.toInt()} ${model?.ride?.distanceType}) ${info.wayFlag}"
 
 
-            tvChargesForAdditionalKm.text = "₹ " + model?.ride?.additionalDistCharges
+            tvChargesForAdditionalKm.text = ProjectUtilities.getAmountInFormat(model?.ride?.additionalDistCharges)
 
-            tvSurCharges.text = "₹ " + model?.ride?.surcharges
+            tvSurCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.surcharges)
 
-            tvConvenienceFees.text = "₹ " + model?.ride?.convenienceFees
-            txtTotalPayable.text = "₹ " + model?.ride?.totalPayableCharges
-            txtAdditionalCharges.text = "₹ " + model?.ride?.totalAdditionalCharges
+            tvConvenienceFees.text = ProjectUtilities.getAmountInFormat(model?.ride?.convenienceFees)
+            txtTotalPayable.text = ProjectUtilities.getAmountInFormat(model?.ride?.totalPayableCharges)
+            txtAdditionalCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.totalAdditionalCharges)
 
             if(model?.ride?.rules.isNullOrEmpty()){
                 txtRulesLabel.visibility = View.GONE

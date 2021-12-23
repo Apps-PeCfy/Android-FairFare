@@ -72,6 +72,20 @@ object ProjectUtilities {
         return returnTime
     }
 
+    fun getAmountInFormat(amount : Double?): String {
+        var returnAmount = "₹ $amount"
+
+        if(amount != null){
+            var formatter = DecimalFormat("#,##0.00")
+            returnAmount = "₹ "+ formatter.format(amount)
+        }
+
+
+        return returnAmount
+    }
+
+
+
     fun timeInSecondsConvertingToString(mContext: Context?, timeInSeconds : String): String {
         var returnTime = timeInSeconds
 
