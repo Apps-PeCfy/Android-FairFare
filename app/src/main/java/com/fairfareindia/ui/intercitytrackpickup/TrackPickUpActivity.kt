@@ -184,10 +184,11 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             txtDropOffLocationHide.text = model?.data?.destinationAddress
             txtOtp.text = getString(R.string.str_start_otp) + " - " + model?.data?.rideOtp
 
-            tvLuggageCharges.text = "₹ " + model?.data?.estimatedTrackRide?.luggageCharges
+            tvLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.luggageCharges?.toDouble())
+            txtNightCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.nightCharges?.toDouble())
 
-            txtBaseFare.text = "₹ " + model?.data?.estimatedTrackRide?.basicFare
-            txtTollCharges.text = "₹ " + model?.data?.estimatedTrackRide?.tollCharges
+            txtBaseFare.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.basicFare?.toDouble())
+            txtTollCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.tollCharges?.toDouble())
 
             sourceLat = model?.data?.originLatitude
             sourceLong = model?.data?.originLongitude
@@ -200,28 +201,30 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             }
 
 
-            if (model?.data?.estimatedTrackRide?.distance!! > model?.data?.estimatedTrackRide?.baseDistance!!) {
-                var extraDistance =
-                    model?.data?.estimatedTrackRide?.distance!!.toInt() - model?.data?.estimatedTrackRide?.baseDistance!!.toInt()
+            if (!model?.data?.estimatedTrackRide?.additionalDistance.isNullOrEmpty()) {
                 txtChargesForAdditionalKmLabel.text =
-                    getString(R.string.str_charges_for_additional) + " $extraDistance " + "Km"
+                    getString(R.string.str_charges_for_additional) + " ${model?.data?.estimatedTrackRide?.additionalDistance} " + "Km"
             } else {
                 txtChargesForAdditionalKmLabel.text = getString(R.string.str_charges_for_additional)
 
             }
-            txtBaseFareLabel.text =
-                getString(R.string.str_base_fare) + "( ${model?.data?.estimatedTrackRide?.baseDistance!!.toInt()} Km )"
+
+            if (model?.data?.estimatedTrackRide?.baseDistance.isNullOrEmpty()){
+                txtBaseFareLabel.text = getString(R.string.str_base_fare)
+            }else{
+                txtBaseFareLabel.text =
+                getString(R.string.str_base_fare) + "( ${model?.data?.estimatedTrackRide?.baseDistance} Km )"
+            }
 
 
-            tvChargesForAdditionalKm.text =
-                "₹ " + model?.data?.estimatedTrackRide?.additionalDistanceCharges
 
-            tvSurCharges.text = "₹ " + model?.data?.estimatedTrackRide?.surCharge
+            tvChargesForAdditionalKm.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.additionalDistanceCharges?.toDouble())
 
-            tvConvenienceFees.text = "₹ " + model?.data?.estimatedTrackRide?.convenienceFees
-            txtTotalPayable.text = "₹ " + model?.data?.estimatedTrackRide?.totalCharges
-            txtAdditionalCharges.text =
-                "₹ " + model?.data?.estimatedTrackRide?.totalAdditionalCharges
+            tvSurCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.surCharge?.toDouble())
+
+            tvConvenienceFees.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.convenienceFees?.toDouble())
+            txtTotalPayable.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.totalCharges?.toDouble())
+            txtAdditionalCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.totalAdditionalCharges?.toDouble())
 
 
             if (model?.data?.rules.isNullOrEmpty()) {

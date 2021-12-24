@@ -436,7 +436,7 @@ interface NetworkService {
     ): Call<DeleteDisputResponsePOJO?>?
 
 
-    @GET("rides")
+    @GET("ridesList")
     fun getMyRides(
         @Header("Authorization") header: String?,
         @Query("page") pageCount: Int?,
@@ -556,7 +556,7 @@ interface NetworkService {
         @Query("ride_id") dispute_id: String?
     ): Call<RideDetailsResponsePOJO?>?
 
-    @POST("rideDetails")
+    @POST("rideDetailsNew")
     fun getRideDetails(
         @Header("Authorization") header: String?,
         @Query("ride_id") dispute_id: String?

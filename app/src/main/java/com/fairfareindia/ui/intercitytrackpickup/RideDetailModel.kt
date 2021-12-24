@@ -255,7 +255,7 @@ class RideDetailModel {
         var totalCharges: String? = null
 
         @SerializedName("baseDistance")
-        var baseDistance: Double = 0.0
+        var baseDistance: String ?= null
 
         @SerializedName("convenienceFees")
         var convenienceFees: String? = null
@@ -271,6 +271,9 @@ class RideDetailModel {
 
         @SerializedName("luggageCharges")
         var luggageCharges: String? = null
+
+        @SerializedName("nightCharges")
+        var nightCharges: String? = null
 
         @SerializedName("rideTime")
         var rideTime: String? = null

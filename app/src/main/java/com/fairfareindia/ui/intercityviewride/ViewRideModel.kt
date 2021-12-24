@@ -47,7 +47,7 @@ class ViewRideModel {
         var fareForAddDist: Double = 0.0
 
         @SerializedName("additionalDistance")
-        var additionalDistance: Double = 0.0
+        var additionalDistance: String ?= null
 
         @SerializedName("chargesPerLuggage")
         var chargesPerLuggage: Double = 0.0

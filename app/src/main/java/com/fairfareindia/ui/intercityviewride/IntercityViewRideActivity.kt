@@ -129,6 +129,14 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             txtTollCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.tollCharges)
 
 
+            if (!model?.ride?.additionalDistance.isNullOrEmpty()) {
+                txtChargesForAdditionalKmLabel.text =
+                    getString(R.string.str_charges_for_additional) + " ${model?.ride?.additionalDistance} " + "Km"
+            } else {
+                txtChargesForAdditionalKmLabel.text = getString(R.string.str_charges_for_additional)
+
+            }
+
             if (model?.ride?.actualDistance!! > model?.ride?.baseDistance!!) {
                 var extraDistance =
                     (model?.ride?.actualDistance!! - model?.ride?.baseDistance!!).toInt()
