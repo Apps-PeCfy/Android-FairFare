@@ -625,6 +625,13 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     locationChangeLatitude = driverLocationModel?.data?.latitude!!
                     locationChangeLongitude = driverLocationModel?.data?.longitude!!
 
+                    if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true"){
+                        addCurrentLocationMarker(driverLocationModel)
+                        getRouteAPI()
+                        iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                    }
+
+
                     if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED) {
                         handler?.removeCallbacksAndMessages(null)
                         myLocationManager?.stopLocationUpdates()
@@ -635,13 +642,6 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         )
                         finish()
                     }
-
-                    if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true"){
-                        addCurrentLocationMarker(driverLocationModel)
-                        getRouteAPI()
-                        iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
-                    }
-
 
 
                 }
