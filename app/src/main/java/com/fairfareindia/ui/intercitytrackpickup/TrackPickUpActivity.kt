@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -363,7 +364,6 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             CameraUpdateFactory.newCameraPosition(
                 CameraPosition.Builder()
                     .target(newPosition)
-                    //  .bearing(getCompassBearing(startLocation, destLocation))
                     .zoom(getZoomLevel())
                     .build()
             )
@@ -441,13 +441,12 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                     destination.latitude,
                     destination.longitude
                 )
-            val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
             if (mMap!!.cameraPosition.zoom <= 18.0) {
-                valueAnimator.duration = 1000 // duration 2 second
+                valueAnimator.duration = 2000 // duration 2 second
             } else {
-                valueAnimator.duration = 500 // duration 2 second
+                valueAnimator.duration = 1000 // duration 2 second
             }
 
             valueAnimator.interpolator = LinearInterpolator()
@@ -609,6 +608,11 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                                 com.google.android.gms.maps.model.LatLng(lat, lng)
                             points.add(position)
                         }
+
+                        if (points.size >= 2){
+                            updateCamera(getCompassBearing(points[0]!!, points[1]!!))
+                        }
+
                         lineOptions.addAll(points)
                         lineOptions.width(8f)
                         //  lineOptions.color(Color.GREEN);
@@ -633,6 +637,13 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                 }
 
             })
+    }
+
+    fun updateCamera(bearing: Float) {
+        val currentPlace: CameraPosition = CameraPosition.Builder()
+            .target(LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel?.data?.longitude!!))
+            .bearing(bearing).zoom(getZoomLevel()).build()
+        mMap?.animateCamera(CameraUpdateFactory.newCameraPosition(currentPlace))
     }
 
     private fun setHandler() {
@@ -733,5 +744,15 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
     override fun onDestroy() {
         super.onDestroy()
         handler?.removeCallbacksAndMessages(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 }

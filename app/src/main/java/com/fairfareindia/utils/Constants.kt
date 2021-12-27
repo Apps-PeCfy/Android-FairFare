@@ -77,6 +77,7 @@ object Constants {
     var KEY_PICK_UP_DURATION = "pickup_duration"
     var KEY_TRACK_DURATION = "track_duration"
     var KEY_SCHEDULE_TIME_IN_MINUTES = "schedule_time_minute"
+    var IS_TRACKING_FROM_DRIVER = "is_tracking_from_driver"
 
 
     //RazorPay Key

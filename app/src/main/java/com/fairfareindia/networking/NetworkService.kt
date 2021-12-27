@@ -264,7 +264,9 @@ interface NetworkService {
         @Field("origin_latitude") origin_latitude: String?,
         @Field("origin_longitude") origin_longitude: String?,
         @Field("destination_latitude") destination_latitude: String?,
-        @Field("destination_longitude") destination_longitude: String?
+        @Field("destination_longitude") destination_longitude: String?,
+        @Field("travel_time") travel_time: String?,
+        @Field("travel_time_second") travel_time_second: String?
     ): Call<ViewRideModel?>?
 
     @FormUrlEncoded
@@ -281,7 +283,9 @@ interface NetworkService {
         @Field("origin_longitude") origin_longitude: String?,
         @Field("destination_latitude") destination_latitude: String?,
         @Field("destination_longitude") destination_longitude: String?,
-        @Field("way_flag") way_flag: String?
+        @Field("way_flag") way_flag: String?,
+        @Field("travel_time") travel_time: String?,
+        @Field("travel_time_second") travel_time_second: String?
     ): Call<ViewRideModel?>?
 
 

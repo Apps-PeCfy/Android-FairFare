@@ -101,7 +101,9 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             sourceLong,
             destinationLat,
             destinationLong,
-            info.wayFlag
+            info.wayFlag,
+            info.travelTime,
+            estTimeInSeconds
         )
 
         setListeners()
@@ -127,6 +129,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
 
             txtBaseFare.text = ProjectUtilities.getAmountInFormat(model?.ride?.baseFare)
             txtTollCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.tollCharges)
+            txtNightCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.nightCharges)
+
 
 
             if (!model?.ride?.additionalDistance.isNullOrEmpty()) {

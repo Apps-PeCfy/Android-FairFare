@@ -896,11 +896,12 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/str_estimated_fare_payable"
                                             android:textColor="@color/colorText"
+                                            android:layout_toStartOf="@id/txt_total_payable"
                                             android:textStyle="bold" />
 
                                         <TextView
                                             android:id="@+id/txt_total_payable"
-                                            android:layout_width="@dimen/_60sdp"
+                                            android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentEnd="true"
                                             android:gravity="end"

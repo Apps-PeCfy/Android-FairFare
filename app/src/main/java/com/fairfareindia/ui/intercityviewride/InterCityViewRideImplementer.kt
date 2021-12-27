@@ -237,6 +237,7 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         })
     }
 
+
     override fun getViewRideDetails(
         token: String?,
         permit_type: String?,
@@ -249,7 +250,9 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         origin_longitude: String?,
         destination_latitude: String?,
         destination_longitude: String?,
-        way_flag: String?
+        way_flag: String?,
+        travel_time: String?,
+        travel_time_second: String?
     ) {
         viewRideView.showWait()
 
@@ -267,7 +270,9 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
                 origin_latitude,
                 origin_longitude,
                 destination_latitude,
-                destination_longitude
+                destination_longitude,
+                travel_time,
+                travel_time_second
             )
         }else{
             call =  ApiClient.client.getViewLocalRideDetails(
@@ -282,7 +287,9 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
                 origin_longitude,
                 destination_latitude,
                 destination_longitude,
-                way_flag
+                way_flag,
+                travel_time,
+                travel_time_second
             )
         }
 

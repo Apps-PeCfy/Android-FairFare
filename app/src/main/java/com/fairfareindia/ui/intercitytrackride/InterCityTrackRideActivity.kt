@@ -7,9 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -66,6 +69,11 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
 
     val handler: Handler? = Handler()
+    private var myLocationManager: MyLocationManager? = MyLocationManager(this)
+    var locationChangeLatitude = 0.0
+    var locationChangeLongitude = 0.0
+    private var IS_TRACKING_DRIVER_IN_TRACK_RIDE : String ? = "false"
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,10 +100,41 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
         iInterCityTrackRidePresenter?.getRideDetails(token, rideID)
 
-        getDriverLocationAPI()
+        IS_TRACKING_DRIVER_IN_TRACK_RIDE = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.IS_TRACKING_FROM_DRIVER)
+
+        if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
+            getDriverLocationAPI()
+        } else {
+            initLocationUpdates()
+        }
+
+
 
         setListeners()
 
+    }
+
+    private fun initLocationUpdates() {
+        myLocationManager?.getMyCurrentLocationChange(object :
+            MyLocationManager.LocationManagerTrackInterface {
+            override fun onMyLocationChange(
+                currentLocation: MutableList<Location>?,
+                lastLocation: Location?
+            ) {
+                if (lastLocation != null) {
+                    addCurrentLocationMarker(lastLocation)
+
+                    locationChangeLatitude = lastLocation!!.latitude
+                    locationChangeLongitude = lastLocation!!.longitude
+
+                    getRouteAPI()
+                    getDriverLocationAPI()
+                    iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+
+                }
+            }
+
+        })
     }
 
     private fun setListeners() {
@@ -199,6 +238,39 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
         }
     }
 
+    private fun addCurrentLocationMarker(location: Location?) {
+
+        val newPosition: LatLng = LatLng(location!!.latitude, location.longitude)
+        if (myMarker != null) {
+            if (prevLatLng != null) {
+                animateMarkerNew(prevLatLng!!, newPosition, myMarker)
+            }
+            myMarker!!.remove()
+        }
+        myMarker = mMap!!.addMarker(
+            MarkerOptions()
+                .position(newPosition)
+                .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                .anchor(0.5f, 0.5f)
+                .draggable(true)
+                .flat(true)
+                .rotation(location.bearing)
+        )
+
+
+        prevLatLng = newPosition
+
+        mMap!!.animateCamera(
+            CameraUpdateFactory.newCameraPosition(
+                CameraPosition.Builder()
+                    .target(newPosition)
+                    .zoom(getZoomLevel())
+                    .build()
+            )
+        )
+
+    }
+
     private fun addCurrentLocationMarker(driverLocationModel: DriverLocationModel?) {
 
         val newPosition: LatLng =
@@ -291,17 +363,11 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker))
         )
 
-
-
-
-
-
-
         mMap?.addMarker(
             MarkerOptions().position(
                 com.google.android.gms.maps.model.LatLng(
                     destinationLat!!.toDouble(),
-                    destinationLat!!.toDouble()
+                    destinationLong!!.toDouble()
                 )
             ).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_grey))
         )
@@ -357,16 +423,18 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
 
-                    myMarker?.remove()
-                    myMarker = mMap?.addMarker(
-                        MarkerOptions()
-                            .position(destination)
-                            .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
-                            .anchor(0.5f, 0.5f)
-                            .draggable(true)
-                            .flat(true)
-                            .rotation(driverLocationModel?.data?.bearing!!)
-                    )
+                    if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true"){
+                        myMarker?.remove()
+                        myMarker = mMap?.addMarker(
+                            MarkerOptions()
+                                .position(destination)
+                                .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                                .anchor(0.5f, 0.5f)
+                                .draggable(true)
+                                .flat(true)
+                                .rotation(driverLocationModel?.data?.bearing!!)
+                        )
+                    }
                 }
             })
             valueAnimator.start()
@@ -439,7 +507,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
     private fun getRouteAPI() {
         val url =
-            "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + driverLat + "," + driverLong + "&destination=" + destinationLat + "," + destinationLong + "&key=" + getString(
+            "https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=" + locationChangeLatitude + "," + locationChangeLongitude + "&destination=" + destinationLat + "," + destinationLong + "&key=" + getString(
                 R.string.google_maps_key
             )
 
@@ -486,6 +554,10 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                                 com.google.android.gms.maps.model.LatLng(lat, lng)
                             points.add(position)
                         }
+
+                        if (points.size >= 2){
+                            updateCamera(getCompassBearing(points[0]!!, points[1]!!))
+                        }
                         lineOptions.addAll(points)
                         lineOptions.width(8f)
                         //  lineOptions.color(Color.GREEN);
@@ -510,6 +582,14 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 }
 
             })
+    }
+
+
+    fun updateCamera(bearing: Float) {
+        val currentPlace: CameraPosition = CameraPosition.Builder()
+            .target(LatLng(locationChangeLatitude, locationChangeLongitude))
+            .bearing(bearing).zoom(getZoomLevel()).build()
+        mMap?.animateCamera(CameraUpdateFactory.newCameraPosition(currentPlace))
     }
 
     private fun setHandler() {
@@ -542,9 +622,12 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     driverLocationModel = resultObj as DriverLocationModel?
                     driverLat = driverLocationModel?.data?.latitude.toString()
                     driverLong = driverLocationModel?.data?.longitude.toString()
+                    locationChangeLatitude = driverLocationModel?.data?.latitude!!
+                    locationChangeLongitude = driverLocationModel?.data?.longitude!!
 
                     if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED) {
                         handler?.removeCallbacksAndMessages(null)
+                        myLocationManager?.stopLocationUpdates()
                         startActivity(
                             Intent(context, IntercityRideDetailsActivity::class.java)
                                 .putExtra("ride_id", rideID)
@@ -553,14 +636,13 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         finish()
                     }
 
-                    addCurrentLocationMarker(driverLocationModel)
-
-                    if (!isRouteDrawn) {
+                    if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true"){
+                        addCurrentLocationMarker(driverLocationModel)
                         getRouteAPI()
                         iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
-                    } else {
-                        getRouteAPI()
                     }
+
+
 
                 }
 
@@ -575,7 +657,10 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     override fun getRideDetails(model: RideDetailModel?) {
         rideDetailModel = model
         setData()
-        setHandler()
+        if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
+            setHandler()
+        }
+
     }
 
     override fun getNearByPlaces(model: NearByResponse?) {
@@ -696,6 +781,17 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
     override fun onDestroy() {
         super.onDestroy()
+        myLocationManager?.stopLocationUpdates()
         handler?.removeCallbacksAndMessages(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 }

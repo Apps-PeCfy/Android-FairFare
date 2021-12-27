@@ -81,7 +81,9 @@ interface IInterCityViewRidePresenter {
         origin_longitude: String?,
         destination_latitude: String?,
         destination_longitude: String?,
-        way_flag: String?
+        way_flag: String?,
+        travel_time: String?,
+        travel_time_second: String?
     )
 
 
