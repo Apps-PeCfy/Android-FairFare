@@ -23,6 +23,7 @@ interface ICompareRidePresenter {
         token: String?,
         distance: String?,
         travel_time: String?,
+        travel_time_second: String?,
         permit_type: String?,
         city_id: String?,
         origin_place_id: String?,

@@ -152,6 +152,7 @@ interface NetworkService {
         @Header("Authorization") header: String?,
         @Field("distance") distance: String?,
         @Field("travel_time") estTime: String?,
+        @Field("travel_time_second") travel_time_second: String?,
         @Field("permit_type") permitType: String?,
         @Field("city_id") city_id: String?,
         @Field("origin_place_id") fromPlaceID: String?,
@@ -285,7 +286,8 @@ interface NetworkService {
         @Field("destination_longitude") destination_longitude: String?,
         @Field("way_flag") way_flag: String?,
         @Field("travel_time") travel_time: String?,
-        @Field("travel_time_second") travel_time_second: String?
+        @Field("travel_time_second") travel_time_second: String?,
+        @Field("schedule_datetime") schedule_datetime: String?
     ): Call<ViewRideModel?>?
 
 

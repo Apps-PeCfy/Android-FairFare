@@ -103,7 +103,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             destinationLong,
             info.wayFlag,
             info.travelTime,
-            estTimeInSeconds
+            estTimeInSeconds,
+            info.scheduleDatetime
         )
 
         setListeners()

@@ -252,7 +252,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         destination_longitude: String?,
         way_flag: String?,
         travel_time: String?,
-        travel_time_second: String?
+        travel_time_second: String?,
+        schedule_datetime: String?
     ) {
         viewRideView.showWait()
 
@@ -289,7 +290,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
                 destination_longitude,
                 way_flag,
                 travel_time,
-                travel_time_second
+                travel_time_second,
+                schedule_datetime
             )
         }
 
