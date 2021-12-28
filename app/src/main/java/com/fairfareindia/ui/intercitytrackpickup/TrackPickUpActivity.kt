@@ -355,6 +355,9 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                     .flat(true)
                     .rotation(driverLocationModel.data?.bearing!!)
             )
+        }else{
+            myMarker?.rotation = driverLocationModel.data?.bearing!!
+            myMarker?.position = newPosition
         }
 
 
@@ -443,10 +446,10 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                 )
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            if (mMap!!.cameraPosition.zoom <= 18.0) {
-                valueAnimator.duration = 2000 // duration 2 second
+            if (mMap?.cameraPosition?.zoom!! <= 18.0) {
+                valueAnimator.duration = 3000 // duration 2 second
             } else {
-                valueAnimator.duration = 1000 // duration 2 second
+                valueAnimator.duration = 1500 // duration 2 second
             }
 
             valueAnimator.interpolator = LinearInterpolator()
@@ -455,8 +458,8 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                     val v = animation.animatedFraction
                     val newPosition: LatLng =
                         latLngInterpolator.interpolate(v, startPosition, endPosition)!!
-                    myMarker!!.setPosition(newPosition)
-                    mMap!!.animateCamera(
+                    myMarker?.position = newPosition
+                    mMap?.animateCamera(
                         CameraUpdateFactory.newCameraPosition(
                             CameraPosition.Builder()
                                 .target(newPosition)
@@ -478,16 +481,8 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
 
-                    myMarker?.remove()
-                    myMarker = mMap?.addMarker(
-                        MarkerOptions()
-                            .position(destination)
-                            .icon(getMarkerIcon(model?.data?.vehicleName))
-                            .anchor(0.5f, 0.5f)
-                            .draggable(true)
-                            .flat(true)
-                            .rotation(driverLocationModel?.data?.bearing!!)
-                    )
+                    myMarker?.rotation = driverLocationModel?.data?.bearing!!
+                    myMarker?.position = destination
                 }
             })
             valueAnimator.start()

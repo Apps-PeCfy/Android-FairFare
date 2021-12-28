@@ -129,8 +129,8 @@ public class CommonAppPermission {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             return hasPermissionSingle(context, Manifest.permission.ACCESS_FINE_LOCATION)
-                    && hasPermissionSingle(context, Manifest.permission.ACCESS_COARSE_LOCATION)
-                    && hasPermissionSingle(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+                    && hasPermissionSingle(context, Manifest.permission.ACCESS_COARSE_LOCATION);
+                  //  && hasPermissionSingle(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
         }
         else{
             return hasPermissionSingle(context, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -154,7 +154,7 @@ public class CommonAppPermission {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
 
-                //check if the permission is only for android 10 and above
+              /*  //check if the permission is only for android 10 and above
                 boolean isForAndroid10Above = false;
                 for (String permission10 : PERMISSIONS_ANDROID10_ABOVE){
                     if (permission10.equalsIgnoreCase(permission)){
@@ -165,7 +165,7 @@ public class CommonAppPermission {
 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && isForAndroid10Above){
                     continue;
-                }
+                }*/
 
                 if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                     return false;
@@ -179,7 +179,7 @@ public class CommonAppPermission {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permission != null) {
 //            for (String permission : permissions) {
 
-            //check if the permission is only for android 10 and above
+          /*  //check if the permission is only for android 10 and above
             boolean isForAndroid10Above = false;
             for (String permission10 : PERMISSIONS_ANDROID10_ABOVE){
                 if (permission10.equalsIgnoreCase(permission)){
@@ -190,7 +190,7 @@ public class CommonAppPermission {
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && isForAndroid10Above){
                 return true;
-            }
+            }*/
 
             if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                 return false;

@@ -167,19 +167,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
 
-    fun showNotification() {
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon)
+    private fun showNotification() {
+        bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_icon)
         val sdf = SimpleDateFormat("HH:mm:ss")
         var formattedDate: String? = ""
         formattedDate = sdf.format(Date())
 
-        val contentView = RemoteViews(getPackageName(), R.layout.custon_push_notofication)
+        val contentView = RemoteViews(packageName, R.layout.custon_push_notofication)
         contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher)
         contentView.setTextViewText(R.id.title, title)
         contentView.setTextViewText(R.id.text, message)
         contentView.setTextViewText(R.id.tvDateandtime, formattedDate)
         val mBuilder =
-            NotificationCompat.Builder(getApplicationContext(), "default")
+            NotificationCompat.Builder(applicationContext, "default")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContent(contentView)
                 .setGroupSummary(true)
@@ -195,7 +195,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             channel.description = getString(R.string.app_name)
             mNotificationManager.createNotificationChannel(channel)
         }
-        val intent = Intent(getApplicationContext(), HomeActivity::class.java)
+        val intent = Intent(applicationContext, HomeActivity::class.java)
         intent.action = "MyRides"
         val bundle = Bundle()
         bundle.putString("title", title!!.trim { it <= ' ' })
@@ -208,11 +208,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         mBuilder.setContentIntent(pi)
         val randomPIN = (Math.random() * 9000).toInt() + 1000
-        sendLocalBroadcast(randomPIN.toString())
+        sendLocalBroadCast(randomPIN.toString())
         mNotificationManager.notify(randomPIN, mBuilder.build())
     }
 
-    fun sendLocalBroadcast(notificationId: String?) {
+    private fun sendLocalBroadCast(notificationId: String?) {
         val intent = Intent("notification")
         val bundle = Bundle()
         bundle.putString("title", title)

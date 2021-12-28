@@ -72,8 +72,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     private var myLocationManager: MyLocationManager? = MyLocationManager(this)
     var locationChangeLatitude = 0.0
     var locationChangeLongitude = 0.0
-    private var IS_TRACKING_DRIVER_IN_TRACK_RIDE : String ? = "false"
-
+    private var IS_TRACKING_DRIVER_IN_TRACK_RIDE: String? = "false"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +99,8 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
         iInterCityTrackRidePresenter?.getRideDetails(token, rideID)
 
-        IS_TRACKING_DRIVER_IN_TRACK_RIDE = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.IS_TRACKING_FROM_DRIVER)
+        IS_TRACKING_DRIVER_IN_TRACK_RIDE =
+            AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.IS_TRACKING_FROM_DRIVER)
 
         if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
             getDriverLocationAPI()
@@ -185,21 +185,30 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             txtPickUpLocation.text = rideDetailModel?.data?.originAddress
             txtDropUpLocation.text = rideDetailModel?.data?.destinationAddress
 
-            txtDistanceTime.text =  getString(R.string.str_est_distance) +
-                " - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / " +  getString(R.string.str_est_time)   +" - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
+            txtDistanceTime.text = getString(R.string.str_est_distance) +
+                    " - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / " + getString(
+                R.string.str_est_time
+            ) + " - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
 
-            txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(context, rideDetailModel?.data?.total_wait_time.toString())
+            txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(
+                context,
+                rideDetailModel?.data?.total_wait_time.toString()
+            )
 
             txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
 
             txtTravelledDistance.text = rideDetailModel?.data?.totalDistTravelled + "KM"
 
 
-            var rideDateTime = AppUtils.getDate(rideDetailModel?.data?.start_date, "yyyy-MM-dd HH:mm:ss")
-            if(rideDateTime != null){
+            var rideDateTime =
+                AppUtils.getDate(rideDetailModel?.data?.start_date, "yyyy-MM-dd HH:mm:ss")
+            if (rideDateTime != null) {
                 var calculateActTime = Date().time - rideDateTime.time
-                var actTotalTimeInMin = ((calculateActTime / 1000)  / 60).toInt()
-                txtTravelTime.text = ProjectUtilities.timeInMinutesConvertingToString(context, actTotalTimeInMin.toString())
+                var actTotalTimeInMin = ((calculateActTime / 1000) / 60).toInt()
+                txtTravelTime.text = ProjectUtilities.timeInMinutesConvertingToString(
+                    context,
+                    actTotalTimeInMin.toString()
+                )
             }
 
 
@@ -275,6 +284,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
         val newPosition: LatLng =
             LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel.data?.longitude!!)
+
         if (myMarker == null) {
             myMarker = mMap?.addMarker(
                 MarkerOptions()
@@ -285,34 +295,15 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     .flat(true)
                     .rotation(driverLocationModel.data?.bearing!!)
             )
+        } else {
+            myMarker?.rotation = driverLocationModel.data?.bearing!!
+            myMarker?.position = newPosition
         }
+
         if (myMarker != null && prevLatLng != null) {
             animateMarkerNew(prevLatLng!!, newPosition, myMarker)
         }
 
-
-        /* if (!driverLocationModel.data?.bearing?.isNaN()!! && driverLocationModel.data?.bearing != 0F) {
-             myMarker?.remove()
-             myMarker = mMap?.addMarker(
-                 MarkerOptions()
-                     .position(newPosition)
-                     .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
-                     .anchor(0.5f, 0.5f)
-                     .draggable(true)
-                     .flat(true)
-                     .rotation(driverLocationModel.data?.bearing!!)
-             )
-         }else{
-             myMarker?.remove()
-             myMarker = mMap?.addMarker(
-                 MarkerOptions()
-                     .position(newPosition)
-                     .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
-                     .anchor(0.5f, 0.5f)
-                     .draggable(true)
-                     .flat(true)
-             )
-         }*/
 
         prevLatLng = newPosition
 
@@ -385,14 +376,23 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     destination.latitude,
                     destination.longitude
                 )
-            val startRotation = marker.rotation
             val latLngInterpolator: LatLngInterpolatorNew = LatLngInterpolatorNew.LinearFixed()
             val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
-            if (mMap!!.cameraPosition.zoom <= 18.0) {
-                valueAnimator.duration = 1000 // duration 2 second
+
+            if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
+                if (mMap!!.cameraPosition.zoom <= 18.0) {
+                    valueAnimator.duration = 3000 // duration 2 second
+                } else {
+                    valueAnimator.duration = 1500 // duration 2 second
+                }
             } else {
-                valueAnimator.duration = 500 // duration 2 second
+                if (mMap!!.cameraPosition.zoom <= 18.0) {
+                    valueAnimator.duration = 1000 // duration 2 second
+                } else {
+                    valueAnimator.duration = 500 // duration 2 second
+                }
             }
+
 
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener { animation ->
@@ -423,17 +423,9 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
 
-                    if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true"){
-                        myMarker?.remove()
-                        myMarker = mMap?.addMarker(
-                            MarkerOptions()
-                                .position(destination)
-                                .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
-                                .anchor(0.5f, 0.5f)
-                                .draggable(true)
-                                .flat(true)
-                                .rotation(driverLocationModel?.data?.bearing!!)
-                        )
+                    if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
+                        myMarker?.position = destination
+                        myMarker?.rotation = driverLocationModel?.data?.bearing!!
                     }
                 }
             })
@@ -555,7 +547,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                             points.add(position)
                         }
 
-                        if (points.size >= 2){
+                        if (points.size >= 2) {
                             updateCamera(getCompassBearing(points[0]!!, points[1]!!))
                         }
                         lineOptions.addAll(points)
@@ -572,7 +564,11 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         mPolyline = mMap?.addPolyline(lineOptions)
                         isRouteDrawn = true
                     } else {
-                        Toast.makeText(context,  getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            context,
+                            getString(R.string.str_no_route_found),
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     }
 
@@ -593,8 +589,9 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     }
 
     private fun setHandler() {
-        var trackDuration = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.KEY_TRACK_DURATION)
-        if (trackDuration.isNullOrEmpty()){
+        var trackDuration =
+            AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.KEY_TRACK_DURATION)
+        if (trackDuration.isNullOrEmpty()) {
             trackDuration = Constants.LOCATION_HANDLER_TIME.toString()
         }
         handler?.postDelayed(object : Runnable {
@@ -611,7 +608,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
      */
 
     private fun getDriverLocationAPI() {
-        var url = BuildConfig.API_URL +  Constants.API_GET_DRIVER_LOCATION
+        var url = BuildConfig.API_URL + Constants.API_GET_DRIVER_LOCATION
         var params: JSONObject = JSONObject()
         params.put("ride_id", rideID)
         params.put("token", token)
@@ -625,7 +622,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     locationChangeLatitude = driverLocationModel?.data?.latitude!!
                     locationChangeLongitude = driverLocationModel?.data?.longitude!!
 
-                    if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true"){
+                    if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
                         addCurrentLocationMarker(driverLocationModel)
                         getRouteAPI()
                         iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
@@ -707,7 +704,11 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
             }
 
-            if (model.results[i]?.types?.get(0)?.contains("health")!! || model.results[i]?.types?.get(0)?.contains("doctor")!! || model.results[i]?.types?.get(0)?.contains("hospital")!!) {
+            if (model.results[i]?.types?.get(0)
+                    ?.contains("health")!! || model.results[i]?.types?.get(0)
+                    ?.contains("doctor")!! || model.results[i]?.types?.get(0)
+                    ?.contains("hospital")!!
+            ) {
                 binding.txtHospital.text = model.results[i]?.name
                 Glide.with(context)
                     .load(model.results[i]?.icon)
