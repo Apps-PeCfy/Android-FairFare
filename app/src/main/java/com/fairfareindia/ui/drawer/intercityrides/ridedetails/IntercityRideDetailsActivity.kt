@@ -146,7 +146,8 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             txtActualDistance.text = model?.data?.actualTrackRide?.baseDistance.toString()
             txtActualAddDistance.text = model?.data?.actualTrackRide?.additionalDistance.toString()
             txtActualRideTime.text = model?.data?.actualTrackRide?.totalTime
-            txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
+            txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
+          //  txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
             txtActualWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.waitingCharges?.toDouble())
             txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.basicFare?.toDouble())
             txtActualTollCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.tollCharges?.toDouble())

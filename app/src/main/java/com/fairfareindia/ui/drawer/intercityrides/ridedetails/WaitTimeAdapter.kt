@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fairfareindia.R
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
+import com.fairfareindia.utils.ProjectUtilities
 
 class WaitTimeAdapter() : RecyclerView.Adapter<WaitTimeAdapter.MyViewHolder>() {
     private var context: Context? = null
@@ -37,7 +38,7 @@ class WaitTimeAdapter() : RecyclerView.Adapter<WaitTimeAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val model: RideDetailModel.WaitTimeModel = mList!![position]
         holder.txtAddress.text = model.fullAddress
-        holder.txtWaitTime.text = model.waitingTime + "mins"
+        holder.txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(context, model.waitingTime.toString())
         holder.itemView.setOnClickListener { mListener!!.onItemSelected(model) }
     }
 

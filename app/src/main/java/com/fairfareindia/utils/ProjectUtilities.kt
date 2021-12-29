@@ -57,16 +57,11 @@ object ProjectUtilities {
         var returnTime = timeInMinute
         if(timeInMinute.isNotEmpty()){
             if (timeInMinute.toInt() < 60){
-                returnTime = "$timeInMinute mins"
+                returnTime = "$timeInMinute ${getMinutesUnit(timeInMinute.toInt())}"
             }else{
                 var hours = timeInMinute.toInt() / 60
                 var minutes = timeInMinute.toInt() % 60
-                returnTime = if (hours > 1){
-                    "$hours hours $minutes mins"
-                }else{
-                    "$hours hour $minutes mins"
-                }
-
+                returnTime = "$hours ${getHourUnit(hours)} $minutes ${getMinutesUnit(minutes)}"
             }
         }
         return returnTime
@@ -90,24 +85,42 @@ object ProjectUtilities {
         var returnTime = timeInSeconds
 
         if (timeInSeconds.toInt() < 60){
-            returnTime = "$timeInSeconds secs"
+            returnTime = "$timeInSeconds ${getSecondsUnit(timeInSeconds.toInt())}"
         }else{
             var minutes : Int = timeInSeconds.toInt() / 60
             if (minutes < 60){
                 var seconds = timeInSeconds.toInt() % 60
-                returnTime = "$minutes mins $seconds secs"
+                returnTime = minutes.toString() + " " +  getMinutesUnit(minutes) + " " + seconds.toString() + " " + getSecondsUnit(seconds)
             }else{
                 var hours : Int = minutes / 60
                 var minutesHour = minutes % 60
-                returnTime = if (hours > 1){
-                    "$hours hours $minutesHour mins"
-                }else{
-                    "$hours hour $minutesHour mins"
-                }
+                returnTime = hours.toString() + " " +  getHourUnit(hours) + " " + minutesHour.toString() + " " + getMinutesUnit(minutesHour)
+
             }
         }
 
         return returnTime
+    }
+
+    private fun getMinutesUnit (times : Int): String{
+        if (times > 1){
+            return "mins"
+        }
+        return "min"
+    }
+
+    private fun getHourUnit (times : Int): String{
+        if (times > 1){
+            return "hours"
+        }
+        return "hour"
+    }
+
+    private fun getSecondsUnit (times : Int): String{
+        if (times > 1){
+            return "secs"
+        }
+        return "sec"
     }
 
     //This method hide keyboard
