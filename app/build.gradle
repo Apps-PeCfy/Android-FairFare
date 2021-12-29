@@ -22,8 +22,8 @@ android {
 
         //    buildConfigField 'String', 'API_URL', '"https://dev.fairfareindia.com/api/"'
        // buildConfigField 'String', 'API_URL', '"https://stage.fairfareindia.com/api/"'
-        buildConfigField 'String', 'API_URL', '"https://dev2.fairfareindia.com/api/"'
-       // buildConfigField 'String', 'API_URL', '"https://p2test2.fairfareindia.com/api/"'
+       // buildConfigField 'String', 'API_URL', '"https://dev2.fairfareindia.com/api/"'
+        buildConfigField 'String', 'API_URL', '"https://p2test2.fairfareindia.com/api/"'
     }
     buildTypes {
         release {

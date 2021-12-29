@@ -264,17 +264,11 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             }else if(driverLocationModel?.data?.status == Constants.BOOKING_ARRIVING){
                 btnCancelRide.visibility = View.VISIBLE
                 binding.txtStatusMessage.text = getString(R.string.msg_track_arriving)
-               /* if (!isRouteDrawn) {
-                    getRouteAPI()
-                }*/
                 getRouteAPI()
                 addCurrentLocationMarker(driverLocationModel)
             }else if (driverLocationModel?.data?.status == Constants.BOOKING_ARRIVED) {
                 btnCancelRide.visibility = View.VISIBLE
                 binding.txtStatusMessage.text = getString(R.string.msg_track_arrived)
-                /*if (!isRouteDrawn) {
-                    getRouteAPI()
-                }*/
                 getRouteAPI()
                 addCurrentLocationMarker(driverLocationModel)
             }else if (driverLocationModel?.data?.status == Constants.BOOKING_ACTIVE){
@@ -463,7 +457,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                         CameraUpdateFactory.newCameraPosition(
                             CameraPosition.Builder()
                                 .target(newPosition)
-                                .bearing(getCompassBearing(startPosition, endPosition))
+                                //.bearing(getCompassBearing(startPosition, endPosition))
                                 .zoom(getZoomLevel())
                                 .build()
                         )
