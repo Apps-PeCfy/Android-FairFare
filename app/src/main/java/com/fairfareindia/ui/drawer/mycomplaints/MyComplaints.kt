@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.fairfareindia.R
@@ -62,6 +63,10 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
     @BindView(R.id.rl_sort)
     var rl_sort: RelativeLayout? = null
 
+    @JvmField
+    @BindView(R.id.swipe_refresh)
+    var swipe_refresh: SwipeRefreshLayout? = null
+
 
 
     override fun onCreateView(
@@ -79,7 +84,64 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
         preferencesManager = PreferencesManager.instance
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
+        callMyComplaintsAPI()
+        return rootView
+    }
 
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater!!.inflate(R.menu.menu_home_lang, menu!!)
+        super.onCreateOptionsMenu(menu!!, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_home -> {
+                preferencesManager!!.setStringValue(
+                    Constants.SHARED_PREFERENCE_PICKUP_AITPORT,
+                    "LOCALITY"
+                )
+                sharedpreferences!!.edit().clear().commit()
+                val intent = Intent(activity, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+                startActivity(intent)
+            }
+        }
+        return true
+    }
+
+
+    private fun initView() {
+
+        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
+        spinnerLang.visibility = View.GONE
+
+        val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
+        toolbar.title = getString(R.string.drawer_mycomplents)
+
+        sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
+
+        setListeners()
+    }
+
+    private fun setListeners() {
+        swipe_refresh?.setOnRefreshListener {
+            callMyComplaintsAPI()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    /**
+     * API CALLING
+     */
+
+    private fun callMyComplaintsAPI() {
         val progressDialog = ProgressDialog(activity)
         progressDialog.setCancelable(false) // set cancelable to false
         progressDialog.setMessage(getString(R.string.str_please_wait)) // set message
@@ -92,6 +154,7 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
                 response: Response<GetDisputResponsePOJO?>
             ) {
                 progressDialog.dismiss()
+                swipe_refresh?.isRefreshing = false
                 if (response.code() == 200) {
                     getComplaintListList = response.body()!!.data!!
                     if (getComplaintListList.size > 0) {
@@ -136,56 +199,11 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
                 call: Call<GetDisputResponsePOJO?>,
                 t: Throwable
             ) {
+                swipe_refresh?.isRefreshing = false
                 progressDialog.dismiss()
                 Log.d("response", t.stackTrace.toString())
             }
         })
-
-
-
-
-
-        return rootView
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater!!.inflate(R.menu.menu_home_lang, menu!!)
-        super.onCreateOptionsMenu(menu!!, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_home -> {
-                preferencesManager!!.setStringValue(
-                    Constants.SHARED_PREFERENCE_PICKUP_AITPORT,
-                    "LOCALITY"
-                )
-                sharedpreferences!!.edit().clear().commit()
-                val intent = Intent(activity, HomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-
-                startActivity(intent)
-            }
-        }
-        return true
-    }
-
-
-    private fun initView() {
-
-        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
-        spinnerLang.visibility = View.GONE
-
-        val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
-        toolbar.title = getString(R.string.drawer_mycomplents)
-
-        sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
-
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun detailDisputClick(model: GetDisputResponsePOJO.DataItem) {
