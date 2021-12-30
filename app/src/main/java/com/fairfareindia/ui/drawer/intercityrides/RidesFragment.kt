@@ -195,7 +195,7 @@ class RidesFragment : Fragment(), IRidesView{
         eventDialogBind.eventInfoDialog?.setContentView(view12)
         ButterKnife.bind(eventDialogBind, view12)
 
-        eventDialogBind.tvDestinationAddress?.text = model.estimatedTrackRide?.destinationFullAddress
+        eventDialogBind.tvDestinationAddress?.text = model.actualEndAddress
         eventDialogBind.eventInfoDialog?.show()
 
     }

@@ -92,8 +92,10 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
 
                 if (model.status == Constants.BOOKING_COMPLETED) {
+                    holder.imgViewInfo.visibility = View.VISIBLE
                     holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorGreen)!!)
                 }else{
+                    holder.imgViewInfo.visibility = View.GONE
                     holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorPrimary)!!)
                 }
 
@@ -105,20 +107,16 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
 
                 if (model.permitType == Constants.TYPE_INTERCITY){
-                    holder.imgViewInfo.visibility = View.GONE
                     holder.txtPermitType.visibility = View.VISIBLE
                     holder.txtPermitType.text =  model.permitType + " (${model.intercityFromCity?.name} - ${model.intercitytoCity?.name})"
                 }else{
                     if (model.status == Constants.BOOKING_COMPLETED) {
-                        holder.imgViewInfo.visibility = View.VISIBLE
                         if (model.reviewStar.toFloat() >= 1.0f) {
                             holder.ratingBar.visibility = View.VISIBLE
                             holder.ratingBar.rating = model.reviewStar.toFloat()
                         } else {
                             holder.txtRateRide.visibility = View.VISIBLE
                         }
-                    } else {
-                        holder.imgViewInfo.visibility = View.GONE
                     }
                 }
 

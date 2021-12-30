@@ -108,6 +108,15 @@ class GetRideResponsePOJO  {
 		@SerializedName("destinationFullAddress")
 		var destinationFullAddress: String? = null
 
+		@SerializedName("actualEndAddress")
+		var actualEndAddress: String? = null
+
+		@SerializedName("actualEndLongitude")
+		var actualEndLongitude: String? = null
+
+		@SerializedName("actualEndLatitude")
+		var actualEndLatitude: String? = null
+
 		@SerializedName("cityName")
 		var cityName: String? = null
 
