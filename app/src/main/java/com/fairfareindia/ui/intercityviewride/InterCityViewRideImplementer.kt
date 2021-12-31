@@ -55,12 +55,22 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
 
             for (i in tolls!!.indices) {
                 val jsonObjectMain = JSONObject()
-                jsonObjectMain.put("latitude", tolls[i].latitude)
-                jsonObjectMain.put("longitude", tolls[i].longitude)
-                jsonObjectMain.put("name", tolls[i].name)
-                jsonObjectMain.put("road", tolls[i].road)
-                jsonObjectMain.put("state", tolls[i].state)
-                jsonObjectMain.put("country", tolls[i].country)
+                if (tolls[i].name.isNullOrEmpty()){
+                    jsonObjectMain.put("name", tolls[i].start?.name)
+                    jsonObjectMain.put("latitude", tolls[i].start?.lat)
+                    jsonObjectMain.put("longitude", tolls[i].start?.lng)
+                    jsonObjectMain.put("road", tolls[i].start?.road)
+                    jsonObjectMain.put("state", tolls[i].start?.state)
+                    jsonObjectMain.put("country", tolls[i].start?.country)
+                }else{
+                    jsonObjectMain.put("name", tolls[i].name)
+                    jsonObjectMain.put("latitude", tolls[i].latitude)
+                    jsonObjectMain.put("longitude", tolls[i].longitude)
+                    jsonObjectMain.put("road", tolls[i].road)
+                    jsonObjectMain.put("state", tolls[i].state)
+                    jsonObjectMain.put("country", tolls[i].country)
+                }
+
                 jsonObjectMain.put("type", tolls[i].type)
                 jsonObjectMain.put("currency", tolls[i].currency)
                 jsonObjectMain.put("charges", tolls[i].charges)

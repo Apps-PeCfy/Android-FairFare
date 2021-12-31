@@ -36,7 +36,12 @@ class TollAdapter() : RecyclerView.Adapter<TollAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val model: RideDetailModel.Tolls = mList!![position]
-        holder.txtAddress.text = model.name
+        if (model.name.isNullOrEmpty()){
+            holder.txtAddress.text = model.start?.name
+        }else{
+            holder.txtAddress.text = model.name
+        }
+
         holder.txtWaitTime.text = model.charges
         holder.itemView.setOnClickListener { mListener!!.onItemSelected(model) }
     }

@@ -74,6 +74,9 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     var locationChangeLongitude = 0.0
     private var IS_TRACKING_DRIVER_IN_TRACK_RIDE: String? = "false"
 
+    private var remainingDistanceText: String? = null
+    private var remainingTimeText: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,7 +189,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             txtDropUpLocation.text = rideDetailModel?.data?.destinationAddress
 
             txtDistanceTime.text = getString(R.string.str_est_distance) +
-                    " - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} KM / " + getString(
+                    " - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} km / " + getString(
                 R.string.str_est_time
             ) + " - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
 
@@ -196,23 +199,6 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             )
 
             txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
-
-            txtTravelledDistance.text = rideDetailModel?.data?.totalDistTravelled + "KM"
-
-
-            var rideDateTime =
-                AppUtils.getDate(rideDetailModel?.data?.start_date, "yyyy-MM-dd HH:mm:ss")
-            if (rideDateTime != null) {
-                var calculateActTime = Date().time - rideDateTime.time
-                var actTotalTimeInMin = ((calculateActTime / 1000) / 60).toInt()
-                txtTravelTime.text = ProjectUtilities.timeInMinutesConvertingToString(
-                    context,
-                    actTotalTimeInMin.toString()
-                )
-            }
-
-
-
 
 
             sourceLat = rideDetailModel?.data?.originLatitude
@@ -236,7 +222,44 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         .dontAnimate()
                         .dontTransform()
                 ).into(imgVehicle)
+
+            setTravelledDistanceTime()
         }
+    }
+
+    private fun setTravelledDistanceTime() {
+        if (remainingDistanceText != null) {
+            binding.txtTravelledDistance.text =
+                rideDetailModel?.data?.totalDistTravelled + " km / $remainingDistanceText"
+
+
+            var rideDateTime =
+                AppUtils.getDate(rideDetailModel?.data?.start_date, "yyyy-MM-dd HH:mm:ss")
+            if (rideDateTime != null) {
+                var calculateActTime = Date().time - rideDateTime.time
+                var actTotalTimeInMin = ((calculateActTime / 1000) / 60).toInt()
+                binding.txtTravelTime.text = ProjectUtilities.timeInMinutesConvertingToString(
+                    context,
+                    actTotalTimeInMin.toString()
+                ) + " / $remainingTimeText"
+            }
+        } else {
+            binding.txtTravelledDistance.text =
+                rideDetailModel?.data?.totalDistTravelled + " km"
+
+
+            var rideDateTime =
+                AppUtils.getDate(rideDetailModel?.data?.start_date, "yyyy-MM-dd HH:mm:ss")
+            if (rideDateTime != null) {
+                var calculateActTime = Date().time - rideDateTime.time
+                var actTotalTimeInMin = ((calculateActTime / 1000) / 60).toInt()
+                binding.txtTravelTime.text = ProjectUtilities.timeInMinutesConvertingToString(
+                    context,
+                    actTotalTimeInMin.toString()
+                )
+            }
+        }
+
     }
 
 
@@ -522,6 +545,11 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     val distance = steps.getJSONObject("distance")
                     val duration = steps.getJSONObject("duration")
                     val actualSteps = steps.getJSONArray("steps")
+
+                    remainingTimeText = duration.getString("text")
+                    remainingDistanceText = distance.getString("text")
+
+                    setTravelledDistanceTime()
 
                     routes = parser.parse(jsonObject)
 

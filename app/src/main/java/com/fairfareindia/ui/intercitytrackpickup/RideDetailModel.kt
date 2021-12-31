@@ -358,6 +358,29 @@ class RideDetailModel {
 
         @SerializedName("charges")
         var charges: String? = null
+
+        @SerializedName("start")
+        var start: StartTolls? = null
+    }
+
+    inner class StartTolls : Serializable {
+        @SerializedName("lat")
+        var lat: String? = null
+
+        @SerializedName("lng")
+        var lng: String? = null
+
+        @SerializedName("name")
+        var name: String? = null
+
+        @SerializedName("road")
+        var road: String? = null
+
+        @SerializedName("state")
+        var state: String? = null
+
+        @SerializedName("country")
+        var country: String? = null
     }
 
     inner class User {
