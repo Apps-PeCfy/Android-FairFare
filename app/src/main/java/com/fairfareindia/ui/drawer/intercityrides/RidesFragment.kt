@@ -1,9 +1,7 @@
 package com.fairfareindia.ui.drawer.intercityrides
 
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +10,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import com.fairfareindia.R
@@ -20,11 +19,9 @@ import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.common.CommonMessageDialog
 import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
-import com.fairfareindia.ui.drawer.myrides.ridedetails.MyRideDetailsActivity
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
 import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
-import com.fairfareindia.ui.ridedetails.RideDetailsActivity
 import com.fairfareindia.ui.ridereview.RideReviewActivity
 import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.fairfareindia.utils.*
@@ -310,10 +307,35 @@ class RidesFragment : Fragment(), IRidesView{
 
     override fun onResume() {
         super.onResume()
+        setup()
         if (Constants.SHOULD_RELOAD){
             Constants.SHOULD_RELOAD = false
             resetAPI()
         }
+    }
+
+    /**
+     * BROADCAST RECEIVER FOR UNREAD MESSAGE INDICATION
+     */
+    private fun setup() {
+        LocalBroadcastManager.getInstance(mContext!!).registerReceiver(
+            mCountReceiver,
+            IntentFilter("refresh_ride_list")
+        )
+    }
+
+    private val mCountReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action != null && action == "refresh_ride_list") {
+                resetAPI()
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(mContext!!).unregisterReceiver(mCountReceiver)
     }
 
 

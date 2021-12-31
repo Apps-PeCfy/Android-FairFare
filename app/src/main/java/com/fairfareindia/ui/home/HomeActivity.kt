@@ -1,16 +1,13 @@
 package com.fairfareindia.ui.home
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Geocoder
@@ -34,6 +31,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -58,20 +56,17 @@ import com.fairfareindia.ui.drawer.intercityrides.RidesFragment
 import com.fairfareindia.ui.drawer.myaccount.MyAccountFragment
 import com.fairfareindia.ui.drawer.mycomplaints.MyComplaints
 import com.fairfareindia.ui.drawer.mydisput.MyDisput
-import com.fairfareindia.ui.drawer.myrides.MyRides
 import com.fairfareindia.ui.drawer.notifications.NotificationsFragment
 import com.fairfareindia.ui.drawer.pojo.DrawerPojo
 import com.fairfareindia.ui.drawer.privacypolicy.ContentPage
 import com.fairfareindia.ui.drawer.privacypolicy.TermsOfUse
 import com.fairfareindia.ui.drawer.ratecard.RateCard
 import com.fairfareindia.ui.drawer.setting.Setting
-import com.fairfareindia.ui.drawer.wallet.WalletFragment
 import com.fairfareindia.ui.home.pojo.GeneralSettingModel
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.intercity.InterCityActivity
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
-import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.localcompareride.LocalCompareRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.ui.splashscreen.PermissionActivity
@@ -2689,6 +2684,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onResume() {
         super.onResume()
+        setup()
         generalSettingAPI()
         if (!CommonAppPermission.hasLocationPermission(this) || !ProjectUtilities.isGPSEnabled(this)) {
             startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
@@ -2718,6 +2714,31 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 }
 
             })
+    }
+
+    /**
+     * BROADCAST RECEIVER FOR UNREAD MESSAGE INDICATION
+     */
+    private fun setup() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mCountReceiver,
+            IntentFilter("ride_status_changed")
+        )
+    }
+
+    private val mCountReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action != null && action == "ride_status_changed") {
+                val newIntent = Intent("refresh_ride_list")
+                LocalBroadcastManager.getInstance(context).sendBroadcast(newIntent)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCountReceiver)
     }
 
 

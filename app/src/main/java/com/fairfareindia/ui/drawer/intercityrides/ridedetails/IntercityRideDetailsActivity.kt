@@ -1,12 +1,15 @@
 package com.fairfareindia.ui.drawer.intercityrides.ridedetails
 
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
@@ -324,5 +327,35 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
         } catch (e: java.lang.Exception) {
             Toast.makeText(context, "Exception in onPaymentSuccess: $e", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setup()
+    }
+
+
+    /**
+     * BROADCAST RECEIVER FOR UNREAD MESSAGE INDICATION
+     */
+    private fun setup() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mCountReceiver,
+            IntentFilter("payment_status_change")
+        )
+    }
+
+    private val mCountReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action != null && action == "payment_status_change") {
+              iRidesDetailPresenter?.getRideDetail(token, rideID)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCountReceiver)
     }
 }

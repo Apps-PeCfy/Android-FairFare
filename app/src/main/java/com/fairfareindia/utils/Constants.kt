@@ -86,4 +86,8 @@ object Constants {
 
     //Live
     // var RAZOR_PAY_KEY = "rzp_test_W9rG6mEpxnV17V";
+
+    // Notification_Types
+    var NOTIF_SCREEN_RIDE = "ride"
+    var NOTIF_PAID_PAYMENT = "PAID_PAYMENT"
 }
