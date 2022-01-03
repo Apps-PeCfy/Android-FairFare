@@ -15,6 +15,7 @@ import com.fairfareindia.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
 import com.fairfareindia.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
 import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.myrides.ridedetails.RideDetailsResponsePOJO
+import com.fairfareindia.ui.drawer.notifications.NotificationModel
 import com.fairfareindia.ui.drawer.privacypolicy.ContentResponsePOJO
 import com.fairfareindia.ui.drawer.ratecard.pojo.RateCardResponsePOJO
 import com.fairfareindia.ui.drawer.setting.pojo.SettingResponsePojo
@@ -449,6 +450,13 @@ interface NetworkService {
         @Query("latitude") latitude: String?,
         @Query("longitude") longitude: String?
     ): Call<GetRideResponsePOJO?>?
+
+    @GET("getNotificationList")
+    fun getNotificationList(
+        @Header("Authorization") header: String?,
+        @Query("page") pageCount: Int?
+    ): Call<NotificationModel?>?
+
 
     @POST("cancelRide")
     fun cancelRide(

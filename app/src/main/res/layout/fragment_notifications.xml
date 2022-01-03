@@ -8,16 +8,61 @@
         android:layout_height="match_parent"
         tools:context=".ui.drawer.notifications.NotificationsFragment">
 
-        <TextView
-            android:id="@+id/txt_no_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:layout_centerInParent="true"
-            android:text="@string/str_no_notifications"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/text_16sp"
-            />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:layout_below="@+id/rl_sort"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="visible"
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/rlEmpty"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/img_no_notification"
+                        android:background="@drawable/empty_disput"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"/>
+
+                    <TextView
+                        android:id="@+id/txt_no_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:layout_below="@id/img_no_notification"
+                        android:layout_centerInParent="true"
+                        android:text="@string/str_no_notifications"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_16sp"
+                        />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     </RelativeLayout>
 
