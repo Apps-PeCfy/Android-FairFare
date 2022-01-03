@@ -61,6 +61,9 @@ class GetRideResponsePOJO  {
 		@SerializedName("permitType")
 		var permitType: String? = null
 
+		@SerializedName("way_flag")
+		var way_flag: String? = null
+
 		@SerializedName("destinationPlaceLat")
 		var destinationPlaceLat: String? = null
 
@@ -194,6 +197,9 @@ class GetRideResponsePOJO  {
 
 		@SerializedName("distance")
 		var distance: String? = null
+
+		@SerializedName("totalTime")
+		var totalTime: String? = null
 
 		@SerializedName("tollCharges")
 		var tollCharges: String? = null

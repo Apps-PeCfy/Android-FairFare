@@ -62,8 +62,8 @@ class NotificationAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                 holder.txtMessage.text = model.message
 
-                holder.txtDate.text = AppUtils.changeDateFormat(model.created_at, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "EEE, MMM dd")
-                holder.txtTime.text = AppUtils.changeDateFormat(model.created_at, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "h:mm a")
+                holder.txtDate.text = AppUtils.changeDateFormat(model.created_at, "yyyy-MM-dd HH:mm:ss", "EEE, MMM dd")
+                holder.txtTime.text = AppUtils.changeDateFormat(model.created_at, "yyyy-MM-dd HH:mm:ss", "h:mm a")
 
                 holder.itemView.setOnClickListener {
                     mListener?.onItemSelected(position, model)

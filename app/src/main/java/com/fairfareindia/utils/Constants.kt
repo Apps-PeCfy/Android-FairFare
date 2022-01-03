@@ -5,6 +5,7 @@ object Constants {
     // API FOR VOLLEY
     var API_GENERAL_SETTINGS = "settings"
     var API_GET_DRIVER_LOCATION = "getDriverLocation"
+    var API_GET_ACTIVE_RIDES = "getActiveRides"
 
     var SHARED_PREFERENCE_LOGIN_TOKEN = "token"
     var SHARED_PREFERENCE_ISLOGIN = "isLogin"

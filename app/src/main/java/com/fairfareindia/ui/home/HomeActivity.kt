@@ -53,9 +53,11 @@ import com.fairfareindia.ui.drawer.contactus.pojo.ContactUsResponsePojo
 import com.fairfareindia.ui.drawer.covid19.Covid
 import com.fairfareindia.ui.drawer.faq.FAQ
 import com.fairfareindia.ui.drawer.intercityrides.RidesFragment
+import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
 import com.fairfareindia.ui.drawer.myaccount.MyAccountFragment
 import com.fairfareindia.ui.drawer.mycomplaints.MyComplaints
 import com.fairfareindia.ui.drawer.mydisput.MyDisput
+import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.notifications.NotificationsFragment
 import com.fairfareindia.ui.drawer.pojo.DrawerPojo
 import com.fairfareindia.ui.drawer.privacypolicy.ContentPage
@@ -67,6 +69,8 @@ import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel
 import com.fairfareindia.ui.intercity.InterCityActivity
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
+import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
+import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
 import com.fairfareindia.ui.localcompareride.LocalCompareRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
 import com.fairfareindia.ui.splashscreen.PermissionActivity
@@ -127,6 +131,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var placesClient: PlacesClient? = null
     var isFirstTimeLocationShowed: Boolean? = false
     var getAllowCityResponse: GetAllowCityResponse? = null
+    private var rideModel: GetRideResponsePOJO.DataItem? = null
 
     var doubleBackPressed: Boolean? = false
     private var mToastToShow: Toast? = null
@@ -149,6 +154,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     @JvmField
     @BindView(R.id.btnCompareRide)
     var btnCompareRide: Button? = null
+
+    @JvmField
+    @BindView(R.id.btn_track_ride)
+    var btnTrackRide: Button? = null
 
     @JvmField
     @BindView(R.id.add)
@@ -191,6 +200,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     @JvmField
     @BindView(R.id.llhideview)
     var llhideview: LinearLayout? = null
+
+    @JvmField
+    @BindView(R.id.ll_active_ride)
+    var llActiveRide: LinearLayout? = null
 
     @JvmField
     @BindView(R.id.homeMain)
@@ -240,6 +253,45 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     @JvmField
     @BindView(R.id.mainRelativeLayout)
     var mainRelativeLayout: RelativeLayout? = null
+
+    @JvmField
+    @BindView(R.id.img_vehicle)
+    var img_vehicle: ImageView? = null
+
+    @JvmField
+    @BindView(R.id.txt_vehicle_name)
+    var txt_vehicle_name: TextView? = null
+
+    @JvmField
+    @BindView(R.id.txt_way_flag)
+    var txt_way_flag: TextView? = null
+
+    @JvmField
+    @BindView(R.id.txt_date_time)
+    var txt_date_time: TextView? = null
+
+    @JvmField
+    @BindView(R.id.txt_amount)
+    var txt_amount: TextView? = null
+
+    @JvmField
+    @BindView(R.id.txt_distance_time)
+    var txt_distance_time: TextView? = null
+
+    @JvmField
+    @BindView(R.id.txt_source_address)
+    var txtSourceAddress: TextView? = null
+
+    @JvmField
+    @BindView(R.id.txt_destination_address)
+    var txtDestinationAddress: TextView? = null
+
+    @JvmField
+    @BindView(R.id.btn_intercity)
+    var btnIntercity: Button? = null
+
+
+
 
 
     @JvmField
@@ -372,6 +424,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         // Initialize drawer list
         setListData()
 
+        getActiveRidesAPI()
+
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
         val intent = intent
         extras = intent.extras
@@ -450,7 +504,74 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         EventBus.getDefault().register(this)
 
+        setListeners()
 
+    }
+
+    private fun setData() {
+        if (rideModel != null) {
+            llActiveRide?.visibility = View.VISIBLE
+            llhideview?.visibility = View.GONE
+            tvhideShow?.visibility = View.GONE
+            btnIntercity?.visibility = View.GONE
+
+
+            txt_vehicle_name?.text = rideModel?.vehicleName + " " + rideModel?.vehicleNo
+            txt_date_time?.text = AppUtils.changeDateFormat(
+                rideModel?.dateTime,
+                "yyyy-MM-dd HH:mm:ss",
+                "EEE, MMM dd, h:mm a"
+            )
+
+            txt_way_flag?.text = rideModel?.way_flag
+            txtSourceAddress?.text = (rideModel?.originFullAddress)
+            txtDestinationAddress?.text = (rideModel?.destinationFullAddress)
+            txt_distance_time?.text = rideModel?.estimatedTrackRide?.distance + " km, "+rideModel?.estimatedTrackRide?.totalTime
+
+            txt_amount?.text =
+                ProjectUtilities.getAmountInFormat(rideModel?.estimatedTrackRide?.totalCharges?.toDouble())
+
+            Glide.with(this)
+                .load(rideModel?.vehicleImageUrl)
+                .apply(
+                    RequestOptions()
+                        .centerCrop()
+                        .dontAnimate()
+                        .dontTransform()
+                ).into(img_vehicle!!)
+
+        } else {
+            llActiveRide?.visibility = View.GONE
+            llhideview?.visibility = View.VISIBLE
+            tvhideShow?.visibility = View.VISIBLE
+            btnIntercity?.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setListeners() {
+        btnTrackRide?.setOnClickListener {
+            if (rideModel?.status == Constants.BOOKING_SCHEDULED || rideModel?.status == Constants.BOOKING_ARRIVING || rideModel?.status == Constants.BOOKING_ARRIVED) {
+                val intent = Intent(this@HomeActivity, TrackPickUpActivity::class.java)
+                intent.putExtra("ride_id", rideModel?.id.toString())
+                startActivity(intent)
+            } else if (rideModel?.status == Constants.BOOKING_ACTIVE) {
+                val intent = Intent(this@HomeActivity, InterCityTrackRideActivity::class.java)
+                intent.putExtra("ride_id", rideModel?.id.toString())
+                startActivity(intent)
+            } else if (rideModel?.status == Constants.BOOKING_COMPLETED) {
+                val intent = Intent(this@HomeActivity, IntercityRideDetailsActivity::class.java)
+                intent.putExtra("ride_id", rideModel?.id.toString())
+                startActivity(intent)
+            }
+        }
+
+        btnIntercity?.setOnClickListener {
+            startActivity(
+                Intent(this, InterCityActivity::class.java)
+                    .putExtra("current_latitude", currentLatitude)
+                    .putExtra("current_longitude", currentLongitude)
+            )
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -543,7 +664,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 getLocationReady()
             }
         } else {
-            startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+            startActivity(
+                Intent(this, PermissionActivity::class.java).putExtra(
+                    "isFromSplash",
+                    true
+                )
+            )
             finish()
         }
     }
@@ -668,7 +794,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     setCitySpinner()
 
 
-                }else if (response.code() == 401) {
+                } else if (response.code() == 401) {
                     preferencesManager?.clear()
                     val intent = Intent(this@HomeActivity, LoginActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -748,7 +874,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 val toastDurationInMilliSeconds = 10000
                 mToastToShow = Toast.makeText(
                     this@HomeActivity,
-                    getString(R.string.msg_not_served_city) + " " + city + " "+ getString(R.string.msg_not_serve_location_two),
+                    getString(R.string.msg_not_served_city) + " " + city + " " + getString(R.string.msg_not_serve_location_two),
                     Toast.LENGTH_LONG
                 )
                 val toastCountDown: CountDownTimer
@@ -789,7 +915,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 val toastDurationInMilliSeconds = 10000
                 mToastToShow = Toast.makeText(
                     this@HomeActivity,
-                    getString(R.string.msg_not_served_city) + " "+  city + " " +getString(R.string.msg_not_serve_location_two),
+                    getString(R.string.msg_not_served_city) + " " + city + " " + getString(R.string.msg_not_serve_location_two),
                     Toast.LENGTH_LONG
                 )
                 val toastCountDown: CountDownTimer
@@ -826,7 +952,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     private fun setListData() {
 
         tvEmailAddress!!.text =
-            getString(R.string.drawer_available_reward_point)  + " "+ preferencesManager?.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
+            getString(R.string.drawer_available_reward_point) + " " + preferencesManager?.getStringValue(
+                Constants.SHARED_PREFERENCE_USER_REWARD
+            )
 
         tvUserName!!.text =
             preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
@@ -1270,7 +1398,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 tvEmailAddress!!.text =
-                    getString(R.string.drawer_available_reward_point) + " " + preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_USER_REWARD)
+                    getString(R.string.drawer_available_reward_point) + " " + preferencesManager!!.getStringValue(
+                        Constants.SHARED_PREFERENCE_USER_REWARD
+                    )
 
                 tvUserName!!.text =
                     preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
@@ -1357,7 +1487,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                                 finish()
 
                             }
-                        }else if (response.code() == 401) {
+                        } else if (response.code() == 401) {
                             preferencesManager?.clear()
                             val intent = Intent(this@HomeActivity, LoginActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -1414,12 +1544,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     }
 
-    @OnClick(R.id.btn_intercity)
-    fun Intercity() {
-        startActivity(Intent(this, InterCityActivity::class.java)
-            .putExtra("current_latitude", currentLatitude)
-            .putExtra("current_longitude", currentLongitude))
-    }
+
 
 
     @OnClick(R.id.tv_RideScheduled)
@@ -1935,7 +2060,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
 
 
-                if(Constants.IS_OLD_LOCAL){
+                if (Constants.IS_OLD_LOCAL) {
                     iCompareRidePresenter!!.getCompareRideData(
                         token,
                         replacedistance,
@@ -1952,7 +2077,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         DestinationLat,
                         DestinationLong
                     )
-                }else{
+                } else {
 
                     iCompareRidePresenter?.getCompareRideLocalNew(
                         token,
@@ -1973,8 +2098,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     )
 
                 }
-
-
 
 
             } else {
@@ -2077,7 +2200,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
 
 
-                if(Constants.IS_OLD_LOCAL){
+                if (Constants.IS_OLD_LOCAL) {
                     iCompareRidePresenter!!.getCompareRideData(
                         token,
                         replacedistance,
@@ -2094,7 +2217,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         DestinationLat,
                         DestinationLong
                     )
-                }else{
+                } else {
                     iCompareRidePresenter?.getCompareRideLocalNew(
                         token,
                         replacedistance,
@@ -2113,8 +2236,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         DestinationLong
                     )
                 }
-
-
 
 
             } else {
@@ -2316,11 +2437,19 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     }
                     mPolyline = mMap!!.addPolyline(lineOptions)
                 } else {
-                    Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.str_no_route_found),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             } else {
-                Toast.makeText(applicationContext, getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.str_no_route_found),
+                    Toast.LENGTH_LONG
+                )
                     .show()
             }
 
@@ -2356,7 +2485,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 } else {
-                    if(position < cityPojoList.size){
+                    if (position < cityPojoList.size) {
                         cityID = cityPojoList[position].id.toString()
                         city_Name = cityPojoList[position].name
                         preferencesManager?.setStringValue(
@@ -2672,11 +2801,16 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         val states: LocationSettingsStates = LocationSettingsStates.fromIntent(data)
         when (requestCode) {
             1000 ->
-                if (resultCode == Activity.RESULT_OK){
+                if (resultCode == Activity.RESULT_OK) {
                     initLocationUpdates()
                     mapAndLocationReady()
-                }else if (resultCode == Activity.RESULT_CANCELED){
-                    startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    startActivity(
+                        Intent(
+                            this,
+                            PermissionActivity::class.java
+                        ).putExtra("isFromSplash", true)
+                    )
                     finish()
                 }
         }
@@ -2687,7 +2821,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         setup()
         generalSettingAPI()
         if (!CommonAppPermission.hasLocationPermission(this) || !ProjectUtilities.isGPSEnabled(this)) {
-            startActivity(Intent(this, PermissionActivity::class.java).putExtra("isFromSplash", true))
+            startActivity(
+                Intent(this, PermissionActivity::class.java).putExtra(
+                    "isFromSplash",
+                    true
+                )
+            )
             finish()
         }
     }
@@ -2704,7 +2843,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             this,
             object : APIManager.APIManagerInterface {
                 override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
-                    var model : GeneralSettingModel = resultObj as GeneralSettingModel
+                    var model: GeneralSettingModel = resultObj as GeneralSettingModel
                     preferencesManager?.setGeneralSettingModel(model)
                     SessionManager.getInstance(this@HomeActivity).setGeneralSettingModel(model)
                 }
@@ -2715,6 +2854,33 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             })
     }
+
+    private fun getActiveRidesAPI() {
+        var url = BuildConfig.API_URL + Constants.API_GET_ACTIVE_RIDES
+
+        var params: JSONObject = JSONObject()
+        params.put("token", token)
+        APIManager.getInstance(this).getAPI(
+            url,
+            params,
+            GetRideResponsePOJO::class.java,
+            this,
+            object : APIManager.APIManagerInterface {
+                override fun onSuccess(resultObj: Any?, jsonObject: JSONObject) {
+                    var model: GetRideResponsePOJO = resultObj as GetRideResponsePOJO
+                    if (!model.data.isNullOrEmpty()) {
+                        rideModel = model.data!![0]
+                        setData()
+                    }
+                }
+
+                override fun onError(error: String?) {
+                    Toast.makeText(this@HomeActivity, error, Toast.LENGTH_SHORT).show()
+                }
+
+            })
+    }
+
 
     /**
      * BROADCAST RECEIVER FOR UNREAD MESSAGE INDICATION
