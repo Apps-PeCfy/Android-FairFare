@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
 import com.fairfareindia.R
+import com.fairfareindia.ui.splashscreen.SplashScreen
 import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.Location
 import java.io.File
 import java.io.FileOutputStream
@@ -53,7 +54,15 @@ object ProjectUtilities {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
-    fun timeInMinutesConvertingToString(mContext: Context?, timeInMinute : String): String {
+    fun restartWithSplash(mContext: Context?) {
+        val i = Intent(mContext, SplashScreen::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        mContext?.startActivity(i)
+    }
+
+
+    fun timeInMinutesConvertingToString(mContext: Context?, timeInMinute: String): String {
         var returnTime = timeInMinute
         if(timeInMinute.isNotEmpty()){
             if (timeInMinute.toInt() < 60){
@@ -67,7 +76,7 @@ object ProjectUtilities {
         return returnTime
     }
 
-    fun getAmountInFormat(amount : Double?): String {
+    fun getAmountInFormat(amount: Double?): String {
         var returnAmount = "₹ $amount"
 
         if(amount != null){
@@ -81,7 +90,7 @@ object ProjectUtilities {
 
 
 
-    fun timeInSecondsConvertingToString(mContext: Context?, timeInSeconds : String): String {
+    fun timeInSecondsConvertingToString(mContext: Context?, timeInSeconds: String): String {
         var returnTime = timeInSeconds
 
         if (timeInSeconds.toInt() < 60){
@@ -90,11 +99,15 @@ object ProjectUtilities {
             var minutes : Int = timeInSeconds.toInt() / 60
             if (minutes < 60){
                 var seconds = timeInSeconds.toInt() % 60
-                returnTime = minutes.toString() + " " +  getMinutesUnit(minutes) + " " + seconds.toString() + " " + getSecondsUnit(seconds)
+                returnTime = minutes.toString() + " " +  getMinutesUnit(minutes) + " " + seconds.toString() + " " + getSecondsUnit(
+                    seconds
+                )
             }else{
                 var hours : Int = minutes / 60
                 var minutesHour = minutes % 60
-                returnTime = hours.toString() + " " +  getHourUnit(hours) + " " + minutesHour.toString() + " " + getMinutesUnit(minutesHour)
+                returnTime = hours.toString() + " " +  getHourUnit(hours) + " " + minutesHour.toString() + " " + getMinutesUnit(
+                    minutesHour
+                )
 
             }
         }
@@ -102,21 +115,21 @@ object ProjectUtilities {
         return returnTime
     }
 
-    private fun getMinutesUnit (times : Int): String{
+    private fun getMinutesUnit(times: Int): String{
         if (times > 1){
             return "mins"
         }
         return "min"
     }
 
-    private fun getHourUnit (times : Int): String{
+    private fun getHourUnit(times: Int): String{
         if (times > 1){
             return "hours"
         }
         return "hour"
     }
 
-    private fun getSecondsUnit (times : Int): String{
+    private fun getSecondsUnit(times: Int): String{
         if (times > 1){
             return "secs"
         }
@@ -239,12 +252,18 @@ object ProjectUtilities {
         }
         var size = 0
         for (i in PERMISSIONS.indices) {
-            if (PermissionChecker.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mContext!!, PERMISSIONS[i]))
+            if (PermissionChecker.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                    mContext!!,
+                    PERMISSIONS[i]
+                ))
             {
                 size++
             }
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && "android.permission.ACCESS_BACKGROUND_LOCATION".equals(PERMISSIONS[i], ignoreCase = true)) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && "android.permission.ACCESS_BACKGROUND_LOCATION".equals(
+                    PERMISSIONS[i],
+                    ignoreCase = true
+                )) {
                 size++
             }
         }
@@ -322,7 +341,8 @@ object ProjectUtilities {
             for (model in list) {
                 myOutWriter.append(
                     model.lat
-                        .toString() + "," + model.lng.toString() + "," + model.timestamp.toString())
+                        .toString() + "," + model.lng.toString() + "," + model.timestamp.toString()
+                )
                 myOutWriter.append("\n")
             }
             myOutWriter.close()

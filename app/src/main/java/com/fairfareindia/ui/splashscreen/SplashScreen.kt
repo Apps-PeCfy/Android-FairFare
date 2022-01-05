@@ -78,6 +78,8 @@ class SplashScreen : AppCompatActivity() {
             SetLocalLanguage.setLocaleLanguage(this, getString(R.string.str_marathi_code))
         }
 
+        SessionManager.getInstance(this).isSplashDisplayed = true
+
        // requestBatteryOptimisationDisabled()
 
 

@@ -358,4 +358,13 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
         super.onPause()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mCountReceiver)
     }
+
+    override fun onBackPressed() {
+        if (SessionManager.getInstance(context).isSplashDisplayed) {
+            super.onBackPressed()
+        } else {
+            //It means its directly came here from notification click
+            ProjectUtilities.restartWithSplash(context)
+        }
+    }
 }

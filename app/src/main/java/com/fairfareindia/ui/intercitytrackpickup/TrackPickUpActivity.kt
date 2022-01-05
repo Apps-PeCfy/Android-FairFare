@@ -405,10 +405,12 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
         mMap?.animateCamera(
             CameraUpdateFactory.newCameraPosition(
                 CameraPosition.Builder()
-                    .target(LatLng(
-                        sourceLat!!.toDouble(),
-                        sourceLong!!.toDouble()
-                    ))
+                    .target(
+                        LatLng(
+                            sourceLat!!.toDouble(),
+                            sourceLong!!.toDouble()
+                        )
+                    )
                     .zoom(getZoomLevel())
                     .build()
             )
@@ -422,7 +424,10 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
         binding.crdRemainingTme.visibility = View.VISIBLE
         var timeInMinutes = (timeInSeconds.toDouble() / 60).toInt()
 
-        binding.txtTime.text = ProjectUtilities.timeInMinutesConvertingToString(context, timeInMinutes.toString())
+        binding.txtTime.text = ProjectUtilities.timeInMinutesConvertingToString(
+            context,
+            timeInMinutes.toString()
+        )
         binding.txtTimeUnit.visibility = View.GONE
 
     }
@@ -598,7 +603,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                             points.add(position)
                         }
 
-                        if (points.size >= 2){
+                        if (points.size >= 2) {
                             updateCamera(getCompassBearing(points[0]!!, points[1]!!))
                         }
 
@@ -616,7 +621,11 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                         mPolyline = mMap?.addPolyline(lineOptions)
                         isRouteDrawn = true
                     } else {
-                        Toast.makeText(context,  getString(R.string.str_no_route_found), Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            context,
+                            getString(R.string.str_no_route_found),
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     }
 
@@ -630,13 +639,21 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
 
     fun updateCamera(bearing: Float) {
         val currentPlace: CameraPosition = CameraPosition.Builder()
-            .target(LatLng(driverLocationModel?.data?.latitude!!, driverLocationModel?.data?.longitude!!))
+            .target(
+                LatLng(
+                    driverLocationModel?.data?.latitude!!,
+                    driverLocationModel?.data?.longitude!!
+                )
+            )
             .bearing(bearing).zoom(getZoomLevel()).build()
         mMap?.animateCamera(CameraUpdateFactory.newCameraPosition(currentPlace))
     }
 
     private fun setHandler() {
-        var pickUpUpdateDuration = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.KEY_PICK_UP_DURATION)
+        var pickUpUpdateDuration = AppUtils.getValueOfKeyFromGeneralSettings(
+            context,
+            Constants.KEY_PICK_UP_DURATION
+        )
         if (pickUpUpdateDuration.isNullOrEmpty()){
             pickUpUpdateDuration = Constants.LOCATION_HANDLER_TIME.toString()
         }
@@ -721,8 +738,13 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         handler?.removeCallbacksAndMessages(null)
+        if (SessionManager.getInstance(context).isSplashDisplayed) {
+            super.onBackPressed()
+        } else {
+            //It means its directly came here from notification click
+            ProjectUtilities.restartWithSplash(context)
+        }
     }
 
     override fun onStop() {
@@ -744,4 +766,5 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
         super.onPause()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
+
 }

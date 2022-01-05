@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -222,6 +223,10 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         .dontAnimate()
                         .dontTransform()
                 ).into(imgVehicle)
+
+            progressDistance.max = rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()!!
+            progressDistance.progress = rideDetailModel?.data?.totalDistTravelled?.toDouble()?.toInt()!!
+
 
             setTravelledDistanceTime()
         }
@@ -804,8 +809,13 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         handler?.removeCallbacksAndMessages(null)
+        if (SessionManager.getInstance(context).isSplashDisplayed) {
+            super.onBackPressed()
+        } else {
+            //It means its directly came here from notification click
+            ProjectUtilities.restartWithSplash(context)
+        }
     }
 
     override fun onDestroy() {

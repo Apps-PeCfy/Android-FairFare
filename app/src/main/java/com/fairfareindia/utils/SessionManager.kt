@@ -8,6 +8,7 @@ open class SessionManager(context: Context) {
     private var mContext : Context = context
     private var userModel:  VerifyOTPResponsePojo.User ?= null
     private var generalSettingModel:  GeneralSettingModel ?= null
+    var isSplashDisplayed = false
 
 
     open fun getUserModel():  VerifyOTPResponsePojo.User? {
@@ -18,7 +19,7 @@ open class SessionManager(context: Context) {
         return userModel
     }
 
-    open fun setUserModel(generalSettingModel:  VerifyOTPResponsePojo.User) {
+    open fun setUserModel(generalSettingModel: VerifyOTPResponsePojo.User) {
         this.userModel = userModel
     }
 
@@ -30,7 +31,7 @@ open class SessionManager(context: Context) {
         return generalSettingModel
     }
 
-    open fun setGeneralSettingModel(generalSettingModel:  GeneralSettingModel) {
+    open fun setGeneralSettingModel(generalSettingModel: GeneralSettingModel) {
         this.generalSettingModel = generalSettingModel
     }
 
