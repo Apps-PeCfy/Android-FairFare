@@ -13,26 +13,41 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/txt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:fontFamily="@font/notosansjp_regular"
+            android:textColor="@color/colorGreyText"
             android:drawablePadding="5dp"
             android:drawableLeft="@mipmap/ic_time"
-            android:text="10:00 AM"/>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/txt_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_alignParentRight="true"
+            android:fontFamily="@font/notosansjp_regular"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorGreyText"
             android:drawableLeft="@mipmap/ic_date"
             android:drawablePadding="3dp"
-            android:text="Thursday, Nov 10"/>
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGreyText"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/notosansjp_bold"
+            android:layout_below="@id/txt_date"
+            android:textSize="@dimen/text_16sp" />
 
 
         <TextView
@@ -40,12 +55,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorGreyText"
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="30dp"
-            android:paddingHorizontal="10dp"
             android:layout_marginTop="3dp"
-            android:layout_below="@id/txt_date"
+            android:fontFamily="@font/notosansjp_regular"
+            android:layout_below="@id/txt_title"
             android:textSize="@dimen/text_14sp" />
+
+        <TextView
+            android:id="@+id/txt_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/notosansjp_regular"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/txt_message"
+            android:textColor="@color/colorGreyText"
+            android:drawableLeft="@mipmap/ic_date"
+            android:drawablePadding="3dp" />
 
 
 

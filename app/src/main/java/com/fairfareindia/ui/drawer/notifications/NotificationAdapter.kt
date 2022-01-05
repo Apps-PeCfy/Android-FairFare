@@ -61,9 +61,11 @@ class NotificationAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val model: NotificationModel.DataItem = mList[position]
 
                 holder.txtMessage.text = model.message
+                holder.txtTitle.text = model.title
 
                 holder.txtDate.text = AppUtils.changeDateFormat(model.created_at, "yyyy-MM-dd HH:mm:ss", "EEE, MMM dd")
                 holder.txtTime.text = AppUtils.changeDateFormat(model.created_at, "yyyy-MM-dd HH:mm:ss", "h:mm a")
+                holder.txtDateTime.text = AppUtils.changeDateFormat(model.created_at, "yyyy-MM-dd HH:mm:ss", "EEE, MMM dd, h:mm a")
 
                 holder.itemView.setOnClickListener {
                     mListener?.onItemSelected(position, model)
@@ -98,6 +100,8 @@ class NotificationAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val txtDate: TextView = itemView.findViewById(R.id.txt_date)
         val txtTime: TextView = itemView.findViewById(R.id.txt_time)
         val txtMessage: TextView = itemView.findViewById(R.id.txt_message)
+        val txtTitle: TextView = itemView.findViewById(R.id.txt_title)
+        val txtDateTime: TextView = itemView.findViewById(R.id.txt_date_time)
 
 
 

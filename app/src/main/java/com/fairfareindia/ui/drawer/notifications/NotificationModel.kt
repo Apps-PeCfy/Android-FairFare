@@ -64,6 +64,9 @@ class NotificationModel  {
 		@SerializedName("message")
 		var message: String? = null
 
+		@SerializedName("title")
+		var title: String? = null
+
 		@SerializedName("created_at")
 		var created_at: String? = null
 	}

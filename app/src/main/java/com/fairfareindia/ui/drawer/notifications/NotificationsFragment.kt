@@ -217,7 +217,8 @@ class NotificationsFragment : Fragment(), INotificationView {
 
 
     override fun showWait() {
-        ProjectUtilities.showProgressDialog(activity)
+        binding.swipeRefresh.isRefreshing = true
+      //  ProjectUtilities.showProgressDialog(activity)
     }
 
     override fun removeWait() {
@@ -227,6 +228,7 @@ class NotificationsFragment : Fragment(), INotificationView {
 
     override fun onFailure(appErrorMessage: String?) {
         binding.swipeRefresh.isRefreshing = false
+        ProjectUtilities.dismissProgressDialog()
         Toast.makeText(activity, appErrorMessage, Toast.LENGTH_LONG).show()
     }
 
