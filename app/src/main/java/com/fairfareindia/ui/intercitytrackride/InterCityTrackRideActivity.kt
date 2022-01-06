@@ -557,7 +557,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     if (rideDetailModel?.data?.estimatedTrackRide?.distance != null){
                         binding.progressDistance.max = 100
                         var percentage = (rideDetailModel?.data?.estimatedTrackRide?.distance?.times(1000)!! - remainingDistance)/ rideDetailModel?.data?.estimatedTrackRide?.distance?.times(1000)!!
-                        binding.progressDistance.progress = percentage.toInt()
+                        binding.progressDistance.progress = percentage.times(100).toInt()
                     }
 
 
