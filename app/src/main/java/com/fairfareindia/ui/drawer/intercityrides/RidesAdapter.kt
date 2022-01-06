@@ -79,7 +79,12 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.txtDate.text = AppUtils.changeDateFormat(model.dateTime, "yyyy-MM-dd HH:mm:ss", "dd MMM, h:mm a")
 
                 holder.txtSourceAddress.text = (model.originFullAddress)
-                holder.txtDestinationAddress.text = (model.destinationFullAddress)
+                if (model.actualEndAddress.isNullOrEmpty()){
+                    holder.txtDestinationAddress.text = model.destinationFullAddress
+                }else{
+                    holder.txtDestinationAddress.text = model.actualEndAddress
+                }
+
 
                 holder.txtActualFare.text = ProjectUtilities.getAmountInFormat(model.estimatedTrackRide?.totalCharges?.toDouble())
 

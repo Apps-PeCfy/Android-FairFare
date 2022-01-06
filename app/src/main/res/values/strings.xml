@@ -374,7 +374,7 @@
     <string name="txt_end_rise_message">Your Current Ride is Completed</string>
     <string name="btn_rate_the_ride">Rate The Ride</string>
     <string name="txt_balance_fare_paid">Balance Fare Paid</string>
-    <string name="txt_balance_fare_not_paid">Balance Fare to be Paid</string>
+    <string name="txt_balance_fare_not_paid">Balance Fair Payable</string>
     <string name="str_payment_method">Payment Method</string>
     <string name="str_pay_offline">Cash</string>
     <string name="str_pay_online">Online</string>

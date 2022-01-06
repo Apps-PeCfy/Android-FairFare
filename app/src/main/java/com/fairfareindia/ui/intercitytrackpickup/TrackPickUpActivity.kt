@@ -321,7 +321,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
-                    .icon(getMarkerIcon(model?.data?.vehicleName))
+                    .icon(getMarkerIcon(model?.data?.vehicleType))
                     .anchor(0.5f, 0.5f)
                     .draggable(true)
                     .flat(true)
@@ -332,7 +332,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
-                    .icon(getMarkerIcon(model?.data?.vehicleName))
+                    .icon(getMarkerIcon(model?.data?.vehicleType))
                     .anchor(0.5f, 0.5f)
                     .draggable(true)
                     .flat(true)
@@ -343,7 +343,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
-                    .icon(getMarkerIcon(model?.data?.vehicleName))
+                    .icon(getMarkerIcon(model?.data?.vehicleType))
                     .anchor(0.5f, 0.5f)
                     .draggable(true)
                     .flat(true)

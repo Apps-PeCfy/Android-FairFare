@@ -207,7 +207,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                     txtBalanceAmountLabel.setTextColor(getColor(R.color.colorGreen))
                     txtBalanceAmount.setTextColor(getColor(R.color.colorGreen))
                 }else{
-                    txtBalanceAmountLabel.text = getString(R.string.txt_balance_fare_paid)
+                    txtBalanceAmountLabel.text = getString(R.string.txt_balance_fare_not_paid)
                     rlBalanceAmount.visibility = View.VISIBLE
                     btnPayNow.visibility = View.VISIBLE
                     btnRateRide.visibility = View.GONE

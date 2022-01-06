@@ -267,7 +267,7 @@ class RideDetailModel {
         var totalDuration: String? = null
 
         @SerializedName("basicFare")
-        var basicFare: Int? = null
+        var basicFare: Double? = null
 
         @SerializedName("luggageCharges")
         var luggageCharges: String? = null

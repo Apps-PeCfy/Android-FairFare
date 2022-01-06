@@ -76,6 +76,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     private var IS_TRACKING_DRIVER_IN_TRACK_RIDE: String? = "false"
 
     private var remainingDistanceText: String? = null
+    private var remainingDistance: Int = 0
     private var remainingTimeText: String? = null
 
 
@@ -190,7 +191,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             txtDropUpLocation.text = rideDetailModel?.data?.destinationAddress
 
             txtDistanceTime.text = getString(R.string.str_est_distance) +
-                    " - ${rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()} km / " + getString(
+                    " - ${rideDetailModel?.data?.estimatedTrackRide?.distance} km / " + getString(
                 R.string.str_est_time
             ) + " - ${rideDetailModel?.data?.estimatedTrackRide?.totalTime}"
 
@@ -223,9 +224,6 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         .dontAnimate()
                         .dontTransform()
                 ).into(imgVehicle)
-
-            progressDistance.max = rideDetailModel?.data?.estimatedTrackRide?.distance?.toInt()!!
-            progressDistance.progress = rideDetailModel?.data?.totalDistTravelled?.toDouble()?.toInt()!!
 
 
             setTravelledDistanceTime()
@@ -287,7 +285,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
         myMarker = mMap!!.addMarker(
             MarkerOptions()
                 .position(newPosition)
-                .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                .icon(getMarkerIcon(rideDetailModel?.data?.vehicleType))
                 .anchor(0.5f, 0.5f)
                 .draggable(true)
                 .flat(true)
@@ -317,7 +315,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
-                    .icon(getMarkerIcon(rideDetailModel?.data?.vehicleName))
+                    .icon(getMarkerIcon(rideDetailModel?.data?.vehicleType))
                     .anchor(0.5f, 0.5f)
                     .draggable(true)
                     .flat(true)
@@ -553,6 +551,15 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
                     remainingTimeText = duration.getString("text")
                     remainingDistanceText = distance.getString("text")
+                    remainingDistance = distance.getInt("value")
+
+
+                    if (rideDetailModel?.data?.estimatedTrackRide?.distance != null){
+                        binding.progressDistance.max = 100
+                        var percentage = (rideDetailModel?.data?.estimatedTrackRide?.distance?.times(1000)!! - remainingDistance)/ rideDetailModel?.data?.estimatedTrackRide?.distance?.times(1000)!!
+                        binding.progressDistance.progress = percentage.toInt()
+                    }
+
 
                     setTravelledDistanceTime()
 
