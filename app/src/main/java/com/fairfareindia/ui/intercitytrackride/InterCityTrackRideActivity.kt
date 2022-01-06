@@ -6,12 +6,9 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.LinearInterpolator
@@ -134,7 +131,10 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
                     getRouteAPI()
                     getDriverLocationAPI()
-                    iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                    if (!isDestroyed){
+                        iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                    }
+
 
                 }
             }
