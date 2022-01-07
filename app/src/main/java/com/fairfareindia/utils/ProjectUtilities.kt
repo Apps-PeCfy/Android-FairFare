@@ -72,6 +72,8 @@ object ProjectUtilities {
                 var minutes = timeInMinute.toInt() % 60
                 returnTime = "$hours ${getHourUnit(hours)} $minutes ${getMinutesUnit(minutes)}"
             }
+        }else{
+            returnTime = "0 min"
         }
         return returnTime
     }
@@ -82,6 +84,18 @@ object ProjectUtilities {
         if(amount != null){
             var formatter = DecimalFormat("#,##0.00")
             returnAmount = "₹ "+ formatter.format(amount)
+        }
+
+
+        return returnAmount
+    }
+
+    fun getDistanceInFormat(distance: Double?): String {
+        var returnAmount = "0.00 km"
+
+        if(distance != null){
+            var formatter = DecimalFormat("#,##0.00")
+            returnAmount =  formatter.format(distance) + " km"
         }
 
 

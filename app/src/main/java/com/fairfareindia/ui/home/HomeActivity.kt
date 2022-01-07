@@ -2818,6 +2818,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onResume() {
         super.onResume()
+        if (Constants.SHOULD_RELOAD){
+            Constants.SHOULD_RELOAD = false
+            getActiveRidesAPI()
+        }
         setup()
         generalSettingAPI()
         if (!CommonAppPermission.hasLocationPermission(this) || !ProjectUtilities.isGPSEnabled(this)) {
@@ -2870,8 +2874,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     var model: GetRideResponsePOJO = resultObj as GetRideResponsePOJO
                     if (!model.data.isNullOrEmpty()) {
                         rideModel = model.data!![0]
-                        setData()
+                    }else{
+                        rideModel = null
                     }
+
+                    setData()
                 }
 
                 override fun onError(error: String?) {
@@ -2896,6 +2903,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
             if (action != null && action == "ride_status_changed") {
+                getActiveRidesAPI()
                 val newIntent = Intent("refresh_ride_list")
                 LocalBroadcastManager.getInstance(context).sendBroadcast(newIntent)
             }

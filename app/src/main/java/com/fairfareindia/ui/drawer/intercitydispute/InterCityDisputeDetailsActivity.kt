@@ -97,8 +97,8 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
 
 
             txtEstLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.luggageCharges?.toDouble())
-            txtEstDistance.text = model?.dispute?.ride?.estimatedTrackRide?.baseDistance.toString()
-            txtEstAddDistance.text = model?.dispute?.ride?.estimatedTrackRide?.additionalDistance.toString()
+            txtEstDistance.text = ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.estimatedTrackRide?.baseDistance)
+            txtEstAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.estimatedTrackRide?.additionalDistance)
             txtEstRideTime.text = model?.dispute?.ride?.estimatedTrackRide?.totalTime
             txtEstWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.dispute?.ride?.estimatedTrackRide?.waitingTime!!)
             txtEstWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.waitingCharges?.toDouble())
@@ -112,8 +112,8 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
 
 
             txtActualLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.luggageCharges?.toDouble())
-            txtActualDistance.text = model?.dispute?.ride?.actualTrackRide?.baseDistance.toString()
-            txtActualAddDistance.text = model?.dispute?.ride?.actualTrackRide?.additionalDistance.toString()
+            txtActualDistance.text = ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.actualTrackRide?.baseDistance)
+            txtActualAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.actualTrackRide?.additionalDistance)
             txtActualRideTime.text = model?.dispute?.ride?.actualTrackRide?.totalTime
             txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.dispute?.ride?.actualTrackRide?.waitingTime!!)
             txtActualWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.waitingCharges?.toDouble())

@@ -131,8 +131,8 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
         binding.apply {
 
             txtEstLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.luggageCharges?.toDouble())
-            txtEstDistance.text = model?.data?.estimatedTrackRide?.baseDistance.toString()
-            txtEstAddDistance.text = model?.data?.estimatedTrackRide?.additionalDistance.toString()
+            txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.baseDistance)
+            txtEstAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)
             txtEstRideTime.text = model?.data?.estimatedTrackRide?.totalTime
             txtEstWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.estimatedTrackRide?.waitingTime!!)
             txtEstWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.waitingCharges?.toDouble())
@@ -146,8 +146,8 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
 
             txtActualLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.luggageCharges?.toDouble())
-            txtActualDistance.text = model?.data?.actualTrackRide?.baseDistance.toString()
-            txtActualAddDistance.text = model?.data?.actualTrackRide?.additionalDistance.toString()
+            txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.baseDistance)
+            txtActualAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.additionalDistance)
             txtActualRideTime.text = model?.data?.actualTrackRide?.totalTime
           //  txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
             txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)

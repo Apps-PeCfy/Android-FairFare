@@ -202,19 +202,19 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             }
 
 
-            if (!model?.data?.estimatedTrackRide?.additionalDistance.isNullOrEmpty()) {
+            if (model?.data?.estimatedTrackRide?.additionalDistance != 0.0) {
                 txtChargesForAdditionalKmLabel.text =
-                    getString(R.string.str_charges_for_additional) + " ${model?.data?.estimatedTrackRide?.additionalDistance} " + "Km"
+                    getString(R.string.str_charges_for_additional) +" ${ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)}"
             } else {
                 txtChargesForAdditionalKmLabel.text = getString(R.string.str_charges_for_additional)
 
             }
 
-            if (model?.data?.estimatedTrackRide?.baseDistance.isNullOrEmpty()){
+            if (model?.data?.estimatedTrackRide?.baseDistance == 0.0){
                 txtBaseFareLabel.text = getString(R.string.str_base_fare)
             }else{
                 txtBaseFareLabel.text =
-                getString(R.string.str_base_fare) + "( ${model?.data?.estimatedTrackRide?.baseDistance} Km )"
+                getString(R.string.str_base_fare) + "( ${ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.baseDistance)} )"
             }
 
 

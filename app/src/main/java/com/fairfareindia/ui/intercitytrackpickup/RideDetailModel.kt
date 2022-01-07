@@ -255,13 +255,13 @@ class RideDetailModel {
         var totalCharges: String? = null
 
         @SerializedName("baseDistance")
-        var baseDistance: String ?= null
+        var baseDistance: Double = 0.0
 
         @SerializedName("convenienceFees")
         var convenienceFees: String? = null
 
         @SerializedName("additionalDistance")
-        var additionalDistance: String? = null
+        var additionalDistance: Double = 0.0
 
         @SerializedName("totalDuration")
         var totalDuration: String? = null
