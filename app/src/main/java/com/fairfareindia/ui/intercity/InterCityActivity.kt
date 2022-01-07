@@ -203,6 +203,11 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                     intent.putExtra("Toolbar_Title", "Pick-Up")
                     intent.putExtra("currentLatitude", currentLatitude)
                     intent.putExtra("currentLongitude", currentLongitude)
+
+                    //For Current Address In PickUPDropActivity
+                    intent.putExtra("currentUserLatitude", currentLatitude)
+                    intent.putExtra("currentUserLongitude", currentLongitude)
+                    intent.putExtra("currentUserAddress", getAddressFromLocation())
                     startActivity(intent)
                 } else {
                     ProjectUtilities.showToast(context, getString(R.string.internet_error))
@@ -215,6 +220,11 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                     intent.putExtra("Toolbar_Title", "Drop-off")
                     intent.putExtra("currentLatitude", currentLatitude)
                     intent.putExtra("currentLongitude", currentLongitude)
+
+                    //For Current Address In PickUPDropActivity
+                    intent.putExtra("currentUserLatitude", currentLatitude)
+                    intent.putExtra("currentUserLongitude", currentLongitude)
+                    intent.putExtra("currentUserAddress", getAddressFromLocation())
                     startActivity(intent)
                 } else {
                     ProjectUtilities.showToast(context, getString(R.string.internet_error))
