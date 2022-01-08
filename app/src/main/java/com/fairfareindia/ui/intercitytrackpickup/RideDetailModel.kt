@@ -20,6 +20,9 @@ class RideDetailModel {
         @SerializedName("totalfare")
         var totalfare : Double = 0.0
 
+        @SerializedName("currentFareLocal")
+        var currentFareLocal : Double = 0.0
+
         @SerializedName("user")
         var user: User? = null
 
@@ -285,7 +288,7 @@ class RideDetailModel {
         var totalTimeMinute: String? = null
 
         @SerializedName("additionalDistanceCharges")
-        var additionalDistanceCharges: String? = null
+        var additionalDistanceCharges: Double ?= null
 
         @SerializedName("tollCharges")
         var tollCharges: String? = null

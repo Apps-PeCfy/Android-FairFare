@@ -17,7 +17,6 @@ import butterknife.ButterKnife
 import com.fairfareindia.R
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.drawer.intercitydispute.InterCityDisputeDetailsActivity
-import com.fairfareindia.ui.drawer.mydisput.disputDetail.DisputDetailActivity
 import com.fairfareindia.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
 import com.fairfareindia.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
 import com.fairfareindia.ui.home.HomeActivity
@@ -257,15 +256,9 @@ class MyDisput : Fragment(), IMyDisputView, MyDisPutesAdapter.IDisputClickListen
     override fun detailDisputClick(model: GetDisputResponsePOJO.DataItem) {
 
         if (ProjectUtilities.checkInternetAvailable(activity)) {
-            if (model.permitType == Constants.TYPE_INTERCITY){
-                val intent = Intent(activity, InterCityDisputeDetailsActivity::class.java)
-                intent.putExtra("dispute_id", model.id.toString())
-                startActivity(intent)
-            }else{
-                val intent = Intent(activity, DisputDetailActivity::class.java)
-                intent.putExtra("Id", model.id.toString())
-                startActivity(intent)
-            }
+            val intent = Intent(activity, InterCityDisputeDetailsActivity::class.java)
+            intent.putExtra("dispute_id", model.id.toString())
+            startActivity(intent)
 
         }else{
             ProjectUtilities.showToast(

@@ -133,6 +133,15 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             txtNightCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.nightCharges)
 
 
+            if (info.permitType == Constants.TYPE_LOCAL){
+                txtBaseFareLabel.text =
+                    getString(R.string.str_base_fare) + " ( ${model?.ride?.actualDistance!!.toInt()} ${model?.ride?.distanceType})"
+                llAdditionalDistanceCharges.visibility = View.GONE
+            }else{
+                txtBaseFareLabel.text =
+                    getString(R.string.str_base_fare) + " ( ${model?.ride?.baseDistance!!.toInt()} ${model?.ride?.distanceType}) ${info.wayFlag}"
+                llAdditionalDistanceCharges.visibility = View.VISIBLE
+            }
 
             if (!model?.ride?.additionalDistance.isNullOrEmpty()) {
                 txtChargesForAdditionalKmLabel.text =
@@ -151,8 +160,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 txtChargesForAdditionalKmLabel.text = getString(R.string.str_charges_for_additional)
 
             }
-            txtBaseFareLabel.text =
-                getString(R.string.str_base_fare) + "( ${model?.ride?.baseDistance!!.toInt()} ${model?.ride?.distanceType}) ${info.wayFlag}"
+
 
 
             tvChargesForAdditionalKm.text = ProjectUtilities.getAmountInFormat(model?.ride?.additionalDistCharges)

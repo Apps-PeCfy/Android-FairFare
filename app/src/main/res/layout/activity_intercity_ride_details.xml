@@ -401,6 +401,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/txt_base_distance_label"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -458,66 +459,75 @@
 
                             <!--ADDITIONAl DISTANCE -->
                             <LinearLayout
+                                android:id="@+id/ll_additional_distance"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
-                                <TextView
-                                    android:layout_width="0dp"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/notosansjp_regular"
-                                    android:gravity="center"
-                                    android:paddingHorizontal="2dp"
-                                    android:paddingVertical="8dp"
-                                    android:text="@string/str_additional_distance"
-                                    android:textColor="@color/colorText"
-                                    android:textSize="@dimen/text_14sp"
-                                    android:textStyle="bold" />
+                                    android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="2dp"
+                                        android:paddingVertical="8dp"
+                                        android:text="@string/str_additional_distance"
+                                        android:textColor="@color/colorText"
+                                        android:textSize="@dimen/text_14sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/secondaryLightGray" />
+
+
+                                    <TextView
+                                        android:id="@+id/txt_est_add_distance"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:gravity="center"
+                                        android:paddingVertical="8dp"
+                                        android:text=""
+                                        android:textColor="@color/colorGreyText"
+                                        android:textSize="@dimen/text_14sp" />
+
+                                    <TextView
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/secondaryLightGray" />
+
+
+                                    <TextView
+                                        android:id="@+id/txt_actual_add_distance"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:gravity="center"
+                                        android:paddingVertical="8dp"
+                                        android:text=""
+                                        android:textColor="@color/colorGreyText"
+                                        android:textSize="@dimen/text_14sp" />
+
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
                                     android:background="@color/secondaryLightGray" />
-
-
-                                <TextView
-                                    android:id="@+id/txt_est_add_distance"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/notosansjp_regular"
-                                    android:gravity="center"
-                                    android:paddingVertical="8dp"
-                                    android:text=""
-                                    android:textColor="@color/colorGreyText"
-                                    android:textSize="@dimen/text_14sp" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/secondaryLightGray" />
-
-
-                                <TextView
-                                    android:id="@+id/txt_actual_add_distance"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/notosansjp_regular"
-                                    android:gravity="center"
-                                    android:paddingVertical="8dp"
-                                    android:text=""
-                                    android:textColor="@color/colorGreyText"
-                                    android:textSize="@dimen/text_14sp" />
-
 
                             </LinearLayout>
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/secondaryLightGray" />
 
                             <!-- RIDE TIME -->
 
@@ -733,6 +743,12 @@
 
                             <!--Additional Distance Charges -->
 
+                        <LinearLayout
+                            android:id="@+id/ll_additional_distance_charges"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -794,6 +810,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/secondaryLightGray" />
+                        </LinearLayout>
+
+
 
                             <!--Wait Charges -->
 
@@ -858,6 +877,77 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/secondaryLightGray" />
+
+                            <!--Night Charges -->
+
+                            <LinearLayout
+                                android:id="@+id/ll_night_charges"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="2dp"
+                                        android:paddingVertical="8dp"
+                                        android:text="@string/str_night_charges"
+                                        android:textColor="@color/colorText"
+                                        android:textSize="@dimen/text_14sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/secondaryLightGray" />
+
+
+                                    <TextView
+                                        android:id="@+id/txt_est_night_charges"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:gravity="center"
+                                        android:paddingVertical="8dp"
+                                        android:text=""
+                                        android:textColor="@color/colorGreyText"
+                                        android:textSize="@dimen/text_14sp" />
+
+                                    <TextView
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/secondaryLightGray" />
+
+
+                                    <TextView
+                                        android:id="@+id/txt_actual_night_charges"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:gravity="center"
+                                        android:paddingVertical="8dp"
+                                        android:text=""
+                                        android:textColor="@color/colorGreyText"
+                                        android:textSize="@dimen/text_14sp" />
+
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/secondaryLightGray" />
+                            </LinearLayout>
 
                             <!--Luggage -->
 

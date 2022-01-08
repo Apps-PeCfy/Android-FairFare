@@ -94,15 +94,35 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
                 txtComments.visibility = View.GONE
             }
 
+            if (model?.dispute?.ride?.permitType == Constants.TYPE_INTERCITY){
+                llAdditionalDistance.visibility = View.VISIBLE
+                llAdditionalDistanceCharges.visibility = View.VISIBLE
+                txtBaseDistanceLabel.text = getString(R.string.str_base_distance)
+                txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.estimatedTrackRide?.baseDistance)
+                txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.actualTrackRide?.baseDistance)
+                txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.basicFare?.toDouble())
+                txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.basicFare?.toDouble())
+            }else{
+                llAdditionalDistance.visibility = View.GONE
+                llAdditionalDistanceCharges.visibility = View.GONE
+                txtBaseDistanceLabel.text = getString(R.string.str_distance)
+                txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.estimatedTrackRide?.distance)
+                txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.actualTrackRide?.distance)
+                var estBaseFare = model?.dispute?.ride?.estimatedTrackRide?.basicFare!! + model?.dispute?.ride?.estimatedTrackRide?.additionalDistanceCharges!!
+                txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(estBaseFare)
+
+                var actualBaseFare = model?.dispute?.ride?.actualTrackRide?.basicFare!! + model?.dispute?.ride?.actualTrackRide?.additionalDistanceCharges!!
+                txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(actualBaseFare)
+            }
+
 
 
             txtEstLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.luggageCharges?.toDouble())
-            txtEstDistance.text = ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.estimatedTrackRide?.baseDistance)
             txtEstAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.estimatedTrackRide?.additionalDistance)
             txtEstRideTime.text = model?.dispute?.ride?.estimatedTrackRide?.totalTime
             txtEstWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.dispute?.ride?.estimatedTrackRide?.waitingTime!!)
             txtEstWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.waitingCharges?.toDouble())
-            txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.basicFare?.toDouble())
+            txtEstNightCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.nightCharges?.toDouble())
             txtEstTollCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.tollCharges?.toDouble())
             txtEstAddDistanceCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.additionalDistanceCharges?.toDouble())
             txtEstSurcharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.estimatedTrackRide?.surCharge?.toDouble())
@@ -117,7 +137,7 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
             txtActualRideTime.text = model?.dispute?.ride?.actualTrackRide?.totalTime
             txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.dispute?.ride?.actualTrackRide?.waitingTime!!)
             txtActualWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.waitingCharges?.toDouble())
-            txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.basicFare?.toDouble())
+            txtActualNightCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.nightCharges?.toDouble())
             txtActualTollCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.tollCharges?.toDouble())
             txtActualAddDistanceCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.additionalDistanceCharges?.toDouble())
             txtActualSurcharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.surCharge?.toDouble())

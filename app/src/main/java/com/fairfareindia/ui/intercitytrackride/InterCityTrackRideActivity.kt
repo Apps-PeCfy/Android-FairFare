@@ -200,7 +200,13 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 rideDetailModel?.data?.total_wait_time.toString()
             )
 
-            txtCurrentFare.text = "₹ " + rideDetailModel?.data?.totalfare.toString()
+
+            if (rideDetailModel?.data?.permitType == Constants.TYPE_LOCAL){
+                txtCurrentFare.text = ProjectUtilities.getAmountInFormat(rideDetailModel?.data?.currentFareLocal)
+            }else{
+                txtCurrentFare.text = ProjectUtilities.getAmountInFormat(rideDetailModel?.data?.totalfare)
+            }
+
 
 
             sourceLat = rideDetailModel?.data?.originLatitude
@@ -226,14 +232,14 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 ).into(imgVehicle)
 
 
-            setTravelledDistanceTime()
+            setTravelledDistanceTime(rideDetailModel?.data?.totalDistTravelled)
         }
     }
 
-    private fun setTravelledDistanceTime() {
+    private fun setTravelledDistanceTime(totalDistTravelled : String?) {
         if (remainingDistanceText != null) {
             binding.txtTravelledDistance.text =
-                rideDetailModel?.data?.totalDistTravelled + " km / $remainingDistanceText"
+                totalDistTravelled + " km / $remainingDistanceText"
 
 
             var rideDateTime =
@@ -248,7 +254,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             }
         } else {
             binding.txtTravelledDistance.text =
-                rideDetailModel?.data?.totalDistTravelled + " km"
+                totalDistTravelled + " km"
 
 
             var rideDateTime =
@@ -561,7 +567,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     }
 
 
-                    setTravelledDistanceTime()
+                    setTravelledDistanceTime(driverLocationModel?.data?.totalDistTravelled)
 
                     routes = parser.parse(jsonObject)
 
@@ -659,16 +665,17 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     driverLocationModel = resultObj as DriverLocationModel?
                     driverLat = driverLocationModel?.data?.latitude.toString()
                     driverLong = driverLocationModel?.data?.longitude.toString()
-                    locationChangeLatitude = driverLocationModel?.data?.latitude!!
-                    locationChangeLongitude = driverLocationModel?.data?.longitude!!
+
 
                     if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
+                        locationChangeLatitude = driverLocationModel?.data?.latitude!!
+                        locationChangeLongitude = driverLocationModel?.data?.longitude!!
                         addCurrentLocationMarker(driverLocationModel)
                         getRouteAPI()
                         iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
                     }
 
-
+                    instantUpdateTrackBoard()
                     if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED) {
                         handler?.removeCallbacksAndMessages(null)
                         myLocationManager?.stopLocationUpdates()
@@ -688,6 +695,20 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 }
 
             })
+    }
+
+    private fun instantUpdateTrackBoard() {
+        setTravelledDistanceTime(driverLocationModel?.data?.totalDistTravelled)
+
+        binding.txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(
+            context,
+            driverLocationModel?.data?.total_wait_time.toString()
+        )
+
+        if (driverLocationModel?.data?.permit_type == Constants.TYPE_LOCAL){
+            binding.txtCurrentFare.text = ProjectUtilities.getAmountInFormat(driverLocationModel?.data?.totalfare)
+        }
+
     }
 
 

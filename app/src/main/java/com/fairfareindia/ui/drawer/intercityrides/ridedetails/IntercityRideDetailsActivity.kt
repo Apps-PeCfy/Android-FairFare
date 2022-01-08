@@ -130,13 +130,35 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
     private fun setData() {
         binding.apply {
 
+            if (model?.data?.permitType == Constants.TYPE_INTERCITY){
+                llAdditionalDistance.visibility = View.VISIBLE
+                llAdditionalDistanceCharges.visibility = View.VISIBLE
+                txtBaseDistanceLabel.text = getString(R.string.str_base_distance)
+                txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.baseDistance)
+                txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.baseDistance)
+                txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.basicFare?.toDouble())
+                txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.basicFare?.toDouble())
+
+            }else{
+                llAdditionalDistance.visibility = View.GONE
+                llAdditionalDistanceCharges.visibility = View.GONE
+                txtBaseDistanceLabel.text = getString(R.string.str_distance)
+                txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.distance)
+                txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.distance)
+                var estBaseFare = model?.data?.estimatedTrackRide?.basicFare!! + model?.data?.estimatedTrackRide?.additionalDistanceCharges!!
+                txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(estBaseFare)
+
+                var actualBaseFare = model?.data?.actualTrackRide?.basicFare!! + model?.data?.actualTrackRide?.additionalDistanceCharges!!
+                txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(actualBaseFare)
+            }
+
             txtEstLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.luggageCharges?.toDouble())
-            txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.baseDistance)
             txtEstAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)
             txtEstRideTime.text = model?.data?.estimatedTrackRide?.totalTime
             txtEstWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.estimatedTrackRide?.waitingTime!!)
             txtEstWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.waitingCharges?.toDouble())
-            txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.basicFare?.toDouble())
+            txtEstNightCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.nightCharges?.toDouble())
+
             txtEstTollCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.tollCharges?.toDouble())
             txtEstAddDistanceCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.additionalDistanceCharges?.toDouble())
             txtEstSurcharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.surCharge?.toDouble())
@@ -152,6 +174,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
           //  txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
             txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
             txtActualWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.waitingCharges?.toDouble())
+            txtActualNightCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.nightCharges?.toDouble())
             txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.basicFare?.toDouble())
             txtActualTollCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.tollCharges?.toDouble())
             txtActualAddDistanceCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.additionalDistanceCharges?.toDouble())
@@ -217,6 +240,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 }
 
             }else{
+                txtBalanceAmountLabel.text = getString(R.string.txt_balance_fare_paid)
                 btnPayNow.visibility = View.GONE
                 if (isFromEndRide){
                     btnRateRide.visibility = View.VISIBLE

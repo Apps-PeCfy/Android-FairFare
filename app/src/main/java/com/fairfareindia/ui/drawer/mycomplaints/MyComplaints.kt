@@ -19,8 +19,6 @@ import com.fairfareindia.R
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.drawer.intercitydispute.InterCityDisputeDetailsActivity
-import com.fairfareindia.ui.drawer.mycomplaints.complaintDetails.ComplaintsDetailsActivity
-import com.fairfareindia.ui.drawer.mydisput.disputDetail.DisputDetailActivity
 import com.fairfareindia.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.utils.Constants
@@ -31,7 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import java.util.ArrayList
+import java.util.*
 
 class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
 
@@ -210,15 +208,9 @@ class MyComplaints : Fragment(),MyComplaintsAdapter.IMyComplaintClickListener {
 
         if (ProjectUtilities.checkInternetAvailable(activity)) {
 
-            if (model.permitType == Constants.TYPE_INTERCITY){
-                val intent = Intent(activity, InterCityDisputeDetailsActivity::class.java)
-                intent.putExtra("dispute_id", model.id.toString())
-                startActivity(intent)
-            }else{
-                val intent = Intent(activity, ComplaintsDetailsActivity::class.java)
-                intent.putExtra("Id", model.id.toString())
-                startActivity(intent)
-            }
+            val intent = Intent(activity, InterCityDisputeDetailsActivity::class.java)
+            intent.putExtra("dispute_id", model.id.toString())
+            startActivity(intent)
 
 
         }else{

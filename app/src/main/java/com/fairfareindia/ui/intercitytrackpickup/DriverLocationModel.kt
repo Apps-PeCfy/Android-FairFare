@@ -29,6 +29,17 @@ class DriverLocationModel {
         @SerializedName("status")
         var status: String ?= null
 
+        @SerializedName("permit_type")
+        var permit_type: String ?= null
+
+        @SerializedName("total_wait_time")
+        var total_wait_time : Int = 0
+
+        @SerializedName("totalfare")
+        var totalfare : Double = 0.0
+
+        @SerializedName("totalDistTravelled")
+        var totalDistTravelled: String? = null
 
 
     }
