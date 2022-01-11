@@ -700,13 +700,22 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     private fun instantUpdateTrackBoard() {
         setTravelledDistanceTime(driverLocationModel?.data?.totalDistTravelled)
 
-        binding.txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(
-            context,
-            driverLocationModel?.data?.total_wait_time.toString()
-        )
+
 
         if (driverLocationModel?.data?.permit_type == Constants.TYPE_LOCAL){
             binding.txtCurrentFare.text = ProjectUtilities.getAmountInFormat(driverLocationModel?.data?.totalfare)
+        }
+
+        if (driverLocationModel?.data?.permit_type == Constants.TYPE_LOCAL){
+            binding.txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(
+                context,
+                driverLocationModel?.data?.ride_wait_time.toString()
+            )
+        }else{
+            binding.txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(
+                context,
+                driverLocationModel?.data?.total_wait_time.toString()
+            )
         }
 
     }

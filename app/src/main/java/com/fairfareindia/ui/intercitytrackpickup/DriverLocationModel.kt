@@ -41,6 +41,8 @@ class DriverLocationModel {
         @SerializedName("totalDistTravelled")
         var totalDistTravelled: String? = null
 
+        @SerializedName("ride_wait_time")
+        var ride_wait_time : Int = 0
 
     }
 }
