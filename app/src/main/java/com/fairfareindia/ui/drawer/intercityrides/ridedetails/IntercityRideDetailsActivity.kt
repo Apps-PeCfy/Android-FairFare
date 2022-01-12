@@ -175,7 +175,6 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
             txtActualWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.waitingCharges?.toDouble())
             txtActualNightCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.nightCharges?.toDouble())
-            txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.basicFare?.toDouble())
             txtActualTollCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.tollCharges?.toDouble())
             txtActualAddDistanceCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.additionalDistanceCharges?.toDouble())
             txtActualSurcharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.surCharge?.toDouble())
