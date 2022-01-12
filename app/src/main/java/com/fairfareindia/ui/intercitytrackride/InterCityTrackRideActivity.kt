@@ -124,7 +124,10 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 lastLocation: Location?
             ) {
                 if (lastLocation != null) {
-                    addCurrentLocationMarker(lastLocation)
+                    if(rideDetailModel != null){
+                        addCurrentLocationMarker(lastLocation)
+                    }
+
 
                     locationChangeLatitude = lastLocation!!.latitude
                     locationChangeLongitude = lastLocation!!.longitude
