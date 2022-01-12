@@ -685,6 +685,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/txt_base_fare_label"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"

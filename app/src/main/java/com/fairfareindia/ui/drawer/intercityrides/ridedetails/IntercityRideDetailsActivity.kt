@@ -134,6 +134,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 llAdditionalDistance.visibility = View.VISIBLE
                 llAdditionalDistanceCharges.visibility = View.VISIBLE
                 txtBaseDistanceLabel.text = getString(R.string.str_base_distance)
+                txtBaseFareLabel.text = getString(R.string.str_base_fare)
                 txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.baseDistance)
                 txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.baseDistance)
                 txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.basicFare?.toDouble())
@@ -143,6 +144,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 llAdditionalDistance.visibility = View.GONE
                 llAdditionalDistanceCharges.visibility = View.GONE
                 txtBaseDistanceLabel.text = getString(R.string.str_distance)
+                txtBaseFareLabel.text = getString(R.string.str_basic_fare)
                 txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.distance)
                 txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.distance)
                 var estBaseFare = model?.data?.estimatedTrackRide?.basicFare!! + model?.data?.estimatedTrackRide?.additionalDistanceCharges!!
@@ -168,7 +170,6 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
 
             txtActualLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.luggageCharges?.toDouble())
-            txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.baseDistance)
             txtActualAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.additionalDistance)
             txtActualRideTime.text = model?.data?.actualTrackRide?.totalTime
           //  txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
@@ -255,6 +256,21 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             }else{
                 llEndRideTop.visibility = View.GONE
             }
+
+            if (model?.data?.waitings?.isNullOrEmpty()!!){
+                imgWaitInfo.visibility = View.GONE
+            }else{
+                imgWaitInfo.visibility = View.VISIBLE
+            }
+
+            if (model?.data?.estimatedTrackRide?.tolls != null && model?.data?.estimatedTrackRide?.tolls?.size!! > 0) {
+                imgTollInfo.visibility = View.VISIBLE
+            }else{
+                imgTollInfo.visibility = View.GONE
+            }
+
+
+
         }
     }
 

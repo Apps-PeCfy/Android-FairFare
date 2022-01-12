@@ -97,7 +97,8 @@ class GetRideResponsePOJO  {
 		@SerializedName("destinationPlaceId")
 		var destinationPlaceId: String? = null
 
-
+		@SerializedName("totalfare")
+		var totalfare: String? = null
 
 		@SerializedName("vehicleNo")
 		var vehicleNo: String? = null

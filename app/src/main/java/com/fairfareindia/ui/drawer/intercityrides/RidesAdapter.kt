@@ -86,7 +86,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
 
 
-                holder.txtActualFare.text = ProjectUtilities.getAmountInFormat(model.estimatedTrackRide?.totalCharges?.toDouble())
+                holder.txtActualFare.text = ProjectUtilities.getAmountInFormat(model.totalfare?.toDouble())
 
                 holder.txtStatus.text = model.status
 
