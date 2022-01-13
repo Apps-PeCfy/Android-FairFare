@@ -107,6 +107,10 @@ import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.Intent
+import android.net.Uri
+import androidx.cardview.widget.CardView
+
 
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
@@ -158,6 +162,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     @JvmField
     @BindView(R.id.btn_track_ride)
     var btnTrackRide: Button? = null
+
+    @JvmField
+    @BindView(R.id.crd_pune_metro)
+    var crdPuneMetro: CardView? = null
+
+
 
     @JvmField
     @BindView(R.id.add)
@@ -571,6 +581,16 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     .putExtra("current_latitude", currentLatitude)
                     .putExtra("current_longitude", currentLongitude)
             )
+        }
+
+        crdPuneMetro?.setOnClickListener{
+            val FB_DYNAMIC_LINK_URL = "https://punemobileapp.page.link/androidapp"
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW, Uri.parse(
+                    FB_DYNAMIC_LINK_URL
+                )
+            )
+            startActivity(browserIntent)
         }
     }
 

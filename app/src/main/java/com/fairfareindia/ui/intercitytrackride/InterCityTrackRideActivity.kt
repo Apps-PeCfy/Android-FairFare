@@ -569,8 +569,13 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         binding.progressDistance.progress = percentage.times(100).toInt()
                     }
 
+                    if(driverLocationModel?.data?.totalDistTravelled == null){
+                        setTravelledDistanceTime(rideDetailModel?.data?.totalDistTravelled)
+                    }else{
+                        setTravelledDistanceTime(driverLocationModel?.data?.totalDistTravelled)
+                    }
 
-                    setTravelledDistanceTime(driverLocationModel?.data?.totalDistTravelled)
+
 
                     routes = parser.parse(jsonObject)
 
@@ -709,17 +714,10 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             binding.txtCurrentFare.text = ProjectUtilities.getAmountInFormat(driverLocationModel?.data?.totalfare)
         }
 
-        if (driverLocationModel?.data?.permit_type == Constants.TYPE_LOCAL){
-            binding.txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(
-                context,
-                driverLocationModel?.data?.ride_wait_time.toString()
-            )
-        }else{
-            binding.txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(
-                context,
-                driverLocationModel?.data?.total_wait_time.toString()
-            )
-        }
+        binding.txtWaitTime.text = ProjectUtilities.timeInSecondsConvertingToString(
+            context,
+            driverLocationModel?.data?.ride_wait_time.toString()
+        )
 
     }
 
