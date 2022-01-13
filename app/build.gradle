@@ -21,8 +21,8 @@ android {
 
 
         //    buildConfigField 'String', 'API_URL', '"https://dev.fairfareindia.com/api/"'
-       // buildConfigField 'String', 'API_URL', '"https://stage.fairfareindia.com/api/"'
-       // buildConfigField 'String', 'API_URL', '"https://dev2.fairfareindia.com/api/"'
+        //buildConfigField 'String', 'API_URL', '"https://p2test1.fairfareindia.com/api/"'
+        //buildConfigField 'String', 'API_URL', '"https://dev2.fairfareindia.com/api/"'
         buildConfigField 'String', 'API_URL', '"https://p2test2.fairfareindia.com/api/"'
     }
     buildTypes {
@@ -113,6 +113,8 @@ dependencies {
 
     //RazorPay Integration
     implementation 'com.razorpay:checkout:1.6.12'
+
+    implementation 'com.google.firebase:firebase-dynamic-links:21.0.0'
 
 
     //noinspection GradleCompatible
