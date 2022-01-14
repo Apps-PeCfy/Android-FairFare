@@ -407,8 +407,7 @@
     <string name="err_valid_date_time">Please select valid date and time</string>
     <string name="str_start_otp">Start OTP</string>
     <string name="title_booked_successfully">Booked Successfully</string>
-    <string name="status_booked">Booked</string>
-    <string name="title_your_payment_successfull">Your payment is successfull</string>
+    <string name="title_your_payment_successfull">Your payment is successful</string>
     <string name="dialog_booking_request_msg_one">Your booking request submitted successfully for</string>
     <string name="dialog_booking_request_msg_two">Driver details will be shared 15 minutes before the ride.</string>
     <string name="title_welcome_to_fair_fare">Welcome to Fair Fare</string>
@@ -418,6 +417,11 @@
     <string name="msg_allow_gps_on">Allow Fair Fare to turn on your phone GPS for accurate pick up and drop</string>
     <string name="msg_location_permission">Location: Please provide location permission</string>
     <string name="msg_all_time_location_permission">Location: Please provide "Allow all the time" location permission for accurate pick-up and drop-off locations, availability of autos/taxis in the area and tracking the ride until trip ends.</string>
+
+
+    <string name="status_booked">Booked</string>
+    <string name="msg_two_way_ride_payment_one">Please pay 1st ride total amount</string>
+    <string name="msg_two_way_ride_payment_two">of 2nd ride. Total</string>
 
 
 </resources>

@@ -183,7 +183,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             if (info.wayFlag == Constants.BOTH_WAY_FLAG && info.permitType == Constants.TYPE_INTERCITY && Constants.IS_EXTRA_PAYMENT_FOR_INTERCITY_TWO_WAY){
                 txtTwoWayMessage.visibility = View.VISIBLE
                 amountToPay = model?.ride?.amountToCollect?.toDouble()!!
-                txtTwoWayMessage.text = "Please pay 1st ride total amount ₹ ${model?.ride?.firstRideTotal} & ${model?.ride?.secondRidePercentageToPay}% of 2nd ride. Total ₹ ${model?.ride?.amountToCollect}"
+                txtTwoWayMessage.text = getString(R.string.msg_two_way_ride_payment_one) +" ₹ ${model?.ride?.firstRideTotal} & ${model?.ride?.secondRidePercentageToPay}% ${getString(R.string.msg_two_way_ride_payment_one)} ₹ ${model?.ride?.amountToCollect}"
             }else{
                 amountToPay = model?.ride?.totalPayableCharges!!
                 txtTwoWayMessage.visibility = View.GONE
