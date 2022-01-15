@@ -14,6 +14,9 @@ class RideDetailModel {
         @SerializedName("id")
         var id = 0
 
+        @SerializedName("ride_number")
+        var ride_number: String? = null
+
         @SerializedName("total_wait_time")
         var total_wait_time : Int = 0
 

@@ -1,5 +1,6 @@
 package com.fairfareindia.ui.drawer.myrides.pojo
 
+import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -55,6 +56,12 @@ class GetRideResponsePOJO  {
 	}
 
 	inner class DataItem {
+		@SerializedName("ride_number")
+		var ride_number: String? = null
+
+		@SerializedName("driver")
+		var driver: RideDetailModel.Driver? = null
+
 		@SerializedName("dateTime")
 		var dateTime: String? = null
 

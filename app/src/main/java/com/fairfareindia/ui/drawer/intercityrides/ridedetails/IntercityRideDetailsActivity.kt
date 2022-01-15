@@ -154,6 +154,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(actualBaseFare)
             }
 
+            txtRideNumber.text =  getString(R.string.str_ride_id) +" : " + model?.data?.ride_number
             txtEstLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.luggageCharges?.toDouble())
             txtEstAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)
             txtEstRideTime.text = model?.data?.estimatedTrackRide?.totalTime

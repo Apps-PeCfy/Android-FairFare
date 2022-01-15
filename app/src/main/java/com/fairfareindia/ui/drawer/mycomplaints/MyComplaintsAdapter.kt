@@ -65,8 +65,15 @@ class MyComplaintsAdapter(
 
 
         holder.tv_dateandTime!!.text = strformaredDate
-        holder.tv_vahicalName!!.text =
-            complaintList[position].vehicleName + " " + complaintList[position].vehicleNo
+
+
+        if (complaintList[position].driverName.isNullOrEmpty()){
+            holder.tv_vahicalName?.text =  complaintList[position].vehicleName + " " + complaintList[position].vehicleNo
+
+        }else{
+            holder.tv_vahicalName?.text = complaintList[position].driverName + ", " + complaintList[position].vehicleName + " " + complaintList[position].vehicleNo
+
+        }
 
         holder.tv_myCurrentLocation!!.text = complaintList[position].originFullAddress
         holder.destnationAddress!!.text = complaintList[position].destinationFullAddress

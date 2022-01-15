@@ -263,6 +263,7 @@
     <string name="dialog_msg_delete_dipute">तुम्हाला विवाद काढून टाकायचा आहे का?</string>
     <string name="title_dispute_details">विवाद तपशील</string>
     <string name="str_dispute_id">विवाद ID</string>
+    <string name="str_ride_id">राइड ID</string>
     <string name="msg_no_saved_location">तुम्ही अद्याप कोणतीही स्थाने जतन केलेली नाहीत!</string>
     <string name="title_my_rides">माझी राइड </string>
     <string name="msg_no_rides">तुम्ही अजून एकही राइड घेतलेली नाही.</string>

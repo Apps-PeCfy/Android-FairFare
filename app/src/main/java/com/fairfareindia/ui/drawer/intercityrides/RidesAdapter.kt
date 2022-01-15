@@ -74,7 +74,19 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val holder = viewHolder as MyViewHolder
                 val model: GetRideResponsePOJO.DataItem = mList[position]
 
-                holder.txtVehicleName.text = model.vehicleName + " " + model.vehicleNo
+                if (model.driver?.name != null){
+                    holder.txtVehicleName.text = model.driver?.name + ", " + model.vehicleName + " " + model.vehicleNo
+                }else{
+                    holder.txtVehicleName.text = model.vehicleName + " " + model.vehicleNo
+                }
+
+                if (model.ride_number.isNullOrEmpty()){
+                    holder.txtRideNumber.visibility = View.GONE
+                }else{
+                    holder.txtRideNumber.text = model.ride_number
+                    holder.txtRideNumber.visibility = View.VISIBLE
+                }
+
 
                 holder.txtDate.text = AppUtils.changeDateFormat(model.dateTime, "yyyy-MM-dd HH:mm:ss", "dd MMM, h:mm a")
 
@@ -189,6 +201,7 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val txtRateRide: TextView = itemView.findViewById(R.id.txt_rate_ride)
         val txtActualFare: TextView = itemView.findViewById(R.id.txt_total_charges)
         val txtDate: TextView = itemView.findViewById(R.id.txt_date)
+        val txtRideNumber: TextView = itemView.findViewById(R.id.txt_ride_number)
         val txtVehicleName: TextView = itemView.findViewById(R.id.txt_vehicle_name)
         val btnStartRide: Button = itemView.findViewById(R.id.btn_start_ride)
         val imgVehicle: ImageView = itemView.findViewById(R.id.img_vehicle)

@@ -63,8 +63,12 @@ class MyDisPutesAdapter(var context: FragmentActivity?, private val MyDisputsLis
 
 
         holder.tv_dateandTime!!.text = strformaredDate
-        holder.tv_vahicalName!!.text =
-            MyDisputsListList[position].vehicleName + " " + MyDisputsListList[position].vehicleNo
+        if (MyDisputsListList[position].driverName.isNullOrEmpty()){
+            holder.tv_vahicalName?.text =  MyDisputsListList[position].vehicleName + " " + MyDisputsListList[position].vehicleNo
+
+        }else{
+            holder.tv_vahicalName?.text = MyDisputsListList[position].driverName + ", " + MyDisputsListList[position].vehicleName + " " + MyDisputsListList[position].vehicleNo
+        }
 
 
 
