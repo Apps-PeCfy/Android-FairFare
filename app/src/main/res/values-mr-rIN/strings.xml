@@ -421,9 +421,9 @@
     <string name="msg_location_permission">स्थान: कृपया स्थान परवानगी प्रदान करा</string>
     <string name="msg_all_time_location_permission">स्थान: कृपया अचूक पिक-अप आणि ड्रॉप-ऑफ स्थाने, परिसरात ऑटो/टॅक्सींची उपलब्धता आणि ट्रिप संपेपर्यंत राइडचा मागोवा घेण्यासाठी "सर्व वेळ परवानगी द्या" स्थानाची परवानगी द्या.</string>
 
-    <string name="status_booked">Booked</string>
-    <string name="msg_two_way_ride_payment_one">Please pay 1st ride total amount</string>
-    <string name="msg_two_way_ride_payment_two">of 2nd ride. Total</string>
+    <string name="status_booked">बुक केले</string>
+    <string name="msg_two_way_ride_payment_one">कृपया पहिल्या राइडची एकूण रक्कम भरा</string>
+    <string name="msg_two_way_ride_payment_two">2 रा राईड. एकूण</string>
 
 </resources>
 
