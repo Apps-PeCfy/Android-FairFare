@@ -8,12 +8,9 @@ import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.*
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.*
 import android.text.format.DateFormat
 import android.util.Log
@@ -42,11 +39,6 @@ import com.fairfareindia.R
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.LoginActivity
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
-import com.fairfareindia.ui.compareride.CompareRideActivity
-import com.fairfareindia.ui.compareride.CompareRideImplementer
-import com.fairfareindia.ui.compareride.ICompareRidePresenter
-import com.fairfareindia.ui.compareride.ICompareRideView
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.drawer.adapter.DrawerAdapter
 import com.fairfareindia.ui.drawer.contactus.ContactUs
 import com.fairfareindia.ui.drawer.contactus.pojo.ContactUsResponsePojo
@@ -57,7 +49,7 @@ import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetai
 import com.fairfareindia.ui.drawer.myaccount.MyAccountFragment
 import com.fairfareindia.ui.drawer.mycomplaints.MyComplaints
 import com.fairfareindia.ui.drawer.mydisput.MyDisput
-import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
+import com.fairfareindia.ui.drawer.intercityrides.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.notifications.NotificationsFragment
 import com.fairfareindia.ui.drawer.pojo.DrawerPojo
 import com.fairfareindia.ui.drawer.privacypolicy.ContentPage
@@ -102,7 +94,6 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.security.MessageDigest
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -114,9 +105,7 @@ import androidx.cardview.widget.CardView
 
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
-    OnTimeSetListener, OnItemSelectedListener, AdapterView.OnItemClickListener, ICompareRideView,
-    LocationListener {
-    protected var locationManager: LocationManager? = null
+    OnTimeSetListener, OnItemSelectedListener, AdapterView.OnItemClickListener, IHomeView {
 
     protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
 
@@ -145,7 +134,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     var timeSpinner = arrayOf<String?>("Now", "Later")
 
-    // var cityspinner = Array<String?>
     var cityspinner = ArrayList<String>()
     var luggageSpinner = arrayOf<String?>(
         "Luggage", "1 Luggage", "2 Luggage", "3 Luggage", "4 Luggage", "5 Luggage"
@@ -352,7 +340,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     private var cityPojoList: List<GetAllowCityResponse.CitiesItem> = ArrayList()
 
 
-    private var iCompareRidePresenter: ICompareRidePresenter? = null
+    private var iCompareRidePresenter: IHomePresenter? = null
     var token: String? = null
     var deviceID: String? = null
     var PortAir: String? = null
@@ -375,7 +363,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var callOnLocation: String? = null
     var actionNotify: String? = null
 
-    var loc: Location? = null
 
     var progressDialogstart: ProgressDialog? = null
 
@@ -397,14 +384,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         spinnerLang!!.visibility = View.VISIBLE
 
-        if (Constants.IS_OLD_PICK_UP_CODE) {
-            locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-            locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-        } else {
-            // ILOMADEV :- New method for location update
-            initLocationUpdates()
-        }
+        initLocationUpdates()
 
 
         //  appSignatureHelper = AppSignatureHelper(this)
@@ -423,7 +403,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
 
-        iCompareRidePresenter = CompareRideImplementer(this)
+        iCompareRidePresenter = HomeImplementer(this)
 
 
 
@@ -592,25 +572,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             )
             startActivity(browserIntent)
         }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun generateSSHKey(context: Context) {
-        try {
-            val info = context.packageManager.getPackageInfo(
-                context.packageName,
-                PackageManager.GET_SIGNATURES
-            )
-            for (signature in info.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                val hashKey = String(Base64.getEncoder().encode(md.digest()))
-                Log.d("AppLog", "key:$hashKey=")
-            }
-        } catch (e: Exception) {
-            Log.e("AppLog", "error:", e)
-        }
-
     }
 
 
@@ -2080,44 +2041,23 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
 
 
-                if (Constants.IS_OLD_LOCAL) {
-                    iCompareRidePresenter!!.getCompareRideData(
-                        token,
-                        replacedistance,
-                        cityID,
-                        sourcePlaceID,
-                        DestinationPlaceID,
-                        replacebags,
-                        airportYesOrNO,
-                        formaredDate,
-                        CurrentPlaceID!!,
-                        legDuration,
-                        SourceLat,
-                        SourceLong,
-                        DestinationLat,
-                        DestinationLong
-                    )
-                } else {
-
-                    iCompareRidePresenter?.getCompareRideLocalNew(
-                        token,
-                        replacedistance,
-                        estTime,
-                        legDuration,
-                        Constants.TYPE_LOCAL,
-                        cityID,
-                        sourcePlaceID,
-                        DestinationPlaceID,
-                        replacebags,
-                        Constants.ONE_WAY_FLAG,
-                        formaredDate,
-                        SourceLat,
-                        SourceLong,
-                        DestinationLat,
-                        DestinationLong
-                    )
-
-                }
+                iCompareRidePresenter?.getCompareRideLocalNew(
+                    token,
+                    replacedistance,
+                    estTime,
+                    legDuration,
+                    Constants.TYPE_LOCAL,
+                    cityID,
+                    sourcePlaceID,
+                    DestinationPlaceID,
+                    replacebags,
+                    Constants.ONE_WAY_FLAG,
+                    formaredDate,
+                    SourceLat,
+                    SourceLong,
+                    DestinationLat,
+                    DestinationLong
+                )
 
 
             } else {
@@ -2220,42 +2160,23 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 CurrentPlaceID = PlaceIDCurrent[0]!!.placeId
 
 
-                if (Constants.IS_OLD_LOCAL) {
-                    iCompareRidePresenter!!.getCompareRideData(
-                        token,
-                        replacedistance,
-                        cityID,
-                        sourcePlaceID,
-                        DestinationPlaceID,
-                        replacebags,
-                        airportYesOrNO,
-                        formaredDate,
-                        CurrentPlaceID!!,
-                        estTime,
-                        SourceLat,
-                        SourceLong,
-                        DestinationLat,
-                        DestinationLong
-                    )
-                } else {
-                    iCompareRidePresenter?.getCompareRideLocalNew(
-                        token,
-                        replacedistance,
-                        estTime,
-                        legDuration,
-                        Constants.TYPE_LOCAL,
-                        cityID,
-                        sourcePlaceID,
-                        DestinationPlaceID,
-                        replacebags,
-                        Constants.ONE_WAY_FLAG,
-                        formaredDate,
-                        SourceLat,
-                        SourceLong,
-                        DestinationLat,
-                        DestinationLong
-                    )
-                }
+                iCompareRidePresenter?.getCompareRideLocalNew(
+                    token,
+                    replacedistance,
+                    estTime,
+                    legDuration,
+                    Constants.TYPE_LOCAL,
+                    cityID,
+                    sourcePlaceID,
+                    DestinationPlaceID,
+                    replacebags,
+                    Constants.ONE_WAY_FLAG,
+                    formaredDate,
+                    SourceLat,
+                    SourceLong,
+                    DestinationLat,
+                    DestinationLong
+                )
 
 
             } else {
@@ -2555,29 +2476,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     }
 
-    override fun onSuccess(info: CompareRideResponsePOJO?) {
-
-        val intent = Intent(applicationContext, CompareRideActivity::class.java)
-        intent.putExtra("SourceLat", SourceLat)
-        intent.putExtra("SourceLong", SourceLong)
-        intent.putExtra("DestinationLat", DestinationLat)
-        intent.putExtra("DestinationLong", DestinationLong)
-        intent.putExtra("Distance", estDistance)
-        intent.putExtra("CITY_ID", cityID)
-        intent.putExtra("CITY_NAME", city_Name)
-        intent.putExtra("EstTime", estTime)
-        intent.putExtra("Liggage", spinnerLuggagetxt)
-        intent.putExtra("TimeSpinner", spinnertxt)
-        intent.putExtra("Airport", keyAirport)
-        intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
-        intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
-        intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
-        intent.putExtra("currentFormatedDate", formaredDate)
-        intent.putExtra("currentPlaceId", CurrentPlaceID)
-        intent.putExtra("MyPOJOClass", info)
-        startActivity(intent)
-
-    }
 
     override fun onNewCompareRideLocalSuccess(info: InterCityCompareRideModel?) {
         val intent = Intent(applicationContext, LocalCompareRideActivity::class.java)
@@ -2625,45 +2523,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     override fun onFailure(appErrorMessage: String?) {
 
         Toast.makeText(this@HomeActivity, appErrorMessage, Toast.LENGTH_LONG).show()
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun onLocationChanged(location: Location) {
-
-        Log.d("sdsdsdswnwe", "onLocationChanged")
-
-        currentLatitude = location!!.latitude
-        currentLongitude = location!!.longitude
-
-
-        if (callOnLocation.equals("first")) {
-            if (currentLatitude != 0.0 && currentLatitude != null) {
-
-                mapAndLocationReady()
-                cityPojoList = preferencesManager!!.getCityList()
-                if (cityPojoList != null && cityPojoList.size > 0) {
-                    setCitySpinner()
-
-
-                } else {
-                    getCity()
-                }
-
-                progressDialogstart!!.dismiss()
-                mainRelativeLayout!!.visibility = View.VISIBLE
-
-
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.msg_fetching_current_location),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-        }
-
-
     }
 
     private fun updateCameraBearing(mMap: GoogleMap?, bering: Float) {
@@ -2743,18 +2602,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 )
             }
         }
-    }
-
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-
-    }
-
-
-    override fun onProviderEnabled(provider: String) {
-    }
-
-    override fun onProviderDisabled(provider: String) {
-
     }
 
     private fun getAddressFromLocation(): String? {

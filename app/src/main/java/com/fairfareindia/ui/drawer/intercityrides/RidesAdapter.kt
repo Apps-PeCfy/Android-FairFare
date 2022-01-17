@@ -1,7 +1,6 @@
 package com.fairfareindia.ui.drawer.intercityrides
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.R
-import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.utils.AppUtils
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.ProjectUtilities

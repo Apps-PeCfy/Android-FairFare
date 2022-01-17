@@ -3,23 +3,19 @@ package com.fairfareindia.networking
 //created by kiran.p
 
 import com.fairfareindia.ui.Login.pojo.LoginResponsepojo
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.disputs.pojo.DisputesReasonResponsePOJO
 import com.fairfareindia.ui.disputs.pojo.SaveDisputResponsePOJO
 import com.fairfareindia.ui.drawer.contactus.pojo.ContactUsResponsePojo
 import com.fairfareindia.ui.drawer.faq.pojo.FAQResponsePOJO
 import com.fairfareindia.ui.drawer.intercitydispute.DisputeDetailModel
 import com.fairfareindia.ui.drawer.myaccount.pojo.UpdateProfileResponsePOJO
-import com.fairfareindia.ui.drawer.mydisput.disputDetail.pojo.DisputDetailResponsePOJO
 import com.fairfareindia.ui.drawer.mydisput.pojo.DeleteDisputResponsePOJO
 import com.fairfareindia.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
-import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
-import com.fairfareindia.ui.drawer.myrides.ridedetails.RideDetailsResponsePOJO
+import com.fairfareindia.ui.drawer.intercityrides.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.notifications.NotificationModel
 import com.fairfareindia.ui.drawer.privacypolicy.ContentResponsePOJO
 import com.fairfareindia.ui.drawer.ratecard.pojo.RateCardResponsePOJO
 import com.fairfareindia.ui.drawer.setting.pojo.SettingResponsePojo
-import com.fairfareindia.ui.endrides.pojo.ResponseEnd
 import com.fairfareindia.ui.home.pojo.DeleteSaveDataResponsePOJO
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.GetSaveLocationResponsePOJO
@@ -27,19 +23,14 @@ import com.fairfareindia.ui.home.pojo.SaveLocationResponsePojo
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
+import com.fairfareindia.ui.intercitytrackride.NearByPlacesPOJO.NearByResponse
 import com.fairfareindia.ui.intercityviewride.BookingRequestModel
 import com.fairfareindia.ui.intercityviewride.ViewRideModel
 import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
-import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.NearByResponse
-import com.fairfareindia.ui.trackRide.currentFare.CurrentFareeResponse
-import com.fairfareindia.ui.trackRide.distMatrixPOJP.DistanceMatrixResponse
-import com.fairfareindia.ui.trackRide.snaptoRoad.SnapTORoadResponse
-import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 import java.util.*
@@ -127,25 +118,6 @@ interface NetworkService {
         @Field("location_id") location_id: String?
     ): Call<DeleteSaveDataResponsePOJO?>?
 
-    @FormUrlEncoded
-    @POST("compareRideLocal")
-    fun getCompareRide(
-        @Header("Authorization") header: String?,
-        @Field("distance") distance: String?,
-        @Field("city_id") city_id: String?,
-        @Field("origin_place_id") origin_place_id: String?,
-        @Field("destination_place_id") destination_place_id: String?,
-        @Field("luggage") luggage: String?,
-        @Field("airport") airport: String?,
-        @Field("schedule_datetime") schedule_datetime: String?,
-        @Field("current_place_id") current_place_id: String?,
-        @Field("duration") duration: String?,
-        @Field("permit_type") permitType: String?,
-        @Field("origin_latitude") origin_latitude: String?,
-        @Field("origin_longitude") origin_longitude: String?,
-        @Field("destination_latitude") destination_latitude: String?,
-        @Field("destination_longitude") destination_longitude: String?
-    ): Call<CompareRideResponsePOJO?>?
 
     @FormUrlEncoded
     @POST("compareRideLocalV1")
@@ -292,157 +264,6 @@ interface NetworkService {
     ): Call<ViewRideModel?>?
 
 
-    @FormUrlEncoded
-    @POST("scheduleRide")
-    fun schduleRide(
-        @Header("Authorization") header: String?,
-        @Field("vehicle_rate_card_id") vehicle_rate_card_id: String?,
-        @Field("luggage_quantity") luggage_quantity: String?,
-        @Field("schedule_date") schedule_date: String?,
-        @Field("origin_place_id") origin_place_id: String?,
-        @Field("destination_place_id") destination_place_id: String?,
-        @Field("overview_polyline") overview_polyline: String?,
-        @Field("distance") distance: String?,
-        @Field("duration") duration: String?,
-        @Field("city_id") city_id: String?,
-        @Field("airport_rate_card_id") airport_rate_card_id: String?,
-        @Field("origin_place_lat") origin_place_lat: String?,
-        @Field("origin_place_long") origin_place_long: String?,
-        @Field("destination_place_lat") destination_place_lat: String?,
-        @Field("destination_place_long") destination_place_long: String?,
-        @Field("origin_full_address") origin_full_address: String?,
-        @Field("destination_full_address") destination_full_address: String?
-
-
-    ): Call<ScheduleRideResponsePOJO?>?
-
-
-    @FormUrlEncoded
-    @POST("startRide")
-    fun startRide(
-
-
-        @Header("Authorization") header: String?,
-        @Field("ride_id") id: String?,
-        @Field("vehicle_rate_card_id") vehicle_rate_card_id: String?,
-        @Field("luggage_quantity") luggage_quantity: String?,
-        @Field("schedule_date") schedule_date: String?,
-        @Field("origin_place_id") origin_place_id: String?,
-        @Field("destination_place_id") destination_place_id: String?,
-        @Field("overview_polyline") overview_polyline: String?,
-        @Field("distance") distance: String?,
-        @Field("duration") duration: String?,
-        @Field("city_id") city_id: String?,
-        @Field("airport_rate_card_id") airport_rate_card_id: String?,
-        @Field("driver_name") driver_name: String?,
-        @Field("vehicle_no") vehicle_no: String?,
-        @Field("badge_no") badge_no: String?,
-        @Field("start_meter_reading") start_meter_reading: String?,
-        @Field("origin_place_lat") origin_place_lat: String?,
-        @Field("origin_place_long") origin_place_long: String?,
-        @Field("destination_place_lat") destination_place_lat: String?,
-        @Field("destination_place_long") destination_place_long: String?,
-        @Field("origin_full_address") origin_full_address: String?,
-        @Field("destination_full_address") destination_full_address: String?,
-        @Field("night_allow") night_allow: String?,
-        @Body body: String?
-    ): Call<ScheduleRideResponsePOJO?>?
-
-
-    @Multipart
-    @POST("startRide")
-    fun uploadstartRide(
-        @Header("Authorization") header: String?,
-        @Part file: Array<MultipartBody.Part?>,
-        @PartMap map: HashMap<String?, String?>?,
-        @PartMap map1: HashMap<String?, Int?>,
-        @PartMap map2: HashMap<String?, Float?>,
-        @PartMap map3: HashMap<String?, String?>
-
-    ): Call<ScheduleRideResponsePOJO?>?
-
-
-    @GET("api/place/nearbysearch/json?sensor=true&key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-    fun getNearbyPlaces(
-        @Query("location") location: String?,
-        @Query("radius") radius: Int
-    ): Call<NearByResponse?>?
-
-    @GET("https://maps.googleapis.com/maps/api/distancematrix/json?key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-    fun distanceMatrix(
-        @Query("origins") origins: String?,
-        @Query("destinations") destinations: String
-    ): Call<DistanceMatrixResponse?>?
-
-
-    @GET("https://roads.googleapis.com/v1/snapToRoads?interpolate=true&key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
-    fun getsnaPTOROAD(
-        @Query("path") location: String?
-    ): Call<SnapTORoadResponse?>?
-
-
-    @POST("currentFare")
-    fun getCurrentFare(
-        @Header("Authorization") header: String?,
-        @Query("ride_id") ride_id: Int,
-        @Query("distance") distance: String?,
-        @Query("waiting_time") wating_time: String?
-    ): Call<CurrentFareeResponse?>?
-
-    @POST("currentFare")
-    fun getCurrentFareWithoutID(
-        @Header("Authorization") header: String?,
-        @Query("distance") distance: String?,
-        @Query("vehicle_rate_card_id") vehicle_rate_card_id: String?,
-        @Query("airport_rate_card_id") airport_rate_card_id: String?,
-        @Query("luggage_quantity") luggage_quantity: String?
-    ): Call<CurrentFareeResponse?>?
-
-
-    @POST("endRide")
-    fun getEndRide(
-        @Header("Authorization") header: String?,
-        @Query("ride_id") ride_id: JSONObject?
-
-
-    ): Call<ResponseEnd>?
-
-
-    @POST("example/api/order")
-    fun postOrder(@Query("data") jsonArray: JSONArray?): Call<JSONArray?>?
-
-    @Headers("Content-Type: application/json")
-    @POST("endRide")
-    fun enndRide(
-        @Header("Authorization") header: String?,
-        @Body body: String?
-    ): Call<ResponseEnd?>?
-
-
-    @Headers("Content-Type: application/json")
-    @POST("startRide")
-    fun startRidear(
-        @Header("Authorization") header: String?,
-        @Body body: String?
-    ): Call<ScheduleRideResponsePOJO?>?
-
-
-    @Headers("Content-Type: application/json")
-    @POST("scheduleRide")
-    fun schduleRidejObj(
-        @Header("Authorization") header: String?,
-        @Body body: String?
-    ): Call<ScheduleRideResponsePOJO?>?
-
-
-    @Headers("Content-Type: application/json")
-    @POST("log")
-    fun logRide(
-        @Header("Authorization") header: String?,
-        @Body body: String?
-    ): Call<DeleteDisputResponsePOJO?>?
-
-
     @GET("ridesList")
     fun getMyRides(
         @Header("Authorization") header: String?,
@@ -558,18 +379,6 @@ interface NetworkService {
     ): Call<UpdateProfileResponsePOJO?>?
 
 
-    @GET("detailDispute")
-    fun getDisputeDetail(
-        @Header("Authorization") header: String?,
-        @Query("dispute_id") dispute_id: String?
-    ): Call<DisputDetailResponsePOJO?>?
-
-    @POST("detailRide")
-    fun getDetailRide(
-        @Header("Authorization") header: String?,
-        @Query("ride_id") dispute_id: String?
-    ): Call<RideDetailsResponsePOJO?>?
-
     @POST("rideDetailsNew")
     fun getRideDetails(
         @Header("Authorization") header: String?,
@@ -683,11 +492,10 @@ interface NetworkService {
     ): Call<GetAllowCityResponse?>?
 
 
-    @Headers("Content-Type: application/json")
-    @POST("route/upload")
-    fun uploadCSVTollGuru(
-        @Header("x-api-key") header: String?,
-        @Body file: RequestBody?
-    ): Call<ResponseBody?>?
+    @GET("api/place/nearbysearch/json?sensor=true&key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+    fun getNearbyPlaces(
+        @Query("location") location: String?,
+        @Query("radius") radius: Int
+    ): Call<NearByResponse?>?
 
 }

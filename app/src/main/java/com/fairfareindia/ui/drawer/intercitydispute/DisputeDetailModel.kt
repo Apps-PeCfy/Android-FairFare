@@ -1,6 +1,5 @@
 package com.fairfareindia.ui.drawer.intercitydispute
 
-import com.fairfareindia.ui.drawer.mydisput.disputDetail.pojo.DisputDetailResponsePOJO
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.google.gson.annotations.SerializedName
 
@@ -61,7 +60,7 @@ class DisputeDetailModel {
         var reasonId = 0
 
         @SerializedName("reasons")
-        val reasons: List<DisputDetailResponsePOJO.ReasonsItem>? = null
+        val reasons: List<ReasonsItem>? = null
 
         @SerializedName("badgeNo")
         var badgeNo: String? = null
@@ -108,6 +107,38 @@ class DisputeDetailModel {
 
         @SerializedName("fare")
         var fare: String? = null
+    }
+
+    class ReasonsItem {
+        @SerializedName("reason")
+        var reason: String? = null
+
+        @SerializedName("updated_at")
+        var updatedAt: String? = null
+
+        @SerializedName("description")
+        var description: Any? = null
+
+        @SerializedName("created_at")
+        var createdAt: String? = null
+
+
+        @SerializedName("id")
+        var id = 0
+
+        @SerializedName("deleted_at")
+        var deletedAt: Any? = null
+
+        override fun toString(): String {
+            return "ReasonsItem{" +
+                    "reason = '" + reason + '\'' +
+                    ",updated_at = '" + updatedAt + '\'' +
+                    ",description = '" + description + '\'' +
+                    ",created_at = '" + createdAt + '\'' +
+                    ",id = '" + id + '\'' +
+                    ",deleted_at = '" + deletedAt + '\'' +
+                    "}"
+        }
     }
 
 

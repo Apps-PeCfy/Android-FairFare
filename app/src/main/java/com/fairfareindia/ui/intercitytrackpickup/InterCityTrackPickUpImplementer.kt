@@ -2,7 +2,7 @@ package com.fairfareindia.ui.intercitytrackpickup
 
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
-import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
+import com.fairfareindia.ui.drawer.intercityrides.GetRideResponsePOJO
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback

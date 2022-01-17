@@ -23,7 +23,7 @@ import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.common.CommonMessageDialog
 import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
 import com.fairfareindia.ui.drawer.intercityrides.ridedetails.TollInfoDialog
-import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
+import com.fairfareindia.ui.drawer.intercityrides.GetRideResponsePOJO
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser

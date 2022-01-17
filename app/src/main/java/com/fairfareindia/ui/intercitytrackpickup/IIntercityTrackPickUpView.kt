@@ -2,7 +2,7 @@ package com.fairfareindia.ui.intercitytrackpickup
 
 import com.fairfareindia.base.IBaseView
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
-import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
+import com.fairfareindia.ui.drawer.intercityrides.GetRideResponsePOJO
 
 interface IIntercityTrackPickUpView : IBaseView {
     fun getRideDetails(model: RideDetailModel?)

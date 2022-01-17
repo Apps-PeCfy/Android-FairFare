@@ -68,18 +68,11 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".ui.drawer.myrides.ridedetails.MyRideDetailsActivity" />
         <activity android:name=".ui.privacypolicy.PrivacyPolicyActivity" />
         <activity android:name=".ui.test.test" />
         <activity android:name=".ui.ridereview.RideReviewActivity" />
-        <activity android:name=".ui.drawer.mycomplaints.complaintDetails.ComplaintsDetailsActivity" />
-        <activity android:name=".ui.drawer.mydisput.disputDetail.DisputDetailActivity" />
-        <activity android:name=".ui.ridedetails.RideDetailsActivity" />
         <activity android:name=".ui.disputs.RegisterDisputActivity" />
-        <activity android:name=".ui.endrides.EndRidesActivity" />
-        <activity android:name=".ui.trackRide.TrackRideActivity" />
-        <activity android:name=".ui.viewride.ViewRideActivity" />
-        <activity android:name=".ui.compareride.CompareRideActivity" />
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait" />

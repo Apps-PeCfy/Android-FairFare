@@ -18,13 +18,11 @@ import com.fairfareindia.ui.drawer.intercityrides.ridedetails.TollInfoDialog
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercitycompareride.InterCityCompareRideModel
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
-import com.fairfareindia.ui.viewride.ViewRideTollsPopUp
 import com.fairfareindia.utils.*
 import com.google.gson.Gson
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
-import org.json.JSONArray
 import org.json.JSONObject
 
 class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,

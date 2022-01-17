@@ -18,12 +18,10 @@ import com.fairfareindia.databinding.FragmentMyRidesBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.common.CommonMessageDialog
 import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
-import com.fairfareindia.ui.drawer.myrides.pojo.GetRideResponsePOJO
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercitytrackpickup.TrackPickUpActivity
 import com.fairfareindia.ui.intercitytrackride.InterCityTrackRideActivity
 import com.fairfareindia.ui.ridereview.RideReviewActivity
-import com.fairfareindia.ui.viewride.pojo.ScheduleRideResponsePOJO
 import com.fairfareindia.utils.*
 
 class RidesFragment : Fragment(), IRidesView{
@@ -235,9 +233,6 @@ class RidesFragment : Fragment(), IRidesView{
     }
 
 
-
-    override fun schduleRideSuccess(scheduleRideResponsePOJO: ScheduleRideResponsePOJO?) {
-    }
 
     override fun validationError(validationResponse: ValidationResponse?) {
         Toast.makeText(

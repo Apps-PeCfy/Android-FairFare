@@ -8,14 +8,12 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.fairfareindia.R
 import com.fairfareindia.databinding.ActivityInterCityBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
-import com.fairfareindia.ui.compareride.pojo.CompareRideResponsePOJO
 import com.fairfareindia.ui.home.PickUpDropActivity
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.ui.home.pojo.PickUpLocationModel

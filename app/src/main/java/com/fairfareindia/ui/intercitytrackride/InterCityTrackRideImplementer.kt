@@ -1,12 +1,9 @@
 package com.fairfareindia.ui.intercitytrackride
 
-import android.view.View
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
-import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.NearByResponse
+import com.fairfareindia.ui.intercitytrackride.NearByPlacesPOJO.NearByResponse
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback

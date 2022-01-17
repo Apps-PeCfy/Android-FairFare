@@ -36,9 +36,8 @@ import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.disputs.pojo.DisputesReasonResponsePOJO
 import com.fairfareindia.ui.disputs.pojo.SaveDisputResponsePOJO
 import com.fairfareindia.ui.home.HomeActivity
-import com.fairfareindia.ui.ridedetails.GridSpacingItemDecoration
-import com.fairfareindia.ui.ridedetails.ImageModel
-import com.fairfareindia.ui.ridedetails.SelectedImageAdapter
+import com.fairfareindia.ui.drawer.mydisput.ImageModel
+import com.fairfareindia.ui.drawer.mydisput.SelectedImageAdapter
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PhotoSelector
 import com.fairfareindia.utils.PreferencesManager
@@ -314,15 +313,7 @@ class RegisterDisputActivity : AppCompatActivity() {
         } )
         val spanCount = 2
         selectedImageRecyclerView!!.layoutManager = GridLayoutManager(this, spanCount)
-        val spacing = 15
-        val includeEdge = true
-        selectedImageRecyclerView!!.addItemDecoration(
-            GridSpacingItemDecoration(
-                spanCount,
-                spacing,
-                includeEdge
-            )
-        )
+
         selectedImageRecyclerView!!.adapter = selectedImageAdapter
 
     }

@@ -25,8 +25,8 @@ import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.intercity.GoogleDistanceModel
 import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
+import com.fairfareindia.ui.intercitytrackride.NearByPlacesPOJO.NearByResponse
 import com.fairfareindia.ui.placeDirection.DirectionsJSONParser
-import com.fairfareindia.ui.trackRide.NearByPlacesPOJO.NearByResponse
 import com.fairfareindia.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
