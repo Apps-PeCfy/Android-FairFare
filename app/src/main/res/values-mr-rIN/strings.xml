@@ -1,5 +1,5 @@
 <resources>
-    <!--Non Changeble Strings-->
+    <!--Non Changeable Strings-->
 
     <string name="str_english">English</string>
     <string name="str_hindi">हिंदी</string>
@@ -10,7 +10,7 @@
 
 
 
-    <string name="app_name">FairFareIndia</string>
+    <string name="app_name">फेयरफेयरइंडिया</string>
     <string name="logIn">साइन-इन करा </string>
     <string name="continuetxt">तुम्ही फेअरफेअरशी सहमत असल्यास सुरू ठेवा</string>
     <string name="privacypolicy">गोपनीयता नीति</string>
@@ -27,13 +27,13 @@
     <string name="fb_login_protocol_scheme">fb344567333332692</string>
     <string name="facebook_app_id">344567333332692</string>
     <string name="underlinesignup"><u>साइन-अप करा </u></string>
-    <string name="title_activity_home">Map</string>
+    <string name="title_activity_home">नक्शा</string>
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="navigation_drawer_open">नेव्हिगेशन ड्रॉवर उघडा</string>
+    <string name="navigation_drawer_close">नेव्हिगेशन ड्रॉवर बंद करा</string>
+    <string name="nav_header_title">Android स्टुडिओ</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_desc">नेव्हिगेशन शीर्षलेख</string>
     <string name="action_settings">सेटिंग्स </string>
 
     <string name="drawer_open"> उघडा </string>
@@ -69,7 +69,7 @@
 
     </string-array>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">हॅलो रिक्त तुकडा</string>
     <string name="save_dispute">विवाद जतन करा</string>
     <string name="resendotp">दुसरा कोड पुन्हा पाठवा</string>
     <string name="gender_text">फेअरफेअर हे ऐप वापरणाऱ्या प्रवाशांच्या गरजा आणि सुरक्षितता आवश्यकता समजून घेण्यासाठी लिंग कॅप्चर करते.</string>
@@ -263,7 +263,6 @@
     <string name="dialog_msg_delete_dipute">तुम्हाला विवाद काढून टाकायचा आहे का?</string>
     <string name="title_dispute_details">विवाद तपशील</string>
     <string name="str_dispute_id">विवाद ID</string>
-    <string name="str_ride_id">राइड ID</string>
     <string name="msg_no_saved_location">तुम्ही अद्याप कोणतीही स्थाने जतन केलेली नाहीत!</string>
     <string name="title_my_rides">माझी राइड </string>
     <string name="msg_no_rides">तुम्ही अजून एकही राइड घेतलेली नाही.</string>
