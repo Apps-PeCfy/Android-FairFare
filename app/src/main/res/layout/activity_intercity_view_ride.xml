@@ -726,6 +726,7 @@
                             android:fontFamily="@font/notosansjp_regular"
                             android:text="@string/str_pay_offline"
                             android:textColor="@color/colorText"
+                            android:buttonTint="@color/colorText"
                             android:textSize="@dimen/text_14sp" />
 
                         <RadioButton
@@ -736,6 +737,7 @@
                             android:fontFamily="@font/notosansjp_regular"
                             android:text="@string/str_pay_online"
                             android:textColor="@color/colorText"
+                            android:buttonTint="@color/colorText"
                             android:textSize="@dimen/text_14sp" />
 
                     </RadioGroup>

@@ -7,6 +7,8 @@
     <string name="str_eng_code">en-gb</string>
     <string name="str_hindi_code">hi</string>
     <string name="str_marathi_code">mr</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU</string>
+
 
 
 

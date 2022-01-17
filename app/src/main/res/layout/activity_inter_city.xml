@@ -51,6 +51,7 @@
                         android:fontFamily="@font/notosansjp_regular"
                         android:textSize="@dimen/text_14sp"
                         android:textColor="@color/colorText"
+                        android:buttonTint="@color/colorText"
                         android:text="@string/str_one_way"
                         android:checked="true"/>
 
@@ -62,6 +63,7 @@
                         android:fontFamily="@font/notosansjp_regular"
                         android:textSize="@dimen/text_14sp"
                         android:textColor="@color/colorText"
+                        android:buttonTint="@color/colorText"
                         android:text="@string/str_round_trip"/>
 
                 </RadioGroup>
