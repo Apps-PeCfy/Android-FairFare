@@ -279,7 +279,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                 if (fromCityList.isNullOrEmpty()) {
                     iInterCityPresenter?.getFromInterCities(token)
                 } else {
-                    openCitySelectionDialog(getString(R.string.title_select_from_city), fromCityList)
+                    openCitySelectionDialog(getString(R.string.title_select_from_city), fromCityList, edtFromCity)
                 }
 
             }
@@ -292,7 +292,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
                     if (toCityList.isNullOrEmpty()) {
                         iInterCityPresenter?.getToInterCities(token, fromCityID)
                     } else {
-                        openCitySelectionDialog(getString(R.string.title_select_to_city), toCityList)
+                        openCitySelectionDialog(getString(R.string.title_select_to_city), toCityList, edtToCity)
                     }
                 }
             }
@@ -302,7 +302,8 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
 
     private fun openCitySelectionDialog(
         title: String,
-        cityList: ArrayList<GetAllowCityResponse.CitiesItem>
+        cityList: ArrayList<GetAllowCityResponse.CitiesItem>,
+        edtCity: EditText
     ) {
         citySelectionDialog = CitySelectionDialog(
             context,
@@ -311,7 +312,7 @@ class InterCityActivity : AppCompatActivity(), IIntercityView {
             object : CitySelectionDialog.SelectionDialogInterface {
                 override fun onItemSelected(model: GetAllowCityResponse.CitiesItem?) {
                     citySelectionDialog?.dismiss()
-                    if (title == getString(R.string.title_select_from_city)) {
+                    if (edtCity == binding.edtFromCity) {
                         binding.edtFromCity.setText(model?.name)
                         fromCityID = model?.id.toString()
                         iInterCityPresenter?.getToInterCities(token, fromCityID)

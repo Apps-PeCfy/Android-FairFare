@@ -58,6 +58,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
 
     var driverLat: String? = null
     var driverLong: String? = null
+    private var cancellationFees: String? = null
 
     private var sourceMarker: Marker? = null
     private var myMarker: Marker? = null
@@ -151,9 +152,15 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
 
 
     private fun openConfirmationDialog() {
+        if (model?.data?.permitType == Constants.TYPE_INTERCITY){
+            cancellationFees = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.CANCELLATION_FEES_INTERCITY)
+        }else{
+            cancellationFees = AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.CANCELLATION_FEES_LOCAL)
+        }
+        var message = getString(R.string.str_cancel_ride_message).replace("100", cancellationFees!!, true)
         commonMessageDialog = CommonMessageDialog(
             context,
-            getString(R.string.str_cancel_ride_message),
+            message,
             getString(R.string.btn_cancel_not),
             getString(R.string.btn_proceed),
             object : CommonMessageDialog.CommonMessageDialogInterface {

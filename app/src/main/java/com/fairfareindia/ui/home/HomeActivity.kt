@@ -11,6 +11,7 @@ import android.content.*
 import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
+import android.net.Uri
 import android.os.*
 import android.text.format.DateFormat
 import android.util.Log
@@ -23,19 +24,15 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fairfareindia.BuildConfig
 import com.fairfareindia.R
+import com.fairfareindia.databinding.ActivityHomeBinding
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.LoginActivity
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
@@ -44,12 +41,12 @@ import com.fairfareindia.ui.drawer.contactus.ContactUs
 import com.fairfareindia.ui.drawer.contactus.pojo.ContactUsResponsePojo
 import com.fairfareindia.ui.drawer.covid19.Covid
 import com.fairfareindia.ui.drawer.faq.FAQ
+import com.fairfareindia.ui.drawer.intercityrides.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.intercityrides.RidesFragment
 import com.fairfareindia.ui.drawer.intercityrides.ridedetails.IntercityRideDetailsActivity
 import com.fairfareindia.ui.drawer.myaccount.MyAccountFragment
 import com.fairfareindia.ui.drawer.mycomplaints.MyComplaints
 import com.fairfareindia.ui.drawer.mydisput.MyDisput
-import com.fairfareindia.ui.drawer.intercityrides.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.notifications.NotificationsFragment
 import com.fairfareindia.ui.drawer.pojo.DrawerPojo
 import com.fairfareindia.ui.drawer.privacypolicy.ContentPage
@@ -98,9 +95,6 @@ import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import android.content.Intent
-import android.net.Uri
-import androidx.cardview.widget.CardView
 
 
 @Suppress("DEPRECATION")
@@ -108,6 +102,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     OnTimeSetListener, OnItemSelectedListener, AdapterView.OnItemClickListener, IHomeView {
 
     protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
+
+    lateinit var binding: ActivityHomeBinding
+    private var context: Context = this
 
     var currentLatitude = 0.0
     var currentLongitude = 0.0
@@ -139,162 +136,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         "Luggage", "1 Luggage", "2 Luggage", "3 Luggage", "4 Luggage", "5 Luggage"
     )
 
-    @JvmField
-    @BindView(R.id.drawer_layout)
-    var mDrawerLayout: DrawerLayout? = null
-
-    @JvmField
-    @BindView(R.id.btnCompareRide)
-    var btnCompareRide: Button? = null
-
-    @JvmField
-    @BindView(R.id.btn_track_ride)
-    var btnTrackRide: Button? = null
-
-    @JvmField
-    @BindView(R.id.crd_pune_metro)
-    var crdPuneMetro: CardView? = null
-
-
-
-    @JvmField
-    @BindView(R.id.add)
-    var add: Button? = null
-
-    @JvmField
-    @BindView(R.id.rlRideScheduled)
-    var rlRideScheduled: RelativeLayout? = null
-
-    @JvmField
-    @BindView(R.id.reestimateDateandTime)
-    var reestimateDateandTime: RelativeLayout? = null
-
-    @JvmField
-    @BindView(R.id.spinner_time)
-    var spinner_time: Spinner? = null
-
-    @JvmField
-    @BindView(R.id.spinnerLang)
-    var spinnerLang: Spinner? = null
-
-    @JvmField
-    @BindView(R.id.spinner_Luggage)
-    var spinner_Luggage: Spinner? = null
-
-    @JvmField
-    @BindView(R.id.toolbar_home)
-    var toolbar: Toolbar? = null
-
-
-    @JvmField
-    @BindView(R.id.tv_myDropUpLocation)
-    var myDropUpLocation: TextView? = null
-
-    @JvmField
-    @BindView(R.id.tv_RideScheduled)
-    var tv_RideScheduled: TextView? = null
-
-
-    @JvmField
-    @BindView(R.id.llhideview)
-    var llhideview: LinearLayout? = null
-
-    @JvmField
-    @BindView(R.id.ll_active_ride)
-    var llActiveRide: LinearLayout? = null
-
-    @JvmField
-    @BindView(R.id.homeMain)
-    var homeMain: RelativeLayout? = null
-
-
-    @JvmField
-    @BindView(R.id.tvhideShow)
-    var tvhideShow: RelativeLayout? = null
-
-    @JvmField
-    @BindView(R.id.lvDrawer)
-    var lvDrawer: ListView? = null
-
-    @JvmField
-    @BindView(R.id.tv_myCurrentLocation)
-    var myCurrentLocation: TextView? = null
-
-    @JvmField
-    @BindView(R.id.tvEstTime)
-    var tvEstTime: TextView? = null
-
-    @JvmField
-    @BindView(R.id.logoLayout)
-    var logoLayout: RoundedImageView? = null
-
-    @JvmField
-    @BindView(R.id.tvUserName)
-    var tvUserName: TextView? = null
-
-    @JvmField
-    @BindView(R.id.tvEmailAddress)
-    var tvEmailAddress: TextView? = null
-
-    @JvmField
-    @BindView(R.id.tvUserLocation)
-    var tvUserLocation: TextView? = null
-
-    @JvmField
-    @BindView(R.id.tvProfession)
-    var tvProfession: TextView? = null
-
-    @JvmField
-    @BindView(R.id.btnLogout)
-    var btnLogout: TextView? = null
-
-    @JvmField
-    @BindView(R.id.mainRelativeLayout)
-    var mainRelativeLayout: RelativeLayout? = null
-
-    @JvmField
-    @BindView(R.id.img_vehicle)
-    var img_vehicle: ImageView? = null
-
-    @JvmField
-    @BindView(R.id.txt_vehicle_name)
-    var txt_vehicle_name: TextView? = null
-
-    @JvmField
-    @BindView(R.id.txt_way_flag)
-    var txt_way_flag: TextView? = null
-
-    @JvmField
-    @BindView(R.id.txt_date_time)
-    var txt_date_time: TextView? = null
-
-    @JvmField
-    @BindView(R.id.txt_amount)
-    var txt_amount: TextView? = null
-
-    @JvmField
-    @BindView(R.id.txt_distance_time)
-    var txt_distance_time: TextView? = null
-
-    @JvmField
-    @BindView(R.id.txt_source_address)
-    var txtSourceAddress: TextView? = null
-
-    @JvmField
-    @BindView(R.id.txt_destination_address)
-    var txtDestinationAddress: TextView? = null
-
-    @JvmField
-    @BindView(R.id.btn_intercity)
-    var btnIntercity: Button? = null
-
-
-
-
-
-    @JvmField
-    @BindView(R.id.tvEstDistance)
-    var tvEstDistance: TextView? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var mMap: GoogleMap? = null
     var extras: Bundle? = null
@@ -370,9 +211,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        init()
+    }
 
-        ButterKnife.bind(this)
+    private fun init() {
         setStatusBarGradiant(this)
 
         // generateSSHKey(this)
@@ -382,7 +226,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         progressDialogstart!!.show() // show progress dialog
 
 
-        spinnerLang!!.visibility = View.VISIBLE
+        binding.spinnerLang?.visibility = View.VISIBLE
 
         initLocationUpdates()
 
@@ -432,16 +276,16 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         }
 
         if (spnrtime == 0) {
-            rlRideScheduled!!.visibility = View.GONE
+            binding.rlRideScheduled.visibility = View.GONE
         } else {
-            rlRideScheduled!!.visibility = View.VISIBLE
+            binding.rlRideScheduled.visibility = View.VISIBLE
         }
 
 
 
 
         hideshow = "show"
-        getcurrentDate()
+        getCurrentDate()
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
@@ -449,31 +293,31 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         val NowLater: ArrayAdapter<*> =
             ArrayAdapter<Any?>(this, R.layout.simple_spinner, timeSpinner)
         NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner_time!!.adapter = NowLater
-        spinner_time!!.setSelection(spnrtime)
-        spinner_time!!.onItemSelectedListener = this
+        binding.spinnerTime.adapter = NowLater
+        binding.spinnerTime.setSelection(spnrtime)
+        binding.spinnerTime.onItemSelectedListener = this
 
 
         val spinnerLuggage: ArrayAdapter<*> =
             ArrayAdapter<Any?>(this, R.layout.simple_spinner, luggageSpinner)
         spinnerLuggage.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner_Luggage?.adapter = spinnerLuggage
-        spinner_Luggage?.setSelection(spnrbag)
-        spinner_Luggage!!.setOnItemSelectedListener(this)
+        binding.spinnerLuggage.adapter = spinnerLuggage
+        binding.spinnerLuggage.setSelection(spnrbag)
+        binding.spinnerLuggage.setOnItemSelectedListener(this)
 
 
 
         if (action == "schduleRideSuccess") {
-            spinnerLang!!.visibility = View.GONE
+            binding.spinnerLang.visibility = View.GONE
             setFragment(RidesFragment())
         } else if (action == "RegisterDisput") {
-            spinnerLang!!.visibility = View.GONE
+            binding.spinnerLang.visibility = View.GONE
             setFragment(MyDisput())
         } else if (action == "filecomplaintSuccess") {
-            spinnerLang!!.visibility = View.GONE
+            binding.spinnerLang.visibility = View.GONE
             setFragment(MyComplaints())
         } else if (action == "MyRides") {
-            spinnerLang!!.visibility = View.GONE
+            binding.spinnerLang.visibility = View.GONE
             setFragment(RidesFragment())
         }
 
@@ -495,84 +339,312 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         EventBus.getDefault().register(this)
 
         setListeners()
-
     }
 
     private fun setData() {
-        if (rideModel != null) {
-            llActiveRide?.visibility = View.VISIBLE
-            llhideview?.visibility = View.GONE
-            tvhideShow?.visibility = View.GONE
-            btnIntercity?.visibility = View.GONE
+        binding.apply {
+            if (rideModel != null) {
+                llActiveRide.visibility = View.VISIBLE
+                llhideview.visibility = View.GONE
+                tvhideShow.visibility = View.GONE
+                btnIntercity.visibility = View.GONE
 
 
-            txt_vehicle_name?.text = rideModel?.vehicleName + " " + rideModel?.vehicleNo
-            txt_date_time?.text = AppUtils.changeDateFormat(
-                rideModel?.dateTime,
-                "yyyy-MM-dd HH:mm:ss",
-                "EEE, MMM dd, h:mm a"
-            )
+                txtVehicleName?.text = rideModel?.vehicleName + " " + rideModel?.vehicleNo
+                txtDateTime?.text = AppUtils.changeDateFormat(
+                    rideModel?.dateTime,
+                    "yyyy-MM-dd HH:mm:ss",
+                    "EEE, MMM dd, h:mm a"
+                )
 
-            txt_way_flag?.text = rideModel?.way_flag
-            txtSourceAddress?.text = (rideModel?.originFullAddress)
-            txtDestinationAddress?.text = (rideModel?.destinationFullAddress)
-            txt_distance_time?.text = rideModel?.estimatedTrackRide?.distance + " km, "+rideModel?.estimatedTrackRide?.totalTime
+                txtWayFlag.text = rideModel?.way_flag
+                txtSourceAddress.text = (rideModel?.originFullAddress)
+                txtDestinationAddress.text = (rideModel?.destinationFullAddress)
+                txtDateTime.text =
+                    rideModel?.estimatedTrackRide?.distance + " km, " + rideModel?.estimatedTrackRide?.totalTime
 
-            txt_amount?.text =
-                ProjectUtilities.getAmountInFormat(rideModel?.estimatedTrackRide?.totalCharges?.toDouble())
+                txtAmount.text =
+                    ProjectUtilities.getAmountInFormat(rideModel?.estimatedTrackRide?.totalCharges?.toDouble())
 
-            Glide.with(this)
-                .load(rideModel?.vehicleImageUrl)
-                .apply(
-                    RequestOptions()
-                        .centerCrop()
-                        .dontAnimate()
-                        .dontTransform()
-                ).into(img_vehicle!!)
+                Glide.with(context)
+                    .load(rideModel?.vehicleImageUrl)
+                    .apply(
+                        RequestOptions()
+                            .centerCrop()
+                            .dontAnimate()
+                            .dontTransform()
+                    ).into(imgVehicle)
 
-        } else {
-            llActiveRide?.visibility = View.GONE
-            llhideview?.visibility = View.VISIBLE
-            tvhideShow?.visibility = View.VISIBLE
-            btnIntercity?.visibility = View.VISIBLE
-        }
-    }
-
-    private fun setListeners() {
-        btnTrackRide?.setOnClickListener {
-            if (rideModel?.status == Constants.BOOKING_SCHEDULED || rideModel?.status == Constants.BOOKING_ARRIVING || rideModel?.status == Constants.BOOKING_ARRIVED) {
-                val intent = Intent(this@HomeActivity, TrackPickUpActivity::class.java)
-                intent.putExtra("ride_id", rideModel?.id.toString())
-                startActivity(intent)
-            } else if (rideModel?.status == Constants.BOOKING_ACTIVE) {
-                val intent = Intent(this@HomeActivity, InterCityTrackRideActivity::class.java)
-                intent.putExtra("ride_id", rideModel?.id.toString())
-                startActivity(intent)
-            } else if (rideModel?.status == Constants.BOOKING_COMPLETED) {
-                val intent = Intent(this@HomeActivity, IntercityRideDetailsActivity::class.java)
-                intent.putExtra("ride_id", rideModel?.id.toString())
-                startActivity(intent)
+            } else {
+                llActiveRide.visibility = View.GONE
+                llhideview.visibility = View.VISIBLE
+                tvhideShow.visibility = View.VISIBLE
+                btnIntercity.visibility = View.VISIBLE
             }
         }
 
-        btnIntercity?.setOnClickListener {
-            startActivity(
-                Intent(this, InterCityActivity::class.java)
-                    .putExtra("current_latitude", currentLatitude)
-                    .putExtra("current_longitude", currentLongitude)
-            )
+    }
+
+    private fun initView() {
+        binding.apply {
+            toolbarHome.title = getString(R.string.title_home)
+            toolbarHome.setTitleTextColor(Color.WHITE)
+            setSupportActionBar(toolbarHome)
+            lvDrawer.onItemClickListener = this@HomeActivity
+            drawerToggle = object : ActionBarDrawerToggle(
+                this@HomeActivity, drawerLayout, toolbarHome,
+                R.string.drawer_open, R.string.drawer_close
+            ) {
+                override fun onDrawerClosed(drawerView: View) {
+                    super.onDrawerClosed(drawerView)
+                }
+
+                override fun onDrawerOpened(drawerView: View) {
+                    super.onDrawerOpened(drawerView)
+                }
+            }
+            drawerLayout.addDrawerListener(drawerToggle as ActionBarDrawerToggle)!!
+            drawerToggle?.isDrawerIndicatorEnabled = true
+            drawerToggle?.isDrawerIndicatorEnabled = false
+            drawerToggle?.setHomeAsUpIndicator(R.drawable.ic_action_menu)
+            drawerToggle?.syncState()
+            drawerToggle?.toolbarNavigationClickListener = View.OnClickListener {
+                if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    drawerLayout.closeDrawer(Gravity.LEFT)
+                } else {
+
+
+                    tvEmailAddress.text =
+                        getString(R.string.drawer_available_reward_point) + " " + preferencesManager!!.getStringValue(
+                            Constants.SHARED_PREFERENCE_USER_REWARD
+                        )
+
+                    tvUserName.text =
+                        preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
+
+                    tvUserLocation.text =
+                        preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION)
+
+                    tvProfession.text =
+                        preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION)
+
+
+
+                    Glide.with(this@HomeActivity)
+                        .load(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK))
+                        .apply(
+                            RequestOptions()
+                                .centerCrop()
+                                .dontAnimate()
+                                .dontTransform()
+                        ).into(logoLayout!!)
+
+                    drawerLayout.openDrawer(Gravity.LEFT)
+                }
+            }
         }
 
-        crdPuneMetro?.setOnClickListener{
-            val FB_DYNAMIC_LINK_URL = "https://punemobileapp.page.link/androidapp"
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW, Uri.parse(
-                    FB_DYNAMIC_LINK_URL
+    }
+
+    private fun setListeners() {
+        binding.apply {
+            btnTrackRide?.setOnClickListener {
+                if (rideModel?.status == Constants.BOOKING_SCHEDULED || rideModel?.status == Constants.BOOKING_ARRIVING || rideModel?.status == Constants.BOOKING_ARRIVED) {
+                    val intent = Intent(this@HomeActivity, TrackPickUpActivity::class.java)
+                    intent.putExtra("ride_id", rideModel?.id.toString())
+                    startActivity(intent)
+                } else if (rideModel?.status == Constants.BOOKING_ACTIVE) {
+                    val intent = Intent(this@HomeActivity, InterCityTrackRideActivity::class.java)
+                    intent.putExtra("ride_id", rideModel?.id.toString())
+                    startActivity(intent)
+                } else if (rideModel?.status == Constants.BOOKING_COMPLETED) {
+                    val intent = Intent(this@HomeActivity, IntercityRideDetailsActivity::class.java)
+                    intent.putExtra("ride_id", rideModel?.id.toString())
+                    startActivity(intent)
+                }
+            }
+
+            btnIntercity.setOnClickListener {
+                startActivity(
+                    Intent(context, InterCityActivity::class.java)
+                        .putExtra("current_latitude", currentLatitude)
+                        .putExtra("current_longitude", currentLongitude)
                 )
-            )
-            startActivity(browserIntent)
+            }
+
+            crdPuneMetro.setOnClickListener {
+                val FB_DYNAMIC_LINK_URL = "https://punemobileapp.page.link/androidapp"
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW, Uri.parse(
+                        FB_DYNAMIC_LINK_URL
+                    )
+                )
+                startActivity(browserIntent)
+            }
+
+            btnCompareRide.setOnClickListener {
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+
+                    if (isValid()) {
+                        btnCompare()
+                    }
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+                }
+            }
+
+
+            logoLayout.setOnClickListener {
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+
+
+                    spinnerLang.visibility = View.GONE
+                    homeMain.visibility = View.GONE
+                    drawerLayout.closeDrawer(Gravity.LEFT)
+                    drawerLayout.closeDrawer(Gravity.START)
+
+                    replaceFragment(MyAccountFragment())
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+                }
+            }
+
+            btnLogout.setOnClickListener {
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+                    callLogoutAPI()
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+                }
+            }
+
+            tvRideScheduled.setOnClickListener {
+                calendar = Calendar.getInstance()
+                year = calendar!!.get(Calendar.YEAR)
+                month = calendar!!.get(Calendar.MONTH)
+                day = calendar!!.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    this@HomeActivity,
+                    this@HomeActivity, year, month, day
+                )
+                datePickerDialog.datePicker.minDate = Date().time
+                datePickerDialog.show()
+            }
+
+            tvhideShow.setOnClickListener {
+                if (hideshow.equals("show")) {
+                    hideshow = "hide"
+                    llhideview.visibility = View.GONE
+                } else {
+                    hideshow = "show"
+                    llhideview.visibility = View.VISIBLE
+                }
+            }
+
+            tvMyCurrentLocation.setOnClickListener {
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+
+                    val intent = Intent(applicationContext, PickUpDropActivity::class.java)
+                    if (SourceLat!!.isEmpty()) {
+                        intent.putExtra("Toolbar_Title", "Pick-Up")
+                        intent.putExtra("currentLatitude", currentLatitude)
+                        intent.putExtra("currentLongitude", currentLongitude)
+                        intent.putExtra("spinnerbag", spnrbag)
+                        intent.putExtra("spinnerTime", spnrtime)
+                        intent.putExtra("City", city_Name)
+                        intent.putExtra("formaredDateLater", formaredDateLater)
+                        intent.putExtra("spinnerTimeDate", tvRideScheduled.text)
+
+
+                        intent.putExtra("currentUserLatitude", currentUserLatitude)
+                        intent.putExtra("currentUserLongitude", currentUserLongitude)
+                        intent.putExtra("currentUserAddress", streetAddress)
+
+
+                    } else {
+                        intent.putExtra("Toolbar_Title", "Pick-Up")
+                        intent.putExtra("currentLatitude", SourceLat!!.toDouble())
+                        intent.putExtra("currentLongitude", SourceLong!!.toDouble())
+                        intent.putExtra("spinnerbag", spnrbag)
+                        intent.putExtra("spinnerTime", spnrtime)
+                        intent.putExtra("City", city_Name)
+                        intent.putExtra("formaredDateLater", formaredDateLater)
+                        intent.putExtra("spinnerTimeDate", tvRideScheduled.text)
+
+
+                        intent.putExtra("currentUserLatitude", currentUserLatitude)
+                        intent.putExtra("currentUserLongitude", currentUserLongitude)
+                        intent.putExtra("currentUserAddress", streetAddress)
+
+
+                    }
+                    startActivity(intent)
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+                }
+            }
+
+            tvMyDropUpLocation.setOnClickListener {
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+
+                    val intent = Intent(applicationContext, PickUpDropActivity::class.java)
+                    if (DestinationLat!!.isEmpty()) {
+                        intent.putExtra("Toolbar_Title", "Drop-off")
+                        intent.putExtra("currentLatitude", currentLatitude)
+                        intent.putExtra("currentLongitude", currentLongitude)
+                        intent.putExtra("spinnerbag", spnrbag)
+                        intent.putExtra("spinnerTime", spnrtime)
+                        intent.putExtra("City", city_Name)
+                        intent.putExtra("formaredDateLater", formaredDateLater)
+                        intent.putExtra("spinnerTimeDate", tvRideScheduled!!.text)
+
+
+                        intent.putExtra("currentUserLatitude", currentUserLatitude)
+                        intent.putExtra("currentUserLongitude", currentUserLongitude)
+                        intent.putExtra("currentUserAddress", streetAddress)
+
+
+                    } else {
+                        intent.putExtra("Toolbar_Title", "Drop-off")
+                        intent.putExtra("currentLatitude", DestinationLat!!.toDouble())
+                        intent.putExtra("currentLongitude", DestinationLong!!.toDouble())
+                        intent.putExtra("spinnerbag", spnrbag)
+                        intent.putExtra("spinnerTime", spnrtime)
+                        intent.putExtra("City", city_Name)
+                        intent.putExtra("formaredDateLater", formaredDateLater)
+                        intent.putExtra("spinnerTimeDate", tvRideScheduled.text)
+
+
+                        intent.putExtra("currentUserLatitude", currentUserLatitude)
+                        intent.putExtra("currentUserLongitude", currentUserLongitude)
+                        intent.putExtra("currentUserAddress", streetAddress)
+
+
+                    }
+                    startActivity(intent)
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+                }
+            }
         }
     }
+
+
 
 
     private fun initLocationUpdates() {
@@ -615,17 +687,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                             mapAndLocationReady()
                             getCity()
-                            /*   cityPojoList = preferencesManager!!.getCityList()
-                               if (cityPojoList != null && cityPojoList.size > 0) {
-                                   setCitySpinner()
-
-
-                               } else {
-                                   getCity()
-                               }*/
 
                             progressDialogstart!!.dismiss()
-                            mainRelativeLayout!!.visibility = View.VISIBLE
+                            binding.mainRelativeLayout.visibility = View.VISIBLE
 
 
                         }
@@ -668,27 +732,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (model != null) {
             keyAirport = model.keyAirport
             if (model.isSource!!) {
-//            SourceLat = sharedpreferences!!.getString("SourceLat", "")
-//            SourceLong = sharedpreferences!!.getString("SourceLong", "")
                 SourceLat = model.latitude.toString()
                 SourceLong = model.longitude.toString()
-                myCurrentLocation!!.text = model.address
+                binding.tvMyCurrentLocation.text = model.address
 
             } else {
-                //  DestinationLat = sharedpreferences!!.getString("DestinationLat", "")
-                //  DestinationLong = sharedpreferences!!.getString("DestinationLong", "")
                 DestinationLat = model.latitude.toString()
                 DestinationLong = model.longitude.toString()
-                myDropUpLocation!!.text = model.address
-
-                /*   if(model.addressType!!.length==0){
-                       myDropUpLocation!!.text = model.address
-
-                   }else{
-
-                       myDropUpLocation!!.text = model.addressType
-
-                   }*/
+                binding.tvMyDropUpLocation.text = model.address
             }
             drawRouteOnAddressSelection()
         }
@@ -737,7 +788,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             )
         }
         if (!SourceLat!!.isEmpty() && !DestinationLat!!.isEmpty()) {
-            reestimateDateandTime!!.visibility = View.VISIBLE
+            binding.reestimateDateandTime.visibility = View.VISIBLE
             drawRoute()
         }
     }
@@ -763,7 +814,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     onePlusEmptyCity = response.body()!!.getcurrentAddress()
 
                     sharedpreferences!!.edit().putString("fromLocation", onePlusEmptyCity).commit()
-                    myCurrentLocation!!.text = onePlusEmptyCity
+                    binding.tvMyCurrentLocation.text = onePlusEmptyCity
 
 
 
@@ -832,7 +883,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             cityspinner as List<Any?>
         )
         SpnLang.setDropDownViewResource(R.layout.simple_city_spinner)
-        spinnerLang!!.adapter = SpnLang
+        binding.spinnerLang.adapter = SpnLang
 
         if (extras == null) {
 
@@ -844,7 +895,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 for (i in cityspinner!!.indices) {
                     if (city.equals(cityspinner[i])) {
-                        spinnerLang!!.setSelection(i)
+                        binding.spinnerLang.setSelection(i)
                     }
 
                 }
@@ -884,7 +935,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             if (cityspinner.contains(city)) {
                 for (i in cityspinner!!.indices) {
                     if (city.equals(cityspinner[i])) {
-                        spinnerLang!!.setSelection(i)
+                        binding.spinnerLang.setSelection(i)
                     }
 
                 }
@@ -916,7 +967,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             }
         }
-        spinnerLang!!.setOnItemSelectedListener(this@HomeActivity)
+        binding.spinnerLang.setOnItemSelectedListener(this@HomeActivity)
     }
 
 
@@ -931,31 +982,34 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
     private fun setListData() {
+        binding.apply {
+            tvEmailAddress.text =
+                getString(R.string.drawer_available_reward_point) + " " + preferencesManager?.getStringValue(
+                    Constants.SHARED_PREFERENCE_USER_REWARD
+                )
 
-        tvEmailAddress!!.text =
-            getString(R.string.drawer_available_reward_point) + " " + preferencesManager?.getStringValue(
-                Constants.SHARED_PREFERENCE_USER_REWARD
-            )
+            tvUserName.text =
+                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
 
-        tvUserName!!.text =
-            preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
+            tvUserLocation.text =
+                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION)
 
-        tvUserLocation!!.text =
-            preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION)
-
-        tvProfession!!.text =
-            preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION)
+            tvProfession.text =
+                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION)
 
 
 
-        Glide.with(this@HomeActivity)
-            .load(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK))
-            .apply(
-                RequestOptions()
-                    .centerCrop()
-                    .dontAnimate()
-                    .dontTransform()
-            ).into(logoLayout!!)
+            Glide.with(this@HomeActivity)
+                .load(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK))
+                .apply(
+                    RequestOptions()
+                        .centerCrop()
+                        .dontAnimate()
+                        .dontTransform()
+                ).into(logoLayout!!)
+        }
+
+
 
 
         drawerPojoArrayList = ArrayList<DrawerPojo>()
@@ -1063,7 +1117,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
         drawerAdapter = DrawerAdapter(this, drawerPojoArrayList)
-        lvDrawer!!.adapter = drawerAdapter
+        binding.lvDrawer.adapter = drawerAdapter
 
     }
 
@@ -1074,10 +1128,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
+
                     replaceFragment(Covid())
                 } else {
                     ProjectUtilities.showToast(
@@ -1091,10 +1148,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             1 -> {
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
                     replaceFragment(RidesFragment())
                 } else {
                     ProjectUtilities.showToast(
@@ -1109,10 +1168,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
                     replaceFragment(MyDisput())
                 } else {
                     ProjectUtilities.showToast(
@@ -1126,10 +1187,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             3 -> {
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
 
                     replaceFragment(MyComplaints())
 
@@ -1144,10 +1207,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             4 -> {
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang?.visibility = View.GONE
-                    homeMain?.visibility = View.GONE
-                    mDrawerLayout?.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout?.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
                     replaceFragment(NotificationsFragment())
                 } else {
                     ProjectUtilities.showToast(
@@ -1161,10 +1226,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             5 -> {
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
                     replaceFragment(RateCard())
                 } else {
                     ProjectUtilities.showToast(
@@ -1179,10 +1246,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
 
                     replaceFragment(FAQ())
                 } else {
@@ -1202,10 +1271,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     if (preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL)!!
                             .isNotEmpty()
                     ) {
-                        spinnerLang!!.visibility = View.GONE
-                        homeMain!!.visibility = View.GONE
-                        mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                        mDrawerLayout!!.closeDrawer(Gravity.START)
+                        binding.apply {
+                            spinnerLang.visibility = View.GONE
+                            homeMain.visibility = View.GONE
+                            drawerLayout.closeDrawer(Gravity.LEFT)
+                            drawerLayout.closeDrawer(Gravity.START)
+                        }
 
                         replaceFragment(ContactUs())
 
@@ -1220,10 +1291,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                             dialog.cancel()
                         }
                         alertDialog.setNegativeButton(getString(R.string.str_yes)) { dialog, which ->
-                            spinnerLang!!.visibility = View.GONE
-                            homeMain!!.visibility = View.GONE
-                            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                            mDrawerLayout!!.closeDrawer(Gravity.START)
+                            binding.apply {
+                                spinnerLang.visibility = View.GONE
+                                homeMain.visibility = View.GONE
+                                drawerLayout.closeDrawer(Gravity.LEFT)
+                                drawerLayout.closeDrawer(Gravity.START)
+                            }
 
                             replaceFragment(MyAccountFragment())
 
@@ -1247,10 +1320,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
 
                     replaceFragment(ContentPage())
                 } else {
@@ -1267,10 +1342,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
                     replaceFragment(TermsOfUse())
 
                 } else {
@@ -1287,10 +1364,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
-                    spinnerLang!!.visibility = View.GONE
-                    homeMain!!.visibility = View.GONE
-                    mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-                    mDrawerLayout!!.closeDrawer(Gravity.START)
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
 
                     replaceFragment(Setting())
                 } else {
@@ -1310,7 +1389,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
 
-    fun replaceFragment(fragment: Fragment?) {
+    private fun replaceFragment(fragment: Fragment?) {
 
         fragmentManager = supportFragmentManager
         fragmentTransaction = fragmentManager!!.beginTransaction()
@@ -1319,7 +1398,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
 
-    private fun getcurrentDate() {
+    private fun getCurrentDate() {
         val today = Date()
         val format = SimpleDateFormat("dd MMM, hh:mm a")
         val formatviewRide = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -1336,213 +1415,24 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         if (extras != null) {
             if (spnrtime == 1) {
-                tv_RideScheduled?.text = tvDateandTime
+                binding.tvRideScheduled.text = tvDateandTime
             } else {
-                tv_RideScheduled?.text = dateToStr
+                binding.tvRideScheduled.text = dateToStr
 
             }
 
         } else {
-            tv_RideScheduled?.text = dateToStr
+            binding.tvRideScheduled.text = dateToStr
 
         }
 
 
     }
 
-    private fun initView() {
-        toolbar!!.title = getString(R.string.title_home)
-        toolbar!!.setTitleTextColor(Color.WHITE)
-        setSupportActionBar(toolbar)
-        lvDrawer!!.onItemClickListener = this
-        drawerToggle = object : ActionBarDrawerToggle(
-            this, mDrawerLayout, toolbar,
-            R.string.drawer_open, R.string.drawer_close
-        ) {
-            override fun onDrawerClosed(drawerView: View) {
-                super.onDrawerClosed(drawerView)
-            }
-
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-            }
-        }
-        mDrawerLayout?.addDrawerListener(drawerToggle as ActionBarDrawerToggle)!!
-        drawerToggle?.setDrawerIndicatorEnabled(true)
-        drawerToggle?.setDrawerIndicatorEnabled(false)
-        drawerToggle?.setHomeAsUpIndicator(R.drawable.ic_action_menu)
-        drawerToggle?.syncState()
-        drawerToggle?.setToolbarNavigationClickListener(View.OnClickListener {
-            if (mDrawerLayout!!.isDrawerOpen(Gravity.LEFT)) {
-                mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-            } else {
-
-
-                tvEmailAddress!!.text =
-                    getString(R.string.drawer_available_reward_point) + " " + preferencesManager!!.getStringValue(
-                        Constants.SHARED_PREFERENCE_USER_REWARD
-                    )
-
-                tvUserName!!.text =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
-
-                tvUserLocation!!.text =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION)
-
-                tvProfession!!.text =
-                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION)
-
-
-
-                Glide.with(this@HomeActivity)
-                    .load(preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK))
-                    .apply(
-                        RequestOptions()
-                            .centerCrop()
-                            .dontAnimate()
-                            .dontTransform()
-                    ).into(logoLayout!!)
-
-                mDrawerLayout!!.openDrawer(Gravity.LEFT)
-            }
-        })
-    }
-
-    @SuppressLint("WrongConstant")
-    @OnClick(R.id.logoLayout)
-    fun myAccount() {
-
-
-        if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
-
-
-            spinnerLang!!.visibility = View.GONE
-            homeMain!!.visibility = View.GONE
-            mDrawerLayout!!.closeDrawer(Gravity.LEFT)
-            mDrawerLayout!!.closeDrawer(Gravity.START)
-
-            replaceFragment(MyAccountFragment())
-        } else {
-            ProjectUtilities.showToast(
-                this@HomeActivity,
-                getString(R.string.internet_error)
-            )
-        }
-
-
-    }
-
-    @OnClick(R.id.btnLogout)
-    fun logOut() {
-
-        if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
-
-            deviceID =
-                preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID)
-            token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-
-
-            val progressDialogLogout = ProgressDialog(this@HomeActivity)
-            progressDialogLogout.setCancelable(false) // set cancelable to false
-            progressDialogLogout.setMessage(getString(R.string.str_please_wait)) // set message
-            progressDialogLogout.show() // show progress dialog
-
-            ApiClient.client.signOut("Bearer $token", deviceID, "Android")!!
-                .enqueue(object : Callback<ContactUsResponsePojo?> {
-                    override fun onResponse(
-                        call: Call<ContactUsResponsePojo?>,
-                        response: Response<ContactUsResponsePojo?>
-                    ) {
-                        progressDialogLogout.dismiss()
-                        if (response.code() == 200) {
-                            if (response.body() != null) {
-                                preferencesManager!!.clear()
-                                Toast.makeText(
-                                    this@HomeActivity,
-                                    response!!.body()!!.message,
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                val intent =
-                                    Intent(this@HomeActivity, LoginActivity::class.java)
-                                startActivity(intent)
-                                finish()
-
-                            }
-                        } else if (response.code() == 401) {
-                            preferencesManager?.clear()
-                            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                            finish()
-                        } else if (response.code() == 422) {
-                            val gson = GsonBuilder().create()
-                            var pojo: ValidationResponse? = ValidationResponse()
-                            try {
-                                pojo = gson.fromJson(
-                                    response.errorBody()!!.string(),
-                                    ValidationResponse::class.java
-                                )
-                                Toast.makeText(
-                                    this@HomeActivity,
-                                    pojo.errors!!.get(0).message,
-                                    Toast.LENGTH_LONG
-                                ).show()
-
-
-                            } catch (exception: IOException) {
-                            }
-
-                        } else {
-                            Toast.makeText(
-                                this@HomeActivity,
-                                getString(R.string.err_internal_server_error),
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                        }
-                    }
-
-                    override fun onFailure(
-                        call: Call<ContactUsResponsePojo?>, t: Throwable
-                    ) {
-                        progressDialogLogout.dismiss()
-                        Toast.makeText(
-                            this@HomeActivity,
-                            t.stackTrace.toString(),
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-                        Log.d("response", t.stackTrace.toString())
-                    }
-                })
-
-        } else {
-            ProjectUtilities.showToast(
-                this@HomeActivity,
-                getString(R.string.internet_error)
-            )
-        }
-
-    }
 
 
 
 
-    @OnClick(R.id.tv_RideScheduled)
-    fun RideScheduled() {
-
-        calendar = Calendar.getInstance()
-        year = calendar!!.get(Calendar.YEAR)
-        month = calendar!!.get(Calendar.MONTH)
-        day = calendar!!.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            this@HomeActivity,
-            this@HomeActivity, year, month, day
-        )
-        datePickerDialog.datePicker.minDate = Date().time
-        datePickerDialog.show()
-    }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
 
@@ -1551,7 +1441,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         myday = dayOfMonth
         myMonth = month + 1
         val c = Calendar.getInstance()
-        if (spinner_time?.selectedItem.toString().equals("Later", ignoreCase = true)) {
+        if (binding.spinnerTime.selectedItem.toString().equals("Later", ignoreCase = true)) {
             c.add(Calendar.MINUTE, 16)
         }
         hour = c.get(Calendar.HOUR_OF_DAY)
@@ -1579,7 +1469,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         if (selectedDateTime.before(minValidDateTime)) {
 
-            tv_RideScheduled?.text =
+            binding.tvRideScheduled.text =
                 AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM")
                     .replace("pm", "PM")
 
@@ -1671,7 +1561,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             formaredDateLater =
                 (myYear.toString() + "-" + strMonth + "-" + stDay + " " + dayhour + ":" + strMinute + ":" + strsecond)
-            tv_RideScheduled!!.text = "$myday $dmonth, $strhr:$strMinute $AMorPM"
+            binding.tvRideScheduled.text = "$myday $dmonth, $strhr:$strMinute $AMorPM"
 
 
         }
@@ -1689,70 +1579,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
 
-    @OnClick(R.id.tvhideShow)
-    fun hideshow() {
-        if (hideshow.equals("show")) {
-            hideshow = "hide"
-            llhideview?.visibility = View.GONE
-        } else {
-            hideshow = "show"
-            llhideview?.visibility = View.VISIBLE
-        }
-    }
 
 
-    @OnClick(R.id.tv_myCurrentLocation)
-    fun myCurrentLocations() {
-
-        if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
-
-            val intent = Intent(applicationContext, PickUpDropActivity::class.java)
-            if (SourceLat!!.isEmpty()) {
-                intent.putExtra("Toolbar_Title", "Pick-Up")
-                intent.putExtra("currentLatitude", currentLatitude)
-                intent.putExtra("currentLongitude", currentLongitude)
-                intent.putExtra("spinnerbag", spnrbag)
-                intent.putExtra("spinnerTime", spnrtime)
-                intent.putExtra("City", city_Name)
-                intent.putExtra("formaredDateLater", formaredDateLater)
-                intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
 
 
-                intent.putExtra("currentUserLatitude", currentUserLatitude)
-                intent.putExtra("currentUserLongitude", currentUserLongitude)
-                intent.putExtra("currentUserAddress", streetAddress)
-
-
-            } else {
-                intent.putExtra("Toolbar_Title", "Pick-Up")
-                intent.putExtra("currentLatitude", SourceLat!!.toDouble())
-                intent.putExtra("currentLongitude", SourceLong!!.toDouble())
-                intent.putExtra("spinnerbag", spnrbag)
-                intent.putExtra("spinnerTime", spnrtime)
-                intent.putExtra("City", city_Name)
-                intent.putExtra("formaredDateLater", formaredDateLater)
-                intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
-
-
-                intent.putExtra("currentUserLatitude", currentUserLatitude)
-                intent.putExtra("currentUserLongitude", currentUserLongitude)
-                intent.putExtra("currentUserAddress", streetAddress)
-
-
-            }
-            startActivity(intent)
-        } else {
-            ProjectUtilities.showToast(
-                this@HomeActivity,
-                getString(R.string.internet_error)
-            )
-        }
-    }
 
     override fun onDestroy() {
-        // sharedpreferences!!.edit().clear().commit()
-
-        //ILOMADEV
         try {
             EventBus.getDefault().unregister(this)
         } catch (ex: Exception) {
@@ -1762,53 +1594,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         super.onDestroy()
     }
 
-    @OnClick(R.id.tv_myDropUpLocation)
-    fun myDropUpLocation() {
-
-        if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
-
-            val intent = Intent(applicationContext, PickUpDropActivity::class.java)
-            if (DestinationLat!!.isEmpty()) {
-                intent.putExtra("Toolbar_Title", "Drop-off")
-                intent.putExtra("currentLatitude", currentLatitude)
-                intent.putExtra("currentLongitude", currentLongitude)
-                intent.putExtra("spinnerbag", spnrbag)
-                intent.putExtra("spinnerTime", spnrtime)
-                intent.putExtra("City", city_Name)
-                intent.putExtra("formaredDateLater", formaredDateLater)
-                intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
-
-
-                intent.putExtra("currentUserLatitude", currentUserLatitude)
-                intent.putExtra("currentUserLongitude", currentUserLongitude)
-                intent.putExtra("currentUserAddress", streetAddress)
-
-
-            } else {
-                intent.putExtra("Toolbar_Title", "Drop-off")
-                intent.putExtra("currentLatitude", DestinationLat!!.toDouble())
-                intent.putExtra("currentLongitude", DestinationLong!!.toDouble())
-                intent.putExtra("spinnerbag", spnrbag)
-                intent.putExtra("spinnerTime", spnrtime)
-                intent.putExtra("City", city_Name)
-                intent.putExtra("formaredDateLater", formaredDateLater)
-                intent.putExtra("spinnerTimeDate", tv_RideScheduled!!.text)
-
-
-                intent.putExtra("currentUserLatitude", currentUserLatitude)
-                intent.putExtra("currentUserLongitude", currentUserLongitude)
-                intent.putExtra("currentUserAddress", streetAddress)
-
-
-            }
-            startActivity(intent)
-        } else {
-            ProjectUtilities.showToast(
-                this@HomeActivity,
-                getString(R.string.internet_error)
-            )
-        }
-    }
 
     private fun setStatusBarGradiant(activity: HomeActivity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -1822,89 +1607,70 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
     override fun onMapReady(googleMap: GoogleMap) {
-        //googleMap.clear()
         mMap = googleMap
         mapAndLocationReady()
-        // mMap!!.getUiSettings().setAllGesturesEnabled(false)
-        //  mMap!!.getUiSettings().setScrollGesturesEnabled(false)
-
-
     }
 
-
-    @OnClick(R.id.btnCompareRide)
-    fun btnCompareClick() {
-        if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
-
-            if (isValid()) {
-                btnCompare()
-            }
-        } else {
-            ProjectUtilities.showToast(
-                this@HomeActivity,
-                getString(R.string.internet_error)
-            )
-        }
-    }
 
     private fun isValid(): Boolean {
-        if (spinner_time!!.selectedItem.toString().equals("Later", ignoreCase = true)) {
-            var dateTime: String?
-            if (year > 0) {
+        binding.apply {
+            if (binding.spinnerTime.selectedItem.toString().equals("Later", ignoreCase = true)) {
+                var dateTime: String?
+                if (year > 0) {
 
-                dateTime =
-                    year.toString() + " " + tv_RideScheduled?.text.toString()
-                        .replace("AM", "am")
+                    dateTime =
+                        year.toString() + " " + tvRideScheduled.text.toString()
+                            .replace("AM", "am")
+                            .replace("PM", "pm")
+                } else {
+                    dateTime = Calendar.getInstance().get(Calendar.YEAR)
+                        .toString() + " " + tvRideScheduled.text.toString().replace("AM", "am")
                         .replace("PM", "pm")
-            } else {
-                dateTime = Calendar.getInstance().get(Calendar.YEAR)
-                    .toString() + " " + tv_RideScheduled?.text.toString().replace("AM", "am")
-                    .replace("PM", "pm")
+                }
+
+                val selectedDateTime = SimpleDateFormat("yyyy dd MMM, hh:mm a").parse(dateTime)
+                val minValidDateTime =
+                    SimpleDateFormat("dd MM yyyy HH:mm:ss").parse(minTimeToShedule())
+
+                if (tvRideScheduled.text.toString()
+                        .equals(
+                            AppUtils.convertDateGMTToLocal(minTimeToShedule()),
+                            ignoreCase = true
+                        )
+                ) {
+                    return true
+                } else if (selectedDateTime.before(minValidDateTime)) {
+
+                    tvRideScheduled.text =
+                        AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM")
+                            .replace("pm", "PM")
+
+                    Toast.makeText(
+                        context,
+                        getString(R.string.err_schedule_min_time),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    return false
+
+                } else {
+                    return true
+                }
             }
 
-            val selectedDateTime = SimpleDateFormat("yyyy dd MMM, hh:mm a").parse(dateTime)
-            val minValidDateTime =
-                SimpleDateFormat("dd MM yyyy HH:mm:ss").parse(minTimeToShedule())
-
-            if (tv_RideScheduled?.text.toString()
-                    .equals(
-                        AppUtils.convertDateGMTToLocal(minTimeToShedule()),
-                        ignoreCase = true
-                    )
-            ) {
-                return true
-            } else if (selectedDateTime.before(minValidDateTime)) {
-
-                tv_RideScheduled?.text =
-                    AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM")
-                        .replace("pm", "PM")
-
-                Toast.makeText(
-                    this,
-                    getString(R.string.err_schedule_min_time),
-                    Toast.LENGTH_LONG
-                ).show()
-
-                return false
-
-            } else {
-                return true
-            }
+            return true
         }
-        return true
+
+
     }
 
-    fun btnCompare() {
-
+    private fun btnCompare() {
 
         sharedpreferences!!.edit()
-            .putString("SourceAddress", myCurrentLocation!!.text.toString())
+            .putString("SourceAddress", binding.tvMyCurrentLocation.text.toString())
             .commit()
         sharedpreferences!!.edit()
-            .putString("DestinationAddress", myDropUpLocation!!.text.toString()).commit()
-
-
-
+            .putString("DestinationAddress", binding.tvMyDropUpLocation.text.toString()).commit()
 
 
         if (spnrtime == 1) {
@@ -1912,7 +1678,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         } else {
             formaredDate = setDate
         }
-        //ILOMADEV :- Take value before comparing
 
         PortAir =
             preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
@@ -1952,8 +1717,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else {
                     airportYesOrNO = "NO"
                 }
-//                PortAir =
-//                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
+
                 replacedistance = estDistance!!.replace(" km", "")
 
 
@@ -2076,8 +1840,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else {
                     airportYesOrNO = "NO"
                 }
-//                PortAir =
-//                    preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_PICKUP_AITPORT)
                 replacedistance = estDistance!!.replace(" km", "")
 
                 if ((spinnerLuggagetxt == "1 Luggage")) {
@@ -2317,16 +2079,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 estDistance =
                     DecimalFormat("####.#").format((estDistance!!.toDouble() / 1000)) + " km"
 
-
-                /* if((distance.getString("text")).contains("mi")){
-                     estDistance = distance.getString("text")
-                     estDistance = estDistance!!.replace(" mi", "")
-                     var estD =  estDistance!!.toDouble()
-                     estD = estD * (1.60934)
-                 }else{
-                     estDistance = distance.getString("text")
-                 }
- */
                 // Starts parsing data
                 routes = parser.parse(jObject)
             } catch (e: Exception) {
@@ -2358,15 +2110,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                             LatLng(lat, lng)
                         points.add(position)
                     }
-                    tvEstDistance!!.text = getString(R.string.str_est_distance) + " $estDistance"
-                    tvEstTime!!.text = getString(R.string.str_est_time) + " $estTime"
+                    binding.tvEstDistance.text =
+                        getString(R.string.str_est_distance) + " $estDistance"
+                    binding.tvEstTime.text = getString(R.string.str_est_time) + " $estTime"
                     if (!estDistance!!.isEmpty()) {
-                        btnCompareRide!!.visibility = View.VISIBLE
+                        binding.btnCompareRide.visibility = View.VISIBLE
                     }
 
                     lineOptions.addAll(points)
                     lineOptions.width(15f)
-                    //  lineOptions.color(Color.GREEN);
                     lineOptions.color(
                         this@HomeActivity.resources.getColor(R.color.gradientstartcolor)
                     )
@@ -2404,7 +2156,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (parent!!.id == R.id.spinner_Luggage) {
             spnrbag = position
-            spinnerLuggagetxt = spinner_Luggage!!.selectedItem.toString()
+            spinnerLuggagetxt = binding.spinnerLuggage.selectedItem.toString()
         } else if (parent.id == R.id.spinnerLang) {
             if (!city_Name.equals("Choose City")) {
                 if (cityspinner.contains("Choose City")) {
@@ -2438,7 +2190,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             }
         } else {
             spnrtime = position
-            spinnertxt = spinner_time!!.selectedItem.toString()
+            spinnertxt = binding.spinnerTime.selectedItem.toString()
             if (spinnertxt == "Later") {
 
                 /**
@@ -2451,26 +2203,24 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (extras != null) {
                     if (spnrtime == 1) {
-
-                        //  tv_RideScheduled?.text = tvDateandTime
-                        tv_RideScheduled?.text = dateToStr
+                        binding.tvRideScheduled.text = dateToStr
 
                     } else {
-                        tv_RideScheduled?.text = dateToStr
+                        binding.tvRideScheduled.text = dateToStr
 
                     }
 
                 } else {
-                    tv_RideScheduled?.text = dateToStr
+                    binding.tvRideScheduled.text = dateToStr
 
                 }
 
 
 
-                rlRideScheduled!!.visibility = View.VISIBLE
+                binding.rlRideScheduled.visibility = View.VISIBLE
             } else {
-                getcurrentDate()
-                rlRideScheduled!!.visibility = View.GONE
+                getCurrentDate()
+                binding.rlRideScheduled.visibility = View.GONE
             }
         }
 
@@ -2490,13 +2240,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         intent.putExtra("Luggage", spinnerLuggagetxt)
         intent.putExtra("TimeSpinner", spinnertxt)
         intent.putExtra("Airport", keyAirport)
-        intent.putExtra("SourceAddress", myCurrentLocation!!.text.toString())
-        intent.putExtra("DestinationAddress", myDropUpLocation!!.text.toString())
-        intent.putExtra("currentDate", tv_RideScheduled!!.text.toString())
+        intent.putExtra("SourceAddress", binding.tvMyCurrentLocation.text.toString())
+        intent.putExtra("DestinationAddress", binding.tvMyDropUpLocation.text.toString())
+        intent.putExtra("currentDate", binding.tvRideScheduled.text.toString())
         intent.putExtra("currentFormattedDate", formaredDate)
         intent.putExtra("currentPlaceId", CurrentPlaceID)
         intent.putExtra("time_in_seconds", legDuration)
-        intent.putExtra("schedule_type", spinner_time?.selectedItem.toString())
+        intent.putExtra("schedule_type", binding.spinnerTime.selectedItem.toString())
         intent.putExtra("MyPOJOClass", info)
         startActivity(intent)
 
@@ -2521,19 +2271,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     }
 
     override fun onFailure(appErrorMessage: String?) {
-
         Toast.makeText(this@HomeActivity, appErrorMessage, Toast.LENGTH_LONG).show()
-    }
-
-    private fun updateCameraBearing(mMap: GoogleMap?, bering: Float) {
-        if (mMap == null) return
-        val camPos = CameraPosition
-            .builder(
-                mMap.getCameraPosition() // current Camera
-            )
-            .bearing(bering)
-            .build()
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(camPos))
     }
 
     private fun getLocationReady() {
@@ -2541,8 +2279,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         if (currentLatitude == 0.0) {
             Toast.makeText(this, "Unable to find CURRENT LOCATION", Toast.LENGTH_LONG).show()
         } else {
-//            Toast.makeText(this, "On Start Location Ready", Toast.LENGTH_LONG).show()
-
 
             callOnLocation = "second"
 
@@ -2553,23 +2289,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             if (extras != null) {
 
-                //ILOMADEV :- 30 Jan 2021 :- Created Method for this code
-
                 drawRouteOnAddressSelection()
 
 
             } else {
                 streetAddress = getAddressFromLocation()
 
-                /* if (streetAddress!!.isEmpty() && flgstreetaddress) {
-
-                     Toast.makeText(this@HomeActivity,""+currentLatitude+"    "+currentLongitude,Toast.LENGTH_LONG).show()
-
-                     streetAddress = getAddressFromLocation()
-                     flgstreetaddress = false
-
-                 }
- */
                 if (SourceLat!!.isEmpty()) {
                     //ILOMADEV
                     SourceLat = currentLatitude.toString()
@@ -2582,9 +2307,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         .putString("SourceLong", currentLongitude.toString())
                         .commit()
                 }
-
-                // sharedpreferences!!.edit().putString("fromLocation", streetAddress).commit()
-                // myCurrentLocation!!.text = streetAddress
 
                 Log.d("sdewddwasMar", currentLatitude.toString())
                 mMap?.animateCamera(
@@ -2630,7 +2352,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     address = address.replace(" " + obj.postalCode, "")
                 }
 
-                //   city = obj.subAdminArea
             } else {
                 address = ""
             }
@@ -2685,7 +2406,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     override fun onResume() {
         super.onResume()
-        if (Constants.SHOULD_RELOAD){
+        if (Constants.SHOULD_RELOAD) {
             Constants.SHOULD_RELOAD = false
             getActiveRidesAPI()
         }
@@ -2741,7 +2462,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     var model: GetRideResponsePOJO = resultObj as GetRideResponsePOJO
                     if (!model.data.isNullOrEmpty()) {
                         rideModel = model.data!![0]
-                    }else{
+                    } else {
                         rideModel = null
                     }
 
@@ -2752,6 +2473,87 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     Toast.makeText(this@HomeActivity, error, Toast.LENGTH_SHORT).show()
                 }
 
+            })
+    }
+
+    private fun callLogoutAPI() {
+        deviceID =
+            preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID)
+        token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
+
+
+        val progressDialogLogout = ProgressDialog(this@HomeActivity)
+        progressDialogLogout.setCancelable(false) // set cancelable to false
+        progressDialogLogout.setMessage(getString(R.string.str_please_wait)) // set message
+        progressDialogLogout.show() // show progress dialog
+
+        ApiClient.client.signOut("Bearer $token", deviceID, "Android")!!
+            .enqueue(object : Callback<ContactUsResponsePojo?> {
+                override fun onResponse(
+                    call: Call<ContactUsResponsePojo?>,
+                    response: Response<ContactUsResponsePojo?>
+                ) {
+                    progressDialogLogout.dismiss()
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            preferencesManager!!.clear()
+                            Toast.makeText(
+                                this@HomeActivity,
+                                response!!.body()!!.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            val intent =
+                                Intent(this@HomeActivity, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
+
+                        }
+                    } else if (response.code() == 401) {
+                        preferencesManager?.clear()
+                        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        finish()
+                    } else if (response.code() == 422) {
+                        val gson = GsonBuilder().create()
+                        var pojo: ValidationResponse? = ValidationResponse()
+                        try {
+                            pojo = gson.fromJson(
+                                response.errorBody()!!.string(),
+                                ValidationResponse::class.java
+                            )
+                            Toast.makeText(
+                                this@HomeActivity,
+                                pojo.errors!!.get(0).message,
+                                Toast.LENGTH_LONG
+                            ).show()
+
+
+                        } catch (exception: IOException) {
+                        }
+
+                    } else {
+                        Toast.makeText(
+                            this@HomeActivity,
+                            getString(R.string.err_internal_server_error),
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ContactUsResponsePojo?>, t: Throwable
+                ) {
+                    progressDialogLogout.dismiss()
+                    Toast.makeText(
+                        this@HomeActivity,
+                        t.stackTrace.toString(),
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                    Log.d("response", t.stackTrace.toString())
+                }
             })
     }
 

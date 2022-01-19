@@ -324,7 +324,7 @@
     <string name="str_round_trip">राउंड ट्रिप</string>
     <string name="hint_select_city">शहर निवडा</string>
     <string name="str_from">पासून</string>
-    <string name="str_to">पासून</string>
+    <string name="str_to">पर्यंत</string>
     <string name="hint_pick_up_location">पिक-अप स्थान</string>
     <string name="hint_drop_off_location">ड्रॉप-ऑफ स्थान</string>
     <string name="str_now">आता</string>

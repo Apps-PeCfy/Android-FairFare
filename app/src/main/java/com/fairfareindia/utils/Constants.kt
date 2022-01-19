@@ -79,6 +79,9 @@ object Constants {
     var KEY_TRACK_DURATION = "track_duration"
     var KEY_SCHEDULE_TIME_IN_MINUTES = "schedule_time_minute"
     var IS_TRACKING_FROM_DRIVER = "is_tracking_from_driver"
+    var CANCELLATION_FEES_INTERCITY = "cancellation_fees_intercity"
+    var CANCELLATION_FEES_LOCAL = "cancellation_fees_local"
+
 
 
     //RazorPay Key

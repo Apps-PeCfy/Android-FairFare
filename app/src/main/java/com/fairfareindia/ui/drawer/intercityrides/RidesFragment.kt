@@ -47,6 +47,7 @@ class RidesFragment : Fragment(), IRidesView{
     var token: String? = null
     var currentLat: String? = null
     var currentLong: String? = null
+    var cancellationFees: String? = null
 
     var commonMessageDialog: CommonMessageDialog? = null
 
@@ -163,7 +164,13 @@ class RidesFragment : Fragment(), IRidesView{
     }
 
     private fun openConfirmationDialog(model: GetRideResponsePOJO.DataItem) {
-        commonMessageDialog = CommonMessageDialog(context,getString(R.string.str_cancel_ride_message), getString(R.string.btn_cancel_not), getString(R.string.btn_proceed), object : CommonMessageDialog.CommonMessageDialogInterface{
+        if (model.permitType == Constants.TYPE_INTERCITY){
+            cancellationFees = AppUtils.getValueOfKeyFromGeneralSettings(requireContext(), Constants.CANCELLATION_FEES_INTERCITY)
+        }else{
+            cancellationFees = AppUtils.getValueOfKeyFromGeneralSettings(requireContext(), Constants.CANCELLATION_FEES_LOCAL)
+        }
+        var message = getString(R.string.str_cancel_ride_message).replace("100", cancellationFees!!, true)
+        commonMessageDialog = CommonMessageDialog(context,message, getString(R.string.btn_cancel_not), getString(R.string.btn_proceed), object : CommonMessageDialog.CommonMessageDialogInterface{
             override fun onPositiveButtonClick() {
                 commonMessageDialog?.dismiss()
             }

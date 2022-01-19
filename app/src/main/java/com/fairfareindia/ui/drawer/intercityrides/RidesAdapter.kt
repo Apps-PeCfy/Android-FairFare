@@ -72,67 +72,79 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val holder = viewHolder as MyViewHolder
                 val model: GetRideResponsePOJO.DataItem = mList[position]
 
-                if (model.driver?.name != null){
-                    holder.txtVehicleName.text = model.driver?.name + ", " + model.vehicleName + " " + model.vehicleNo
-                }else{
+                if (model.driver?.name != null) {
+                    holder.txtVehicleName.text =
+                        model.driver?.name + ", " + model.vehicleName + " " + model.vehicleNo
+                } else {
                     holder.txtVehicleName.text = model.vehicleName + " " + model.vehicleNo
                 }
 
-                if (model.ride_number.isNullOrEmpty()){
+                if (model.ride_number.isNullOrEmpty()) {
                     holder.txtRideNumber.visibility = View.GONE
-                }else{
+                } else {
                     holder.txtRideNumber.text = model.ride_number
                     holder.txtRideNumber.visibility = View.VISIBLE
                 }
 
 
-                holder.txtDate.text = AppUtils.changeDateFormat(model.dateTime, "yyyy-MM-dd HH:mm:ss", "dd MMM, h:mm a")
+                holder.txtDate.text = AppUtils.changeDateFormat(
+                    model.dateTime,
+                    "yyyy-MM-dd HH:mm:ss",
+                    "dd MMM, h:mm a"
+                )
 
                 holder.txtSourceAddress.text = (model.originFullAddress)
-                if (model.actualEndAddress.isNullOrEmpty()){
+                if (model.actualEndAddress.isNullOrEmpty()) {
                     holder.txtDestinationAddress.text = model.destinationFullAddress
-                }else{
+                } else {
                     holder.txtDestinationAddress.text = model.actualEndAddress
                 }
 
+                holder.txtActualFare.text =
+                    ProjectUtilities.getAmountInFormat(model.totalfare?.toDouble())
 
-                holder.txtActualFare.text = ProjectUtilities.getAmountInFormat(model.totalfare?.toDouble())
 
                 holder.txtStatus.text = model.status
 
-                if (model.status == Constants.BOOKING_PENDING){
+                if (model.status == Constants.BOOKING_PENDING) {
                     holder.txtStatus.text = context?.resources?.getString(R.string.status_booked)
-                }else{
+                } else {
                     holder.txtStatus.text = model.status
                 }
 
                 if (model.status == Constants.BOOKING_COMPLETED) {
                     holder.imgViewInfo.visibility = View.VISIBLE
                     holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorGreen)!!)
-                }else{
+                } else {
                     holder.imgViewInfo.visibility = View.GONE
                     holder.txtStatus.setTextColor(context?.resources?.getColor(R.color.colorPrimary)!!)
                 }
 
 
-                if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_PENDING || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED){
+                if (model.status == Constants.BOOKING_SCHEDULED || model.status == Constants.BOOKING_PENDING || model.status == Constants.BOOKING_ARRIVING || model.status == Constants.BOOKING_ARRIVED) {
                     holder.llCancelRide.visibility = View.VISIBLE
-                }else{
+                } else {
                     holder.llCancelRide.visibility = View.GONE
                 }
 
-                if (model.permitType == Constants.TYPE_INTERCITY){
+                if (model.permitType == Constants.TYPE_INTERCITY) {
                     holder.txtPermitType.visibility = View.VISIBLE
-                    holder.txtPermitType.text =  model.permitType + " (${model.intercityFromCity?.name} - ${model.intercitytoCity?.name})"
-                }else{
-                    if (model.status == Constants.BOOKING_COMPLETED) {
-                        if (model.reviewStar.toFloat() >= 1.0f) {
-                            holder.ratingBar.visibility = View.VISIBLE
-                            holder.ratingBar.rating = model.reviewStar.toFloat()
-                        } else {
-                            holder.txtRateRide.visibility = View.VISIBLE
-                        }
+                    holder.txtPermitType.text =
+                        model.permitType + " (${model.intercityFromCity?.name} - ${model.intercitytoCity?.name})"
+                } else {
+                    holder.txtPermitType.visibility = View.GONE
+                }
+
+                if (model.status == Constants.BOOKING_COMPLETED) {
+                    if (model.reviewStar.toFloat() >= 1.0f) {
+                        holder.ratingBar.visibility = View.VISIBLE
+                        holder.ratingBar.rating = model.reviewStar.toFloat()
+                    } else {
+                        holder.txtRateRide.visibility = View.VISIBLE
                     }
+                }else{
+                    holder.txtRateRide.visibility = View.GONE
+                    holder.ratingBar.visibility = View.GONE
                 }
 
 
@@ -166,7 +178,6 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.llCancelRide.setOnClickListener {
                     mListener?.onCancelRideClick(position, model)
                 }
-
 
 
             }
@@ -206,8 +217,8 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val imgViewInfo: ImageView = itemView.findViewById(R.id.img_view_info)
         val ratingBar: SimpleRatingBar = itemView.findViewById(R.id.ratingBar)
         val txtSourceAddress: TextView = itemView.findViewById(R.id.txt_source_address)
-        val txtDestinationAddress : TextView = itemView.findViewById(R.id.txt_destination_address)
-        val llCancelRide : LinearLayout = itemView.findViewById(R.id.ll_cancel_ride)
+        val txtDestinationAddress: TextView = itemView.findViewById(R.id.txt_destination_address)
+        val llCancelRide: LinearLayout = itemView.findViewById(R.id.ll_cancel_ride)
 
     }
 
