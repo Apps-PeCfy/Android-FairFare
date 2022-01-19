@@ -69,7 +69,6 @@
             android:required="false" />
 
         <activity android:name=".ui.privacypolicy.PrivacyPolicyActivity" />
-        <activity android:name=".ui.test.test" />
         <activity android:name=".ui.ridereview.RideReviewActivity" />
         <activity android:name=".ui.disputs.RegisterDisputActivity" />
 
