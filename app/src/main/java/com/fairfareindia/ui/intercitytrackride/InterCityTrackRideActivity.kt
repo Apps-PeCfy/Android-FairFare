@@ -124,9 +124,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 lastLocation: Location?
             ) {
                 if (lastLocation != null) {
-                    if(rideDetailModel != null){
-                        addCurrentLocationMarker(lastLocation)
-                    }
+                    addCurrentLocationMarker(lastLocation)
 
 
                     locationChangeLatitude = lastLocation!!.latitude
@@ -240,9 +238,13 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     }
 
     private fun setTravelledDistanceTime(totalDistTravelled : String?) {
+        var actualDistance = totalDistTravelled
+        if(actualDistance.isNullOrEmpty()){
+            actualDistance = "0.00"
+        }
         if (remainingDistanceText != null) {
             binding.txtTravelledDistance.text =
-                totalDistTravelled + " km / $remainingDistanceText"
+                actualDistance + " km / $remainingDistanceText"
 
 
             var rideDateTime =
@@ -257,7 +259,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             }
         } else {
             binding.txtTravelledDistance.text =
-                totalDistTravelled + " km"
+                actualDistance + " km"
 
 
             var rideDateTime =

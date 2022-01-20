@@ -133,11 +133,11 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
 
             if (info.permitType == Constants.TYPE_LOCAL){
                 txtBaseFareLabel.text =
-                    getString(R.string.str_base_fare) + " ( ${model?.ride?.actualDistance!!.toInt()} ${model?.ride?.distanceType})"
+                    getString(R.string.str_basic_fare) + " ( ${ProjectUtilities.getDistanceInFormat(model?.ride?.actualDistance)} )"
                 llAdditionalDistanceCharges.visibility = View.GONE
             }else{
                 txtBaseFareLabel.text =
-                    getString(R.string.str_base_fare) + " ( ${model?.ride?.baseDistance!!.toInt()} ${model?.ride?.distanceType}) ${info.wayFlag}"
+                    getString(R.string.str_base_fare) + " ( ${model?.ride?.baseDistance!!.toInt()} ${model?.ride?.distanceType} ) ${info.wayFlag}"
                 llAdditionalDistanceCharges.visibility = View.VISIBLE
             }
 
