@@ -222,7 +222,7 @@ class RideDetailModel {
         var surCharge: String? = null
 
         @SerializedName("cancellationCharges")
-        var cancellationCharges: String? = null
+        var cancellationCharges: Double? = null
 
         @SerializedName("originPlaceId")
         var originPlaceId: String? = null

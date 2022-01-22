@@ -335,6 +335,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
         } else {
             myMarker?.rotation = driverLocationModel.data?.bearing!!
             myMarker?.position = newPosition
+            myMarker?.setIcon(getMarkerIcon(rideDetailModel?.data?.vehicleType))
         }
 
         if (myMarker != null && prevLatLng != null) {
@@ -463,6 +464,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
                         myMarker?.position = destination
                         myMarker?.rotation = driverLocationModel?.data?.bearing!!
+                        myMarker?.setIcon(getMarkerIcon(rideDetailModel?.data?.vehicleType))
                     }
                 }
             })

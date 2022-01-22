@@ -80,7 +80,7 @@ class ViewRideModel {
         var totalAdditionalCharges: Double = 0.0
 
         @SerializedName("cancellationCharges")
-        var cancellationCharges: String ?= null
+        var cancellationCharges : Double ?= null
 
         @SerializedName("totalPayableCharges")
         var totalPayableCharges: Double = 0.0
