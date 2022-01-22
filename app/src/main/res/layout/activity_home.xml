@@ -364,7 +364,8 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingVertical="10dp"
-                                    android:paddingHorizontal="20dp">
+                                    android:paddingHorizontal="20dp"
+                                    android:background="@drawable/rounded_corner_night_mode">
 
                                     <RelativeLayout
                                         android:layout_width="match_parent"
