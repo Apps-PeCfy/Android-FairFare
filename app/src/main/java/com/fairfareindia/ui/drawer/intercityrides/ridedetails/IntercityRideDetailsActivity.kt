@@ -154,6 +154,13 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(actualBaseFare)
             }
 
+            if (model?.data?.estimatedTrackRide?.cancellationCharges.isNullOrEmpty()){
+                txtCancellationFeesMessage.visibility = View.GONE
+            }else{
+                txtCancellationFeesMessage.text = "${getString(R.string.msg_cancellation_fees_one)} ${ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.cancellationCharges?.toDouble())} ${getString(R.string.msg_cancellation_fees_two)}"
+                txtCancellationFeesMessage.visibility = View.GONE
+            }
+
             txtRideNumber.text =  getString(R.string.str_ride_id) +" : " + model?.data?.ride_number
             txtEstLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.luggageCharges?.toDouble())
             txtEstAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)

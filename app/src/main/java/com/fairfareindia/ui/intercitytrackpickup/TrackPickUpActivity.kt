@@ -234,6 +234,13 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
             txtTotalPayable.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.totalCharges?.toDouble())
             txtAdditionalCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.totalAdditionalCharges?.toDouble())
 
+            if (model?.data?.estimatedTrackRide?.cancellationCharges.isNullOrEmpty()){
+                txtCancellationFeesMessage.visibility = View.GONE
+            }else{
+                txtCancellationFeesMessage.text = "${getString(R.string.msg_cancellation_fees_one)} ${ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.cancellationCharges?.toDouble())} ${getString(R.string.msg_cancellation_fees_two)}"
+                txtCancellationFeesMessage.visibility = View.GONE
+            }
+
 
             if (model?.data?.rules.isNullOrEmpty()) {
                 txtRulesLabel.visibility = View.GONE
