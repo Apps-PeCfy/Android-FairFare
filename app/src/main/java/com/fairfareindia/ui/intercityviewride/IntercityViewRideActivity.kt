@@ -130,10 +130,9 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             txtTollCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.tollCharges)
             txtNightCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.nightCharges)
 
-
             if (info.permitType == Constants.TYPE_LOCAL){
                 txtBaseFareLabel.text =
-                    getString(R.string.str_basic_fare) + " ( ${ProjectUtilities.getDistanceInFormat(model?.ride?.actualDistance)} )"
+                    getString(R.string.str_basic_fare)
                 llAdditionalDistanceCharges.visibility = View.GONE
             }else{
                 txtBaseFareLabel.text =
@@ -210,6 +209,12 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 llPaymentMethod.visibility = View.GONE
             }else{
                 llPaymentMethod.visibility = View.VISIBLE
+            }
+
+            if (model?.ride?.tolls != null && model?.ride?.tolls?.size!! > 0) {
+               ivViewTollInfo.visibility = View.VISIBLE
+            }else{
+                ivViewTollInfo.visibility = View.GONE
             }
         }
     }

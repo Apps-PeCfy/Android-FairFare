@@ -220,13 +220,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         setStatusBarGradiant(this)
 
         // generateSSHKey(this)
-        progressDialogstart = ProgressDialog(this@HomeActivity)
-        progressDialogstart!!.setCancelable(false) // set cancelable to false
-        progressDialogstart!!.setMessage(getString(R.string.str_please_wait)) // set message
-        progressDialogstart!!.show() // show progress dialog
+        progressDialogstart = ProgressDialog(context)
+        progressDialogstart?.setCancelable(false) // set cancelable to false
+        progressDialogstart?.setMessage(getString(R.string.str_please_wait)) // set message
+        progressDialogstart?.show() // show progress dialog
 
 
-        binding.spinnerLang?.visibility = View.VISIBLE
+        binding.spinnerLang.visibility = View.VISIBLE
 
         initLocationUpdates()
 
@@ -333,7 +333,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
         if (SourceLat!!.isNotEmpty() && DestinationLat!!.isNotEmpty()) {
-            progressDialogstart!!.dismiss()
+            progressDialogstart?.dismiss()
         }
 
         EventBus.getDefault().register(this)
@@ -350,21 +350,40 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 btnIntercity.visibility = View.GONE
 
 
-                txtVehicleName?.text = rideModel?.vehicleName + " " + rideModel?.vehicleNo
-                txtDateTime?.text = AppUtils.changeDateFormat(
+                txtVehicleName.text = rideModel?.vehicleName
+                txtVehicleNumber.text = rideModel?.vehicleNo
+                txtDateTime.text = AppUtils.changeDateFormat(
                     rideModel?.dateTime,
                     "yyyy-MM-dd HH:mm:ss",
                     "EEE, MMM dd, h:mm a"
                 )
 
-                txtWayFlag.text = rideModel?.way_flag
+                if (rideModel?.permitType == Constants.TYPE_LOCAL){
+                    txtPermitType.text = rideModel?.permitType
+                }else{
+                    txtPermitType.text = rideModel?.permitType + " (${rideModel?.way_flag})"
+                }
+
                 txtSourceAddress.text = (rideModel?.originFullAddress)
                 txtDestinationAddress.text = (rideModel?.destinationFullAddress)
-                txtDateTime.text =
-                    rideModel?.estimatedTrackRide?.distance + " km, " + rideModel?.estimatedTrackRide?.totalTime
+                txtDriverName.text = rideModel?.driverName
 
-                txtAmount.text =
-                    ProjectUtilities.getAmountInFormat(rideModel?.estimatedTrackRide?.totalCharges?.toDouble())
+                if (rideModel?.status == Constants.BOOKING_SCHEDULED){
+                    txtStatusMessage.text = getString(R.string.str_ride_accepted)
+                    txtRideMessage.text = getString(R.string.msg_ride_scheduled)
+                    txtRideMessage.visibility = View.VISIBLE
+                }else if (rideModel?.status == Constants.BOOKING_ARRIVING){
+                    txtStatusMessage.text = getString(R.string.msg_track_arriving)
+                    txtRideMessage.text = getString(R.string.msg_ride_arriving)
+                    txtRideMessage.visibility = View.VISIBLE
+                }else if (rideModel?.status == Constants.BOOKING_ARRIVED){
+                    txtStatusMessage.text = getString(R.string.msg_track_arrived)
+                    txtRideMessage.text = getString(R.string.msg_ride_arrived)
+                    txtRideMessage.visibility = View.VISIBLE
+                }else if (rideModel?.status == Constants.BOOKING_ACTIVE){
+                    txtStatusMessage.text = getString(R.string.msg_track_active)
+                    txtRideMessage.visibility = View.GONE
+                }
 
                 Glide.with(context)
                     .load(rideModel?.vehicleImageUrl)
@@ -688,7 +707,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                             mapAndLocationReady()
                             getCity()
 
-                            progressDialogstart!!.dismiss()
+                            progressDialogstart?.dismiss()
                             binding.mainRelativeLayout.visibility = View.VISIBLE
 
 
