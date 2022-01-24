@@ -366,6 +366,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
         }else{
             myMarker?.rotation = driverLocationModel.data?.bearing!!
             myMarker?.position = newPosition
+            myMarker?.setIcon(getMarkerIcon(model?.data?.vehicleType))
         }
 
 
@@ -496,6 +497,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
 
                     myMarker?.rotation = driverLocationModel?.data?.bearing!!
                     myMarker?.position = destination
+                    myMarker?.setIcon(getMarkerIcon(model?.data?.vehicleType))
                 }
             })
             valueAnimator.start()
