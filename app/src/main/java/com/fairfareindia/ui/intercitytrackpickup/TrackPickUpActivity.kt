@@ -477,7 +477,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                         CameraUpdateFactory.newCameraPosition(
                             CameraPosition.Builder()
                                 .target(newPosition)
-                                //.bearing(getCompassBearing(startPosition, endPosition))
+                                .bearing(getCompassBearing(startPosition, endPosition))
                                 .zoom(getZoomLevel())
                                 .build()
                         )
