@@ -319,6 +319,7 @@
     <string name="str_current_fare">सध्याचे भाडे</string>
     <string name="drawer_wallet">पाकीट</string>
     <string name="title_intercity"> इंटरसिटी </string>
+    <string name="btn_intercity">इंटरसिटी राइड बुक करा</string>
     <string name="title_intercity_rides">इंटरसिटी राइड</string>
     <string name="str_one_way">एकेरि मार्ग</string>
     <string name="str_round_trip">राउंड ट्रिप</string>
@@ -364,6 +365,7 @@
     <string name="lbl_enter_message">संदेश प्रविष्ट करा</string>
     <string name="btn_cancel_ride">राइड रद्द करा</string>
     <string name="str_charges_for_additional">अतिरिक्त साठी शुल्क</string>
+    <string name="str_cancellation_fees">रद्दीकरण शुल्क</string>
     <string name="str_base_fare">मूळ भाडे</string>
     <string name="str_no_rides">तुम्ही अद्याप कोणत्याही राइड घेतलेल्या नाहीत.</string>
     <string name="str_start_ride">राइड सुरू करा</string>
@@ -427,7 +429,13 @@
     <string name="msg_two_way_ride_payment_two">2 रा राईड. एकूण</string>
     <string name="msg_cancellation_fees_one">रद्दीकरण शुल्क</string>
     <string name="msg_cancellation_fees_two">लागू आहे.</string>
-    <string name="str_ride_accepted">Ride Accepted</string>
+    <string name="str_ride_accepted">राइड स्वीकारली</string>
+
+    <string name="msg_track_active">सक्रिय राइड</string>
+    <string name="str_ride_id">राइड आयडी</string>
+    <string name="msg_ride_scheduled">ड्रायव्हर लवकरच तुम्हाला घेण्यासाठी येईल. कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
+    <string name="msg_ride_arriving">कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
+    <string name="msg_ride_arrived">कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
 
 </resources>
 

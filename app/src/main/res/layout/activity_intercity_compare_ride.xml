@@ -133,19 +133,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
                     android:background="@drawable/top_corner"
                     android:orientation="vertical">
+
                     <RelativeLayout
                         android:id="@+id/rl_hide_show"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_30sdp">
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal">
 
                         <TextView
-                            android:layout_centerInParent="true"
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_3sdp"
+                            android:layout_centerInParent="true"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_12sdp"
                             android:layout_marginBottom="@dimen/_15sdp"
@@ -156,20 +157,20 @@
                         android:id="@+id/txt_journey_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center"
                         android:text="@string/str_one_way"
                         android:textColor="@color/colorText"
-                        android:fontFamily="@font/notosansjp_regular"
-                        android:textSize="@dimen/text_16sp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp" />
+                        android:textSize="@dimen/text_16sp" />
 
                     <LinearLayout
                         android:id="@+id/ll_hide_view"
-                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_175sdp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="visible">
 
 
                         <RelativeLayout
@@ -180,35 +181,35 @@
                             android:layout_marginEnd="@dimen/_15sdp"
                             android:background="@drawable/roundedcorner"
                             android:orientation="horizontal"
+                            android:paddingVertical="@dimen/_5sdp"
                             android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingVertical="@dimen/_5sdp">
+                            android:paddingEnd="@dimen/_10sdp">
 
 
                             <TextView
                                 android:id="@+id/txt_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
-                                android:layout_toStartOf="@id/txt_luggage"
                                 android:layout_marginEnd="10dp"
+                                android:layout_toStartOf="@id/txt_luggage"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:text="02 Nov, 08:44 pm"
                                 android:textColor="@color/colorText"
-                                android:fontFamily="@font/notosansjp_regular"
-                                android:textSize="@dimen/text_14sp" />
+                                android:textSize="@dimen/text_14sp"
+                                android:textStyle="bold" />
 
 
                             <TextView
                                 android:id="@+id/txt_luggage"
-                                android:textStyle="bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="2 bags"
-                                android:layout_centerVertical="true"
                                 android:layout_alignParentEnd="true"
-                                android:textColor="@color/colorText"
+                                android:layout_centerVertical="true"
                                 android:fontFamily="@font/notosansjp_regular"
-                                android:textSize="@dimen/text_14sp" />
+                                android:text="2 bags"
+                                android:textColor="@color/colorText"
+                                android:textSize="@dimen/text_14sp"
+                                android:textStyle="bold" />
 
 
                         </RelativeLayout>
@@ -222,15 +223,15 @@
 
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/notosansjp_bold"
                                 android:includeFontPadding="false"
                                 android:paddingStart="@dimen/_5sdp"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
                                 android:text="@string/txt_available_rides"
-                                android:fontFamily="@font/notosansjp_bold"
+                                android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_14sp" />
 
 
@@ -243,10 +244,10 @@
                                 android:drawablePadding="@dimen/_4sdp"
                                 android:fontFamily="@font/notosansjp_bold"
                                 android:includeFontPadding="false"
-                                android:textColor="@color/colorGreyText"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
                                 android:text="@string/lbl_sort"
+                                android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_14sp" />
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -258,7 +259,6 @@
 
 
                         </RelativeLayout>
-
 
 
                     </LinearLayout>

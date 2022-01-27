@@ -320,6 +320,7 @@
     <string name="drawer_wallet">बटुआ</string>
 
     <string name="title_intercity"> इंटरसिटी </string>
+    <string name="btn_intercity">बुक इंटरसिटी राइड</string>
     <string name="title_intercity_rides">इंटरसिटी राइड</string>
     <string name="str_one_way">एक तरफ़ा </string>
     <string name="str_round_trip">राउंड ट्रिप</string>
@@ -365,6 +366,7 @@
     <string name="lbl_enter_message">संदेश दर्ज करें</string>
     <string name="btn_cancel_ride">सवारी रद्द करें</string>
     <string name="str_charges_for_additional">अतिरिक्त शुल्क</string>
+    <string name="str_cancellation_fees">निरस्तीकरण शुल्क</string>
     <string name="str_base_fare"> आधार किराया</string>
     <string name="str_no_rides">आपने अभी तक कोई राइड नहीं ली है।</string>
     <string name="str_start_ride">सवारी शुरू करें</string>
@@ -428,7 +430,14 @@
     <string name="msg_two_way_ride_payment_two">दूसरी सवारी का। कुल</string>
     <string name="msg_cancellation_fees_one">रद्द करने की फीस</string>
     <string name="msg_cancellation_fees_two">लागू की गई है।</string>
-    <string name="str_ride_accepted">Ride Accepted</string>
+    <string name="str_ride_accepted">सवारी स्वीकृत</string>
+
+
+    <string name="msg_track_active">सक्रिय सवारी</string>
+    <string name="str_ride_id">सवारी आईडी</string>
+    <string name="msg_ride_scheduled">ड्राइवर जल्द ही आपको लेने आएगा। सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
+    <string name="msg_ride_arriving">सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
+    <string name="msg_ride_arrived">सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
 
 </resources>
 

@@ -91,15 +91,15 @@
                     <Button
                         android:id="@+id/btn_intercity"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_above="@id/homeView"
                         android:layout_margin="@dimen/_10sdp"
                         android:background="@drawable/shape_roundedbtn"
                         android:fontFamily="@font/notosansjp_regular"
                         android:gravity="center"
-                        android:padding="5dp"
+                        android:paddingHorizontal="15dp"
                         android:layout_alignParentEnd="true"
-                        android:text="@string/title_intercity"
+                        android:text="@string/btn_intercity"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/text_14sp" />

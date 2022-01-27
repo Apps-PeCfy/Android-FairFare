@@ -308,6 +308,7 @@
     <string name="str_valid_for_new_users_only">Valid for New Users Only</string>
     <string name="str_reward_points">Sign Up and Get 200 Reward Points</string>
     <string name="title_intercity">Intercity</string>
+    <string name="btn_intercity">Book Intercity Ride</string>
     <string name="title_intercity_rides">Intercity Ride</string>
     <string name="str_one_way">One Way</string>
     <string name="str_round_trip">Round Trip</string>
@@ -357,6 +358,7 @@
     <string name="lbl_enter_message">Enter message</string>
     <string name="btn_cancel_ride">Cancel Ride</string>
     <string name="str_charges_for_additional">Charges for Additional</string>
+    <string name="str_cancellation_fees">Cancellation Fees</string>
     <string name="str_base_fare">Base Fare</string>
     <string name="str_no_rides">You have not taken any Rides yet.</string>
     <string name="str_start_ride">Start Ride</string>

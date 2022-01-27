@@ -366,8 +366,8 @@
                                 android:background="@color/secondaryLightGray" />
                         </LinearLayout>
 
+                        <!-- Night Charges -->
 
-                        <!-- LUGGAGE CHARGES -->
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -375,26 +375,26 @@
                             android:layout_marginStart="@dimen/_15sdp">
 
                             <TextView
+                                android:textColor="@color/colorGreyText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/notosansjp_regular"
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingBottom="@dimen/_8sdp"
-                                android:text="@string/str_luggage_charges"
-                                android:textColor="@color/colorGreyText"
-                                android:textSize="@dimen/text_14sp" />
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textSize="@dimen/text_14sp"
+                                android:text="@string/str_night_charges" />
 
                             <TextView
-                                android:id="@+id/tv_Luggage_Charges"
+                                android:textColor="@color/colorGreyText"
+                                android:id="@+id/txt_night_charges"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="end"
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingEnd="@dimen/_5sdp"
                                 android:paddingBottom="@dimen/_8sdp"
-                                android:textColor="@color/colorGreyText"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:textSize="@dimen/text_14sp" />
 
                             <TextView
@@ -405,6 +405,7 @@
                                 android:background="@color/secondaryLightGray" />
 
                         </RelativeLayout>
+
 
 
                         <View
@@ -478,8 +479,7 @@
                             android:layout_height="1sp"
                             android:background="@color/secondaryLightGray" />
 
-                        <!-- Night Charges -->
-
+                        <!-- LUGGAGE CHARGES -->
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -487,26 +487,26 @@
                             android:layout_marginStart="@dimen/_15sdp">
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingBottom="@dimen/_8sdp"
-                                android:fontFamily="@font/notosansjp_regular"
-                                android:textSize="@dimen/text_14sp"
-                                android:text="@string/str_night_charges" />
+                                android:text="@string/str_luggage_charges"
+                                android:textColor="@color/colorGreyText"
+                                android:textSize="@dimen/text_14sp" />
 
                             <TextView
-                                android:textColor="@color/colorGreyText"
-                                android:id="@+id/txt_night_charges"
+                                android:id="@+id/tv_Luggage_Charges"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/notosansjp_regular"
                                 android:gravity="end"
                                 android:paddingTop="@dimen/_8sdp"
                                 android:paddingEnd="@dimen/_5sdp"
                                 android:paddingBottom="@dimen/_8sdp"
-                                android:fontFamily="@font/notosansjp_regular"
+                                android:textColor="@color/colorGreyText"
                                 android:textSize="@dimen/text_14sp" />
 
                             <TextView
@@ -522,6 +522,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1sp"
                             android:background="@color/secondaryLightGray" />
+
 
                         <!-- SURCHARGES -->
 
@@ -655,15 +656,6 @@
                         android:background="@color/secondaryLightGray" />
 
 
-                    <TextView
-                        android:id="@+id/txt_cancellation_fees_message"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:fontFamily="@font/notosansjp_bold"
-                        android:textColor="@color/colorGreyText"
-                        android:textSize="@dimen/text_16sp"
-                        android:visibility="gone" />
 
 
                     <TextView

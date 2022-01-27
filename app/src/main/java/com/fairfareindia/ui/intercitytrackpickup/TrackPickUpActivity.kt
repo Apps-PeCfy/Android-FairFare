@@ -35,6 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import org.json.JSONObject
 import java.util.*
+import kotlin.math.roundToInt
 
 class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityTrackPickUpView {
     lateinit var binding: ActivityTrackPickUpBinding
@@ -208,21 +209,39 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                 drawSourceMarker()
             }
 
+            if (model?.data?.permitType == Constants.TYPE_INTERCITY){
+                llAdditionalDistance.visibility = View.VISIBLE
+                if (model?.data?.estimatedTrackRide?.baseDistance == 0.0){
+                    txtBaseFareLabel.text = getString(R.string.str_base_fare)
+                }else{
+                    txtBaseFareLabel.text =
+                        getString(R.string.str_base_fare) + "( ${ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.baseDistance)} )"
+                }
 
-            if (model?.data?.estimatedTrackRide?.additionalDistance != 0.0) {
-                txtChargesForAdditionalKmLabel.text =
-                    getString(R.string.str_charges_for_additional) +" ${ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)}"
-            } else {
-                txtChargesForAdditionalKmLabel.text = getString(R.string.str_charges_for_additional)
+                if (model?.data?.estimatedTrackRide?.additionalDistance != 0.0) {
+                    txtChargesForAdditionalKmLabel.text =
+                        getString(R.string.str_charges_for_additional) +" ${ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)}"
+                } else {
+                    txtChargesForAdditionalKmLabel.text = getString(R.string.str_charges_for_additional)
 
-            }
+                }
+                txtAdditionalCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.totalAdditionalCharges?.toDouble())
 
-            if (model?.data?.estimatedTrackRide?.baseDistance == 0.0){
-                txtBaseFareLabel.text = getString(R.string.str_base_fare)
             }else{
-                txtBaseFareLabel.text =
-                getString(R.string.str_base_fare) + "( ${ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.baseDistance)} )"
+                llAdditionalDistance.visibility = View.GONE
+                txtBaseFareLabel.text = getString(R.string.str_basic_fare)
+                var estBaseFare = model?.data?.estimatedTrackRide?.basicFare!! + model?.data?.estimatedTrackRide?.additionalDistanceCharges!!
+                txtBaseFare.text = ProjectUtilities.getAmountInFormat(estBaseFare)
+
+                var estAdditionalCharges = model?.data?.estimatedTrackRide?.totalAdditionalCharges!! - (model?.data?.estimatedTrackRide?.additionalDistanceCharges!!).roundToInt()
+                txtAdditionalCharges.text = ProjectUtilities.getAmountInFormat(estAdditionalCharges)
+
             }
+
+
+
+
+
 
 
 
@@ -232,13 +251,12 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
 
             tvConvenienceFees.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.convenienceFees?.toDouble())
             txtTotalPayable.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.totalCharges?.toDouble())
-            txtAdditionalCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.totalAdditionalCharges?.toDouble())
 
             if ( model?.data?.estimatedTrackRide?.cancellationCharges != null && model?.data?.estimatedTrackRide?.cancellationCharges!! > 0.0){
-                txtCancellationFeesMessage.text = "${getString(R.string.msg_cancellation_fees_one)} ${ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.cancellationCharges)} ${getString(R.string.msg_cancellation_fees_two)}"
-                txtCancellationFeesMessage.visibility = View.VISIBLE
+                txtCancellationFees.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.cancellationCharges)
+                llCancellationCharges.visibility = View.VISIBLE
             }else{
-                txtCancellationFeesMessage.visibility = View.GONE
+                llCancellationCharges.visibility = View.GONE
             }
 
 

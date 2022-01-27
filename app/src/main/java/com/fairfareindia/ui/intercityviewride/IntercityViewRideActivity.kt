@@ -168,13 +168,6 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             txtTotalPayable.text = ProjectUtilities.getAmountInFormat(model?.ride?.totalPayableCharges)
             txtAdditionalCharges.text = ProjectUtilities.getAmountInFormat(model?.ride?.totalAdditionalCharges)
 
-            if ( model?.ride?.cancellationCharges != null && model?.ride?.cancellationCharges!! > 0.0){
-                txtCancellationFeesMessage.text = "${getString(R.string.msg_cancellation_fees_one)} ${ProjectUtilities.getAmountInFormat(model?.ride?.cancellationCharges?.toDouble())} ${getString(R.string.msg_cancellation_fees_two)}"
-                txtCancellationFeesMessage.visibility = View.VISIBLE
-            }else{
-                txtCancellationFeesMessage.visibility = View.GONE
-            }
-
             if(model?.ride?.rules.isNullOrEmpty()){
                 txtRulesLabel.visibility = View.GONE
                 txtRules.visibility = View.GONE

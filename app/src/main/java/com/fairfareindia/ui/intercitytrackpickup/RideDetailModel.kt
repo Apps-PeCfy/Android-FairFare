@@ -303,7 +303,7 @@ class RideDetailModel {
         var tolls: ArrayList<Tolls> ? = ArrayList()
 
         @SerializedName("totalAdditionalCharges")
-        var totalAdditionalCharges: String? = null
+        var totalAdditionalCharges: Double = 0.0
 
     }
 

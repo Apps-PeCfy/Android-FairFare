@@ -155,10 +155,11 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             }
 
             if ( model?.data?.estimatedTrackRide?.cancellationCharges != null && model?.data?.estimatedTrackRide?.cancellationCharges!! > 0.0){
-                txtCancellationFeesMessage.text = "${getString(R.string.msg_cancellation_fees_one)} ${ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.cancellationCharges)} ${getString(R.string.msg_cancellation_fees_two)}"
-                txtCancellationFeesMessage.visibility = View.VISIBLE
+                txtEstCancellation.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.cancellationCharges)
+                txtActualCancellation.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.cancellationCharges)
+                llCancellationCharges.visibility = View.VISIBLE
             }else{
-                txtCancellationFeesMessage.visibility = View.GONE
+                llCancellationCharges.visibility = View.GONE
             }
 
             txtRideNumber.text =  getString(R.string.str_ride_id) +" : " + model?.data?.ride_number
