@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fairfareindia.R
@@ -41,6 +42,7 @@ class LocalCompareRideActivity : BaseLocationClass(), OnMapReadyCallback {
     var destinationLong: String? = null
     private var estTimeInSeconds: String? = null
     private var scheduleType: String? = null
+    private var isFullView: Boolean = false
 
     var mMap: GoogleMap? = null
 
@@ -83,12 +85,25 @@ class LocalCompareRideActivity : BaseLocationClass(), OnMapReadyCallback {
             toolbarHome.setNavigationOnClickListener { onBackPressed() }
 
             rlHideShow.setOnClickListener {
-                if (rlHideView.visibility == View.VISIBLE){
-                    rlHideView.visibility = View.GONE
+                if (!isFullView){
+                    isFullView = true
+                    locationCardView.visibility = View.GONE
+                    rlHideView.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                    rlHideView.requestLayout()
                 }else{
-                    rlHideView.visibility = View.VISIBLE
+                    isFullView = false
+                    locationCardView.visibility = View.VISIBLE
+                    rlHideView.layoutParams.height = 500
+                    rlHideView.requestLayout()
                 }
 
+            }
+
+            txtSort.setOnClickListener {
+                if (list.isNotEmpty()){
+                    list.reverse()
+                    mAdapter?.updateAdapter(list)
+                }
             }
         }
     }

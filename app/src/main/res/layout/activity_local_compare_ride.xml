@@ -46,7 +46,6 @@
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@+id/homeView"
                     android:layout_marginBottom="-30dp"
                     tools:context="com.fairfareindia.ui.location.MyLocationActivity" />
 
@@ -95,9 +94,6 @@
 
 
                         <TextView
-                            android:paddingTop="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:textColor="@color/colorGreyText"
                             android:id="@+id/txt_drop_off_location"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -107,10 +103,13 @@
                             android:drawableStart="@drawable/triangle"
                             android:drawablePadding="@dimen/_15sdp"
                             android:fontFamily="@font/notosansjp_regular"
-                            android:textSize="@dimen/text_14sp"
                             android:gravity="center_vertical"
                             android:includeFontPadding="false"
-                            android:text="@string/str_drop_off_location" />
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:text="@string/str_drop_off_location"
+                            android:textColor="@color/colorGreyText"
+                            android:textSize="@dimen/text_14sp" />
 
 
                         <View
