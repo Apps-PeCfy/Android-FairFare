@@ -207,6 +207,7 @@ class NotificationsFragment : Fragment(), INotificationView {
               }else if (model?.data?.status == Constants.BOOKING_ACTIVE){
                   val intent = Intent(activity, InterCityTrackRideActivity::class.java)
                   intent.putExtra("ride_id", model?.data?.id.toString())
+                  intent.putExtra("vehicle_type", model.data?.vehicleType)
                   startActivity(intent)
               }else if (model?.data?.status == Constants.BOOKING_COMPLETED){
                   val intent = Intent(activity, IntercityRideDetailsActivity::class.java)

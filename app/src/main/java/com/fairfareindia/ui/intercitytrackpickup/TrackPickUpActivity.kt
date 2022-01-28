@@ -309,6 +309,7 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
                 startActivity(
                     Intent(context, InterCityTrackRideActivity::class.java)
                         .putExtra("ride_id", rideID)
+                        .putExtra("vehicle_type", model?.data?.vehicleType)
                 )
                 finish()
             }else if (driverLocationModel?.data?.status == Constants.BOOKING_COMPLETED){

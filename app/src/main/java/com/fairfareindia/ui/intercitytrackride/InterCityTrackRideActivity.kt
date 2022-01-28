@@ -75,6 +75,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     private var remainingDistanceText: String? = null
     private var remainingDistance: Int = 0
     private var remainingTimeText: String? = null
+    private var vehicleType: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +88,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
     private fun init() {
         rideID = intent.getStringExtra("ride_id")
+        vehicleType = intent.getStringExtra("vehicle_type")
 
 
         val mapFragment = supportFragmentManager
@@ -191,6 +193,8 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             txtPickUpLocation.text = rideDetailModel?.data?.originAddress
             txtDropUpLocation.text = rideDetailModel?.data?.destinationAddress
 
+            vehicleType = rideDetailModel?.data?.vehicleType
+
             txtDistanceTime.text = getString(R.string.str_est_distance) +
                     " - ${rideDetailModel?.data?.estimatedTrackRide?.distance} km / " + getString(
                 R.string.str_est_time
@@ -294,7 +298,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
         myMarker = mMap!!.addMarker(
             MarkerOptions()
                 .position(newPosition)
-                .icon(getMarkerIcon(rideDetailModel?.data?.vehicleType))
+                .icon(getMarkerIcon(vehicleType))
                 .anchor(0.5f, 0.5f)
                 .draggable(true)
                 .flat(true)
@@ -324,7 +328,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
             myMarker = mMap?.addMarker(
                 MarkerOptions()
                     .position(newPosition)
-                    .icon(getMarkerIcon(rideDetailModel?.data?.vehicleType))
+                    .icon(getMarkerIcon(vehicleType))
                     .anchor(0.5f, 0.5f)
                     .draggable(true)
                     .flat(true)
@@ -333,7 +337,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
         } else {
             myMarker?.rotation = driverLocationModel.data?.bearing!!
             myMarker?.position = newPosition
-            myMarker?.setIcon(getMarkerIcon(rideDetailModel?.data?.vehicleType))
+            myMarker?.setIcon(getMarkerIcon(vehicleType))
         }
 
         if (myMarker != null && prevLatLng != null) {
@@ -462,7 +466,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     if (IS_TRACKING_DRIVER_IN_TRACK_RIDE == "true") {
                         myMarker?.position = destination
                         myMarker?.rotation = driverLocationModel?.data?.bearing!!
-                        myMarker?.setIcon(getMarkerIcon(rideDetailModel?.data?.vehicleType))
+                        myMarker?.setIcon(getMarkerIcon(vehicleType))
                     }
                 }
             })

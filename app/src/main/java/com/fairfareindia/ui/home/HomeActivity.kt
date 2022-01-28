@@ -475,6 +475,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 } else if (rideModel?.status == Constants.BOOKING_ACTIVE) {
                     val intent = Intent(this@HomeActivity, InterCityTrackRideActivity::class.java)
                     intent.putExtra("ride_id", rideModel?.id.toString())
+                    intent.putExtra("vehicle_type", rideModel?.vehicleType)
                     startActivity(intent)
                 } else if (rideModel?.status == Constants.BOOKING_COMPLETED) {
                     val intent = Intent(this@HomeActivity, IntercityRideDetailsActivity::class.java)

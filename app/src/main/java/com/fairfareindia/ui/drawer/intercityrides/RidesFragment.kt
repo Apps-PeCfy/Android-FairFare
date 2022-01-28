@@ -95,6 +95,7 @@ class RidesFragment : Fragment(), IRidesView{
                 }else if (model.status == Constants.BOOKING_ACTIVE){
                     val intent = Intent(activity, InterCityTrackRideActivity::class.java)
                     intent.putExtra("ride_id", model.id.toString())
+                    intent.putExtra("vehicle_type", model.vehicleType)
                     startActivity(intent)
                 }else if (model.status == Constants.BOOKING_COMPLETED){
                     val intent = Intent(activity, IntercityRideDetailsActivity::class.java)

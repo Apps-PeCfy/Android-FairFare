@@ -90,10 +90,10 @@ object ProjectUtilities {
     }
 
     fun getDistanceInFormat(distance: Double?): String {
-        var returnAmount = "0.00 km"
+        var returnAmount = "0.0 km"
 
         if(distance != null){
-            var formatter = DecimalFormat("#,##0.00")
+            var formatter = DecimalFormat("#,##0.0")
             returnAmount =  formatter.format(distance) + " km"
         }
 
