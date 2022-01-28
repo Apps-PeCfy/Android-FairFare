@@ -154,7 +154,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 txtActualBaseFare.text = ProjectUtilities.getAmountInFormat(actualBaseFare)
             }
 
-            if ( model?.data?.estimatedTrackRide?.cancellationCharges != null && model?.data?.estimatedTrackRide?.cancellationCharges!! > 0.0){
+            if ( model?.data?.actualTrackRide?.cancellationCharges != null && model?.data?.actualTrackRide?.cancellationCharges!! > 0.0){
                 txtEstCancellation.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.cancellationCharges)
                 txtActualCancellation.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.cancellationCharges)
                 llCancellationCharges.visibility = View.VISIBLE
