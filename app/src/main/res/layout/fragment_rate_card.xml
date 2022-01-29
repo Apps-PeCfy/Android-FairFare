@@ -107,6 +107,7 @@
                 android:paddingStart="@dimen/_5sdp"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/text_14sp"
+                android:visibility="gone"
                 android:fontFamily="@font/notosansjp_regular"/>
 
 
@@ -121,7 +122,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:visibility="gone"/>
 
 
 

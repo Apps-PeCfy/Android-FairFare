@@ -251,17 +251,16 @@
                                             android:textColor="@color/colorGreyText"
                                             android:textSize="@dimen/text_14sp" />
 
-                                        <LinearLayout
+                                        <RelativeLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:orientation="horizontal">
+                                            android:layout_marginTop="10dp">
 
                                             <TextView
                                                 android:id="@+id/txt_driver_name"
-                                                android:layout_width="0dp"
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_weight="6"
+                                                android:layout_toStartOf="@id/txt_rating"
                                                 android:drawableStart="@drawable/iv_person"
                                                 android:drawablePadding="@dimen/_3sdp"
                                                 android:fontFamily="@font/notosansjp_regular"
@@ -271,19 +270,19 @@
 
                                             <TextView
                                                 android:id="@+id/txt_rating"
-                                                android:layout_width="0dp"
+                                                android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginStart="10dp"
-                                                android:layout_weight="5"
                                                 android:drawableStart="@mipmap/ic_rating_star"
                                                 android:drawablePadding="@dimen/_3sdp"
                                                 android:fontFamily="@font/notosansjp_regular"
                                                 android:text="5.0"
+                                                android:layout_alignParentEnd="true"
                                                 android:textColor="@color/colorGreyText"
                                                 android:textSize="@dimen/text_14sp" />
 
 
-                                        </LinearLayout>
+                                        </RelativeLayout>
                                     </LinearLayout>
 
 

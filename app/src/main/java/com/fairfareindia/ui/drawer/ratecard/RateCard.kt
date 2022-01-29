@@ -388,8 +388,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
 
                         if (getRateCardList.get(0).rateCards!!.size > 1) {
-                            tvEmptySpinner!!.visibility = View.GONE
-                            spinner_type_rate_card!!.visibility = View.VISIBLE
+                          //  tvEmptySpinner!!.visibility = View.GONE
+                          //  spinner_type_rate_card!!.visibility = View.VISIBLE
 
                             spinnr = java.util.ArrayList()
                             for (i in (getRateCardList.get(0).rateCards)!!.indices) {
@@ -399,8 +399,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
                             }
                         }else{
-                            tvEmptySpinner!!.visibility = View.VISIBLE
-                            spinner_type_rate_card!!.visibility = View.GONE
+                           // tvEmptySpinner!!.visibility = View.VISIBLE
+                          //  spinner_type_rate_card!!.visibility = View.GONE
                             tvEmptySpinner!!.text =  getRateCardList[0]!!.rateCards!!.get(0).name
                             ZerothPosition()
 
@@ -496,13 +496,13 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                         }
 
 
-                        spinner_type_rate_card!!.visibility = View.VISIBLE
+                       // spinner_type_rate_card!!.visibility = View.VISIBLE
                         spinner_city!!.visibility = View.VISIBLE
 
                         if (getRateCardList.get(0).rateCards!!.size > 1) {
 
-                            tvEmptySpinner!!.visibility = View.GONE
-                            spinner_type_rate_card!!.visibility = View.VISIBLE
+                           // tvEmptySpinner!!.visibility = View.GONE
+                           // spinner_type_rate_card!!.visibility = View.VISIBLE
 
 
                             val auto: ArrayAdapter<*> = ArrayAdapter<Any?>(
@@ -513,8 +513,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                             auto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             spinner_type_rate_card!!.adapter = auto
                         }else{
-                            tvEmptySpinner!!.visibility = View.VISIBLE
-                            spinner_type_rate_card!!.visibility = View.GONE
+                           // tvEmptySpinner!!.visibility = View.VISIBLE
+                           // spinner_type_rate_card!!.visibility = View.GONE
                             tvEmptySpinner!!.text =  getRateCardList[0]!!.rateCards!!.get(0).name
 
                         }
@@ -545,8 +545,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
 
                                 if (getRateCardList.get(tab.position).rateCards!!.size > 1) {
 
-                                    tvEmptySpinner!!.visibility = View.GONE
-                                    spinner_type_rate_card!!.visibility = View.VISIBLE
+                                   // tvEmptySpinner!!.visibility = View.GONE
+                                  //  spinner_type_rate_card!!.visibility = View.VISIBLE
                                     spinnr = java.util.ArrayList()
 
                                     for (i in (getRateCardList.get(tab.position).rateCards)!!.indices) {
@@ -569,8 +569,8 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                                     spinner_type_rate_card!!.adapter = auto
                                     spinner_type_rate_card!!.onItemSelectedListener = this@RateCard
                                 }else{
-                                    tvEmptySpinner!!.visibility = View.VISIBLE
-                                    spinner_type_rate_card!!.visibility = View.GONE
+                                   // tvEmptySpinner!!.visibility = View.VISIBLE
+                                  //  spinner_type_rate_card!!.visibility = View.GONE
                                     tvEmptySpinner!!.text =  getRateCardList[tab.position]!!.rateCards!!.get(0).name
                                     ZerothPosition()
 

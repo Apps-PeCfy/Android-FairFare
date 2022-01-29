@@ -246,30 +246,54 @@
                                     android:layout_marginStart="10dp"
                                     android:layout_toEndOf="@+id/ll_image"
                                     android:gravity="center_vertical"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
 
-                                    <LinearLayout
+                                    <RelativeLayout
                                         android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical">
+                                        android:layout_height="match_parent">
 
 
 
                                         <TextView
                                             android:id="@+id/txt_vehicle_number"
-                                            android:layout_width="wrap_content"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
+                                            android:layout_toStartOf="@id/txt_luggage"
                                             android:fontFamily="@font/notosansjp_regular"
                                             android:text=""
                                             android:textColor="@color/colorGreyText"
                                             android:textSize="@dimen/text_14sp" />
 
+                                        <TextView
+                                            android:id="@+id/txt_luggage"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:drawableStart="@drawable/iv_bags"
+                                            android:drawablePadding="8dp"
+                                            android:text=""
+                                            android:layout_alignParentEnd="true"
+                                            android:layout_marginStart="10dp"
+                                            android:gravity="end"
+                                            android:textColor="@color/colorGreyText" />
+
+
+
+
+                                    </RelativeLayout>
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:orientation="vertical">
+
+
                                         <RelativeLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="8dp">
+                                            android:layout_toStartOf="@id/txt_date">
 
 
                                             <ImageView
@@ -296,40 +320,20 @@
                                         </RelativeLayout>
 
 
-                                    </LinearLayout>
-
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginStart="10dp"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical">
-
-
-                                        <TextView
-                                            android:id="@+id/txt_luggage"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginBottom="3dp"
-                                            android:drawableStart="@drawable/iv_bags"
-                                            android:drawablePadding="8dp"
-                                            android:text=""
-                                            android:textColor="@color/colorGreyText" />
-
-
                                         <TextView
                                             android:id="@+id/txt_date"
-                                            android:layout_width="match_parent"
+                                            android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="8dp"
+                                            android:layout_alignParentEnd="true"
+                                            android:gravity="end"
                                             android:drawableStart="@drawable/ic_clock"
                                             android:drawablePadding="8dp"
+                                            android:layout_marginStart="10dp"
                                             android:text=""
                                             android:textColor="@color/colorGreyText" />
 
 
-                                    </LinearLayout>
+                                    </RelativeLayout>
 
 
                                 </LinearLayout>

@@ -86,10 +86,10 @@ object Constants {
 
     //RazorPay Key
     //Test
-    var RAZOR_PAY_KEY = "rzp_test_W9rG6mEpxnV17V"
+    var RAZOR_PAY_KEY = "rzp_test_GmqJPYOmCwL4qO"
 
     //Live
-    // var RAZOR_PAY_KEY = "rzp_test_W9rG6mEpxnV17V";
+    // var RAZOR_PAY_KEY = "rzp_test_GmqJPYOmCwL4qO";
 
     // Notification_Types
     var NOTIF_SCREEN_RIDE = "ride"
