@@ -14,6 +14,7 @@ import com.fairfareindia.ui.drawer.mydisput.pojo.GetDisputResponsePOJO
 import com.fairfareindia.ui.drawer.intercityrides.GetRideResponsePOJO
 import com.fairfareindia.ui.drawer.notifications.NotificationModel
 import com.fairfareindia.ui.drawer.privacypolicy.ContentResponsePOJO
+import com.fairfareindia.ui.drawer.ratecard.pojo.RateCardModel
 import com.fairfareindia.ui.drawer.ratecard.pojo.RateCardResponsePOJO
 import com.fairfareindia.ui.drawer.setting.pojo.SettingResponsePojo
 import com.fairfareindia.ui.home.pojo.DeleteSaveDataResponsePOJO
@@ -468,6 +469,13 @@ interface NetworkService {
         @Query("time_format") time_format: String?
     ): Call<ContactUsResponsePojo?>?
 
+    @POST("getNewRateCardDetails")
+    fun getNewRateCardDetails(
+        @Header("Authorization") header: String?,
+        @Query("permit_type") permit_type: String?,
+        @Query("from_city_id") from_city_id: String?,
+        @Query("to_city_id") to_city_id: String?
+    ): Call<RateCardModel?>?
 
     /*  @GET("getAllowCities")
       fun getAllowCities(@HeaderMap header: HashMap<String, String>): Call<GetAllowCityResponse?>?
@@ -479,6 +487,7 @@ interface NetworkService {
         @Query("latitude") latitude: String?,
         @Query("longitude") longitude: String?
     ): Call<GetAllowCityResponse?>?
+
 
     @GET("getToCities")
     fun getToInterCities(

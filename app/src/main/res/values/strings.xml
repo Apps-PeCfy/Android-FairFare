@@ -11,7 +11,6 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU</string>
 
 
-
     <string name="app_name">FairFareIndia</string>
     <string name="logIn">Sign In</string>
     <string name="continuetxt">By continuing, you agree to Fair Fare</string>
@@ -435,5 +434,6 @@
     <string name="msg_ride_scheduled">Driver will come to pick you up soon. Please share the OTP with driver before starting you ride.</string>
     <string name="msg_ride_arriving">Please share the OTP with driver before starting you ride.</string>
     <string name="msg_ride_arrived">Please share the OTP with driver before starting you ride.</string>
+    <string name="str_no_rate_cards">No rate cards found.</string>
 </resources>
 

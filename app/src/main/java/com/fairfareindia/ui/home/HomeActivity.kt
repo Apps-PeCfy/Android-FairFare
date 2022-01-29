@@ -51,7 +51,7 @@ import com.fairfareindia.ui.drawer.notifications.NotificationsFragment
 import com.fairfareindia.ui.drawer.pojo.DrawerPojo
 import com.fairfareindia.ui.drawer.privacypolicy.ContentPage
 import com.fairfareindia.ui.drawer.privacypolicy.TermsOfUse
-import com.fairfareindia.ui.drawer.ratecard.RateCard
+import com.fairfareindia.ui.drawer.ratecard.RateCardsFragment
 import com.fairfareindia.ui.drawer.setting.Setting
 import com.fairfareindia.ui.home.pojo.GeneralSettingModel
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
@@ -1252,7 +1252,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         drawerLayout.closeDrawer(Gravity.LEFT)
                         drawerLayout.closeDrawer(Gravity.START)
                     }
-                    replaceFragment(RateCard())
+                    replaceFragment(RateCardsFragment())
                 } else {
                     ProjectUtilities.showToast(
                         this@HomeActivity,

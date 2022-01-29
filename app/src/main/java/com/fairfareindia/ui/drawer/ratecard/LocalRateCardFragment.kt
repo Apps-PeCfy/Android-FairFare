@@ -2,7 +2,6 @@ package com.fairfareindia.ui.drawer.ratecard
 
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.BlendMode
@@ -24,7 +23,6 @@ import com.fairfareindia.R
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.drawer.ratecard.pojo.RateCardResponsePOJO
-import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
 import com.fairfareindia.utils.Constants
 import com.fairfareindia.utils.PreferencesManager
@@ -38,7 +36,7 @@ import retrofit2.Response
 import java.io.IOException
 import kotlin.collections.ArrayList
 
-class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickListener {
+class LocalRateCardFragment : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     var activityIsRunning = false
     var selectedPosition = 0
@@ -172,7 +170,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+   /* override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater!!.inflate(R.menu.menu_home_lang, menu!!)
         super.onCreateOptionsMenu(menu!!, inflater)
     }
@@ -191,7 +189,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
             }
         }
         return true
-    }
+    }*/
 
 
     private fun initView() {
@@ -267,7 +265,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                     }
 
 
-                    spinner_city!!.onItemSelectedListener = this@RateCard
+                    spinner_city!!.onItemSelectedListener = this@LocalRateCardFragment
 
                     citycalles = "first"
 
@@ -420,7 +418,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                             rdbtn.setCircleColor(getResources().getColor(R.color.gradientstartcolor))
 
 
-                            rdbtn.setOnClickListener(this@RateCard)
+                            rdbtn.setOnClickListener(this@LocalRateCardFragment)
 
                             if (cityId.equals("2707")) {
                                 if ((getRateCardList.get(selectedPosition).rateCards!!.get(0).rateCards!!.get(
@@ -567,7 +565,7 @@ class RateCard : Fragment(), AdapterView.OnItemSelectedListener, View.OnClickLis
                                     )
                                     auto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                                     spinner_type_rate_card!!.adapter = auto
-                                    spinner_type_rate_card!!.onItemSelectedListener = this@RateCard
+                                    spinner_type_rate_card!!.onItemSelectedListener = this@LocalRateCardFragment
                                 }else{
                                    // tvEmptySpinner!!.visibility = View.VISIBLE
                                   //  spinner_type_rate_card!!.visibility = View.GONE
