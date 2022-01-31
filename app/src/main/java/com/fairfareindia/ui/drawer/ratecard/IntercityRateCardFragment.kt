@@ -91,7 +91,9 @@ class IntercityRateCardFragment : Fragment(), IRateCardsView {
                     if (!fromCityList.isNullOrEmpty()){
                         fromCityID = fromCityList[position].id.toString()
                         toCitySpinner.clear()
+                        binding.recyclerView.visibility = View.GONE
                         iRateCardsPresenter?.getToInterCities(token, fromCityID)
+
                     }
 
                 }
@@ -111,6 +113,7 @@ class IntercityRateCardFragment : Fragment(), IRateCardsView {
 
                     if (!toCityList.isNullOrEmpty() && !fromCityID.isNullOrEmpty()){
                         toCityID = toCityList[position].id.toString()
+                        binding.recyclerView.visibility = View.GONE
                         iRateCardsPresenter?.getRateCards(token, Constants.TYPE_INTERCITY, fromCityID, toCityID)
                     }
 
@@ -124,8 +127,10 @@ class IntercityRateCardFragment : Fragment(), IRateCardsView {
 
             tabs.setOnTabSelectedListener(object : OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
+                    binding.swipeRefresh.isRefreshing = true
                     selectedRateCardModel = rateCardModel?.rateCards!![tab.position]
-                    setRecyclerView()
+                    mAdapter?.updateAdapter(selectedRateCardModel?.rateCardsDetails!!)
+                    binding.swipeRefresh.isRefreshing = false
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -152,7 +157,6 @@ class IntercityRateCardFragment : Fragment(), IRateCardsView {
             binding.recyclerView.layoutManager = LinearLayoutManager(mContext)
             binding.recyclerView.adapter = mAdapter
         }
-
 
     }
 
@@ -264,6 +268,7 @@ class IntercityRateCardFragment : Fragment(), IRateCardsView {
     }
 
     override fun showWait() {
+        binding.swipeRefresh.isRefreshing = true
        // ProjectUtilities.showProgressDialog(mContext)
     }
 
