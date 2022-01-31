@@ -148,6 +148,12 @@ class ViewRideModel {
         @SerializedName("city")
         var city: String? = null
 
+        @SerializedName("razorpay_key")
+        var razorpay_key: String? = null
+
+        @SerializedName("razorpay_secret_key")
+        var razorpay_secret_key: String? = null
+
     }
 
 

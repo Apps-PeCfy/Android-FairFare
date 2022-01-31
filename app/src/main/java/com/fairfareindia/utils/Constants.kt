@@ -81,6 +81,8 @@ object Constants {
     var IS_TRACKING_FROM_DRIVER = "is_tracking_from_driver"
     var CANCELLATION_FEES_INTERCITY = "cancellation_fees_intercity"
     var CANCELLATION_FEES_LOCAL = "cancellation_fees_local"
+    var RAZORPAY_KEY = "razorpay_key"
+    var IS_RAZORPAY_MERCHANT_ADMIN = "is_razorpay_merchant_admin"
 
 
 

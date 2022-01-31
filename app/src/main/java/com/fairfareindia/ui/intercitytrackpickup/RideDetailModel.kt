@@ -518,6 +518,12 @@ class RideDetailModel {
         @SerializedName("isOnline")
         var isOnline: String? = null
 
+        @SerializedName("razorpay_key")
+        var razorpay_key: String? = null
+
+        @SerializedName("razorpay_secret_key")
+        var razorpay_secret_key: String? = null
+
     }
 
 

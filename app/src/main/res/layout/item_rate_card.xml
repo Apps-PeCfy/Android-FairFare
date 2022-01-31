@@ -9,8 +9,9 @@
         android:id="@+id/txt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_16sp"
-        android:fontFamily="@font/notosansjp_bold"
+        android:textSize="@dimen/text_14sp"
+        android:fontFamily="@font/notosansjp_regular"
+        android:textStyle="bold"
         android:textColor="@color/colorText"/>
 
     <TextView
