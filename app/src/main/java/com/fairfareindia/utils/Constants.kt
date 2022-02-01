@@ -86,9 +86,7 @@ object Constants {
 
 
 
-    //RazorPay Key
-    //Test
-    var RAZOR_PAY_KEY = "rzp_test_GmqJPYOmCwL4qO"
+
 
     //Live
     // var RAZOR_PAY_KEY = "rzp_test_GmqJPYOmCwL4qO";

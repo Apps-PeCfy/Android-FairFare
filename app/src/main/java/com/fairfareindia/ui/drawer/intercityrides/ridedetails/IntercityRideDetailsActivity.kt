@@ -333,7 +333,12 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
          */
         val activity: Activity = this
         val checkout = Checkout()
-        checkout.setKeyID(Constants.RAZOR_PAY_KEY)
+        var unionRazorpayKey = model?.data?.driver?.razorpay_key
+        if (AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.IS_RAZORPAY_MERCHANT_ADMIN) == "false" && !unionRazorpayKey.isNullOrEmpty()){
+            checkout.setKeyID(unionRazorpayKey)
+        }else{
+            checkout.setKeyID(AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.RAZORPAY_KEY))
+        }
         try {
             val options = JSONObject()
             options.put("name", SessionManager.getInstance(context).getUserModel()?.name)
