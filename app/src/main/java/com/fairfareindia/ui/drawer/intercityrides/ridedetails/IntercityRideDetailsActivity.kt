@@ -50,6 +50,12 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
         rideID = intent.getStringExtra("ride_id")
         isFromEndRide = intent.getBooleanExtra("isFromEndRide", false)
 
+        if (isFromEndRide){
+            binding.toolbar.title = getString(R.string.title_end_ride)
+        }else{
+            binding.toolbar.title = getString(R.string.title_ride_details)
+        }
+
         PreferencesManager.initializeInstance(context)
         preferencesManager = PreferencesManager.instance
         token = preferencesManager?.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
@@ -250,6 +256,8 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
             }else{
                 txtBalanceAmountLabel.text = getString(R.string.txt_balance_fare_paid)
+                txtBalanceAmountLabel.setTextColor(getColor(R.color.colorGreen))
+                txtBalanceAmount.setTextColor(getColor(R.color.colorGreen))
                 btnPayNow.visibility = View.GONE
                 if (isFromEndRide){
                     btnRateRide.visibility = View.VISIBLE

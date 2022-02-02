@@ -5,17 +5,16 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
-        android:weightSum="4">
+        android:padding="@dimen/_10sdp">
 
         <TextView
             android:id="@+id/tvAddress"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_toStartOf="@id/tvWaitTime"
             android:textColor="@color/Black"
             android:fontFamily="@font/notosansjp_regular"
             android:textSize="@dimen/text_14sp"
@@ -23,17 +22,19 @@
 
         <TextView
             android:id="@+id/tvWaitTime"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
             android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:textColor="@color/Black"
             android:fontFamily="@font/notosansjp_regular"
             android:textSize="@dimen/text_14sp"
             android:textStyle="bold" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:layout_marginTop="@dimen/_5sdp"

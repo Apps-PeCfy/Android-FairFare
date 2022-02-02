@@ -344,7 +344,7 @@
     <string name="str_additional_charges">Additional Charges</string>
     <string name="str_rules_and_restrictions">Rules and Restrictions</string>
     <string name="str_rules">Rs 50/hr will be applicable on waiting for more than half an hour when the ride is active\nRs 15/km will be charged for extra km.</string>
-    <string name="btn_pay_now">Pay Now</string>
+    <string name="btn_pay_now">Pay Online</string>
 
     <!--Track PICK UP SCREEN-->
     <string name="title_track_pick_up">Track Pick Up</string>
@@ -378,7 +378,7 @@
     <string name="txt_end_rise_message">Your Current Ride is Completed</string>
     <string name="btn_rate_the_ride">Rate The Ride</string>
     <string name="txt_balance_fare_paid">Balance Fare Paid</string>
-    <string name="txt_balance_fare_not_paid">Balance Fair Payable</string>
+    <string name="txt_balance_fare_not_paid">Balance Fare Payable</string>
     <string name="str_payment_method">Payment Method</string>
     <string name="str_pay_offline">Cash</string>
     <string name="str_pay_online">Online</string>

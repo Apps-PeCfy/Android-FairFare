@@ -36,7 +36,169 @@
             android:paddingBottom="@dimen/_15sdp">
 
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rlvahical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorBackground"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_marginEnd="2dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/rounded_corner_night_mode"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:id="@+id/ll_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_vehical"
+                                android:layout_width="60dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/tv_carName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/colorGreyText"
+                                android:textStyle="bold"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/notosansjp_regular"
+                                android:textSize="@dimen/text_14sp" />
+
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/ll_image"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+
+
+
+                                <TextView
+                                    android:id="@+id/tv_vahicalNO"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toStartOf="@id/tv_bagCount"
+                                    android:fontFamily="@font/notosansjp_regular"
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText"
+                                    android:textSize="@dimen/text_14sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_bagCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableStart="@drawable/iv_bags"
+                                    android:drawablePadding="8dp"
+                                    android:text=""
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginStart="10dp"
+                                    android:gravity="end"
+                                    android:textColor="@color/colorGreyText" />
+
+
+
+
+                            </RelativeLayout>
+
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:orientation="vertical">
+
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toStartOf="@id/tv_Datetime">
+
+
+                                    <ImageView
+                                        android:id="@+id/ivUserIcon"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerVertical="true"
+                                        android:background="@drawable/iv_end_ride_person"
+                                        android:scaleType="fitCenter" />
+
+
+                                    <TextView
+                                        android:id="@+id/tv_driverName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_toEndOf="@id/ivUserIcon"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:text=""
+                                        android:textColor="@color/colorGreyText"
+                                        android:textSize="@dimen/text_14sp" />
+
+
+                                </RelativeLayout>
+
+
+                                <TextView
+                                    android:id="@+id/tv_Datetime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:gravity="end"
+                                    android:drawableStart="@drawable/ic_clock"
+                                    android:drawablePadding="8dp"
+                                    android:layout_marginStart="10dp"
+                                    android:text=""
+                                    android:textColor="@color/colorGreyText" />
+
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!--<RelativeLayout
                 android:id="@+id/rlvahical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -203,7 +365,7 @@
                 </RelativeLayout>
 
 
-            </RelativeLayout>
+            </RelativeLayout>-->
 
 
             <TextView

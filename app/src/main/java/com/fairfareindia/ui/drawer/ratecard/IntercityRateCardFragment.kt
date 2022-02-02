@@ -148,8 +148,11 @@ class IntercityRateCardFragment : Fragment(), IRateCardsView {
         if(!selectedRateCardModel?.rateCardsDetails.isNullOrEmpty()){
             mAdapter = RateCardAdapter(mContext, selectedRateCardModel?.rateCardsDetails!!, object : RateCardAdapter.RateCardAdapterInterface{
                 override fun onItemSelected(position: Int, model: RateCardModel.RateCardsDetailItem) {
-                    selectedRateCardModel = rateCardModel?.rateCards!![position]
-                    setRecyclerView()
+                    if (position < rateCardModel?.rateCards?.size!!){
+                        selectedRateCardModel = rateCardModel?.rateCards!![position]
+                        setRecyclerView()
+                    }
+
                 }
 
             })
