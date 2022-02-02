@@ -352,17 +352,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 txtVehicleName.text = rideModel?.vehicleName
                 txtVehicleNumber.text = rideModel?.vehicleNo
-                txtDateTime.text = AppUtils.changeDateFormat(
-                    rideModel?.dateTime,
-                    "yyyy-MM-dd HH:mm:ss",
-                    "EEE, MMM dd, h:mm a"
-                )
 
-                if (rideModel?.permitType == Constants.TYPE_LOCAL){
-                    txtPermitType.text = rideModel?.permitType
-                }else{
-                    txtPermitType.text = rideModel?.permitType + " (${rideModel?.way_flag})"
-                }
 
                 txtSourceAddress.text = (rideModel?.originFullAddress)
                 txtDestinationAddress.text = (rideModel?.destinationFullAddress)
