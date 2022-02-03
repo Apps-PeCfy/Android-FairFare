@@ -435,5 +435,6 @@
     <string name="msg_ride_arriving">Please share the OTP with driver before starting you ride.</string>
     <string name="msg_ride_arrived">Please share the OTP with driver before starting you ride.</string>
     <string name="str_no_rate_cards">No rate cards found.</string>
+    <string name="dialog_booking_request_msg_local_now">We are finding driver nearby. We will notify you the details once the search is complete.</string>
 </resources>
 

@@ -381,8 +381,14 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
 
     override fun localBookingRequestSuccess(model: BookingRequestModel?) {
         var title = getString(R.string.title_booked_successfully)
-        var message1 =
-            getString(R.string.dialog_booking_request_msg_one) +  " ${binding.txtDate.text}. " + getString(R.string.dialog_booking_request_msg_two)
+        var message1 = ""
+        if(scheduleType == "Now"){
+            message1 = getString(R.string.dialog_booking_request_msg_local_now)
+        }else{
+            message1 =
+                getString(R.string.dialog_booking_request_msg_one) +  " ${binding.txtDate.text}. " + getString(R.string.dialog_booking_request_msg_two)
+        }
+
         openPaymentDialog(getString(R.string.btn_ok), message1, title)
     }
 

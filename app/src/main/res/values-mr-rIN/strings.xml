@@ -436,6 +436,7 @@
     <string name="msg_ride_scheduled">ड्रायव्हर लवकरच तुम्हाला घेण्यासाठी येईल. कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
     <string name="msg_ride_arriving">कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
     <string name="msg_ride_arrived">कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
+    <string name="dialog_booking_request_msg_local_now">We are finding driver nearby. We will notify you the details once the search is complete.</string>
 
 </resources>
 

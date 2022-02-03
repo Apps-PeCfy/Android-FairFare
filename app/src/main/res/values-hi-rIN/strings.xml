@@ -438,6 +438,7 @@
     <string name="msg_ride_scheduled">ड्राइवर जल्द ही आपको लेने आएगा। सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
     <string name="msg_ride_arriving">सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
     <string name="msg_ride_arrived">सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
+    <string name="dialog_booking_request_msg_local_now">We are finding driver nearby. We will notify you the details once the search is complete.</string>
 
 </resources>
 
