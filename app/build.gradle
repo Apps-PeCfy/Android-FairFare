@@ -24,14 +24,14 @@ android {
             debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'API_URL', '"https://p2test2.fairfareindia.com/api/"'
+            buildConfigField 'String', 'API_URL', '"https://p2stage.fairfareindia.com/api/"'
         }
         debug {
             buildConfigField 'String', 'API_URL', '"https://dev2.fairfareindia.com/api/"'
             debuggable true
         }
         staging {
-            buildConfigField 'String', 'API_URL', '"https://p2test2.fairfareindia.com/api/"'
+            buildConfigField 'String', 'API_URL', '"https://p2stage.fairfareindia.com/api/"'
             debuggable true
             signingConfig signingConfigs.debug
         }
