@@ -99,7 +99,7 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
-    OnTimeSetListener, OnItemSelectedListener, AdapterView.OnItemClickListener, IHomeView {
+    OnTimeSetListener, AdapterView.OnItemClickListener, IHomeView {
 
     protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
 
@@ -129,12 +129,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     var appSignatureHelper: AppSignatureHelper? = null
 
-    var timeSpinner = arrayOf<String?>("Now", "Later")
+    private var timeSpinner: Array<String>? = null
+    private var luggageSpinner: Array<String>? = null
 
     var cityspinner = ArrayList<String>()
-    var luggageSpinner = arrayOf<String?>(
-        "Luggage", "1 Luggage", "2 Luggage", "3 Luggage", "4 Luggage", "5 Luggage"
-    )
+
 
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var mMap: GoogleMap? = null
@@ -193,7 +192,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     var CurrentPlaceID: String? = null
     var tvDateandTime: String? = null
     var dateToStr: String? = null
-    var addressType: String? = null
+    var scheduleType: String? = null
 
 
     var stDay: String? = null
@@ -290,7 +289,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
 
-        val NowLater: ArrayAdapter<*> =
+      /*  val NowLater: ArrayAdapter<*> =
             ArrayAdapter<Any?>(this, R.layout.simple_spinner, timeSpinner)
         NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerTime.adapter = NowLater
@@ -303,7 +302,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         spinnerLuggage.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerLuggage.adapter = spinnerLuggage
         binding.spinnerLuggage.setSelection(spnrbag)
-        binding.spinnerLuggage.setOnItemSelectedListener(this)
+        binding.spinnerLuggage.setOnItemSelectedListener(this)*/
 
 
 
@@ -338,7 +337,35 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
         EventBus.getDefault().register(this)
 
+        setSpinners()
         setListeners()
+    }
+
+    private fun setSpinners() {
+        timeSpinner = arrayOf<String>(
+            context.resources.getString(R.string.str_now),
+            context.resources.getString(R.string.str_later)
+        )
+        luggageSpinner = arrayOf<String>(
+            getString(R.string.str_luggage),
+            getString(R.string.str_luggage_1),
+            getString(R.string.str_luggage_2),
+            getString(R.string.str_luggage_3),
+            getString(R.string.str_luggage_4),
+            getString(R.string.str_luggage_5)
+        )
+
+        val NowLater: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, R.layout.simple_spinner, timeSpinner!!)
+        NowLater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTime.adapter = NowLater
+
+
+        val spinnerLuggage: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, R.layout.simple_spinner, luggageSpinner!!)
+        spinnerLuggage.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerLuggage.adapter = spinnerLuggage
+
     }
 
     private fun setData() {
@@ -649,6 +676,118 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         this@HomeActivity,
                         getString(R.string.internet_error)
                     )
+                }
+            }
+
+            spinnerLang.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (!city_Name.equals("Choose City")) {
+                        if (cityspinner.contains("Choose City")) {
+                            if (position > 0) {
+                                cityID = cityPojoList[position - 1].id.toString()
+                                city_Name = cityPojoList[position - 1].name
+                                preferencesManager!!.setStringValue(
+                                    Constants.SHARED_PREFERENCE_CITY_ID,
+                                    cityID
+                                )
+                            } else {
+
+                                cityID = ""
+                                preferencesManager!!.setStringValue(
+                                    Constants.SHARED_PREFERENCE_CITY_ID,
+                                    cityPojoList[position].id.toString()
+                                )
+                            }
+
+
+                        } else {
+                            if (position < cityPojoList.size) {
+                                cityID = cityPojoList[position].id.toString()
+                                city_Name = cityPojoList[position].name
+                                preferencesManager?.setStringValue(
+                                    Constants.SHARED_PREFERENCE_CITY_ID,
+                                    cityID
+                                )
+                            }
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+
+                }
+            }
+
+            spinnerLuggage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    spnrbag = position
+                    replacebags = position.toString()
+                    spinnerLuggagetxt = binding.spinnerLuggage.selectedItem.toString()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+
+                }
+            }
+
+
+
+            spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    spnrtime = position
+                    spinnertxt = binding.spinnerTime.selectedItem.toString()
+                    if (timeSpinner?.get(position)?.equals(getString(R.string.str_now))!!) {
+                        getCurrentDate()
+                        binding.rlRideScheduled.visibility = View.GONE
+                        scheduleType = "Now"
+
+                    } else {
+                        /**
+                         * Mohsin to display 15 min Later time.
+                         */
+                        scheduleType = "Later"
+                        dateToStr =
+                            AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM")
+                                .replace("pm", "PM")
+
+
+                        if (extras != null) {
+                            if (spnrtime == 1) {
+                                binding.tvRideScheduled.text = dateToStr
+
+                            } else {
+                                binding.tvRideScheduled.text = dateToStr
+
+                            }
+
+                        } else {
+                            binding.tvRideScheduled.text = dateToStr
+
+                        }
+
+
+
+                        binding.rlRideScheduled.visibility = View.VISIBLE
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+
                 }
             }
         }
@@ -977,7 +1116,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
             }
         }
-        binding.spinnerLang.setOnItemSelectedListener(this@HomeActivity)
     }
 
 
@@ -1451,7 +1589,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         myday = dayOfMonth
         myMonth = month + 1
         val c = Calendar.getInstance()
-        if (binding.spinnerTime.selectedItem.toString().equals("Later", ignoreCase = true)) {
+        if (binding.spinnerTime.selectedItem.toString().equals(getString(R.string.str_later), ignoreCase = true)) {
             c.add(Calendar.MINUTE, 16)
         }
         hour = c.get(Calendar.HOUR_OF_DAY)
@@ -1624,7 +1762,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
     private fun isValid(): Boolean {
         binding.apply {
-            if (binding.spinnerTime.selectedItem.toString().equals("Later", ignoreCase = true)) {
+            if (binding.spinnerTime.selectedItem.toString().equals(getString(R.string.str_later), ignoreCase = true)) {
                 var dateTime: String?
                 if (year > 0) {
 
@@ -1731,17 +1869,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 replacedistance = estDistance!!.replace(" km", "")
 
 
-                if ((spinnerLuggagetxt == "1 Luggage")) {
-                    replacebags = spinnerLuggagetxt!!.replace(" Luggage", "")
 
-                } else if ((spinnerLuggagetxt == "Luggage")) {
-                    replacebags = "0"
-
-                } else {
-                    replacebags = spinnerLuggagetxt!!.replace(" Luggage", "")
-
-
-                }
 
 
                 val context = GeoApiContext.Builder()
@@ -1852,16 +1980,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 }
                 replacedistance = estDistance!!.replace(" km", "")
 
-                if ((spinnerLuggagetxt == "1 Luggage")) {
-                    replacebags = spinnerLuggagetxt!!.replace(" Luggage", "")
 
-                } else if ((spinnerLuggagetxt == "Luggage")) {
-                    replacebags = "0"
-
-                } else {
-                    replacebags = spinnerLuggagetxt!!.replace(" Luggage", "")
-
-                }
 
 
                 val context = GeoApiContext.Builder()
@@ -2160,81 +2279,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (parent!!.id == R.id.spinner_Luggage) {
-            spnrbag = position
-            spinnerLuggagetxt = binding.spinnerLuggage.selectedItem.toString()
-        } else if (parent.id == R.id.spinnerLang) {
-            if (!city_Name.equals("Choose City")) {
-                if (cityspinner.contains("Choose City")) {
-                    if (position > 0) {
-                        cityID = cityPojoList[position - 1].id.toString()
-                        city_Name = cityPojoList[position - 1].name
-                        preferencesManager!!.setStringValue(
-                            Constants.SHARED_PREFERENCE_CITY_ID,
-                            cityID
-                        )
-                    } else {
-
-                        cityID = ""
-                        preferencesManager!!.setStringValue(
-                            Constants.SHARED_PREFERENCE_CITY_ID,
-                            cityPojoList[position].id.toString()
-                        )
-                    }
-
-
-                } else {
-                    if (position < cityPojoList.size) {
-                        cityID = cityPojoList[position].id.toString()
-                        city_Name = cityPojoList[position].name
-                        preferencesManager?.setStringValue(
-                            Constants.SHARED_PREFERENCE_CITY_ID,
-                            cityID
-                        )
-                    }
-                }
-            }
-        } else {
-            spnrtime = position
-            spinnertxt = binding.spinnerTime.selectedItem.toString()
-            if (spinnertxt == "Later") {
-
-                /**
-                 * Mohsin to display 15 min Later time.
-                 */
-                dateToStr =
-                    AppUtils.convertDateGMTToLocal(minTimeToShedule())!!.replace("am", "AM")
-                        .replace("pm", "PM")
-
-
-                if (extras != null) {
-                    if (spnrtime == 1) {
-                        binding.tvRideScheduled.text = dateToStr
-
-                    } else {
-                        binding.tvRideScheduled.text = dateToStr
-
-                    }
-
-                } else {
-                    binding.tvRideScheduled.text = dateToStr
-
-                }
 
 
 
-                binding.rlRideScheduled.visibility = View.VISIBLE
-            } else {
-                getCurrentDate()
-                binding.rlRideScheduled.visibility = View.GONE
-            }
-        }
-
-    }
 
 
     override fun onNewCompareRideLocalSuccess(info: InterCityCompareRideModel?) {
@@ -2256,7 +2303,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         intent.putExtra("currentFormattedDate", formaredDate)
         intent.putExtra("currentPlaceId", CurrentPlaceID)
         intent.putExtra("time_in_seconds", legDuration)
-        intent.putExtra("schedule_type", binding.spinnerTime.selectedItem.toString())
+        intent.putExtra("schedule_type", scheduleType)
         intent.putExtra("MyPOJOClass", info)
         startActivity(intent)
 
