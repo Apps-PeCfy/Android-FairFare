@@ -35,6 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import org.json.JSONObject
 import java.util.*
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityTrackPickUpView {
@@ -455,12 +456,14 @@ class TrackPickUpActivity : BaseLocationClass(), OnMapReadyCallback, IIntercityT
     private fun updateTimeToPickUP(duration: JSONObject) {
         var timeInSeconds = duration.getString("value")
 
+
         binding.crdRemainingTme.visibility = View.VISIBLE
-        var timeInMinutes = (timeInSeconds.toDouble() / 60).toInt()
+        var timeInMinutes = (timeInSeconds.toDouble() / 60)
+        timeInMinutes = ceil(timeInMinutes)
 
         binding.txtTime.text = ProjectUtilities.timeInMinutesConvertingToString(
             context,
-            timeInMinutes.toString()
+            timeInMinutes.toInt().toString()
         )
         binding.txtTimeUnit.visibility = View.GONE
 

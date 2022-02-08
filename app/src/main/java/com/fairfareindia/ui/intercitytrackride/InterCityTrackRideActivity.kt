@@ -738,95 +738,98 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     }
 
     override fun getNearByPlaces(model: NearByResponse?) {
-        for (i in model?.results?.indices!!) {
+        if (!isDestroyed){
+            for (i in model?.results?.indices!!) {
 
-            if (model.results[i]?.types?.get(0)?.contains("atm")!!) {
-                binding.txtAtm.text = model.results[i]!!.name
-                Glide.with(context)
-                    .load(model.results[i]?.icon)
-                    .apply(
-                        RequestOptions()
-                            .centerCrop()
-                            .dontAnimate()
-                            .dontTransform()
-                    ).into(binding.imgAtm)
+                if (model.results[i]?.types?.get(0)?.contains("atm")!!) {
+                    binding.txtAtm.text = model.results[i]!!.name
+                    Glide.with(context)
+                        .load(model.results[i]?.icon)
+                        .apply(
+                            RequestOptions()
+                                .centerCrop()
+                                .dontAnimate()
+                                .dontTransform()
+                        ).into(binding.imgAtm)
 
 
-                if (binding.txtAtm.text.isNotEmpty()) {
-                    binding.llAtm.visibility = View.VISIBLE
-                } else {
-                    binding.llAtm.visibility = View.GONE
+                    if (binding.txtAtm.text.isNotEmpty()) {
+                        binding.llAtm.visibility = View.VISIBLE
+                    } else {
+                        binding.llAtm.visibility = View.GONE
+                    }
+
+
+                }
+
+                if (model.results[i]?.types?.get(0).equals("point_of_interest")
+                ) {
+                    binding.txtMuseum.text = model.results[i]?.name
+                    Glide.with(context)
+                        .load(model.results[i]?.icon)
+                        .apply(
+                            RequestOptions()
+                                .centerCrop()
+                                .dontAnimate()
+                                .dontTransform()
+                        ).into(binding.imgMuseum)
+                    if (binding.txtMuseum.text.isNotEmpty()) {
+                        binding.llMuseum.visibility = View.VISIBLE
+                    } else {
+                        binding.llMuseum.visibility = View.GONE
+                    }
+
+
+                }
+
+                if (model.results[i]?.types?.get(0)
+                        ?.contains("health")!! || model.results[i]?.types?.get(0)
+                        ?.contains("doctor")!! || model.results[i]?.types?.get(0)
+                        ?.contains("hospital")!!
+                ) {
+                    binding.txtHospital.text = model.results[i]?.name
+                    Glide.with(context)
+                        .load(model.results[i]?.icon)
+                        .apply(
+                            RequestOptions()
+                                .centerCrop()
+                                .dontAnimate()
+                                .dontTransform()
+                        ).into(binding.imgHospital)
+
+                    if (binding.txtHospital.text.isNotEmpty()) {
+                        binding.llHospital.visibility = View.VISIBLE
+                    } else {
+                        binding.llHospital.visibility = View.GONE
+                    }
+
+
+                }
+
+                if (model.results[i]?.types?.get(0)?.contains("bank")!!) {
+                    binding.txtHotel.text = model?.results!!.get(i)!!.name
+                    Glide.with(context)
+                        .load(model?.results!!.get(i)!!.icon)
+                        .apply(
+                            RequestOptions()
+                                .centerCrop()
+                                .dontAnimate()
+                                .dontTransform()
+                        ).into(binding.imgHotel)
+
+                    if (binding.txtHotel.text.isNotEmpty()) {
+                        binding.llHotel.visibility = View.VISIBLE
+                    } else {
+                        binding.llHotel.visibility = View.GONE
+                    }
+
+
                 }
 
 
             }
-
-            if (model.results[i]?.types?.get(0).equals("point_of_interest")
-            ) {
-                binding.txtMuseum.text = model.results[i]?.name
-                Glide.with(context)
-                    .load(model.results[i]?.icon)
-                    .apply(
-                        RequestOptions()
-                            .centerCrop()
-                            .dontAnimate()
-                            .dontTransform()
-                    ).into(binding.imgMuseum)
-                if (binding.txtMuseum.text.isNotEmpty()) {
-                    binding.llMuseum.visibility = View.VISIBLE
-                } else {
-                    binding.llMuseum.visibility = View.GONE
-                }
-
-
-            }
-
-            if (model.results[i]?.types?.get(0)
-                    ?.contains("health")!! || model.results[i]?.types?.get(0)
-                    ?.contains("doctor")!! || model.results[i]?.types?.get(0)
-                    ?.contains("hospital")!!
-            ) {
-                binding.txtHospital.text = model.results[i]?.name
-                Glide.with(context)
-                    .load(model.results[i]?.icon)
-                    .apply(
-                        RequestOptions()
-                            .centerCrop()
-                            .dontAnimate()
-                            .dontTransform()
-                    ).into(binding.imgHospital)
-
-                if (binding.txtHospital.text.isNotEmpty()) {
-                    binding.llHospital.visibility = View.VISIBLE
-                } else {
-                    binding.llHospital.visibility = View.GONE
-                }
-
-
-            }
-
-            if (model.results[i]?.types?.get(0)?.contains("bank")!!) {
-                binding.txtHotel.text = model?.results!!.get(i)!!.name
-                Glide.with(context)
-                    .load(model?.results!!.get(i)!!.icon)
-                    .apply(
-                        RequestOptions()
-                            .centerCrop()
-                            .dontAnimate()
-                            .dontTransform()
-                    ).into(binding.imgHotel)
-
-                if (binding.txtHotel.text.isNotEmpty()) {
-                    binding.llHotel.visibility = View.VISIBLE
-                } else {
-                    binding.llHotel.visibility = View.GONE
-                }
-
-
-            }
-
-
         }
+
     }
 
 
