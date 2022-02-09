@@ -281,7 +281,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             "",
             "Cash",
             Constants.PAYMENT_UNPAID,
-            "Offline"
+            "Offline",
+            "",
+            "",
+            model?.ride?.tolls!!
         )
     }
 
@@ -315,6 +318,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             model?.ride?.secondRideTotal,
             model?.ride?.secondRidePercentageToPay,
             model?.ride?.amountToCollect,
+            "",
+            "",
             model?.ride?.tolls!!
         )
     }
@@ -325,7 +330,9 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 override fun onButtonClick() {
                     paymentDialog?.dismiss()
                     if (btnName == getString(R.string.btn_pay_now)) {
-                        startPayment()
+                      //  startPayment()
+                        iInterCityViewRidePresenter?.getRazorPayOrderID(token, model?.ride?.vehicle?.union?.id, (amountToPay.times(100)).toInt().toString())
+                     //   iInterCityViewRidePresenter?.getRazorPayOrderID(token, model?.ride?.vehicle?.union?.id, "100")
                     } else {
                         sharedpreferences!!.edit().clear().commit()
                         val intent = Intent(context, HomeActivity::class.java)
@@ -397,6 +404,10 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
         setData()
     }
 
+    override fun getRazorPayIdSuccess(model: RazorPayModel?) {
+        startPayment(model)
+    }
+
     override fun validationError(validationResponse: ValidationResponse?) {
         Toast.makeText(
             context,
@@ -427,22 +438,27 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
      * Razor Pay Payment Gateway Integration
      */
 
-    private fun startPayment() {
+    private fun startPayment(model: RazorPayModel?) {
         /*
           You need to pass current activity in order to let Razorpay create CheckoutActivity
          */
         val activity: Activity = this
         val checkout = Checkout()
-        var unionRazorpayKey = model?.ride?.vehicle?.union?.razorpay_key
+
+        checkout.setKeyID(model?.data?.razorpay_key)
+
+
+       /* var unionRazorpayKey = this.model?.ride?.vehicle?.union?.razorpay_key
         if (AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.IS_RAZORPAY_MERCHANT_ADMIN) == "false" && !unionRazorpayKey.isNullOrEmpty()){
             checkout.setKeyID(unionRazorpayKey)
         }else{
             checkout.setKeyID(AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.RAZORPAY_KEY))
-        }
+        }*/
 
 
         try {
             val options = JSONObject()
+            options.put("order_id", model?.data?.order_id)
             options.put("name", SessionManager.getInstance(context).getUserModel()?.name)
             options.put("description", "Demoing Charges")
             options.put("send_sms_hash", true)
@@ -452,7 +468,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             options.put("currency", "INR")
             options.put("amount", (amountToPay.times(100)).toString())
             val preFill = JSONObject()
-            preFill.put("email", "test@razorpay.com")
+            preFill.put("email", SessionManager.getInstance(context).getUserModel()?.email)
             preFill.put("contact", SessionManager.getInstance(context).getUserModel()?.phoneNo)
             options.put("prefill", preFill)
             checkout.open(activity, options)
@@ -506,6 +522,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 model?.ride?.secondRideTotal,
                 model?.ride?.secondRidePercentageToPay,
                 model?.ride?.amountToCollect,
+                paymentData?.orderId,
+                paymentData?.paymentId,
                 model?.ride?.tolls!!
 
             )

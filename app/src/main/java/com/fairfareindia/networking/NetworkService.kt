@@ -26,6 +26,7 @@ import com.fairfareindia.ui.intercitytrackpickup.DriverLocationModel
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
 import com.fairfareindia.ui.intercitytrackride.NearByPlacesPOJO.NearByResponse
 import com.fairfareindia.ui.intercityviewride.BookingRequestModel
+import com.fairfareindia.ui.intercityviewride.RazorPayModel
 import com.fairfareindia.ui.intercityviewride.ViewRideModel
 import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
 import okhttp3.MultipartBody
@@ -193,7 +194,11 @@ interface NetworkService {
         @Field("secondRideTotal") secondRideTotal: String?,
         @Field("secondRidePercentageToPay") secondRidePercentageToPay: String?,
         @Field("amountToCollect") amountToCollect: String?,
+        @Field("rp_order_id") rp_order_id: String?,
+        @Field("rp_payment_id") rp_payment_id: String?,
         @Field("tolls") jsonArray: JSONArray?
+
+
     ): Call<BookingRequestModel?>?
 
     @FormUrlEncoded
@@ -222,8 +227,20 @@ interface NetworkService {
         @Field("transaction_id") transaction_id: String?,
         @Field("method") method: String?,
         @Field("payment_status") payment_status: String?,
-        @Field("gateway_type") gateway_type: String?
+        @Field("gateway_type") gateway_type: String?,
+        @Field("rp_order_id") rp_order_id: String?,
+        @Field("rp_payment_id") rp_payment_id: String?,
+        @Field("tolls") jsonArray: JSONArray?
     ): Call<BookingRequestModel?>?
+
+    @FormUrlEncoded
+    @POST("getRazorpayOrderId")
+    fun getRazorPayOrderId(
+        @Header("Authorization") header: String?,
+        @Field("union_id") union_id: String?,
+        @Field("amount") amount: String?
+    ): Call<RazorPayModel?>?
+
 
 
     @FormUrlEncoded

@@ -11,6 +11,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Field
 import java.io.IOException
 
 class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideView) :
@@ -45,6 +46,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         secondRideTotal: String?,
         secondRidePercentageToPay: String?,
         amountToCollect: String?,
+        rp_order_id: String?,
+        rp_payment_id: String?,
         tolls: ArrayList<RideDetailModel.Tolls>
     ) {
 
@@ -55,14 +58,14 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
 
             for (i in tolls!!.indices) {
                 val jsonObjectMain = JSONObject()
-                if (tolls[i].name.isNullOrEmpty()){
+                if (tolls[i].name.isNullOrEmpty()) {
                     jsonObjectMain.put("name", tolls[i].start?.name)
                     jsonObjectMain.put("latitude", tolls[i].start?.lat)
                     jsonObjectMain.put("longitude", tolls[i].start?.lng)
                     jsonObjectMain.put("road", tolls[i].start?.road)
                     jsonObjectMain.put("state", tolls[i].start?.state)
                     jsonObjectMain.put("country", tolls[i].start?.country)
-                }else{
+                } else {
                     jsonObjectMain.put("name", tolls[i].name)
                     jsonObjectMain.put("latitude", tolls[i].latitude)
                     jsonObjectMain.put("longitude", tolls[i].longitude)
@@ -76,7 +79,6 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
                 jsonObjectMain.put("charges", tolls[i].charges)
                 jsonArray.put(jsonObjectMain)
             }
-
 
 
         } catch (e: JSONException) {
@@ -114,6 +116,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             secondRideTotal,
             secondRidePercentageToPay,
             amountToCollect,
+            rp_order_id,
+            rp_payment_id,
             jsonArray
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
@@ -179,9 +183,47 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         transaction_id: String?,
         method: String?,
         payment_status: String?,
-        gateway_type: String?
+        gateway_type: String?,
+        rp_order_id: String?,
+        rp_payment_id: String?,
+        tolls: ArrayList<RideDetailModel.Tolls>
     ) {
         viewRideView.showWait()
+
+        var jsonArray = JSONArray()
+
+        try {
+
+
+            for (i in tolls!!.indices) {
+                val jsonObjectMain = JSONObject()
+                if (tolls[i].name.isNullOrEmpty()) {
+                    jsonObjectMain.put("name", tolls[i].start?.name)
+                    jsonObjectMain.put("latitude", tolls[i].start?.lat)
+                    jsonObjectMain.put("longitude", tolls[i].start?.lng)
+                    jsonObjectMain.put("road", tolls[i].start?.road)
+                    jsonObjectMain.put("state", tolls[i].start?.state)
+                    jsonObjectMain.put("country", tolls[i].start?.country)
+                } else {
+                    jsonObjectMain.put("name", tolls[i].name)
+                    jsonObjectMain.put("latitude", tolls[i].latitude)
+                    jsonObjectMain.put("longitude", tolls[i].longitude)
+                    jsonObjectMain.put("road", tolls[i].road)
+                    jsonObjectMain.put("state", tolls[i].state)
+                    jsonObjectMain.put("country", tolls[i].country)
+                }
+
+                jsonObjectMain.put("type", tolls[i].type)
+                jsonObjectMain.put("currency", tolls[i].currency)
+                jsonObjectMain.put("charges", tolls[i].charges)
+                jsonArray.put(jsonObjectMain)
+            }
+
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
         val call = ApiClient.client.localBookingRequest(
             "Bearer $token",
             type,
@@ -206,7 +248,10 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             transaction_id,
             method,
             payment_status,
-            gateway_type
+            gateway_type,
+            rp_order_id,
+            rp_payment_id,
+            jsonArray
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
             override fun onResponse(
@@ -285,8 +330,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
                 travel_time,
                 travel_time_second
             )
-        }else{
-            call =  ApiClient.client.getViewLocalRideDetails(
+        } else {
+            call = ApiClient.client.getViewLocalRideDetails(
                 "Bearer $token",
                 permit_type,
                 rate_card_id,
@@ -336,6 +381,52 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
 
             override fun onFailure(
                 call: Call<ViewRideModel?>,
+                t: Throwable
+            ) {
+                viewRideView.removeWait()
+                viewRideView.onFailure(t.message)
+            }
+        })
+    }
+
+    override fun getRazorPayOrderID(token: String?, union_id: String?, amount: String?) {
+        viewRideView.showWait()
+        val call = ApiClient.client.getRazorPayOrderId(
+            "Bearer $token",
+            union_id,
+            amount
+        )
+        call!!.enqueue(object : Callback<RazorPayModel?> {
+            override fun onResponse(
+                call: Call<RazorPayModel?>,
+                response: Response<RazorPayModel?>
+            ) {
+                viewRideView.removeWait()
+
+                if (response.code() == 200) {
+                    viewRideView.removeWait()
+
+                    viewRideView.getRazorPayIdSuccess(response.body())
+                } else if (response.code() == 400 || response.code() == 422) {
+                    viewRideView.removeWait()
+
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        viewRideView.validationError(pojo)
+                    } catch (exception: IOException) {
+                    }
+                } else {
+                    viewRideView.onFailure(response.message())
+                }
+            }
+
+            override fun onFailure(
+                call: Call<RazorPayModel?>,
                 t: Throwable
             ) {
                 viewRideView.removeWait()

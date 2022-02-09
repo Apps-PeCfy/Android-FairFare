@@ -36,6 +36,8 @@ interface IInterCityViewRidePresenter {
         secondRideTotal: String?,
         secondRidePercentageToPay: String?,
         amountToCollect: String?,
+        rp_order_id: String?,
+        rp_payment_id: String?,
         tolls: ArrayList<RideDetailModel.Tolls>
     )
 
@@ -64,7 +66,10 @@ interface IInterCityViewRidePresenter {
         transaction_id: String?,
         method: String?,
         payment_status: String?,
-        gateway_type: String?
+        gateway_type: String?,
+        rp_order_id: String?,
+        rp_payment_id: String?,
+        tolls: ArrayList<RideDetailModel.Tolls>
     )
 
 
@@ -85,6 +90,12 @@ interface IInterCityViewRidePresenter {
         travel_time: String?,
         travel_time_second: String?,
         schedule_datetime: String?
+    )
+
+    fun getRazorPayOrderID(
+        token: String?,
+        union_id: String?,
+        amount: String?
     )
 
 
