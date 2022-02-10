@@ -17,6 +17,7 @@ import com.fairfareindia.databinding.ActivityIntercityRideDetailsBinding
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
 import com.fairfareindia.ui.disputs.RegisterDisputActivity
 import com.fairfareindia.ui.intercitytrackpickup.RideDetailModel
+import com.fairfareindia.ui.intercityviewride.RazorPayModel
 import com.fairfareindia.ui.ridereview.RideReviewActivity
 import com.fairfareindia.utils.*
 import com.razorpay.Checkout
@@ -72,7 +73,8 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
             btnPayNow.setOnClickListener {
-                startPayment()
+               // startPayment(model)
+                iRidesDetailPresenter?.getRazorPayOrderID(token, model?.data?.driver?.union_id, model?.data?.totalunPaid?.times(100)?.toInt().toString() )
             }
 
             imgRefresh.setOnClickListener {
@@ -304,6 +306,10 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
        iRidesDetailPresenter?.getRideDetail(token, rideID)
     }
 
+    override fun getRazorPayIdSuccess(model: RazorPayModel?) {
+        startPayment(model)
+    }
+
 
     override fun validationError(validationResponse: ValidationResponse?) {
         Toast.makeText(
@@ -335,20 +341,22 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
      * Razor Pay Payment Gateway Integration
      */
 
-    private fun startPayment() {
+    private fun startPayment(razorPayModel: RazorPayModel?) {
         /*
           You need to pass current activity in order to let Razorpay create CheckoutActivity
          */
         val activity: Activity = this
         val checkout = Checkout()
-        var unionRazorpayKey = model?.data?.driver?.razorpay_key
+        checkout.setKeyID(razorPayModel?.data?.razorpay_key)
+       /* var unionRazorpayKey = model?.data?.driver?.razorpay_key
         if (AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.IS_RAZORPAY_MERCHANT_ADMIN) == "false" && !unionRazorpayKey.isNullOrEmpty()){
             checkout.setKeyID(unionRazorpayKey)
         }else{
             checkout.setKeyID(AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.RAZORPAY_KEY))
-        }
+        }*/
         try {
             val options = JSONObject()
+            options.put("order_id", razorPayModel?.data?.order_id)
             options.put("name", SessionManager.getInstance(context).getUserModel()?.name)
             options.put("description", "Demoing Charges")
             options.put("send_sms_hash", true)
@@ -383,7 +391,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
     override fun onPaymentSuccess(razorpayPaymentID: String?, paymentData: PaymentData?) {
         try {
-            iRidesDetailPresenter?.updatePaymentStatus(token, rideID, "Online", model?.data?.totalunPaid.toString(), Constants.PAYMENT_PAID, "Razorpay", razorpayPaymentID)
+            iRidesDetailPresenter?.updatePaymentStatus(token, rideID, "Online", model?.data?.totalunPaid.toString(), Constants.PAYMENT_PAID, "Razorpay", razorpayPaymentID, paymentData?.orderId, paymentData?.paymentId)
             //    Toast.makeText(this, "Payment Success: " + paymentData, Toast.LENGTH_SHORT).show()
         } catch (e: java.lang.Exception) {
             Toast.makeText(context, "Exception in onPaymentSuccess: $e", Toast.LENGTH_SHORT).show()

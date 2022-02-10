@@ -524,6 +524,11 @@ class RideDetailModel {
         @SerializedName("razorpay_secret_key")
         var razorpay_secret_key: String? = null
 
+        @SerializedName("union_id")
+        var union_id: String? = null
+
+
+
     }
 
 

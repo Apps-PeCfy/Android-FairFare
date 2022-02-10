@@ -417,7 +417,9 @@ interface NetworkService {
         @Query("amount") amount: String?,
         @Query("payment_status") payment_status: String?,
         @Query("gateway_type") gateway_type: String?,
-        @Query("transaction_id") transaction_id: String?
+        @Query("transaction_id") transaction_id: String?,
+        @Query("rp_order_id") rp_order_id: String?,
+        @Query("rp_payment_id") rp_payment_id: String?
     ): Call<RideDetailModel?>?
 
 
