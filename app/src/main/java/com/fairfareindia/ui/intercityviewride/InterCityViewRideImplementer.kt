@@ -48,6 +48,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         amountToCollect: String?,
         rp_order_id: String?,
         rp_payment_id: String?,
+        razorpay_key: String?,
+        razorpay_secret_key: String?,
         tolls: ArrayList<RideDetailModel.Tolls>
     ) {
 
@@ -118,6 +120,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             amountToCollect,
             rp_order_id,
             rp_payment_id,
+            razorpay_key,
+            razorpay_secret_key,
             jsonArray
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
@@ -186,6 +190,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         gateway_type: String?,
         rp_order_id: String?,
         rp_payment_id: String?,
+        razorpay_key: String?,
+        razorpay_secret_key: String?,
         tolls: ArrayList<RideDetailModel.Tolls>
     ) {
         viewRideView.showWait()
@@ -251,6 +257,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             gateway_type,
             rp_order_id,
             rp_payment_id,
+            razorpay_key,
+            razorpay_secret_key,
             jsonArray
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {

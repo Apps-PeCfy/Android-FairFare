@@ -196,9 +196,9 @@ interface NetworkService {
         @Field("amountToCollect") amountToCollect: String?,
         @Field("rp_order_id") rp_order_id: String?,
         @Field("rp_payment_id") rp_payment_id: String?,
+        @Field("razorpay_key") razorpay_key: String?,
+        @Field("razorpay_secret_key") razorpay_secret_key: String?,
         @Field("tolls") jsonArray: JSONArray?
-
-
     ): Call<BookingRequestModel?>?
 
     @FormUrlEncoded
@@ -230,6 +230,8 @@ interface NetworkService {
         @Field("gateway_type") gateway_type: String?,
         @Field("rp_order_id") rp_order_id: String?,
         @Field("rp_payment_id") rp_payment_id: String?,
+        @Field("razorpay_key") razorpay_key: String?,
+        @Field("razorpay_secret_key") razorpay_secret_key: String?,
         @Field("tolls") jsonArray: JSONArray?
     ): Call<BookingRequestModel?>?
 
@@ -419,7 +421,9 @@ interface NetworkService {
         @Query("gateway_type") gateway_type: String?,
         @Query("transaction_id") transaction_id: String?,
         @Query("rp_order_id") rp_order_id: String?,
-        @Query("rp_payment_id") rp_payment_id: String?
+        @Query("rp_payment_id") rp_payment_id: String?,
+        @Query("razorpay_key") razorpay_key: String?,
+        @Query("razorpay_secret_key") razorpay_secret_key: String?
     ): Call<RideDetailModel?>?
 
 

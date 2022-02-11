@@ -38,6 +38,8 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
     private var waitingInfoDialog : WaitingInfoDialog ?= null
     private var tollInfoDialog : TollInfoDialog ?= null
 
+    private var razorPayModel: RazorPayModel? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityIntercityRideDetailsBinding.inflate(layoutInflater)
@@ -348,6 +350,8 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
         val activity: Activity = this
         val checkout = Checkout()
         checkout.setKeyID(razorPayModel?.data?.razorpay_key)
+
+        this.razorPayModel = razorPayModel
        /* var unionRazorpayKey = model?.data?.driver?.razorpay_key
         if (AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.IS_RAZORPAY_MERCHANT_ADMIN) == "false" && !unionRazorpayKey.isNullOrEmpty()){
             checkout.setKeyID(unionRazorpayKey)
@@ -391,7 +395,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
     override fun onPaymentSuccess(razorpayPaymentID: String?, paymentData: PaymentData?) {
         try {
-            iRidesDetailPresenter?.updatePaymentStatus(token, rideID, "Online", model?.data?.totalunPaid.toString(), Constants.PAYMENT_PAID, "Razorpay", razorpayPaymentID, paymentData?.orderId, paymentData?.paymentId)
+            iRidesDetailPresenter?.updatePaymentStatus(token, rideID, "Online", model?.data?.totalunPaid.toString(), Constants.PAYMENT_PAID, "Razorpay", razorpayPaymentID, paymentData?.orderId, paymentData?.paymentId, razorPayModel?.data?.razorpay_key, razorPayModel?.data?.razorpay_secret_key)
             //    Toast.makeText(this, "Payment Success: " + paymentData, Toast.LENGTH_SHORT).show()
         } catch (e: java.lang.Exception) {
             Toast.makeText(context, "Exception in onPaymentSuccess: $e", Toast.LENGTH_SHORT).show()

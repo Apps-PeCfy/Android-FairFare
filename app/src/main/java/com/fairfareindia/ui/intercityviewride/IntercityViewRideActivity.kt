@@ -54,6 +54,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
 
     private var tollInfoDialog : TollInfoDialog ?= null
     private var amountToPay : Double = 0.0
+    private var razorPayModel: RazorPayModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -284,6 +285,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             "Offline",
             "",
             "",
+            "",
+            "",
             model?.ride?.tolls!!
         )
     }
@@ -318,6 +321,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             model?.ride?.secondRideTotal,
             model?.ride?.secondRidePercentageToPay,
             model?.ride?.amountToCollect,
+            "",
+            "",
             "",
             "",
             model?.ride?.tolls!!
@@ -446,8 +451,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
         val checkout = Checkout()
 
         checkout.setKeyID(model?.data?.razorpay_key)
-
-
+        razorPayModel = model
        /* var unionRazorpayKey = this.model?.ride?.vehicle?.union?.razorpay_key
         if (AppUtils.getValueOfKeyFromGeneralSettings(context, Constants.IS_RAZORPAY_MERCHANT_ADMIN) == "false" && !unionRazorpayKey.isNullOrEmpty()){
             checkout.setKeyID(unionRazorpayKey)
@@ -524,6 +528,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 model?.ride?.amountToCollect,
                 paymentData?.orderId,
                 paymentData?.paymentId,
+                razorPayModel?.data?.razorpay_key,
+                razorPayModel?.data?.razorpay_secret_key,
                 model?.ride?.tolls!!
 
             )

@@ -12,7 +12,9 @@ interface IRidesDetailPresenter {
         gateway_type: String?,
         transaction_id: String?,
         rp_order_id: String?,
-        rp_payment_id: String?
+        rp_payment_id: String?,
+        razorpay_key: String?,
+        razorpay_secret_key: String?
     )
 
     fun getRazorPayOrderID(

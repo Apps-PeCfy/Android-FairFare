@@ -38,8 +38,11 @@ interface IInterCityViewRidePresenter {
         amountToCollect: String?,
         rp_order_id: String?,
         rp_payment_id: String?,
+        razorpay_key: String?,
+        razorpay_secret_key: String?,
         tolls: ArrayList<RideDetailModel.Tolls>
     )
+
 
 
     fun localBookingRequest(
@@ -69,6 +72,8 @@ interface IInterCityViewRidePresenter {
         gateway_type: String?,
         rp_order_id: String?,
         rp_payment_id: String?,
+        razorpay_key: String?,
+        razorpay_secret_key: String?,
         tolls: ArrayList<RideDetailModel.Tolls>
     )
 

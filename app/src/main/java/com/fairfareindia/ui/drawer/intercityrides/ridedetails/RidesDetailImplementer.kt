@@ -66,12 +66,14 @@ class RidesDetailImplementer(private val view: IRideDetailView) : IRidesDetailPr
         gateway_type: String?,
         transaction_id: String?,
         rp_order_id: String?,
-        rp_payment_id: String?
+        rp_payment_id: String?,
+        razorpay_key: String?,
+        razorpay_secret_key: String?
     ) {
 
 
         view.showWait()
-        val call = ApiClient.client.updatePaymentStatus("Bearer $token", rideID, method, amount, payment_status, gateway_type, transaction_id, rp_order_id, rp_payment_id)
+        val call = ApiClient.client.updatePaymentStatus("Bearer $token", rideID, method, amount, payment_status, gateway_type, transaction_id, rp_order_id, rp_payment_id, razorpay_key, razorpay_secret_key)
         call!!.enqueue(object : Callback<RideDetailModel?> {
             override fun onResponse(
                 call: Call<RideDetailModel?>,
