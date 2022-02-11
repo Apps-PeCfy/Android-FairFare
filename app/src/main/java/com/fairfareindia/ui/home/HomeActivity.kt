@@ -383,7 +383,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 txtSourceAddress.text = (rideModel?.originFullAddress)
                 txtDestinationAddress.text = (rideModel?.destinationFullAddress)
-                txtDriverName.text = rideModel?.driverName
+                txtDriverName.text = rideModel?.driver?.name
 
                 if (rideModel?.status == Constants.BOOKING_SCHEDULED){
                     txtStatusMessage.text = getString(R.string.str_ride_accepted)
