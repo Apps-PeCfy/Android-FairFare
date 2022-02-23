@@ -359,7 +359,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
     }
 
     private fun getZoomLevel(): Float {
-        if (mMap?.cameraPosition?.zoom!! < 10) {
+        if (mMap?.cameraPosition?.zoom!! < 15) {
             return 18.0f
         }
         return mMap?.cameraPosition?.zoom!!
