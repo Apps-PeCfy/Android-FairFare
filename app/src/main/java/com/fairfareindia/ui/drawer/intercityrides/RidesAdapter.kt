@@ -87,11 +87,22 @@ class RidesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
 
 
-                holder.txtDate.text = AppUtils.changeDateFormat(
-                    model.dateTime,
-                    "yyyy-MM-dd HH:mm:ss",
-                    "dd MMM, h:mm a"
-                )
+
+
+                if (model.start_date.isNullOrEmpty()) {
+                    holder.txtDate.text = AppUtils.changeDateFormat(
+                        model.scheduleDate,
+                        "yyyy-MM-dd HH:mm:ss",
+                        "EEE, MMM dd, h:mm a"
+                    )
+                } else {
+                    holder.txtDate.text = AppUtils.changeDateFormat(
+                        model.start_date,
+                        "yyyy-MM-dd HH:mm:ss",
+                        "EEE, MMM dd, h:mm a"
+                    )
+
+                }
 
                 holder.txtSourceAddress.text = (model.originFullAddress)
                 if (model.actualEndAddress.isNullOrEmpty()) {

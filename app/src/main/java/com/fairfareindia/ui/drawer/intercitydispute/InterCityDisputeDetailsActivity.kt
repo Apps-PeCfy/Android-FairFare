@@ -149,7 +149,21 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
             txtVehicleName.text =  model?.dispute?.ride?.vehicleName
             txtVehicleNumber.text = model?.dispute?.ride?.vehicleNo
             txtDriverName.text = model?.dispute?.ride?.driver?.name
-            txtDate.text = AppUtils.changeDateFormat(model?.dispute?.ride?.dateTime, "yyyy-MM-dd HH:mm:ss", "dd MMM, hh:mm a")
+
+            if (model?.dispute?.ride?.start_date.isNullOrEmpty()) {
+                txtDate.text = AppUtils.changeDateFormat(
+                    model?.dispute?.ride?.scheduleDate,
+                    "yyyy-MM-dd HH:mm:ss",
+                    "dd MMM, hh:mm a"
+                )
+            } else {
+                txtDate.text = AppUtils.changeDateFormat(
+                    model?.dispute?.ride?.start_date,
+                    "yyyy-MM-dd HH:mm:ss",
+                    "dd MMM, hh:mm a"
+                )
+
+            }
 
             if (model?.dispute?.ride?.luggageQuantity == "0") {
                 txtLuggage.text = getString(R.string.str_no_bags)

@@ -65,6 +65,15 @@ class GetRideResponsePOJO  {
 		@SerializedName("dateTime")
 		var dateTime: String? = null
 
+		@SerializedName("endDate")
+		var endDate: String? = null
+
+		@SerializedName("start_date")
+		var start_date: String? = null
+
+		@SerializedName("scheduleDate")
+		var scheduleDate: String? = null
+
 		@SerializedName("vehicleType")
 		var vehicleType: String? = null
 

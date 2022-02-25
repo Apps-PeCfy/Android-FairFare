@@ -206,7 +206,21 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             txtVehicleName.text =  model?.data?.vehicleName
             txtVehicleNumber.text = model?.data?.vehicleNo
             txtDriverName.text = model?.data?.driver?.name
-            txtDate.text = AppUtils.changeDateFormat(model?.data?.dateTime, "yyyy-MM-dd HH:mm:ss", "dd MMM, hh:mm a")
+
+            if (model?.data?.start_date.isNullOrEmpty()) {
+                txtDate.text = AppUtils.changeDateFormat(
+                    model?.data?.scheduleDate,
+                    "yyyy-MM-dd HH:mm:ss",
+                    "dd MMM, hh:mm a"
+                )
+            } else {
+                txtDate.text = AppUtils.changeDateFormat(
+                    model?.data?.start_date,
+                    "yyyy-MM-dd HH:mm:ss",
+                    "dd MMM, hh:mm a"
+                )
+
+            }
 
             if (model?.data?.luggageQuantity == "0") {
                 txtLuggage.text = getString(R.string.str_no_bags)

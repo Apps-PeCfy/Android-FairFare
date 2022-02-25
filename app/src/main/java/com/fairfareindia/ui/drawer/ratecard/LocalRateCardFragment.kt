@@ -1004,10 +1004,10 @@ class LocalRateCardFragment : Fragment(), AdapterView.OnItemSelectedListener, Vi
         tvCarName!!.text = getRateCardList[selectedPosition].rateCards!!.get(0).name
 
 
-        tvFare!!.text = getString(R.string.str_extra_fare_one)
+        tvFare!!.text = getString(R.string.str_extra_fare_one) +
             " " + getRateCardList[selectedPosition]!!.rateCards!!.get(0).rateCards!!.get(
                 0
-            ).minBaseFare + getString(R.string.str_extra_fare_two) +
+            ).minBaseFare+ " " + getString(R.string.str_extra_fare_two) +
                     "  " +
                     getRateCardList[selectedPosition].rateCards!!.get(0).rateCards!!.get(
                         0
