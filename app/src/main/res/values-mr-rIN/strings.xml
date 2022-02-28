@@ -62,15 +62,6 @@
     <string name="review">तुमचा अभिप्राय आमच्यासाठी अत्यंत महत्त्वाचा आहे. तुमची अधिक चांगली सेवा करण्यासाठी कृपया तुमचा मौल्यवान अभिप्राय द्या. खूप खूप धन्यवाद!</string>
 
 
-    <string-array name="tab_A">
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-
-    </string-array>
-
     <string name="hello_blank_fragment">हॅलो रिक्त तुकडा</string>
     <string name="save_dispute">विवाद जतन करा</string>
     <string name="resendotp">दुसरा कोड पुन्हा पाठवा</string>
@@ -370,7 +361,7 @@
     <string name="str_no_rides">तुम्ही अद्याप कोणत्याही राइड घेतलेल्या नाहीत.</string>
     <string name="str_start_ride">राइड सुरू करा</string>
     <string name="str_cancel_ride"> राइड रद्द करा </string>
-    <string name="str_cancel_ride_message">राइड रद्द केल्यावर रु. 100/- कापले जातील आणि उर्वरित रक्कम 7-10 कामकाजाच्या दिवसांत परत केली जाईल</string>
+    <string name="str_cancel_ride_message">राइड रद्द केल्यावर रु. 100/– कापले जातील आणि उर्वरित रक्कम 7–10 कामकाजाच्या दिवसांत परत केली जाईल</string>
     <string name="btn_cancel_not">रद्द करू नका</string>
     <string name="str_base_distance"> मूळ अंतर</string>
     <string name="str_additional_distance_charges">अतिरिक्त अंतर शुल्क</string>
@@ -436,6 +427,7 @@
     <string name="msg_ride_scheduled">ड्रायव्हर लवकरच तुम्हाला घेण्यासाठी येईल. कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
     <string name="msg_ride_arriving">कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
     <string name="msg_ride_arrived">कृपया तुम्ही राइड सुरू करण्यापूर्वी ड्रायव्हरसोबत OTP शेअर करा.</string>
+    <string name="str_no_rate_cards">No rate cards found.</string>
     <string name="dialog_booking_request_msg_local_now">We are finding driver nearby. We will notify you the details once the search is complete.</string>
 
 </resources>

@@ -277,14 +277,6 @@
     <string name="review">Your feedback is extremely important to us. Please provide your valuable feedback to serve you better. Thank you in advance!</string>
 
 
-    <string-array name="tab_A">
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-
-    </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_dispute">Save Dispute</string>
@@ -362,7 +354,7 @@
     <string name="str_no_rides">You have not taken any Rides yet.</string>
     <string name="str_start_ride">Start Ride</string>
     <string name="str_cancel_ride">Cancel Ride</string>
-    <string name="str_cancel_ride_message">On Cancel ride Rs. 100/- will be deducted and the rest will be refunded in 7-10 working days</string>
+    <string name="str_cancel_ride_message">On Cancel ride Rs. 100/– will be deducted and the rest will be refunded in 7–10 working days</string>
     <string name="btn_proceed">Proceed</string>
     <string name="btn_cancel_not">Don\'t Cancel</string>
     <string name="str_base_distance">Base Distance</string>

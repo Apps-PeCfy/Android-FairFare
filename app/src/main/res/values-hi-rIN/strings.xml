@@ -62,15 +62,6 @@
     <string name="review">आपकी प्रतिक्रिया हमारे लिए अत्यंत महत्वपूर्ण है। आपको बेहतर सेवा देने के लिए कृपया अपनी बहुमूल्य प्रतिक्रिया दें। आपका बहुत धन्यवाद!</string>
 
 
-    <string-array name="tab_A">
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-        <item>Marol Naka,Andheri East,Mumbai"</item>
-
-    </string-array>
-
     <string name="hello_blank_fragment">नमस्ते खाली टुकड़ा</string>
     <string name="save_dispute">विवाद सहेजें</string>
     <string name="resendotp">दूसरा कोड दोबारा भेजें</string>
@@ -371,7 +362,7 @@
     <string name="str_no_rides">आपने अभी तक कोई राइड नहीं ली है।</string>
     <string name="str_start_ride">सवारी शुरू करें</string>
     <string name="str_cancel_ride">सवारी रद्द करें</string>
-    <string name="str_cancel_ride_message">कैंसिल राइड पर रु. 100/- की कटौती की जाएगी और शेष 7-10 कार्य दिवसों में वापस कर दी जाएगी</string>
+    <string name="str_cancel_ride_message">कैंसिल राइड पर रु. 100/– की कटौती की जाएगी और शेष 7–10 कार्य दिवसों में वापस कर दी जाएगी</string>
     <string name="btn_cancel_not">रद्द न करें</string>
     <string name="str_base_distance">आधार दूरी</string>
     <string name="str_additional_distance_charges">अतिरिक्त दूरी प्रभार</string>
@@ -438,6 +429,7 @@
     <string name="msg_ride_scheduled">ड्राइवर जल्द ही आपको लेने आएगा। सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
     <string name="msg_ride_arriving">सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
     <string name="msg_ride_arrived">सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
+    <string name="str_no_rate_cards">No rate cards found.</string>
     <string name="dialog_booking_request_msg_local_now">We are finding driver nearby. We will notify you the details once the search is complete.</string>
 
 </resources>
