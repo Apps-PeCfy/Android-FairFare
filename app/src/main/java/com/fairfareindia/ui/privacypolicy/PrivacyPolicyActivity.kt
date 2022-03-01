@@ -55,7 +55,8 @@ class PrivacyPolicyActivity : AppCompatActivity() {
             callApi("Privacy-Policy")
 
         }else{
-            callApi("Terms-Of-Use")
+          //  callApi("Terms-Of-Use")
+            callApi("Terms-Of-Use-Commuters")
 
         }
 

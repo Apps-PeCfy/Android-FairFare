@@ -62,7 +62,8 @@ class TermsOfUse : Fragment() {
         progressDialog.show() // show progress dialog
 
 
-        val call = ApiClient.client.pageContents( "Terms-Of-Use")
+       // val call = ApiClient.client.pageContents( "Terms-Of-Use")
+        val call = ApiClient.client.pageContents( "Terms-Of-Use-Commuters")
         call!!.enqueue(object : Callback<ContentResponsePOJO?> {
             override fun onResponse(
                 call: Call<ContentResponsePOJO?>,
