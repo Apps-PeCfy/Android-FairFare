@@ -61,6 +61,8 @@ class IntroActivity : AppCompatActivity() {
         arrayList!!.add(R.color.Red)
         arrayList!!.add(R.color.Red)
         arrayList!!.add(R.color.Red)
+        arrayList!!.add(R.color.Red)
+        arrayList!!.add(R.color.Red)
         addDot(0)
         mPreferencesManager = PreferencesManager.instance
         vp = findViewById(R.id.view_pager)
@@ -70,7 +72,9 @@ class IntroActivity : AppCompatActivity() {
             R.layout.intro_screen1,
             R.layout.intro_screen2,
             R.layout.intro_screen3,
-            R.layout.intro_screen4
+            R.layout.intro_screen4,
+            R.layout.intro_screen5,
+            R.layout.intro_screen6
         )
         myvpAdapter = MyViewPagerAdapter()
         vp!!.setAdapter(myvpAdapter)

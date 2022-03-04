@@ -7,7 +7,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/introduction_four" />
+        android:src="@drawable/introduction_six"
+        android:layout_marginBottom="@dimen/_50sdp"/>
 
 
 </LinearLayout>
