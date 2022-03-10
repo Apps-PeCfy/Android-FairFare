@@ -132,7 +132,19 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                     locationChangeLatitude = lastLocation!!.latitude
                     locationChangeLongitude = lastLocation!!.longitude
 
-                    getRouteAPI()
+                    if (rideDetailModel?.data?.permitType == Constants.TYPE_LOCAL){
+                        getRouteAPI()
+                    }else{
+                        var diffTime = Date().time - preferencesManager?.getDirectionAPITime()!!
+                        if (diffTime > 30000 || mPolyline == null) {
+                            preferencesManager?.setDirectionAPITime(Date().time)
+                            getRouteAPI()
+                        }
+                    }
+
+
+
+
                     getDriverLocationAPI()
                     if (!isDestroyed){
                         iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
@@ -685,8 +697,19 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         locationChangeLatitude = driverLocationModel?.data?.latitude!!
                         locationChangeLongitude = driverLocationModel?.data?.longitude!!
                         addCurrentLocationMarker(driverLocationModel)
-                        getRouteAPI()
-                        iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                        if (rideDetailModel?.data?.permitType == Constants.TYPE_LOCAL){
+                            getRouteAPI()
+                            iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                        }else{
+                            var diffTime = Date().time - preferencesManager?.getDirectionAPITime()!!
+                            if (diffTime > 30000 || mPolyline == null) {
+                                preferencesManager?.setDirectionAPITime(Date().time)
+                                getRouteAPI()
+                                iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                            }
+                        }
+
+
                     }
 
                     instantUpdateTrackBoard()

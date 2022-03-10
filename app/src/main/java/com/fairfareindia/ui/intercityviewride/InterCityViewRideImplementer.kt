@@ -50,7 +50,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         rp_payment_id: String?,
         razorpay_key: String?,
         razorpay_secret_key: String?,
-        tolls: ArrayList<RideDetailModel.Tolls>
+        tolls: ArrayList<RideDetailModel.Tolls>,
+        convenience_fees: String?
     ) {
 
         var jsonArray = JSONArray()
@@ -122,7 +123,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             rp_payment_id,
             razorpay_key,
             razorpay_secret_key,
-            jsonArray
+            jsonArray,
+            convenience_fees
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
             override fun onResponse(
@@ -192,7 +194,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
         rp_payment_id: String?,
         razorpay_key: String?,
         razorpay_secret_key: String?,
-        tolls: ArrayList<RideDetailModel.Tolls>
+        tolls: ArrayList<RideDetailModel.Tolls>,
+        convenience_fees: String?
     ) {
         viewRideView.showWait()
 
@@ -259,7 +262,8 @@ class InterCityViewRideImplementer(private val viewRideView: IIntercityViewRideV
             rp_payment_id,
             razorpay_key,
             razorpay_secret_key,
-            jsonArray
+            jsonArray,
+            convenience_fees
         )
         call!!.enqueue(object : Callback<BookingRequestModel?> {
             override fun onResponse(

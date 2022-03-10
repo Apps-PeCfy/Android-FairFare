@@ -198,7 +198,8 @@ interface NetworkService {
         @Field("rp_payment_id") rp_payment_id: String?,
         @Field("razorpay_key") razorpay_key: String?,
         @Field("razorpay_secret_key") razorpay_secret_key: String?,
-        @Field("tolls") jsonArray: JSONArray?
+        @Field("tolls") jsonArray: JSONArray?,
+        @Field("convenience_fees") convenience_fees: String?
     ): Call<BookingRequestModel?>?
 
     @FormUrlEncoded
@@ -232,7 +233,8 @@ interface NetworkService {
         @Field("rp_payment_id") rp_payment_id: String?,
         @Field("razorpay_key") razorpay_key: String?,
         @Field("razorpay_secret_key") razorpay_secret_key: String?,
-        @Field("tolls") jsonArray: JSONArray?
+        @Field("tolls") jsonArray: JSONArray?,
+        @Field("convenience_fees") convenience_fees: String?
     ): Call<BookingRequestModel?>?
 
     @FormUrlEncoded

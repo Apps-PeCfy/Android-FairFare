@@ -14,6 +14,7 @@ class PreferencesManager private constructor(context: Context) {
     private val KEY_GENERAL_SETTING = "general_settings"
     private val KEY_LANGUAGE : String = "language"
     private val KEY_LANGUAGE_CHANGE : String = "language_change"
+    private val KEY_LAST_DIRECTION_API_CALL : String = "direction_api_time"
 
     fun setStringValue(KEY_VALUE: String?, value: String?) {
         mPref.edit()
@@ -61,6 +62,14 @@ class PreferencesManager private constructor(context: Context) {
 
     fun setLanguageChanged(value: Boolean) {
         mPref.edit().putBoolean(KEY_LANGUAGE_CHANGE, value).apply()
+    }
+
+    fun getDirectionAPITime(): Long {
+        return mPref.getLong(KEY_LAST_DIRECTION_API_CALL, 0L)
+    }
+
+    fun setDirectionAPITime(value: Long) {
+        mPref.edit().putLong(KEY_LAST_DIRECTION_API_CALL, value).apply()
     }
 
     fun isLanguageChanged(): Boolean {

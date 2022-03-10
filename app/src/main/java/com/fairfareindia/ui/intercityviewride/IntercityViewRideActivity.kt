@@ -287,7 +287,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             "",
             "",
             "",
-            model?.ride?.tolls!!
+            model?.ride?.tolls!!,
+            model?.ride?.convenienceFees.toString()
         )
     }
 
@@ -325,7 +326,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
             "",
             "",
             "",
-            model?.ride?.tolls!!
+            model?.ride?.tolls!!,
+            model?.ride?.convenienceFees.toString()
         )
     }
 
@@ -530,7 +532,8 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
                 paymentData?.paymentId,
                 razorPayModel?.data?.razorpay_key,
                 razorPayModel?.data?.razorpay_secret_key,
-                model?.ride?.tolls!!
+                model?.ride?.tolls!!,
+                model?.ride?.convenienceFees.toString()
 
             )
 
