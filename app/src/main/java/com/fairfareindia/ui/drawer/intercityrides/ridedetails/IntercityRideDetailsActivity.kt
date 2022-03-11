@@ -176,7 +176,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             txtEstLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.luggageCharges?.toDouble())
             txtEstAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)
             txtEstRideTime.text = model?.data?.estimatedTrackRide?.totalTime
-            txtEstWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.estimatedTrackRide?.waitingTime!!)
+            txtEstWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.estimatedTrackRide?.waitingTime!!)
             txtEstWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.waitingCharges?.toDouble())
             txtEstNightCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.nightCharges?.toDouble())
 
@@ -192,7 +192,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
             txtActualAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.additionalDistance)
             txtActualRideTime.text = model?.data?.actualTrackRide?.totalTime
           //  txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
-            txtActualWaitTime.text =  ProjectUtilities.timeInMinutesConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
+            txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
             txtActualWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.waitingCharges?.toDouble())
             txtActualNightCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.nightCharges?.toDouble())
             txtActualTollCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.tollCharges?.toDouble())

@@ -93,7 +93,7 @@ object ProjectUtilities {
         var returnAmount = "0.0 km"
 
         if(distance != null){
-            var formatter = DecimalFormat("#,##0.0")
+            var formatter = DecimalFormat("#,##0.000")
             returnAmount =  formatter.format(distance) + " km"
         }
 
