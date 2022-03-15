@@ -260,7 +260,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
         }
         if (remainingDistanceText != null) {
             binding.txtTravelledDistance.text =
-                ProjectUtilities.getDistanceInFormat(actualDistance.toDouble()) + " / $remainingDistanceText"
+                ProjectUtilities.getDistanceInThreeDigitFormat(actualDistance.toDouble()) + " / $remainingDistanceText"
 
 
             var rideDateTime =
@@ -274,7 +274,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                 ) + " / $remainingTimeText"
             }
         } else {
-            binding.txtTravelledDistance.text = ProjectUtilities.getDistanceInFormat(actualDistance.toDouble())
+            binding.txtTravelledDistance.text = ProjectUtilities.getDistanceInThreeDigitFormat(actualDistance.toDouble())
 
             var rideDateTime =
                 AppUtils.getDate(rideDetailModel?.data?.start_date, "yyyy-MM-dd HH:mm:ss")

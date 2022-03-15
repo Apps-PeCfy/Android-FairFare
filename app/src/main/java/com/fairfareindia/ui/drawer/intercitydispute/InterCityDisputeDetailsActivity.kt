@@ -107,7 +107,7 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
                 llAdditionalDistanceCharges.visibility = View.GONE
                 txtBaseDistanceLabel.text = getString(R.string.str_distance)
                 txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.estimatedTrackRide?.distance)
-                txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.actualTrackRide?.distance)
+                txtActualDistance.text =  ProjectUtilities.getDistanceInThreeDigitFormat(model?.dispute?.ride?.actualTrackRide?.distance)
                 var estBaseFare = model?.dispute?.ride?.estimatedTrackRide?.basicFare!! + model?.dispute?.ride?.estimatedTrackRide?.additionalDistanceCharges!!
                 txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(estBaseFare)
 
@@ -133,7 +133,7 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
 
             txtActualLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.luggageCharges?.toDouble())
             txtActualDistance.text = ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.actualTrackRide?.baseDistance)
-            txtActualAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.dispute?.ride?.actualTrackRide?.additionalDistance)
+            txtActualAddDistance.text = ProjectUtilities.getDistanceInThreeDigitFormat(model?.dispute?.ride?.actualTrackRide?.additionalDistance)
             txtActualRideTime.text = model?.dispute?.ride?.actualTrackRide?.totalTime
             txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.dispute?.ride?.actualTrackRide?.waitingTime!!)
             txtActualWaitCharges.text = ProjectUtilities.getAmountInFormat(model?.dispute?.ride?.actualTrackRide?.waitingCharges?.toDouble())

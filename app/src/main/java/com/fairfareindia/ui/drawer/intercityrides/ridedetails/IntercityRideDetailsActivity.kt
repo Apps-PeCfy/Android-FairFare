@@ -156,7 +156,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 txtBaseDistanceLabel.text = getString(R.string.str_distance)
                 txtBaseFareLabel.text = getString(R.string.str_basic_fare)
                 txtEstDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.distance)
-                txtActualDistance.text =  ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.distance)
+                txtActualDistance.text =  ProjectUtilities.getDistanceInThreeDigitFormat(model?.data?.actualTrackRide?.distance)
                 var estBaseFare = model?.data?.estimatedTrackRide?.basicFare!! + model?.data?.estimatedTrackRide?.additionalDistanceCharges!!
                 txtEstBaseFare.text = ProjectUtilities.getAmountInFormat(estBaseFare)
 
@@ -189,7 +189,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
 
             txtActualLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.actualTrackRide?.luggageCharges?.toDouble())
-            txtActualAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.actualTrackRide?.additionalDistance)
+            txtActualAddDistance.text = ProjectUtilities.getDistanceInThreeDigitFormat(model?.data?.actualTrackRide?.additionalDistance)
             txtActualRideTime.text = model?.data?.actualTrackRide?.totalTime
           //  txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)
             txtActualWaitTime.text =  ProjectUtilities.timeInSecondsConvertingToString(context, model?.data?.actualTrackRide?.waitingTime!!)

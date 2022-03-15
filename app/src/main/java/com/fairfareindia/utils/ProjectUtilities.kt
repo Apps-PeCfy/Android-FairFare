@@ -93,6 +93,18 @@ object ProjectUtilities {
         var returnAmount = "0.0 km"
 
         if(distance != null){
+            var formatter = DecimalFormat("#,##0.0")
+            returnAmount =  formatter.format(distance) + " km"
+        }
+
+
+        return returnAmount
+    }
+
+    fun getDistanceInThreeDigitFormat(distance: Double?): String {
+        var returnAmount = "0.000 km"
+
+        if(distance != null){
             var formatter = DecimalFormat("#,##0.000")
             returnAmount =  formatter.format(distance) + " km"
         }
@@ -104,27 +116,28 @@ object ProjectUtilities {
 
 
     fun timeInSecondsConvertingToString(mContext: Context?, timeInSeconds: String): String {
-        var returnTime = timeInSeconds
+        var returnTime = "0 ${getSecondsUnit(0)}"
 
-        if (timeInSeconds.toInt() < 60){
-            returnTime = "$timeInSeconds ${getSecondsUnit(timeInSeconds.toInt())}"
-        }else{
-            var minutes : Int = timeInSeconds.toInt() / 60
-            if (minutes < 60){
-                var seconds = timeInSeconds.toInt() % 60
-                returnTime = minutes.toString() + " " +  getMinutesUnit(minutes) + " " + seconds.toString() + " " + getSecondsUnit(
-                    seconds
-                )
+        if (timeInSeconds.trim().isNotEmpty()){
+            if (timeInSeconds.toInt() < 60){
+                returnTime = "$timeInSeconds ${getSecondsUnit(timeInSeconds.toInt())}"
             }else{
-                var hours : Int = minutes / 60
-                var minutesHour = minutes % 60
-                returnTime = hours.toString() + " " +  getHourUnit(hours) + " " + minutesHour.toString() + " " + getMinutesUnit(
-                    minutesHour
-                )
+                var minutes : Int = timeInSeconds.toInt() / 60
+                if (minutes < 60){
+                    var seconds = timeInSeconds.toInt() % 60
+                    returnTime = minutes.toString() + " " +  getMinutesUnit(minutes) + " " + seconds.toString() + " " + getSecondsUnit(
+                        seconds
+                    )
+                }else{
+                    var hours : Int = minutes / 60
+                    var minutesHour = minutes % 60
+                    returnTime = hours.toString() + " " +  getHourUnit(hours) + " " + minutesHour.toString() + " " + getMinutesUnit(
+                        minutesHour
+                    )
 
+                }
             }
         }
-
         return returnTime
     }
 
