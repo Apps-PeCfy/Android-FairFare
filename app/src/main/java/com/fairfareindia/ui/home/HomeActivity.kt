@@ -52,6 +52,7 @@ import com.fairfareindia.ui.drawer.pojo.DrawerPojo
 import com.fairfareindia.ui.drawer.privacypolicy.ContentPage
 import com.fairfareindia.ui.drawer.privacypolicy.TermsOfUse
 import com.fairfareindia.ui.drawer.ratecard.RateCardsFragment
+import com.fairfareindia.ui.drawer.servicepartners.ServicePartnersFragment
 import com.fairfareindia.ui.drawer.setting.Setting
 import com.fairfareindia.ui.home.pojo.GeneralSettingModel
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
@@ -1253,11 +1254,19 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
             )
         )
 
+        drawerPojoArrayList!!.add(
+            DrawerPojo(
+                10,
+                getString(R.string.drawer_service_partners),
+                R.drawable.ic_nav_privacypolicy
+            )
+        )
+
 
 
         drawerPojoArrayList!!.add(
             DrawerPojo(
-                10,
+                11,
                 getString(R.string.drawer_setting),
                 R.drawable.ic_nav_setting
             )
@@ -1507,8 +1516,31 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                 }
             }
 
-
             10 -> {
+
+
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+                    binding.apply {
+                        spinnerLang.visibility = View.GONE
+                        homeMain.visibility = View.GONE
+                        drawerLayout.closeDrawer(Gravity.LEFT)
+                        drawerLayout.closeDrawer(Gravity.START)
+                    }
+
+                    replaceFragment(ServicePartnersFragment())
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+
+                }
+
+
+            }
+
+
+            11 -> {
 
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {

@@ -16,6 +16,7 @@ import com.fairfareindia.ui.drawer.notifications.NotificationModel
 import com.fairfareindia.ui.drawer.privacypolicy.ContentResponsePOJO
 import com.fairfareindia.ui.drawer.ratecard.pojo.RateCardModel
 import com.fairfareindia.ui.drawer.ratecard.pojo.RateCardResponsePOJO
+import com.fairfareindia.ui.drawer.servicepartners.ServicePartnerModel
 import com.fairfareindia.ui.drawer.setting.pojo.SettingResponsePojo
 import com.fairfareindia.ui.home.pojo.DeleteSaveDataResponsePOJO
 import com.fairfareindia.ui.home.pojo.GetAllowCityResponse
@@ -293,6 +294,11 @@ interface NetworkService {
         @Query("latitude") latitude: String?,
         @Query("longitude") longitude: String?
     ): Call<GetRideResponsePOJO?>?
+
+    @POST("getUnionList")
+    fun getServicePartners(
+        @Header("Authorization") header: String?
+    ): Call<ServicePartnerModel?>?
 
     @GET("getNotificationList")
     fun getNotificationList(

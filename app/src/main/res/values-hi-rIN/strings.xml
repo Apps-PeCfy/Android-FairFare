@@ -53,6 +53,7 @@
     <string name="drawer_contactus">संपर्क करें</string>
     <string name="drawer_privacypolicy">प्राइवेसी पालिसी</string>
     <string name="drawer_term_of_use">टर्म्स ऑफ़ यूज़</string>
+    <string name="drawer_service_partners">सर्विस पार्टनर्स</string>
     <string name="drawer_setting">सेटिंग्स</string>
     <string name="drawer_language">भाषा</string>
     <string name="drawer_available_reward_point">उपलब्ध इनाम अंक</string>
@@ -431,6 +432,13 @@
     <string name="msg_ride_arrived">सवारी शुरू करने से पहले कृपया ओटीपी को ड्राइवर के साथ साझा करें।</string>
     <string name="str_no_rate_cards">No rate cards found.</string>
     <string name="dialog_booking_request_msg_local_now">We are finding driver nearby. We will notify you the details once the search is complete.</string>
+
+
+    <string name="str_service_type">सेवा प्रकार</string>
+    <string name="str_route_served">मार्ग सेवित</string>
+    <string name="str_address">पता</string>
+    <string name="str_contact">संपर्क नंबर</string>
+    <string name="str_email">ईमेल</string>
 
 </resources>
 
