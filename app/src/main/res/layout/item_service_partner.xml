@@ -27,12 +27,12 @@
                 android:textStyle="bold"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:textSize="@dimen/text_16sp"/>
+                android:textSize="@dimen/text_14sp"/>
 
             <ImageView
                 android:id="@+id/img_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"

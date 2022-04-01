@@ -1,4 +1,5 @@
 package com.fairfareindia.ui.intercitytrackpickup
+import com.fairfareindia.ui.intercityviewride.ViewRideModel
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -13,6 +14,9 @@ class RideDetailModel {
 
         @SerializedName("id")
         var id = 0
+
+        @SerializedName("vehicle")
+        var vehicle: ViewRideModel.VehicleDetail? = null
 
         @SerializedName("ride_number")
         var ride_number: String? = null

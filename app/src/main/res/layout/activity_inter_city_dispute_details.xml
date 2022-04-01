@@ -330,6 +330,16 @@
 
                                     </RelativeLayout>
 
+                                    <TextView
+                                        android:id="@+id/txt_union_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/notosansjp_regular"
+                                        android:textColor="@color/colorText"
+                                        android:layout_marginStart="70dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:textSize="@dimen/text_14sp" />
+
                                 </LinearLayout>
 
                             </androidx.cardview.widget.CardView>

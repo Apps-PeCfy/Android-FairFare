@@ -113,6 +113,7 @@ class IntercityViewRideActivity : AppCompatActivity(), IIntercityViewRideView,
         binding.apply {
             txtPickUpLocation.text = sourceAddress
             txtDropOffLocation.text = destinationAddress
+            txtUnionName.text = model?.ride?.vehicle?.union?.name
 
             txtVehicleName.text = model?.ride?.name
             txtPerson.text = model?.ride?.vehicle?.noOfSeater.toString()

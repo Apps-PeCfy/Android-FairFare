@@ -172,6 +172,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
                 llCancellationCharges.visibility = View.GONE
             }
 
+            txtUnionName.text = model?.data?.vehicle?.union?.name
             txtRideNumber.text =  getString(R.string.str_ride_id) +" : " + model?.data?.ride_number
             txtEstLuggageCharges.text = ProjectUtilities.getAmountInFormat(model?.data?.estimatedTrackRide?.luggageCharges?.toDouble())
             txtEstAddDistance.text = ProjectUtilities.getDistanceInFormat(model?.data?.estimatedTrackRide?.additionalDistance)

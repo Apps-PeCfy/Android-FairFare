@@ -81,6 +81,8 @@ class InterCityDisputeDetailsActivity : AppCompatActivity(), IDisputeDetailView 
 
             txtDisputeReason.text = dReason
 
+            txtUnionName.text = model?.dispute?.ride?.vehicle?.union?.name
+
 
 
             txtActualFare.text = getString(R.string.str_total_fare_charged)  + " : " + ProjectUtilities.getAmountInFormat(model?.dispute?.actualMeterCharges?.toDouble())
