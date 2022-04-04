@@ -11,7 +11,7 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU</string>
 
 
-    <string name="app_name">FairFareIndia</string>
+    <string name="app_name">Fair Fare India</string>
     <string name="logIn">Sign In</string>
     <string name="continuetxt">By continuing, you agree to Fair Fare</string>
     <string name="privacypolicy">Privacy Policy</string>
