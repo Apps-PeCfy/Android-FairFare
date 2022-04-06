@@ -257,13 +257,15 @@
                             android:id="@+id/txt_base_fare_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_toStartOf="@id/txt_base_fare"
                             android:text="@string/str_base_fare"
                             android:textColor="@color/colorText"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txt_base_fare"
-                            android:layout_width="@dimen/_60sdp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:fontFamily="@font/notosansjp_bold"

@@ -460,13 +460,15 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:text="@string/str_base_fare"
+                                            android:layout_toStartOf="@id/txt_base_fare"
+                                            android:layout_marginEnd="10dp"
                                             android:textColor="@color/colorText"
                                             android:textStyle="bold" />
 
                                         <TextView
                                             android:id="@+id/txt_base_fare"
                                             android:textColor="@color/colorPrimary"
-                                            android:layout_width="@dimen/_60sdp"
+                                            android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentEnd="true"
                                             android:textSize="@dimen/text_16sp"
@@ -911,6 +913,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/str_estimated_fare_payable"
                                             android:textColor="@color/colorText"
+                                            android:layout_marginEnd="10dp"
                                             android:layout_toStartOf="@id/txt_total_payable"
                                             android:textStyle="bold" />
 
