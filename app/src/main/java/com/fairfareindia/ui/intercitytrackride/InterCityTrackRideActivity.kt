@@ -147,7 +147,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
                     getDriverLocationAPI()
                     if (!isDestroyed){
-                        iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                      //  iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
                     }
 
 
@@ -175,7 +175,7 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
 
             imgRefresh.setOnClickListener {
                 iInterCityTrackRidePresenter?.getRideDetails(token, rideID)
-                iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+               // iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
             }
 
             rlHideShow.setOnClickListener {
@@ -699,13 +699,13 @@ class InterCityTrackRideActivity : BaseLocationClass(), OnMapReadyCallback,
                         addCurrentLocationMarker(driverLocationModel)
                         if (rideDetailModel?.data?.permitType == Constants.TYPE_LOCAL){
                             getRouteAPI()
-                            iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                           // iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
                         }else{
                             var diffTime = Date().time - preferencesManager?.getDirectionAPITime()!!
                             if (diffTime > 30000 || mPolyline == null) {
                                 preferencesManager?.setDirectionAPITime(Date().time)
                                 getRouteAPI()
-                                iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
+                              //  iInterCityTrackRidePresenter?.getNearByPlaces(driverLat, driverLong)
                             }
                         }
 

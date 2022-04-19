@@ -402,7 +402,8 @@
                     android:id="@+id/rl_current_fare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
 
 
                     <TextView
@@ -434,7 +435,7 @@
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
                     android:background="@color/secondaryLightGray" />
 
                 <TextView
@@ -445,14 +446,16 @@
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/text_14sp"
                     android:fontFamily="@font/notosansjp_regular"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:id="@+id/rl_places"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fairfareindia.R
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
@@ -28,7 +29,7 @@ class GooglePlace : AppCompatActivity() {
         if (!Places.isInitialized()) {
             Places.initialize(
                 applicationContext,
-                "AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU"
+                getString(R.string.google_maps_key)
             )
         }
 
@@ -37,9 +38,10 @@ class GooglePlace : AppCompatActivity() {
         edit_txt!!.isFocusable = false
         edit_txt!!.setOnClickListener {
             val fields =
-                Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.OPENING_HOURS)
+                Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
             val intent =
                 Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+                    .setTypeFilter(TypeFilter.ADDRESS)
                     .build(this@GooglePlace)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
@@ -58,8 +60,7 @@ class GooglePlace : AppCompatActivity() {
                 edit_txt!!.setText(place.address)
                 Log.i(
                     "PlaceData", "Place: " + place.name + ",      "
-                            + place.id + "    " + place.latLng + "   "
-                            + place.openingHours + "    " + place.address
+                            + place.id + "    " + place.latLng + "    " + place.address
                 )
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.

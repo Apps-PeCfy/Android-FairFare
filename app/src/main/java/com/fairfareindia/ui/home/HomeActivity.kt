@@ -1905,7 +1905,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 val context = GeoApiContext.Builder()
-                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .apiKey(getString(R.string.google_maps_key))
                     .build()
                 var results = arrayOfNulls<GeocodingResult>(0)
                 try {
@@ -1927,7 +1927,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 val context1 = GeoApiContext.Builder()
-                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .apiKey(getString(R.string.google_maps_key))
                     .build()
                 var results1 = arrayOfNulls<GeocodingResult>(0)
                 try {
@@ -1949,7 +1949,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 val contextCurrentPlaceID = GeoApiContext.Builder()
-                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .apiKey(getString(R.string.google_maps_key))
                     .build()
                 var PlaceIDCurrent = arrayOfNulls<GeocodingResult>(0)
                 try {
@@ -2016,7 +2016,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 val context = GeoApiContext.Builder()
-                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .apiKey(getString(R.string.google_maps_key))
                     .build()
                 var results = arrayOfNulls<GeocodingResult>(0)
                 try {
@@ -2037,7 +2037,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 val context1 = GeoApiContext.Builder()
-                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .apiKey(getString(R.string.google_maps_key))
                     .build()
                 var results1 = arrayOfNulls<GeocodingResult>(0)
                 try {
@@ -2058,7 +2058,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
                 val contextCurrentPlaceID = GeoApiContext.Builder()
-                    .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                    .apiKey(getString(R.string.google_maps_key))
                     .build()
                 var PlaceIDCurrent = arrayOfNulls<GeocodingResult>(0)
                 try {

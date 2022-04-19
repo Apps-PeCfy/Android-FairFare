@@ -2,6 +2,7 @@ package com.fairfareindia.networking
 
 //created by kiran.p
 
+import com.fairfareindia.R
 import com.fairfareindia.ui.Login.pojo.LoginResponsepojo
 import com.fairfareindia.ui.disputs.pojo.DisputesReasonResponsePOJO
 import com.fairfareindia.ui.disputs.pojo.SaveDisputResponsePOJO
@@ -532,7 +533,7 @@ interface NetworkService {
     ): Call<GetAllowCityResponse?>?
 
 
-    @GET("api/place/nearbysearch/json?sensor=true&key=AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+    @GET("api/place/nearbysearch/json?sensor=true&key=" + R.string.google_maps_key)
     fun getNearbyPlaces(
         @Query("location") location: String?,
         @Query("radius") radius: Int

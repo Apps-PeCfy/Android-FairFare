@@ -43,6 +43,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
     private var mResultList: ArrayList<PlaceAutocomplete>? =
         ArrayList()
     var token: String? = null
+    var sessionToken: AutocompleteSessionToken? = null
     var preferencesManager: PreferencesManager
     private val STYLE_BOLD: CharacterStyle
     private val STYLE_NORMAL: CharacterStyle
@@ -100,7 +101,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
 
         // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
         // and once again when the user makes a selection (for example when calling fetchPlace()).
-        val token = AutocompleteSessionToken.newInstance()
+        //val token = AutocompleteSessionToken.newInstance()
         val northEast = LatLng(19.076090, 72.877426)
         val southwest = LatLng(19.2183, 72.9781)
 
@@ -113,10 +114,10 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
                 //.setTypeFilter(TypeFilter.CITIES)
                 //   .setLocationRestriction(RectangularBounds.newInstance(northEast,northEast))
                 // .setLocationBias(RectangularBounds.newInstance(northEast,southwest))
-                .setSessionToken(token)
-                //  .setCountry("IN")
-
                 .setQuery(constraint.toString())
+                .setSessionToken(sessionToken)
+                //  .setCountry("IN")
+                    
                 .build()
         val autocompletePredictions =
             placesClient.findAutocompletePredictions(request)
@@ -384,6 +385,7 @@ class PlacesAutoCompleteAdapter(private val mContext: Context) :
         STYLE_BOLD = StyleSpan(Typeface.BOLD)
         STYLE_NORMAL = StyleSpan(Typeface.NORMAL)
         placesClient = Places.createClient(mContext)
+        sessionToken = AutocompleteSessionToken.newInstance()
         PreferencesManager.initializeInstance(mContext)
         preferencesManager = PreferencesManager.instance!!
     }

@@ -489,7 +489,7 @@ class PickUpDropActivity : FragmentActivity(), OnMapReadyCallback, ClickListener
     fun favClick() {
         if(ProjectUtilities.checkInternetAvailable(this@PickUpDropActivity)) {
             val context = GeoApiContext.Builder()
-                .apiKey("AIzaSyDTtO6dht-M6tX4uL28f8HTLwIQrT_ivUU")
+                .apiKey(getString(R.string.google_maps_key))
                 .build()
             var results = arrayOfNulls<GeocodingResult>(0)
             try {
