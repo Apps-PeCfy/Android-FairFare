@@ -37,6 +37,9 @@ class VerifyOTPResponsePojo {
         @SerializedName("name")
         var name: String? = null
 
+        @SerializedName("referrer_code")
+        var referrer_code: String? = null
+
         @SerializedName("date_of_birth")
         var dateOfBirth: String? = null
 

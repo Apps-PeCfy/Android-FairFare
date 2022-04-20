@@ -9,6 +9,7 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -20,6 +21,9 @@ import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
+import com.android.installreferrer.api.ReferrerDetails
 import com.fairfareindia.R
 import com.fairfareindia.receiver.SmsReceiver
 import com.fairfareindia.ui.Login.pojo.LoginResponsepojo
@@ -51,6 +55,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     var device_token: String? = null
     var register_Latitude: String? = null
     var register_Longitude: String? = null
+    private lateinit var referrerClient: InstallReferrerClient
 
 
     @JvmField
@@ -99,18 +104,14 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
 
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
-            if(it.isComplete){
+            if (it.isComplete) {
                 device_token = it.result.toString()
                 // DO your thing with your firebase token
             }
         }
 
 
-
-
-
-
-      //  setToolbar()
+        //  setToolbar()
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
@@ -131,6 +132,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         edt_otp?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
             }
+
             override fun beforeTextChanged(
                 s: CharSequence, start: Int,
                 count: Int, after: Int
@@ -142,11 +144,11 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                if(s.length>0){
-                    edt_otp?.letterSpacing=1.0f
+                if (s.length > 0) {
+                    edt_otp?.letterSpacing = 1.0f
 
-                }else{
-                    edt_otp?.letterSpacing=0.0f
+                } else {
+                    edt_otp?.letterSpacing = 0.0f
 
                 }
 
@@ -158,11 +160,11 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
 
         object : CountDownTimer(31000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                if((millisUntilFinished / 1000).toString().length==1){
-                    txtResendTimer!!.setText("00:0" + millisUntilFinished / 1000+"")
+                if ((millisUntilFinished / 1000).toString().length == 1) {
+                    txtResendTimer!!.setText("00:0" + millisUntilFinished / 1000 + "")
 
-                }else{
-                    txtResendTimer!!.setText("00:" + millisUntilFinished / 1000+"")
+                } else {
+                    txtResendTimer!!.setText("00:" + millisUntilFinished / 1000 + "")
 
                 }
             }
@@ -206,7 +208,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
             val otpListener: SmsReceiver.OTPListener = object : SmsReceiver.OTPListener {
                 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                 override fun onOTPReceived(otpData: String?) {
-                    edt_otp?.letterSpacing=1.0f
+                    edt_otp?.letterSpacing = 1.0f
                     edt_otp?.setText(otpData)
                     successOtpFlow()
                 }
@@ -227,10 +229,66 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         if (LoginType == "NOR") {
             GoogleToken = ""
         }
-        iOtpPresenter!!.verifyOtp(
-            MobileNo, type, "Android",
-            LoginType, CountryCode, Username, UserMail,
-            gender, edt_otp!!.text.toString(),deviceID,device_token,register_Latitude,register_Longitude)
+        if (type.equals("Login")) {
+            iOtpPresenter!!.verifyOtp(
+                MobileNo,
+                type,
+                "Android",
+                LoginType,
+                CountryCode,
+                Username,
+                UserMail,
+                gender,
+                edt_otp!!.text.toString(),
+                deviceID,
+                device_token,
+                register_Latitude,
+                register_Longitude
+            )
+
+        } else
+        {
+
+
+            var refferCode: String? = ""
+            referrerClient = InstallReferrerClient.newBuilder(this).build()
+            referrerClient.startConnection(object : InstallReferrerStateListener {
+
+                override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                    when (responseCode) {
+                        InstallReferrerClient.InstallReferrerResponse.OK -> {
+                            Log.d("InstallReferrTest", "OK")
+                            val response: ReferrerDetails = referrerClient.installReferrer
+                            refferCode = response.installReferrer
+
+
+                            // Connection established.
+                        }
+                        InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
+                            Log.d("InstallReferrTest", "FEATURE_NOT_SUPPORTED")
+                            // API not available on the current Play Store app.
+                        }
+                        InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+                            // Connection couldn't be established.
+                            Log.d("InstallReferrTest", "SERVICE_UNAVAILABLE")
+                        }
+                    }
+                }
+
+                override fun onInstallReferrerServiceDisconnected() {
+                    // Try to restart the connection on the next request to
+                    // Google Play by calling the startConnection() method.
+                }
+            })
+
+            iOtpPresenter!!.verifyOtpWithReferel(
+                MobileNo, type, "Android",
+                LoginType, CountryCode, Username, UserMail,
+                gender, edt_otp!!.text.toString(), deviceID, device_token, register_Latitude,
+                register_Longitude, refferCode
+            )
+
+        }
     }
 
     private fun setToolbar() {
@@ -258,31 +316,125 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         }
 
 
-        iOtpPresenter!!.resendOtp(
-            MobileNo, type, "Android",
-            LoginType, CountryCode, Username, UserMail, GoogleToken
-        )
+        if (type.equals("Login")) {
+            iOtpPresenter!!.verifyOtp(
+                MobileNo,
+                type,
+                "Android",
+                LoginType,
+                CountryCode,
+                Username,
+                UserMail,
+                gender,
+                edt_otp!!.text.toString(),
+                deviceID,
+                device_token,
+                register_Latitude,
+                register_Longitude
+            )
 
+        } else
+        {
+
+
+            var refferCode: String? = ""
+            referrerClient = InstallReferrerClient.newBuilder(this).build()
+            referrerClient.startConnection(object : InstallReferrerStateListener {
+
+                override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                    when (responseCode) {
+                        InstallReferrerClient.InstallReferrerResponse.OK -> {
+                            Log.d("InstallReferrTest", "OK")
+                            val response: ReferrerDetails = referrerClient.installReferrer
+                            refferCode = response.installReferrer
+
+
+                            // Connection established.
+                        }
+                        InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
+                            Log.d("InstallReferrTest", "FEATURE_NOT_SUPPORTED")
+                            // API not available on the current Play Store app.
+                        }
+                        InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+                            // Connection couldn't be established.
+                            Log.d("InstallReferrTest", "SERVICE_UNAVAILABLE")
+                        }
+                    }
+                }
+
+                override fun onInstallReferrerServiceDisconnected() {
+                    // Try to restart the connection on the next request to
+                    // Google Play by calling the startConnection() method.
+                }
+            })
+
+
+
+
+
+
+            iOtpPresenter!!.verifyOtpWithReferel(
+                MobileNo, type, "Android",
+                LoginType, CountryCode, Username, UserMail,
+                gender, edt_otp!!.text.toString(), deviceID, device_token, register_Latitude,
+                register_Longitude, refferCode
+            )
+
+        }
     }
 
+    
     override fun otpSuccess(verifyOTPResponsePojo: VerifyOTPResponsePojo?) {
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN, verifyOTPResponsePojo!!.token)
-        mPreferencesManager!!.setIntegerValue(Constants.SHARED_PREFERENCE_LOGIN_ID, verifyOTPResponsePojo!!.user!!.id)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME, verifyOTPResponsePojo!!.user!!.name)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_USER_REWARD, verifyOTPResponsePojo!!.user!!.rewards)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_EMAIL, verifyOTPResponsePojo!!.user!!.email)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PHONENO, verifyOTPResponsePojo!!.user!!.phoneNo)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_GENDER, verifyOTPResponsePojo!!.user!!.gender)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFESTION, verifyOTPResponsePojo!!.user!!.profession)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DOB, verifyOTPResponsePojo!!.user!!.dateOfBirth)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK, verifyOTPResponsePojo!!.user!!.profilePic)
-        mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_LOCATION, verifyOTPResponsePojo!!.user!!.location)
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_TOKEN,
+            verifyOTPResponsePojo!!.token
+        )
+        mPreferencesManager!!.setIntegerValue(
+            Constants.SHARED_PREFERENCE_LOGIN_ID,
+            verifyOTPResponsePojo!!.user!!.id
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_NAME,
+            verifyOTPResponsePojo!!.user!!.name
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_USER_REWARD,
+            verifyOTPResponsePojo!!.user!!.rewards
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_EMAIL,
+            verifyOTPResponsePojo!!.user!!.email
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_PHONENO,
+            verifyOTPResponsePojo!!.user!!.phoneNo
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_GENDER,
+            verifyOTPResponsePojo!!.user!!.gender
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_PROFESTION,
+            verifyOTPResponsePojo!!.user!!.profession
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_DOB,
+            verifyOTPResponsePojo!!.user!!.dateOfBirth
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_PROFILEPICK,
+            verifyOTPResponsePojo!!.user!!.profilePic
+        )
+        mPreferencesManager!!.setStringValue(
+            Constants.SHARED_PREFERENCE_LOGIN_LOCATION,
+            verifyOTPResponsePojo!!.user!!.location
+        )
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_LOGIN_DEVICEID, deviceID)
         mPreferencesManager!!.setStringValue(Constants.SHARED_PREFERENCE_ISLOGIN, "true")
         mPreferencesManager?.createLoginSession(verifyOTPResponsePojo.user)
         SessionManager.getInstance(this@OtpAvtivity).setUserModel(verifyOTPResponsePojo.user!!)
         val intent = Intent(this@OtpAvtivity, HomeActivity::class.java)
-      //  edt_otp!!.setText("")
+        //  edt_otp!!.setText("")
 
         startActivity(intent)
         finish()
@@ -297,11 +449,11 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
 
         object : CountDownTimer(31000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                if((millisUntilFinished / 1000).toString().length==1){
-                    txtResendTimer!!.setText("00:0" + millisUntilFinished / 1000+"")
+                if ((millisUntilFinished / 1000).toString().length == 1) {
+                    txtResendTimer!!.setText("00:0" + millisUntilFinished / 1000 + "")
 
-                }else{
-                    txtResendTimer!!.setText("00:" + millisUntilFinished / 1000+"")
+                } else {
+                    txtResendTimer!!.setText("00:" + millisUntilFinished / 1000 + "")
 
                 }
             }
@@ -339,7 +491,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(smsReceiver!=null){
+        if (smsReceiver != null) {
             unregisterReceiver(smsReceiver)
         }
 

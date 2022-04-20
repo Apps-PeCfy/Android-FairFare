@@ -62,6 +62,59 @@ class OtpPresenterImplmenter(var view: IOtpView) : IOtpPresenter {
         })
     }
 
+
+    override fun verifyOtpWithReferel(
+        phoneNo: String?,
+        type: String?,
+        deviceType: String?,
+        loginType: String?,
+        countryCode: String?,
+        name: String?,
+        email: String?,
+        gender: String?,
+        otp: String?,
+        deviceId: String?,
+        device_token: String?,
+        register_Latitude: String?,
+        register_Longitude: String?,
+        refer_code: String?
+    ) {
+        view.showWait()
+        val call = client.verifyOtpwithReferel(
+            phoneNo, type, deviceType, loginType,
+            countryCode, name, email, gender, otp,deviceId,device_token,
+            register_Latitude,register_Longitude,refer_code)
+        call!!.enqueue(object : Callback<VerifyOTPResponsePojo?> {
+            override fun onResponse(call: Call<VerifyOTPResponsePojo?>, response: Response<VerifyOTPResponsePojo?>) {
+                view.removeWait()
+                if (response.code() == 200) {
+                    view.otpSuccess(response.body())
+                } else if (response.code() == 400||response.code()==422) {
+                    val gson = GsonBuilder().create()
+                    var pojo: ValidationResponse? = ValidationResponse()
+                    try {
+                        pojo = gson.fromJson(
+                            response.errorBody()!!.string(),
+                            ValidationResponse::class.java
+                        )
+                        view.validationError(pojo)
+                    } catch (exception: IOException) {
+                    }
+                }else{
+                    view.onFailure(response.message())
+                }
+            }
+
+            override fun onFailure(
+                call: Call<VerifyOTPResponsePojo?>,
+                t: Throwable
+            ) {
+                view.removeWait()
+                view.onFailure(t.message)
+            }
+        })
+    }
+
     override fun resendOtp(
         phoneNo: String?,
         type: String?,

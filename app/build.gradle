@@ -89,7 +89,7 @@ dependencies {
     //For Volley
     implementation 'com.android.volley:volley:1.2.1'
 
-    
+    implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'com.hbb20:ccp:2.2.9'

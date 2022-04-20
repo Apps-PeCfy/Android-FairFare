@@ -87,6 +87,26 @@ interface NetworkService {
         @Field("reg_longitude") register_Longitude: String?
     ): Call<VerifyOTPResponsePojo?>?
 
+
+    @FormUrlEncoded
+    @POST("verifyOtp")
+    fun verifyOtpwithReferel(
+        @Field("phone_no") phoneno: String?,
+        @Field("type") type: String?,
+        @Field("device_type") device_type: String?,
+        @Field("login_type") login_type: String?,
+        @Field("country_phone_code") logcountry_phone_codein_type: String?,
+        @Field("name") name: String?,
+        @Field("email") email: String?,
+        @Field("gender") gender: String?,
+        @Field("otp") otp: String?,
+        @Field("device_id") deviceId: String?,
+        @Field("device_token") device_token: String?,
+        @Field("reg_latitude") register_Latitude: String?,
+        @Field("reg_longitude") register_Longitude: String?,
+        @Field("referee_code") referee_code: String?
+    ): Call<VerifyOTPResponsePojo?>?
+
     @FormUrlEncoded
     @POST("saveLocation")
     fun SaveLocation(

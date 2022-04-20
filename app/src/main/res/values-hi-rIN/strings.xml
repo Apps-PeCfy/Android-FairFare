@@ -55,6 +55,8 @@
     <string name="drawer_term_of_use">टर्म्स ऑफ़ यूज़</string>
     <string name="drawer_service_partners">सर्विस पार्टनर्स</string>
     <string name="drawer_setting">सेटिंग्स</string>
+
+    <string name="drawer_refer_and_earn">Refer &amp; Earn</string>
     <string name="drawer_language">भाषा</string>
     <string name="drawer_available_reward_point">उपलब्ध इनाम अंक</string>
 

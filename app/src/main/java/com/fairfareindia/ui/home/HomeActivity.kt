@@ -103,7 +103,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
     OnTimeSetListener, AdapterView.OnItemClickListener, IHomeView {
 
     protected var myLocationManager: MyLocationManager? = MyLocationManager(this)
-
+    private var sessionManager: SessionManager? = null
     lateinit var binding: ActivityHomeBinding
     private var context: Context = this
 
@@ -1273,6 +1273,15 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         )
 
 
+        drawerPojoArrayList!!.add(
+            DrawerPojo(
+                12,
+                getString(R.string.drawer_refer_and_earn),
+                R.drawable.ic_nav_setting
+            )
+        )
+
+
         drawerAdapter = DrawerAdapter(this, drawerPojoArrayList)
         binding.lvDrawer.adapter = drawerAdapter
 
@@ -1562,6 +1571,48 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
 
             }
+
+
+
+
+            12 -> {
+
+
+                if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
+
+                    sessionManager = SessionManager.getInstance(this@HomeActivity)
+
+
+                    val shareIntent = Intent(Intent.ACTION_SEND)
+                    shareIntent.type = "text/plain"
+                    shareIntent.putExtra(
+                        Intent.EXTRA_SUBJECT,
+                        resources.getString(R.string.app_name)
+                    )
+                    var shareMessage =
+                        "Join me on FairfareIndia use my code " + sessionManager?.getUserModel()?.referrer_code
+                            .toString() + " to earn 200 points "
+                    shareMessage =
+                        shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "&referrer=" +
+                                sessionManager?.getUserModel()?.referrer_code + "\n"
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+                    startActivity(Intent.createChooser(shareIntent, "Samiksha Referral"))
+
+
+                } else {
+                    ProjectUtilities.showToast(
+                        this@HomeActivity,
+                        getString(R.string.internet_error)
+                    )
+
+                }
+
+            }
+
+
+
+
+
 
             else -> {
             }
