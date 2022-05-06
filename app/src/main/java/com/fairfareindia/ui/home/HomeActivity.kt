@@ -1596,7 +1596,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                         shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "&referrer=" +
                                 sessionManager?.getUserModel()?.referrer_code + "\n"
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
-                    startActivity(Intent.createChooser(shareIntent, "Samiksha Referral"))
+                    startActivity(Intent.createChooser(shareIntent, "FairFare Referral"))
 
 
                 } else {
