@@ -53,6 +53,9 @@ class VerifyOTPResponsePojo {
         @SerializedName("rewards")
         val rewards: String? = null
 
+        @SerializedName("total_earning")
+        val total_earning: String? = null
+
 
 
         @SerializedName("id")

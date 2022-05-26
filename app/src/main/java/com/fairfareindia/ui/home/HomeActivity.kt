@@ -243,6 +243,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         placesClient = Places.createClient(this@HomeActivity)
         PreferencesManager.initializeInstance(this@HomeActivity)
         preferencesManager = PreferencesManager.instance
+        sessionManager = SessionManager.getInstance(this@HomeActivity)
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
 
@@ -454,7 +455,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
                     tvEmailAddress.text =
                         getString(R.string.drawer_available_reward_point) + " " + preferencesManager!!.getStringValue(
                             Constants.SHARED_PREFERENCE_USER_REWARD
-                        )
+                        ) + " (${ProjectUtilities.getAmountInFormat(sessionManager?.getUserModel()?.total_earning?.toDouble())})"
 
                     tvUserName.text =
                         preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_NAME)
@@ -1580,7 +1581,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
 
                 if (ProjectUtilities.checkInternetAvailable(this@HomeActivity)) {
 
-                    sessionManager = SessionManager.getInstance(this@HomeActivity)
+
 
 
                     val shareIntent = Intent(Intent.ACTION_SEND)
