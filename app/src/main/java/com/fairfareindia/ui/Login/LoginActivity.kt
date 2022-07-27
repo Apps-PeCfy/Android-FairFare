@@ -61,6 +61,7 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 import kotlin.random.Random
+import com.fairfareindia.BuildConfig
 
 class LoginActivity : AppCompatActivity(),
     CountryCodePicker.OnCountryChangeListener, ILoginView {
@@ -281,8 +282,10 @@ class LoginActivity : AppCompatActivity(),
     @OnClick(R.id.tvPrivacy)
     fun tvPrivacy() {
 
+        var url = BuildConfig.PAGE_URL + "pageContents?page_name=Privacy-Policy"
         val intent = Intent(applicationContext, PrivacyPolicyActivity::class.java)
-        intent.putExtra("ContentPageData", "Privacy Policy")
+        intent.putExtra("title", "Privacy Policy")
+        intent.putExtra("url", url)
         startActivity(intent)
 
 
@@ -291,8 +294,10 @@ class LoginActivity : AppCompatActivity(),
     @OnClick(R.id.tvTerms)
     fun tvTerms() {
 
+        var url = BuildConfig.PAGE_URL + "pageContents?page_name=Terms-Of-Use-Commuters"
         val intent = Intent(applicationContext, PrivacyPolicyActivity::class.java)
-        intent.putExtra("ContentPageData", "Terms of Use")
+        intent.putExtra("title", "Terms of Use")
+        intent.putExtra("url", url)
         startActivity(intent)
 
 

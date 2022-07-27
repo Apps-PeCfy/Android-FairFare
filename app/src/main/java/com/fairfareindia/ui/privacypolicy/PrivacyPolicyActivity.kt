@@ -1,13 +1,18 @@
 package com.fairfareindia.ui.privacypolicy
 
 import android.app.ProgressDialog
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
+import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
@@ -28,10 +33,15 @@ class PrivacyPolicyActivity : AppCompatActivity() {
 
     var preferencesManager: PreferencesManager? = null
     var token: String? = null
-    var contentPadeText: String? = null
+    var title: String? = null
+    var url: String? = null
     @JvmField
     @BindView(R.id.webView)
     var webView: WebView? = null
+
+    @JvmField
+    @BindView(R.id.progressbar)
+    var progressbar: ProgressBar? = null
 
     @JvmField
     @BindView(R.id.toolbar_viewRide)
@@ -43,23 +53,50 @@ class PrivacyPolicyActivity : AppCompatActivity() {
         ButterKnife.bind(this)
         setStatusBarGradiant(this)
 
-        contentPadeText = intent.getStringExtra("ContentPageData")
+        title = intent.getStringExtra("title")
+        url = intent.getStringExtra("url")
 
-        mToolbar!!.title = contentPadeText
+        mToolbar!!.title = title
         mToolbar!!.setTitleTextColor(Color.WHITE)
         setSupportActionBar(mToolbar)
         mToolbar!!.setNavigationOnClickListener { onBackPressed() }
 
-        if(contentPadeText.equals("Privacy Policy")){
+        if (!url.isNullOrEmpty()){
+            loadWithSever()
+        }
+    }
 
-            callApi("Privacy-Policy")
+    private fun loadWithSever() {
+        webView?.settings?.javaScriptEnabled = true
+        webView?.settings?.loadWithOverviewMode = true
+        webView?.settings?.useWideViewPort = true
+        webView?.settings?.domStorageEnabled = true
+        webView?.settings?.cacheMode = WebSettings.LOAD_NO_CACHE
 
-        }else{
-          //  callApi("Terms-Of-Use")
-            callApi("Terms-Of-Use-Commuters")
 
+
+        webView?.webViewClient = object : WebViewClient() {
+            override fun onReceivedError(
+                view: WebView,
+                errorCode: Int,
+                description: String,
+                failingUrl: String
+            ) {
+                progressbar?.visibility = View.GONE
+            }
+
+            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                progressbar?.visibility = View.VISIBLE
+            }
+
+            override fun onPageFinished(view: WebView, url: String) {
+                super.onPageFinished(view, url)
+                progressbar?.visibility = View.GONE
+            }
         }
 
+        webView?.loadUrl(url!!)
 
     }
 

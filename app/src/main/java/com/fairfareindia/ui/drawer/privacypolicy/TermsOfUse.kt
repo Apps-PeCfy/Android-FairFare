@@ -4,16 +4,21 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.fairfareindia.BuildConfig
 import com.fairfareindia.R
 import com.fairfareindia.networking.ApiClient
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
@@ -35,6 +40,10 @@ class TermsOfUse : Fragment() {
     @BindView(R.id.webView)
     var webView: WebView? = null
 
+    @JvmField
+    @BindView(R.id.progressbar)
+    var progressbar: ProgressBar? = null
+
 
 
     override fun onCreateView(
@@ -49,9 +58,45 @@ class TermsOfUse : Fragment() {
         PreferencesManager.initializeInstance(activity!!.applicationContext)
         preferencesManager = PreferencesManager.instance
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
-        callApi()
+        //callApi()
+        loadWithSever()
 
         return rootView
+    }
+
+    private fun loadWithSever() {
+        webView?.settings?.javaScriptEnabled = true
+        webView?.settings?.loadWithOverviewMode = true
+        webView?.settings?.useWideViewPort = true
+        webView?.settings?.domStorageEnabled = true
+        webView?.settings?.cacheMode = WebSettings.LOAD_NO_CACHE
+
+
+
+        webView?.webViewClient = object : WebViewClient() {
+            override fun onReceivedError(
+                view: WebView,
+                errorCode: Int,
+                description: String,
+                failingUrl: String
+            ) {
+                progressbar?.visibility = View.GONE
+            }
+
+            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                progressbar?.visibility = View.VISIBLE
+            }
+
+            override fun onPageFinished(view: WebView, url: String) {
+                super.onPageFinished(view, url)
+                progressbar?.visibility = View.GONE
+            }
+        }
+
+        var url = BuildConfig.PAGE_URL + "pageContents?page_name=Terms-Of-Use-Commuters"
+        webView?.loadUrl(url)
+
     }
 
     private fun callApi() {
