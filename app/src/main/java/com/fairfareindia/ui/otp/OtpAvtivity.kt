@@ -26,8 +26,10 @@ import com.android.installreferrer.api.InstallReferrerStateListener
 import com.android.installreferrer.api.ReferrerDetails
 import com.fairfareindia.R
 import com.fairfareindia.receiver.SmsReceiver
+import com.fairfareindia.ui.Login.LoginActivity
 import com.fairfareindia.ui.Login.pojo.LoginResponsepojo
 import com.fairfareindia.ui.Login.pojo.ValidationResponse
+import com.fairfareindia.ui.Register.RegisterActivity
 import com.fairfareindia.ui.home.HomeActivity
 import com.fairfareindia.ui.otp.pojo.VerifyOTPResponsePojo
 import com.fairfareindia.utils.Constants
@@ -86,7 +88,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
     var iOtpPresenter: IOtpPresenter? = null
     override fun onBackPressed() {
 
-        //super.onBackPressed();
+     //   super.onBackPressed();
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,7 +113,7 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
         }
 
 
-        //  setToolbar()
+          setToolbar()
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
@@ -293,9 +295,22 @@ class OtpAvtivity : AppCompatActivity(), IOtpView {
 
     private fun setToolbar() {
         setSupportActionBar(mToolbar)
-        mToolbar!!.setNavigationOnClickListener { onBackPressed() }
+        mToolbar!!.setNavigationOnClickListener {
+            if(type.equals("Login")){
+                val intent = Intent(this@OtpAvtivity, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+
+            }else{
+                val intent = Intent(this@OtpAvtivity, RegisterActivity::class.java)
+                startActivity(intent)
+                finish()
+
+            }
+
+        }
         supportActionBar!!.title = ""
-        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     @OnClick(R.id.btnFinish)

@@ -1274,14 +1274,14 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, OnDateSetListener,
         )
 
 
-        drawerPojoArrayList!!.add(
+     /*   drawerPojoArrayList!!.add(
             DrawerPojo(
                 12,
                 getString(R.string.drawer_refer_and_earn),
                 R.drawable.ic_nav_setting
             )
         )
-
+*/
 
         drawerAdapter = DrawerAdapter(this, drawerPojoArrayList)
         binding.lvDrawer.adapter = drawerAdapter

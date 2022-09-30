@@ -10,10 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import butterknife.BindView
@@ -39,13 +36,20 @@ class ContactUs : Fragment() {
     var preferencesManager: PreferencesManager? = null
     var sharedpreferences: SharedPreferences? = null
     var token: String? = null
+    var contactUsArray = arrayOf<String?>("Feedback", "Enquiry", "Technical Issues")
+    var subjectStr: String? = ""
 
 
     @JvmField
     @BindView(R.id.btnSubmitContactUs)
     var btnSubmitContactUs: Button? = null
 
- @JvmField
+    @JvmField
+    @BindView(R.id.spnContactUsType)
+    var spnContactUsType: Spinner? = null
+
+
+    @JvmField
     @BindView(R.id.editReview)
     var editReview: EditText? = null
 
@@ -59,7 +63,7 @@ class ContactUs : Fragment() {
         ButterKnife.bind(this, rootView)
         setHasOptionsMenu(true)
         initView()
-        PreferencesManager.initializeInstance(activity!!.applicationContext)
+        PreferencesManager.initializeInstance(requireActivity().applicationContext)
         preferencesManager = PreferencesManager.instance
         token = preferencesManager!!.getStringValue(Constants.SHARED_PREFERENCE_LOGIN_TOKEN)
 
@@ -89,14 +93,30 @@ class ContactUs : Fragment() {
 
 
     private fun initView() {
-        val spinnerLang: Spinner = activity!!.findViewById(R.id.spinnerLang)
+        val spinnerLang: Spinner = requireActivity().findViewById(R.id.spinnerLang)
         spinnerLang.visibility = View.GONE
 
 
-        val toolbar: Toolbar = activity!!.findViewById(R.id.toolbar_home)
+        val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar_home)
         toolbar.title = getString(R.string.drawer_contactus)
 
-        sharedpreferences = activity!!.getSharedPreferences("mypref", Context.MODE_PRIVATE)
+        sharedpreferences = requireActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE)
+
+
+        val spinnerLuggage: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(requireActivity(), R.layout.simple_item_spinner, contactUsArray)
+        spinnerLuggage.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spnContactUsType?.adapter = spinnerLuggage
+        spnContactUsType?.setSelection(0)
+        spnContactUsType!!.onItemSelectedListener  = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                subjectStr = contactUsArray[position]
+                Log.d("sdewdwwwd",subjectStr!!)
+              }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+               }
+        }
 
     }
 
@@ -123,7 +143,7 @@ class ContactUs : Fragment() {
 
 
                 val call =
-                    ApiClient.client.saveContactUs("Bearer $token", editReview!!.text.toString())
+                    ApiClient.client.saveContactUs("Bearer $token", editReview!!.text.toString(),subjectStr,"Open")
                 call!!.enqueue(object : Callback<ContactUsResponsePojo?> {
                     override fun onResponse(
                         call: Call<ContactUsResponsePojo?>,
@@ -209,4 +229,6 @@ class ContactUs : Fragment() {
 
 
     }
+
+
 }

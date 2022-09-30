@@ -245,7 +245,7 @@ class IntercityRideDetailsActivity : AppCompatActivity(), IRideDetailView,
 
 
             if(model?.data?.rewards != null && model?.data?.rewards != "0"){
-                txtRewardsPoint.visibility = View.VISIBLE
+                txtRewardsPoint.visibility = View.GONE
                 txtRewardsPoint.text = getString(R.string.str_reward_points_earned_for_this_ride) + " " + model?.data?.rewards
             }else{
                 txtRewardsPoint.visibility = View.GONE

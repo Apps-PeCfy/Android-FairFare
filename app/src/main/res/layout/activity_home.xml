@@ -642,6 +642,7 @@
                         android:textSize="@dimen/text_14sp" />
 
                     <TextView
+
                         android:id="@+id/tvEmailAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -650,7 +651,7 @@
                         android:gravity="center"
                         android:textColor="@color/colorBackground"
                         android:textSize="@dimen/text_14sp"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/usertypelayout"

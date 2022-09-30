@@ -466,7 +466,9 @@ interface NetworkService {
     @POST("saveContactUs")
     fun saveContactUs(
         @Header("Authorization") header: String?,
-        @Query("message") message: String?
+        @Query("message") message: String?,
+        @Query("subject") subject: String?,
+        @Query("status") status: String?
     ): Call<ContactUsResponsePojo?>?
 
     @POST("signOut")

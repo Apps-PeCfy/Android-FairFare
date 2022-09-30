@@ -28,8 +28,10 @@ android {
             buildConfigField 'String', 'PAGE_URL', '"https://prod.fairfareindia.com/"'
         }
         debug {
-            buildConfigField 'String', 'API_URL', '"https://dev2.fairfareindia.com/api/"'
-            buildConfigField 'String', 'PAGE_URL', '"https://dev2.fairfareindia.com/"'
+         //   buildConfigField 'String', 'API_URL', '"https://dev2.fairfareindia.com/api/"'
+          //  buildConfigField 'String', 'PAGE_URL', '"https://dev2.fairfareindia.com/"'
+            buildConfigField 'String', 'API_URL', '"https://p2stage.fairfareindia.com/api/"'
+            buildConfigField 'String', 'PAGE_URL', '"https://p2stage.fairfareindia.com/"'
             debuggable true
         }
         staging {

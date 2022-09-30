@@ -48,8 +48,27 @@
                 android:textColor="@color/colorText" />
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
 
-                <EditText
+
+                <Spinner
+                    android:id="@+id/spnContactUsType"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/txt_input_layout_border"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:spinnerMode="dialog"
+                    android:textColor="@color/colorGreyText" />
+
+
+
+            </RelativeLayout>
+
+
+            <EditText
                     android:inputType="textCapSentences|textMultiLine|textNoSuggestions"
                     android:id="@+id/editReview"
                     android:layout_width="match_parent"
@@ -75,21 +94,21 @@
 
 
         <Button
-            android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/btnSubmitContactUs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_15sdp"
             android:background="@drawable/shape_roundedbtn"
+            android:fontFamily="@font/notosansjp_regular"
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="@string/btn_submit"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/text_16sp"
-            android:fontFamily="@font/notosansjp_regular" />
+            android:textSize="@dimen/text_16sp" />
 
 
 

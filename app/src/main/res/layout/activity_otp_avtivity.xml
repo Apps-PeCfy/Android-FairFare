@@ -12,6 +12,7 @@
         android:includeFontPadding="false"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
+        app:navigationIcon="?attr/homeAsUpIndicator"
         app:titleTextAppearance="@style/Toolbar.TitleText"
         android:layout_height="@dimen/toolbar_height"
         >

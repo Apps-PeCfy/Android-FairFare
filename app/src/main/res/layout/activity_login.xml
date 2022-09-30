@@ -134,6 +134,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:textColor="@color/colorText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -145,6 +146,7 @@
                     android:textAppearance="@style/log_in" />
 
                 <TextView
+                    android:visibility="gone"
                     android:textColor="@color/colorGreyText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
