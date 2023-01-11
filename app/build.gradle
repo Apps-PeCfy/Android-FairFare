@@ -9,14 +9,14 @@ apply plugin: 'kotlin-kapt'
 
 android {
 
-    compileSdkVersion 30
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.fairfareindia"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 33
         multiDexEnabled true
-        versionCode 13
-        versionName "1.0.9"
+        versionCode 14
+        versionName "1.0.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -122,7 +122,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.2.0'
 
     //RazorPay Integration
-    implementation 'com.razorpay:checkout:1.6.12'
+    implementation 'com.razorpay:checkout:1.6.21'
 
     implementation 'com.google.firebase:firebase-dynamic-links:21.0.0'
 
